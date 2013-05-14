@@ -1,3 +1,5 @@
+![Logo](uaf.github.com/uaf/uaf/doc/img/logo/uaf_logo_200x67_opaque.png)
+
 UAF - the Unified Architecture Framework
 ========================================
 
@@ -14,9 +16,9 @@ Why?
 
  - The UAF is a framework (or "toolkit") that helps you to create advanced 
    OPC UA applications with minimal effort. Essentially, it takes care of
-   some "technical" aspects (such as Session and Subscription management,
+   some *technical* aspects (such as Session and Subscription management,
    server discovery, node resolution, ...) so that you can concentrate on 
-   the "functional" aspects of your software application.  
+   the *functional* aspects of your software application.  
 
  - The following Python example shows you some advantages of the UAF.
    In C++, the example would look quite similar.
