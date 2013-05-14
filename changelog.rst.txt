@@ -1,6 +1,6 @@
 
 UAF changelog                     
--------------
+===============================================================================
 
 
 Version = X.Y with
@@ -17,9 +17,9 @@ Bugfixes (which do not have any implications on the API) can only be tracked
 via the GIT version control system.
 
 
-----------------------------------------------------------------------------
 
 
-### 1.0
+1.0
+-------------------------------------------------------------------------------
 
  - Public release on GitHub.
