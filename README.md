@@ -151,9 +151,9 @@ Dependencies?
    from their website for free:
    http://www.unified-automation.com
 
- - More info about the dependencies: see dependencies.rst.txt
+ - More info about the dependencies: see [dependencies.rst.txt](dependencies.rst.txt)
 
-   
+
 Status?
 -------------------------------------------------------------------------------
 
