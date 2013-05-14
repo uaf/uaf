@@ -1,0 +1,1 @@
+( cat Doxyfile ; echo "PROJECT_NUMBER=" `cat ../version.txt` ) | doxygen -

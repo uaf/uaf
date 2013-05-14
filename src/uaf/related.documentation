@@ -1,0 +1,27 @@
+/**
+ * \page readme Readme
+ *
+ * See the included README.rst file :
+ * \verbinclude README.rst
+ *
+ *
+ * \page dependencies Dependencies
+ *
+ * See the included dependencies.rst.txt file :
+ * \verbinclude dependencies.rst.txt
+ *
+ *
+ * \page installation_linux Installation instructions (Linux)
+ *
+ * See the included install_linux.rst.txt file :
+ * \verbinclude install_linux.rst.txt
+ *
+ *
+ * \page installation_windows Installation instructions (Windows)
+ * 
+ * See the included install_windows.rst.txt file :
+ * \verbinclude install_windows.rst.txt
+ *
+ * 
+ */
+ 

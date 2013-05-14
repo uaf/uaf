@@ -1,0 +1,17 @@
+# Ignore project files
+.project
+.cproject
+.pydevproject
+
+# Ignore python bytecode
+*.py[cod]
+
+# Ignore compiled libraries etc.
+*.slo
+*.lo
+*.o
+*.so
+*.dylib
+*.lai
+*.la
+*.a
