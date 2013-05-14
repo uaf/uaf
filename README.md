@@ -171,9 +171,9 @@ Status?
 Installation?
 -------------------------------------------------------------------------------
 
-  - **Linux installation guide**: see install_linux.rst.txt
+  - **Linux installation guide**: see [install_linux.rst.txt](install_linux.rst.txt)
   
-  - **Windows installation guide**: see install_windows.rst.txt
+  - **Windows installation guide**: see [install_windows.rst.txt](install_windows.rst.txt)
 
 
 Who?
