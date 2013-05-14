@@ -29,7 +29,8 @@ Why?
     - **Intuitive API:**
 
       All code from the Software Developers Kit is wrapped into some 
-      convenient namespaces and classes.
+      convenient namespaces and classes (many more than can be seen below 
+      of course).
 
         ```python
         import pyuaf
