@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/uaf/uaf/blob/master/doc/img/logo/uaf_logo_200x67_opaque.png" alt="Logo"/>
+  <img src="http://github.com/uaf/uaf/blob/master/doc/img/logo/uaf_logo_200x67_opaque.png" alt="Logo"/>
 </p>
 
 
