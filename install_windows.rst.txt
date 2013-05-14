@@ -107,9 +107,9 @@ Installation procedure for Microsoft Windows
        -- Build files have been written to: C:/Users/john/uaf/examples/uaf/build
      
  - In Windows explorer, navigate to ``C:\Users\john\uaf\examples\uaf\build`` 
-   and double click "uaf-test.sln".
+   and double click **uaf-test.sln**.
     
- - Make sure the "Release" configuration in the Visual C++ toolbar is selected, 
+ - Make sure the **Release** configuration in the Visual C++ toolbar is selected, 
    and build the solution.
 
  - If all goes well (it should!), you will find the UAF C++ example binaries after 
@@ -135,7 +135,7 @@ Installation procedure for Microsoft Windows
 
  - Go to the ``examples\pyuaf\client`` or ``examples\pyuaf\util`` directory and 
    run the examples. If necessary, you can set the environment variables first
-   by executing the ``uaf-commandprompt.bat`` or ``uaf-powershell.bat`` scripts:
+   by executing the ``uaf-commandprompt.bat`` or ``uaf-powershell.bat`` scripts::
 
        cd "C:\Users\john\uaf\examples\"
        uaf-commandprompt.bat
