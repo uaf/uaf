@@ -21,7 +21,7 @@ the "functional" aspects of your software application.
 The following Python example shows you some advantages of the UAF.
 In C++, the example would look quite similar.
 
-**Intuitive API:**
+### Intuitive API:
 
 All code from the Software Developers Kit is wrapped into some 
 convenient namespaces and classes.
@@ -36,7 +36,7 @@ convenient namespaces and classes.
     from pyuaf.client.settings import ClientSettings
 
     
-**Automatic discovery:**
+### Automatic discovery:
     
 Just provide one or more Discovery URL(s), and the UAF will then
 automatically and periodically perform the discovery for you.
@@ -51,12 +51,10 @@ automatically and periodically perform the discovery for you.
     myClient = Client(settings)
 
     
-**Easy node addressing**
+### Easy node addressing:
     
-You can address nodes in an absolute way 
- (via "NodeIds" and "ExpandedNodeIds")
-or in a relative way
- (via "RelativePaths").
+You can address nodes in an absolute way (via "NodeIds" and "ExpandedNodeIds")
+or in a relative way (via "RelativePaths").
 The UAF will resolve the nodes, regardless on what server they are hosted.
        
 .. code-block:: python
@@ -78,7 +76,7 @@ The UAF will resolve the nodes, regardless on what server they are hosted.
     tank5_sensor3_status = Address( tank5_sensor3, [ RelativePathElement(QualifiedName("Status", ns)) ] )
 
 
-**Automatic address resolution**
+### Automatic address resolution:
     
 You can now read/write/monitor/... the Value (or any other attribute) of the nodes 
 that we addressed above. **Even if these nodes are hosted by multiple servers**,
@@ -117,7 +115,7 @@ This can be seen in the following lines: reading or writing just takes a single 
         print("OK, the new name was written successfully!")
 
 
-**Persistent monitored items**
+### Persistent monitored items:
 
 You can create monitored items once, and then forget about them...
  - even if the server that hosts your monitored items is not online yet!
@@ -134,7 +132,7 @@ You can create monitored items once, and then forget about them...
     myClient.createMonitoredData([tank5_sensor3_status], notificationCallbacks = [myCallback])
 
     
-**More stuff**
+### More stuff:
         
 For instance, UAF clients have also a generic `processRequest` method that can process
 fully configurable `ReadRequest`s, `WriteRequest`s, `MethodCallRequest`s, ...
@@ -157,20 +155,16 @@ More info about the dependencies: see dependencies.rst.txt
 Status?
 -------------------------------------------------------------------------------
 
-Client side:
- [x] read (synchronous + asynchronous)
- [x] write (synchronous + asynchronous)
- [x] method call (synchronous + asynchronous)
- [x] translate browse paths (synchronous)
- [x] create monitored data items (synchronous)
- [x] create monitored events items (synchronous)
- [ ] browse
- [ ] historical data
- [ ] queries
- [ ] modify monitored items, subscriptions, ...
+Supported on the client side:
+ - read (synchronous + asynchronous)
+ - write (synchronous + asynchronous)
+ - method call (synchronous + asynchronous)
+ - translate browse paths (synchronous)
+ - create monitored data items (synchronous)
+ - create monitored events items (synchronous)
  
-Server side
- [ ] Nothing yet so far!
+Supported on the client side:
+ - Nothing yet so far!
 
 
 Installation?
@@ -186,7 +180,7 @@ Who?
 
 **Author**: Wim Pessemier
 
-**Contact**: `W**.P********@ster.kuleuven.be` (replace the asterisks)
+**Contact**: ``W**.P********@ster.kuleuven.be`` (replace the asterisks)
 
 **Organization**: Institute of Astronomy, KU Leuven (Belgium)
 
