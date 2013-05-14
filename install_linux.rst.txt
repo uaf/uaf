@@ -6,60 +6,60 @@ Installation procedure for Linux
 1. Install the dependencies
 ----------------------------------------------------------------------------------------------------
 
-Use your package manager to install:
- - CMake
- - OpenSSL
- - LibXML2
- - SWIG
- - Python
+ - Use your package manager to install:
+    - CMake
+    - OpenSSL
+    - LibXML2
+    - SWIG
+    - Python
 
-You may need to install "devel" packages, and if you're running a 64-bit 
-operating system you may need to install the appropriate 32-bit packages.
+   You may need to install "devel" packages, and if you're running a 64-bit 
+   operating system you may need to install the appropriate 32-bit packages.
 
 
 
 2. Install the Unified Automation C++ SDK
 ----------------------------------------------------------------------------------------------------
 
-Get the C++ SDK from [Unified Automation](http://www.unified-automation.com)
-and install it, for instance, in ``/opt/unifiedautomation``.
+ - Get the C++ SDK from [Unified Automation](http://www.unified-automation.com)
+   and install it, for instance, in ``/opt/unifiedautomation``.
 
 
 
 3. Generate the make files
 ----------------------------------------------------------------------------------------------------
 
-If the Unified Automation SDK is installed in /opt, the following just might work::
+ - If the Unified Automation SDK is installed in /opt, the following just might work::
 
-    cd build
-    cmake ../src
-
-
-The path to the Unified Automation SDK can also be specified explicitely, for instance::
-
-    cd build
-    cmake ../src -DUASDK=/path/to/sdk
+       cd build
+       cmake ../src
 
 
-You may also specify other paths by setting the ``CMAKE_PREFIX_PATH`` variable, for instance::
+ - The path to the Unified Automation SDK can also be specified explicitely, for instance::
 
-    export CMAKE_PREFIX_PATH=/software/Python-2.5.1:/software/Python-2.5.1/include/python2.5
-    cd build
-    cmake ../src -DUASDK=/path/to/sdk
-
-
-If you're building the UAF on a 64-bit platform but you're using the 32-bit 
-Unified Automation SDK libraries, you may want to use ``-DFORCE32`` to force the compiler 
-to create 32-bit libraries, and to force the linker to search for 32-bit OpenSSL libraries::
-
-    cmake ../src -DUASDK=/path/to/sdk -DFORCE32
+       cd build
+       cmake ../src -DUASDK=/path/to/sdk
 
 
-In this case, also note that you need to install 32-bit Python and 32-bit Python libraries
-in order to make use of the Python wrappers. Of course, the best way to avoid all these 
-annoyances, is to buy the SDK source-code license from Unified Automation and simply 
-compile the SDK in 64-bit (simply by executing the buildSdk64.sh script included with 
-the SDK) for your platform.
+ - You may also specify other paths by setting the ``CMAKE_PREFIX_PATH`` variable, for instance::
+
+       export CMAKE_PREFIX_PATH=/software/Python-2.5.1:/software/Python-2.5.1/include/python2.5
+       cd build
+       cmake ../src -DUASDK=/path/to/sdk
+
+
+ - If you're building the UAF on a 64-bit platform but you're using the 32-bit 
+   Unified Automation SDK libraries, you may want to use ``-DFORCE32`` to force the compiler 
+   to create 32-bit libraries, and to force the linker to search for 32-bit OpenSSL libraries::
+
+       cmake ../src -DUASDK=/path/to/sdk -DFORCE32
+
+
+   In this case, also note that you need to install 32-bit Python and 32-bit Python libraries
+   in order to make use of the Python wrappers. Of course, the best way to avoid all these 
+   annoyances, is to buy the SDK source-code license from Unified Automation and simply 
+   compile the SDK in 64-bit (simply by executing the buildSdk64.sh script included with 
+   the SDK) for your platform.
 
 
 
@@ -67,57 +67,56 @@ the SDK) for your platform.
 ----------------------------------------------------------------------------------------------------
 
 
-Inside the ``build`` folder, run ``make``::
+ - Inside the ``build`` folder, run ``make``::
    
-    make
+       make
    
-
-If the linker complains about libraries that it cannot find, then make sure the 
-libraries are installed. If the libraries are installed but the linker cannot 
-find them, you may have to create some symbolic links, for instance::
-   
-    ln -s /usr/lib/libpython2.7.so.1.0 /usr/lib/libpython2.7.so
+   If the linker complains about libraries that it cannot find, then make sure the 
+   libraries are installed. If the libraries are installed but the linker cannot 
+   find them, you may have to create some symbolic links, for instance::
+       
+       ln -s /usr/lib/libpython2.7.so.1.0 /usr/lib/libpython2.7.so
   
 
 
 5. (OPTIONAL) Build and run the C++ examples
 ----------------------------------------------------------------------------------------------------
 
-Go to the ``examples`` folder, update the ``PATH`` and ``PYTHONPATH`` (the ``uaf.rc`` 
-script will do that for you), generate the make-files with CMake, and build the examples::
+ - Go to the ``examples`` folder, update the ``PATH`` and ``PYTHONPATH`` (the ``uaf.rc`` 
+   script will do that for you), generate the make-files with CMake, and build the examples::
        
-    cd examples/
-    source uaf.rc
-    cd uaf/build
-    cmake ../src
-    make
-       
-
-Run the examples::
-       
-    cd ../bin
-    simplest_client_example
+       cd examples/
+       source uaf.rc
+       cd uaf/build
+       cmake ../src
+       make
        
 
-Note that some of the examples require that you start the Unified Automation 
-UA Demo Server on the local machine. The UA Demo Server was already installed 
-when you installed the SDK: you can find the ``uademoserver`` executable in the ``bin`` 
-directory of the SDK installation directory::
+ - Run the examples::
        
-    /opt/unifiedautomation/sdk/bin/uademoserver
-   
+       cd ../bin
+       simplest_client_example
+       
+
+   **Note** that some of the examples require that you start the Unified Automation 
+   UA Demo Server on the local machine. The UA Demo Server was already installed 
+   when you installed the SDK: you can find the ``uademoserver`` executable in the ``bin`` 
+   directory of the SDK installation directory::
+       
+       /opt/unifiedautomation/sdk/bin/uademoserver
+
 
 
 6. (OPTIONAL) Run the Python examples
 ----------------------------------------------------------------------------------------------------
 
-Go to the ``examples`` folder, update the ``PATH`` and ``PYTHONPATH`` 
-(the ``uaf.rc`` script will do that for you), and run the examples::
+ - Go to the ``examples`` folder, update the ``PATH`` and ``PYTHONPATH`` 
+   (the ``uaf.rc`` script will do that for you), and run the examples::
       
-    cd examples/pyuaf
-    source uaf.rc
-    cd client
-    python simplest_client_example.py
+       cd examples/pyuaf
+       source uaf.rc
+       cd client
+       python simplest_client_example.py
       
 
 .. This document is part of the Unified Architecture Framework : http://github.com/uaf
