@@ -26,28 +26,30 @@ In C++, the example would look quite similar.
 All code from the Software Developers Kit is wrapped into some 
 convenient namespaces and classes.
 
-```python
-import pyuaf
-from pyuaf.util            import Node, NodeId, QualifiedName
-from pyuaf.util            import RelativePathElement, LocalizedText
-from pyuaf.util.primitives import UInt16
-from pyuaf.client          import Client
-from pyuaf.client.settings import ClientSettings
-```
+.. code-block:: python
+
+    import pyuaf
+    from pyuaf.util            import Node, NodeId, QualifiedName
+    from pyuaf.util            import RelativePathElement, LocalizedText
+    from pyuaf.util.primitives import UInt16
+    from pyuaf.client          import Client
+    from pyuaf.client.settings import ClientSettings
+
     
 **Automatic discovery:**
     
 Just provide one or more Discovery URL(s), and the UAF will then
 automatically and periodically perform the discovery for you.
     
-```python
-settings = ClientSettings()
-settings.applicationName = "myClient"
-settings.discoveryUrls.append("opc.tcp://localhost:4841")
+.. code-block:: python
 
-# create the client with the given settings
-myClient = Client(settings)
-```
+    settings = ClientSettings()
+    settings.applicationName = "myClient"
+    settings.discoveryUrls.append("opc.tcp://localhost:4841")
+    
+    # create the client with the given settings
+    myClient = Client(settings)
+
     
 **Easy node addressing**
     
@@ -57,23 +59,24 @@ or in a relative way
  (via "RelativePaths").
 The UAF will resolve the nodes, regardless on what server they are hosted.
        
-```python
-# first define some URIs (Uniform Resource Identifiers):
-ns      = "MyOrganization"      # the "namespace URI" of the organization or company
-plc12   = "PLC/12/Server/URI"   # the "server URI" of the OPC UA server running on some PLC
+.. code-block:: python
 
-# now define some absolute addresses:
-tank5      = Address( NodeId("Tank5"    , ns), plc12) )
-tank5_name = Address( NodeId("Tank5Name", ns), plc12) )
+    # first define some URIs (Uniform Resource Identifiers):
+    ns      = "MyOrganization"      # the "namespace URI" of the organization or company
+    plc12   = "PLC/12/Server/URI"   # the "server URI" of the OPC UA server running on some PLC
+    
+    # now define some absolute addresses:
+    tank5      = Address( NodeId("Tank5"    , ns), plc12) )
+    tank5_name = Address( NodeId("Tank5Name", ns), plc12) )
+    
+    # now define some relative addresses (Tank5/Sensor3 and Tank5/Sensor3/Status):
+    tank5_sensor3        = Address( tank5, [ RelativePathElement(QualifiedName("Sensor3", ns)) ] )
+    tank5_sensor3_status = Address( tank5, [ RelativePathElement(QualifiedName("Sensor3", ns)),
+                                             RelativePathElement(QualifiedName("Status" , ns)) ] )
+    
+    # the UAF accepts even relative addresses to relative addresses! So you could also do:
+    tank5_sensor3_status = Address( tank5_sensor3, [ RelativePathElement(QualifiedName("Status", ns)) ] )
 
-# now define some relative addresses (Tank5/Sensor3 and Tank5/Sensor3/Status):
-tank5_sensor3        = Address( tank5, [ RelativePathElement(QualifiedName("Sensor3", ns)) ] )
-tank5_sensor3_status = Address( tank5, [ RelativePathElement(QualifiedName("Sensor3", ns)),
-                                         RelativePathElement(QualifiedName("Status" , ns)) ] )
-
-# the UAF accepts even relative addresses to relative addresses! So you could also do:
-tank5_sensor3_status = Address( tank5_sensor3, [ RelativePathElement(QualifiedName("Status", ns)) ] )
-```
 
 **Automatic address resolution**
     
@@ -94,24 +97,25 @@ the UAF will automatically:
        
 This can be seen in the following lines: reading or writing just takes a single line of code!
        
-```python
-# let's read 
-#   - the tank name         (a LocalizedText, which may be exposed by an OPC UA-enabled PLC) 
-#   - and the sensor status (an UInt16, which may be exposed by some OPC UA-enabled smart sensor)
-result = myClient.read([tank5_name, tank5_sensor3_status])
+.. code-block:: python
 
-if isinstance(result.targets[0].data, LocalizedText):
-    name   = result.targets[0].data.text()
+    # let's read 
+    #   - the tank name         (a LocalizedText, which may be exposed by an OPC UA-enabled PLC) 
+    #   - and the sensor status (an UInt16, which may be exposed by some OPC UA-enabled smart sensor)
+    result = myClient.read([tank5_name, tank5_sensor3_status])
+    
+    if isinstance(result.targets[0].data, LocalizedText):
+        name   = result.targets[0].data.text()
+    
+    if isinstance(result.targets[1].data, UInt16):
+        status = result.targets[1].data.value
+    
+    # we can also write a new name
+    result = myClient.write( [tank5_name], [LocalizedText("Oil tank", "EN")] )
+    
+    if result.targets[0].status.isGood():
+        print("OK, the new name was written successfully!")
 
-if isinstance(result.targets[1].data, UInt16):
-    status = result.targets[1].data.value
-
-# we can also write a new name
-result = myClient.write( [tank5_name], [LocalizedText("Oil tank", "EN")] )
-
-if result.targets[0].status.isGood():
-    print("OK, the new name was written successfully!")
-```
 
 **Persistent monitored items**
 
@@ -121,12 +125,14 @@ You can create monitored items once, and then forget about them...
    relative addresses of your monitored items now suddenly point to  
    nodes hosted by another (redundant) server!!
    
-```python
-def myCallback(notification):
-    print("New sensor status received: %d" %notification.data.value)
-    
-myClient.createMonitoredData([tank5_sensor3_status], notificationCallbacks = [myCallback])
-```
+
+.. code-block:: python
+
+    def myCallback(notification):
+        print("New sensor status received: %d" %notification.data.value)
+        
+    myClient.createMonitoredData([tank5_sensor3_status], notificationCallbacks = [myCallback])
+
     
 **More stuff**
         
