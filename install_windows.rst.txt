@@ -3,10 +3,9 @@ Installation procedure for Microsoft Windows
 
 
 
-1. **Install the Unified Automation C++ SDK**
- - Get the C++ SDK from Unified Automation (http://www.unified-automation.com)
-   and install it, for instance, in its default directory:
-   ``C:\Program Files\UnifiedAutomation\UaSdkCppBundleEval``
+1. Install the Unified Automation C++ SDK
+----------------------------------------------------------------------------------------------------
+
 
  - Get the C++ SDK from Unified Automation (http://www.unified-automation.com)
    and install it, for instance, in its default directory:
