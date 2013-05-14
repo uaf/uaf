@@ -22,4 +22,5 @@ via the GIT version control system.
 1.0
 -------------------------------------------------------------------------------
 
- - Public release on GitHub.
+Public release on GitHub.
+
