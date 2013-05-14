@@ -1,0 +1,4 @@
+Font name   : Geosans Light
+Created by  : Manfred Klein
+Licensed as : Freeware, commercial use requires donation
+Website     : http://manfred-klein.ina-mar.com

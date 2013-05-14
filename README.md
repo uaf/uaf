@@ -142,7 +142,7 @@ Dependencies?
 
  - The UAF is based on the commercial C++ Software Developers Kit from 
    Unified Automation. A demo version of this SDK can be downloaded
-   from their website for free
+   from their website for free:
    http://www.unified-automation.com
 
  - More info about the dependencies: see dependencies.rst.txt
@@ -152,18 +152,18 @@ Status?
 -------------------------------------------------------------------------------
 
  - Client side:
-    - [x] read (synchronous + asynchronous)
-    - [x] write (synchronous + asynchronous)
-    - [x] method call (synchronous + asynchronous)
-    - [x] translate browse paths (synchronous)
-    - [x] create monitored data items (synchronous)
-    - [x] create monitored events items (synchronous)
-    - [ ] browse
-    - [ ] historical data
-    - [ ] queries
-    - [ ] modify monitored items, subscriptions, ...
+    [x] read (synchronous + asynchronous)
+    [x] write (synchronous + asynchronous)
+    [x] method call (synchronous + asynchronous)
+    [x] translate browse paths (synchronous)
+    [x] create monitored data items (synchronous)
+    [x] create monitored events items (synchronous)
+    [ ] browse
+    [ ] historical data
+    [ ] queries
+    [ ] modify monitored items, subscriptions, ...
  - Server side
-    - Nothing yet so far!
+    [ ] Nothing yet so far!
 
 
 Installation?

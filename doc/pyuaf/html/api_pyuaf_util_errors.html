@@ -1,0 +1,909 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyuaf.util.errors &mdash; PyUAF 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyUAF 1.0 documentation" href="index.html" />
+    <link rel="next" title="pyuaf.util.loglevels" href="api_pyuaf_util_loglevels.html" />
+    <link rel="prev" title="pyuaf.util.constants" href="api_pyuaf_util_constants.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_util_loglevels.html" title="pyuaf.util.loglevels"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_util_constants.html" title="pyuaf.util.constants"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pyuaf.util.errors">
+<span id="pyuaf-util-errors"></span><h1><tt class="docutils literal"><span class="pre">pyuaf.util.errors</span></tt><a class="headerlink" href="#module-pyuaf.util.errors" title="Permalink to this headline">¶</a></h1>
+<p>This module defines the exceptions that may be thrown by UAF functions.</p>
+<div class="section" id="class-uaferror">
+<h2><em>class</em> UafError<a class="headerlink" href="#class-uaferror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.UafError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UafError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UafError" title="Permalink to this definition">¶</a></dt>
+<dd><p>A UafError is the superclass of all UAF related exceptions.</p>
+<p>Catch this error to catch all errors thrown by the UAF.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.UafError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UafError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a UafError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.UafError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.UafError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-configurationerror">
+<h2><em>class</em> ConfigurationError<a class="headerlink" href="#class-configurationerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.ConfigurationError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ConfigurationError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ConfigurationError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.ConfigurationError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ConfigurationError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a ConfigurationError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.ConfigurationError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.ConfigurationError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-connectionerror">
+<h2><em>class</em> ConnectionError<a class="headerlink" href="#class-connectionerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.ConnectionError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ConnectionError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ConnectionError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.ConnectionError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ConnectionError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a ConnectionError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.ConnectionError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.ConnectionError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-dataformaterror">
+<h2><em>class</em> DataFormatError<a class="headerlink" href="#class-dataformaterror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.DataFormatError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">DataFormatError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.DataFormatError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.DataFormatError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.DataFormatError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a DataFormatError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.DataFormatError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.DataFormatError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-datasizeerror">
+<h2><em>class</em> DataSizeError<a class="headerlink" href="#class-datasizeerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.DataSizeError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">DataSizeError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.DataSizeError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.DataSizeError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.DataSizeError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a DataSizeError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.DataSizeError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.DataSizeError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-datasourceerror">
+<h2><em>class</em> DataSourceError<a class="headerlink" href="#class-datasourceerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.DataSourceError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">DataSourceError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.DataSourceError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.DataSourceError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.DataSourceError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a DataSourceError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.DataSourceError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.DataSourceError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-disconnectionerror">
+<h2><em>class</em> DisconnectionError<a class="headerlink" href="#class-disconnectionerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.DisconnectionError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">DisconnectionError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.DisconnectionError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.DisconnectionError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.DisconnectionError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a DisconnectionError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.DisconnectionError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.DisconnectionError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-discoveryerror">
+<h2><em>class</em> DiscoveryError<a class="headerlink" href="#class-discoveryerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.DiscoveryError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">DiscoveryError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.DiscoveryError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.DiscoveryError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.DiscoveryError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a DiscoveryError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.DiscoveryError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.DiscoveryError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-invalidrequesterror">
+<h2><em>class</em> InvalidRequestError<a class="headerlink" href="#class-invalidrequesterror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.InvalidRequestError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">InvalidRequestError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.InvalidRequestError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.InvalidRequestError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.InvalidRequestError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a InvalidRequestError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.InvalidRequestError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.InvalidRequestError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-lowlevelerror">
+<h2><em>class</em> LowLevelError<a class="headerlink" href="#class-lowlevelerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.LowLevelError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">LowLevelError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.LowLevelError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.LowLevelError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.LowLevelError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a LowLevelError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.LowLevelError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.LowLevelError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-resolutionerror">
+<h2><em>class</em> ResolutionError<a class="headerlink" href="#class-resolutionerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.ResolutionError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ResolutionError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ResolutionError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.ResolutionError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ResolutionError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a ResolutionError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.ResolutionError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.ResolutionError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-wrongtypeerror">
+<h2><em>class</em> WrongTypeError<a class="headerlink" href="#class-wrongtypeerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.WrongTypeError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">WrongTypeError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.WrongTypeError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.WrongTypeError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.WrongTypeError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a WrongTypeError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.WrongTypeError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.WrongTypeError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-othererror">
+<h2><em>class</em> OtherError<a class="headerlink" href="#class-othererror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.OtherError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">OtherError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.OtherError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.OtherError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.OtherError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a OtherError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.OtherError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.OtherError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-securityerror">
+<h2><em>class</em> SecurityError<a class="headerlink" href="#class-securityerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.SecurityError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">SecurityError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.SecurityError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.SecurityError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.SecurityError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a SecurityError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.SecurityError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.SecurityError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-timeouterror">
+<h2><em>class</em> TimeoutError<a class="headerlink" href="#class-timeouterror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.TimeoutError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">TimeoutError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.TimeoutError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.TimeoutError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.TimeoutError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a TimeoutError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.TimeoutError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.TimeoutError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-noresultreceivederror">
+<h2><em>class</em> NoResultReceivedError<a class="headerlink" href="#class-noresultreceivederror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.NoResultReceivedError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">NoResultReceivedError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.NoResultReceivedError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.NoResultReceivedError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.NoResultReceivedError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a NoResultReceivedError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.NoResultReceivedError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.NoResultReceivedError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-subscriptionerror">
+<h2><em>class</em> SubscriptionError<a class="headerlink" href="#class-subscriptionerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.SubscriptionError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">SubscriptionError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.SubscriptionError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.SubscriptionError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.SubscriptionError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a SubscriptionError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.SubscriptionError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.SubscriptionError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-unexpectederror">
+<h2><em>class</em> UnexpectedError<a class="headerlink" href="#class-unexpectederror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.UnexpectedError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UnexpectedError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UnexpectedError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.UnexpectedError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UnexpectedError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a UnexpectedError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.UnexpectedError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.UnexpectedError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-unknownhandleerror">
+<h2><em>class</em> UnknownHandleError<a class="headerlink" href="#class-unknownhandleerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.UnknownHandleError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UnknownHandleError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UnknownHandleError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.UnknownHandleError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UnknownHandleError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a UnknownHandleError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.UnknownHandleError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.UnknownHandleError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-unsupportederror">
+<h2><em>class</em> UnsupportedError<a class="headerlink" href="#class-unsupportederror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.errors.UnsupportedError">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UnsupportedError</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UnsupportedError" title="Permalink to this definition">¶</a></dt>
+<dd><ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.errors.UnsupportedError.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>status</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UnsupportedError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a UnsupportedError.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>) &#8211; The status object that caused the error to be raised.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.errors.UnsupportedError.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.errors.UnsupportedError.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> object that caused the error to be raised.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/uaf_logo_200x67_transparent.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">pyuaf.util.errors</span></tt></a><ul>
+<li><a class="reference internal" href="#class-uaferror"><em>class</em> UafError</a></li>
+<li><a class="reference internal" href="#class-configurationerror"><em>class</em> ConfigurationError</a></li>
+<li><a class="reference internal" href="#class-connectionerror"><em>class</em> ConnectionError</a></li>
+<li><a class="reference internal" href="#class-dataformaterror"><em>class</em> DataFormatError</a></li>
+<li><a class="reference internal" href="#class-datasizeerror"><em>class</em> DataSizeError</a></li>
+<li><a class="reference internal" href="#class-datasourceerror"><em>class</em> DataSourceError</a></li>
+<li><a class="reference internal" href="#class-disconnectionerror"><em>class</em> DisconnectionError</a></li>
+<li><a class="reference internal" href="#class-discoveryerror"><em>class</em> DiscoveryError</a></li>
+<li><a class="reference internal" href="#class-invalidrequesterror"><em>class</em> InvalidRequestError</a></li>
+<li><a class="reference internal" href="#class-lowlevelerror"><em>class</em> LowLevelError</a></li>
+<li><a class="reference internal" href="#class-resolutionerror"><em>class</em> ResolutionError</a></li>
+<li><a class="reference internal" href="#class-wrongtypeerror"><em>class</em> WrongTypeError</a></li>
+<li><a class="reference internal" href="#class-othererror"><em>class</em> OtherError</a></li>
+<li><a class="reference internal" href="#class-securityerror"><em>class</em> SecurityError</a></li>
+<li><a class="reference internal" href="#class-timeouterror"><em>class</em> TimeoutError</a></li>
+<li><a class="reference internal" href="#class-noresultreceivederror"><em>class</em> NoResultReceivedError</a></li>
+<li><a class="reference internal" href="#class-subscriptionerror"><em>class</em> SubscriptionError</a></li>
+<li><a class="reference internal" href="#class-unexpectederror"><em>class</em> UnexpectedError</a></li>
+<li><a class="reference internal" href="#class-unknownhandleerror"><em>class</em> UnknownHandleError</a></li>
+<li><a class="reference internal" href="#class-unsupportederror"><em>class</em> UnsupportedError</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api_pyuaf_util_constants.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">pyuaf.util.constants</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api_pyuaf_util_loglevels.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.util.loglevels</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/api_pyuaf_util_errors.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_util_loglevels.html" title="pyuaf.util.loglevels"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_util_constants.html" title="pyuaf.util.constants"
+             >previous</a> |</li>
+        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Wim Pessemier (Institute for Astronomy, KU Leuven) - http://github.com/uaf.
+    </div>
+  </body>
+</html>

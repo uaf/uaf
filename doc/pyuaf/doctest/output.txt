@@ -1,0 +1,33 @@
+Results of doctest builder run on 2013-05-14 14:37:16
+=====================================================
+
+Document: api_pyuaf_client_requests
+-----------------------------------
+1 items passed all tests:
+ 144 tests in default
+144 tests in 1 items.
+144 passed and 0 failed.
+Test passed.
+
+Document: api_pyuaf_client_results
+----------------------------------
+1 items passed all tests:
+  68 tests in default
+68 tests in 1 items.
+68 passed and 0 failed.
+Test passed.
+
+Document: api_pyuaf_util
+------------------------
+1 items passed all tests:
+ 165 tests in default
+165 tests in 1 items.
+165 passed and 0 failed.
+Test passed.
+
+Doctest summary
+===============
+  377 tests
+    0 failures in tests
+    0 failures in setup code
+    0 failures in cleanup code
