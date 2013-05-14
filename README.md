@@ -1,4 +1,4 @@
-![Logo](uaf.github.com/uaf/uaf/doc/img/logo/uaf_logo_200x67_opaque.png)
+![Logo](doc/img/logo/uaf_logo_200x67_opaque.png)
 
 UAF - the Unified Architecture Framework
 ========================================
@@ -153,19 +153,15 @@ Dependencies?
 Status?
 -------------------------------------------------------------------------------
 
- - Client side:
-    [x] read (synchronous + asynchronous)
-    [x] write (synchronous + asynchronous)
-    [x] method call (synchronous + asynchronous)
-    [x] translate browse paths (synchronous)
-    [x] create monitored data items (synchronous)
-    [x] create monitored events items (synchronous)
-    [ ] browse
-    [ ] historical data
-    [ ] queries
-    [ ] modify monitored items, subscriptions, ...
- - Server side
-    [ ] Nothing yet so far!
+ - Supported on the Client side:
+   - read (synchronous + asynchronous)
+   - write (synchronous + asynchronous)
+   - method call (synchronous + asynchronous)
+   - translate browse paths (synchronous)
+   - create monitored data items (synchronous)
+   - create monitored events items (synchronous)
+ - Supported on the Server side:
+   - nothing yet so far!
 
 
 Installation?
