@@ -55,6 +55,31 @@
             
   <div class="section" id="client-examples">
 <h1>Client examples<a class="headerlink" href="#client-examples" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="easiest-client-example">
+<h2>Easiest client example<a class="headerlink" href="#easiest-client-example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># examples/pyuaf/client/easiest_client_example.py</span>
+
+<span class="c"># Start the UaDemoserver of Unified Automation before running this script!</span>
+
+<span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client</span>           <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span>
+
+<span class="c"># create a client named &quot;myClient&quot;, and provide the discovery URL of the UaDemoserver:</span>
+<span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">ClientSettings</span><span class="p">(</span><span class="s">&quot;myClient&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">]))</span>
+
+<span class="c"># specify the address of the node of which we would like to read its Value attribute:</span>
+<span class="c"># (here we&#39;re using an absolute address, i.e. a NodeId(&lt;identifier&gt;, &lt;namespace URI&gt;) and a &lt;server URI&gt;)</span>
+<span class="n">someAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;MyDemoObject.Counter&quot;</span><span class="p">,</span> <span class="s">&quot;DemoNodeManager&quot;</span><span class="p">),</span> <span class="s">&quot;urn:UnifiedAutomation:UaDemoserver&quot;</span><span class="p">)</span>
+
+<span class="c"># read the Value attribute of the node that we just addressed:</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="p">[</span><span class="n">someAddress</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;The counter value is </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="how-to-define-addresses">
 <h2>How to define addresses?<a class="headerlink" href="#how-to-define-addresses" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># examples/pyuaf/util/how_to_define_addresses.py</span>
@@ -536,6 +561,7 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Client examples</a><ul>
+<li><a class="reference internal" href="#easiest-client-example">Easiest client example</a></li>
 <li><a class="reference internal" href="#how-to-define-addresses">How to define addresses?</a></li>
 <li><a class="reference internal" href="#how-to-read-some-data">How to read some data?</a></li>
 <li><a class="reference internal" href="#how-to-change-the-default-session-behavior">How to change the default session behavior?</a></li>
@@ -549,7 +575,7 @@
                         title="previous chapter">PyUAF - Python bindings for the UAF (Unified Architecture Framework)</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="api_pyuaf.html"
-                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">pyuaf</span></tt></a></p>
+                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf</span></tt></a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/client_examples.txt"

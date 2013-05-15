@@ -3,6 +3,12 @@ Client examples
 
 
 
+Easiest client example
+====================================================================================================
+
+.. literalinclude:: ../../../examples/pyuaf/client/easiest_client_example.py
+
+
 
 How to define addresses?
 ====================================================================================================
