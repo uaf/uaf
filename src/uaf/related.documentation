@@ -2,7 +2,7 @@
  * \page readme Readme
  *
  * See the included README.rst file :
- * \verbinclude README.rst
+ * \verbinclude README.md
  *
  *
  * \page dependencies Dependencies
