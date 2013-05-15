@@ -28,8 +28,8 @@ Why?
     - in Python:   [easiest_client_example.py](examples/pyuaf/client/easiest_client_example.py)
     - in C++:      [easiest_client_example.cpp](examples/uaf/src/client/easiest_client_example.cpp)
 
- - The following Python example (a single example, split up into several pieces)
-   shows you some advantages of the UAF.
+ - The following example (a single example, split up into several pieces) 
+   shows you some advantages of the UAF, in Python.
    In C++, the equivalent code would be a bit more verbose, but the C++ API 
    is essentially the same as the Python API.
 
