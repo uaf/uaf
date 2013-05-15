@@ -1,3 +1,0 @@
-[submodule "doc/pyuaf"]
-	path = doc/pyuaf
-	url = git@github.com:uaf/uaf.git
