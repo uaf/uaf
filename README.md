@@ -147,7 +147,9 @@ Why?
       For instance, UAF clients have also a generic `processRequest` method that can process
       fully configurable `ReadRequest`s, `WriteRequest`s, `MethodCallRequest`s, ...
         
-      Dive into the documentation or the examples to find out more!
+      Dive into the [documentation](http://uaf.github.io/uaf/doc/pyuaf)
+      or the [examples](http://uaf.github.io/uaf/doc/pyuaf/client_examples.html)
+      to find out more!
 
 
 
