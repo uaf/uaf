@@ -1,0 +1,1320 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyuaf.client &mdash; PyUAF 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyUAF 1.0 documentation" href="index.html" />
+    <link rel="next" title="pyuaf.client.configs" href="api_pyuaf_client_configs.html" />
+    <link rel="prev" title="pyuaf" href="api_pyuaf.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_client_configs.html" title="pyuaf.client.configs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf.html" title="pyuaf"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pyuaf.client">
+<span id="pyuaf-client"></span><h1><tt class="docutils literal"><span class="pre">pyuaf.client</span></tt><a class="headerlink" href="#module-pyuaf.client" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="class-client">
+<h2><em>class</em> Client<a class="headerlink" href="#class-client" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.Client">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.</tt><tt class="descname">Client</tt><big>(</big><em>settings=None</em>, <em>loggingCallback=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a UAF client.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># examples/pyuaf/client/how_to_create_a_client.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">EXAMPLE: how to create a client</span>
+<span class="sd">====================================================================================================</span>
+
+<span class="sd">The Client constructor signature looks like this: </span>
+
+<span class="sd">  pyuaf.client.Client.__init__(settings=None, loggingCallback=None)</span>
+
+<span class="sd">with:</span>
+<span class="sd">  - &#39;settings&#39;: optional: could be </span>
+<span class="sd">      - a pyuaf.client.settings.ClientSettings instance</span>
+<span class="sd">      - or simply a string (the name of the client)</span>
+<span class="sd">      - or None (so default pyuaf.client.settings.ClientSettings() are used).</span>
+<span class="sd">  - &#39;loggingCallback&#39;: optional: a callback function to catch log messages of type pyuaf.util.LogMessage.</span>
+
+<span class="sd">See the PyUAF HTML documentation for more info.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client</span>          <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span> <span class="kn">import</span> <span class="n">ClientSettings</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="kn">import</span> <span class="n">loglevels</span><span class="p">,</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
+
+<span class="c"># we can create some ClientSettings:</span>
+<span class="n">settings</span> <span class="o">=</span> <span class="n">ClientSettings</span><span class="p">()</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">applicationName</span> <span class="o">=</span> <span class="s">&quot;MyClient&quot;</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">)</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">logToStdOutLevel</span>   <span class="o">=</span> <span class="n">loglevels</span><span class="o">.</span><span class="n">Info</span>   <span class="c"># print Info, Warning and Error logging to the console </span>
+<span class="n">settings</span><span class="o">.</span><span class="n">logToCallbackLevel</span> <span class="o">=</span> <span class="n">loglevels</span><span class="o">.</span><span class="n">Debug</span>  <span class="c"># send Debug, Info, Warning and Error logging to the callback</span>
+
+<span class="c"># And if you want to catch the logging output, you may also define a callback.</span>
+<span class="c"># In this case we define a callback to write the logging output to a file in the user&#39;s home directory.</span>
+<span class="c"># (but this callback is optional of course, only define one if you want to do something more with the</span>
+<span class="c">#  logging output than simply printing it to the console (i.e. sending it to the stdout))</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&quot;~/my_logging_output.txt&quot;</span><span class="p">),</span> <span class="s">&quot;w&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="n">logDetailsString</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="n">logDetailsString</span> <span class="o">+=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&quot;%a, </span><span class="si">%d</span><span class="s"> %b %Y %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">ctime</span><span class="p">))</span>
+    <span class="n">logDetailsString</span> <span class="o">+=</span> <span class="s">&quot;.</span><span class="si">%.3d</span><span class="s"> &quot;</span> <span class="o">%</span><span class="n">msg</span><span class="o">.</span><span class="n">msec</span>
+    <span class="n">logDetailsString</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="si">%-10s</span><span class="s"> &quot;</span> <span class="o">%</span><span class="n">msg</span><span class="o">.</span><span class="n">applicationName</span>
+    <span class="n">logDetailsString</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s"> &quot;</span> <span class="o">%</span><span class="n">msg</span><span class="o">.</span><span class="n">loggerName</span>
+    <span class="n">logDetailsString</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="si">%-8s</span><span class="s"> &quot;</span>  <span class="o">%</span><span class="n">loglevels</span><span class="o">.</span><span class="n">toString</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">level</span><span class="p">)</span>
+    <span class="c"># msg.message may contain multiple lines, so we prepend the other logging details in</span>
+    <span class="c"># front of each line:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">logDetailsString</span><span class="p">,</span> <span class="n">line</span><span class="p">))</span>
+
+
+<span class="c"># Example 0: create a client with the default settings and no logging callback</span>
+<span class="c"># --------------------------------------------------------------------------------------------------</span>
+<span class="n">client0</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
+
+<span class="c"># Example 1: create a client by specifying the settings</span>
+<span class="c"># --------------------------------------------------------------------------------------------------</span>
+<span class="n">client1</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+
+<span class="c"># Example 2: create a client by specifying the settings</span>
+<span class="c"># --------------------------------------------------------------------------------------------------</span>
+<span class="n">client2</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
+
+<span class="c"># Example 3: create a client by specifying only the logging callback</span>
+<span class="c"># --------------------------------------------------------------------------------------------------</span>
+<span class="n">client3</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">loggingCallback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
+
+<span class="c"># you can still provide settings and register a logging callback afterwards, but you&#39;ll need to use:</span>
+<span class="c">#  client0.setClientSettings(settings)</span>
+<span class="c">#  client0.registerLoggingCallback(callback)</span>
+
+
+<span class="c"># read the Value attribute of some non-existing node in order to have some Error output sent to the callback:</span>
+<span class="n">client2</span><span class="o">.</span><span class="n">read</span><span class="p">([</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;InvalidIdentifier&quot;</span><span class="p">,</span><span class="s">&quot;InvalidNamespace&quot;</span><span class="p">),</span><span class="s">&quot;InvalidServerURI&quot;</span><span class="p">)])</span>
+
+<span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>settings</strong> (<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings" title="pyuaf.client.settings.ClientSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ClientSettings</span></tt></a> or <tt class="docutils literal"><span class="pre">str</span></tt> or None) &#8211; <p>Can be:</p>
+<ul>
+<li>the settings of the client (of type <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings" title="pyuaf.client.settings.ClientSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ClientSettings</span></tt></a>)</li>
+<li>or simply the name of the client application (as a <tt class="docutils literal"><span class="pre">str</span></tt>)</li>
+<li>or None for defaults.</li>
+</ul>
+</li>
+<li><strong>callback</strong> &#8211; A callback function for the logging. This function should have one 
+input argument, which you should call &#8220;msg&#8221; or so,
+because this argument is of type <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.LogMessage" title="pyuaf.util.LogMessage"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.LogMessage</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyuaf.client.Client.allSessionInformations">
+<tt class="descname">allSessionInformations</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.Client.allSessionInformations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get information about all sessions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of information objects about all sessions.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.client.SessionInformation" title="pyuaf.client.SessionInformation"><tt class="xref py py-class docutils literal"><span class="pre">SessionInformation</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.allSubscriptionInformations">
+<tt class="descname">allSubscriptionInformations</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.Client.allSubscriptionInformations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get information about all subscriptions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of information objects about all subscriptions.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.client.SubscriptionInformation" title="pyuaf.client.SubscriptionInformation"><tt class="xref py py-class docutils literal"><span class="pre">SubscriptionInformation</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.beginCall">
+<tt class="descname">beginCall</tt><big>(</big><em>objectAddress</em>, <em>methodAddress</em>, <em>inputArgs=</em><span class="optional">[</span><span class="optional">]</span>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em>, <em>callback=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.beginCall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invoke a remote method call asynchronously.</p>
+<dl class="docutils">
+<dt>Unlike &#8220;strict object-oriented&#8221; method calling, a method is called by specifying both </dt>
+<dd><ul class="first last simple">
+<li>the method itself (parameter methodAddress)</li>
+<li>the object in which context the method should be invoked (parameter objectAddress).</li>
+</ul>
+</dd>
+</dl>
+<p>In other words, in OPC UA you can call a method on different objects. In contrast to strict
+object-oriented languages, where a method can only be called on the object that &#8220;owns&#8221; the
+method.</p>
+<p>This is a convenience function for calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-class docutils literal"><span class="pre">processRequest</span></tt></a> with 
+a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.MethodCallRequest" title="pyuaf.client.requests.MethodCallRequest"><tt class="xref py py-class docutils literal"><span class="pre">MethodCallRequest</span></tt></a> as its first argument.
+For full flexibility, use that function. For instance, if you want to call multiple 
+methods at once, you can do so by creating a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.MethodCallRequest" title="pyuaf.client.requests.MethodCallRequest"><tt class="xref py py-class docutils literal"><span class="pre">MethodCallRequest</span></tt></a> 
+and adding multiple targets.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>objectAddress</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; The address of the object node on which to call the method.</li>
+<li><strong>methodAddress</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; The address of the method node to call.</li>
+<li><strong>inputArgs</strong> (<tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.UInt32" title="pyuaf.util.primitives.UInt32"><tt class="xref py py-class docutils literal"><span class="pre">UInt32</span></tt></a>,
+or <tt class="docutils literal"><span class="pre">list</span></tt> of any other supported data type.) &#8211; A list of input arguments.</li>
+<li><strong>serviceConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.MethodCallConfig" title="pyuaf.client.configs.MethodCallConfig"><tt class="xref py py-class docutils literal"><span class="pre">MethodCallConfig</span></tt></a>) &#8211; Additional settings for processing the method call request.
+Leave None for defaults.</li>
+<li><strong>sessionConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SessionConfig" title="pyuaf.client.configs.SessionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SessionConfig</span></tt></a>) &#8211; A config holding settings for the session creation.
+Leave None for defaults.</li>
+<li><strong>callback</strong> &#8211; A callback function to receive the result. This function should have one
+argument (which will be of type <a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.MethodCallResult" title="pyuaf.client.results.MethodCallResult"><tt class="xref py py-class docutils literal"><span class="pre">MethodCallResult</span></tt></a>).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The result of the asynchronous method call request.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.AsyncMethodCallResult" title="pyuaf.client.results.AsyncMethodCallResult"><tt class="xref py py-class docutils literal"><span class="pre">AsyncMethodCallResult</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">Base exception, catch this to handle any UAF errors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.call">
+<tt class="descname">call</tt><big>(</big><em>objectAddress</em>, <em>methodAddress</em>, <em>inputArgs=</em><span class="optional">[</span><span class="optional">]</span>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invoke a remote method call.</p>
+<dl class="docutils">
+<dt>Unlike &#8220;strict object-oriented&#8221; method calling, a method is called by specifying both </dt>
+<dd><ul class="first last simple">
+<li>the method itself (parameter methodAddress)</li>
+<li>the object in which context the method should be invoked (parameter objectAddress).</li>
+</ul>
+</dd>
+</dl>
+<p>In other words, in OPC UA you can call a method on different objects. In contrast to strict
+object-oriented languages, where a method can only be called on the object that &#8220;owns&#8221; the
+method.</p>
+<p>This is a convenience function for calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-class docutils literal"><span class="pre">processRequest</span></tt></a> with 
+a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.MethodCallRequest" title="pyuaf.client.requests.MethodCallRequest"><tt class="xref py py-class docutils literal"><span class="pre">MethodCallRequest</span></tt></a> as its first argument.
+For full flexibility, use that function. For instance, if you want to call multiple 
+methods at once, you can do so by creating a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.MethodCallRequest" title="pyuaf.client.requests.MethodCallRequest"><tt class="xref py py-class docutils literal"><span class="pre">MethodCallRequest</span></tt></a> 
+and adding multiple targets.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>objectAddress</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; The address of the object node on which to call the method.</li>
+<li><strong>methodAddress</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; The address of the method node to call.</li>
+<li><strong>inputArgs</strong> (<tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.UInt32" title="pyuaf.util.primitives.UInt32"><tt class="xref py py-class docutils literal"><span class="pre">UInt32</span></tt></a>,
+or <tt class="docutils literal"><span class="pre">list</span></tt> of any other supported data type.) &#8211; A list of input arguments.</li>
+<li><strong>serviceConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.MethodCallConfig" title="pyuaf.client.configs.MethodCallConfig"><tt class="xref py py-class docutils literal"><span class="pre">MethodCallConfig</span></tt></a>) &#8211; Additional settings for processing the method call request.
+Leave None for defaults.</li>
+<li><strong>sessionConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SessionConfig" title="pyuaf.client.configs.SessionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SessionConfig</span></tt></a>) &#8211; A config holding settings for the session creation.
+Leave None for defaults.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The result of the method call request.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.MethodCallResult" title="pyuaf.client.results.MethodCallResult"><tt class="xref py py-class docutils literal"><span class="pre">MethodCallResult</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">Base exception, catch this to handle any UAF errors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.callComplete">
+<tt class="descname">callComplete</tt><big>(</big><em>result</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.callComplete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to catch the result of asynchronous method call requests.</p>
+<p>This method will only be called by the UAF if you didn&#8217;t provide an &#8220;external&#8221; callback
+function already when you began the asynchronous method call request.</p>
+<p>In other words, there are two ways how you can catch the result of asynchronous method calls:</p>
+<blockquote>
+<div><ul class="simple">
+<li>either by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> <em>without</em> providing an external callback function
+via the &#8216;resultCallback&#8217; argument &#8211;&gt; then you need to override <a class="reference internal" href="#pyuaf.client.Client.callComplete" title="pyuaf.client.Client.callComplete"><tt class="xref py py-meth docutils literal"><span class="pre">callComplete()</span></tt></a></li>
+<li>or by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> <em>with</em> providing an external callback function
+via the &#8216;resultCallback&#8217; argument &#8211;&gt; then only the external callback function will be called.</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>result</strong> (<a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.MethodCallResult" title="pyuaf.client.results.MethodCallResult"><tt class="xref py py-class docutils literal"><span class="pre">MethodCallResult</span></tt></a>) &#8211; The asynchronously received method call result.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.clientSettings">
+<tt class="descname">clientSettings</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.Client.clientSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a copy of the current client settings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The currently active settings.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings" title="pyuaf.client.settings.ClientSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ClientSettings</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.createMonitoredData">
+<tt class="descname">createMonitoredData</tt><big>(</big><em>addresses</em>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em>, <em>subscriptionConfig=None</em>, <em>notificationCallbacks=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.client.Client.createMonitoredData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create one or more monitored data items.</p>
+<p>This is a convenience function for calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-class docutils literal"><span class="pre">processRequest</span></tt></a> with 
+a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredDataRequest" title="pyuaf.client.requests.CreateMonitoredDataRequest"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredDataRequest</span></tt></a> as its first argument.
+For full flexibility, use that function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>addresses</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; A single address or a list of addresses, identifying the nodes to be monitored.</li>
+<li><strong>serviceConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.CreateMonitoredDataConfig" title="pyuaf.client.configs.CreateMonitoredDataConfig"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredDataConfig</span></tt></a>) &#8211; Additional settings for processing the request.
+Leave None for defaults.</li>
+<li><strong>sessionConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SessionConfig" title="pyuaf.client.configs.SessionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SessionConfig</span></tt></a>) &#8211; A config holding settings for the session creation.
+Leave None for defaults.</li>
+<li><strong>subscriptionConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SubscriptionConfig" title="pyuaf.client.configs.SubscriptionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SubscriptionConfig</span></tt></a>) &#8211; A config holding settings for the subscription creation.
+Leave None for defaults.</li>
+<li><strong>notificationCallbacks</strong> (<tt class="docutils literal"><span class="pre">list</span></tt> of functions) &#8211; A list of callback functions (one for each node to be monitored).
+These callback functions should have a single argument, which
+will be of type <a class="reference internal" href="#pyuaf.client.DataChangeNotification" title="pyuaf.client.DataChangeNotification"><tt class="xref py py-class docutils literal"><span class="pre">DataChangeNotification</span></tt></a>.
+If you don&#8217;t provide callback functions in this way, you&#8217;ll need
+to override <a class="reference internal" href="#pyuaf.client.Client.dataChangesReceived" title="pyuaf.client.Client.dataChangesReceived"><tt class="xref py py-meth docutils literal"><span class="pre">dataChangesReceived()</span></tt></a> 
+in order to receive the notifications.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The result of the CreateMonitoredData request.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.CreateMonitoredDataResult" title="pyuaf.client.results.CreateMonitoredDataResult"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredDataResult</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">Base exception, catch this to handle any UAF errors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.createMonitoredEvents">
+<tt class="descname">createMonitoredEvents</tt><big>(</big><em>addresses</em>, <em>eventFilter=None</em>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em>, <em>subscriptionConfig=None</em>, <em>notificationCallbacks=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.client.Client.createMonitoredEvents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create one or more monitored event items.</p>
+<p>This is a convenience function for calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-class docutils literal"><span class="pre">processRequest</span></tt></a> with 
+a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredEventsRequest" title="pyuaf.client.requests.CreateMonitoredEventsRequest"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsRequest</span></tt></a> as its first argument.
+For full flexibility, use that function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>addresses</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; A single address or a list of addresses, identifying the nodes to be monitored.</li>
+<li><strong>eventFilter</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.EventFilter" title="pyuaf.util.EventFilter"><tt class="xref py py-class docutils literal"><span class="pre">EventFilter</span></tt></a>) &#8211; The event filter, common to all nodes that you want to monitor!
+If you want to specify a different filter for each target, you need to 
+use the generic <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> method
+with a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredEventsRequest" title="pyuaf.client.requests.CreateMonitoredEventsRequest"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsRequest</span></tt></a> as 
+argument. Leave None for defaults.</li>
+<li><strong>serviceConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.CreateMonitoredEventsConfig" title="pyuaf.client.configs.CreateMonitoredEventsConfig"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsConfig</span></tt></a>) &#8211; Additional settings for processing the request.
+Leave None for defaults.</li>
+<li><strong>sessionConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SessionConfig" title="pyuaf.client.configs.SessionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SessionConfig</span></tt></a>) &#8211; A config holding settings for the session creation.
+Leave None for defaults.</li>
+<li><strong>subscriptionConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SubscriptionConfig" title="pyuaf.client.configs.SubscriptionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SubscriptionConfig</span></tt></a>) &#8211; A config holding settings for the subscription creation.
+Leave None for defaults.</li>
+<li><strong>notificationCallbacks</strong> (<tt class="docutils literal"><span class="pre">list</span></tt> of functions) &#8211; A list of callback functions (one for each node to be monitored).
+These callback functions should have a single argument, which
+will be of type <a class="reference internal" href="#pyuaf.client.EventNotification" title="pyuaf.client.EventNotification"><tt class="xref py py-class docutils literal"><span class="pre">EventNotification</span></tt></a>.
+If you don&#8217;t provide callback functions in this way, you&#8217;ll need
+to override <a class="reference internal" href="#pyuaf.client.Client.eventsReceived" title="pyuaf.client.Client.eventsReceived"><tt class="xref py py-meth docutils literal"><span class="pre">eventsReceived()</span></tt></a> 
+in order to receive the notifications.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The result of the CreateMonitoredEvents request.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.CreateMonitoredEventsResult" title="pyuaf.client.results.CreateMonitoredEventsResult"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsResult</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">Base exception, catch this to handle any UAF errors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.dataChangesReceived">
+<tt class="descname">dataChangesReceived</tt><big>(</big><em>dataNotifications</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.dataChangesReceived" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to catch the &#8220;data change&#8221; notifications of MonitoredItems.</p>
+<p>This method will only be called by the UAF if you didn&#8217;t provide &#8220;external&#8221; callback
+functions already when you created the monitored items.</p>
+<p>In other words, there are two ways how you can catch the data change notifications of 
+monitored data items:</p>
+<blockquote>
+<div><ul class="simple">
+<li>either by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> 
+or <a class="reference internal" href="#pyuaf.client.Client.createMonitoredData" title="pyuaf.client.Client.createMonitoredData"><tt class="xref py py-meth docutils literal"><span class="pre">createMonitoredData()</span></tt></a> 
+<em>without</em> providing external callback functions
+via the &#8216;notificationCallbacks&#8217; argument 
+&#8211;&gt; then you need to override <a class="reference internal" href="#pyuaf.client.Client.dataChangesReceived" title="pyuaf.client.Client.dataChangesReceived"><tt class="xref py py-meth docutils literal"><span class="pre">dataChangesReceived()</span></tt></a></li>
+<li>or by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> 
+or <a class="reference internal" href="#pyuaf.client.Client.createMonitoredData" title="pyuaf.client.Client.createMonitoredData"><tt class="xref py py-meth docutils literal"><span class="pre">createMonitoredData()</span></tt></a> 
+<em>with</em> providing external callback functions
+via the &#8216;notificationCallbacks&#8217; argument
+&#8211;&gt; then only the external callback functions will be called.</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>result</strong> (<tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.client.DataChangeNotification" title="pyuaf.client.DataChangeNotification"><tt class="xref py py-class docutils literal"><span class="pre">DataChangeNotification</span></tt></a>) &#8211; The asynchronously received notifications.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.eventsReceived">
+<tt class="descname">eventsReceived</tt><big>(</big><em>eventNotifications</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.eventsReceived" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to catch the &#8220;event&#8221; notifications of MonitoredItems.</p>
+<p>This method will only be called by the UAF if you didn&#8217;t provide &#8220;external&#8221; callback
+functions already when you created the monitored items.</p>
+<p>In other words, there are two ways how you can catch the event notifications of 
+monitored event items:</p>
+<blockquote>
+<div><ul class="simple">
+<li>either by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> 
+or <a class="reference internal" href="#pyuaf.client.Client.createMonitoredEvents" title="pyuaf.client.Client.createMonitoredEvents"><tt class="xref py py-meth docutils literal"><span class="pre">createMonitoredEvents()</span></tt></a> 
+<em>without</em> providing external callback functions
+via the &#8216;notificationCallbacks&#8217; argument 
+&#8211;&gt; then you need to override <a class="reference internal" href="#pyuaf.client.Client.eventsReceived" title="pyuaf.client.Client.eventsReceived"><tt class="xref py py-meth docutils literal"><span class="pre">eventsReceived()</span></tt></a></li>
+<li>or by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> 
+or <a class="reference internal" href="#pyuaf.client.Client.createMonitoredEvents" title="pyuaf.client.Client.createMonitoredEvents"><tt class="xref py py-meth docutils literal"><span class="pre">createMonitoredEvents()</span></tt></a> 
+<em>with</em> providing external callback functions
+via the &#8216;notificationCallbacks&#8217; argument
+&#8211;&gt; then only the external callback functions will be called.</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>result</strong> (<tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.client.EventNotification" title="pyuaf.client.EventNotification"><tt class="xref py py-class docutils literal"><span class="pre">EventNotification</span></tt></a>) &#8211; The asynchronously received notifications.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.findServersNow">
+<tt class="descname">findServersNow</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.Client.findServersNow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discover the servers immediately (instead of waiting for the background thread) by 
+using the OPC UA FindServers service.</p>
+<p>The URLs to use for discovery are specified 
+by the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings.discoveryUrls" title="pyuaf.client.settings.ClientSettings.discoveryUrls"><tt class="xref py py-attr docutils literal"><span class="pre">discoveryUrls</span></tt></a> attribute of the 
+<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings" title="pyuaf.client.settings.ClientSettings"><tt class="xref py py-class docutils literal"><span class="pre">ClientSettings</span></tt></a>.
+Since discovery is also handled silently (and periodically) in the background, 
+you normally don&#8217;t have to call <a class="reference internal" href="#pyuaf.client.Client.findServersNow" title="pyuaf.client.Client.findServersNow"><tt class="xref py py-meth docutils literal"><span class="pre">findServersNow()</span></tt></a> manually.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.DiscoveryError" title="pyuaf.util.errors.DiscoveryError"><strong>pyuaf.util.errors.DiscoveryError</strong></a> &#8211; Raised in case the FindServers service failed for one or more URLs.</li>
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.InvalidRequestError" title="pyuaf.util.errors.InvalidRequestError"><strong>pyuaf.util.errors.InvalidRequestError</strong></a> &#8211; Raised in case the FindServers service is already being invoked by the client (because
+no parallel FindServers invocations are allowed!). This can happen for instance when
+multiple threads (created by the user, or running in the background of the Client
+instance) try to use the FindServers service at the same time.</li>
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any other errors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.logMessageReceived">
+<tt class="descname">logMessageReceived</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.logMessageReceived" title="Permalink to this definition">¶</a></dt>
+<dd><p>You should override this method if you want to process logging output from the UAF.</p>
+<dl class="docutils">
+<dt>This method is called by the UAF if:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings.logToCallbackLevel" title="pyuaf.client.settings.ClientSettings.logToCallbackLevel"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.settings.ClientSettings.logToCallbackLevel</span></tt></a> is not set to <a class="reference internal" href="api_pyuaf_util_loglevels.html#pyuaf.util.loglevels.Disabled" title="pyuaf.util.loglevels.Disabled"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.loglevels.Disabled</span></tt></a></li>
+<li>no external logging callback function is registered 
+(via <a class="reference internal" href="#pyuaf.client.Client" title="pyuaf.client.Client"><tt class="xref py py-meth docutils literal"><span class="pre">Client()</span></tt></a> or via <a class="reference internal" href="#pyuaf.client.Client.registerLoggingCallback" title="pyuaf.client.Client.registerLoggingCallback"><tt class="xref py py-meth docutils literal"><span class="pre">registerLoggingCallback()</span></tt></a>).</li>
+</ul>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.LogMessage" title="pyuaf.util.LogMessage"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.LogMessage</span></tt></a>) &#8211; The received LogMessage.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.manuallyConnect">
+<tt class="descname">manuallyConnect</tt><big>(</big><em>serverUri</em>, <em>sessionSettings</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.manuallyConnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a session manually (instead of having the UAF do it behind the scenes).</p>
+<p>One of the advantages of the UAF is that you can just define the addresses of some nodes, and 
+then read/write/monitor/... them without worrying about the technical concerns such as
+session creation, subscription creation etc. So you don&#8217;t have to create sessions
+yourself, because the UAF will do it for you.
+However, if you want to &#8220;keep control&#8221; over the session/subscription/... management
+yourself, you can use methods like 
+<a class="reference internal" href="#pyuaf.client.Client.manuallyConnect" title="pyuaf.client.Client.manuallyConnect"><tt class="xref py py-meth docutils literal"><span class="pre">manuallyConnect()</span></tt></a>, 
+<a class="reference internal" href="#pyuaf.client.Client.manuallyDisconnect" title="pyuaf.client.Client.manuallyDisconnect"><tt class="xref py py-meth docutils literal"><span class="pre">manuallyDisconnect()</span></tt></a>,
+<a class="reference internal" href="#pyuaf.client.Client.manuallySubscribe" title="pyuaf.client.Client.manuallySubscribe"><tt class="xref py py-meth docutils literal"><span class="pre">manuallySubscribe()</span></tt></a>, etc. 
+In this case, you can create the sessions/subscriptions/...
+in advance, and then afterwards read/write/... variables by using the same sessions
+and subscriptions. So these &#8220;manual&#8221; methods allow you to use OPC UA in the &#8220;traditional
+way&#8221;, however it&#8217;s much easier to do it the &#8220;UAF way&#8221; and simply forget about the
+creation and deletion of sessions, subscriptions, and monitored items.</p>
+<p>The URL(s) needed to discover the server with the given server URI, can be specified 
+via the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings" title="pyuaf.client.settings.ClientSettings"><tt class="xref py py-class docutils literal"><span class="pre">ClientSettings</span></tt></a> (which you can set via 
+<a class="reference internal" href="#pyuaf.client.Client" title="pyuaf.client.Client"><tt class="xref py py-meth docutils literal"><span class="pre">Client()</span></tt></a> and via <a class="reference internal" href="#pyuaf.client.Client.setClientSettings" title="pyuaf.client.Client.setClientSettings"><tt class="xref py py-meth docutils literal"><span class="pre">setClientSettings()</span></tt></a>).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>serverUri</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The server URI to manually connect to.</li>
+<li><strong>sessionSettings</strong> (<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.SessionSettings" title="pyuaf.client.settings.SessionSettings"><tt class="xref py py-class docutils literal"><span class="pre">SessionSettings</span></tt></a>) &#8211; The settings for the session.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The client connection id: a number identifying the session.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><tt class="docutils literal"><span class="pre">int</span></tt></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.DiscoveryError" title="pyuaf.util.errors.DiscoveryError"><strong>pyuaf.util.errors.DiscoveryError</strong></a> &#8211; Raised in case the FindServers service failed to discover a server that matches the 
+given server URI.</li>
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any other errors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.manuallyDisconnect">
+<tt class="descname">manuallyDisconnect</tt><big>(</big><em>clientConnectionId</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.manuallyDisconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect the session manually.</p>
+<p>A session which has been disconnected manually is &#8220;garbage collected&#8221; on the client side.
+When a session is created afterwards, a new ClientConnectionId will be assigned to this
+session (even if the properties of the new session are exactly the same as the old one).</p>
+<p>Only use this for sessions that were created via the manuallyConnect method!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>clientConnectionId</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The id of the session (that was returned by
+the <a class="reference internal" href="#pyuaf.client.Client.manuallyConnect" title="pyuaf.client.Client.manuallyConnect"><tt class="xref py py-meth docutils literal"><span class="pre">manuallyConnect()</span></tt></a> method).</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.InvalidRequestError" title="pyuaf.util.errors.InvalidRequestError"><strong>pyuaf.util.errors.InvalidRequestError</strong></a> &#8211; Raised in case no session is known for the given client connection id.</li>
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any other errors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.manuallySubscribe">
+<tt class="descname">manuallySubscribe</tt><big>(</big><em>clientConnectionId</em>, <em>subscriptionSettings</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.manuallySubscribe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a subscription manually.</p>
+<p>For more info about &#8220;manual&#8221; methods, see the documentation on the
+<a class="reference internal" href="#pyuaf.client.Client.manuallyConnect" title="pyuaf.client.Client.manuallyConnect"><tt class="xref py py-meth docutils literal"><span class="pre">manuallyConnect()</span></tt></a> method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>clientConnectionId</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The id of the session which should host the subscription.</li>
+<li><strong>settings</strong> (<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.SubscriptionSettings" title="pyuaf.client.settings.SubscriptionSettings"><tt class="xref py py-class docutils literal"><span class="pre">SubscriptionSettings</span></tt></a>) &#8211; The settings of the subscription you&#8217;d like to create.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The clientSubscriptionHandle: the handle identifying the newly
+created subscription.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><tt class="docutils literal"><span class="pre">int</span></tt></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">Base exception, catch this to handle any other errors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.manuallyUnsubscribe">
+<tt class="descname">manuallyUnsubscribe</tt><big>(</big><em>clientConnectionId</em>, <em>clientSubscriptionHandle</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.manuallyUnsubscribe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the subscription manually.</p>
+<p>A subscription which has been deleted manually is &#8220;garbage collected&#8221; on the client side.
+When a subscription is created afterwards, a new clientSubscriptionHandle will be assigned to this
+session (even if the properties of the new subscription are exactly the same as the old one).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>clientConnectionId</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The id of the session that hosts the subscription.</li>
+<li><strong>clientSubscriptionHandle</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The id of the subscription.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.InvalidRequestError" title="pyuaf.util.errors.InvalidRequestError"><strong>pyuaf.util.errors.InvalidRequestError</strong></a> &#8211; Raised in case no session is known for the given clientSubscriptionHandle.</li>
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any other errors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.processRequest">
+<tt class="descname">processRequest</tt><big>(</big><em>request</em>, <em>resultCallback=None</em>, <em>notificationCallbacks=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.client.Client.processRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process a generic request (as found in <a class="reference internal" href="api_pyuaf_client_requests.html#module-pyuaf.client.requests" title="pyuaf.client.requests"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.client.requests</span></tt></a>).</p>
+<p>Note that asynchronous requests MUST be invoked on a single session. Meaning:
+the targets of asynchronous requests MUST belong to the same server (as the UAF can 
+currently not reconstruct an asynchronous request that must be &#8220;split up&#8221; to be called
+on multiple servers).</p>
+<dl class="docutils">
+<dt>As for callbacks, you may:</dt>
+<dd><ul class="first last simple">
+<li>specify no callbacks at all. In this case, you need to override (&#8220;virtually inherit&#8221;)
+the <a class="reference internal" href="#pyuaf.client.Client.readComplete" title="pyuaf.client.Client.readComplete"><tt class="xref py py-meth docutils literal"><span class="pre">readComplete()</span></tt></a>/<a class="reference internal" href="#pyuaf.client.Client.writeComplete" title="pyuaf.client.Client.writeComplete"><tt class="xref py py-meth docutils literal"><span class="pre">writeComplete()</span></tt></a>/<a class="reference internal" href="#pyuaf.client.Client.dataChangesReceived" title="pyuaf.client.Client.dataChangesReceived"><tt class="xref py py-meth docutils literal"><span class="pre">dataChangesReceived()</span></tt></a>/... functions</li>
+<li>specify a resultCallback function (only for AsyncXXXXX functions!). 
+In this case, the ReadResult/WriteResult/MethodCallResult/...
+of the corresponding asynchronous requests will be forwarded to the resultCallback
+function.</li>
+<li>specify a list of notificationCallback functions (only for CreateMonitoredDataRequests,
+CreateMonitoredEventsRequests, AsyncCreateMonitoredDataRequests and 
+AsyncCreateMonitoredEventsRequests!). The number of callbacks must correspond exactly to
+the number of targets of the request.</li>
+</ul>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>request</strong> &#8211; The request (e.g. a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.ReadRequest" title="pyuaf.client.requests.ReadRequest"><tt class="xref py py-class docutils literal"><span class="pre">ReadRequest</span></tt></a> 
+or class:<cite>~pyuaf.client.requests.WriteRequest</cite> or ...</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The result of the request (e.g. a <a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.ReadResult" title="pyuaf.client.results.ReadResult"><tt class="xref py py-class docutils literal"><span class="pre">ReadResult</span></tt></a> 
+or <a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.WriteResult" title="pyuaf.client.results.WriteResult"><tt class="xref py py-class docutils literal"><span class="pre">WriteResult</span></tt></a> or ...</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Base exception, catch this to handle any UAF errors.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.read">
+<tt class="descname">read</tt><big>(</big><em>addresses</em>, <em>attributeId=13</em>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a number of node attributes synchronously.</p>
+<p>This is a convenience function for calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-class docutils literal"><span class="pre">processRequest</span></tt></a> with 
+a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.ReadRequest" title="pyuaf.client.requests.ReadRequest"><tt class="xref py py-class docutils literal"><span class="pre">ReadRequest</span></tt></a> as its first argument.
+For full flexibility, use that function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>addresses</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; A single address or a list of addresses of nodes of which the specified 
+attribute should be read.</li>
+<li><strong>attributeId</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The id of the attribute to be read (e.g. <a class="reference internal" href="api_pyuaf_util_attributeids.html#pyuaf.util.attributeids.Value" title="pyuaf.util.attributeids.Value"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.attributeids.Value</span></tt></a>
+or <a class="reference internal" href="api_pyuaf_util_attributeids.html#pyuaf.util.attributeids.DisplayName" title="pyuaf.util.attributeids.DisplayName"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.attributeids.DisplayName</span></tt></a>).</li>
+<li><strong>serviceConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.ReadConfig" title="pyuaf.client.configs.ReadConfig"><tt class="xref py py-class docutils literal"><span class="pre">ReadConfig</span></tt></a>) &#8211; Additional settings for processing the read request.
+Leave None for defaults.</li>
+<li><strong>sessionConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SessionConfig" title="pyuaf.client.configs.SessionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SessionConfig</span></tt></a>) &#8211; A config holding settings for the session creation.
+Leave None for defaults.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The result of the read request.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.ReadResult" title="pyuaf.client.results.ReadResult"><tt class="xref py py-class docutils literal"><span class="pre">ReadResult</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">Base exception, catch this to handle any UAF errors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.readComplete">
+<tt class="descname">readComplete</tt><big>(</big><em>result</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.readComplete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to catch the result of asynchronous read requests.</p>
+<p>This method will only be called by the UAF if you didn&#8217;t provide an &#8220;external&#8221; callback
+function already when you began the asynchronous read request.</p>
+<p>In other words, there are two ways how you can catch the result of asynchronous read requests:</p>
+<blockquote>
+<div><ul class="simple">
+<li>either by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> <em>without</em> providing an external callback function
+via the &#8216;resultCallback&#8217; argument &#8211;&gt; then you need to override <a class="reference internal" href="#pyuaf.client.Client.callComplete" title="pyuaf.client.Client.callComplete"><tt class="xref py py-meth docutils literal"><span class="pre">callComplete()</span></tt></a></li>
+<li>or by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> <em>with</em> providing an external callback function
+via the &#8216;resultCallback&#8217; argument &#8211;&gt; then only the external callback function will be called.</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>result</strong> (<a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.ReadResult" title="pyuaf.client.results.ReadResult"><tt class="xref py py-class docutils literal"><span class="pre">ReadResult</span></tt></a>) &#8211; The asynchronously received read result.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.registerLoggingCallback">
+<tt class="descname">registerLoggingCallback</tt><big>(</big><em>callback</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.registerLoggingCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a callback function to receive all log messages.</p>
+<p>If you register a callback function, this callback function will be called instead of 
+the <a class="reference internal" href="#pyuaf.client.Client.logMessageReceived" title="pyuaf.client.Client.logMessageReceived"><tt class="xref py py-meth docutils literal"><span class="pre">logMessageReceived()</span></tt></a> function (so the latter function will 
+NOT be called anymore!).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>callback</strong> &#8211; A callback function for the logging. This function should have one 
+input argument, which you should call &#8220;msg&#8221; or so,
+because this argument is of type <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.LogMessage" title="pyuaf.util.LogMessage"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.LogMessage</span></tt></a>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.serversFound">
+<tt class="descname">serversFound</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.Client.serversFound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the application descriptions of the servers found in the discovery process.</p>
+<p>The discovery is periodically being run in the background, so the returned list may 
+change. The cycle time is of the discovery is configurable
+via the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings" title="pyuaf.client.settings.ClientSettings"><tt class="xref py py-class docutils literal"><span class="pre">ClientSettings</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of the application descriptions that were found.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.ApplicationDescription" title="pyuaf.util.ApplicationDescription"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.ApplicationDescription</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.sessionInformation">
+<tt class="descname">sessionInformation</tt><big>(</big><em>clientConnectionId</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.sessionInformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get information about the specified session.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>clientConnectionId</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The client connection id 
+(always assigned by the client, not by the user!).</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Information about the specified session.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#pyuaf.client.SessionInformation" title="pyuaf.client.SessionInformation"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.SessionInformation</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.InvalidRequestError" title="pyuaf.util.errors.InvalidRequestError"><strong>pyuaf.util.errors.InvalidRequestError</strong></a> &#8211; Raised in case no session is known for the given client connection id.</li>
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any other errors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.setClientSettings">
+<tt class="descname">setClientSettings</tt><big>(</big><em>settings</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.setClientSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the client settings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>settings</strong> (<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings" title="pyuaf.client.settings.ClientSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ClientSettings</span></tt></a>) &#8211; The new settings.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.subscriptionInformation">
+<tt class="descname">subscriptionInformation</tt><big>(</big><em>clientSubscriptionHandle</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.subscriptionInformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get information about the specified subscription.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>clientSubscriptionHandle</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The client subscription handle 
+(always assigned by the UAF, not by the user!).</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Information about the specified subscription.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#pyuaf.client.SubscriptionInformation" title="pyuaf.client.SubscriptionInformation"><tt class="xref py py-class docutils literal"><span class="pre">SubscriptionInformation</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.InvalidRequestError" title="pyuaf.util.errors.InvalidRequestError"><strong>pyuaf.util.errors.InvalidRequestError</strong></a> &#8211; Raised in case no subscription is known for the given client subscription handle.</li>
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any other errors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.unregisterLoggingCallback">
+<tt class="descname">unregisterLoggingCallback</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.Client.unregisterLoggingCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister a callback function to stop receiving all log messages.</p>
+<p>If you unregister a callback function, and callback logging is still enabled (via the 
+client settings), the log messages will be sent to the :meth:logMessageReceived method 
+(so you can virtually override this method to receive the log messages).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.write">
+<tt class="descname">write</tt><big>(</big><em>addresses</em>, <em>data</em>, <em>attributeId=13</em>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a number of node attributes synchronously.</p>
+<p>This is a convenience function for calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-class docutils literal"><span class="pre">processRequest</span></tt></a> with 
+a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.WriteRequest" title="pyuaf.client.requests.WriteRequest"><tt class="xref py py-class docutils literal"><span class="pre">WriteRequest</span></tt></a> as its first argument.
+For full flexibility, use that function.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>addresses</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; A single address or a list of addresses of nodes of which the specified 
+attribute should be written.</li>
+<li><strong>data</strong> (<a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.UInt32" title="pyuaf.util.primitives.UInt32"><tt class="xref py py-class docutils literal"><span class="pre">UInt32</span></tt></a> or <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.UInt32" title="pyuaf.util.primitives.UInt32"><tt class="xref py py-class docutils literal"><span class="pre">UInt32</span></tt></a>
+or any other data type of the supported dynamic data types (or a <tt class="docutils literal"><span class="pre">list</span></tt> of them).) &#8211; A single value or a list of values to be written.</li>
+<li><strong>attributeId</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The id of the attribute to be written (e.g. <a class="reference internal" href="api_pyuaf_util_attributeids.html#pyuaf.util.attributeids.Value" title="pyuaf.util.attributeids.Value"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.attributeids.Value</span></tt></a>
+or <a class="reference internal" href="api_pyuaf_util_attributeids.html#pyuaf.util.attributeids.DisplayName" title="pyuaf.util.attributeids.DisplayName"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.attributeids.DisplayName</span></tt></a>) for all addresses.</li>
+<li><strong>serviceConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.WriteConfig" title="pyuaf.client.configs.WriteConfig"><tt class="xref py py-class docutils literal"><span class="pre">WriteConfig</span></tt></a>) &#8211; Additional settings for processing the write request.
+Leave None for defaults.</li>
+<li><strong>sessionConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SessionConfig" title="pyuaf.client.configs.SessionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SessionConfig</span></tt></a>) &#8211; A config holding settings for the session creation.
+Leave None for defaults.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The result of the write request.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.WriteResult" title="pyuaf.client.results.WriteResult"><tt class="xref py py-class docutils literal"><span class="pre">WriteResult</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">Base exception, catch this to handle any UAF errors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.writeComplete">
+<tt class="descname">writeComplete</tt><big>(</big><em>result</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.writeComplete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to catch the result of asynchronous write requests.</p>
+<p>This method will only be called by the UAF if you didn&#8217;t provide an &#8220;external&#8221; callback
+function already when you began the asynchronous write request.</p>
+<p>In other words, there are two ways how you can catch the result of asynchronous write requests:</p>
+<blockquote>
+<div><ul class="simple">
+<li>either by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> <em>without</em> providing an external callback function
+via the &#8216;resultCallback&#8217; argument &#8211;&gt; then you need to override <a class="reference internal" href="#pyuaf.client.Client.callComplete" title="pyuaf.client.Client.callComplete"><tt class="xref py py-meth docutils literal"><span class="pre">callComplete()</span></tt></a></li>
+<li>or by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> <em>with</em> providing an external callback function
+via the &#8216;resultCallback&#8217; argument &#8211;&gt; then only the external callback function will be called.</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>result</strong> (<a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.WriteResult" title="pyuaf.client.results.WriteResult"><tt class="xref py py-class docutils literal"><span class="pre">WriteResult</span></tt></a>) &#8211; The asynchronously received write result.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="class-basenotification">
+<h2><em>class</em> BaseNotification<a class="headerlink" href="#class-basenotification" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.BaseNotification">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.</tt><tt class="descname">BaseNotification</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.BaseNotification" title="Permalink to this definition">¶</a></dt>
+<dd><p>A BaseNotification is the common superclass class of <a class="reference internal" href="#pyuaf.client.DataChangeNotification" title="pyuaf.client.DataChangeNotification"><tt class="xref py py-class docutils literal"><span class="pre">DataChangeNotification</span></tt></a>
+and <a class="reference internal" href="#pyuaf.client.EventNotification" title="pyuaf.client.EventNotification"><tt class="xref py py-class docutils literal"><span class="pre">EventNotification</span></tt></a>. It contains the common attributes of notifications
+that are received when a subscription is made.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.BaseNotification.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.BaseNotification.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new BaseNotification.</p>
+<dl class="docutils">
+<dt>You&#8217;ll never need to create notifications like this yourself because:</dt>
+<dd><ul class="first last simple">
+<li>only the subclasses <a class="reference internal" href="#pyuaf.client.DataChangeNotification" title="pyuaf.client.DataChangeNotification"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.DataChangeNotification</span></tt></a> and
+<a class="reference internal" href="#pyuaf.client.EventNotification" title="pyuaf.client.EventNotification"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.EventNotification</span></tt></a> will be instantiated, never the superclass itself</li>
+<li>the UAF will produce notifications and provide them to you, so you can consume them.</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.BaseNotification.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=20</em><big>)</big><a class="headerlink" href="#pyuaf.client.BaseNotification.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.BaseNotification.notificationHandle">
+<tt class="descname">notificationHandle</tt><a class="headerlink" href="#pyuaf.client.BaseNotification.notificationHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>A NotificationHandle is a handle (an <tt class="docutils literal"><span class="pre">int</span></tt>) defined by the UAF (not by the OPC UA standard!) to
+associate monitored item notifications with the
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredDataRequestTarget" title="pyuaf.client.requests.CreateMonitoredDataRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredDataRequestTarget</span></tt></a> (or
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredEventsRequestTarget" title="pyuaf.client.requests.CreateMonitoredEventsRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsRequestTarget</span></tt></a>) that originally
+created them. It is a 64-bit number
+that gets a unique value as soon as you create a monitored item. Even if the server of
+this monitored item would crash, and the UAF determines that the monitored item should be
+re-established on another server (e.g. because the browse path now points to a node in
+another redundant server), then this value will not change. So if you create monitored
+items once, you can be sure that the notification handle will always correctly identify
+the same item, for the whole lifetime of the client.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.BaseNotification.clientHandle">
+<tt class="descname">clientHandle</tt><a class="headerlink" href="#pyuaf.client.BaseNotification.clientHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>A clientHandle is a 32-bit number assigned by the UAF to newly created
+monitored items. The number will be incremented on each new item creation, so in
+theory it will take 2**32 items that have to be created before the number starts
+to count from 0 again. In practice, it will never happen.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-datachangenotification">
+<h2><em>class</em> DataChangeNotification<a class="headerlink" href="#class-datachangenotification" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.DataChangeNotification">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.</tt><tt class="descname">DataChangeNotification</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.DataChangeNotification" title="Permalink to this definition">¶</a></dt>
+<dd><p>A DataChangeNotification is a notification for a monitored data item.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.DataChangeNotification.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.DataChangeNotification.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new DataChangeNotification.</p>
+<p>You&#8217;ll never need to create notifications like this yourself, because the UAF will
+produce them and provide them to you, so you can consume them.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.BaseNotification" title="pyuaf.client.BaseNotification"><tt class="xref py py-class docutils literal"><span class="pre">BaseNotification</span></tt></a>:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.DataChangeNotification.notificationHandle">
+<tt class="descname">notificationHandle</tt><a class="headerlink" href="#pyuaf.client.DataChangeNotification.notificationHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.BaseNotification.notificationHandle" title="pyuaf.client.BaseNotification.notificationHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.BaseNotification.notificationHandle</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.DataChangeNotification.clientHandle">
+<tt class="descname">clientHandle</tt><a class="headerlink" href="#pyuaf.client.DataChangeNotification.clientHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.BaseNotification.clientHandle" title="pyuaf.client.BaseNotification.clientHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.BaseNotification.clientHandle</span></tt></a>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Other attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.DataChangeNotification.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.client.DataChangeNotification.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The status of the data (a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.Status</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.DataChangeNotification.data">
+<tt class="descname">data</tt><a class="headerlink" href="#pyuaf.client.DataChangeNotification.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>The changed data.</p>
+<p>The type of this data depends on the type of the variable you are monitoring.
+This means that it has a dynamic data type.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="api_variants.html#note-variants"><em>A note on dynamic data types</em></a>.</p>
+</div>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-eventnotification">
+<h2><em>class</em> EventNotification<a class="headerlink" href="#class-eventnotification" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.EventNotification">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.</tt><tt class="descname">EventNotification</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.EventNotification" title="Permalink to this definition">¶</a></dt>
+<dd><p>An EventNotification is a notification for a monitored event item.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.EventNotification.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.EventNotification.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new EventNotification.</p>
+<p>You&#8217;ll never need to create notifications like this yourself, because the UAF will
+produce them and provide them to you, so you can consume them.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.BaseNotification" title="pyuaf.client.BaseNotification"><tt class="xref py py-class docutils literal"><span class="pre">BaseNotification</span></tt></a>:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.EventNotification.notificationHandle">
+<tt class="descname">notificationHandle</tt><a class="headerlink" href="#pyuaf.client.EventNotification.notificationHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.BaseNotification.notificationHandle" title="pyuaf.client.BaseNotification.notificationHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.BaseNotification.notificationHandle</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.EventNotification.clientHandle">
+<tt class="descname">clientHandle</tt><a class="headerlink" href="#pyuaf.client.EventNotification.clientHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.BaseNotification.clientHandle" title="pyuaf.client.BaseNotification.clientHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.BaseNotification.clientHandle</span></tt></a>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Other attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.EventNotification.fields">
+<tt class="descname">fields</tt><a class="headerlink" href="#pyuaf.client.EventNotification.fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>The values of the fields you are monitoring (in the same order as the select clauses which
+you specified in the <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredEventsRequestTarget" title="pyuaf.client.requests.CreateMonitoredEventsRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.requests.CreateMonitoredEventsRequestTarget</span></tt></a>).</p>
+<p>Since the type of the fields depend on the type of the select clauses of your
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredEventsRequestTarget" title="pyuaf.client.requests.CreateMonitoredEventsRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.requests.CreateMonitoredEventsRequestTarget</span></tt></a>, the fields are
+presented to you as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.VariantVector" title="pyuaf.util.VariantVector"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.VariantVector</span></tt></a>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-sessioninformation">
+<h2><em>class</em> SessionInformation<a class="headerlink" href="#class-sessioninformation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.SessionInformation">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.</tt><tt class="descname">SessionInformation</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.SessionInformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A SessionInformation object contains information about a session such as the state of the
+session, the server URI of the server to which it is connected, etc.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.SessionInformation.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.SessionInformation.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new SessionInformation object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.SessionInformation.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=22</em><big>)</big><a class="headerlink" href="#pyuaf.client.SessionInformation.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.SessionInformation.clientConnectionId">
+<tt class="descname">clientConnectionId</tt><a class="headerlink" href="#pyuaf.client.SessionInformation.clientConnectionId" title="Permalink to this definition">¶</a></dt>
+<dd><p>The id of the session, as a <tt class="docutils literal"><span class="pre">long</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.SessionInformation.sessionState">
+<tt class="descname">sessionState</tt><a class="headerlink" href="#pyuaf.client.SessionInformation.sessionState" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> representing the state of the session
+(e.g. <a class="reference internal" href="api_pyuaf_client_sessionstates.html#pyuaf.client.sessionstates.Connected" title="pyuaf.client.sessionstates.Connected"><tt class="xref py py-attr docutils literal"><span class="pre">Connected</span></tt></a>).</p>
+<p>The possible states are defined in the <a class="reference internal" href="api_pyuaf_client_sessionstates.html#module-pyuaf.client.sessionstates" title="pyuaf.client.sessionstates"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.client.sessionstates</span></tt></a> module.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.SessionInformation.serverUri">
+<tt class="descname">serverUri</tt><a class="headerlink" href="#pyuaf.client.SessionInformation.serverUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>The URI of the server to which the session should be connected, as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-subscriptioninformation">
+<h2><em>class</em> SubscriptionInformation<a class="headerlink" href="#class-subscriptioninformation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.SubscriptionInformation">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.</tt><tt class="descname">SubscriptionInformation</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.SubscriptionInformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A SubscriptionInformation object contains information about a subscription such as the
+state of the subscription, the handle, etc.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.SubscriptionInformation.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.SubscriptionInformation.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new SubscriptionInformation object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.SubscriptionInformation.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=22</em><big>)</big><a class="headerlink" href="#pyuaf.client.SubscriptionInformation.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.SubscriptionInformation.clientConnectionId">
+<tt class="descname">clientConnectionId</tt><a class="headerlink" href="#pyuaf.client.SubscriptionInformation.clientConnectionId" title="Permalink to this definition">¶</a></dt>
+<dd><p>The id of the session that hosts the subscription, as a <tt class="docutils literal"><span class="pre">long</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.SubscriptionInformation.clientSubscriptionHandle">
+<tt class="descname">clientSubscriptionHandle</tt><a class="headerlink" href="#pyuaf.client.SubscriptionInformation.clientSubscriptionHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The handle of the subscription, as a <tt class="docutils literal"><span class="pre">long</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.SubscriptionInformation.subscriptionState">
+<tt class="descname">subscriptionState</tt><a class="headerlink" href="#pyuaf.client.SubscriptionInformation.subscriptionState" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> representing the state of the subscription
+(e.g. <a class="reference internal" href="api_pyuaf_client_subscriptionstates.html#pyuaf.client.subscriptionstates.Created" title="pyuaf.client.subscriptionstates.Created"><tt class="xref py py-attr docutils literal"><span class="pre">Created</span></tt></a>).</p>
+<p>The possible states are defined in the <a class="reference internal" href="api_pyuaf_client_subscriptionstates.html#module-pyuaf.client.subscriptionstates" title="pyuaf.client.subscriptionstates"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.client.subscriptionstates</span></tt></a> module.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/uaf_logo_200x67_transparent.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">pyuaf.client</span></tt></a><ul>
+<li><a class="reference internal" href="#class-client"><em>class</em> Client</a></li>
+<li><a class="reference internal" href="#class-basenotification"><em>class</em> BaseNotification</a></li>
+<li><a class="reference internal" href="#class-datachangenotification"><em>class</em> DataChangeNotification</a></li>
+<li><a class="reference internal" href="#class-eventnotification"><em>class</em> EventNotification</a></li>
+<li><a class="reference internal" href="#class-sessioninformation"><em>class</em> SessionInformation</a></li>
+<li><a class="reference internal" href="#class-subscriptioninformation"><em>class</em> SubscriptionInformation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api_pyuaf.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">pyuaf</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api_pyuaf_client_configs.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.client.configs</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/api_pyuaf_client.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_client_configs.html" title="pyuaf.client.configs"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf.html" title="pyuaf"
+             >previous</a> |</li>
+        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Wim Pessemier (Institute for Astronomy, KU Leuven) - http://github.com/uaf.
+    </div>
+  </body>
+</html>

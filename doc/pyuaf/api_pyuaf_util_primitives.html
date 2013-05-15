@@ -1,0 +1,832 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyuaf.util.primitives &mdash; PyUAF 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyUAF 1.0 documentation" href="index.html" />
+    <link rel="next" title="pyuaf.util.securitypolicies" href="api_pyuaf_util_securitypolicies.html" />
+    <link rel="prev" title="pyuaf.util.opcuatypes" href="api_pyuaf_util_opcuatypes.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_util_securitypolicies.html" title="pyuaf.util.securitypolicies"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_util_opcuatypes.html" title="pyuaf.util.opcuatypes"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pyuaf.util.primitives">
+<span id="pyuaf-util-primitives"></span><h1><tt class="docutils literal"><span class="pre">pyuaf.util.primitives</span></tt><a class="headerlink" href="#module-pyuaf.util.primitives" title="Permalink to this headline">¶</a></h1>
+<p>This module defines some primitive data types (since Python does not differentiate clearly
+between, for example, an UInt32 and an Int16 value.</p>
+<div class="section" id="class-boolean">
+<h2><em>class</em> Boolean<a class="headerlink" href="#class-boolean" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.primitives.Boolean">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.primitives.</tt><tt class="descname">Boolean</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Boolean" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a primitive.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.primitives.Boolean.__init__">
+<tt class="descname">__init__</tt><big>(</big><span class="optional">[</span><em>value</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Boolean.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new Boolean value with an optional initial value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.Boolean.type">
+<tt class="descname">type</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Boolean.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of the value, in this case <a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.Boolean" title="pyuaf.util.opcuatypes.Boolean"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.Boolean</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.Boolean" title="pyuaf.util.opcuatypes.Boolean"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.Boolean</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.Boolean.typeName">
+<tt class="descname">typeName</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Boolean.typeName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the type of the value, in this case <tt class="docutils literal"><span class="pre">&quot;Boolean&quot;</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">&quot;Boolean&quot;</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.primitives.Boolean.value">
+<tt class="descname">value</tt><a class="headerlink" href="#pyuaf.util.primitives.Boolean.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>A bool value.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-sbyte">
+<h2><em>class</em> SByte<a class="headerlink" href="#class-sbyte" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.primitives.SByte">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.primitives.</tt><tt class="descname">SByte</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.SByte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a primitive.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.primitives.SByte.__init__">
+<tt class="descname">__init__</tt><big>(</big><span class="optional">[</span><em>value</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.SByte.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new SByte value with an optional initial value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.SByte.type">
+<tt class="descname">type</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.SByte.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of the value, in this case <a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.SByte" title="pyuaf.util.opcuatypes.SByte"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.SByte</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.SByte" title="pyuaf.util.opcuatypes.SByte"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.SByte</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.SByte.typeName">
+<tt class="descname">typeName</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.SByte.typeName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the type of the value, in this case <tt class="docutils literal"><span class="pre">&quot;SByte&quot;</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">&quot;SByte&quot;</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.primitives.SByte.value">
+<tt class="descname">value</tt><a class="headerlink" href="#pyuaf.util.primitives.SByte.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> value.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-byte">
+<h2><em>class</em> Byte<a class="headerlink" href="#class-byte" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.primitives.Byte">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.primitives.</tt><tt class="descname">Byte</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Byte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a primitive.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.primitives.Byte.__init__">
+<tt class="descname">__init__</tt><big>(</big><span class="optional">[</span><em>value</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Byte.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new Byte value with an optional initial value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.Byte.type">
+<tt class="descname">type</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Byte.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of the value, in this case <a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.Byte" title="pyuaf.util.opcuatypes.Byte"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.Byte</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.Byte" title="pyuaf.util.opcuatypes.Byte"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.Byte</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.Byte.typeName">
+<tt class="descname">typeName</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Byte.typeName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the type of the value, in this case <tt class="docutils literal"><span class="pre">&quot;Byte&quot;</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">&quot;Byte&quot;</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.primitives.Byte.value">
+<tt class="descname">value</tt><a class="headerlink" href="#pyuaf.util.primitives.Byte.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> value.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-int16">
+<h2><em>class</em> Int16<a class="headerlink" href="#class-int16" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.primitives.Int16">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.primitives.</tt><tt class="descname">Int16</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Int16" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a primitive.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.primitives.Int16.__init__">
+<tt class="descname">__init__</tt><big>(</big><span class="optional">[</span><em>value</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Int16.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new Int16 value with an optional initial value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.Int16.type">
+<tt class="descname">type</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Int16.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of the value, in this case <a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.Int16" title="pyuaf.util.opcuatypes.Int16"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.Int16</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.Int16" title="pyuaf.util.opcuatypes.Int16"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.Int16</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.Int16.typeName">
+<tt class="descname">typeName</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Int16.typeName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the type of the value, in this case <tt class="docutils literal"><span class="pre">&quot;Int16&quot;</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">&quot;Int16&quot;</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.primitives.Int16.value">
+<tt class="descname">value</tt><a class="headerlink" href="#pyuaf.util.primitives.Int16.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> value.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-uint16">
+<h2><em>class</em> UInt16<a class="headerlink" href="#class-uint16" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.primitives.UInt16">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.primitives.</tt><tt class="descname">UInt16</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.UInt16" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a primitive.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.primitives.UInt16.__init__">
+<tt class="descname">__init__</tt><big>(</big><span class="optional">[</span><em>value</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.UInt16.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new UInt16 value with an optional initial value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.UInt16.type">
+<tt class="descname">type</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.UInt16.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of the value, in this case <a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.UInt16" title="pyuaf.util.opcuatypes.UInt16"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.UInt16</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.UInt16" title="pyuaf.util.opcuatypes.UInt16"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.UInt16</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.UInt16.typeName">
+<tt class="descname">typeName</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.UInt16.typeName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the type of the value, in this case <tt class="docutils literal"><span class="pre">&quot;UInt16&quot;</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">&quot;UInt16&quot;</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.primitives.UInt16.value">
+<tt class="descname">value</tt><a class="headerlink" href="#pyuaf.util.primitives.UInt16.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> value.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-int32">
+<h2><em>class</em> Int32<a class="headerlink" href="#class-int32" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.primitives.Int32">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.primitives.</tt><tt class="descname">Int32</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Int32" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a primitive.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.primitives.Int32.__init__">
+<tt class="descname">__init__</tt><big>(</big><span class="optional">[</span><em>value</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Int32.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new Int32 value with an optional initial value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.Int32.type">
+<tt class="descname">type</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Int32.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of the value, in this case <a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.Int32" title="pyuaf.util.opcuatypes.Int32"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.Int32</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.Int32" title="pyuaf.util.opcuatypes.Int32"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.Int32</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.Int32.typeName">
+<tt class="descname">typeName</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Int32.typeName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the type of the value, in this case <tt class="docutils literal"><span class="pre">&quot;Int32&quot;</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">&quot;Int32&quot;</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.primitives.Int32.value">
+<tt class="descname">value</tt><a class="headerlink" href="#pyuaf.util.primitives.Int32.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> value.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-uint32">
+<h2><em>class</em> UInt32<a class="headerlink" href="#class-uint32" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.primitives.UInt32">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.primitives.</tt><tt class="descname">UInt32</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.UInt32" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a primitive.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.primitives.UInt32.__init__">
+<tt class="descname">__init__</tt><big>(</big><span class="optional">[</span><em>value</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.UInt32.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new UInt32 value with an optional initial value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.UInt32.type">
+<tt class="descname">type</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.UInt32.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of the value, in this case <a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.UInt32" title="pyuaf.util.opcuatypes.UInt32"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.UInt32</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.UInt32" title="pyuaf.util.opcuatypes.UInt32"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.UInt32</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.UInt32.typeName">
+<tt class="descname">typeName</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.UInt32.typeName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the type of the value, in this case <tt class="docutils literal"><span class="pre">&quot;UInt32&quot;</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">&quot;UInt32&quot;</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.primitives.UInt32.value">
+<tt class="descname">value</tt><a class="headerlink" href="#pyuaf.util.primitives.UInt32.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> value.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-int64">
+<h2><em>class</em> Int64<a class="headerlink" href="#class-int64" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.primitives.Int64">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.primitives.</tt><tt class="descname">Int64</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Int64" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a primitive.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.primitives.Int64.__init__">
+<tt class="descname">__init__</tt><big>(</big><span class="optional">[</span><em>value</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Int64.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new Int64 value with an optional initial value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.Int64.type">
+<tt class="descname">type</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Int64.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of the value, in this case <a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.Int64" title="pyuaf.util.opcuatypes.Int64"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.Int64</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.Int64" title="pyuaf.util.opcuatypes.Int64"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.Int64</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.Int64.typeName">
+<tt class="descname">typeName</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Int64.typeName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the type of the value, in this case <tt class="docutils literal"><span class="pre">&quot;Int64&quot;</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">&quot;Int64&quot;</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.primitives.Int64.value">
+<tt class="descname">value</tt><a class="headerlink" href="#pyuaf.util.primitives.Int64.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> value.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-uint64">
+<h2><em>class</em> UInt64<a class="headerlink" href="#class-uint64" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.primitives.UInt64">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.primitives.</tt><tt class="descname">UInt64</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.UInt64" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a primitive.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.primitives.UInt64.__init__">
+<tt class="descname">__init__</tt><big>(</big><span class="optional">[</span><em>value</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.UInt64.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new UInt64 value with an optional initial value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.UInt64.type">
+<tt class="descname">type</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.UInt64.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of the value, in this case <a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.UInt64" title="pyuaf.util.opcuatypes.UInt64"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.UInt64</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.UInt64" title="pyuaf.util.opcuatypes.UInt64"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.UInt64</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.UInt64.typeName">
+<tt class="descname">typeName</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.UInt64.typeName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the type of the value, in this case <tt class="docutils literal"><span class="pre">&quot;UInt64&quot;</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">&quot;UInt64&quot;</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.primitives.UInt64.value">
+<tt class="descname">value</tt><a class="headerlink" href="#pyuaf.util.primitives.UInt64.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> value.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-float">
+<h2><em>class</em> Float<a class="headerlink" href="#class-float" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.primitives.Float">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.primitives.</tt><tt class="descname">Float</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Float" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a primitive.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.primitives.Float.__init__">
+<tt class="descname">__init__</tt><big>(</big><span class="optional">[</span><em>value</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Float.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new Float value with an optional initial value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.Float.type">
+<tt class="descname">type</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Float.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of the value, in this case <a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.Float" title="pyuaf.util.opcuatypes.Float"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.Float</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.Float" title="pyuaf.util.opcuatypes.Float"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.Float</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.Float.typeName">
+<tt class="descname">typeName</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Float.typeName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the type of the value, in this case <tt class="docutils literal"><span class="pre">&quot;Float&quot;</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">&quot;Float&quot;</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.primitives.Float.value">
+<tt class="descname">value</tt><a class="headerlink" href="#pyuaf.util.primitives.Float.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>A float value.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-double">
+<h2><em>class</em> Double<a class="headerlink" href="#class-double" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.primitives.Double">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.primitives.</tt><tt class="descname">Double</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Double" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a primitive.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.primitives.Double.__init__">
+<tt class="descname">__init__</tt><big>(</big><span class="optional">[</span><em>value</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Double.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new Double value with an optional initial value.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.Double.type">
+<tt class="descname">type</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Double.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of the value, in this case <a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.Double" title="pyuaf.util.opcuatypes.Double"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.Double</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="api_pyuaf_util_opcuatypes.html#pyuaf.util.opcuatypes.Double" title="pyuaf.util.opcuatypes.Double"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.opcuatypes.Double</span></tt></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.primitives.Double.typeName">
+<tt class="descname">typeName</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.primitives.Double.typeName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the type of the value, in this case <tt class="docutils literal"><span class="pre">&quot;Double&quot;</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">&quot;Double&quot;</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.primitives.Double.value">
+<tt class="descname">value</tt><a class="headerlink" href="#pyuaf.util.primitives.Double.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>A float value.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/uaf_logo_200x67_transparent.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">pyuaf.util.primitives</span></tt></a><ul>
+<li><a class="reference internal" href="#class-boolean"><em>class</em> Boolean</a></li>
+<li><a class="reference internal" href="#class-sbyte"><em>class</em> SByte</a></li>
+<li><a class="reference internal" href="#class-byte"><em>class</em> Byte</a></li>
+<li><a class="reference internal" href="#class-int16"><em>class</em> Int16</a></li>
+<li><a class="reference internal" href="#class-uint16"><em>class</em> UInt16</a></li>
+<li><a class="reference internal" href="#class-int32"><em>class</em> Int32</a></li>
+<li><a class="reference internal" href="#class-uint32"><em>class</em> UInt32</a></li>
+<li><a class="reference internal" href="#class-int64"><em>class</em> Int64</a></li>
+<li><a class="reference internal" href="#class-uint64"><em>class</em> UInt64</a></li>
+<li><a class="reference internal" href="#class-float"><em>class</em> Float</a></li>
+<li><a class="reference internal" href="#class-double"><em>class</em> Double</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api_pyuaf_util_opcuatypes.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">pyuaf.util.opcuatypes</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api_pyuaf_util_securitypolicies.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.util.securitypolicies</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/api_pyuaf_util_primitives.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_util_securitypolicies.html" title="pyuaf.util.securitypolicies"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_util_opcuatypes.html" title="pyuaf.util.opcuatypes"
+             >previous</a> |</li>
+        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Wim Pessemier (Institute for Astronomy, KU Leuven) - http://github.com/uaf.
+    </div>
+  </body>
+</html>

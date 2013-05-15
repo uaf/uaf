@@ -1,0 +1,2460 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyuaf.util &mdash; PyUAF 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyUAF 1.0 documentation" href="index.html" />
+    <link rel="next" title="pyuaf.util.attributeids" href="api_pyuaf_util_attributeids.html" />
+    <link rel="prev" title="pyuaf.client.subscriptionstates" href="api_pyuaf_client_subscriptionstates.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_util_attributeids.html" title="pyuaf.util.attributeids"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pyuaf.util">
+<span id="pyuaf-util"></span><h1><tt class="docutils literal"><span class="pre">pyuaf.util</span></tt><a class="headerlink" href="#module-pyuaf.util" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="class-address">
+<h2><em>class</em> Address<a class="headerlink" href="#class-address" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.Address">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">Address</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Address" title="Permalink to this definition">¶</a></dt>
+<dd><p>An Address points to a node within an server address space by means of an
+absolute address (an ExpandedNodeId) or by means of a relative address (a path relative to
+another address).</p>
+<p>An &#8220;address&#8221; is a term defined by the UAF, and <em>not</em> by the OPC UA standard. It&#8217;s basically
+a union class that holds the information to identify a node within an address space.
+Several addresses can all point to the same node.</p>
+<p>A relative address may point to other relative addresses. More formally, the starting
+point of an Address based on a relative path, may also be an Address based on a
+relative path in turn. This way you can define large and complex hierarchies of relative
+addresses, with just a single absolute address (based on an ExpandedNodeId) as the starting
+point.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.Address.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Address.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new Address by providing either</p>
+<blockquote>
+<div><ul class="simple">
+<li>an <a class="reference internal" href="#pyuaf.util.ExpandedNodeId" title="pyuaf.util.ExpandedNodeId"><tt class="xref py py-class docutils literal"><span class="pre">ExpandedNodeId</span></tt></a></li>
+<li>another <a class="reference internal" href="#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a> (the starting point) and a
+<a class="reference internal" href="#pyuaf.util.RelativePath" title="pyuaf.util.RelativePath"><tt class="xref py py-class docutils literal"><span class="pre">RelativePath</span></tt></a> (the path).</li>
+</ul>
+</div></blockquote>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">RelativePathElement</span><span class="p">,</span> <span class="n">QualifiedName</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># the following ways of constructing a Address are possible:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address0</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;someId&quot;</span><span class="p">,</span> <span class="s">&quot;someNsUri&quot;</span><span class="p">,</span> <span class="s">&quot;someServerUri&quot;</span><span class="p">)</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address1</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;someId&quot;</span><span class="p">,</span> <span class="s">&quot;someNsUri&quot;</span><span class="p">),</span> <span class="s">&quot;someServerUri&quot;</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address2</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">address0</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;someName&quot;</span><span class="p">,</span> <span class="s">&quot;someNsUri&quot;</span><span class="p">))]</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address3</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">address1</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;someOtherName&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">))]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Address.isExpandedNodeId">
+<tt class="descname">isExpandedNodeId</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Address.isExpandedNodeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the address is defined as an ExpandedNodeId.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the address is based on an <a class="reference internal" href="#pyuaf.util.ExpandedNodeId" title="pyuaf.util.ExpandedNodeId"><tt class="xref py py-class docutils literal"><span class="pre">ExpandedNodeId</span></tt></a>
+(and you&#8217;re allowed to call <a class="reference internal" href="#pyuaf.util.Address.getExpandedNodeId" title="pyuaf.util.Address.getExpandedNodeId"><tt class="xref py py-meth docutils literal"><span class="pre">getExpandedNodeId()</span></tt></a>), False if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Address.isRelativePath">
+<tt class="descname">isRelativePath</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Address.isRelativePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the address is defined as a RelativePath.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the address is based on a <a class="reference internal" href="#pyuaf.util.RelativePath" title="pyuaf.util.RelativePath"><tt class="xref py py-class docutils literal"><span class="pre">RelativePath</span></tt></a>
+and another <a class="reference internal" href="#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>
+(and you&#8217;re allowed to call <a class="reference internal" href="#pyuaf.util.Address.getStartingAddress" title="pyuaf.util.Address.getStartingAddress"><tt class="xref py py-meth docutils literal"><span class="pre">getStartingAddress()</span></tt></a>
+and <a class="reference internal" href="#pyuaf.util.Address.getRelativePath" title="pyuaf.util.Address.getRelativePath"><tt class="xref py py-meth docutils literal"><span class="pre">getRelativePath()</span></tt></a>), False if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Address.getExpandedNodeId">
+<tt class="descname">getExpandedNodeId</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Address.getExpandedNodeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the ExpandedNodeId in case <a class="reference internal" href="#pyuaf.util.Address.isExpandedNodeId" title="pyuaf.util.Address.isExpandedNodeId"><tt class="xref py py-meth docutils literal"><span class="pre">isExpandedNodeId()</span></tt></a> returns True.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The ExpandedNodeId corresponding with this Address.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.ExpandedNodeId" title="pyuaf.util.ExpandedNodeId"><tt class="xref py py-class docutils literal"><span class="pre">ExpandedNodeId</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Address.getRelativePath">
+<tt class="descname">getRelativePath</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Address.getRelativePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the RelativePath in case <a class="reference internal" href="#pyuaf.util.Address.isRelativePath" title="pyuaf.util.Address.isRelativePath"><tt class="xref py py-meth docutils literal"><span class="pre">isRelativePath()</span></tt></a> returns True.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The RelativePath corresponding with this Address, as a <tt class="docutils literal"><span class="pre">tuple</span></tt>
+of <a class="reference internal" href="#pyuaf.util.RelativePathElement" title="pyuaf.util.RelativePathElement"><tt class="xref py py-class docutils literal"><span class="pre">RelativePathElement</span></tt></a>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Address.getStartingAddress">
+<tt class="descname">getStartingAddress</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Address.getStartingAddress" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a pointer (not a copy of the actual object itself!) to the starting address in case
+<a class="reference internal" href="#pyuaf.util.Address.isRelativePath" title="pyuaf.util.Address.isRelativePath"><tt class="xref py py-meth docutils literal"><span class="pre">isRelativePath()</span></tt></a> returns True.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A reference to the starting address.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-applicationdescription">
+<h2><em>class</em> ApplicationDescription<a class="headerlink" href="#class-applicationdescription" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.ApplicationDescription">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">ApplicationDescription</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.ApplicationDescription" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ApplicationDescription instance describes a Server or Client or ClientAndServer, or a
+DiscoveryServer.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.ApplicationDescription.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.ApplicationDescription.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new ApplicationDescription.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.ApplicationDescription.isEmpty">
+<tt class="descname">isEmpty</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.ApplicationDescription.isEmpty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is this a valid application description or an empty one?</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.ApplicationDescription.applicationUri">
+<tt class="descname">applicationUri</tt><a class="headerlink" href="#pyuaf.util.ApplicationDescription.applicationUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>The application URI as a string (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.ApplicationDescription.productUri">
+<tt class="descname">productUri</tt><a class="headerlink" href="#pyuaf.util.ApplicationDescription.productUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>The product URI as a string (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.ApplicationDescription.applicationName">
+<tt class="descname">applicationName</tt><a class="headerlink" href="#pyuaf.util.ApplicationDescription.applicationName" title="Permalink to this definition">¶</a></dt>
+<dd><p>The application name as a localized text (type <a class="reference internal" href="#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><tt class="xref py py-class docutils literal"><span class="pre">LocalizedText</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.ApplicationDescription.applicationType">
+<tt class="descname">applicationType</tt><a class="headerlink" href="#pyuaf.util.ApplicationDescription.applicationType" title="Permalink to this definition">¶</a></dt>
+<dd><p>The application type as an int (as defined in <a class="reference internal" href="api_pyuaf_util_applicationtypes.html#module-pyuaf.util.applicationtypes" title="pyuaf.util.applicationtypes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.applicationtypes</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.ApplicationDescription.gatewayServerUri">
+<tt class="descname">gatewayServerUri</tt><a class="headerlink" href="#pyuaf.util.ApplicationDescription.gatewayServerUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>The gateway server URI as a string (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.ApplicationDescription.discoveryProfileUri">
+<tt class="descname">discoveryProfileUri</tt><a class="headerlink" href="#pyuaf.util.ApplicationDescription.discoveryProfileUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>The discovery profile URI as a string (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.ApplicationDescription.discoveryUrls">
+<tt class="descname">discoveryUrls</tt><a class="headerlink" href="#pyuaf.util.ApplicationDescription.discoveryUrls" title="Permalink to this definition">¶</a></dt>
+<dd><p>The discovery URLs as a list of strings (type <a class="reference internal" href="#pyuaf.util.StringVector" title="pyuaf.util.StringVector"><tt class="xref py py-class docutils literal"><span class="pre">StringVector</span></tt></a>).</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-applicationdescriptionvector">
+<h2><em>class</em> ApplicationDescriptionVector<a class="headerlink" href="#class-applicationdescriptionvector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.ApplicationDescriptionVector">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">ApplicationDescriptionVector</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.ApplicationDescriptionVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ApplicationDescriptionVector is a container that holds elements of type
+<a class="reference internal" href="#pyuaf.util.ApplicationDescription" title="pyuaf.util.ApplicationDescription"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.ApplicationDescription</span></tt></a>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.util.ApplicationDescription" title="pyuaf.util.ApplicationDescription"><tt class="xref py py-class docutils literal"><span class="pre">ApplicationDescription</span></tt></a>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">ApplicationDescriptionVector</span><span class="p">,</span> <span class="n">ApplicationDescription</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a ApplicationDescriptionVector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">descriptions</span> <span class="o">=</span> <span class="n">ApplicationDescriptionVector</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">descriptions</span><span class="p">)</span> <span class="c"># will be 0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">descriptions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ApplicationDescription</span><span class="p">())</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">descriptions</span><span class="p">)</span> <span class="c"># will be 1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">descriptions</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">descriptions</span><span class="p">)</span> <span class="c"># will be 4</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">description0</span> <span class="o">=</span> <span class="n">descriptions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct an ApplicationDescriptionVector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">otherDescriptions</span> <span class="o">=</span> <span class="n">ApplicationDescriptionVector</span><span class="p">(</span> <span class="p">[</span><span class="n">ApplicationDescription</span><span class="p">(),</span> <span class="n">ApplicationDescription</span><span class="p">()]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="class-browsepath">
+<h2><em>class</em> BrowsePath<a class="headerlink" href="#class-browsepath" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.BrowsePath">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">BrowsePath</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.BrowsePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>A BrowsePath holds a path from a resolved starting node (an ExpandedNodeId) to another node
+within the address space.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.BrowsePath.__init__">
+<tt class="descname">__init__</tt><big>(</big><span class="optional">[</span><em>startingExpandedNodeId</em><span class="optional">[</span>, <em>relativePath</em><span class="optional">]</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.BrowsePath.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new BrowsePath.</p>
+<p>You may optionally provide a starting point for the browse path
+(a <a class="reference internal" href="#pyuaf.util.ExpandedNodeId" title="pyuaf.util.ExpandedNodeId"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.ExpandedNodeId</span></tt></a>) and optionally provide a relative path
+(which is a <a class="reference internal" href="#pyuaf.util.RelativePath" title="pyuaf.util.RelativePath"><tt class="xref py py-class docutils literal"><span class="pre">RelativePath</span></tt></a>, resembling a <tt class="docutils literal"><span class="pre">list</span></tt> of
+<a class="reference internal" href="#pyuaf.util.RelativePathElement" title="pyuaf.util.RelativePathElement"><tt class="xref py py-class docutils literal"><span class="pre">RelativePathElement</span></tt></a>).</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.BrowsePath.startingExpandedNodeId">
+<tt class="descname">startingExpandedNodeId</tt><a class="headerlink" href="#pyuaf.util.BrowsePath.startingExpandedNodeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>The starting point (as an <a class="reference internal" href="#pyuaf.util.ExpandedNodeId" title="pyuaf.util.ExpandedNodeId"><tt class="xref py py-class docutils literal"><span class="pre">ExpandedNodeId</span></tt></a>)) of the relative path.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.BrowsePath.relativePath">
+<tt class="descname">relativePath</tt><a class="headerlink" href="#pyuaf.util.BrowsePath.relativePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>The relative path as a list of qualified names
+The type of this attribute is <a class="reference internal" href="#pyuaf.util.RelativePath" title="pyuaf.util.RelativePath"><tt class="xref py py-class docutils literal"><span class="pre">RelativePath</span></tt></a>,
+which resembles a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.util.RelativePathElement" title="pyuaf.util.RelativePathElement"><tt class="xref py py-class docutils literal"><span class="pre">RelativePathElement</span></tt></a>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-datachangefilter">
+<h2><em>class</em> DataChangeFilter<a class="headerlink" href="#class-datachangefilter" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.DataChangeFilter">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">DataChangeFilter</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.DataChangeFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A DataChangeFilter specifies a deadband filter for monitored data items.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.DataChangeFilter.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.DataChangeFilter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a default DataChangeFilter instance.</p>
+<p>Defaults:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#pyuaf.util.DataChangeFilter.trigger" title="pyuaf.util.DataChangeFilter.trigger"><tt class="xref py py-attr docutils literal"><span class="pre">trigger</span></tt></a>: <a class="reference internal" href="#pyuaf.util.DataChangeFilter.DataChangeTrigger_StatusValue" title="pyuaf.util.DataChangeFilter.DataChangeTrigger_StatusValue"><tt class="xref py py-attr docutils literal"><span class="pre">DataChangeTrigger_StatusValue</span></tt></a></li>
+<li><a class="reference internal" href="#pyuaf.util.DataChangeFilter.deadBandType" title="pyuaf.util.DataChangeFilter.deadBandType"><tt class="xref py py-attr docutils literal"><span class="pre">deadBandType</span></tt></a>: <a class="reference internal" href="#pyuaf.util.DataChangeFilter.DeadBandType_None" title="pyuaf.util.DataChangeFilter.DeadBandType_None"><tt class="xref py py-attr docutils literal"><span class="pre">DeadBandType_None</span></tt></a></li>
+<li><a class="reference internal" href="#pyuaf.util.DataChangeFilter.deadBandValue" title="pyuaf.util.DataChangeFilter.deadBandValue"><tt class="xref py py-attr docutils literal"><span class="pre">deadBandValue</span></tt></a>: 0.0</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.DataChangeFilter.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=17</em><big>)</big><a class="headerlink" href="#pyuaf.util.DataChangeFilter.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Class attributes:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">for the dead band type:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.DataChangeFilter.DeadBandType_None">
+<tt class="descname">DeadBandType_None</tt><em class="property"> = 0</em><a class="headerlink" href="#pyuaf.util.DataChangeFilter.DeadBandType_None" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> identifying the kind of deadband: in this case no deadband at all!</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.DataChangeFilter.DeadBandType_Absolute">
+<tt class="descname">DeadBandType_Absolute</tt><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.util.DataChangeFilter.DeadBandType_Absolute" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> identifying the kind of deadband: in this case an absolute deadband.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.DataChangeFilter.DeadBandType_Percent">
+<tt class="descname">DeadBandType_Percent</tt><em class="property"> = 2</em><a class="headerlink" href="#pyuaf.util.DataChangeFilter.DeadBandType_Percent" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> identifying the kind of deadband: in this case a relative deadband
+(in percent).</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">for the data change trigger:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.DataChangeFilter.DataChangeTrigger_Status">
+<tt class="descname">DataChangeTrigger_Status</tt><em class="property"> = 0</em><a class="headerlink" href="#pyuaf.util.DataChangeFilter.DataChangeTrigger_Status" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> identifying the kind of trigger: in this case trigger when the status
+changes!</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.DataChangeFilter.DataChangeTrigger_StatusValue">
+<tt class="descname">DataChangeTrigger_StatusValue</tt><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.util.DataChangeFilter.DataChangeTrigger_StatusValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> identifying the kind of trigger: in this case trigger when the status
+or the value changes!</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.DataChangeFilter.DataChangeTrigger_StatusValueTimestamp">
+<tt class="descname">DataChangeTrigger_StatusValueTimestamp</tt><em class="property"> = 2</em><a class="headerlink" href="#pyuaf.util.DataChangeFilter.DataChangeTrigger_StatusValueTimestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> identifying the kind of trigger: in this case trigger when the status
+or the value or the timestamp changes!</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.DataChangeFilter.trigger">
+<tt class="descname">trigger</tt><a class="headerlink" href="#pyuaf.util.DataChangeFilter.trigger" title="Permalink to this definition">¶</a></dt>
+<dd><p>The kind of trigger, as one of these <tt class="docutils literal"><span class="pre">int</span></tt> values:
+<a class="reference internal" href="#pyuaf.util.DataChangeFilter.DataChangeTrigger_Status" title="pyuaf.util.DataChangeFilter.DataChangeTrigger_Status"><tt class="xref py py-attr docutils literal"><span class="pre">DataChangeTrigger_Status</span></tt></a>
+or <a class="reference internal" href="#pyuaf.util.DataChangeFilter.DataChangeTrigger_StatusValue" title="pyuaf.util.DataChangeFilter.DataChangeTrigger_StatusValue"><tt class="xref py py-attr docutils literal"><span class="pre">DataChangeTrigger_StatusValue</span></tt></a>
+or <a class="reference internal" href="#pyuaf.util.DataChangeFilter.DataChangeTrigger_StatusValueTimestamp" title="pyuaf.util.DataChangeFilter.DataChangeTrigger_StatusValueTimestamp"><tt class="xref py py-attr docutils literal"><span class="pre">DataChangeTrigger_StatusValueTimestamp</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.DataChangeFilter.deadBandType">
+<tt class="descname">deadBandType</tt><a class="headerlink" href="#pyuaf.util.DataChangeFilter.deadBandType" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type of dead band, as one of these <tt class="docutils literal"><span class="pre">int</span></tt> values:
+<a class="reference internal" href="#pyuaf.util.DataChangeFilter.DeadBandType_None" title="pyuaf.util.DataChangeFilter.DeadBandType_None"><tt class="xref py py-attr docutils literal"><span class="pre">DeadBandType_None</span></tt></a>
+or <a class="reference internal" href="#pyuaf.util.DataChangeFilter.DeadBandType_Absolute" title="pyuaf.util.DataChangeFilter.DeadBandType_Absolute"><tt class="xref py py-attr docutils literal"><span class="pre">DeadBandType_Absolute</span></tt></a>
+or <a class="reference internal" href="#pyuaf.util.DataChangeFilter.DeadBandType_Percent" title="pyuaf.util.DataChangeFilter.DeadBandType_Percent"><tt class="xref py py-attr docutils literal"><span class="pre">DeadBandType_Percent</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.DataChangeFilter.deadBandValue">
+<tt class="descname">deadBandValue</tt><a class="headerlink" href="#pyuaf.util.DataChangeFilter.deadBandValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Value of the deadband, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-endpointdescription">
+<h2><em>class</em> EndpointDescription<a class="headerlink" href="#class-endpointdescription" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.EndpointDescription">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">EndpointDescription</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.EndpointDescription" title="Permalink to this definition">¶</a></dt>
+<dd><p>An EndpointDescription instance describes an endpoint of a Server (as returned during the
+discovery process, so that the client can choose an endpoint and connect to it).</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.EndpointDescription.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.EndpointDescription.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new EndpointDescription.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.EndpointDescription.isEmpty">
+<tt class="descname">isEmpty</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.EndpointDescription.isEmpty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is this a valid endpoint description or an empty one?</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.EndpointDescription.endpointUrl">
+<tt class="descname">endpointUrl</tt><a class="headerlink" href="#pyuaf.util.EndpointDescription.endpointUrl" title="Permalink to this definition">¶</a></dt>
+<dd><p>The endpoint URL (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.EndpointDescription.server">
+<tt class="descname">server</tt><a class="headerlink" href="#pyuaf.util.EndpointDescription.server" title="Permalink to this definition">¶</a></dt>
+<dd><p>The application description of the server (type <a class="reference internal" href="#pyuaf.util.ApplicationDescription" title="pyuaf.util.ApplicationDescription"><tt class="xref py py-class docutils literal"><span class="pre">ApplicationDescription</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.EndpointDescription.serverCertificate">
+<tt class="descname">serverCertificate</tt><a class="headerlink" href="#pyuaf.util.EndpointDescription.serverCertificate" title="Permalink to this definition">¶</a></dt>
+<dd><p>The server certificate (as a byte string).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.EndpointDescription.securityMode">
+<tt class="descname">securityMode</tt><a class="headerlink" href="#pyuaf.util.EndpointDescription.securityMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The message security mode (e.g. <a class="reference internal" href="api_pyuaf_util_messagesecuritymodes.html#pyuaf.util.messagesecuritymodes.Mode_SignAndEncrypt" title="pyuaf.util.messagesecuritymodes.Mode_SignAndEncrypt"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.messagesecuritymodes.Mode_SignAndEncrypt</span></tt></a>)
+(an <tt class="docutils literal"><span class="pre">int</span></tt>, as defined in <a class="reference internal" href="api_pyuaf_util_messagesecuritymodes.html#module-pyuaf.util.messagesecuritymodes" title="pyuaf.util.messagesecuritymodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.messagesecuritymodes</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.EndpointDescription.securityPolicyUri">
+<tt class="descname">securityPolicyUri</tt><a class="headerlink" href="#pyuaf.util.EndpointDescription.securityPolicyUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>The security policy URI (e.g. <a class="reference internal" href="api_pyuaf_util_securitypolicies.html#pyuaf.util.securitypolicies.UA_Basic128" title="pyuaf.util.securitypolicies.UA_Basic128"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.securitypolicies.UA_Basic128</span></tt></a>),
+(an <tt class="docutils literal"><span class="pre">int</span></tt>, as defined in <a class="reference internal" href="api_pyuaf_util_securitypolicies.html#module-pyuaf.util.securitypolicies" title="pyuaf.util.securitypolicies"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.securitypolicies</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.EndpointDescription.userIdentityTokens">
+<tt class="descname">userIdentityTokens</tt><a class="headerlink" href="#pyuaf.util.EndpointDescription.userIdentityTokens" title="Permalink to this definition">¶</a></dt>
+<dd><p>The allowed user identity token policies (as a <a class="reference internal" href="#pyuaf.util.UserTokenPolicyVector" title="pyuaf.util.UserTokenPolicyVector"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.UserTokenPolicyVector</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.EndpointDescription.transportProfileUri">
+<tt class="descname">transportProfileUri</tt><a class="headerlink" href="#pyuaf.util.EndpointDescription.transportProfileUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>The transport profile URI (type <a class="reference internal" href="#pyuaf.util.StringVector" title="pyuaf.util.StringVector"><tt class="xref py py-class docutils literal"><span class="pre">StringVector</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.EndpointDescription.securityLevel">
+<tt class="descname">securityLevel</tt><a class="headerlink" href="#pyuaf.util.EndpointDescription.securityLevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>The security level (type <tt class="docutils literal"><span class="pre">int</span></tt>).</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-endpointdescriptionvector">
+<h2><em>class</em> EndpointDescriptionVector<a class="headerlink" href="#class-endpointdescriptionvector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.EndpointDescriptionVector">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">EndpointDescriptionVector</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.EndpointDescriptionVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>An EndpointDescriptionVector is a container that holds elements of type
+<a class="reference internal" href="#pyuaf.util.EndpointDescription" title="pyuaf.util.EndpointDescription"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.EndpointDescription</span></tt></a>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.util.EndpointDescription" title="pyuaf.util.EndpointDescription"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.EndpointDescription</span></tt></a>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">EndpointDescriptionVector</span><span class="p">,</span> <span class="n">EndpointDescription</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a EndpointDescriptionVector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">descriptions</span> <span class="o">=</span> <span class="n">EndpointDescriptionVector</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">descriptions</span><span class="p">)</span> <span class="c"># will be 0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">descriptions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">EndpointDescription</span><span class="p">())</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">descriptions</span><span class="p">)</span> <span class="c"># will be 1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">descriptions</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">descriptions</span><span class="p">)</span> <span class="c"># will be 4</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">description0</span> <span class="o">=</span> <span class="n">descriptions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct an EndpointDescriptionVector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">otherDescriptions</span> <span class="o">=</span> <span class="n">EndpointDescriptionVector</span><span class="p">(</span> <span class="p">[</span><span class="n">EndpointDescription</span><span class="p">(),</span> <span class="n">EndpointDescription</span><span class="p">()]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="class-eventfilter">
+<h2><em>class</em> EventFilter<a class="headerlink" href="#class-eventfilter" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.EventFilter">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">EventFilter</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.EventFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>An EventFilter selects and filters the events to be received by a client.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.EventFilter.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.EventFilter.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a default EventFilter instance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.EventFilter.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=26</em><big>)</big><a class="headerlink" href="#pyuaf.util.EventFilter.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.EventFilter.selectClauses">
+<tt class="descname">selectClauses</tt><a class="headerlink" href="#pyuaf.util.EventFilter.selectClauses" title="Permalink to this definition">¶</a></dt>
+<dd><p>The select clauses, as a <a class="reference internal" href="#pyuaf.util.SimpleAttributeOperandVector" title="pyuaf.util.SimpleAttributeOperandVector"><tt class="xref py py-class docutils literal"><span class="pre">SimpleAttributeOperandVector</span></tt></a>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-expandednodeid">
+<h2><em>class</em> ExpandedNodeId<a class="headerlink" href="#class-expandednodeid" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.ExpandedNodeId">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">ExpandedNodeId</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.ExpandedNodeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ExpandedNodeId fully identifies the node by means of a NodeId part, and a part containing
+the serverIndex and/or serverUri of the server hosting the node.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.ExpandedNodeId.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.ExpandedNodeId.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new ExpandedNodeId in one of the following ways:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">NodeId</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># suppose we have a node with the following properties:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeIdStringIdentifier</span> <span class="o">=</span> <span class="s">&quot;myStringIdentifier&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nameSpaceUri</span>           <span class="o">=</span> <span class="s">&quot;myNameSpaceUri&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nameSpaceIndex</span>         <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">serverUri</span>              <span class="o">=</span> <span class="s">&quot;myServerUri&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">serverIndex</span>            <span class="o">=</span> <span class="mi">2</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># and one with the same namespace and server properties, but with a different identifier:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeIdNumericIdentifier</span> <span class="o">=</span> <span class="mi">1234</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># then these ExpandedNodeIds all point to the nodes:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exp0</span>  <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="n">nodeIdStringIdentifier</span>  <span class="p">,</span> <span class="n">nameSpaceUri</span>   <span class="p">,</span> <span class="n">serverUri</span>   <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exp1</span>  <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="n">nodeIdStringIdentifier</span>  <span class="p">,</span> <span class="n">nameSpaceUri</span>   <span class="p">,</span> <span class="n">serverIndex</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exp2</span>  <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="n">nodeIdStringIdentifier</span>  <span class="p">,</span> <span class="n">nameSpaceUri</span>   <span class="p">,</span> <span class="n">serverUri</span>   <span class="p">,</span> <span class="n">serverIndex</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exp3</span>  <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="n">nodeIdStringIdentifier</span>  <span class="p">,</span> <span class="n">nameSpaceIndex</span> <span class="p">,</span> <span class="n">serverUri</span>   <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exp4</span>  <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="n">nodeIdStringIdentifier</span>  <span class="p">,</span> <span class="n">nameSpaceIndex</span> <span class="p">,</span> <span class="n">serverIndex</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exp5</span>  <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="n">nodeIdStringIdentifier</span>  <span class="p">,</span> <span class="n">nameSpaceIndex</span> <span class="p">,</span> <span class="n">serverUri</span>   <span class="p">,</span> <span class="n">serverIndex</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exp6</span>  <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="n">nodeIdNumericIdentifier</span> <span class="p">,</span> <span class="n">nameSpaceUri</span>   <span class="p">,</span> <span class="n">serverUri</span>   <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exp7</span>  <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="n">nodeIdNumericIdentifier</span> <span class="p">,</span> <span class="n">nameSpaceUri</span>   <span class="p">,</span> <span class="n">serverIndex</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exp8</span>  <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="n">nodeIdNumericIdentifier</span> <span class="p">,</span> <span class="n">nameSpaceUri</span>   <span class="p">,</span> <span class="n">serverUri</span>   <span class="p">,</span> <span class="n">serverIndex</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exp9</span>  <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="n">nodeIdNumericIdentifier</span> <span class="p">,</span> <span class="n">nameSpaceIndex</span> <span class="p">,</span> <span class="n">serverUri</span>   <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exp10</span> <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="n">nodeIdNumericIdentifier</span> <span class="p">,</span> <span class="n">nameSpaceIndex</span> <span class="p">,</span> <span class="n">serverIndex</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exp11</span> <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="n">nodeIdNumericIdentifier</span> <span class="p">,</span> <span class="n">nameSpaceIndex</span> <span class="p">,</span> <span class="n">serverUri</span>   <span class="p">,</span> <span class="n">serverIndex</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># you can also define the NodeId first and provide this + serverIndex and/or serverUri</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="n">nodeIdStringIdentifier</span><span class="p">,</span> <span class="n">nameSpaceUri</span><span class="p">,</span> <span class="n">nameSpaceIndex</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exp12</span> <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="n">nodeId</span><span class="p">,</span> <span class="n">serverUri</span>   <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exp13</span> <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="n">nodeId</span><span class="p">,</span> <span class="n">serverIndex</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">exp14</span> <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="n">nodeId</span><span class="p">,</span> <span class="n">serverUri</span>   <span class="p">,</span> <span class="n">serverIndex</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.ExpandedNodeId.hasServerIndex">
+<tt class="descname">hasServerIndex</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.ExpandedNodeId.hasServerIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a server index was given.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if a serverIndex has been defined, False if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.ExpandedNodeId.hasServerUri">
+<tt class="descname">hasServerUri</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.ExpandedNodeId.hasServerUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a non-empty server URI was given.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if this ExpandedNodeId contains a non-empty server URI, False if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.ExpandedNodeId.serverIndex">
+<tt class="descname">serverIndex</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.ExpandedNodeId.serverIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the server index of the ExpandedNodeId.</p>
+<p>This function will always return an <tt class="docutils literal"><span class="pre">int</span></tt>, so call hasServerIndex() to see if it&#8217;s a
+valid one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The server index.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.ExpandedNodeId.serverUri">
+<tt class="descname">serverUri</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.ExpandedNodeId.serverUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the server URI of the ExpandedNodeId.</p>
+<p>This function will always return a string, so call hasServerUri() to see if it&#8217;s a
+valid one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The server URI.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.ExpandedNodeId.nodeId">
+<tt class="descname">nodeId</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.ExpandedNodeId.nodeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the NodeId part of the ExpandedNodeId.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The NodeId part.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.NodeId</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-expandednodeidvector">
+<h2><em>class</em> ExpandedNodeIdVector<a class="headerlink" href="#class-expandednodeidvector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.ExpandedNodeIdVector">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">ExpandedNodeIdVector</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.ExpandedNodeIdVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A ExpandedNodeIdVector is a container that holds elements of type
+<a class="reference internal" href="#pyuaf.util.ExpandedNodeId" title="pyuaf.util.ExpandedNodeId"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.ExpandedNodeId</span></tt></a>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.util.ExpandedNodeId" title="pyuaf.util.ExpandedNodeId"><tt class="xref py py-class docutils literal"><span class="pre">ExpandedNodeId</span></tt></a>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">ExpandedNodeIdVector</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a ExpandedNodeIdVector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">ExpandedNodeIdVector</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;some id&quot;</span><span class="p">,</span> <span class="s">&quot;http://Some/Namespace/URI&quot;</span><span class="p">,</span> <span class="s">&quot;Some:Server:URI&quot;</span><span class="p">))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hasServerUri</span><span class="p">():</span>
+<span class="gp">... </span>   <span class="n">serverUri</span> <span class="o">=</span> <span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">serverUri</span><span class="p">()</span>
+<span class="gp">... </span><span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="n">serverUri</span> <span class="o">=</span> <span class="bp">None</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 2</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a ExpandedNodeIdVector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">someOtherVec</span> <span class="o">=</span> <span class="n">ExpandedNodeIdVector</span><span class="p">(</span> <span class="p">[</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;id 0&quot;</span><span class="p">,</span> <span class="s">&quot;MyNamespace&quot;</span><span class="p">,</span> <span class="s">&quot;serverX&quot;</span><span class="p">),</span>
+<span class="gp">... </span>                                       <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;id 1&quot;</span><span class="p">,</span> <span class="s">&quot;MyNamespace&quot;</span><span class="p">,</span> <span class="s">&quot;serverY&quot;</span><span class="p">)</span> <span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="class-localizedtext">
+<h2><em>class</em> LocalizedText<a class="headerlink" href="#class-localizedtext" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.LocalizedText">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">LocalizedText</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.LocalizedText" title="Permalink to this definition">¶</a></dt>
+<dd><p>A LocalizedText is text with a locale attached.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.LocalizedText.__init__">
+<tt class="descname">__init__</tt><big>(</big><span class="optional">[</span><em>locale</em><span class="optional">[</span>, <em>text</em><span class="optional">]</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.LocalizedText.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new LocalizedText in one of the following ways:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">LocalizedText</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># the following ways of constructing a QualifiedName are possible:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lText0</span> <span class="o">=</span> <span class="n">LocalizedText</span><span class="p">()</span>                        <span class="c"># incomplete, no information given!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lText1</span> <span class="o">=</span> <span class="n">LocalizedText</span><span class="p">(</span><span class="s">&quot;en&quot;</span><span class="p">,</span> <span class="s">&quot;My English Text&quot;</span><span class="p">)</span> <span class="c"># OK</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lText2</span> <span class="o">=</span> <span class="n">LocalizedText</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;My Text&quot;</span><span class="p">)</span>           <span class="c"># OK (no specific locale given)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># strings are assumed to be UTF-8 encoded!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unicodeObject</span> <span class="o">=</span> <span class="s">u&quot;40</span><span class="se">\u00B0</span><span class="s"> Celsius ist eine hei</span><span class="se">\u00DF</span><span class="s">e Temperatur!&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lText3</span> <span class="o">=</span> <span class="n">LocalizedText</span><span class="p">(</span><span class="s">&quot;de&quot;</span><span class="p">,</span> <span class="n">unicodeObject</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&quot;UTF-8&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.LocalizedText.text">
+<tt class="descname">text</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.LocalizedText.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the text part of the LocalizedText, as an UTF-8 encoded string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The text part.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.LocalizedText.locale">
+<tt class="descname">locale</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.LocalizedText.locale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the locale part of the LocalizedText.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The locale part (e.g. &#8220;en&#8221;, &#8220;de&#8221;, &#8220;nl&#8221;, &#8220;&#8221;, ...).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.LocalizedText.toFullString">
+<tt class="descname">toFullString</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.LocalizedText.toFullString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string of the locale part + the text part.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The localized text.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-logginginterface">
+<h2><em>class</em> LoggingInterface<a class="headerlink" href="#class-logginginterface" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.LoggingInterface">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">LoggingInterface</tt><a class="headerlink" href="#pyuaf.util.LoggingInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>A LoggingInterface interface class can be implemented to receive log messages.</p>
+<p>For instance, the pyuaf.client.Client class is implementing this interface.
+As a regular UAF user, you should not have to deal with this interface directly.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.LoggingInterface.__dispatch_logMessageReceived__">
+<tt class="descname">__dispatch_logMessageReceived__</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#pyuaf.util.LoggingInterface.__dispatch_logMessageReceived__" title="Permalink to this definition">¶</a></dt>
+<dd><p>A new log message was received.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<a class="reference internal" href="#pyuaf.util.LogMessage" title="pyuaf.util.LogMessage"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.LogMessage</span></tt></a>) &#8211; The log message that was received.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-logmessage">
+<h2><em>class</em> LogMessage<a class="headerlink" href="#class-logmessage" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.LogMessage">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">LogMessage</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.LogMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>A LogMessage instance contains a timestamp, a log level, an informative message, etc.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># normally you receive log messages from a pyuaf.client.Client instance,</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># but in this case we&#39;ll create a log message manually:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">msg</span> <span class="o">=</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">LogMessage</span><span class="p">(</span><span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">loglevels</span><span class="o">.</span><span class="n">Debug</span><span class="p">,</span>
+<span class="gp">... </span>                            <span class="s">&quot;MyApp&quot;</span><span class="p">,</span>
+<span class="gp">... </span>                            <span class="s">&quot;MyLogger&quot;</span><span class="p">,</span>
+<span class="gp">... </span>                            <span class="s">&quot;Something has happened,</span><span class="se">\n</span><span class="s">&quot;</span>
+<span class="gp">... </span>                            <span class="o">+</span> <span class="s">&quot;requiring a big multi-line description!&quot;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">niceLocalTimeString</span> <span class="o">=</span>  <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&quot;%a, </span><span class="si">%d</span><span class="s"> %b %Y %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">ctime</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">niceLocalTimeString</span> <span class="o">+=</span> <span class="s">&quot;.</span><span class="si">%.3d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">msg</span><span class="o">.</span><span class="n">msec</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stringToWrittenToFile</span>  <span class="o">=</span> <span class="s">&quot;New log message:&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stringToWrittenToFile</span> <span class="o">+=</span> <span class="s">&quot; - time received    : </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">niceLocalTimeString</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stringToWrittenToFile</span> <span class="o">+=</span> <span class="s">&quot; - application name : </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">msg</span><span class="o">.</span><span class="n">applicationName</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stringToWrittenToFile</span> <span class="o">+=</span> <span class="s">&quot; - logger name      : </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">msg</span><span class="o">.</span><span class="n">loggerName</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stringToWrittenToFile</span> <span class="o">+=</span> <span class="s">&quot; - level            : </span><span class="si">%d</span><span class="s"> = </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">level</span><span class="p">,</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">loglevels</span><span class="o">.</span><span class="n">toString</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">level</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="n">stringToWrittenToFile</span> <span class="o">+=</span> <span class="s">&quot; - message lines    : </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">line</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">theWholeMessageAtOnce</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.LogMessage.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>level</em>, <em>applicationName</em>, <em>loggerName</em>, <em>message</em><big>)</big><a class="headerlink" href="#pyuaf.util.LogMessage.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new LogMessage.</p>
+<p>The &#8216;ctime&#8217; timestamp will be set to the construction time.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.LogMessage.__str__">
+<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.LogMessage.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a formatted string representation of the log message.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.LogMessage.ctime">
+<tt class="descname">ctime</tt><a class="headerlink" href="#pyuaf.util.LogMessage.ctime" title="Permalink to this definition">¶</a></dt>
+<dd><p>The timestamp as a 64-bit number (the &#8220;c-time&#8221;) expressing the seconds that passed
+since the epoch, as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.LogMessage.msec">
+<tt class="descname">msec</tt><a class="headerlink" href="#pyuaf.util.LogMessage.msec" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of milliseconds past the ctime, as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.LogMessage.level">
+<tt class="descname">level</tt><a class="headerlink" href="#pyuaf.util.LogMessage.level" title="Permalink to this definition">¶</a></dt>
+<dd><p>The log level as an <tt class="docutils literal"><span class="pre">int</span></tt> (as defined in <a class="reference internal" href="api_pyuaf_util_loglevels.html#module-pyuaf.util.loglevels" title="pyuaf.util.loglevels"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.loglevels</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.LogMessage.applicationName">
+<tt class="descname">applicationName</tt><a class="headerlink" href="#pyuaf.util.LogMessage.applicationName" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the application that owns the logger (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.LogMessage.loggerName">
+<tt class="descname">loggerName</tt><a class="headerlink" href="#pyuaf.util.LogMessage.loggerName" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the logger that produced the log message (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.LogMessage.message">
+<tt class="descname">message</tt><a class="headerlink" href="#pyuaf.util.LogMessage.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>The actual informative message to be logged (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-mask">
+<h2><em>class</em> Mask<a class="headerlink" href="#class-mask" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.Mask">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">Mask</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a boolean mask to mark items as &#8216;set&#8217; (boolean True) or &#8216;unset&#8217; (boolean False).</p>
+<p>The mask keeps track of the number of &#8216;set&#8217; and &#8216;unset&#8217; values. This means you can
+very efficiently call countSet() and countUnset().</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.Mask.__init__">
+<tt class="descname">__init__</tt><big>(</big><span class="optional">[</span><em>initialSize</em><span class="optional">[</span>, <em>initialValue</em><span class="optional">]</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.Mask.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new Mask.</p>
+<p>The initial size can optionally be given.
+If the initial size is given, also the initial value of all initial elements can be
+given.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>initialSize</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; (Optional) Initial number of elements of the mask.</li>
+<li><strong>initialValue</strong> (<tt class="docutils literal"><span class="pre">bool</span></tt>) &#8211; (Optional) Value (True or False) of the initial elements.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Mask.resize">
+<tt class="descname">resize</tt><big>(</big><em>newSize</em><big>)</big><a class="headerlink" href="#pyuaf.util.Mask.resize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resize the mask.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>newSize</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The size the mask should be having.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Mask.size">
+<tt class="descname">size</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Mask.size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current size of the mask.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The current number of elements.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Mask.setCount">
+<tt class="descname">setCount</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Mask.setCount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of &#8216;set&#8217; elements.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The current number of &#8216;set&#8217; elements.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Mask.unsetCount">
+<tt class="descname">unsetCount</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Mask.unsetCount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of &#8216;unset&#8217; elements.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The current number of &#8216;unset&#8217; elements.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Mask.set">
+<tt class="descname">set</tt><big>(</big><em>i</em><big>)</big><a class="headerlink" href="#pyuaf.util.Mask.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the i&#8217;th mask item (i.e. make it True).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>i</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The number of the item that should be &#8216;set&#8217;.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Mask.unset">
+<tt class="descname">unset</tt><big>(</big><em>i</em><big>)</big><a class="headerlink" href="#pyuaf.util.Mask.unset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unset the i&#8217;th mask item (i.e. make it False).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>i</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The number of the item that should be &#8216;unset&#8217;.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Mask.__and__">
+<tt class="descname">__and__</tt><big>(</big><em>otherMask</em><big>)</big><a class="headerlink" href="#pyuaf.util.Mask.__and__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logically AND this mask with another mask element-wise.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>otherMask</strong> (<a class="reference internal" href="#pyuaf.util.Mask" title="pyuaf.util.Mask"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.Mask</span></tt></a>) &#8211; The other mask.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A new mask, the logical AND result of the current one and the other one.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.Mask" title="pyuaf.util.Mask"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.Mask</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-nodeid">
+<h2><em>class</em> NodeId<a class="headerlink" href="#class-nodeid" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.NodeId">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">NodeId</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.NodeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>A NodeId identifies the node within an address space. It is not bound to a specific server
+(use an <a class="reference internal" href="#pyuaf.util.ExpandedNodeId" title="pyuaf.util.ExpandedNodeId"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.ExpandedNodeId</span></tt></a> for that).</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.NodeId.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.NodeId.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a NodeId.</p>
+<p>A NodeId should contain an identifier (e.g. a string or a numeric value) and
+some information about the namespace (a namespace URI and/or a namespace index).</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">NodeId</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId0</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">()</span>                                          <span class="c"># contains no information</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId1</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myStringIdentifier&quot;</span><span class="p">,</span> <span class="s">&quot;myNameSpaceUri&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId2</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myStringIdentifier&quot;</span><span class="p">,</span> <span class="s">&quot;myNameSpaceUri&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c"># 3 = namespace index</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId3</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myStringIdentifier&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>                   <span class="c"># 3 = namespace index</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId4</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="mi">2345</span><span class="p">,</span> <span class="s">&quot;myNameSpaceUri&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId5</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="mi">2345</span><span class="p">,</span> <span class="s">&quot;myNameSpaceUri&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>                 <span class="c"># 2345 = numeric id, 3 = namespace index</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId6</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="mi">2345</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>                                   <span class="c"># 2345 = numeric id, 3 = namespace index</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.NodeId.hasNameSpaceUri">
+<tt class="descname">hasNameSpaceUri</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.NodeId.hasNameSpaceUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a non-empty namespace URI was given.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if this NodeId contains a non-empty server URI, False if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.NodeId.hasNameSpaceIndex">
+<tt class="descname">hasNameSpaceIndex</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.NodeId.hasNameSpaceIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a namespace index was given.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if a namespaceIndex has been defined, False if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.NodeId.nameSpaceUri">
+<tt class="descname">nameSpaceUri</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.NodeId.nameSpaceUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the namespace URI of the NodeId.</p>
+<p>This function will always return a string, so call hasNameSpaceUri() to see if it&#8217;s a
+valid one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The namespace URI.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.NodeId.nameSpaceIndex">
+<tt class="descname">nameSpaceIndex</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.NodeId.nameSpaceIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the namespace index of the NodeId.</p>
+<p>This function will always return an <tt class="docutils literal"><span class="pre">int</span></tt>, so call hasNameSpaceIndex() to see if it&#8217;s
+a valid one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The namespace index.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.NodeId.identifier">
+<tt class="descname">identifier</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.NodeId.identifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the NodeIdIdentifier part of the NodeId.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The NodeIdIdentifier part.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.NodeIdIdentifier" title="pyuaf.util.NodeIdIdentifier"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.NodeIdIdentifier</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.NodeId.setNameSpaceUri">
+<tt class="descname">setNameSpaceUri</tt><big>(</big><em>uri</em><big>)</big><a class="headerlink" href="#pyuaf.util.NodeId.setNameSpaceUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the namespace URI of the NodeId.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uri</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The namespace URI.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.NodeId.setNameSpaceIndex">
+<tt class="descname">setNameSpaceIndex</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyuaf.util.NodeId.setNameSpaceIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the namespace index of the NodeId.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uri</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The namespace index.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-nodeididentifier">
+<h2><em>class</em> NodeIdIdentifier<a class="headerlink" href="#class-nodeididentifier" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.NodeIdIdentifier">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">NodeIdIdentifier</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.NodeIdIdentifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>A NodeIdIdentifier is the identifier part of a NodeId.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.NodeIdIdentifier.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.NodeIdIdentifier.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a NodeIdIdentifier by providing a string or a numeric value (or nothing at
+all).</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.NodeIdIdentifier.type">
+<tt class="descname">type</tt><a class="headerlink" href="#pyuaf.util.NodeIdIdentifier.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type of the NodeIdIdentifier (e.g. <a class="reference internal" href="api_pyuaf_util_nodeididentifiertypes.html#pyuaf.util.nodeididentifiertypes.String" title="pyuaf.util.nodeididentifiertypes.String"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.nodeididentifiertypes.String</span></tt></a>)
+as defined within <a class="reference internal" href="api_pyuaf_util_nodeididentifiertypes.html#module-pyuaf.util.nodeididentifiertypes" title="pyuaf.util.nodeididentifiertypes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.nodeididentifiertypes</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.NodeIdIdentifier.idString">
+<tt class="descname">idString</tt><a class="headerlink" href="#pyuaf.util.NodeIdIdentifier.idString" title="Permalink to this definition">¶</a></dt>
+<dd><p>The string value in case <a class="reference internal" href="#pyuaf.util.NodeIdIdentifier.type" title="pyuaf.util.NodeIdIdentifier.type"><tt class="xref py py-attr docutils literal"><span class="pre">type</span></tt></a> equals
+<a class="reference internal" href="api_pyuaf_util_nodeididentifiertypes.html#pyuaf.util.nodeididentifiertypes.String" title="pyuaf.util.nodeididentifiertypes.String"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.nodeididentifiertypes.String</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.NodeIdIdentifier.idNumeric">
+<tt class="descname">idNumeric</tt><a class="headerlink" href="#pyuaf.util.NodeIdIdentifier.idNumeric" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <tt class="docutils literal"><span class="pre">int</span></tt> value in case <a class="reference internal" href="#pyuaf.util.NodeIdIdentifier.type" title="pyuaf.util.NodeIdIdentifier.type"><tt class="xref py py-attr docutils literal"><span class="pre">type</span></tt></a> equals
+<a class="reference internal" href="api_pyuaf_util_nodeididentifiertypes.html#pyuaf.util.nodeididentifiertypes.Numeric" title="pyuaf.util.nodeididentifiertypes.Numeric"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.nodeididentifiertypes.Numeric</span></tt></a>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-qualifiedname">
+<h2><em>class</em> QualifiedName<a class="headerlink" href="#class-qualifiedname" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.QualifiedName">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">QualifiedName</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.QualifiedName" title="Permalink to this definition">¶</a></dt>
+<dd><p>An QualifiedName consists of a name and a corresponding namespace index or namespace URI.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.QualifiedName.__init__">
+<tt class="descname">__init__</tt><big>(</big><span class="optional">[</span><em>name</em><span class="optional">[</span>, <em>nameSpaceUri</em><span class="optional">[</span>, <em>nameSpaceIndex</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.QualifiedName.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new QualifiedName in one of the following ways:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">QualifiedName</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">name</span>    <span class="o">=</span> <span class="s">&quot;MyName&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nsUri</span>   <span class="o">=</span> <span class="s">&quot;myNameSpaceUri&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nsIndex</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># the following ways of constructing a QualifiedName are possible:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qName0</span> <span class="o">=</span> <span class="n">QualifiedName</span><span class="p">()</span>                        <span class="c"># incomplete, no information given!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qName1</span> <span class="o">=</span> <span class="n">QualifiedName</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>                    <span class="c"># incomplete, no namespace information!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qName2</span> <span class="o">=</span> <span class="n">QualifiedName</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">nsUri</span><span class="p">)</span>             <span class="c"># OK, fully qualified</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qName3</span> <span class="o">=</span> <span class="n">QualifiedName</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">nsIndex</span><span class="p">)</span>           <span class="c"># OK, fully qualified</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qName4</span> <span class="o">=</span> <span class="n">QualifiedName</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">nsUri</span><span class="p">,</span> <span class="n">nsIndex</span><span class="p">)</span>    <span class="c"># OK, fully qualified</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># strings are assumed to be UTF-8 encoded!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unicodeObject</span> <span class="o">=</span> <span class="s">u&quot;40</span><span class="se">\u00B0</span><span class="s"> Celsius ist eine hei</span><span class="se">\u00DF</span><span class="s">e Temperatur!&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qName5</span> <span class="o">=</span> <span class="n">QualifiedName</span><span class="p">(</span><span class="n">unicodeObject</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s">&quot;UTF-8&quot;</span><span class="p">),</span> <span class="n">nsUri</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.QualifiedName.hasNameSpaceUri">
+<tt class="descname">hasNameSpaceUri</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.QualifiedName.hasNameSpaceUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a non-empty namespace URI was given.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if this QualifiedName contains a non-empty server URI, False if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.QualifiedName.hasNameSpaceIndex">
+<tt class="descname">hasNameSpaceIndex</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.QualifiedName.hasNameSpaceIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a namespace index was given.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if a namespaceIndex has been defined, False if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.QualifiedName.name">
+<tt class="descname">name</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.QualifiedName.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name part of the QualifiedName.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The name part.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.QualifiedName.nameSpaceUri">
+<tt class="descname">nameSpaceUri</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.QualifiedName.nameSpaceUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the namespace URI of the QualifiedName.</p>
+<p>This function will always return a string, so call hasNameSpaceUri() to see if it&#8217;s a
+valid one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The namespace URI.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.QualifiedName.nameSpaceIndex">
+<tt class="descname">nameSpaceIndex</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.QualifiedName.nameSpaceIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the namespace index of the QualifiedName.</p>
+<p>This function will always return an <tt class="docutils literal"><span class="pre">int</span></tt>, so call hasNameSpaceIndex() to see if it&#8217;s
+a valid one.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The namespace index.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.QualifiedName.setName">
+<tt class="descname">setName</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#pyuaf.util.QualifiedName.setName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name part of the QualifiedName.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The name part.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.QualifiedName.setNameSpaceUri">
+<tt class="descname">setNameSpaceUri</tt><big>(</big><em>uri</em><big>)</big><a class="headerlink" href="#pyuaf.util.QualifiedName.setNameSpaceUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the namespace URI of the QualifiedName.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uri</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The namespace URI.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.QualifiedName.setNameSpaceIndex">
+<tt class="descname">setNameSpaceIndex</tt><big>(</big><em>index</em><big>)</big><a class="headerlink" href="#pyuaf.util.QualifiedName.setNameSpaceIndex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the namespace index of the QualifiedName.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>uri</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The namespace index.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-qualifiednamevector">
+<h2><em>class</em> QualifiedNameVector<a class="headerlink" href="#class-qualifiednamevector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.QualifiedNameVector">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">QualifiedNameVector</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.QualifiedNameVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A QualifiedNameVector is a container that holds elements of type
+<a class="reference internal" href="#pyuaf.util.QualifiedName" title="pyuaf.util.QualifiedName"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.QualifiedName</span></tt></a>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.util.QualifiedName" title="pyuaf.util.QualifiedName"><tt class="xref py py-class docutils literal"><span class="pre">QualifiedName</span></tt></a>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">QualifiedNameVector</span><span class="p">,</span> <span class="n">QualifiedName</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a QualifiedNameVector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">QualifiedNameVector</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;some name&quot;</span><span class="p">,</span> <span class="s">&quot;/some/URI/&quot;</span><span class="p">))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">setName</span><span class="p">(</span><span class="s">&quot;Some other name&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">setNameSpaceUri</span><span class="p">(</span><span class="s">&quot;/some/other/URI/&quot;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 2</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a QualifiedNameVector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">someOtherVec</span> <span class="o">=</span> <span class="n">QualifiedNameVector</span><span class="p">(</span> <span class="p">[</span> <span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;uriA&quot;</span><span class="p">),</span>
+<span class="gp">... </span>                                      <span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;b&quot;</span><span class="p">,</span> <span class="s">&quot;uriB&quot;</span><span class="p">)</span> <span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="class-relativepath">
+<h2><em>class</em> RelativePath<a class="headerlink" href="#class-relativepath" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.RelativePath">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">RelativePath</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.RelativePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>A RelativePath is a container that holds elements of type
+<a class="reference internal" href="#pyuaf.util.RelativePathElement" title="pyuaf.util.RelativePathElement"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.RelativePathElement</span></tt></a>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.util.RelativePathElement" title="pyuaf.util.RelativePathElement"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.RelativePathElement</span></tt></a>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">RelativePath</span><span class="p">,</span> <span class="n">RelativePathElement</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a RelativePath without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span> <span class="o">=</span> <span class="n">RelativePath</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="c"># will be 0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RelativePathElement</span><span class="p">())</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="c"># will be 1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="c"># will be 4</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">element0</span> <span class="o">=</span> <span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a RelativePath from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">someOtherPath</span> <span class="o">=</span> <span class="n">RelativePath</span><span class="p">(</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(),</span> <span class="n">RelativePathElement</span><span class="p">()]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="class-relativepathelement">
+<h2><em>class</em> RelativePathElement<a class="headerlink" href="#class-relativepathelement" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.RelativePathElement">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">RelativePathElement</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.RelativePathElement" title="Permalink to this definition">¶</a></dt>
+<dd><p>A RelativePathElement describes one element of a RelativePath and basically contains a target
+(a qualified name), the type of the reference to this target, and some other properties.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.RelativePathElement.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.RelativePathElement.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a NodeIdIdentifier by providing a string or a numeric value (or nothing at
+all).</p>
+<p>You can construct a RelativePathElement like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>                  <span class="kn">import</span> <span class="n">RelativePathElement</span><span class="p">,</span> <span class="n">QualifiedName</span><span class="p">,</span> <span class="n">NodeId</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.opcuaidentifiers</span> <span class="kn">import</span> <span class="n">OpcUaId_HierarchicalReferences</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">elem0</span> <span class="o">=</span> <span class="n">RelativePathElement</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">elem1</span> <span class="o">=</span> <span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;SomeBrowseName&quot;</span><span class="p">,</span> <span class="mi">42</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">elem2</span> <span class="o">=</span> <span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;SomeBrowseName&quot;</span><span class="p">,</span> <span class="mi">42</span><span class="p">),</span> <span class="n">NodeId</span><span class="p">(</span><span class="n">OpcUaId_HierarchicalReferences</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.RelativePathElement.targetName">
+<tt class="descname">targetName</tt><a class="headerlink" href="#pyuaf.util.RelativePathElement.targetName" title="Permalink to this definition">¶</a></dt>
+<dd><p>The target name (a <a class="reference internal" href="#pyuaf.util.QualifiedName" title="pyuaf.util.QualifiedName"><tt class="xref py py-class docutils literal"><span class="pre">QualifiedName</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.RelativePathElement.referenceType">
+<tt class="descname">referenceType</tt><a class="headerlink" href="#pyuaf.util.RelativePathElement.referenceType" title="Permalink to this definition">¶</a></dt>
+<dd><p>The reference type as a <a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><tt class="xref py py-class docutils literal"><span class="pre">NodeId</span></tt></a> (which may, or may not be resolved).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.RelativePathElement.isInverse">
+<tt class="descname">isInverse</tt><a class="headerlink" href="#pyuaf.util.RelativePathElement.isInverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag specifying whether or not the inverse reference is meant (as a <tt class="docutils literal"><span class="pre">bool</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.RelativePathElement.includeSubtypes">
+<tt class="descname">includeSubtypes</tt><a class="headerlink" href="#pyuaf.util.RelativePathElement.includeSubtypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flag specifying if subtypes of the reference type should be included (as a <tt class="docutils literal"><span class="pre">bool</span></tt>).</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-simpleattributeoperand">
+<h2><em>class</em> SimpleAttributeOperand<a class="headerlink" href="#class-simpleattributeoperand" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.SimpleAttributeOperand">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">SimpleAttributeOperand</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.SimpleAttributeOperand" title="Permalink to this definition">¶</a></dt>
+<dd><p>A SimpleAttributeOperand is part of a filter and can describe select clauses, where clauses, etc.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.SimpleAttributeOperand.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.SimpleAttributeOperand.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new SimpleAttributeOperand.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.SimpleAttributeOperand.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=20</em><big>)</big><a class="headerlink" href="#pyuaf.util.SimpleAttributeOperand.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation of the SimpleAttributeOperand.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.SimpleAttributeOperand.attributeId">
+<tt class="descname">attributeId</tt><a class="headerlink" href="#pyuaf.util.SimpleAttributeOperand.attributeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>The attribute id (e.g. <a class="reference internal" href="api_pyuaf_util_attributeids.html#pyuaf.util.attributeids.Value" title="pyuaf.util.attributeids.Value"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.attributeids.Value</span></tt></a>) as an <tt class="docutils literal"><span class="pre">int</span></tt> as
+defined in <a class="reference internal" href="api_pyuaf_util_attributeids.html#module-pyuaf.util.attributeids" title="pyuaf.util.attributeids"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.attributeids</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.SimpleAttributeOperand.browsePath">
+<tt class="descname">browsePath</tt><a class="headerlink" href="#pyuaf.util.SimpleAttributeOperand.browsePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>A &#8220;simple&#8221; browse path (actually just a list of qualified names),
+as a <a class="reference internal" href="#pyuaf.util.QualifiedNameVector" title="pyuaf.util.QualifiedNameVector"><tt class="xref py py-class docutils literal"><span class="pre">QualifiedNameVector</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.SimpleAttributeOperand.typeId">
+<tt class="descname">typeId</tt><a class="headerlink" href="#pyuaf.util.SimpleAttributeOperand.typeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type id, as a <a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><tt class="xref py py-class docutils literal"><span class="pre">NodeId</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.SimpleAttributeOperand.indexRange">
+<tt class="descname">indexRange</tt><a class="headerlink" href="#pyuaf.util.SimpleAttributeOperand.indexRange" title="Permalink to this definition">¶</a></dt>
+<dd><p>The index range of an array, as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-simpleattributeoperandvector">
+<h2><em>class</em> SimpleAttributeOperandVector<a class="headerlink" href="#class-simpleattributeoperandvector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.SimpleAttributeOperandVector">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">SimpleAttributeOperandVector</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.SimpleAttributeOperandVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A SimpleAttributeOperandVector is a container that holds elements of type
+<a class="reference internal" href="#pyuaf.util.SimpleAttributeOperand" title="pyuaf.util.SimpleAttributeOperand"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.SimpleAttributeOperand</span></tt></a>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.util.SimpleAttributeOperand" title="pyuaf.util.SimpleAttributeOperand"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.SimpleAttributeOperand</span></tt></a>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">SimpleAttributeOperandVector</span><span class="p">,</span> \
+<span class="gp">... </span>                       <span class="n">SimpleAttributeOperand</span><span class="p">,</span> \
+<span class="gp">... </span>                       <span class="n">QualifiedName</span><span class="p">,</span> \
+<span class="gp">... </span>                       <span class="n">NodeId</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a SimpleAttributeOperandVector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">SimpleAttributeOperandVector</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SimpleAttributeOperand</span><span class="p">())</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">attributeId</span> <span class="o">=</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">attributeids</span><span class="o">.</span><span class="n">Value</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">browsePath</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;some name&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">typeId</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">opcuaidentifiers</span><span class="o">.</span><span class="n">OpcUaId_BaseEventType</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 4</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a SimpleAttributeOperandVector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">someOtherVec</span> <span class="o">=</span> <span class="n">SimpleAttributeOperandVector</span><span class="p">(</span> <span class="p">[</span> <span class="n">SimpleAttributeOperand</span><span class="p">(),</span>
+<span class="gp">... </span>                                               <span class="n">SimpleAttributeOperand</span><span class="p">()</span> <span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="class-status">
+<h2><em>class</em> Status<a class="headerlink" href="#class-status" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.Status">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">Status</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Status" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>A Status object holds a UAF status code, a description and optionally an OPC UA status code.</div></blockquote>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.Status.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Status.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a Status by providing a UAF status code (as defined by
+<a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a>) and optionally a description (a string).</p>
+<p>UAF Status objects are Uncertain by default.</p>
+<p>You can construct a Status like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">Status</span><span class="p">,</span> <span class="n">statuscodes</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">status0</span> <span class="o">=</span> <span class="n">Status</span><span class="p">()</span> <span class="c"># Uncertain by default!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">status1</span> <span class="o">=</span> <span class="n">Status</span><span class="p">(</span><span class="n">statuscodes</span><span class="o">.</span><span class="n">Good</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">status2</span> <span class="o">=</span> <span class="n">Status</span><span class="p">(</span><span class="n">statuscodes</span><span class="o">.</span><span class="n">InvalidRequestError</span><span class="p">,</span> <span class="s">&quot;This is an invalid request!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.statusCode">
+<tt class="descname">statusCode</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.statusCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the UAF status code (as defined by <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a>).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The UAF status code (as defined by <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a>).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.statusCodeName">
+<tt class="descname">statusCodeName</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.statusCodeName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the UAF status code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The name of the UAF status code.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.addDiagnostic">
+<tt class="descname">addDiagnostic</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Status.addDiagnostic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add some diagnostic info.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The extra diagnostic info.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.hasOpcUaStatusCode">
+<tt class="descname">hasOpcUaStatusCode</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.hasOpcUaStatusCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the Status object, besides a UAF status code, also contains an OPC UA status
+code (which can be gotten with <a class="reference internal" href="#pyuaf.util.Status.opcUaStatusCode" title="pyuaf.util.Status.opcUaStatusCode"><tt class="xref py py-meth docutils literal"><span class="pre">opcUaStatusCode()</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the status object has an OPC UA status code.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.opcUaStatusCode">
+<tt class="descname">opcUaStatusCode</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.opcUaStatusCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the OPC UA status code (only relevant
+if <a class="reference internal" href="#pyuaf.util.Status.hasOpcUaStatusCode" title="pyuaf.util.Status.hasOpcUaStatusCode"><tt class="xref py py-meth docutils literal"><span class="pre">hasOpcUaStatusCode()</span></tt></a> is True!).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The OPC UA status code.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.setGood">
+<tt class="descname">setGood</tt><big>(</big><span class="optional">[</span><em>message</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.Status.setGood" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the status to Good (and optionally add a message).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The optional message.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.setUncertain">
+<tt class="descname">setUncertain</tt><big>(</big><span class="optional">[</span><em>message</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.Status.setUncertain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the status to Uncertain (and optionally add a message).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The optional message.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.setStatus">
+<tt class="descname">setStatus</tt><big>(</big><em>statusCode</em><span class="optional">[</span>, <em>message</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.Status.setStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the status to the given status code (and optionally add a message).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>statusCode</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The new UAF status code (as defined by <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a>).</li>
+<li><strong>message</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The optional message.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.isGood">
+<tt class="descname">isGood</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.isGood" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the status has a &#8220;good&#8221; status code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the status is Good.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.isNotGood">
+<tt class="descname">isNotGood</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.isNotGood" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the status does not have a &#8220;good&#8221; status code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the status is not Good.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.isUncertain">
+<tt class="descname">isUncertain</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.isUncertain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the status has an &#8220;uncertain&#8221; status code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the status is Uncertain.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.isNotUncertain">
+<tt class="descname">isNotUncertain</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.isNotUncertain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the status does not have a &#8220;uncertain&#8221; status code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the status is not Uncertain.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.isBad">
+<tt class="descname">isBad</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.isBad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the status has a &#8220;bad&#8221; status code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the status is Bad.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.isNotBad">
+<tt class="descname">isNotBad</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.isNotBad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the status does not have a &#8220;bad&#8221; status code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the status is not Bad.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.summarize">
+<tt class="descname">summarize</tt><big>(</big><em>statuses</em><big>)</big><a class="headerlink" href="#pyuaf.util.Status.summarize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a &#8220;summary&#8221; of other statuses.</p>
+<p>Bad is dominant to Uncertain, which is dominant to Good.
+So if any Bad status is present, the summary will be &#8220;Bad&#8221;.
+If no Bad statuses are present but any Uncertain status is present, the summary will be
+Uncertain. And if only Good statuses are present, the summary will be Good.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>statuses</strong> (<a class="reference internal" href="#pyuaf.util.StatusVector" title="pyuaf.util.StatusVector"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.StatusVector</span></tt></a>.) &#8211; The statuses to summarize.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-statusvector">
+<h2><em>class</em> StatusVector<a class="headerlink" href="#class-statusvector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.StatusVector">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">StatusVector</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.StatusVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A StatusVector is a container that holds elements of type  <a class="reference internal" href="#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.Status</span></tt></a>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.Status</span></tt></a>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">Status</span><span class="p">,</span> <span class="n">StatusVector</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a StatusVector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">statuses</span> <span class="o">=</span> <span class="n">StatusVector</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">statuses</span><span class="p">)</span> <span class="c"># will be 0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">statuses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Status</span><span class="p">())</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">statuses</span><span class="p">)</span> <span class="c"># will be 1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">statuses</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">statuses</span><span class="p">)</span> <span class="c"># will be 4</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">element0</span> <span class="o">=</span> <span class="n">statuses</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a StatusVector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">otherStatuses</span> <span class="o">=</span> <span class="n">StatusVector</span><span class="p">(</span> <span class="p">[</span><span class="n">Status</span><span class="p">(),</span> <span class="n">Status</span><span class="p">()]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="class-stringifiable">
+<h2><em>class</em> Stringifiable<a class="headerlink" href="#class-stringifiable" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.Stringifiable">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">Stringifiable</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyuaf.util.Stringifiable" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Stringifiable is an abstract class, subclassed by classes that must be able to be represented
+as a string.</div></blockquote>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.Stringifiable.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent</em>, <em>colon</em><big>)</big><a class="headerlink" href="#pyuaf.util.Stringifiable.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>indent</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; Indentation to add in front of each new line.</li>
+<li><strong>colon</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>.) &#8211; Position from the beginning of the line, where a colon (double point)
+should be placed in case of key : value pairs.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-stringvector">
+<h2><em>class</em> StringVector<a class="headerlink" href="#class-stringvector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.StringVector">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">StringVector</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.StringVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A StringVector is a container that holds string elements.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of string.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># examples/pyuaf/util/how_to_use_a_stringvector.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Example: how to use a StringVector</span>
+<span class="sd">====================================================================================================</span>
+
+<span class="sd">A StringVector is a container that holds string elements. </span>
+<span class="sd">It is an artifact automatically generated from the C++ UAF code, and has the same functionality</span>
+<span class="sd">as a list of str.</span>
+
+<span class="sd">See the HTML documentation of PyUAF for more info!</span>
+<span class="sd">&quot;&quot;&quot;</span> 
+
+<span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">StringVector</span>
+
+<span class="c"># construct a StringVector without elements:</span>
+<span class="n">strings</span> <span class="o">=</span> <span class="n">StringVector</span><span class="p">()</span>
+
+<span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span> <span class="c"># will be 0</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;noOfElements (should be 0): </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">noOfElements</span><span class="p">)</span>
+
+<span class="n">strings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">)</span>
+
+<span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span> <span class="c"># will be 1</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;noOfElements (should be 1): </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">noOfElements</span><span class="p">)</span>
+
+<span class="n">strings</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">strings</span><span class="p">)</span> <span class="c"># will be 4</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;noOfElements (should be 4): </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">noOfElements</span><span class="p">)</span>
+
+<span class="c"># The first element (index 0) is &quot;foo&quot;, the other 3 elements are empty strings (&quot;&quot;)</span>
+<span class="c"># So we fill these strings now: </span>
+<span class="n">strings</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;x&quot;</span>
+<span class="n">strings</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;y&quot;</span>
+<span class="n">strings</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;z&quot;</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&#39;strings&#39; element 0: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">strings</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&#39;strings&#39; element 1: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">strings</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&#39;strings&#39; element 2: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">strings</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&#39;strings&#39; element 3: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">strings</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+
+<span class="c"># you may also construct a StringVector from a regular Python list:</span>
+<span class="n">otherStrings</span> <span class="o">=</span> <span class="n">StringVector</span><span class="p">(</span> <span class="p">[</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="s">&quot;bar&quot;</span><span class="p">]</span> <span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&#39;otherStrings&#39; element 0: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">otherStrings</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&#39;otherStrings&#39; element 1: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">otherStrings</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="class-uint32vector">
+<h2><em>class</em> UInt32Vector<a class="headerlink" href="#class-uint32vector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.UInt32Vector">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">UInt32Vector</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.UInt32Vector" title="Permalink to this definition">¶</a></dt>
+<dd><p>An UInt32Vector is a container that holds unsigned 32-bit <tt class="docutils literal"><span class="pre">int</span></tt> elements
+(not <a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.UInt32" title="pyuaf.util.primitives.UInt32"><tt class="xref py py-class docutils literal"><span class="pre">UInt32</span></tt></a> objects!)</p>
+<p>It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
+<p>An <a class="reference internal" href="#pyuaf.util.UInt32Vector" title="pyuaf.util.UInt32Vector"><tt class="xref py py-class docutils literal"><span class="pre">UInt32Vector</span></tt></a> is exactly the same as a <a class="reference internal" href="#pyuaf.util.StringVector" title="pyuaf.util.StringVector"><tt class="xref py py-class docutils literal"><span class="pre">StringVector</span></tt></a>,
+except of course that it holds <tt class="docutils literal"><span class="pre">int</span></tt> elements instead of <tt class="docutils literal"><span class="pre">str</span></tt> elements.
+For an elaborate example, check out the example at the <a class="reference internal" href="#pyuaf.util.StringVector" title="pyuaf.util.StringVector"><tt class="xref py py-class docutils literal"><span class="pre">StringVector</span></tt></a>
+documentation.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="class-usertokenpolicy">
+<h2><em>class</em> UserTokenPolicy<a class="headerlink" href="#class-usertokenpolicy" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.UserTokenPolicy">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">UserTokenPolicy</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.UserTokenPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>A UserTokenPolicy instance describes the type, ID, issued token type, etc. of a user token.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.UserTokenPolicy.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.UserTokenPolicy.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new UserTokenPolicy.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.UserTokenPolicy.policyId">
+<tt class="descname">policyId</tt><a class="headerlink" href="#pyuaf.util.UserTokenPolicy.policyId" title="Permalink to this definition">¶</a></dt>
+<dd><p>The policy ID as a <tt class="docutils literal"><span class="pre">str</span></tt>, as defined in <a class="reference internal" href="api_pyuaf_util_securitypolicies.html#module-pyuaf.util.securitypolicies" title="pyuaf.util.securitypolicies"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.securitypolicies</span></tt></a>.</p>
+<p>By default, the policyId is <a class="reference internal" href="api_pyuaf_util_securitypolicies.html#pyuaf.util.securitypolicies.UA_None" title="pyuaf.util.securitypolicies.UA_None"><tt class="xref py py-attr docutils literal"><span class="pre">UA_None</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.UserTokenPolicy.tokenType">
+<tt class="descname">tokenType</tt><a class="headerlink" href="#pyuaf.util.UserTokenPolicy.tokenType" title="Permalink to this definition">¶</a></dt>
+<dd><p>The token type (e.g. <a class="reference internal" href="api_pyuaf_util_usertokentypes.html#pyuaf.util.usertokentypes.UserName" title="pyuaf.util.usertokentypes.UserName"><tt class="xref py py-attr docutils literal"><span class="pre">UserName</span></tt></a>)
+(an <tt class="docutils literal"><span class="pre">int</span></tt>, as defined in <a class="reference internal" href="api_pyuaf_util_usertokentypes.html#module-pyuaf.util.usertokentypes" title="pyuaf.util.usertokentypes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.usertokentypes</span></tt></a>).</p>
+<p>By default, the tokenType is <a class="reference internal" href="api_pyuaf_util_usertokentypes.html#pyuaf.util.usertokentypes.Anonymous" title="pyuaf.util.usertokentypes.Anonymous"><tt class="xref py py-attr docutils literal"><span class="pre">Anonymous</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.UserTokenPolicy.issuedTokenType">
+<tt class="descname">issuedTokenType</tt><a class="headerlink" href="#pyuaf.util.UserTokenPolicy.issuedTokenType" title="Permalink to this definition">¶</a></dt>
+<dd><p>The issued token type as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.UserTokenPolicy.issuerEndpointUrl">
+<tt class="descname">issuerEndpointUrl</tt><a class="headerlink" href="#pyuaf.util.UserTokenPolicy.issuerEndpointUrl" title="Permalink to this definition">¶</a></dt>
+<dd><p>The issuer endpoint URL as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.UserTokenPolicy.securityPolicyUri">
+<tt class="descname">securityPolicyUri</tt><a class="headerlink" href="#pyuaf.util.UserTokenPolicy.securityPolicyUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>The security policy URI as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-usertokenpolicyvector">
+<h2><em>class</em> UserTokenPolicyVector<a class="headerlink" href="#class-usertokenpolicyvector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.UserTokenPolicyVector">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">UserTokenPolicyVector</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.UserTokenPolicyVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A QualifiedNameVector is a container that holds elements of type
+<a class="reference internal" href="#pyuaf.util.UserTokenPolicy" title="pyuaf.util.UserTokenPolicy"><tt class="xref py py-class docutils literal"><span class="pre">UserTokenPolicy</span></tt></a>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.util.UserTokenPolicy" title="pyuaf.util.UserTokenPolicy"><tt class="xref py py-class docutils literal"><span class="pre">UserTokenPolicy</span></tt></a>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">UserTokenPolicyVector</span><span class="p">,</span> <span class="n">UserTokenPolicy</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a UserTokenPolicyVector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">UserTokenPolicyVector</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">UserTokenPolicy</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">policyId</span> <span class="o">=</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">securitypolicies</span><span class="o">.</span><span class="n">UA_Basic128Rsa15</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">policyId</span> <span class="o">=</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">securitypolicies</span><span class="o">.</span><span class="n">UA_Basic256Rsa15</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 2</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a UserTokenPolicyVector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">someOtherVec</span> <span class="o">=</span> <span class="n">UserTokenPolicyVector</span><span class="p">(</span> <span class="p">[</span> <span class="n">UserTokenPolicy</span><span class="p">(),</span> <span class="n">UserTokenPolicy</span><span class="p">()</span> <span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="class-variantvector">
+<h2><em>class</em> VariantVector<a class="headerlink" href="#class-variantvector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.VariantVector">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">VariantVector</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.VariantVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A VariantVector is a container that holds variants (so variables with a dynamic data type).
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of values, where the values can be instances of:</p>
+<blockquote>
+<div><ul class="simple">
+<li>None</li>
+<li><a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.Boolean" title="pyuaf.util.primitives.Boolean"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.primitives.Boolean</span></tt></a></li>
+<li><a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.UInt32" title="pyuaf.util.primitives.UInt32"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.primitives.UInt32</span></tt></a></li>
+<li><tt class="docutils literal"><span class="pre">str</span></tt></li>
+<li><a class="reference internal" href="#pyuaf.util.QualifiedName" title="pyuaf.util.QualifiedName"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.QualifiedName</span></tt></a></li>
+<li><a class="reference internal" href="#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.LocalizedText</span></tt></a></li>
+<li>a <tt class="docutils literal"><span class="pre">list</span></tt> of any of the above types &#8211;&gt; represents an OPC UA array!</li>
+<li>...</li>
+</ul>
+</div></blockquote>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="api_variants.html#note-variants"><em>A note on dynamic data types</em></a>.</p>
+</div>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># examples/pyuaf/util/how_to_use_a_variantvector.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Example: how to use a VariantVector</span>
+<span class="sd">====================================================================================================</span>
+
+<span class="sd">A VariantVector is a container that holds elements of a dynamic data type. </span>
+<span class="sd">It is an artifact automatically generated from the C++ UAF code, and has the same functionality</span>
+<span class="sd">as a list of variables values, where the values can be instances of:</span>
+
+<span class="sd">  - None</span>
+<span class="sd">  - pyuaf.util.primitives.Boolean</span>
+<span class="sd">  - pyuaf.util.primitives.UInt32</span>
+<span class="sd">  - pyuaf.util.QualifiedName</span>
+<span class="sd">  - pyuaf.util.LocalizedText</span>
+<span class="sd">  - ...</span>
+
+<span class="sd">See the HTML documentation of PyUAF for more info!</span>
+<span class="sd">&quot;&quot;&quot;</span> 
+
+<span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">VariantVector</span>
+
+<span class="c"># construct a VariantVector without elements:</span>
+<span class="n">vec</span> <span class="o">=</span> <span class="n">VariantVector</span><span class="p">()</span>
+
+<span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;noOfElements (should be 0): </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">noOfElements</span><span class="p">)</span>
+
+
+<span class="c"># now we append an unsigned 32-bit integer, a boolean, and a localized text: </span>
+<span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">primitives</span><span class="o">.</span><span class="n">UInt32</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">primitives</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">LocalizedText</span><span class="p">(</span><span class="s">&quot;en&quot;</span><span class="p">,</span> <span class="s">&quot;Some text.&quot;</span><span class="p">)</span> <span class="p">)</span>
+
+<span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;noOfElements (should be 3): </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Vector contents:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">noOfElements</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot; - vec[</span><span class="si">%d</span><span class="s">] = </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">])))</span>
+
+<span class="c"># now we resize the vector so that it contains 4 elements (the last one being a None value)</span>
+<span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;noOfElements (should be 4): </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">noOfElements</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Vector contents:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">noOfElements</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot; - vec[</span><span class="si">%d</span><span class="s">] = </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">])))</span>
+
+<span class="c"># now we append an array of Floats.</span>
+<span class="c"># An OPC UA array can be defined as a python list. </span>
+<span class="c"># All elements should have the same type, otherwise you will get a TypeError!</span>
+<span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="p">[</span><span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">primitives</span><span class="o">.</span><span class="n">Float</span><span class="p">(</span><span class="mf">0.1</span><span class="p">),</span>
+             <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">primitives</span><span class="o">.</span><span class="n">Float</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+             <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">primitives</span><span class="o">.</span><span class="n">Float</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span> <span class="p">]</span> <span class="p">)</span>
+
+<span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;noOfElements (should be 5): </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">noOfElements</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Vector contents:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">noOfElements</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot; - vec[</span><span class="si">%d</span><span class="s">] = </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">])))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/uaf_logo_200x67_transparent.png" alt="Logo"/>
+            </a></p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">pyuaf.util</span></tt></a><ul>
+<li><a class="reference internal" href="#class-address"><em>class</em> Address</a></li>
+<li><a class="reference internal" href="#class-applicationdescription"><em>class</em> ApplicationDescription</a></li>
+<li><a class="reference internal" href="#class-applicationdescriptionvector"><em>class</em> ApplicationDescriptionVector</a></li>
+<li><a class="reference internal" href="#class-browsepath"><em>class</em> BrowsePath</a></li>
+<li><a class="reference internal" href="#class-datachangefilter"><em>class</em> DataChangeFilter</a></li>
+<li><a class="reference internal" href="#class-endpointdescription"><em>class</em> EndpointDescription</a></li>
+<li><a class="reference internal" href="#class-endpointdescriptionvector"><em>class</em> EndpointDescriptionVector</a></li>
+<li><a class="reference internal" href="#class-eventfilter"><em>class</em> EventFilter</a></li>
+<li><a class="reference internal" href="#class-expandednodeid"><em>class</em> ExpandedNodeId</a></li>
+<li><a class="reference internal" href="#class-expandednodeidvector"><em>class</em> ExpandedNodeIdVector</a></li>
+<li><a class="reference internal" href="#class-localizedtext"><em>class</em> LocalizedText</a></li>
+<li><a class="reference internal" href="#class-logginginterface"><em>class</em> LoggingInterface</a></li>
+<li><a class="reference internal" href="#class-logmessage"><em>class</em> LogMessage</a></li>
+<li><a class="reference internal" href="#class-mask"><em>class</em> Mask</a></li>
+<li><a class="reference internal" href="#class-nodeid"><em>class</em> NodeId</a></li>
+<li><a class="reference internal" href="#class-nodeididentifier"><em>class</em> NodeIdIdentifier</a></li>
+<li><a class="reference internal" href="#class-qualifiedname"><em>class</em> QualifiedName</a></li>
+<li><a class="reference internal" href="#class-qualifiednamevector"><em>class</em> QualifiedNameVector</a></li>
+<li><a class="reference internal" href="#class-relativepath"><em>class</em> RelativePath</a></li>
+<li><a class="reference internal" href="#class-relativepathelement"><em>class</em> RelativePathElement</a></li>
+<li><a class="reference internal" href="#class-simpleattributeoperand"><em>class</em> SimpleAttributeOperand</a></li>
+<li><a class="reference internal" href="#class-simpleattributeoperandvector"><em>class</em> SimpleAttributeOperandVector</a></li>
+<li><a class="reference internal" href="#class-status"><em>class</em> Status</a></li>
+<li><a class="reference internal" href="#class-statusvector"><em>class</em> StatusVector</a></li>
+<li><a class="reference internal" href="#class-stringifiable"><em>class</em> Stringifiable</a></li>
+<li><a class="reference internal" href="#class-stringvector"><em>class</em> StringVector</a></li>
+<li><a class="reference internal" href="#class-uint32vector"><em>class</em> UInt32Vector</a></li>
+<li><a class="reference internal" href="#class-usertokenpolicy"><em>class</em> UserTokenPolicy</a></li>
+<li><a class="reference internal" href="#class-usertokenpolicyvector"><em>class</em> UserTokenPolicyVector</a></li>
+<li><a class="reference internal" href="#class-variantvector"><em>class</em> VariantVector</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api_pyuaf_client_subscriptionstates.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">pyuaf.client.subscriptionstates</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api_pyuaf_util_attributeids.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.util.attributeids</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/api_pyuaf_util.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_util_attributeids.html" title="pyuaf.util.attributeids"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
+             >previous</a> |</li>
+        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Wim Pessemier (Institute for Astronomy, KU Leuven) - http://github.com/uaf.
+    </div>
+  </body>
+</html>
