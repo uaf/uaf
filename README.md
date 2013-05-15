@@ -21,10 +21,17 @@ Why?
    OPC UA applications with minimal effort. Essentially, it takes care of
    some *technical* aspects (such as Session and Subscription management,
    server discovery, node resolution, ...) so that you can concentrate on 
-   the *functional* aspects of your software application.  
+   the *functional* aspects of your software application.
+   
+ - Some very concise and easy to understand examples can be found here:
+ 
+    - in Python:   [easiest_client_example.py](examples/pyuaf/client/easiest_client_example.py)
+    - in C++:      [easiest_client_example.cpp](examples/uaf/src/client/easiest_client_example.cpp)
 
- - The following Python example shows you some advantages of the UAF.
-   In C++, the example would look quite similar.
+ - The following Python example (a single example, split up into several pieces)
+   shows you some advantages of the UAF.
+   In C++, the equivalent code would be a bit more verbose, but the C++ API 
+   is essentially the same as the Python API.
 
     - **Intuitive API:**
 
