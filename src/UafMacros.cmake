@@ -217,7 +217,7 @@ MACRO(handleSwig)
                 message(FATAL_ERROR
                         "-- The Unified Automation SDK path was specified (${UASDK}) "
                         "but doesn't exist!")
-            endif (EXISTS "${UASDK}/include")
+            endif ()
             
         else(SWIG)
         
