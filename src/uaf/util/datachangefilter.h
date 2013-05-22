@@ -39,7 +39,7 @@ namespace uaf
 
 
     /*******************************************************************************************//**
-    * A uaf::MonitoredDataSettings instance holds the settings for a monitored data item.
+    * A uaf::DataChangeFilter instance holds the filter settings for a monitored data item.
     *
     * @ingroup Util
     ***********************************************************************************************/

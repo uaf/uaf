@@ -23,6 +23,7 @@ set(  PYUAF_UTIL_TARGETS
       __init__
       applicationtypes
       attributeids
+      bytestring_python
       loglevels
       usertokentypes
       nodeididentifiertypes
@@ -32,6 +33,8 @@ set(  PYUAF_UTIL_TARGETS
       securitypolicies
       messagesecuritymodes
       monitoringmodes
+      browsedirections
+      nodeclasses
       primitives
       constants
       variant_python

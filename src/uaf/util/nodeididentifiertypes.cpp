@@ -34,10 +34,10 @@ namespace uaf
         {
             switch (type)
             {
-                case Numeric:   return "Numeric";
-                case String:    return "String";
-                case Guid:      return "Guid";
-                case Opaque:    return "Opaque";
+                case Identifier_Numeric:   return "Numeric";
+                case Identifier_String:    return "String";
+                case Identifier_Guid:      return "Guid";
+                case Identifier_Opaque:    return "Opaque";
                 default:        return "INVALID";
             }
         }
@@ -49,10 +49,10 @@ namespace uaf
         {
             switch (type)
             {
-                case Numeric:   return OpcUa_IdentifierType_Numeric;
-                case String:    return OpcUa_IdentifierType_String;
-                case Guid:      return OpcUa_IdentifierType_Guid;
-                case Opaque:    return OpcUa_IdentifierType_Opaque;
+                case Identifier_Numeric:   return OpcUa_IdentifierType_Numeric;
+                case Identifier_String:    return OpcUa_IdentifierType_String;
+                case Identifier_Guid:      return OpcUa_IdentifierType_Guid;
+                case Identifier_Opaque:    return OpcUa_IdentifierType_Opaque;
                 default:        return OpcUa_IdentifierType_Numeric;
             }
         }
@@ -64,11 +64,11 @@ namespace uaf
         {
             switch (type)
             {
-                case OpcUa_IdentifierType_Numeric:  return Numeric;
-                case OpcUa_IdentifierType_String:   return String;
-                case OpcUa_IdentifierType_Guid:     return Guid;
-                case OpcUa_IdentifierType_Opaque:   return Opaque;
-                default:                            return Numeric;
+                case OpcUa_IdentifierType_Numeric:  return Identifier_Numeric;
+                case OpcUa_IdentifierType_String:   return Identifier_String;
+                case OpcUa_IdentifierType_Guid:     return Identifier_Guid;
+                case OpcUa_IdentifierType_Opaque:   return Identifier_Opaque;
+                default:                            return Identifier_Numeric;
             }
         }
 

@@ -33,6 +33,8 @@
 #include "uaf/util/util.h"
 #include "uaf/util/nodeididentifiertypes.h"
 #include "uaf/util/status.h"
+#include "uaf/util/guid.h"
+#include "uaf/util/bytestring.h"
 
 
 namespace uaf
@@ -78,15 +80,45 @@ namespace uaf
         NodeIdIdentifier(const uint32_t idNumeric);
 
 
+        /**
+         * Construct a NodeIdIdentifier based on a Guid.
+         *
+         * @param idGuid Guid value defining the identifier.
+         */
+        NodeIdIdentifier(const uaf::Guid& idGuid);
 
-        /** Type of the identifier (e.g. NodeIdIdentifier::String or NodeIdIdentifier::Numeric). */
+
+        /**
+         * Construct a NodeIdIdentifier based on a ByteString.
+         *
+         * @param idOpaque ByteString value defining the opaque identifier.
+         */
+        NodeIdIdentifier(const uaf::ByteString& idOpaque);
+
+
+        /**
+         * Was the identifier initialized with some contents?
+         *
+         * @return  True if the identifier does not have any contents.
+         */
+        bool isNull() const;
+
+
+        /** Type of the identifier (e.g. nodeididentifiers::Identifier_String or
+         *  nodeididentifiers::Identifier_Numeric). */
         uaf::nodeididentifiertypes::NodeIdIdentifierType type;
 
-        /** String in case the type equals NodeIdIdentifier::String. */
-        std::string         idString;
+        /** String in case the type equals nodeididentifiers::Identifier_String. */
+        std::string idString;
 
-        /** UInt32 in case the type equals NodeIdIdentifier::Numeric. */
-        uint32_t            idNumeric;
+        /** UInt32 in case the type equals nodeididentifiers::Identifier_Numeric. */
+        uint32_t idNumeric;
+
+        /** GUID in case the type equals nodeididentifiers::Identifier_Guid. */
+        uaf::Guid idGuid;
+
+        /** Bytestring in case the type equals nodeididentifiers::Identifier_Opaque. */
+        uaf::ByteString idOpaque;
 
 
         /**

@@ -10,6 +10,104 @@ In UAF terminology, a ``Config`` contains one or more ``Settings`` (which are de
 
 
 
+*class* BrowseConfig
+----------------------------------------------------------------------------------------------------
+
+.. autoclass:: pyuaf.client.configs.BrowseConfig
+
+    A BrowseConfig contains all service-related settings to process a 
+    :class:`~pyuaf.client.requests.BrowseRequest`.
+    
+    It contains:
+    
+      - a :class:`~pyuaf.client.settings.BrowseSettings` instance, containing the settings for the
+        actual Browse service (and subsequent BrowseNext services that are automatically invoked
+        by the UAF, if you allow the UAF to do so).
+        
+      - a :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings` instance, that
+        will only be used to resolve the addresses that are part of the 
+        :class:`~pyuaf.client.requests.BrowseRequest` (if needed).
+
+
+    * Methods:
+
+        .. automethod:: pyuaf.client.configs.BrowseConfig.__init__
+    
+            Create a new BrowseConfig object.
+            
+    
+        .. automethod:: pyuaf.client.configs.BrowseConfig.__str__
+    
+            Get a formatted string representation of the config.
+
+
+    * Attributes
+    
+        .. autoattribute:: pyuaf.client.configs.BrowseConfig.serviceSettings
+
+            The settings that will be used for the Browse service invocation.
+            
+            This attribute is a :class:`~pyuaf.client.settings.BrowseSettings` instance.
+    
+        .. autoattribute:: pyuaf.client.configs.BrowseConfig.translationSettings
+
+            The settings that will be used if the browse request contains addresses that have 
+            relative paths that need to be translated.
+            
+            This attribute is a 
+            :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings` instance.
+
+
+
+*class* BrowseNextConfig
+----------------------------------------------------------------------------------------------------
+
+.. autoclass:: pyuaf.client.configs.BrowseNextConfig
+
+    A BrowseNextConfig contains all service-related settings to process a 
+    :class:`~pyuaf.client.requests.BrowseNextRequest`.
+    
+    It contains:
+    
+      - a :class:`~pyuaf.client.settings.BrowseNextSettings` instance, containing the settings for 
+        the actual BrowseNext service.
+        
+      - a :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings` instance, that
+        will only be used to resolve the addresses that are part of the 
+        :class:`~pyuaf.client.requests.BrowseNextRequest` (if needed).
+
+
+    * Methods:
+
+        .. automethod:: pyuaf.client.configs.BrowseNextConfig.__init__
+    
+            Create a new BrowseNextConfig object.
+            
+    
+        .. automethod:: pyuaf.client.configs.BrowseNextConfig.__str__
+    
+            Get a formatted string representation of the config.
+
+
+    * Attributes
+    
+        .. autoattribute:: pyuaf.client.configs.BrowseNextConfig.serviceSettings
+
+            The settings that will be used for the Browse service invocation.
+            
+            This attribute is a :class:`~pyuaf.client.settings.BrowseSettings` instance.
+    
+        .. autoattribute:: pyuaf.client.configs.BrowseNextConfig.translationSettings
+
+            The settings that will be used if the BrowseNext request contains addresses that have 
+            relative paths that need to be translated.
+            
+            This attribute is a 
+            :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings` instance.
+
+
+
+
 
 *class* CreateMonitoredDataConfig
 ----------------------------------------------------------------------------------------------------

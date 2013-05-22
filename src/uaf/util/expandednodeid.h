@@ -28,11 +28,18 @@
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/nodeid.h"
-#include "uaf/util/serverarray.h"
 
 
 namespace uaf
 {
+
+
+    /**
+     * A ServerIndex is an unsigned 32-bit integer, identifying a server in a ServerArray.
+     *
+     * @ingroup Util
+     */
+    typedef uint32_t ServerIndex;
 
 
     /*******************************************************************************************//**
@@ -313,6 +320,16 @@ namespace uaf
 
 
         /**
+         * Set the server URI of the ExpandedNodeId.
+         */
+        void setServerUri(const std::string& serverUri)
+        {
+            serverUri_      = serverUri;
+            serverUriGiven_ = true;
+        }
+
+
+        /**
          * Get a string representation.
          *
          * @return String representation.
@@ -349,6 +366,19 @@ namespace uaf
                 const OpcUa_ExpandedNodeId& opcUaExpandedNodeId,
                 const std::string&          nameSpaceUri,
                 const std::string&          serverUri);
+
+
+        /**
+         * Construct an ExpandedNodeId based on a stack OpcUa_ExpandedNodeId instance, and a
+         * namespace URI.
+         *
+         * @param opcUaExpandedNodeId   OPC UA stack OpcUa_ExpandedNodeId instance.
+         * @param nameSpaceUri          Namespace URI of the NodeId.
+         * @return                      Good in case the ExpandedNodeId was successfully updated.
+         */
+        uaf::Status fromSdk(
+                const OpcUa_ExpandedNodeId& opcUaExpandedNodeId,
+                const std::string&          nameSpaceUri);
 
 
         /**

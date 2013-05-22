@@ -229,10 +229,10 @@ namespace uafc
         ss << uaf::fillToPos(ss, colon);
         ss << ": " << requestHandle << "\n";
 
-        ss << indent << " - targets[]\n";
+        ss << indent << " - targets[]";
         for (std::size_t i = 0; i < targets.size(); i++)
         {
-            ss << indent << "    - targets[" << i << "]";
+            ss << indent << "\n    - targets[" << i << "]";
 
             // append the target description in a nice way (both for single and multi line strings)
             if (uaf::isMultiLine(targets[i].toString()))
@@ -245,9 +245,6 @@ namespace uafc
                 ss << uaf::fillToPos(ss, colon);
                 ss << ": " << targets[i].toString();
             }
-            // don't add a newline character to the last target:
-            if (i < targets.size() - 1)
-                ss << "\n";
         }
 
         return ss.str();

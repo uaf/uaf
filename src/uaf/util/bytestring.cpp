@@ -36,9 +36,20 @@ namespace uaf
     // Constructor
     // =============================================================================================
     ByteString::ByteString(int32_t length, uint8_t* data)
-    : uaByteString_(length, data)
-    {}
+    {
+        if (length > 0)
+            uaByteString_ = UaByteString(length, data);
+    }
 
+
+    // Get a string representation
+    // =============================================================================================
+    string ByteString::toString() const
+    {
+        stringstream ss;
+        ss << length() << "bytes";
+        return ss.str();
+    }
 
 
     // Comparison operator ==

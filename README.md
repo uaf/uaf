@@ -174,6 +174,7 @@ Status?
    - translate browse paths (synchronous)
    - create monitored data items (synchronous)
    - create monitored events items (synchronous)
+   - browse and browse next (synchronous)
  - Supported on the Server side:
    - nothing yet so far!
 

@@ -19,6 +19,7 @@ ALL_MODULES = [ "util.expandednodeid",
                 "util.nodeididentifier",
                 "util.qualifiedname",
                 "util.relativepathelement",
+                "util.datetime",
                 "util.browsepath",
                 "util.status",
                 "util.variant",
@@ -34,7 +35,9 @@ ALL_MODULES = [ "util.expandednodeid",
                 "client.client_asyncmethodcall",
                 "client.client_manualsubscription",
                 "client.client_monitordata",
-                "client.client_monitorevents"  ]
+                "client.client_monitorevents",
+                "client.client_browse",
+                "client.client_browsenext" ]
 
 
 import pyuaftests

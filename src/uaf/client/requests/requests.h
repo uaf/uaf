@@ -34,6 +34,8 @@
 #include "uaf/client/requests/createmonitoreddatarequesttarget.h"
 #include "uaf/client/requests/createmonitoredeventsrequesttarget.h"
 #include "uaf/client/requests/translatebrowsepathstonodeidsrequesttarget.h"
+#include "uaf/client/requests/browserequesttarget.h"
+#include "uaf/client/requests/browsenextrequesttarget.h"
 
 
 
@@ -66,6 +68,8 @@ namespace uafc
     DEFINE_SYNC_SESSIONREQUEST(Write)
     DEFINE_SYNC_SESSIONREQUEST(MethodCall)
     DEFINE_SYNC_SESSIONREQUEST(TranslateBrowsePathsToNodeIds)
+    DEFINE_SYNC_SESSIONREQUEST(Browse)
+    DEFINE_SYNC_SESSIONREQUEST(BrowseNext)
     DEFINE_SYNC_SUBSCRIPTIONREQUEST(CreateMonitoredData)
     DEFINE_SYNC_SUBSCRIPTIONREQUEST(CreateMonitoredEvents)
 

@@ -67,6 +67,9 @@
     %ignore operator==(const TYPE&, const TYPE&);
     %ignore operator!=(const TYPE&, const TYPE&);
     %ignore operator< (const TYPE&, const TYPE&);
+    %ignore operator==(const NS::TYPE&, const NS::TYPE&);
+    %ignore operator!=(const NS::TYPE&, const NS::TYPE&);
+    %ignore operator< (const NS::TYPE&, const NS::TYPE&);
 
     #if defined(SWIGPYTHON)
     

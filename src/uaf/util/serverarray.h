@@ -34,17 +34,11 @@
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/status.h"
+#include "uaf/util/expandednodeid.h"
 
 
 namespace uaf
 {
-
-    /**
-     * A ServerIndex is an unsigned 32-bit integer, identifying a server in a ServerArray.
-     *
-     * @ingroup Util
-     */
-    typedef uint32_t ServerIndex;
 
 
     /*******************************************************************************************//**
@@ -110,6 +104,21 @@ namespace uaf
          * @return              True if the server index was found.
          */
         bool findServerIndex(const std::string& serverUri, ServerIndex& serverIndex) const;
+
+
+        /**
+         * Update the server URI of an ExpandedNodeId by using the server index from an
+         * OpcUa_ExpandedNodeId .
+         *
+         * @param opcUaExpandedNodeId   The OpcUa_ExpandedNodeId from which we want to extract
+         *                              the server index.
+         * @param expandedNodeId        The uaf::ExpandedNodeId which we want to update.
+         * @return                      True if the uaf::ExpandedNodeId could be updated without
+         *                              problems (i.e. if the namespace URI could be set).
+         */
+        uaf::Status updateServerUri(
+                const OpcUa_ExpandedNodeId& opcUaExpandedNodeId,
+                uaf::ExpandedNodeId&        expandedNodeId) const;
 
 
     private:

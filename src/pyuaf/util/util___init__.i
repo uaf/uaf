@@ -22,6 +22,9 @@
 %{
 #define SWIG_FILE_WITH_INIT
 #include "uaf/util/util.h"
+#include "uaf/util/bytestring.h"
+#include "uaf/util/guid.h"
+#include "uaf/util/datetime.h"
 #include "uaf/util/localizedtext.h"
 #include "uaf/util/applicationdescription.h"
 #include "uaf/util/datachangefilter.h"
@@ -42,6 +45,8 @@
 #include "uaf/util/browsepath.h"
 #include "uaf/util/address.h"
 #include "uaf/util/variant.h"
+#include "uaf/util/viewdescription.h"
+#include "uaf/util/referencedescription.h"
 %}
 
 
@@ -62,6 +67,13 @@
 // include the initializeUaf() function
 %include "uaf/util/util.h"
 
+// include the ByteString typemap
+#if defined(SWIGPYTHON)
+    %include "pyuaf/util/util_bytestring_python.i"
+#endif
+
+// create a Vector that holds these ByteStrings!
+%template(ByteStringVector) std::vector<uaf::ByteString>;
 
 // import the submodules
 %import "pyuaf/util/util_loglevels.i" 
@@ -77,6 +89,8 @@
 %import "pyuaf/util/util_securitypolicies.i" 
 %import "pyuaf/util/util_messagesecuritymodes.i" 
 %import "pyuaf/util/util_monitoringmodes.i" 
+%import "pyuaf/util/util_browsedirections.i" 
+%import "pyuaf/util/util_nodeclasses.i" 
 
 
 // before including any classes in a generic way, specify the "special treatments" of certain classes:
@@ -84,29 +98,36 @@
 %rename(__dispatch_logMessageReceived__) uaf::LoggingInterface::logMessageReceived;
 %ignore extractServerUri(const Address& object, std::string& serverUri);
 %ignore uaf::Address::operator=;
+%ignore operator>(const DateTime&, const DateTime&);
+%ignore uaf::DateTime::DateTime(const FILETIME& t);
 
 
 // now include all classes in a generic way
 UAF_WRAP_CLASS("uaf/util/stringifiable.h"          , uaf , Stringifiable           , COPY_NO,  TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/localizedtext.h"          , uaf , LocalizedText           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/applicationdescription.h" , uaf , ApplicationDescription  , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, ApplicationDescriptionVector)
+UAF_WRAP_CLASS("uaf/util/guid.h"                   , uaf , Guid                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/datetime.h"               , uaf , DateTime                , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, DateTimeVector)
 UAF_WRAP_CLASS("uaf/util/mask.h"                   , uaf , Mask                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/status.h"                 , uaf , Status                  , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, StatusVector)
 UAF_WRAP_CLASS("uaf/util/logmessage.h"             , uaf , LogMessage              , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/logginginterface.h"       , uaf , LoggingInterface        , COPY_NO,  TOSTRING_NO,  COMP_NO,  pyuaf.util, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/util/serverarray.h"            , uaf , ServerArray             , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/guid.h"                   , uaf , Guid                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/nodeididentifier.h"       , uaf , NodeIdIdentifier        , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/nodeid.h"                 , uaf , NodeId                  , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/expandednodeid.h"         , uaf , ExpandedNodeId          , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ExpandedNodeIdVector)
 UAF_WRAP_CLASS("uaf/util/qualifiedname.h"          , uaf , QualifiedName           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, QualifiedNameVector)
 UAF_WRAP_CLASS("uaf/util/relativepathelement.h"    , uaf , RelativePathElement     , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, RelativePath)
 UAF_WRAP_CLASS("uaf/util/browsepath.h"             , uaf , BrowsePath              , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/serverarray.h"            , uaf , ServerArray             , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/simpleattributeoperand.h" , uaf , SimpleAttributeOperand  , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, SimpleAttributeOperandVector)
 UAF_WRAP_CLASS("uaf/util/datachangefilter.h"       , uaf , DataChangeFilter        , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/eventfilter.h"            , uaf , EventFilter             , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/address.h"                , uaf , Address                 , COPY_NO,  TOSTRING_YES, COMP_YES, pyuaf.util, AddressVector)
 UAF_WRAP_CLASS("uaf/util/usertokenpolicy.h"        , uaf , UserTokenPolicy         , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, UserTokenPolicyVector)
 UAF_WRAP_CLASS("uaf/util/endpointdescription.h"    , uaf , EndpointDescription     , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, EndpointDescriptionVector)
+UAF_WRAP_CLASS("uaf/util/viewdescription.h"        , uaf , ViewDescription         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/referencedescription.h"   , uaf , ReferenceDescription    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ReferenceDescriptionVector)
 
 
 // also include the Variant typemap(s)

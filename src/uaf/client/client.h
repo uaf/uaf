@@ -227,6 +227,64 @@ namespace uafc
 
 
         /**
+         * Browse one or more nodes synchronously.
+         *
+         * This is a convenience method, with few parameters. Use the
+         * processRequest(BrowseRequest()) function to specify your browse request much more in
+         * detail!
+         *
+         * @param addresses         Addresses of the starting point nodes to browse.
+         * @param maxAutoBrowseNext How many times do you allow the UAF to automatically invoke a
+         *                          BrowseNext for you (if that's needed to fetch all results)?
+         *                          This parameter will always be used instead of the
+         *                          maxAutoBrowseNext attribute in the serviceSettings attribute of
+         *                          the serviceConfig parameter!
+         * @param serviceConfig     Browse config.
+         * @param sessionConfig     Session config.
+         * @param result            Result of the request.
+         * @return                  Client-side status.
+         */
+        uaf::Status browse(
+                const std::vector<uaf::Address>&    addresses,
+                const uint32_t                      maxAutoBrowseNext,
+                const uafc::BrowseConfig&           serviceConfig,
+                const uafc::SessionConfig&          sessionConfig,
+                uafc::BrowseResult&                 result);
+
+
+        /**
+         * Continue a previous synchronous Browse request, in case you didn't use the automatic
+         * BrowseNext feature of the UAF.
+         *
+         * You only need to use this function if you have put maxAutoBrowseNext to 0 in the previous
+         * Browse request (or if the automatic BrowseNext calls still resulted in continuationPoints).
+         * For your convenience, it's much easier to simply use the browse() method, and let the
+         * UAF do the BrowseNext calls for you!
+         *
+         * This is a convenience method, with few parameters. Use the
+         * processRequest(BrowseNextRequest()) function to specify your browse request much more in
+         * detail!
+         *
+         * @param addresses             Addresses of the nodes that serve as the
+         *                              starting point to browse. You need to copy the addresses to
+         *                              here from the original Browse request, so that the UAF can
+         *                              use these addresses to find out to which server the
+         *                              BrowseNext call should be sent.
+         * @param continuationPoints    The continuation points.
+         * @param serviceConfig         BrowseNext config.
+         * @param sessionConfig         Session config.
+         * @param result                Result of the request.
+         * @return                      Client-side status.
+         */
+        uaf::Status browseNext(
+                const std::vector<uaf::Address>&    addresses,
+                const std::vector<uaf::ByteString>& continuationPoints,
+                const uafc::BrowseNextConfig&       serviceConfig,
+                const uafc::SessionConfig&          sessionConfig,
+                uafc::BrowseNextResult&             result);
+
+
+        /**
          * Start to monitor data.
          *
          * @param addresses                 The addresses of the nodes of which the Value
@@ -342,6 +400,28 @@ namespace uafc
         uaf::Status processRequest(
                 const uafc::AsyncMethodCallRequest&  request,
                 uafc::AsyncMethodCallResult&         result);
+
+        /**
+         * Process a synchronous browse request.
+         *
+         * @param request   The request.
+         * @param result    The result.
+         * @return          The client-side status.
+         */
+        uaf::Status processRequest(
+                const uafc::BrowseRequest&   request,
+                uafc::BrowseResult&          result);
+
+        /**
+         * Process a synchronous BrowseNext request.
+         *
+         * @param request   The request.
+         * @param result    The result.
+         * @return          The client-side status.
+         */
+        uaf::Status processRequest(
+                const uafc::BrowseNextRequest&   request,
+                uafc::BrowseNextResult&          result);
 
         /**
          * Process a synchronous "create monitored data" request.

@@ -62,9 +62,9 @@ def printResult(readResult):
     
     # target 2:
     status = readResult.targets[2].status                         # 'status' has type pyuaf.util.Status
-    data   = readResult.targets[2].data                           # 'data' has type ""
-    if status.isGood() and isinstance(data, str):
-        print("The string is: '%s'" %data)
+    data   = readResult.targets[2].data                           # 'data' has type pyuaf.util.primitives.String
+    if status.isGood() and isinstance(data, primitives.String):
+        print("The string is: '%s'" %data.value)
     
     # target 3:
     status = readResult.targets[3].status                         # 'status' has type pyuaf.util.Status
@@ -74,7 +74,7 @@ def printResult(readResult):
     
     # target 4:
     status = readResult.targets[4].status                         # 'status' has type pyuaf.util.Status
-    data   = readResult.targets[4].data                           # 'data' has type pyuaf.util.LocalizedText
+    data   = readResult.targets[4].data                           # 'data' is a list of pyuaf.util.primitives.SByte
     if status.isGood() and isinstance(data, list):
         print("The array is:")
         for i in xrange(len(data)):

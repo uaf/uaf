@@ -10,16 +10,26 @@ def test(args):
     n0_ = pyuaf.util.NodeIdIdentifier("SomeStringIdentifier")
     n1  = pyuaf.util.NodeIdIdentifier(42)
     n2  = pyuaf.util.NodeIdIdentifier("SomeOtherStringIdentifier")
+    n3  = pyuaf.util.NodeIdIdentifier(pyuaf.util.Guid("{10000000-0000-0000-0000-000000000000}"))
+    n4  = pyuaf.util.NodeIdIdentifier(bytearray("abcd"))
     
     print(" - testing pyuaf.util.NodeIdIdentifier().type")
-    assert n0.type == pyuaf.util.nodeididentifiertypes.String
-    assert n1.type == pyuaf.util.nodeididentifiertypes.Numeric
+    assert n1.type == pyuaf.util.nodeididentifiertypes.Identifier_Numeric
+    assert n2.type == pyuaf.util.nodeididentifiertypes.Identifier_String
+    assert n3.type == pyuaf.util.nodeididentifiertypes.Identifier_Guid
+    assert n4.type == pyuaf.util.nodeididentifiertypes.Identifier_Opaque
     
     print(" - testing pyuaf.util.NodeIdIdentifier().idString")
     assert n0.idString == "SomeStringIdentifier"
     
     print(" - testing pyuaf.util.NodeIdIdentifier().idInt")
     assert n1.idNumeric == 42
+    
+    print(" - testing pyuaf.util.NodeIdIdentifier().idGuid")
+    assert n3.idGuid == pyuaf.util.Guid("{10000000-0000-0000-0000-000000000000}")
+    
+    print(" - testing pyuaf.util.NodeIdIdentifier().idOpaque")
+    assert n4.idOpaque == bytearray("abcd")
     
     print(" - testing pyuaf.util.NodeIdIdentifier().__eq__()")
     assert n0 == n0_

@@ -42,9 +42,19 @@ namespace uafc
     string ReadResultTarget::toString(const string& indent, size_t colon) const
     {
         stringstream ss;
-        ss << "status="                  << status.toString()          << ", ";
-        ss << "data="                    << data.toFullString()        << ", ";
-        ss << "clientConnectionId="      << clientConnectionId;
+
+        ss << indent << " - status";
+        ss << fillToPos(ss, colon);
+        ss << ": " << status.toString() << "\n";
+
+        ss << indent << " - data";
+        ss << fillToPos(ss, colon);
+        ss << ": " << data.toFullString() << "\n";
+
+        ss << indent << " - clientConnectionId";
+        ss << fillToPos(ss, colon);
+        ss << ": " << int(clientConnectionId);
+
         return ss.str();
     }
 

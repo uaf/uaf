@@ -302,6 +302,18 @@ namespace uaf
     }
 
 
+    // Fill out the NodeId with information from an OpcUa_ExpandedNodeId instance
+    // =============================================================================================
+    Status ExpandedNodeId::fromSdk(
+            const OpcUa_ExpandedNodeId& opcUaExpandedNodeId,
+            const string&               nameSpaceUri)
+    {
+        serverIndex_        = opcUaExpandedNodeId.ServerIndex;
+        serverIndexGiven_   = true;
+        return nodeId_.fromSdk(opcUaExpandedNodeId.NodeId, nameSpaceUri);
+    }
+
+
     // Fill out the NodeId with information from an UaExpandedNodeId instance
     // =============================================================================================
     Status ExpandedNodeId::fromSdk(

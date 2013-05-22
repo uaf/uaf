@@ -1,6 +1,6 @@
 
 UAF changelog                     
-===============================================================================
+====================================================================================================
 
 
 Version = X.Y with
@@ -18,9 +18,88 @@ via the GIT version control system.
 
 
 
+1.1 @ 2013/05/22
+----------------------------------------------------------------------------------------------------
 
-1.0
--------------------------------------------------------------------------------
+Informally:
 
-Public release on GitHub.
+ - The Browse service is now supported (including the functionality to let the UAF invoke 
+   BrowseNext automatically).
+   
+ - Strings and ByteStrings that are part of OPC UA requests and results have become 
+   "primitive" values in Python (i.e. they are encapsulated in Python by 
+   pyuaf.util.primitives.String and pyuaf.util.primitives.ByteString classes).
+   
+ - Bytestrings are now better supported in Python: a typemap has been added that maps a 
+   uaf::ByteString to a built-in Python bytearray and the other way around.
+   
+ - Timestamps are now supported via the DateTime class.
+ 
+ - NodeId identifiers can now also be GUIDs (Globally Unique Identifiers) and bytestrings.
+
+ - Browse examples have been added
+
+Formally:
+
+ - The following namespaces (modules) have been added:
+ 
+    - uaf::nodeclasses 
+      (pyuaf.util.nodeclasses)
+    - uaf::browsedirections 
+      (pyuaf.util.browsedirections)
+   
+ - The following classes have been added:
+ 
+    - uaf::ViewDescription 
+      (pyuaf.util.ViewDescription)
+    - uaf::Guid 
+      (pyuaf.util.Guid)
+    - uaf::ReferenceDescription 
+      (pyuaf.util.ReferenceDescription and pyuaf.util.ReferenceDescriptionVector)
+    - uaf::DateTime 
+      (pyuaf.util.DateTime)
+    - uafc::BrowseRequest
+      (pyuaf.client.requests.BrowseRequest)
+    - uafc::BrowseRequestTarget 
+      (pyuaf.client.requests.BrowseRequestTarget and pyuaf.client.requests.BrowseRequestTargetVector)
+    - uafc::BrowseConfig 
+      (pyuaf.client.configs.BrowseConfig)
+    - uafc::BrowseSettings 
+      (pyuaf.client.configs.BrowseSettings)
+    - uafc::BrowseResult 
+      (pyuaf.client.requests.BrowseResult)
+    - uafc::BrowseResultTarget 
+      (pyuaf.client.requests.BrowseResultTarget and pyuaf.client.requests.BrowseResultTargetVector)
+    - uafc::BrowseNextRequest
+      (pyuaf.client.requests.BrowseNextRequest)
+    - uafc::BrowseNextRequestTarget 
+      (pyuaf.client.requests.BrowseNextRequestTarget and pyuaf.client.requests.BrowseNextRequestTargetVector)
+    - uafc::BrowseNextConfig 
+      (pyuaf.client.configs.BrowseNextConfig)
+    - uafc::BrowseNextSettings 
+      (pyuaf.client.configs.BrowseNextSettings)
+    - uafc::BrowseNextResult 
+      (pyuaf.client.requests.BrowseNextResult)
+    - uafc::BrowseNextResultTarget 
+      (same as pyuaf.client.requests.BrowseResultTarget and pyuaf.client.requests.BrowseResultTargetVector)
+
+ - The following methods and attributes have been added to existing classes:
+
+    - uafc::Client::browse() 
+      (pyuaf.util.Client.browse()) 
+    - uaf::NodeId::isNull() 
+      (pyuaf.util.NodeId.isNull()) 
+    - uaf::NodeIdIdentifier::isNull(), idGuid, idOpaque 
+      (pyuaf.util.NodeIdIdentifier.isNull(), idGuid, idOpaque)
+    - uaf::Variant::toDateTime(), toDateTimeArray(), fromDateTime(), fromDateTimeArray() 
+      (DateTime Variants are converted automatically into DateTime instances in Python) 
+    - uaf::Variant::toByteString(), fromByteString(), toByteStringArray(), fromByteStringArray()
+      (ByteString Variants are converted automatically into bytearray instances in Python) 
+ 
+
+
+1.0 @ 2013/05/14
+----------------------------------------------------------------------------------------------------
+
+ - Public release on GitHub.
 

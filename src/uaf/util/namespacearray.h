@@ -164,7 +164,7 @@ namespace uaf
 
 
         /**
-         * Fill a NodeId from an OpcUaNodeId (which includes filling out the namespace URI).
+         * Fill a NodeId from an OpcUa_NodeId (which includes filling out the namespace URI).
          *
          * @param opcUaNodeId   The OpcUa_NodeId of which we want to extract the information.
          * @param nodeId        The uaf::NodeId which we want to update.
@@ -174,6 +174,36 @@ namespace uaf
         uaf::Status fillNodeId(
                 const OpcUa_NodeId& opcUaNodeId,
                 uaf::NodeId&        nodeId) const;
+
+
+        /**
+         * Fill an ExpandedNodeId from an OpcUa_ExpandedNodeId (which includes filling out the
+         * namespace URI).
+         *
+         * @param opcUaExpandedNodeId   The OpcUa_ExpandedNodeId of which we want to extract
+         *                              the information.
+         * @param expandedNodeId        The uaf::ExpandedNodeId which we want to update.
+         * @return                      True if the uaf::ExpandedNodeId could be updated without
+         *                              problems (i.e. if the namespace URI could be set).
+         */
+        uaf::Status fillExpandedNodeId(
+                const OpcUa_ExpandedNodeId& opcUaExpandedNodeId,
+                uaf::ExpandedNodeId&        expandedNodeId) const;
+
+
+        /**
+         * Fill a QualifiedName from an OpcUa_QualifiedName (which includes filling out the
+         * namespace URI).
+         *
+         * @param opcUaQualifiedName    The OpcUa_QualifiedName of which we want to extract
+         *                              the information.
+         * @param qualifiedName         The uaf::QualifiedName which we want to update.
+         * @return                      True if the uaf::QualifiedName could be updated without
+         *                              problems (i.e. if the namespace URI could be set).
+         */
+        uaf::Status fillQualifiedName(
+                const OpcUa_QualifiedName& opcUaQualifiedName,
+                uaf::QualifiedName&        qualifiedName) const;
 
 
 

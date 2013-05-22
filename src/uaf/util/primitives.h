@@ -29,6 +29,7 @@
 #include "uabase/uaplatformlayer.h"
 // UAF
 #include "uaf/util/util.h"
+#include "uaf/util/bytestring.h"
 #include "uaf/util/opcuatypes.h"
 
 
@@ -44,7 +45,7 @@ namespace uaf
     {
 
 
-        #define DEFINE_PRIMITIVE(NAME, DEFAULT, CTYPE)                                      \
+        #define DEFINE_PRIMITIVE(NAME, DEFAULT, CTYPE, TOSTRING)                            \
         /**  A primitive value.                                                             \
          *                                                                                  \
          * This class is only used in wrapped languages that don't support primitive        \
@@ -69,7 +70,7 @@ namespace uaf
             std::string toString() const                                                    \
             {                                                                               \
                 std::stringstream ss;                                                       \
-                ss << value;                                                                \
+                ss << TOSTRING;                                                             \
                 return ss.str();                                                            \
             }                                                                               \
             /** comparison operators. */                                                    \
@@ -87,17 +88,19 @@ namespace uaf
         };
 
         // define some primitives:
-        DEFINE_PRIMITIVE(Boolean  , false   , bool)
-        DEFINE_PRIMITIVE(SByte    , 0       , int8_t)
-        DEFINE_PRIMITIVE(Byte     , 0       , uint8_t)
-        DEFINE_PRIMITIVE(Int16    , 0       , int16_t)
-        DEFINE_PRIMITIVE(UInt16   , 0       , uint16_t)
-        DEFINE_PRIMITIVE(Int32    , 0       , int32_t)
-        DEFINE_PRIMITIVE(UInt32   , 0       , uint32_t)
-        DEFINE_PRIMITIVE(Int64    , 0       , int64_t)
-        DEFINE_PRIMITIVE(UInt64   , 0       , uint64_t)
-        DEFINE_PRIMITIVE(Float    , 0.0     , float)
-        DEFINE_PRIMITIVE(Double   , 0.0     , double)
+        DEFINE_PRIMITIVE(Boolean    , false             , bool              , value)
+        DEFINE_PRIMITIVE(SByte      , 0                 , int8_t            , value)
+        DEFINE_PRIMITIVE(Byte       , 0                 , uint8_t           , value)
+        DEFINE_PRIMITIVE(Int16      , 0                 , int16_t           , value)
+        DEFINE_PRIMITIVE(UInt16     , 0                 , uint16_t          , value)
+        DEFINE_PRIMITIVE(Int32      , 0                 , int32_t           , value)
+        DEFINE_PRIMITIVE(UInt32     , 0                 , uint32_t          , value)
+        DEFINE_PRIMITIVE(Int64      , 0                 , int64_t           , value)
+        DEFINE_PRIMITIVE(UInt64     , 0                 , uint64_t          , value)
+        DEFINE_PRIMITIVE(Float      , 0.0               , float             , value)
+        DEFINE_PRIMITIVE(Double     , 0.0               , double            , value)
+        DEFINE_PRIMITIVE(String     , ""                , std::string       , value)
+        DEFINE_PRIMITIVE(ByteString , uaf::ByteString() , uaf::ByteString   , value.toString())
 
     }
 
@@ -106,3 +109,10 @@ namespace uaf
 
 
 #endif /* UAF_PRIMITIVES_H_ */
+
+
+
+
+
+
+

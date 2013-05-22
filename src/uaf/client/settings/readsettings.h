@@ -36,8 +36,8 @@ namespace uafc
 
 
     /*******************************************************************************************//**
-    * An uafc::MethodCallSettings object holds the service settings that are particular
-    * for the MethodCall service.
+    * An uafc::ReadSettings object holds the service settings that are particular
+    * for the Read service.
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/

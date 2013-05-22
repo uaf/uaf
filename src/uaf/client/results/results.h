@@ -35,6 +35,8 @@
 #include "uaf/client/results/createmonitoreddataresulttarget.h"
 #include "uaf/client/results/createmonitoredeventsresulttarget.h"
 #include "uaf/client/results/translatebrowsepathstonodeidsresulttarget.h"
+#include "uaf/client/results/browseresulttarget.h"
+#include "uaf/client/results/browsenextresulttarget.h"
 
 
 
@@ -66,6 +68,8 @@ namespace uafc
     DEFINE_SYNC_SESSIONRESULT(Write)
     DEFINE_SYNC_SESSIONRESULT(MethodCall)
     DEFINE_SYNC_SESSIONRESULT(TranslateBrowsePathsToNodeIds)
+    DEFINE_SYNC_SESSIONRESULT(Browse)
+    typedef UAFC_EXPORT uafc::BrowseResult BrowseNextResult;
     DEFINE_SYNC_SUBSCRIPTIONRESULT(CreateMonitoredData)
     DEFINE_SYNC_SUBSCRIPTIONRESULT(CreateMonitoredEvents)
 

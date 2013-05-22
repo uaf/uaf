@@ -28,6 +28,7 @@
 #include "uaf/client/settings/monitoreditemsettings.h"
 #include "uaf/client/settings/clientsettings.h"
 #include "uaf/util/address.h"
+#include "uaf/util/referencedescription.h"
 %}
 
 
@@ -45,12 +46,15 @@
 %import(module="pyuaf.util.attributeids")       "pyuaf/util/util_attributeids.i"
 %import(module="pyuaf.util.monitoringmodes")    "pyuaf/util/util_monitoringmodes.i"
 %import(module="pyuaf.util.primitives")         "pyuaf/util/util_primitives.i"
+%import(module="pyuaf.util.browsedirections")   "pyuaf/util/util_browsedirections.i"
+%import(module="pyuaf.util.nodeclasses")        "pyuaf/util/util_nodeclasses.i"
 %import(module="pyuaf.util")                    "uaf/util/stringifiable.h"
 %import(module="pyuaf.util")                    "uaf/util/browsepath.h"
 
 
-// also include the Variant typemap(s)
+// also include the typemaps
 #if defined(SWIGPYTHON)
+    %include "pyuaf/util/util_bytestring_python.i"
     %include "pyuaf/util/util_variant_python.i"
 #endif
 
@@ -76,6 +80,8 @@ CREATE_UAFC_CONFIG(Read)
 CREATE_UAFC_CONFIG(Write)
 CREATE_UAFC_CONFIG(MethodCall)
 CREATE_UAFC_CONFIG(TranslateBrowsePathsToNodeIds)
+CREATE_UAFC_CONFIG(Browse)
+CREATE_UAFC_CONFIG(BrowseNext)
 CREATE_UAFC_CONFIG(CreateMonitoredData)
 CREATE_UAFC_CONFIG(CreateMonitoredEvents)
 

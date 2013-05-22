@@ -56,6 +56,7 @@
         uaf::ExpandedNodeId someExpandedNodeId;
         uaf::LocalizedText someLocalizedText;
         uaf::QualifiedName someQualifiedName;
+        uaf::DateTime someDateTime;
         
         UnitTestHelper() 
         {
@@ -71,6 +72,7 @@
             someExpandedNodeId = uaf::ExpandedNodeId("SomeIdentifier", 42, 21);
             someLocalizedText = uaf::LocalizedText("en", "SomeText");
             someQualifiedName = uaf::QualifiedName("SomeName", 42);
+            someDateTime = uaf::DateTime::fromString("2013-05-21T12:34:56.789Z");
         }
 
         virtual ~UnitTestHelper()
@@ -233,6 +235,15 @@
                         v.setQualifiedNameArray(array);
                         break;
                     }
+                    case uaf::opcuatypes::DateTime:
+                    {
+                        std::vector<uaf::DateTime> array;
+                        array.push_back(someDateTime);
+                        array.push_back(someDateTime);
+                        array.push_back(someDateTime);
+                        v.setDateTimeArray(array);
+                        break;
+                    }
                     default:
                     {
                         v.clear();
@@ -261,6 +272,7 @@
                     case uaf::opcuatypes::ExpandedNodeId: { v.setExpandedNodeId(someExpandedNodeId); break; }
                     case uaf::opcuatypes::LocalizedText:  { v.setLocalizedText(someLocalizedText);   break; }
                     case uaf::opcuatypes::QualifiedName:  { v.setQualifiedName(someQualifiedName);   break; }
+                    case uaf::opcuatypes::DateTime:       { v.setDateTime(someDateTime);             break; }
                     default:                              { v.clear();                               break; }
                 }
             }

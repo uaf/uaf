@@ -22,6 +22,7 @@
 %{
 #define SWIG_FILE_WITH_INIT
 #include "uaf/util/primitives.h"
+#include "uaf/util/referencedescription.h"
 #include "uaf/client/settings/clientsettings.h"
 #include "uaf/client/requests/basesessionrequesttarget.h"
 #include "uaf/client/requests/basesubscriptionrequesttarget.h"
@@ -29,6 +30,8 @@
 #include "uaf/client/requests/createmonitoredeventsrequesttarget.h"
 #include "uaf/client/requests/methodcallrequesttarget.h"
 #include "uaf/client/requests/readrequesttarget.h"
+#include "uaf/client/requests/browserequesttarget.h"
+#include "uaf/client/requests/browsenextrequesttarget.h"
 #include "uaf/client/requests/translatebrowsepathstonodeidsrequesttarget.h"
 #include "uaf/client/requests/writerequesttarget.h"
 #include "uaf/client/requests/basesessionrequest.h"
@@ -50,12 +53,15 @@
 %import(module="pyuaf.util.attributeids")       "pyuaf/util/util_attributeids.i"
 %import(module="pyuaf.util.monitoringmodes")    "pyuaf/util/util_monitoringmodes.i"
 %import(module="pyuaf.util.primitives")         "pyuaf/util/util_primitives.i"
+%import(module="pyuaf.util.browsedirections")   "pyuaf/util/util_browsedirections.i"
+%import(module="pyuaf.util.nodeclasses")        "pyuaf/util/util_nodeclasses.i"
 %import(module="pyuaf.util")                    "uaf/util/stringifiable.h"
 %import(module="pyuaf.util")                    "uaf/util/browsepath.h"
 
 
-// also include the Variant typemap(s)
+// also include the typemap
 #if defined(SWIGPYTHON)
+    %include "pyuaf/util/util_bytestring_python.i"
     %include "pyuaf/util/util_variant_python.i"
 #endif
 
@@ -71,6 +77,8 @@ MAKE_NON_DYNAMIC(uafc::CreateMonitoredEventsRequestTarget)
 MAKE_NON_DYNAMIC(uafc::MethodCallRequestTarget)
 MAKE_NON_DYNAMIC(uafc::ReadRequestTarget)
 MAKE_NON_DYNAMIC(uafc::TranslateBrowsePathsToNodeIdsRequestTarget)
+MAKE_NON_DYNAMIC(uafc::BrowseRequestTarget)
+MAKE_NON_DYNAMIC(uafc::BrowseNextRequestTarget)
 MAKE_NON_DYNAMIC(uafc::WriteRequestTarget)
 %ignore operator==(const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2);
 %ignore operator!=(const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2);
@@ -83,6 +91,8 @@ MAKE_NON_DYNAMIC(uafc::WriteRequestTarget)
 // wrap some classes that are not defined by macros:
 UAF_WRAP_CLASS("uaf/client/requests/basesessionrequesttarget.h"                  , uafc , BaseSessionRequestTarget                   , COPY_NO , TOSTRING_NO,  COMP_NO,  pyuaf.client.requests, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/requests/basesubscriptionrequesttarget.h"             , uafc , BaseSubscriptionRequestTarget              , COPY_NO , TOSTRING_NO,  COMP_NO,  pyuaf.client.requests, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/requests/browserequesttarget.h"                       , uafc , BrowseRequestTarget                        , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, BrowseRequestTargetVector)
+UAF_WRAP_CLASS("uaf/client/requests/browsenextrequesttarget.h"                   , uafc , BrowseNextRequestTarget                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, BrowseNextRequestTargetVector)
 UAF_WRAP_CLASS("uaf/client/requests/createmonitoreddatarequesttarget.h"          , uafc , CreateMonitoredDataRequestTarget           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, CreateMonitoredDataRequestTargetVector)
 UAF_WRAP_CLASS("uaf/client/requests/createmonitoredeventsrequesttarget.h"        , uafc , CreateMonitoredEventsRequestTarget         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, CreateMonitoredEventsRequestTargetVector)
 UAF_WRAP_CLASS("uaf/client/requests/methodcallrequesttarget.h"                   , uafc , MethodCallRequestTarget                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, MethodCallRequestTargetVector)
@@ -137,6 +147,8 @@ CREATE_UAFC_SYNC_SESSIONREQUEST(Read)
 CREATE_UAFC_SYNC_SESSIONREQUEST(Write)
 CREATE_UAFC_SYNC_SESSIONREQUEST(MethodCall)
 CREATE_UAFC_SYNC_SESSIONREQUEST(TranslateBrowsePathsToNodeIds)
+CREATE_UAFC_SYNC_SESSIONREQUEST(Browse)
+CREATE_UAFC_SYNC_SESSIONREQUEST(BrowseNext)
 
 
 // create asynchronous session requests

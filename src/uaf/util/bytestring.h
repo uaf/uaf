@@ -25,6 +25,7 @@
 // STD
 #include <vector>
 #include <string>
+#include <sstream>
 #include <stdint.h>
 // SDK
 #include "uabase/uabytestring.h"
@@ -38,6 +39,8 @@ namespace uaf
 
     /*******************************************************************************************//**
      * A ByteString holds some raw data.
+     *
+     * Unlike the SDK UaByteString, length() will be 0 for a NULL ByteString!!!
      *
      * @ingroup Util
      **********************************************************************************************/
@@ -63,8 +66,10 @@ namespace uaf
 
         /**
          * Get the length of the byte string (i.e. the number of bytes).
+         *
+         * An empty (NULL) ByteString has 0 length!
          */
-        int32_t length() const { return uaByteString_.length(); }
+        int32_t length() const { return (uaByteString_.length() <= 0 ? 0 : uaByteString_.length()); }
 
 
         /**
@@ -73,10 +78,41 @@ namespace uaf
         const uint8_t* data() const { return uaByteString_.data(); }
 
 
+        /**
+         * Get a string representation.
+         */
+        std::string toString() const;
+
+
+        /**
+         * Get the contents of the ByteString from a SDK UaByteString instance.
+         *
+         * @param uaByteString  SDK UaByteString instance.
+         */
+        void fromSdk(const UaByteString& uaByteString) { uaByteString_ = uaByteString; }
+
+
+        /**
+         * Copy the contents to an SDK instance.
+         *
+         * @param uaByteString  SDK UaByteString instance.
+         */
+        void toSdk(UaByteString& uaByteString) const { uaByteString = uaByteString_; };
+
+
+        /**
+         * Copy the contents to a stack OpcUa_ByteString instance.
+         *
+         * @param dest  Destination stack OpcUa_ByteString instance.
+         */
+        void toSdk(OpcUa_ByteString* dest) const { uaByteString_.copyTo(dest); };
+
+
         // comparison operators
         friend UAF_EXPORT bool operator==(const ByteString& object1, const ByteString& object2);
         friend UAF_EXPORT bool operator!=(const ByteString& object1, const ByteString& object2);
         friend UAF_EXPORT bool operator< (const ByteString& object1, const ByteString& object2);
+
 
     private:
 

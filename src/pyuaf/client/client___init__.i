@@ -35,6 +35,8 @@
 #include "uaf/client/requests/createmonitoredeventsrequesttarget.h"
 #include "uaf/client/requests/methodcallrequesttarget.h"
 #include "uaf/client/requests/readrequesttarget.h"
+#include "uaf/client/requests/browserequesttarget.h"
+#include "uaf/client/requests/browsenextrequesttarget.h"
 #include "uaf/client/requests/translatebrowsepathstonodeidsrequesttarget.h"
 #include "uaf/client/requests/writerequesttarget.h"
 #include "uaf/client/requests/basesessionrequest.h"
@@ -49,6 +51,8 @@
 #include "uaf/client/results/createmonitoredeventsresulttarget.h"
 #include "uaf/client/results/methodcallresulttarget.h"
 #include "uaf/client/results/readresulttarget.h"
+#include "uaf/client/results/browseresulttarget.h"
+#include "uaf/client/results/browsenextresulttarget.h"
 #include "uaf/client/results/translatebrowsepathstonodeidsresulttarget.h"
 #include "uaf/client/results/writeresulttarget.h"
 #include "uaf/client/results/results.h"
@@ -76,8 +80,9 @@ import threading
 %include "../pyuaf.i"
 
 
-// also include the Variant typemap(s)
+// also include the typemaps
 #if defined(SWIGPYTHON)
+    %include "pyuaf/util/util_bytestring_python.i"
     %include "pyuaf/util/util_variant_python.i"
 #endif
 
@@ -96,6 +101,8 @@ import threading
 %import(module="pyuaf.util.securitypolicies")       "pyuaf/util/util_securitypolicies.i"
 %import(module="pyuaf.util.messagesecuritymodes")   "pyuaf/util/util_messagesecuritymodes.i"
 %import(module="pyuaf.util.monitoringmodes")        "pyuaf/util/util_monitoringmodes.i"
+%import(module="pyuaf.util.browsedirections")       "pyuaf/util/util_browsedirections.i"
+%import(module="pyuaf.util.nodeclasses")            "pyuaf/util/util_nodeclasses.i"
 %import(module="pyuaf.util.__unittesthelper__")     "pyuaf/util/util___unittesthelper__.i"
 %import(module="pyuaf.util")                        "pyuaf/util/util___init__.i"
 

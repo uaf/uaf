@@ -50,12 +50,15 @@
 %import(module="pyuaf.util.attributeids")       "pyuaf/util/util_attributeids.i"
 %import(module="pyuaf.util.monitoringmodes")    "pyuaf/util/util_monitoringmodes.i"
 %import(module="pyuaf.util.primitives")         "pyuaf/util/util_primitives.i"
+%import(module="pyuaf.util.browsedirections")   "pyuaf/util/util_browsedirections.i"
+%import(module="pyuaf.util.nodeclasses")        "pyuaf/util/util_nodeclasses.i"
 %import(module="pyuaf.util")                    "uaf/util/stringifiable.h"
 %import(module="pyuaf.util")                    "uaf/util/browsepath.h"
 
 
-// also include the Variant typemap(s)
+// also include the typemaps
 #if defined(SWIGPYTHON)
+    %include "pyuaf/util/util_bytestring_python.i"
     %include "pyuaf/util/util_variant_python.i"
 #endif
 
@@ -67,12 +70,14 @@
 %ignore operator==(const BaseSubscriptionResult<_Target, _Async>& object1, const BaseSubscriptionResult<_Target, _Async>& object2);
 %ignore operator!=(const BaseSubscriptionResult<_Target, _Async>& object1, const BaseSubscriptionResult<_Target, _Async>& object2);
 %ignore operator< (const BaseSubscriptionResult<_Target, _Async>& object1, const BaseSubscriptionResult<_Target, _Async>& object2);
-
+%rename(__str__) uafc::BaseSessionResult::toString const;
+%rename(__str__) uafc::BaseSubscriptionResult::toString const;
 
 // wrap some classes that are not defined by macros:
 UAF_WRAP_CLASS("uaf/client/results/basesessionresulttarget.h"                   , uafc , BaseSessionResultTarget                   , COPY_NO , TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/results/basesubscriptionresulttarget.h"              , uafc , BaseSubscriptionResultTarget              , COPY_NO , TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/results/asyncresulttarget.h"                         , uafc , AsyncResultTarget                         , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, AsyncResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/browseresulttarget.h"                        , uafc , BrowseResultTarget                        , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, BrowseResultTargetVector)
 UAF_WRAP_CLASS("uaf/client/results/createmonitoreddataresulttarget.h"           , uafc , CreateMonitoredDataResultTarget           , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, CreateMonitoredDataResultTargetVector)
 UAF_WRAP_CLASS("uaf/client/results/createmonitoredeventsresulttarget.h"         , uafc , CreateMonitoredEventsResultTarget         , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, CreateMonitoredEventsResultTargetVector)
 UAF_WRAP_CLASS("uaf/client/results/methodcallresulttarget.h"                    , uafc , MethodCallResultTarget                    , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, MethodCallResultTargetVector)
@@ -81,6 +86,7 @@ UAF_WRAP_CLASS("uaf/client/results/translatebrowsepathstonodeidsresulttarget.h" 
 UAF_WRAP_CLASS("uaf/client/results/writeresulttarget.h"                         , uafc , WriteResultTarget                         , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, WriteResultTargetVector)
 UAF_WRAP_CLASS("uaf/client/results/basesessionresult.h"                         , uafc , BaseSessionResult                         , COPY_YES, TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/results/basesubscriptionresult.h"                    , uafc , BaseSubscriptionResult                    , COPY_YES, TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
+
 
 
 // define a macro to create synchronous session results
@@ -100,6 +106,9 @@ CREATE_UAFC_SYNC_SESSIONRESULT(Read)
 CREATE_UAFC_SYNC_SESSIONRESULT(Write)
 CREATE_UAFC_SYNC_SESSIONRESULT(MethodCall)
 CREATE_UAFC_SYNC_SESSIONRESULT(TranslateBrowsePathsToNodeIds)
+CREATE_UAFC_SYNC_SESSIONRESULT(Browse)
+%template(BrowseNextResult) uafc::BaseSessionResult<uafc::BrowseResultTarget, false>;
+
 
 // create the asynchronous session results
 CREATE_UAFC_ASYNC_SESSIONRESULT(Read)

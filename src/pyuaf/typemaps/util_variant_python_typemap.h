@@ -39,9 +39,12 @@
     || PRIMITIVE_CONDITION(IN, Int64)           \
     || PRIMITIVE_CONDITION(IN, Float)           \
     || PRIMITIVE_CONDITION(IN, Double)          \
+    || PRIMITIVE_CONDITION(IN, String)          \
+    || PRIMITIVE_CONDITION(IN, ByteString)      \
     || UAFTYPE_CONDITION(IN, NodeId)            \
     || UAFTYPE_CONDITION(IN, ExpandedNodeId)    \
     || UAFTYPE_CONDITION(IN, LocalizedText)     \
+    || UAFTYPE_CONDITION(IN, DateTime)          \
     || UAFTYPE_CONDITION(IN, QualifiedName)
 
 
@@ -52,8 +55,6 @@
         else if (PyString_Check(INPUT))                                                            \
             RESULT = 1;                                                                            \
         else if (PyUnicode_Check(INPUT))                                                           \
-            RESULT = 1;                                                                            \
-        else if (PyByteArray_Check(INPUT))                                                         \
             RESULT = 1;                                                                            \
         else if (PyByteArray_Check(INPUT))                                                         \
             RESULT = 1;                                                                            \
@@ -212,21 +213,24 @@
         PyErr_SetString(PyExc_TypeError, "Could not determine the type of the array!");             \
         return NULL;                                                                                \
     }                                                                                               \
-    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, Boolean))      { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, Boolean,   bool,       length,   VARIANT) } \
-    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, SByte))        { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, SByte,     int8_t,     length,   VARIANT) } \
-    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, Byte))         { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, Byte,      uint8_t,    length,   VARIANT) } \
-    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, UInt16))       { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, UInt16,    uint16_t,   length,   VARIANT) } \
-    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, Int16))        { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, Int16,     int16_t,    length,   VARIANT) } \
-    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, UInt32))       { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, UInt32,    uint32_t,   length,   VARIANT) } \
-    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, Int32))        { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, Int32,     int32_t,    length,   VARIANT) } \
-    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, UInt64))       { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, UInt64,    uint64_t,   length,   VARIANT) } \
-    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, Int64))        { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, Int64,     int64_t,    length,   VARIANT) } \
-    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, Float))        { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, Float,     float,      length,   VARIANT) } \
-    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, Double))       { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, Double,    double,     length,   VARIANT) } \
+    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, Boolean))      { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, Boolean,    bool,              length,   VARIANT) } \
+    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, SByte))        { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, SByte,      int8_t,            length,   VARIANT) } \
+    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, Byte))         { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, Byte,       uint8_t,           length,   VARIANT) } \
+    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, UInt16))       { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, UInt16,     uint16_t,          length,   VARIANT) } \
+    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, Int16))        { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, Int16,      int16_t,           length,   VARIANT) } \
+    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, UInt32))       { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, UInt32,     uint32_t,          length,   VARIANT) } \
+    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, Int32))        { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, Int32,      int32_t,           length,   VARIANT) } \
+    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, UInt64))       { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, UInt64,     uint64_t,          length,   VARIANT) } \
+    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, Int64))        { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, Int64,      int64_t,           length,   VARIANT) } \
+    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, Float))        { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, Float,      float,             length,   VARIANT) } \
+    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, Double))       { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, Double,     double,            length,   VARIANT) } \
+    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, String))       { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, String,     std::string,       length,   VARIANT) } \
+    else if (PRIMITIVE_CONDITION(FIRSTOBJECT, ByteString))   { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, ByteString, uaf::ByteString,   length,   VARIANT) } \
     else if (UAFTYPE_CONDITION(FIRSTOBJECT, NodeId))         { PYUAF_CONVERT_UAFTYPE_ARRAY(PYOBJECT, NodeId,         length,   VARIANT) } \
     else if (UAFTYPE_CONDITION(FIRSTOBJECT, ExpandedNodeId)) { PYUAF_CONVERT_UAFTYPE_ARRAY(PYOBJECT, ExpandedNodeId, length,   VARIANT) } \
     else if (UAFTYPE_CONDITION(FIRSTOBJECT, LocalizedText))  { PYUAF_CONVERT_UAFTYPE_ARRAY(PYOBJECT, LocalizedText,  length,   VARIANT) } \
     else if (UAFTYPE_CONDITION(FIRSTOBJECT, QualifiedName))  { PYUAF_CONVERT_UAFTYPE_ARRAY(PYOBJECT, QualifiedName,  length,   VARIANT) } \
+    else if (UAFTYPE_CONDITION(FIRSTOBJECT, DateTime))       { PYUAF_CONVERT_UAFTYPE_ARRAY(PYOBJECT, DateTime,       length,   VARIANT) } \
     else if (STRING_OR_UNICODE_CONDITION(FIRSTOBJECT))       { CONVERT_STRING_ARRAY(PYOBJECT, length, VARIANT) } \
     else { PyErr_SetString(PyExc_TypeError, "Invalid type!"); return NULL; }
 
@@ -243,10 +247,13 @@
     else if (PRIMITIVE_CONDITION(PYOBJECT, Int64))        { CONVERT_PRIMITIVE(PYOBJECT, Int64,          VARIANT) } \
     else if (PRIMITIVE_CONDITION(PYOBJECT, Float))        { CONVERT_PRIMITIVE(PYOBJECT, Float,          VARIANT) } \
     else if (PRIMITIVE_CONDITION(PYOBJECT, Double))       { CONVERT_PRIMITIVE(PYOBJECT, Double,         VARIANT) } \
+    else if (PRIMITIVE_CONDITION(PYOBJECT, String))       { CONVERT_PRIMITIVE(PYOBJECT, String,         VARIANT) } \
+    else if (PRIMITIVE_CONDITION(PYOBJECT, ByteString))   { CONVERT_PRIMITIVE(PYOBJECT, ByteString,     VARIANT) } \
     else if (UAFTYPE_CONDITION(PYOBJECT, NodeId))         { PYUAF_CONVERT_UAFTYPE(PYOBJECT, NodeId,           VARIANT) } \
     else if (UAFTYPE_CONDITION(PYOBJECT, ExpandedNodeId)) { PYUAF_CONVERT_UAFTYPE(PYOBJECT, ExpandedNodeId,   VARIANT) } \
     else if (UAFTYPE_CONDITION(PYOBJECT, LocalizedText))  { PYUAF_CONVERT_UAFTYPE(PYOBJECT, LocalizedText,    VARIANT) } \
     else if (UAFTYPE_CONDITION(PYOBJECT, QualifiedName))  { PYUAF_CONVERT_UAFTYPE(PYOBJECT, QualifiedName,    VARIANT) } \
+    else if (UAFTYPE_CONDITION(PYOBJECT, DateTime))       { PYUAF_CONVERT_UAFTYPE(PYOBJECT, DateTime,         VARIANT) } \
     else \
     { \
         PyErr_SetString(PyExc_TypeError, "Invalid type!"); \
@@ -351,32 +358,24 @@
 
 
 #define CREATE_ARRAYOBJECT(VARIANT, PYOBJECT)  \
-    if (VARIANT.type() == uaf::opcuatypes::Boolean)              { CREATE_PRIMITIVE_ARRAY(Boolean,   bool, VARIANT, PYOBJECT)     } \
-    else if (VARIANT.type() == uaf::opcuatypes::SByte)           { CREATE_PRIMITIVE_ARRAY(SByte,     int8_t, VARIANT, PYOBJECT)   } \
-    else if (VARIANT.type() == uaf::opcuatypes::Byte)            { CREATE_PRIMITIVE_ARRAY(Byte,      uint8_t, VARIANT, PYOBJECT)  } \
-    else if (VARIANT.type() == uaf::opcuatypes::Int16)           { CREATE_PRIMITIVE_ARRAY(Int16,     int16_t, VARIANT, PYOBJECT)  } \
-    else if (VARIANT.type() == uaf::opcuatypes::UInt16)          { CREATE_PRIMITIVE_ARRAY(UInt16,    uint16_t, VARIANT, PYOBJECT) } \
-    else if (VARIANT.type() == uaf::opcuatypes::Int32)           { CREATE_PRIMITIVE_ARRAY(Int32,     int32_t, VARIANT, PYOBJECT)  } \
-    else if (VARIANT.type() == uaf::opcuatypes::UInt32)          { CREATE_PRIMITIVE_ARRAY(UInt32,    uint32_t, VARIANT, PYOBJECT) } \
-    else if (VARIANT.type() == uaf::opcuatypes::Int64)           { CREATE_PRIMITIVE_ARRAY(Int64,     int64_t, VARIANT, PYOBJECT)  } \
-    else if (VARIANT.type() == uaf::opcuatypes::UInt64)          { CREATE_PRIMITIVE_ARRAY(UInt64,    uint64_t, VARIANT, PYOBJECT) } \
-    else if (VARIANT.type() == uaf::opcuatypes::Float)           { CREATE_PRIMITIVE_ARRAY(Float,     float, VARIANT, PYOBJECT)    } \
-    else if (VARIANT.type() == uaf::opcuatypes::Double)          { CREATE_PRIMITIVE_ARRAY(Double,    double, VARIANT, PYOBJECT)   } \
+    if (VARIANT.type() == uaf::opcuatypes::Boolean)              { CREATE_PRIMITIVE_ARRAY(Boolean,    bool, VARIANT, PYOBJECT)     } \
+    else if (VARIANT.type() == uaf::opcuatypes::SByte)           { CREATE_PRIMITIVE_ARRAY(SByte,      int8_t, VARIANT, PYOBJECT)   } \
+    else if (VARIANT.type() == uaf::opcuatypes::Byte)            { CREATE_PRIMITIVE_ARRAY(Byte,       uint8_t, VARIANT, PYOBJECT)  } \
+    else if (VARIANT.type() == uaf::opcuatypes::Int16)           { CREATE_PRIMITIVE_ARRAY(Int16,      int16_t, VARIANT, PYOBJECT)  } \
+    else if (VARIANT.type() == uaf::opcuatypes::UInt16)          { CREATE_PRIMITIVE_ARRAY(UInt16,     uint16_t, VARIANT, PYOBJECT) } \
+    else if (VARIANT.type() == uaf::opcuatypes::Int32)           { CREATE_PRIMITIVE_ARRAY(Int32,      int32_t, VARIANT, PYOBJECT)  } \
+    else if (VARIANT.type() == uaf::opcuatypes::UInt32)          { CREATE_PRIMITIVE_ARRAY(UInt32,     uint32_t, VARIANT, PYOBJECT) } \
+    else if (VARIANT.type() == uaf::opcuatypes::Int64)           { CREATE_PRIMITIVE_ARRAY(Int64,      int64_t, VARIANT, PYOBJECT)  } \
+    else if (VARIANT.type() == uaf::opcuatypes::UInt64)          { CREATE_PRIMITIVE_ARRAY(UInt64,     uint64_t, VARIANT, PYOBJECT) } \
+    else if (VARIANT.type() == uaf::opcuatypes::Float)           { CREATE_PRIMITIVE_ARRAY(Float,      float, VARIANT, PYOBJECT)    } \
+    else if (VARIANT.type() == uaf::opcuatypes::Double)          { CREATE_PRIMITIVE_ARRAY(Double,     double, VARIANT, PYOBJECT)   } \
+    else if (VARIANT.type() == uaf::opcuatypes::String)          { CREATE_PRIMITIVE_ARRAY(String,     std::string, VARIANT, PYOBJECT)   } \
+    else if (VARIANT.type() == uaf::opcuatypes::ByteString)      { CREATE_PRIMITIVE_ARRAY(ByteString, uaf::ByteString, VARIANT, PYOBJECT)   } \
     else if (VARIANT.type() == uaf::opcuatypes::NodeId)          { CREATE_UAFTYPE_ARRAY(NodeId, VARIANT, PYOBJECT)         } \
     else if (VARIANT.type() == uaf::opcuatypes::ExpandedNodeId)  { CREATE_UAFTYPE_ARRAY(ExpandedNodeId, VARIANT, PYOBJECT) } \
     else if (VARIANT.type() == uaf::opcuatypes::LocalizedText)   { CREATE_UAFTYPE_ARRAY(LocalizedText, VARIANT, PYOBJECT)  } \
     else if (VARIANT.type() == uaf::opcuatypes::QualifiedName)   { CREATE_UAFTYPE_ARRAY(QualifiedName, VARIANT, PYOBJECT)  } \
-    else if (VARIANT.type() == uaf::opcuatypes::String)                                            \
-    {                                                                                              \
-        std::vector<std::string> vec;                                                              \
-        VARIANT.toStringArray(vec);                                                                \
-        PYOBJECT = PyList_New(VARIANT.arraySize());                                                \
-        for (Py_ssize_t i = 0; i < VARIANT.arraySize(); i++)                                       \
-        {                                                                                          \
-            PyObject* s = PyString_FromString(vec[i].c_str());                                     \
-            PyList_SetItem(PYOBJECT, i, s);                                                        \
-        }                                                                                          \
-    }                                                                                              \
+    else if (VARIANT.type() == uaf::opcuatypes::DateTime)        { CREATE_UAFTYPE_ARRAY(DateTime, VARIANT, PYOBJECT)       } \
     else                                                                                           \
     {                                                                                              \
         PyErr_SetString(PyExc_TypeError, "Invalid type!");                                         \
@@ -397,20 +396,13 @@
     else if (VARIANT.type() == uaf::opcuatypes::UInt64)          { CREATE_PRIMITIVE(UInt64, VARIANT, PYOBJECT)       }  \
     else if (VARIANT.type() == uaf::opcuatypes::Float)           { CREATE_PRIMITIVE(Float, VARIANT, PYOBJECT)        }  \
     else if (VARIANT.type() == uaf::opcuatypes::Double)          { CREATE_PRIMITIVE(Double, VARIANT, PYOBJECT)       }  \
+    else if (VARIANT.type() == uaf::opcuatypes::String)          { CREATE_PRIMITIVE(String, VARIANT, PYOBJECT)       }  \
+    else if (VARIANT.type() == uaf::opcuatypes::ByteString)      { CREATE_PRIMITIVE(ByteString, VARIANT, PYOBJECT)   }  \
     else if (VARIANT.type() == uaf::opcuatypes::NodeId)          { CREATE_UAFTYPE(NodeId, VARIANT, PYOBJECT)         }  \
     else if (VARIANT.type() == uaf::opcuatypes::ExpandedNodeId)  { CREATE_UAFTYPE(ExpandedNodeId, VARIANT, PYOBJECT) }  \
     else if (VARIANT.type() == uaf::opcuatypes::LocalizedText)   { CREATE_UAFTYPE(LocalizedText, VARIANT, PYOBJECT)  }  \
     else if (VARIANT.type() == uaf::opcuatypes::QualifiedName)   { CREATE_UAFTYPE(QualifiedName, VARIANT, PYOBJECT)  }  \
-    else if (VARIANT.type() == uaf::opcuatypes::String)                                            \
-    {                                                                                              \
-        PYOBJECT = PyString_FromString(VARIANT.toString().c_str());                                \
-    }                                                                                              \
-    else if (VARIANT.type() == uaf::opcuatypes::ByteString)                                        \
-    {                                                                                              \
-        UaByteString value;                                                                        \
-        VARIANT.toByteString(value);                                                               \
-        PYOBJECT = PyByteArray_FromStringAndSize((char*) value.data(), value.length());            \
-    }                                                                                              \
+    else if (VARIANT.type() == uaf::opcuatypes::DateTime)        { CREATE_UAFTYPE(DateTime, VARIANT, PYOBJECT)       }  \
     else                                                                                           \
     {                                                                                              \
         PyErr_SetString(PyExc_TypeError, "Invalid type!");                                         \

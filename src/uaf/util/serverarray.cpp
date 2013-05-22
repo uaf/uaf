@@ -122,6 +122,32 @@ namespace uaf
     }
 
 
+    // Update the server URI of an uaf::ExpandedNodeId
+    // =============================================================================================
+    Status ServerArray::updateServerUri(
+            const OpcUa_ExpandedNodeId& opcUaExpandedNodeId,
+            ExpandedNodeId&             expandedNodeId) const
+    {
+        Status ret;
+
+        string serverUri;
+
+        if (findServerUri(opcUaExpandedNodeId.ServerIndex, serverUri))
+        {
+            expandedNodeId.setServerUri(serverUri);
+            ret.setGood();
+        }
+        else
+        {
+            ret.setStatus(statuscodes::ResolutionError,
+                          "Unknown server index %d",
+                          opcUaExpandedNodeId.ServerIndex);
+        }
+
+        return ret;
+    }
+
+
     // Get a string representation of the Server Array (one line per ServerIndex:ServerURI pair)
     // =============================================================================================
     string ServerArray::toString() const

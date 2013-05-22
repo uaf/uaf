@@ -79,16 +79,16 @@ def test(args):
     
     print(" - testing output typemap for unicode string")
     v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.String)
-    assert v == (u"test \u00B0").encode("UTF-8")
-    assert type(v) == str
+    assert v.value == (u"test \u00B0").encode("UTF-8")
+    assert type(v) == type(pyuaf.util.primitives.String())
     
     print(" - testing output typemap for bytearray")
     v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.ByteString)
-    assert type(v) == type(bytearray())
-    assert len(v) == 3
-    assert v[0] == 1
-    assert v[1] == 2
-    assert v[2] == 3
+    assert type(v.value) == type(bytearray())
+    assert len(v.value) == 3
+    assert v.value[0] == 1
+    assert v.value[1] == 2
+    assert v.value[2] == 3
     
     print(" - testing output typemap for pyuaf.util.NodeId")
     v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.NodeId)
@@ -105,6 +105,10 @@ def test(args):
     print(" - testing output typemap for pyuaf.util.QualifiedName")
     v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.QualifiedName)
     assert v == pyuaf.util.QualifiedName("SomeName", 42)
+    
+    print(" - testing output typemap for pyuaf.util.DateTime")
+    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.DateTime)
+    assert v == pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z")
     
     print(" - testing output typemap for pyuaf.util.primitives.Boolean array")
     v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Boolean, True)
@@ -174,7 +178,9 @@ def test(args):
     
     print(" - testing output typemap for pyuaf.util.primitives.String array")
     v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.String, True)
-    assert v == ["test1", "test2", "test3"]
+    assert v == [pyuaf.util.primitives.String("test1"), 
+                 pyuaf.util.primitives.String("test2"),
+                 pyuaf.util.primitives.String("test3")]
     
     print(" - testing output typemap for pyuaf.util.NodeId array")
     v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.NodeId, True)
@@ -204,6 +210,13 @@ def test(args):
     assert v == [pyuaf.util.QualifiedName("SomeName", 42), 
                  pyuaf.util.QualifiedName("SomeName", 42),
                  pyuaf.util.QualifiedName("SomeName", 42)]
+    
+    
+    print(" - testing output typemap for pyuaf.util.DateTime array")
+    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.DateTime, True)
+    assert v == [pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"), 
+                 pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"),
+                 pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z")]
     
     
     
@@ -256,15 +269,15 @@ def test(args):
     
     print(" - testing input typemap for non-unicode string")
     v = tester.testVariantTypemap_in("test")
-    assert v == "test"
+    assert v == pyuaf.util.primitives.String("test")
     
     print(" - testing input typemap for unicode string")
     v = tester.testVariantTypemap_in(u"test \u00B0")
-    assert v == (u"test \u00B0").encode("UTF-8")
+    assert v == pyuaf.util.primitives.String((u"test \u00B0").encode("UTF-8"))
     
     print(" - testing input typemap for bytearray")
     v = tester.testVariantTypemap_in(bytearray(b"abc"))
-    assert v == bytearray(b"abc")
+    assert v == pyuaf.util.primitives.ByteString(bytearray(b"abc"))
     
     print(" - testing input typemap for pyuaf.util.NodeId")
     v = tester.testVariantTypemap_in(pyuaf.util.NodeId("SomeIdentifier", 42))
@@ -281,6 +294,10 @@ def test(args):
     print(" - testing input typemap for pyuaf.util.QualifiedName")
     v = tester.testVariantTypemap_in(pyuaf.util.QualifiedName("SomeName", 42))
     assert v == pyuaf.util.QualifiedName("SomeName", 42)
+
+    print(" - testing input typemap for pyuaf.util.DateTime")
+    v = tester.testVariantTypemap_in(pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"))
+    assert v == pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z")
 
     print(" - testing input typemap for pyuaf.util.primitives.Boolean array")
     v = tester.testVariantTypemap_in( [pyuaf.util.primitives.Boolean(True),
@@ -370,15 +387,19 @@ def test(args):
     assert 3.13999 < v[1].value < 3.14001
     assert -3.13999 > v[2].value > -3.14001
 
-    print(" - testing input typemap for string array")
-    v = tester.testVariantTypemap_in(["test1", "test2", "test3"])
-    assert v == ["test1", "test2", "test3"]
+    print(" - testing input typemap for pyuaf.util.primitives.String array")
+    v = tester.testVariantTypemap_in([pyuaf.util.primitives.String("test1"),
+                                      pyuaf.util.primitives.String("test2"),
+                                      pyuaf.util.primitives.String("test3") ])
+    assert v == [pyuaf.util.primitives.String("test1"),
+                 pyuaf.util.primitives.String("test2"),
+                 pyuaf.util.primitives.String("test3") ]
 
     print(" - testing input typemap for unicode objects array")
     v = tester.testVariantTypemap_in([u"test1 \u00B0", u"test2 \u00B0", u"test3 \u00B0"])
-    assert v == [ (u"test1 \u00B0").encode("UTF-8"), 
-                  (u"test2 \u00B0").encode("UTF-8"), 
-                  (u"test3 \u00B0").encode("UTF-8") ]
+    assert v == [ pyuaf.util.primitives.String((u"test1 \u00B0").encode("UTF-8")), 
+                  pyuaf.util.primitives.String((u"test2 \u00B0").encode("UTF-8")), 
+                  pyuaf.util.primitives.String((u"test3 \u00B0").encode("UTF-8")) ]
     
     print(" - testing input typemap for pyuaf.util.NodeId array")
     v = tester.testVariantTypemap_in( [pyuaf.util.NodeId("SomeIdentifier", 42), 
@@ -413,4 +434,9 @@ def test(args):
     v = tester.testVariantTypemap_in( [pyuaf.util.QualifiedName("SomeName", 42), 
                                        pyuaf.util.QualifiedName("SomeName", 43),
                                        pyuaf.util.QualifiedName("SomeName", 44)] )
+    
+    print(" - testing input typemap for pyuaf.util.DateTime array")
+    v = tester.testVariantTypemap_in( [pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"), 
+                                       pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"), 
+                                       pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z")] )
 

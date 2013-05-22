@@ -219,21 +219,34 @@ namespace uaf
         {
             UaNodeId uaNodeId;
             // update the NodeId identifier
-            if (nodeId.identifier().type == nodeididentifiertypes::Numeric)
+            if (nodeId.identifier().type == nodeididentifiertypes::Identifier_Numeric)
             {
                 uaNodeId.setNodeId(nodeId.identifier().idNumeric, nameSpaceIndex);
                 uaNodeId.copyTo(&opcUaNodeId);
             }
-            else if (nodeId.identifier().type == nodeididentifiertypes::String)
+            else if (nodeId.identifier().type == nodeididentifiertypes::Identifier_String)
             {
                 uaNodeId.setNodeId(UaString(nodeId.identifier().idString.c_str()), nameSpaceIndex);
                 uaNodeId.copyTo(&opcUaNodeId);
             }
+            else if (nodeId.identifier().type == nodeididentifiertypes::Identifier_Guid)
+            {
+                UaGuid uaGuid;
+                nodeId.identifier().idGuid.toSdk(uaGuid);
+                uaNodeId.setNodeId(uaGuid, nameSpaceIndex);
+                uaNodeId.copyTo(&opcUaNodeId);
+            }
+            else if (nodeId.identifier().type == nodeididentifiertypes::Identifier_Opaque)
+            {
+                UaByteString uaByteString;
+                nodeId.identifier().idOpaque.toSdk(uaByteString);
+                uaNodeId.setNodeId(uaByteString, nameSpaceIndex);
+                uaNodeId.copyTo(&opcUaNodeId);
+            }
             else
-                ret.setStatus(
-                        statuscodes::UnsupportedError,
-                        "UAF does not support NodeIds with nodeId identifiers other than Numeric "
-                        "or String");
+            {
+                ret.setStatus(statuscodes::UnexpectedError, "Unknown identifier type!");
+            }
         }
 
         return ret;
@@ -322,7 +335,7 @@ namespace uaf
     }
 
 
-    // Convert an OpcUa_NodeId to a fully resolved uaf::NodeId
+    // Fill out a NodeId
     // =============================================================================================
     Status NamespaceArray::fillNodeId(const OpcUa_NodeId& opcUaNodeId, NodeId& nodeId) const
     {
@@ -335,6 +348,68 @@ namespace uaf
         else
             ret.setStatus(statuscodes::ResolutionError,
                           "Unknown namespace index %d", opcUaNodeId.NamespaceIndex);
+
+        return ret;
+    }
+
+
+    // Fill out an ExpandedNodeId
+    // =============================================================================================
+    Status NamespaceArray::fillExpandedNodeId(
+            const OpcUa_ExpandedNodeId& opcUaExpandedNodeId,
+            ExpandedNodeId&             expandedNodeId) const
+    {
+        Status ret;
+
+        string namespaceUri;
+
+        // according to the OPC UA specs, if the opcUaExpandedNodeId contains a namespaceUri,
+        // then the namespaceIndex should be ignored.
+
+        // So, if a non-empty namespace URI is already given, then we use that one.
+        // Else, we try to find the namespace URI that corresponds to the given namespace index.
+        if (!UaString(&opcUaExpandedNodeId.NamespaceUri).isEmpty())
+        {
+            expandedNodeId.nodeId().setNameSpaceUri(
+                    string(UaString(&opcUaExpandedNodeId.NamespaceUri).toUtf8()));
+            ret.isGood();
+        }
+        else if (findNamespaceUri(opcUaExpandedNodeId.NodeId.NamespaceIndex, namespaceUri))
+        {
+            ret = expandedNodeId.fromSdk(opcUaExpandedNodeId, namespaceUri);
+        }
+        else
+        {
+            ret.setStatus(statuscodes::ResolutionError,
+                          "Empty server URI and unknown namespace index %d",
+                          opcUaExpandedNodeId.NodeId.NamespaceIndex);
+        }
+
+
+        return ret;
+    }
+
+
+    // Fill out a QualifiedName
+    // =============================================================================================
+    Status NamespaceArray::fillQualifiedName(
+            const OpcUa_QualifiedName&  opcUaQualfiedName,
+            QualifiedName&              qualifiedName) const
+    {
+        Status ret;
+
+        string namespaceUri;
+
+        if (findNamespaceUri(opcUaQualfiedName.NamespaceIndex, namespaceUri))
+        {
+            qualifiedName.fromSdk(opcUaQualfiedName, namespaceUri);
+            ret.setGood();
+        }
+        else
+        {
+            ret.setStatus(statuscodes::ResolutionError,
+                          "Unknown namespace index %d", opcUaQualfiedName.NamespaceIndex);
+        }
 
         return ret;
     }

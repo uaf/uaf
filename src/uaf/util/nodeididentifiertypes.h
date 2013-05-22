@@ -46,10 +46,10 @@ namespace uaf
          */
         enum NodeIdIdentifierType
         {
-            Numeric    = 0, /**< The NodeId identifier is a numerical value. */
-            String     = 1, /**< The NodeId identifier is a string. */
-            Guid       = 2, /**< The NodeId identifier is a globally unique identifier (GUID). */
-            Opaque     = 3  /**< The NodeId identifier is an opaque value. */
+            Identifier_Numeric    = 0, /**< The NodeId identifier is a numerical value. */
+            Identifier_String     = 1, /**< The NodeId identifier is a string. */
+            Identifier_Guid       = 2, /**< The NodeId identifier is a globally unique identifier (GUID). */
+            Identifier_Opaque     = 3  /**< The NodeId identifier is an opaque value. */
         };
 
         /**

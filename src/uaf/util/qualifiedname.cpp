@@ -112,6 +112,22 @@ namespace uaf
     }
 
 
+    // Fill the qualified name
+    // =============================================================================================
+    void QualifiedName::fromSdk(const UaQualifiedName& destination, const string& nameSpaceUri)
+    {
+        if (UaString(destination.name()).isNull())
+            name_ == "";
+        else
+            name_ = string(UaString(destination.name()).toUtf8());
+
+        nameSpaceIndex_ = destination.namespaceIndex();
+        nameSpaceIndexGiven_ = true;
+        nameSpaceUri_ = nameSpaceUri;
+        nameSpaceUriGiven_ = true;
+    }
+
+
     // Set the namespace index
     // =============================================================================================
     void QualifiedName::setNameSpaceIndex(uint16_t nameSpaceIndex)
@@ -136,15 +152,18 @@ namespace uaf
     {
         stringstream ss;
 
+        ss << "Ns";
+
         if (nameSpaceIndexGiven_)
-        {
-            if (nameSpaceUriGiven_)
-                ss << name_ << ":" << nameSpaceUri_ << "=" << nameSpaceIndex_;
-            else
-                ss << name_ << ":" << nameSpaceIndex_;
-        }
-        else
-            ss << name_ << ":" << nameSpaceUri_;
+            ss << "=" << nameSpaceIndex_;
+
+        if (nameSpaceUriGiven_)
+            ss << "='" << nameSpaceUri_ << "'";
+
+        if ( (!nameSpaceIndexGiven_) && (!nameSpaceUriGiven_) )
+            ss << "=???";
+
+        ss << "|'" << name_ << "'";
 
         return ss.str();
     }

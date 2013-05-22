@@ -41,3 +41,8 @@
 // import some macros
 %import "pyuaf_macros.i"
 
+
+// typemap for time_t
+%typemap(in)  time_t { $1 = (time_t) PyLong_AsLong($input); }
+%typemap(out) time_t { $result = PyLong_FromLong((long)$1); }
+

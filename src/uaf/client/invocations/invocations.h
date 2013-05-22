@@ -31,6 +31,8 @@
 #include "uaf/client/invocations/createmonitoreddatainvocation.h"
 #include "uaf/client/invocations/createmonitoredeventsinvocation.h"
 #include "uaf/client/invocations/translatebrowsepathstonodeidsinvocation.h"
+#include "uaf/client/invocations/browseinvocation.h"
+#include "uaf/client/invocations/browsenextinvocation.h"
 
 
 // no declarations, just an #include for each invocation

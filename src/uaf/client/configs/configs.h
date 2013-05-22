@@ -32,6 +32,8 @@
 #include "uaf/client/settings/createmonitoreddatasettings.h"
 #include "uaf/client/settings/createmonitoredeventssettings.h"
 #include "uaf/client/settings/translatebrowsepathstonodeidssettings.h"
+#include "uaf/client/settings/browsesettings.h"
+#include "uaf/client/settings/browsenextsettings.h"
 
 
 
@@ -49,6 +51,8 @@ namespace uafc
     DEFINE_CONFIG(Read)
     DEFINE_CONFIG(Write)
     DEFINE_CONFIG(MethodCall)
+    DEFINE_CONFIG(Browse)
+    DEFINE_CONFIG(BrowseNext)
     DEFINE_CONFIG(TranslateBrowsePathsToNodeIds)
     DEFINE_CONFIG(CreateMonitoredData)
     DEFINE_CONFIG(CreateMonitoredEvents)

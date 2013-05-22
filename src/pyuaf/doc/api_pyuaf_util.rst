@@ -316,6 +316,269 @@
 
 
 
+*class* DateTime
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.DateTime
+
+
+    An DateTime holds a timestamp.
+    
+    Short example:
+
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> import time, datetime
+        >>> from pyuaf.util import DateTime
+        
+        >>> nowDateTime = DateTime.now()  
+        >>> nowDateTime2 = DateTime(time.time()) # equally valid alternative
+    
+        >>> nowStringRepresentation = str(nowDateTime)
+        
+        >>> # create a time in the future (note that 567 milliseconds have been added on the last line!)
+        >>> futureTimeFloat = time.mktime(datetime.datetime(year   = 2023, 
+        ...                                                 month  =    6, 
+        ...                                                 day    =   18, 
+        ...                                                 hour   =    9, 
+        ...                                                 minute =   12, 
+        ...                                                 second =   34).timetuple()) + 0.567
+        >>> futureDateTime = DateTime(futureTimeFloat)
+        
+        >>> # equally valid alternative:
+        >>> futureDateTime2 = DateTime()
+        >>> futureDateTime2.setCtime(futureTimeFloat)
+        
+        >>> # calculate the number of days difference between "now" and the "future"
+        >>> daysDifference = nowDateTime.daysTo(futureDateTime)
+        
+
+    * Methods:
+
+        .. automethod:: pyuaf.util.DateTime.__init__
+    
+            You can construct a pyuaf.util.DateTime instance by providing a floating point number
+            which represents the number of seconds (+ milliseconds after the comma) since
+            UTC 1 January 1970 (= 1970-01-01T00:00:00Z).
+            
+            
+        .. automethod:: pyuaf.util.DateTime.isNull
+        
+            True if the datetime is NULL, False if it has a real value.
+            
+            :return: True if the datetime is NULL, false if it has a real value.
+            :rtype: ``bool``
+             
+        .. automethod:: pyuaf.util.DateTime.toFileTime
+        
+            Get the time as a FILETIME, i.e. as a 64-bit integer corresponding to the number
+            of 100-nanosecond intervals since January 1, 1601 UTC).
+
+            :return: The time as a 64-bit number.
+            :rtype: ``long``
+            
+            
+        .. automethod:: pyuaf.util.DateTime.__str__
+        
+            Get the time as a string representation, e.g. "2013-05-21T12:34:56.789Z".
+           
+            :return: The time as a string.
+            :rtype: ``str``
+            
+            
+        .. automethod:: pyuaf.util.DateTime.toDateString
+        
+            Get the date part as a string representation, e.g. "2013-05-21".
+           
+            :return: The date as a string.
+            :rtype: ``str``
+            
+            
+        .. automethod:: pyuaf.util.DateTime.toTimeString
+        
+            Get the time part as a string representation, e.g. "12:34:56.789Z".
+           
+            :return: The time without the date, as a string.
+            :rtype: ``str``
+            
+            
+        .. automethod:: pyuaf.util.DateTime.toTime_t
+        
+            Get the time part as the number of seconds since UTC 1 January 1970
+            (= 1970-01-01T00:00:00Z).
+           
+            :return: The time as an integer.
+            :rtype: ``int``
+            
+            
+        .. automethod:: pyuaf.util.DateTime.setCtime(t)
+        
+            Update the time to the given floating point value, corresponding 
+            to the number of seconds (+ milliseconds, after the comma) since UTC 1 January 1970
+            (= 1970-01-01T00:00:00Z).
+           
+            :param t: The time , e.g. ``time.time()`` for the current time.
+            :type t: ``float``
+            :return: The time as a :class:`~pyuaf.util.DateTime` object.
+            :rtype:  :class:`~pyuaf.util.DateTime`
+            
+            
+        .. automethod:: pyuaf.util.DateTime.msec
+        
+            Get the milliseconds part of the timestamp.
+           
+            :return: The number of milliseconds after the second.
+            :rtype: ``int``
+            
+            
+        .. automethod:: pyuaf.util.DateTime.daysTo(other)
+        
+            Get the number of days from this instance to the argument instance.
+           
+            :param other: Another DateTime instance.
+            :type other:  :class:`~pyuaf.util.DateTime`
+            :return: The number of days difference.
+            :rtype: ``int``
+            
+            
+        .. automethod:: pyuaf.util.DateTime.secsTo(other)
+        
+            Get the number of seconds from this instance to the argument instance.
+           
+            :param other: Another DateTime instance.
+            :type other:  :class:`~pyuaf.util.DateTime`
+            :return: The number of seconds difference.
+            :rtype: ``int``
+            
+            
+        .. automethod:: pyuaf.util.DateTime.msecsTo(other)
+        
+            Get the number of milliseconds from this instance to the argument instance.
+           
+            :param other: Another DateTime instance.
+            :type other:  :class:`~pyuaf.util.DateTime`
+            :return: The number of milliseconds difference.
+            :rtype: ``int``
+            
+            
+        .. automethod:: pyuaf.util.DateTime.addSecs(secs)
+        
+            Add a number of seconds to the timestamp.
+           
+            :param secs: Number of seconds to add.
+            :type secs:  ``int``
+            
+            
+        .. automethod:: pyuaf.util.DateTime.addMilliSecs(msecs)
+        
+            Add a number of milliseconds to the timestamp.
+           
+            :param msecs: Number of milliseconds to add.
+            :type msecs:  ``int``
+
+
+    * Static functions:
+            
+            
+        .. automethod:: pyuaf.util.DateTime.now
+        
+            Static function to get the current time.
+           
+            :return: The current time.
+            :rtype:  :class:`~pyuaf.util.DateTime`
+
+
+        .. automethod:: pyuaf.util.DateTime.fromString(s)
+        
+            Static function to convert the given string into a DateTime object.
+           
+            :param s: The string, e.g. "2013-05-21T12:34:56.789Z".
+            :type s: ``str``
+            :return: The time from the string.
+            :rtype:  :class:`~pyuaf.util.DateTime`
+            
+            
+        .. automethod:: pyuaf.util.DateTime.fromTime_t(t)
+        
+            Static function to convert the given time (as an integer corresponding to 
+            ``long(time.time())``) into a DateTime object.
+           
+            This time ("time_t") is the number of seconds since UTC 1 January 1970 
+            = 1970-01-01T00:00:00Z.
+           
+            :param t: The time , e.g. ``long(time.time()) + 3`` for the current time + 3 seconds.
+            :type t: ``long``
+            :return: The time as a :class:`~pyuaf.util.DateTime` object.
+            :rtype:  :class:`~pyuaf.util.DateTime`
+            
+            
+        .. automethod:: pyuaf.util.DateTime.fromFileTime(t)
+        
+            Static function to convert the given time (as a 64-bit integer corresponding to 
+            FILETIME (= the number of 100-nanosecond intervals since January 1, 1601 UTC).
+           
+            :param t: The FILETIME.
+            :type t: ``long``
+            :return: The time as a :class:`~pyuaf.util.DateTime` object.
+            :rtype:  :class:`~pyuaf.util.DateTime`
+            
+
+
+*class* DateTimeVector
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.DateTimeVector
+
+    A DateTimeVector is a container that holds elements of type 
+    :class:`pyuaf.util.DateTime`. 
+    It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+    as a ``list`` of :class:`~pyuaf.util.DateTime`.
+
+    Usage example:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> import time, datetime
+        >>> from pyuaf.util import DateTimeVector, DateTime
+        
+        >>> # construct a DateTimeVector without elements:
+        >>> vec = DateTimeVector()
+        
+        >>> noOfElements = len(vec) # will be 0
+        
+        >>> vec.append(DateTime(time.time()))
+        
+        >>> noOfElements = len(vec) # will be 1
+        
+        >>> vec.resize(2)
+        
+        >>> vec[1].setCtime(time.time())
+        >>> vec[1].addSecs(3)
+        
+        >>> noOfElements = len(vec) # will be 2
+        
+        >>> # you may construct a DateTimeVector from a regular Python list:
+        >>> fromTime = time.mktime(datetime.datetime(year   = 2013, 
+        ...                                          month  =    6, 
+        ...                                          day    =   18, 
+        ...                                          hour   =    9, 
+        ...                                          minute =   12, 
+        ...                                          second =   34).timetuple()) + 0.567 # 567 msec 
+        >>> toTime = time.mktime(datetime.datetime(year   = 2014, 
+        ...                                        month  =    1, 
+        ...                                        day    =   30, 
+        ...                                        hour   =   12, 
+        ...                                        minute =   34, 
+        ...                                        second =   56).timetuple()) + 0.789 # 789 msec 
+        >>> someOtherVec = DateTimeVector( [ DateTime(fromTime), DateTime(toTime) ] )
+
+
+
+
 
 
 *class* EndpointDescription
@@ -592,6 +855,28 @@
 
 
     
+
+
+*class* Guid
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.Guid
+
+    A Guid represents a Globally unique identifier.
+    
+    
+    * Methods:
+
+        .. automethod:: pyuaf.util.Guid.__init__
+            
+            Create a Guid instance, without arguments or with a UTF-8 ``str`` argument.
+
+        .. automethod:: pyuaf.util.Guid.__str__
+            
+            Get a UTF-8 string representation.
+
+
 
 
 *class* LocalizedText
@@ -948,6 +1233,14 @@
             :type  uri:  ``int``
 
 
+        .. automethod:: pyuaf.util.NodeId.isNull
+        
+            Was the NodeId initialized with some contents?
+            
+            :return: True if the NodeId does not have any contents.
+            :rtype:  ``bool``
+
+
 
 
 *class* NodeIdIdentifier
@@ -964,26 +1257,49 @@
 
         .. automethod:: pyuaf.util.NodeIdIdentifier.__init__
     
-            Construct a NodeIdIdentifier by providing a string or a numeric value (or nothing at 
-            all).
+            Construct a NodeIdIdentifier.
+            
+            The constructor accepts
+             - an ``int`` in order to construct a Numeric identifier
+             - a ``str`` in order to construct a String identifier
+             - a :class:`~pyuaf.util.Guid` in order to construct a Guid identifier
+             - a ``bytearray`` in order to construct a Guid identifier
+
+        .. automethod:: pyuaf.util.NodeIdIdentifier.isNull
         
+            Was the identifier initialized with some contents?
+            
+            :return: True if the identifier does not have any contents.
+            :rtype:  ``bool``
+
 
     * Attributes:
     
         .. autoattribute:: pyuaf.util.NodeIdIdentifier.type
         
-            The type of the NodeIdIdentifier (e.g. :attr:`pyuaf.util.nodeididentifiertypes.String`)
+            The type of the NodeIdIdentifier (e.g. :attr:`pyuaf.util.nodeididentifiertypes.Identifier_String`)
             as defined within :mod:`pyuaf.util.nodeididentifiertypes`.
     
         .. autoattribute:: pyuaf.util.NodeIdIdentifier.idString
         
-            The string value in case :attr:`~pyuaf.util.NodeIdIdentifier.type` equals 
-            :attr:`pyuaf.util.nodeididentifiertypes.String`.
+            The ``str`` value in case :attr:`~pyuaf.util.NodeIdIdentifier.type` equals 
+            :attr:`pyuaf.util.nodeididentifiertypes.Identifier_String`.
     
         .. autoattribute:: pyuaf.util.NodeIdIdentifier.idNumeric
         
             The ``int`` value in case :attr:`~pyuaf.util.NodeIdIdentifier.type` equals 
-            :attr:`pyuaf.util.nodeididentifiertypes.Numeric`.
+            :attr:`pyuaf.util.nodeididentifiertypes.Identifier_Numeric`.
+    
+        .. autoattribute:: pyuaf.util.NodeIdIdentifier.idGuid
+        
+            The :class:`~pyuaf.util.Guid` value in case :attr:`~pyuaf.util.NodeIdIdentifier.type` equals 
+            :attr:`pyuaf.util.nodeididentifiertypes.Identifier_Guid`.
+    
+        .. autoattribute:: pyuaf.util.NodeIdIdentifier.idOpaque
+        
+            The ``bytearray`` (a built-in Python type) value in case 
+            :attr:`~pyuaf.util.NodeIdIdentifier.type` equals 
+            :attr:`pyuaf.util.nodeididentifiertypes.Identifier_Opaque`.
 
 
 
@@ -1134,6 +1450,109 @@
         >>> # you may construct a QualifiedNameVector from a regular Python list:
         >>> someOtherVec = QualifiedNameVector( [ QualifiedName("a", "uriA"), 
         ...                                       QualifiedName("b", "uriB") ] )
+
+
+
+*class* ReferenceDescription
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.ReferenceDescription
+
+    A ReferenceDescription instance describes a Reference to a specific Node in some address
+    space.
+
+
+    * Methods:
+
+
+        .. automethod:: pyuaf.util.ReferenceDescription.__init__
+    
+            Construct a new ReferenceDescription.
+
+    
+        .. automethod:: pyuaf.util.ReferenceDescription.__str__
+    
+            Get a string representation of the ReferenceDescription.
+
+
+    * Attributes:
+
+      
+        .. autoattribute:: pyuaf.util.ReferenceDescription.referenceTypeId
+        
+            The NodeId (as a :class:`pyuaf.util.NodeId`) of the type of the reference.
+  
+        .. autoattribute:: pyuaf.util.ReferenceDescription.isForward
+        
+            A ``bool``: ``True`` if the server followed a forward reference, ``False`` if not.
+  
+        .. autoattribute:: pyuaf.util.ReferenceDescription.nodeId
+        
+            The ExpandedNodeId (as a :class:`pyuaf.util.ExpandedNodeId`) of the node to which 
+            the reference is pointing.
+        
+        .. autoattribute:: pyuaf.util.ReferenceDescription.browseName
+        
+            The browse name (as a :class:`pyuaf.util.QualifiedName`) of the node to which the
+            reference is pointing.
+        
+        .. autoattribute:: pyuaf.util.ReferenceDescription.displayName
+        
+            The display name (as a :class:`pyuaf.util.LocalizedText`) of the node to which 
+            the reference is pointing.
+        
+        .. autoattribute:: pyuaf.util.ReferenceDescription.nodeClass
+        
+            The node class of the node to which the reference is pointing,
+            as an ``int`` as defined in the :mod:`pyuaf.util.nodeclasses` module.
+  
+        .. autoattribute:: pyuaf.util.ReferenceDescription.typeDefinition
+        
+            The ExpandedNodeId (as a :class:`pyuaf.util.ExpandedNodeId`) of the type of the node 
+            to which the reference is pointing to (only in case the node class of this node is 
+            an Object or a Variable).
+    
+
+
+
+*class* ReferenceDescriptionVector
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.ReferenceDescriptionVector
+
+    A ReferenceDescriptionVector is a container that holds elements of type 
+    :class:`pyuaf.util.ReferenceDescription`. 
+    It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+    as a ``list`` of :class:`~pyuaf.util.ReferenceDescription`.
+
+    Usage example:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> from pyuaf.util import ReferenceDescriptionVector, ReferenceDescription, ExpandedNodeId
+        
+        >>> # construct a ReferenceDescriptionVector without elements:
+        >>> vec = ReferenceDescriptionVector()
+        
+        >>> noOfElements = len(vec) # will be 0
+        
+        >>> vec.append(ReferenceDescription())
+        
+        >>> noOfElements = len(vec) # will be 1
+        
+        >>> vec.resize(2)
+        
+        >>> vec[1].nodeId    = ExpandedNodeId("SomeId", "SomeNameSpace", "SomeServerUri")
+        >>> vec[1].nodeClass = pyuaf.util.nodeclasses.Variable
+        
+        >>> noOfElements = len(vec) # will be 2
+        
+        >>> # you may construct a ReferenceDescriptionVector from a regular Python list:
+        >>> someOtherVec = ReferenceDescriptionVector( [ ReferenceDescription(), 
+        ...                                              ReferenceDescription() ] )
 
 
 
@@ -1673,15 +2092,30 @@
     It is an artifact automatically generated from the C++ UAF code, and has the same functionality
     as a ``list`` of values, where the values can be instances of:
     
-     - None
-     - :class:`pyuaf.util.primitives.Boolean`
-     - :class:`pyuaf.util.primitives.UInt32`
-     - ``str``
-     - :class:`pyuaf.util.QualifiedName`
-     - :class:`pyuaf.util.LocalizedText`
-     - a ``list`` of any of the above types --> represents an OPC UA array!
-     - ...
-     
+      - ``None`` (for a NULL value)
+      - a primitive:
+         - :class:`pyuaf.util.primitives.Boolean`
+         - :class:`pyuaf.util.primitives.SByte`
+         - :class:`pyuaf.util.primitives.Byte`
+         - :class:`pyuaf.util.primitives.UInt16`
+         - :class:`pyuaf.util.primitives.Int16`
+         - :class:`pyuaf.util.primitives.UInt32`
+         - :class:`pyuaf.util.primitives.Int32`
+         - :class:`pyuaf.util.primitives.UInt64`
+         - :class:`pyuaf.util.primitives.Int64`
+         - :class:`pyuaf.util.primitives.Float`
+         - :class:`pyuaf.util.primitives.Double`
+         - :class:`pyuaf.util.primitives.String`
+         - :class:`pyuaf.util.primitives.ByteString`
+      - a non-primitive such as:
+         - :class:`pyuaf.util.NodeId`
+         - :class:`pyuaf.util.ExpandedNodeId`
+         - :class:`pyuaf.util.QualifiedName`
+         - :class:`pyuaf.util.LocalizedText`
+         - :class:`pyuaf.util.DateTime`
+      - a ``list`` of any of the above types. This list represents an OPC UA array, so all items
+        of this list should have the same type!!!
+    
     .. seealso:: :ref:`note-variants`.
 
     Usage example:
@@ -1693,10 +2127,33 @@
 
 
 
+
+
+*class* ViewDescription
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.ViewDescription
+
+
+    A ViewDescription instance specifies an OPC UA View.
+
+
+    * Methods:
+
+        .. automethod:: pyuaf.util.ViewDescription.__init__
     
+            Construct a new ViewDescription.
+            
+    
+    * Attributes:
+  
+  
+        .. autoattribute:: pyuaf.util.ViewDescription.viewId
 
-
-        
-
+            The node id of the View to query.
+            
+            Leave the NodeId to its default value (= without any contents, so NodeId.isNull()
+            will return True) if you want to specify the whole address space.
 
 

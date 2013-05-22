@@ -867,6 +867,141 @@ class Client(ClientBase):
             self.__asyncCallLock__.release()
     
     
+    def browse(self, addresses, maxAutoBrowseNext=100, serviceConfig=None, sessionConfig=None):
+        """
+        Browse a number of nodes synchronously.
+        
+        This is a convenience method for calling :class:`~pyuaf.client.Client.processRequest` with 
+        a :class:`~pyuaf.client.requests.BrowseRequest` as its first argument.
+        A BrowseRequest has many parameters (only few of them can be configured by this convenience
+        method), so for full flexibility use the other method.
+        
+        The second parameter (maxAutoBrowseNext) allows you to use some handy extra functionality
+        of the UAF: the UAF can automatically invoke the BrowseNext service for you, if all browse
+        results couldn't be fetched by the initial Browse service. This parameter specifies how
+        many times the UAF may silently invoke the BrowseNext service for you. Put it to 0 if you
+        want the "normal SDK behavior", i.e. if you want to invoke the BrowseNext service manually. 
+        
+        :param addresses: A single address or a list of addresses of nodes that serve as the 
+                          starting point to browse.
+        :type  addresses: :class:`~pyuaf.util.Address` or a ``list`` of :class:`~pyuaf.util.Address` 
+        :param maxAutoBrowseNext: How many times do you allow the UAF to automatically invoke a
+                                  BrowseNext for you (if that's needed to fetch all results)? 
+                                  This parameter will always be used instead of the 
+                                  maxAutoBrowseNext attribute in the serviceSettings attribute of 
+                                  the serviceConfig parameter!
+        :type maxAutoBrowseNext: ``int``
+        :param serviceConfig: Additional settings for processing the browse request.
+                              Leave None for defaults.
+        :type serviceConfig: :class:`~pyuaf.client.configs.BrowseConfig`
+        :param sessionConfig: A config holding settings for the session creation.
+                              Leave None for defaults.
+        :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
+        :return: The result of the browse request.
+        :rtype:  :class:`~pyuaf.client.results.BrowseResult`
+        :raise pyuaf.util.errors.UafError:
+             Base exception, catch this to handle any UAF errors.
+        """
+        if type(addresses) == pyuaf.util.Address:
+            addressVector = pyuaf.util.AddressVector([addresses])
+        else:
+            addressVector = pyuaf.util.AddressVector(addresses)
+        result = pyuaf.client.results.BrowseResult()
+        
+        # make sure the arguments are valid (to avoid the ugly SWIG error output)
+        pyuaf.util.errors.evaluateArg(maxAutoBrowseNext, "maxAutoBrowseNext", int, [])
+        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
+                                      pyuaf.client.configs.BrowseConfig, [None])
+        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
+                                      pyuaf.client.configs.SessionConfig, [None])
+        
+        if serviceConfig is None:
+            serviceConfig = pyuaf.client.configs.BrowseConfig()
+        
+        if sessionConfig is None:
+            sessionConfig = pyuaf.client.configs.SessionConfig()
+        
+        status = ClientBase.browse(self, addressVector, maxAutoBrowseNext, serviceConfig, 
+                                   sessionConfig, result)
+        
+        pyuaf.util.errors.evaluate(status)
+        return result
+    
+    
+    
+    def browseNext(self, addresses, continuationPoints, serviceConfig=None, sessionConfig=None):
+        """
+        Continue a previous synchronous Browse request, in case you didn't use the automatic
+        BrowseNext feature of the UAF.
+        
+        You only need to use this function if you have put maxAutoBrowseNext to 0 in the previous
+        Browse request (or if the automatic BrowseNext calls still resulted in continuationPoints).
+        For your convenience, it's much easier to simple use the browse() method, and let the
+        UAF do the BrowseNext calls for you! 
+        
+        This is a convenience method for calling :class:`~pyuaf.client.Client.processRequest` with 
+        a :class:`~pyuaf.client.requests.BrowseNextRequest` as its first argument.
+        A BrowseNextRequest has many parameters (only few of them can be configured by this 
+        convenience method), so for full flexibility use the other method.
+        
+        :param addresses: A single address or a list of addresses of nodes that serve as the 
+                          starting point to browse. You need to copy the addresses here from the
+                          original Browse request, so that the UAF can use these addresses to find
+                          out to which server the BrowseNext call should be sent.
+        :type  addresses: :class:`~pyuaf.util.Address` or a ``list`` of :class:`~pyuaf.util.Address` 
+        :param continuationPoints: A ``list`` of continuation points (represented by the built-in 
+                                   Python ``bytearray`` objects).
+        :type maxAutoBrowseNext: ``list`` of ``bytearray``
+        :param serviceConfig: Additional settings for processing the BrowseNext request.
+                              Leave None for defaults.
+        :type serviceConfig: :class:`~pyuaf.client.configs.BrowseNextConfig`
+        :param sessionConfig: A config holding settings for the session creation.
+                              Leave None for defaults.
+        :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
+        :return: The result of the BrowseNext request.
+        :rtype:  :class:`~pyuaf.client.results.BrowseNextResult`
+        :raise pyuaf.util.errors.UafError:
+             Base exception, catch this to handle any UAF errors.
+        """
+        if type(addresses) == pyuaf.util.Address:
+            addressVector = pyuaf.util.AddressVector([addresses])
+        else:
+            addressVector = pyuaf.util.AddressVector(addresses)
+            
+        if type(continuationPoints) == bytearray:
+            byteStringVector = pyuaf.util.ByteStringVector()
+            byteStringVector.append(continuationPoints)
+        elif type(continuationPoints) == list:
+            byteStringVector = pyuaf.util.ByteStringVector()
+            for continuationPoint in continuationPoints:
+                byteStringVector.append(continuationPoint)
+        elif type(continuationPoints) == pyuaf.util.ByteStringVector:
+            pass
+        else:
+            raise TypeError("The 'continuationPoints' argument must be of type bytearray, or "
+                            "a list of bytearray, or a pyuaf.util.ByteStringVector")
+            
+        result = pyuaf.client.results.BrowseNextResult()
+        
+        # make sure the arguments are valid (to avoid the ugly SWIG error output)
+        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
+                                      pyuaf.client.configs.BrowseConfig, [None])
+        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
+                                      pyuaf.client.configs.SessionConfig, [None])
+        
+        if serviceConfig is None:
+            serviceConfig = pyuaf.client.configs.BrowseNextConfig()
+        
+        if sessionConfig is None:
+            sessionConfig = pyuaf.client.configs.SessionConfig()
+        
+        status = ClientBase.browseNext(self, addressVector, byteStringVector, serviceConfig, 
+                                       sessionConfig, result)
+        
+        pyuaf.util.errors.evaluate(status)
+        return result
+    
+    
     def createMonitoredData(self, addresses, serviceConfig=None, sessionConfig=None, 
                             subscriptionConfig=None, notificationCallbacks=[]):
         """
@@ -1130,6 +1265,10 @@ class Client(ClientBase):
             result = pyuaf.client.results.TranslateBrowsePathsToNodeIdsResult()
         elif type(request) == pyuaf.client.requests.MethodCallRequest:
             result = pyuaf.client.results.MethodCallResult()
+        elif type(request) == pyuaf.client.requests.BrowseRequest:
+            result = pyuaf.client.results.BrowseResult()
+        elif type(request) == pyuaf.client.requests.BrowseNextRequest:
+            result = pyuaf.client.results.BrowseNextResult()
         elif type(request) == pyuaf.client.requests.AsyncMethodCallRequest:
             result = pyuaf.client.results.AsyncMethodCallResult()
         elif type(request) == pyuaf.client.requests.CreateMonitoredDataRequest:

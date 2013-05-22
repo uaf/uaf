@@ -190,6 +190,18 @@ namespace uaf
         void fromSdk(const UaQualifiedName& source);
 
 
+        /**
+         * Update the qualified name with the contents of an SDK UaQualifiedName instance and
+         * a corresponding namespace URI.
+         *
+         * @param source        UaQualifiedName instance (as defined by the SDK) to fetch the
+         *                      contents.
+         * @param nameSpaceUri  An additional namespace URI that corresponds to the namespace index
+         *                      from the source argument.
+         */
+        void fromSdk(const UaQualifiedName& source, const std::string& nameSpaceUri);
+
+
         // comparison operators
         friend UAF_EXPORT bool operator==(const QualifiedName& object1, const QualifiedName& object2);
         friend UAF_EXPORT bool operator!=(const QualifiedName& object1, const QualifiedName& object2);

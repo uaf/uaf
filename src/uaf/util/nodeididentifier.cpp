@@ -32,7 +32,7 @@ namespace uaf
     // Constructor
     // =============================================================================================
     NodeIdIdentifier::NodeIdIdentifier()
-    : type(Numeric),
+    : type(Identifier_Numeric),
       idNumeric(0)
     {}
 
@@ -42,7 +42,9 @@ namespace uaf
     NodeIdIdentifier::NodeIdIdentifier(const NodeIdIdentifier& other)
     : type(other.type),
       idNumeric(other.idNumeric),
-      idString(other.idString)
+      idString(other.idString),
+      idGuid(other.idGuid),
+      idOpaque(other.idOpaque)
     {}
 
 
@@ -51,7 +53,7 @@ namespace uaf
     NodeIdIdentifier::NodeIdIdentifier(const string& idString)
     : idString(idString),
       idNumeric(0),
-      type(String)
+      type(Identifier_String)
     {}
 
 
@@ -59,8 +61,34 @@ namespace uaf
     // =============================================================================================
     NodeIdIdentifier::NodeIdIdentifier(uint32_t idNumeric)
     : idNumeric(idNumeric),
-      type(Numeric)
+      type(Identifier_Numeric)
     {}
+
+
+    // Constructor
+    // =============================================================================================
+    NodeIdIdentifier::NodeIdIdentifier(const Guid& idGuid)
+    : idGuid(idGuid),
+      type(Identifier_Guid)
+    {}
+
+
+    // Constructor
+    // =============================================================================================
+    NodeIdIdentifier::NodeIdIdentifier(const ByteString& idOpaque)
+    : idOpaque(idOpaque),
+      type(Identifier_Opaque)
+    {}
+
+
+    // Is the identifier NULL?
+    // =============================================================================================
+    bool NodeIdIdentifier::isNull() const
+    {
+        return     (type == Identifier_Numeric)
+                && (idNumeric == 0)
+                && idString.empty();
+    }
 
 
     // Get a string representation
@@ -68,18 +96,16 @@ namespace uaf
     std::string NodeIdIdentifier::toString() const
     {
         stringstream ss;
-        if (type == String)
-        {
+        if (type == Identifier_String)
             ss << "String|" << idString;
-        }
-        else if (type == Numeric)
-        {
+        else if (type == Identifier_Numeric)
             ss << "Numeric|" << idNumeric;
-        }
+        else if (type == Identifier_Guid)
+            ss << "Guid|" << idGuid.toString();
+        else if (type == Identifier_Opaque)
+            ss << "Opaque|" << int(idOpaque.length()) << "bytes";
         else
-        {
-            ss << "???";
-        }
+            ss << "UNKNOWN_IDENTIFIER_TYPE";
         return ss.str();
     }
 
@@ -92,20 +118,31 @@ namespace uaf
 
         if (opcUaNodeId.IdentifierType == OpcUa_IdentifierType_Numeric)
         {
-            type = Numeric;
+            type = Identifier_Numeric;
             idNumeric = opcUaNodeId.Identifier.Numeric;
             ret.setGood();
         }
         else if (opcUaNodeId.IdentifierType == OpcUa_IdentifierType_String)
         {
-            type = String;
+            type = Identifier_String;
             idString = UaString(&opcUaNodeId.Identifier.String).toUtf8();
+            ret.setGood();
+        }
+        else if (opcUaNodeId.IdentifierType == OpcUa_IdentifierType_Guid)
+        {
+            type = Identifier_Guid;
+            idGuid.fromSdk(UaGuid(*opcUaNodeId.Identifier.Guid));
+            ret.setGood();
+        }
+        else if (opcUaNodeId.IdentifierType == OpcUa_IdentifierType_Opaque)
+        {
+            type = Identifier_Opaque;
+            idOpaque.fromSdk(UaByteString(opcUaNodeId.Identifier.ByteString));
             ret.setGood();
         }
         else
         {
-            ret.setStatus(statuscodes::UnsupportedError,
-                          "Identifier type currently not supported by the UAF");
+            ret.setStatus(statuscodes::UnexpectedError, "Unknown identifier type!");
         }
 
         return ret;
@@ -118,7 +155,9 @@ namespace uaf
     {
         return object1.type == object2.type
             && object1.idNumeric == object2.idNumeric
-            && object1.idString == object2.idString;
+            && object1.idString == object2.idString
+            && object1.idGuid == object2.idGuid
+            && object1.idOpaque == object2.idOpaque;
     }
 
 
@@ -135,17 +174,15 @@ namespace uaf
     bool operator<(const NodeIdIdentifier& object1, const NodeIdIdentifier& object2)
     {
         if (object1.type != object2.type)
-        {
             return object1.type < object2.type;
-        }
         else if (object1.idNumeric != object2.idNumeric)
-        {
             return object1.idNumeric < object2.idNumeric;
-        }
+        else if (object1.idGuid != object2.idGuid)
+            return object1.idGuid < object2.idGuid;
+        else if (object1.idOpaque != object2.idOpaque)
+            return object1.idOpaque < object2.idOpaque;
         else
-        {
             return object1.idString < object2.idString;
-        }
     }
 
 

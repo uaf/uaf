@@ -91,6 +91,8 @@ namespace uafc
     DEFINE_SYNC_SERVICE(Write)
     DEFINE_SYNC_SERVICE(MethodCall)
     DEFINE_SYNC_SERVICE(TranslateBrowsePathsToNodeIds)
+    DEFINE_SYNC_SERVICE(Browse)
+    DEFINE_SYNC_SERVICE(BrowseNext)
     DEFINE_SYNC_SERVICE(CreateMonitoredData)
     DEFINE_SYNC_SERVICE(CreateMonitoredEvents)
 

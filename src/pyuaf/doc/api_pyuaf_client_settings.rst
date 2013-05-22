@@ -36,6 +36,98 @@
             in seconds, as a ``float``.
     
 
+*class* BrowseNextSettings
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.client.settings.BrowseNextSettings
+
+    A BrowseNextSettings is a subclass of :class:`pyuaf.client.settings.BaseServiceSettings` and 
+    defines some properties of an OPC UA BrowseNext service invocation.
+
+    
+    * Methods:
+
+        .. automethod:: pyuaf.client.settings.BrowseNextSettings.__init__()
+    
+            Create a new BrowseNextSettings object.
+            
+    
+        .. method:: pyuaf.client.settings.BrowseNextSettings.__str__
+    
+            Get a formatted string representation of the settings.
+
+
+    * Attributes inherited from :class:`pyuaf.client.settings.BaseServiceSettings`:
+    
+        .. autoattribute:: pyuaf.client.settings.BaseServiceSettings.callTimeoutSec
+
+            The maximum time allowed for each service communication between client and server,
+            in seconds, as a ``float``.
+    
+    * Additional attributes:
+        
+        .. autoattribute:: pyuaf.client.settings.BrowseNextSettings.releaseContinuationPoints
+        
+            A ``bool`` indicating if the memory associated with the continuation point in the 
+            server should be released (``True``) or not (``False``).
+        
+
+
+
+
+
+*class* BrowseSettings
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.client.settings.BrowseSettings
+
+    A BrowseSettings is a subclass of :class:`pyuaf.client.settings.BaseServiceSettings` and 
+    defines some properties of an OPC UA Browse service invocation.
+
+    
+    * Methods:
+
+        .. automethod:: pyuaf.client.settings.BrowseSettings.__init__()
+    
+            Create a new BrowseSettings object.
+            
+    
+        .. method:: pyuaf.client.settings.BrowseSettings.__str__
+    
+            Get a formatted string representation of the settings.
+
+
+    * Attributes inherited from :class:`pyuaf.client.settings.BaseServiceSettings`:
+    
+        .. autoattribute:: pyuaf.client.settings.BaseServiceSettings.callTimeoutSec
+
+            The maximum time allowed for each service communication between client and server,
+            in seconds, as a ``float``.
+    
+    * Additional attributes:
+        
+        .. autoattribute:: pyuaf.client.settings.BrowseSettings.maxReferencesToReturn
+        
+            An ``int``: the maximum number of references to return. Default is 0, 
+            which means that the client is not imposing a limitation.
+        
+        .. autoattribute:: pyuaf.client.settings.BrowseSettings.view
+        
+            Attribute of type :class:`~pyuaf.util.ViewDescription` that specifies 
+            the View to browse. Don't touch if you want to browse the whole address 
+            space without restrictions.
+        
+        .. autoattribute:: pyuaf.client.settings.BrowseSettings.maxAutoBrowseNext
+        
+            An ``int`` defined by the UAF, to indicate how many times the UAF may automatically
+            call the BrowseNext service. Default = 0, which means that there will be no 
+            BrowseNext being called automatically. But if you put this value to e.g. 10, then you 
+            can very easily browse large address spaces since you don't have to call BrowseNext 
+            manually every time (and there's no risk of ending up in an endless loop since the 
+            UAF client will stop processing the request after 10 BrowseNext calls).
+
 
 
 

@@ -34,6 +34,7 @@
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/status.h"
+#include "uaf/util/datetime.h"
 #include "uaf/util/bytestring.h"
 #include "uaf/util/opcuatypes.h"
 #include "uaf/util/nodeid.h"
@@ -513,6 +514,57 @@ namespace uaf
 
 
         /**
+         * Convert the variant to a string.
+         *
+         * @param val   Value to update.
+         * @return      Status of the conversion.
+         */
+        Status toString(std::string& val) const
+        {
+            val = uaVariant_.toString().toUtf8();
+            return uaf::Status(uaf::statuscodes::Good);
+        }
+
+
+        /**
+         * Convert the variant to a bytestring.
+         *
+         * @param val   Value to update.
+         * @return      Status of the conversion.
+         */
+        Status toByteString(uaf::ByteString& val) const
+        {
+            UaByteString uaByteString;
+            uaf::Status ret = evaluate(
+                    uaVariant_.toByteString(uaByteString),
+                    uaVariant_.type(),
+                    OpcUaType_ByteString);
+            val.fromSdk(uaByteString);
+            return ret;
+        }
+
+
+        /**
+         * Convert the variant to a ByteString array.
+         *
+         * @param vec   Value to update.
+         * @return      Status of the conversion.
+         */
+        Status toByteStringArray(std::vector<uaf::ByteString>& vec) const
+        {
+            UaByteStringArray arr;
+            uaf::Status ret = evaluate(
+                    uaVariant_.toByteStringArray(arr),
+                    uaVariant_.type(),
+                    OpcUaType_NodeId);
+            vec.resize(arr.length());
+            for (std::size_t i = 0; i < arr.length(); i++)
+                vec[i].fromSdk(UaByteString(arr[i]));
+            return ret;
+        }
+
+
+        /**
          * Convert the variant to a NodeId.
          *
          * @param val   Value to update.
@@ -659,6 +711,44 @@ namespace uaf
                     uaVariant_.toQualifiedNameArray(arr),
                     uaVariant_.type(),
                     OpcUaType_QualifiedName);
+            vec.resize(arr.length());
+            for (std::size_t i = 0; i < arr.length(); i++)
+                vec[i].fromSdk(arr[i]);
+            return ret;
+        }
+
+
+        /**
+         * Convert the variant to a DateTime.
+         *
+         * @param val   Value to update.
+         * @return      Status of the conversion.
+         */
+        Status toDateTime(uaf::DateTime& val) const
+        {
+            UaDateTime uaDateTime;
+            uaf::Status ret = evaluate(
+                    uaVariant_.toDateTime(uaDateTime),
+                    uaVariant_.type(),
+                    OpcUaType_DateTime);
+            val.fromSdk(uaDateTime);
+            return ret;
+        }
+
+
+        /**
+         * Convert the variant to a DateTime array.
+         *
+         * @param vec   Value to update.
+         * @return      Status of the conversion.
+         */
+        Status toDateTimeArray(std::vector<uaf::DateTime>& vec) const
+        {
+            UaDateTimeArray arr;
+            uaf::Status ret = evaluate(
+                    uaVariant_.toDateTimeArray(arr),
+                    uaVariant_.type(),
+                    OpcUaType_DateTime);
             vec.resize(arr.length());
             for (std::size_t i = 0; i < arr.length(); i++)
                 vec[i].fromSdk(arr[i]);
@@ -955,6 +1045,33 @@ namespace uaf
 
 
         /**
+         * Set the variant to a bytestring.
+         *
+         * @param val   New value
+         */
+        void setByteString(const uaf::ByteString& val)
+        {
+            UaByteString b;
+            val.toSdk(b);
+            uaVariant_.setByteString(b, OpcUa_True);
+        }
+
+
+        /**
+         * Set the variant to a ByteString array.
+         *
+         * @param vec   New value.
+         */
+        void setByteStringArray(const std::vector<uaf::ByteString>& vec)
+        {
+            UaByteStringArray arr;
+            arr.create(vec.size());
+            for (std::size_t i = 0; i < vec.size(); i++) { vec[i].toSdk(&arr[i]); }
+            uaVariant_.setByteStringArray(arr);
+        }
+
+
+        /**
          * Set the variant to a NodeId.
          *
          * @param val   New value.
@@ -1059,6 +1176,33 @@ namespace uaf
             arr.create(vec.size());
             for (std::size_t i = 0; i < vec.size(); i++) { vec[i].toSdk(&arr[i]); }
             uaVariant_.setQualifiedNameArray(arr);
+        }
+
+
+        /**
+         * Set the variant to a DateTime.
+         *
+         * @param val   New value.
+         */
+        void setDateTime(const uaf::DateTime& val)
+        {
+            UaDateTime uaDateTime;
+            val.toSdk(uaDateTime);
+            uaVariant_.setDateTime(uaDateTime);
+        }
+
+
+        /**
+         * Set the variant to a DateTime array.
+         *
+         * @param vec   New value.
+         */
+        void setDateTimeArray(const std::vector<uaf::DateTime>& vec)
+        {
+            UaDateTimeArray arr;
+            arr.create(vec.size());
+            for (std::size_t i = 0; i < vec.size(); i++) { vec[i].toSdk(arr[i]); }
+            uaVariant_.setDateTimeArray(arr);
         }
 
 

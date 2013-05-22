@@ -34,6 +34,10 @@
 %import "uaf/util/util.h"
 %import "uaf/util/opcuatypes.h"
 
+// include the ByteString typemap
+#if defined(SWIGPYTHON)
+    %include "pyuaf/util/util_bytestring_python.i"
+#endif
 
 
 // =================================================================================================
@@ -86,6 +90,30 @@
 
 
 
+// =================================================================================================
+// SETUP_OTHER_PRIMITIVE(TYPE, PYTHONTYPE)
+// =================================================================================================
+// 
+// Set-up a string primitive type from uaf::primitives.
+//
+//   - argument TYPE : the type of the class, e.g. String
+//
+%define SETUP_OTHER_PRIMITIVE(TYPE, PYTHONTYPE)
+    %feature("pythonprepend") uaf::primitives::TYPE::TYPE %{
+        """
+        Construct a primitive.
+        """
+        if len(args) == 1:
+            if not isinstance(args[0], PYTHONTYPE):
+                raise TypeError("'PYTHONTYPE' expected instead of %s instance" %type(args[0]))
+        elif len(args) > 0:
+            raise TypeError("Only one value can be provided")
+    %}
+    HANDLE_COMPARISON_OPERATORS(uaf::primitives, TYPE)
+    HANDLE_TOSTRING(uaf::primitives, TYPE, pyuaf.util.primitives)
+%enddef
+
+
 // setup the primitives
 SETUP_INT_OR_LONG_PRIMITIVE(Boolean)
 SETUP_INT_OR_LONG_PRIMITIVE(SByte)
@@ -98,6 +126,9 @@ SETUP_INT_OR_LONG_PRIMITIVE(Int64)
 SETUP_INT_OR_LONG_PRIMITIVE(UInt64)
 SETUP_FLOAT_PRIMITIVE(Float)
 SETUP_FLOAT_PRIMITIVE(Double)
+SETUP_OTHER_PRIMITIVE(String, str)
+SETUP_OTHER_PRIMITIVE(ByteString, bytearray)
+
 
 %include "uaf/util/primitives.h"
 

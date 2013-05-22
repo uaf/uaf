@@ -39,6 +39,7 @@ namespace uafc
     string MethodCallResultTarget::toString(const string& indent, size_t colon) const
     {
         stringstream ss;
+
         ss << indent << " - status";
         ss << fillToPos(ss, colon);
         ss << ": " << status.toString() << "\n";

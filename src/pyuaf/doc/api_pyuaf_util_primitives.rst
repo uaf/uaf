@@ -18,18 +18,18 @@
 
     * Methods:
 
-        .. method:: __init__([value])
+        .. automethod:: pyuaf.util.primitives.Boolean.__init__([value])
     
             Construct a new Boolean value with an optional initial value.
     
-        .. method:: type()
+        .. automethod:: pyuaf.util.primitives.Boolean.type
         
             Get the type of the value, in this case :attr:`pyuaf.util.opcuatypes.Boolean`.
             
             :return: :attr:`pyuaf.util.opcuatypes.Boolean`
             :rtype: ``int``
             
-        .. method:: typeName()
+        .. automethod:: pyuaf.util.primitives.Boolean.typeName
         
             Get the name of the type of the value, in this case ``"Boolean"``.
             
@@ -39,7 +39,7 @@
     
     * Attributes:
   
-        .. attribute:: value
+        .. autoattribute:: pyuaf.util.primitives.Boolean.value
         
             A bool value.
     
@@ -53,18 +53,18 @@
 
     * Methods:
 
-        .. method:: __init__([value])
+        .. automethod:: pyuaf.util.primitives.SByte.__init__([value])
     
             Construct a new SByte value with an optional initial value.
     
-        .. method:: type()
+        .. automethod:: pyuaf.util.primitives.SByte.type
         
             Get the type of the value, in this case :attr:`pyuaf.util.opcuatypes.SByte`.
             
             :return: :attr:`pyuaf.util.opcuatypes.SByte`
             :rtype: ``int``
             
-        .. method:: typeName()
+        .. automethod:: pyuaf.util.primitives.SByte.typeName
         
             Get the name of the type of the value, in this case ``"SByte"``.
             
@@ -74,7 +74,7 @@
     
     * Attributes:
   
-        .. attribute:: value
+        .. autoattribute:: pyuaf.util.primitives.SByte.value
         
             An ``int`` value.
     
@@ -88,18 +88,18 @@
 
     * Methods:
 
-        .. method:: __init__([value])
+        .. automethod:: pyuaf.util.primitives.Byte.__init__([value])
     
             Construct a new Byte value with an optional initial value.
     
-        .. method:: type()
+        .. automethod:: pyuaf.util.primitives.Byte.type
         
             Get the type of the value, in this case :attr:`pyuaf.util.opcuatypes.Byte`.
             
             :return: :attr:`pyuaf.util.opcuatypes.Byte`
             :rtype: ``int``
             
-        .. method:: typeName()
+        .. automethod:: pyuaf.util.primitives.Byte.typeName
         
             Get the name of the type of the value, in this case ``"Byte"``.
             
@@ -109,7 +109,7 @@
     
     * Attributes:
   
-        .. attribute:: value
+        .. autoattribute:: pyuaf.util.primitives.Byte.value
         
             An ``int`` value.
 
@@ -122,18 +122,18 @@
 
     * Methods:
 
-        .. method:: __init__([value])
+        .. automethod:: pyuaf.util.primitives.Int16.__init__([value])
     
             Construct a new Int16 value with an optional initial value.
     
-        .. method:: type()
+        .. automethod:: pyuaf.util.primitives.Int16.type
         
             Get the type of the value, in this case :attr:`pyuaf.util.opcuatypes.Int16`.
             
             :return: :attr:`pyuaf.util.opcuatypes.Int16`
             :rtype: ``int``
             
-        .. method:: typeName()
+        .. automethod:: pyuaf.util.primitives.Int16.typeName
         
             Get the name of the type of the value, in this case ``"Int16"``.
             
@@ -143,7 +143,7 @@
     
     * Attributes:
   
-        .. attribute:: value
+        .. autoattribute:: pyuaf.util.primitives.Int16.value
         
             An ``int`` value.
 
@@ -156,18 +156,18 @@
 
     * Methods:
 
-        .. method:: __init__([value])
+        .. automethod:: pyuaf.util.primitives.UInt16.__init__([value])
     
             Construct a new UInt16 value with an optional initial value.
     
-        .. method:: type()
+        .. automethod:: pyuaf.util.primitives.UInt16.type
         
             Get the type of the value, in this case :attr:`pyuaf.util.opcuatypes.UInt16`.
             
             :return: :attr:`pyuaf.util.opcuatypes.UInt16`
             :rtype: ``int``
             
-        .. method:: typeName()
+        .. automethod:: pyuaf.util.primitives.UInt16.typeName
         
             Get the name of the type of the value, in this case ``"UInt16"``.
             
@@ -177,7 +177,7 @@
     
     * Attributes:
   
-        .. attribute:: value
+        .. autoattribute:: pyuaf.util.primitives.UInt16.value
         
             An ``int`` value.
 
@@ -190,18 +190,18 @@
 
     * Methods:
 
-        .. method:: __init__([value])
+        .. automethod:: pyuaf.util.primitives.Int32.__init__([value])
     
             Construct a new Int32 value with an optional initial value.
     
-        .. method:: type()
+        .. automethod:: pyuaf.util.primitives.Int32.type
         
             Get the type of the value, in this case :attr:`pyuaf.util.opcuatypes.Int32`.
             
             :return: :attr:`pyuaf.util.opcuatypes.Int32`
             :rtype: ``int``
             
-        .. method:: typeName()
+        .. automethod:: pyuaf.util.primitives.Int32.typeName
         
             Get the name of the type of the value, in this case ``"Int32"``.
             
@@ -211,7 +211,7 @@
     
     * Attributes:
   
-        .. attribute:: value
+        .. autoattribute:: pyuaf.util.primitives.Int32.value
         
             An ``int`` value.
 
@@ -224,18 +224,18 @@
 
     * Methods:
 
-        .. method:: __init__([value])
+        .. automethod:: pyuaf.util.primitives.UInt32.__init__([value])
     
             Construct a new UInt32 value with an optional initial value.
     
-        .. method:: type()
+        .. automethod:: pyuaf.util.primitives.UInt32.type
         
             Get the type of the value, in this case :attr:`pyuaf.util.opcuatypes.UInt32`.
             
             :return: :attr:`pyuaf.util.opcuatypes.UInt32`
             :rtype: ``int``
             
-        .. method:: typeName()
+        .. automethod:: pyuaf.util.primitives.UInt32.typeName
         
             Get the name of the type of the value, in this case ``"UInt32"``.
             
@@ -245,7 +245,7 @@
     
     * Attributes:
   
-        .. attribute:: value
+        .. autoattribute:: pyuaf.util.primitives.UInt32.value
         
             An ``int`` value.
 
@@ -258,18 +258,18 @@
 
     * Methods:
 
-        .. method:: __init__([value])
+        .. automethod:: pyuaf.util.primitives.Int64.__init__([value])
     
             Construct a new Int64 value with an optional initial value.
     
-        .. method:: type()
+        .. automethod:: pyuaf.util.primitives.Int64.type
         
             Get the type of the value, in this case :attr:`pyuaf.util.opcuatypes.Int64`.
             
             :return: :attr:`pyuaf.util.opcuatypes.Int64`
             :rtype: ``int``
             
-        .. method:: typeName()
+        .. automethod:: pyuaf.util.primitives.Int64.typeName
         
             Get the name of the type of the value, in this case ``"Int64"``.
             
@@ -279,7 +279,7 @@
     
     * Attributes:
   
-        .. attribute:: value
+        .. autoattribute:: pyuaf.util.primitives.Int64.value
         
             An ``int`` value.
 
@@ -292,18 +292,18 @@
 
     * Methods:
 
-        .. method:: __init__([value])
+        .. automethod:: pyuaf.util.primitives.UInt64.__init__([value])
     
             Construct a new UInt64 value with an optional initial value.
     
-        .. method:: type()
+        .. automethod:: pyuaf.util.primitives.UInt64.type
         
             Get the type of the value, in this case :attr:`pyuaf.util.opcuatypes.UInt64`.
             
             :return: :attr:`pyuaf.util.opcuatypes.UInt64`
             :rtype: ``int``
             
-        .. method:: typeName()
+        .. automethod:: pyuaf.util.primitives.UInt64.typeName
         
             Get the name of the type of the value, in this case ``"UInt64"``.
             
@@ -313,7 +313,7 @@
     
     * Attributes:
   
-        .. attribute:: value
+        .. autoattribute:: pyuaf.util.primitives.UInt64.value
         
             An ``int`` value.
 
@@ -326,18 +326,18 @@
 
     * Methods:
 
-        .. method:: __init__([value])
+        .. automethod:: pyuaf.util.primitives.Float.__init__([value])
     
             Construct a new Float value with an optional initial value.
     
-        .. method:: type()
+        .. automethod:: pyuaf.util.primitives.Float.type
         
             Get the type of the value, in this case :attr:`pyuaf.util.opcuatypes.Float`.
             
             :return: :attr:`pyuaf.util.opcuatypes.Float`
             :rtype: ``int``
             
-        .. method:: typeName()
+        .. automethod:: pyuaf.util.primitives.Float.typeName
         
             Get the name of the type of the value, in this case ``"Float"``.
             
@@ -347,9 +347,10 @@
     
     * Attributes:
   
-        .. attribute:: value
+        .. autoattribute:: pyuaf.util.primitives.Float.value
         
             A float value.
+
 
 *class* Double
 ----------------------------------------------------------------------------------------------------
@@ -359,18 +360,18 @@
 
     * Methods:
 
-        .. method:: __init__([value])
+        .. automethod:: pyuaf.util.primitives.Double.__init__([value])
     
             Construct a new Double value with an optional initial value.
     
-        .. method:: type()
+        .. automethod:: pyuaf.util.primitives.Double.type
         
             Get the type of the value, in this case :attr:`pyuaf.util.opcuatypes.Double`.
             
             :return: :attr:`pyuaf.util.opcuatypes.Double`
             :rtype: ``int``
             
-        .. method:: typeName()
+        .. automethod:: pyuaf.util.primitives.Double.typeName
         
             Get the name of the type of the value, in this case ``"Double"``.
             
@@ -380,6 +381,82 @@
     
     * Attributes:
   
-        .. attribute:: value
+        .. autoattribute:: pyuaf.util.primitives.Double.value
         
             A float value.
+
+
+*class* String
+----------------------------------------------------------------------------------------------------
+
+.. autoclass:: pyuaf.util.primitives.String
+
+
+    * Methods:
+
+        .. automethod:: pyuaf.util.primitives.String.__init__([value])
+    
+            Construct a new String value with an optional initial value.
+    
+        .. automethod:: pyuaf.util.primitives.String.type
+        
+            Get the type of the value, in this case :attr:`pyuaf.util.opcuatypes.String`.
+            
+            :return: :attr:`pyuaf.util.opcuatypes.String`
+            :rtype: ``int``
+            
+        .. automethod:: pyuaf.util.primitives.String.typeName
+        
+            Get the name of the type of the value, in this case ``"String"``.
+            
+            :return: ``"String"``
+            :rtype: ``str``
+               
+    
+    * Attributes:
+  
+        .. autoattribute:: pyuaf.util.primitives.String.value
+        
+            A string value.
+
+
+
+            
+
+
+*class* ByteString
+----------------------------------------------------------------------------------------------------
+
+.. autoclass:: pyuaf.util.primitives.ByteString
+
+
+    * Methods:
+
+        .. automethod:: pyuaf.util.primitives.ByteString.__init__([value])
+    
+            Construct a new ByteString value with an optional initial value.
+    
+        .. automethod:: pyuaf.util.primitives.ByteString.type
+        
+            Get the type of the value, in this case :attr:`pyuaf.util.opcuatypes.ByteString`.
+            
+            :return: :attr:`pyuaf.util.opcuatypes.ByteString`
+            :rtype: ``int``
+            
+        .. automethod:: pyuaf.util.primitives.ByteString.typeName
+        
+            Get the name of the type of the value, in this case ``"ByteString"``.
+            
+            :return: ``"ByteString"``
+            :rtype: ``str``
+    
+    
+    * Attributes:
+  
+        .. autoattribute:: pyuaf.util.primitives.ByteString.value
+        
+            A built-in Python ``bytearray`` value.
+
+
+
+

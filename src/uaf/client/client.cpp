@@ -28,6 +28,7 @@ namespace uafc
     using std::string;
     using std::map;
     using std::vector;
+    using std::size_t;
     using std::pair;
 
 
@@ -277,6 +278,73 @@ namespace uafc
     }
 
 
+    // Browse a number of nodes
+    //==============================================================================================
+    uaf::Status Client::browse(
+            const std::vector<uaf::Address>&    addresses,
+            const uint32_t                      maxAutoBrowseNext,
+            const uafc::BrowseConfig&           serviceConfig,
+            const uafc::SessionConfig&          sessionConfig,
+            uafc::BrowseResult&                 result)
+    {
+        // log read request
+        logger_->debug("Browsing %d nodes", addresses.size());
+
+        // override the maxAutoBrowseNext parameter
+        BrowseConfig serviceConfigCopy(serviceConfig);
+        serviceConfigCopy.serviceSettings.maxAutoBrowseNext = maxAutoBrowseNext;
+
+        BrowseRequest request(0, serviceConfigCopy, sessionConfig);
+
+        request.targets.reserve(addresses.size());
+
+        for (vector<Address>::const_iterator it = addresses.begin(); it != addresses.end(); ++it)
+            request.targets.push_back(BrowseRequestTarget(*it));
+
+        // perform the browse request
+        return processRequest(request, result);
+    }
+
+
+    // Browse a number of nodes
+    //==============================================================================================
+    uaf::Status Client::browseNext(
+            const std::vector<uaf::Address>&    addresses,
+            const std::vector<uaf::ByteString>& continuationPoints,
+            const uafc::BrowseNextConfig&       serviceConfig,
+            const uafc::SessionConfig&          sessionConfig,
+            uafc::BrowseNextResult&             result)
+    {
+        // log read request
+        logger_->debug("BrowseNext %d continuation points", continuationPoints.size());
+
+        Status ret;
+
+        if (addresses.size() == continuationPoints.size())
+            ret.setGood();
+        else
+            ret.setStatus(
+                    uaf::statuscodes::InvalidRequestError,
+                    "The number of given addresses should correspond to the number of given "
+                    "continuation points");
+
+        if (ret.isGood())
+        {
+            BrowseNextRequest request(0, serviceConfig, sessionConfig);
+
+            request.targets.reserve(addresses.size());
+
+            for (size_t i = 0; i < addresses.size(); i++)
+                request.targets.push_back(BrowseNextRequestTarget(addresses[i], continuationPoints[i]));
+
+            // perform the browse request
+            ret = processRequest(request, result);
+        }
+
+        return ret;
+    }
+
+
 
 
     // Start monitoring data items
@@ -502,6 +570,24 @@ namespace uafc
             uafc::AsyncMethodCallResult&          result)
     {
         return processRequest<uafc::AsyncMethodCallService>(request, result);
+    }
+
+
+    // Process a BrowseRequest
+    // =============================================================================================
+    Status Client::processRequest(const uafc::BrowseRequest& request, uafc::BrowseResult& result)
+    {
+        return processRequest<uafc::BrowseService>(request, result);
+    }
+
+
+    // Process a BrowseNextRequest
+    // =============================================================================================
+    Status Client::processRequest(
+            const uafc::BrowseNextRequest&  request,
+            uafc::BrowseNextResult&         result)
+    {
+        return processRequest<uafc::BrowseNextService>(request, result);
     }
 
 

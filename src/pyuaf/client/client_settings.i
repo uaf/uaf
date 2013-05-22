@@ -23,6 +23,8 @@
 #define SWIG_FILE_WITH_INIT
 #include "uaf/client/settings/clientsettings.h"
 #include "uaf/client/settings/baseservicesettings.h"
+#include "uaf/client/settings/browsesettings.h"
+#include "uaf/client/settings/browsenextsettings.h"
 #include "uaf/client/settings/createmonitoreddatasettings.h"
 #include "uaf/client/settings/createmonitoredeventssettings.h"
 #include "uaf/client/settings/methodcallsettings.h"
@@ -34,6 +36,7 @@
 #include "uaf/client/settings/translatebrowsepathstonodeidssettings.h"
 #include "uaf/client/settings/writesettings.h"
 #include "uaf/util/address.h"
+#include "uaf/util/referencedescription.h"
 %}
 
 
@@ -63,12 +66,15 @@
 %import(module="pyuaf.util.primitives")             "pyuaf/util/util_primitives.i"
 %import(module="pyuaf.util.securitypolicies")       "pyuaf/util/util_securitypolicies.i"
 %import(module="pyuaf.util.monitoringmodes")        "pyuaf/util/util_monitoringmodes.i"
+%import(module="pyuaf.util.browsedirections")       "pyuaf/util/util_browsedirections.i"
+%import(module="pyuaf.util.nodeclasses")            "pyuaf/util/util_nodeclasses.i"
 %import(module="pyuaf.util.__unittesthelper__")     "pyuaf/util/util___unittesthelper__.i"
 %import(module="pyuaf.util")                        "pyuaf/util/util___init__.i"
 
 
-// also include the Variant typemap(s)
+// also include the typemaps
 #if defined(SWIGPYTHON)
+    %include "pyuaf/util/util_bytestring_python.i"
     %include "pyuaf/util/util_variant_python.i"
 #endif
 
@@ -88,6 +94,8 @@ UAF_WRAP_CLASS("uaf/client/settings/readsettings.h"                          , u
 UAF_WRAP_CLASS("uaf/client/settings/writesettings.h"                         , uafc , WriteSettings                         , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/settings/methodcallsettings.h"                    , uafc , MethodCallSettings                    , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/settings/translatebrowsepathstonodeidssettings.h" , uafc , TranslateBrowsePathsToNodeIdsSettings , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/browsesettings.h"                        , uafc , BrowseSettings                        , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/browsenextsettings.h"                    , uafc , BrowseNextSettings                    , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/settings/createmonitoreddatasettings.h"           , uafc , CreateMonitoredDataSettings           , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/settings/createmonitoredeventssettings.h"         , uafc , CreateMonitoredEventsSettings         , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
 

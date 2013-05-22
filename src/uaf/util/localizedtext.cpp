@@ -79,7 +79,7 @@ namespace uaf
         if (!uaLocalizedText_.isNull())
             return string(uaLocalizedText_.toString().toUtf8());
         else
-            return string("");
+            return string("''");
     }
 
 
@@ -90,7 +90,7 @@ namespace uaf
         if (!uaLocalizedText_.isNull())
             return string(uaLocalizedText_.toFullString().toUtf8());
         else
-            return string("");
+            return string("''");
     }
 
 

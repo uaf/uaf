@@ -176,11 +176,19 @@ namespace uaf
 
 
         /**
+         * Was the NodeId initialized with some contents?
+         *
+         * @return  True if the NodeId does not have any contents.
+         */
+        bool isNull() const;
+
+
+        /**
          * Get the identifier of the NodeId.
          *
          * @return  The identifier part of the NodeId.
          */
-        uaf::NodeIdIdentifier identifier()     const { return identifier_; }
+        uaf::NodeIdIdentifier identifier() const { return identifier_; }
 
 
         /**

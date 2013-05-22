@@ -104,6 +104,17 @@ namespace uaf
     {}
 
 
+    // Is the NodeId NULL?
+    // =============================================================================================
+    bool NodeId::isNull() const
+    {
+        return     (nameSpaceIndexGiven_ == false)
+                && (nameSpaceUriGiven_ == false)
+                && (nameSpaceIndex_ == 0)
+                && identifier_.isNull();
+    }
+
+
     // Get a string representation
     // =============================================================================================
     string NodeId::toString() const
@@ -127,7 +138,6 @@ namespace uaf
     }
 
 
-
     // Copy to SDK object
     // =============================================================================================
     Status NodeId::toSdk(UaNodeId& destination) const
@@ -137,13 +147,34 @@ namespace uaf
         if (hasNameSpaceIndex() || nameSpaceUri() == uaf::constants::OPCUA_NAMESPACE_URI)
         {
             // fill the just created UaNodeId
-            if (identifier_.type == nodeididentifiertypes::String)
+            if (identifier_.type == nodeididentifiertypes::Identifier_String)
+            {
                 destination.setNodeId(identifier_.idString.c_str(), nameSpaceIndex_);
-            else if (identifier_.type == nodeididentifiertypes::Numeric)
+                ret.setGood();
+            }
+            else if (identifier_.type == nodeididentifiertypes::Identifier_Numeric)
+            {
                 destination.setNodeId(identifier_.idNumeric, nameSpaceIndex_);
-
-            // update the status
-            ret.setGood();
+                ret.setGood();
+            }
+            else if (identifier_.type == nodeididentifiertypes::Identifier_Guid)
+            {
+                UaGuid uaGuid;
+                identifier_.idGuid.toSdk(uaGuid);
+                destination.setNodeId(uaGuid, nameSpaceIndex_);
+                ret.setGood();
+            }
+            else if (identifier_.type == nodeididentifiertypes::Identifier_Opaque)
+            {
+                UaByteString uaOpaque;
+                identifier_.idOpaque.toSdk(uaOpaque);
+                destination.setNodeId(uaOpaque, nameSpaceIndex_);
+                ret.setGood();
+            }
+            else
+            {
+                ret.setStatus(uaf::statuscodes::UnexpectedError, "Unknown NodeId identifier!");
+            }
         }
         else
         {
