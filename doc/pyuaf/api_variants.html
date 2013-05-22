@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>A note on dynamic data types &mdash; PyUAF 1.0 documentation</title>
+    <title>A note on dynamic data types &mdash; PyUAF 1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.0 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.1 documentation" href="index.html" />
     <link rel="prev" title="pyuaf.util.usertokentypes" href="api_pyuaf_util_usertokentypes.html" /> 
   </head>
   <body>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="api_pyuaf_util_usertokentypes.html" title="pyuaf.util.usertokentypes"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -76,23 +76,26 @@ therefore not always known in advance.</p>
 <li><a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.Int64" title="pyuaf.util.primitives.Int64"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.primitives.Int64</span></tt></a></li>
 <li><a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.Float" title="pyuaf.util.primitives.Float"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.primitives.Float</span></tt></a></li>
 <li><a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.Double" title="pyuaf.util.primitives.Double"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.primitives.Double</span></tt></a></li>
-<li>a <tt class="docutils literal"><span class="pre">str</span></tt> (UTF-8 encoded) or a <tt class="docutils literal"><span class="pre">unicode</span></tt> object</li>
+<li><a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.String" title="pyuaf.util.primitives.String"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.primitives.String</span></tt></a></li>
+<li><a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.ByteString" title="pyuaf.util.primitives.ByteString"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.primitives.ByteString</span></tt></a></li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt>a non-primitive like:</dt>
+<dt>a supported non-primitive such as:</dt>
 <dd><ul class="first last simple">
 <li><a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.NodeId</span></tt></a></li>
 <li><a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.ExpandedNodeId" title="pyuaf.util.ExpandedNodeId"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.ExpandedNodeId</span></tt></a></li>
 <li><a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.QualifiedName" title="pyuaf.util.QualifiedName"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.QualifiedName</span></tt></a></li>
 <li><a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.LocalizedText</span></tt></a></li>
+<li><a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.DateTime</span></tt></a></li>
 </ul>
 </dd>
 </dl>
 </li>
-<li><p class="first">or an array of any of the above types (in other words: a list of instances of the same data type).</p>
+<li><p class="first">a <tt class="docutils literal"><span class="pre">list</span></tt> of any of the above types. This list represents an OPC UA array, so all items
+of this list should have the same type!!!</p>
 </li>
 </ul>
 </dd>
@@ -169,7 +172,7 @@ may be presented to you as a <a class="reference internal" href="api_pyuaf_util.
         <li class="right" >
           <a href="api_pyuaf_util_usertokentypes.html" title="pyuaf.util.usertokentypes"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

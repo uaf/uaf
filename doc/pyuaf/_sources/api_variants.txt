@@ -26,13 +26,16 @@ The type of the instance can be:
      - :class:`pyuaf.util.primitives.Int64`
      - :class:`pyuaf.util.primitives.Float`
      - :class:`pyuaf.util.primitives.Double`
-     - a ``str`` (UTF-8 encoded) or a ``unicode`` object
-  - a non-primitive like:
+     - :class:`pyuaf.util.primitives.String`
+     - :class:`pyuaf.util.primitives.ByteString`
+  - a supported non-primitive such as:
      - :class:`pyuaf.util.NodeId`
      - :class:`pyuaf.util.ExpandedNodeId`
      - :class:`pyuaf.util.QualifiedName`
      - :class:`pyuaf.util.LocalizedText`
-  - or an array of any of the above types (in other words: a list of instances of the same data type).
+     - :class:`pyuaf.util.DateTime`
+  - a ``list`` of any of the above types. This list represents an OPC UA array, so all items
+    of this list should have the same type!!!
 
 
 So suppose `x` is the instance, and we expect it to be a NULL value, or an unsigned 32-bit number, 

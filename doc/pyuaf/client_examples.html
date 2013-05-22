@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Client examples &mdash; PyUAF 1.0 documentation</title>
+    <title>Client examples &mdash; PyUAF 1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.0 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.1 documentation" href="index.html" />
     <link rel="next" title="pyuaf" href="api_pyuaf.html" />
     <link rel="prev" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)" href="index.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="index.html" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -254,9 +254,9 @@
     
     <span class="c"># target 2:</span>
     <span class="n">status</span> <span class="o">=</span> <span class="n">readResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">status</span>                         <span class="c"># &#39;status&#39; has type pyuaf.util.Status</span>
-    <span class="n">data</span>   <span class="o">=</span> <span class="n">readResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>                           <span class="c"># &#39;data&#39; has type &quot;&quot;</span>
-    <span class="k">if</span> <span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The string is: &#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">data</span>   <span class="o">=</span> <span class="n">readResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>                           <span class="c"># &#39;data&#39; has type pyuaf.util.primitives.String</span>
+    <span class="k">if</span> <span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">primitives</span><span class="o">.</span><span class="n">String</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The string is: &#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
     
     <span class="c"># target 3:</span>
     <span class="n">status</span> <span class="o">=</span> <span class="n">readResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">status</span>                         <span class="c"># &#39;status&#39; has type pyuaf.util.Status</span>
@@ -266,7 +266,7 @@
     
     <span class="c"># target 4:</span>
     <span class="n">status</span> <span class="o">=</span> <span class="n">readResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">status</span>                         <span class="c"># &#39;status&#39; has type pyuaf.util.Status</span>
-    <span class="n">data</span>   <span class="o">=</span> <span class="n">readResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>                           <span class="c"># &#39;data&#39; has type pyuaf.util.LocalizedText</span>
+    <span class="n">data</span>   <span class="o">=</span> <span class="n">readResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>                           <span class="c"># &#39;data&#39; is a list of pyuaf.util.primitives.SByte</span>
     <span class="k">if</span> <span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="k">print</span><span class="p">(</span><span class="s">&quot;The array is:&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
@@ -351,6 +351,160 @@
     
 <span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;Some error occurred: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-browse-some-nodes">
+<h2>How to browse some nodes?<a class="headerlink" href="#how-to-browse-some-nodes" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># examples/pyuaf/client/how_to_browse_some_nodes.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">EXAMPLE: how to browse some nodes</span>
+<span class="sd">====================================================================================================</span>
+
+<span class="sd">A UAF Client can browse nodes in two ways:</span>
+<span class="sd">  - either using the &quot;convenience&quot; method: browse()</span>
+<span class="sd">  - or using the &quot;generic&quot; method: processRequest() </span>
+
+<span class="sd">The &quot;convenience&quot; methods (such as read(), write(), call(), ...) are conveniently to use </span>
+<span class="sd"> (since they accept the most frequently used parameters directly), </span>
+<span class="sd">but they are less powerful than the &quot;generic&quot; processRequest() method </span>
+<span class="sd"> (since this method accepts ReadRequests, WriteRequests, etc. that can be fully configured).</span>
+
+<span class="sd">In this example, we will use both ways to browse nodes.</span>
+
+<span class="sd">As will be shown in this example, the UAF can automatically take care of BrowseNext calls,</span>
+<span class="sd">so as a user you don&#39;t have to worry about incomplete Browse results!</span>
+
+<span class="sd">To run the example, start the UaDemoServer of UnifiedAutomation first on the same machine. </span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client</span>           <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>  <span class="kn">import</span> <span class="n">BrowseRequest</span><span class="p">,</span> <span class="n">BrowseRequestTarget</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.configs</span>   <span class="kn">import</span> <span class="n">BrowseConfig</span><span class="p">,</span> <span class="n">SessionConfig</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">primitives</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">opcuaidentifiers</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util.errors</span>      <span class="kn">import</span> <span class="n">UafError</span>
+
+
+<span class="c"># define the namespace URI and server URI of the UaDemoServer</span>
+<span class="n">demoNsUri</span>     <span class="o">=</span> <span class="s">&quot;DemoNodeManager&quot;</span>
+<span class="n">dataNsUri</span>     <span class="o">=</span> <span class="s">&quot;http://opcfoundation.org/UA/DI/&quot;</span>
+<span class="n">demoServerUri</span> <span class="o">=</span> <span class="s">&quot;urn:UnifiedAutomation:UaDemoserver&quot;</span>
+
+<span class="c"># define the address of the Root node which we would like to start browsing</span>
+<span class="n">rootNode</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="n">opcuaidentifiers</span><span class="o">.</span><span class="n">OpcUaId_RootFolder</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">demoServerUri</span> <span class="p">)</span>
+
+<span class="c"># define the ClientSettings:</span>
+<span class="n">settings</span> <span class="o">=</span> <span class="n">ClientSettings</span><span class="p">()</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">applicationName</span> <span class="o">=</span> <span class="s">&quot;MyClient&quot;</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">)</span>
+
+<span class="c"># create the client</span>
+<span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+
+
+
+<span class="c"># read the node attributes all at once</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;First option: use the convenience function </span><span class="se">\&quot;</span><span class="s">browse()</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;===================================================&quot;</span><span class="p">)</span>
+    
+    <span class="c"># OPTIONAL: You could also provide a BrowseConfig to configure a call timeout</span>
+    <span class="n">serviceConfig</span> <span class="o">=</span> <span class="n">BrowseConfig</span><span class="p">()</span>
+    <span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">2.0</span>
+    
+    <span class="c"># OPTIONAL: And you could also provide a SessionConfig to configure the sessions </span>
+    <span class="c">#           (e.g. set the timeout to 600.0 seconds)</span>
+    <span class="c">#           For more info about SessionConfigs, see the sessionconfig example</span>
+    <span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">SessionConfig</span><span class="p">()</span>
+    <span class="n">sessionConfig</span><span class="o">.</span><span class="n">defaultSessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">600.0</span>
+    
+    <span class="c"># now browse the root node</span>
+    <span class="c"># (notice that there is also an argument called &#39;maxAutoBrowseNext&#39;, which we don&#39;t mention</span>
+    <span class="c">#  here because we can leave it at the default value (100), to make sure that BrowseNext is </span>
+    <span class="c"># automatically being called for us as much as needed!)</span>
+    <span class="n">firstLevelBrowseResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">browse</span><span class="p">(</span> <span class="n">addresses</span>     <span class="o">=</span> <span class="p">[</span><span class="n">rootNode</span><span class="p">],</span>
+                                              <span class="n">serviceConfig</span> <span class="o">=</span> <span class="n">serviceConfig</span><span class="p">,</span> <span class="c"># optional argument</span>
+                                              <span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">sessionConfig</span><span class="p">)</span> <span class="c"># optional argument</span>
+    
+    <span class="c"># print the result</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot; - Browse result of the first level:&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;   ---------------------------------&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">firstLevelBrowseResult</span><span class="p">)</span>
+    
+    <span class="c"># we don&#39;t expect that &quot;manual&quot; BrowseNext calls are still needed, as the UAF will</span>
+    <span class="c"># have done the BrowseNext calls up to 100 times automatically for us! If there would still be</span>
+    <span class="c"># some continuation points left, then we surely have some unexpected problem!</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">firstLevelBrowseResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">continuationPoint</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+    
+    <span class="c"># we can now continue browsing the other nodes that we discovered, all simultaneously!!!</span>
+    <span class="n">noOfFoundReferences</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">firstLevelBrowseResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">references</span><span class="p">)</span>
+    <span class="n">newNodesToBeBrowsed</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">noOfFoundReferences</span><span class="p">):</span>
+        <span class="n">newNodesToBeBrowsed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">Address</span><span class="p">(</span><span class="n">firstLevelBrowseResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">references</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">nodeId</span><span class="p">)</span> <span class="p">)</span>
+    
+    <span class="n">secondLevelBrowseResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">browse</span><span class="p">(</span> <span class="n">addresses</span>     <span class="o">=</span> <span class="n">newNodesToBeBrowsed</span><span class="p">,</span>
+                                               <span class="n">serviceConfig</span> <span class="o">=</span> <span class="n">serviceConfig</span><span class="p">,</span> <span class="c"># optional argument</span>
+                                               <span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">sessionConfig</span><span class="p">)</span> <span class="c"># optional argument</span>
+    
+    <span class="c"># print the result</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot; - Browse result of the second level:&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;   ----------------------------------&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">secondLevelBrowseResult</span><span class="p">)</span>
+    
+    
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Second option: use the generic function </span><span class="se">\&quot;</span><span class="s">processRequest()</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;==========================================================&quot;</span><span class="p">)</span>
+    
+    <span class="c"># create a request with 1 target</span>
+    <span class="n">firstLevelBrowseRequest</span> <span class="o">=</span> <span class="n">BrowseRequest</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">firstLevelBrowseRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">rootNode</span>
+    
+    <span class="c"># OPTIONAL: let&#39;s also specify a small call timeout, since the UaDemoServer is running </span>
+    <span class="c">#           on the local machine anyway</span>
+    <span class="n">firstLevelBrowseRequest</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">2.0</span>
+    
+    <span class="c"># OPTIONAL: and finally let&#39;s also specify that sessions should have a timeout of 600 seconds</span>
+    <span class="c">#           For more info about SessionConfigs, see the sessionconfig example</span>
+    <span class="n">firstLevelBrowseRequest</span><span class="o">.</span><span class="n">sessionConfig</span><span class="o">.</span><span class="n">defaultSessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">600.0</span>
+    
+    <span class="c"># process the request</span>
+    <span class="n">firstLevelBrowseResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">processRequest</span><span class="p">(</span><span class="n">firstLevelBrowseRequest</span><span class="p">)</span>
+    
+    <span class="c"># print the result</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot; - Browse result of the first level:&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;   ---------------------------------&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">firstLevelBrowseResult</span><span class="p">)</span>
+    
+    <span class="c"># we don&#39;t expect that &quot;manual&quot; BrowseNext calls are still needed, as the UAF will</span>
+    <span class="c"># have done the BrowseNext calls up to 100 times automatically for us! If there would still be</span>
+    <span class="c"># some continuation points left, then we surely have some unexpected problem!</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">firstLevelBrowseResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">continuationPoint</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+    
+    <span class="c"># we can now continue browsing the other nodes that we discovered, all simultaneously!!!</span>
+    <span class="n">noOfFoundReferences</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">firstLevelBrowseResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">references</span><span class="p">)</span>
+    <span class="n">secondLevelBrowseRequest</span> <span class="o">=</span> <span class="n">BrowseRequest</span><span class="p">(</span><span class="n">noOfFoundReferences</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">noOfFoundReferences</span><span class="p">):</span>
+        <span class="n">secondLevelBrowseRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">firstLevelBrowseResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">references</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">nodeId</span><span class="p">)</span>
+    
+    <span class="n">secondLevelBrowseResult</span> <span class="o">=</span>  <span class="n">myClient</span><span class="o">.</span><span class="n">processRequest</span><span class="p">(</span><span class="n">secondLevelBrowseRequest</span><span class="p">)</span>
+    
+    <span class="c"># print the result</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot; - Browse result of the second level:&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;   ----------------------------------&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">secondLevelBrowseResult</span><span class="p">)</span>
+    
+    
+<span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Some error occurred: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
+    <span class="k">raise</span>
 </pre></div>
 </div>
 </div>
@@ -564,6 +718,7 @@
 <li><a class="reference internal" href="#easiest-client-example">Easiest client example</a></li>
 <li><a class="reference internal" href="#how-to-define-addresses">How to define addresses?</a></li>
 <li><a class="reference internal" href="#how-to-read-some-data">How to read some data?</a></li>
+<li><a class="reference internal" href="#how-to-browse-some-nodes">How to browse some nodes?</a></li>
 <li><a class="reference internal" href="#how-to-change-the-default-session-behavior">How to change the default session behavior?</a></li>
 <li><a class="reference internal" href="#how-to-change-the-default-subscription-behavior">How to change the default subscription_behavior?</a></li>
 </ul>
@@ -575,7 +730,7 @@
                         title="previous chapter">PyUAF - Python bindings for the UAF (Unified Architecture Framework)</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="api_pyuaf.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf</span></tt></a></p>
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">pyuaf</span></tt></a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/client_examples.txt"
@@ -613,7 +768,7 @@
         <li class="right" >
           <a href="index.html" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

@@ -24,6 +24,12 @@ How to read some data?
 
 
 
+How to browse some nodes?
+====================================================================================================
+
+.. literalinclude:: ../../../examples/pyuaf/client/how_to_browse_some_nodes.py
+
+
 .. _sessionconfig-example: 
 
 How to change the default session behavior?

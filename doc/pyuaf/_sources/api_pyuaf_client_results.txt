@@ -351,6 +351,171 @@
 
 
 
+
+
+*class* BrowseNextResult
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.client.results.BrowseNextResult
+
+    A :class:`~pyuaf.client.results.BrowseNextResult` is the result of a corresponding 
+    :class:`~pyuaf.client.requests.BrowseNextRequest`. 
+    
+    A :class:`~pyuaf.client.results.BrowseNextResult` is exactly the same as a 
+    :class:`~pyuaf.client.results.BrowseResult`. See the latter class documentation
+    for a description of the attributes and methods.
+    
+    
+    
+
+*class* BrowseResult
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.client.results.BrowseResult
+
+    A :class:`~pyuaf.client.results.BrowseResult` is the result of a corresponding 
+    :class:`~pyuaf.client.requests.BrowseRequest`. 
+    
+    It tells you whether or not the requested targets have been browsed, what were the resulting
+    references that were found, etc.
+    
+    * Methods:
+
+        .. automethod:: pyuaf.client.results.BrowseResult.__init__
+    
+            Create a new BrowseResult object.
+            
+            You should never have to create result objects yourself, the UAF will produce them
+            and you will consume them.
+            
+        .. automethod:: pyuaf.client.results.BrowseResult.__str__
+    
+            Get a formatted string representation of the result.
+
+
+    * Attributes
+    
+        .. autoattribute:: pyuaf.client.results.BrowseResult.targets
+
+            The targets, as a :class:`~pyuaf.client.results.BrowseResultTargetVector`.
+    
+        .. autoattribute:: pyuaf.client.results.BrowseResult.overallStatus
+
+            The combined status of the targets, as a :class:`~pyuaf.util.Status` instance.
+            
+            If this status is Good, then you know for sure that all the statuses of the targets
+            are all Good.
+            If this status is Bad, then you know that at least one of the targets has a Bad status.
+    
+        .. autoattribute:: pyuaf.client.results.BrowseResult.requestHandle
+
+            The unique handle that was originally assigned to the 
+            :class:`~pyuaf.client.requests.BrowseRequest` 
+            that resulted in this 
+            :class:`~pyuaf.client.results.BrowseResult`. 
+            It's a 64-bit ``long`` value, assigned by the UAF during the processing of the request.
+
+
+*class* BrowseResultTarget
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.client.results.BrowseResultTarget
+
+    A :class:`~pyuaf.client.results.BrowseResultTarget` corresponds exactly to the
+    :class:`~pyuaf.client.requests.BrowseRequestTarget` that was part of the invoked
+    :class:`~pyuaf.client.requests.BrowseRequest`. 
+    So the first target of the request corresponds to the first target of the result, and so on.
+    
+    
+    * Methods:
+
+        .. automethod:: pyuaf.client.results.BrowseResultTarget.__init__
+    
+            Create a new BrowseRequestTarget object.
+            
+            You should never have to create result targets (or results for that matter) yourself, 
+            the UAF will produce them and you will consume them.
+            
+        .. automethod:: pyuaf.client.results.BrowseResultTarget.__str__
+    
+            Get a formatted string representation of the target.
+
+
+    * Attributes
+    
+        .. autoattribute:: pyuaf.client.results.BrowseResultTarget.status
+
+            Status of the result target (Good if the request target was browsed, Bad if not), 
+            as a :class:`~pyuaf.util.Status` instance.
+    
+        .. autoattribute:: pyuaf.client.results.BrowseResultTarget.clientConnectionId
+
+            The id of the session that was used for this target, as an ``int``.
+    
+        .. autoattribute:: pyuaf.client.results.BrowseResultTarget.autoBrowsedNext
+
+            An ``int``, clarifying how many times the UAF automatically invoked 
+            the "BrowseNext" OPC UA service in order to get the results?
+    
+        .. autoattribute:: pyuaf.client.results.BrowseResultTarget.continuationPoint
+
+            The continuation point (a server-defined byte string) that should be provided 
+            to the next BrowseNext call, to get the remaining browse results. The type 
+            of this attribute is a built-in Python ``bytearray``. 
+            Since the UAF can automatically call BrowseNext for you (via the
+            :attr:`pyuaf.client.settings.BrowseSettings.maxAutoBrowseNext` attribute),
+            you normally don't have to use the continuation point and the BrowseNext service
+            yourself.
+    
+        .. autoattribute:: pyuaf.client.results.BrowseResultTarget.references
+        
+            The reference descriptions that were found during the browsing,
+            as a :class:`~pyuaf.util.ReferenceDescriptionVector`.
+
+
+
+*class* BrowseResultTargetVector
+----------------------------------------------------------------------------------------------------
+
+
+.. class:: pyuaf.client.results.BrowseResultTargetVector
+
+    An BrowseResultTargetVector is a container that holds elements of type 
+    :class:`pyuaf.client.results.BrowseResultTarget`. 
+    It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+    as a ``list`` of :class:`~pyuaf.client.results.BrowseResultTarget`.
+
+    Usage example:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> from pyuaf.client.results import BrowseResultTarget, BrowseResultTargetVector
+        
+        >>> # construct a realistic result, for instance one with 5 targets:
+        >>> targets = BrowseResultTargetVector(5)
+        
+        >>> noOfElements = len(targets) # will be 5  (alternative: targets.size())
+        
+        >>> for i in xrange(len(targets)):
+        ...     if(targets[i].status.isGood()):
+        ...         for j in xrange(len(targets[i].references)):
+        ...             print("Target %d Reference %d --> Display name = %s" 
+        ...                   %(i, j, targets[i].references[j].displayName))
+        
+        >>> # other methods of the vector:
+        >>> targets.resize(6)
+        >>> targets.append(BrowseResultTarget())
+        >>> someTarget = targets.pop()
+        >>> targets.clear()
+        >>> # ...
+
+
+
+
 *class* CreateMonitoredDataResult
 ----------------------------------------------------------------------------------------------------
 
@@ -436,9 +601,7 @@
     
         .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.clientConnectionId
 
-            The id of the session that was used for this target.
-    
-        .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.notificationHandle
+            The id of the session that wasThe id of the session that was used for this target, as an ``int``.. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.notificationHandle
 
             The notification handle that was assigned to the monitored item by the UAF 
             (unique per client).
@@ -581,7 +744,7 @@
     
         .. autoattribute:: pyuaf.client.results.CreateMonitoredEventsResultTarget.clientConnectionId
 
-            The id of the session that was used for this target.
+            The id of the session that was used for this target, as an ``int``.
     
         .. autoattribute:: pyuaf.client.results.CreateMonitoredEventsResultTarget.notificationHandle
 
@@ -726,7 +889,7 @@
     
         .. autoattribute:: pyuaf.client.results.MethodCallResultTarget.clientConnectionId
 
-            The id of the session that was used for this target.
+            The id of the session that was used for this target, as an ``int``.
     
         .. autoattribute:: pyuaf.client.results.MethodCallResultTarget.outputArguments
 
@@ -860,7 +1023,7 @@
     
         .. autoattribute:: pyuaf.client.results.ReadResultTarget.clientConnectionId
 
-            The id of the session that was used for this target.
+            The id of the session that was used for this target, as an ``int``.
     
         .. autoattribute:: pyuaf.client.results.ReadResultTarget.data
 
@@ -994,7 +1157,7 @@
     
         .. autoattribute:: pyuaf.client.results.TranslateBrowsePathsToNodeIdsResultTarget.clientConnectionId
 
-            The id of the session that was used for this target.
+            The id of the session that was used for this target, as an ``int``.
     
         .. autoattribute:: pyuaf.client.results.TranslateBrowsePathsToNodeIdsResultTarget.expandedNodeIds
 
@@ -1131,7 +1294,7 @@
     
         .. autoattribute:: pyuaf.client.results.WriteResultTarget.clientConnectionId
 
-            The id of the session that was used for this target.
+            The id of the session that was used for this target, as an ``int``.
     
 
 

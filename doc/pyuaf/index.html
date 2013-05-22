@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>PyUAF - Python bindings for the UAF (Unified Architecture Framework) &mdash; PyUAF 1.0 documentation</title>
+    <title>PyUAF - Python bindings for the UAF (Unified Architecture Framework) &mdash; PyUAF 1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.0 documentation" href="#" />
+    <link rel="top" title="PyUAF 1.1 documentation" href="#" />
     <link rel="next" title="Client examples" href="client_examples.html" /> 
   </head>
   <body>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="client_examples.html" title="Client examples"
              accesskey="N">next</a> |</li>
-        <li><a href="#">PyUAF 1.0 documentation</a> &raquo;</li> 
+        <li><a href="#">PyUAF 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -100,6 +100,7 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
 <li class="toctree-l2"><a class="reference internal" href="client_examples.html#easiest-client-example">Easiest client example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="client_examples.html#how-to-define-addresses">How to define addresses?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="client_examples.html#how-to-read-some-data">How to read some data?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="client_examples.html#how-to-browse-some-nodes">How to browse some nodes?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="client_examples.html#how-to-change-the-default-session-behavior">How to change the default session behavior?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="client_examples.html#how-to-change-the-default-subscription-behavior">How to change the default subscription_behavior?</a></li>
 </ul>
@@ -122,6 +123,8 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_client_configs.html"><tt class="docutils literal"><span class="pre">pyuaf.client.configs</span></tt></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_configs.html#class-browseconfig"><em>class</em> BrowseConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_configs.html#class-browsenextconfig"><em>class</em> BrowseNextConfig</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_configs.html#class-createmonitoreddataconfig"><em>class</em> CreateMonitoredDataConfig</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_configs.html#class-createmonitoredeventsconfig"><em>class</em> CreateMonitoredEventsConfig</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_configs.html#class-methodcallconfig"><em>class</em> MethodCallConfig</a></li>
@@ -138,6 +141,12 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_requests.html#class-asyncmethodcallrequest"><em>class</em> AsyncMethodCallRequest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_requests.html#class-asyncreadrequest"><em>class</em> AsyncReadRequest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_requests.html#class-asyncwriterequest"><em>class</em> AsyncWriteRequest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_requests.html#class-browsenextrequest"><em>class</em> BrowseNextRequest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_requests.html#class-browsenextrequesttarget"><em>class</em> BrowseNextRequestTarget</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_requests.html#class-browsenextrequesttargetvector"><em>class</em> BrowseNextRequestTargetVector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_requests.html#class-browserequest"><em>class</em> BrowseRequest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_requests.html#class-browserequesttarget"><em>class</em> BrowseRequestTarget</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_requests.html#class-browserequesttargetvector"><em>class</em> BrowseRequestTargetVector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_requests.html#class-createmonitoreddatarequest"><em>class</em> CreateMonitoredDataRequest</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_requests.html#class-createmonitoreddatarequesttarget"><em>class</em> CreateMonitoredDataRequestTarget</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_requests.html#class-createmonitoreddatarequesttargetvector"><em>class</em> CreateMonitoredDataRequestTargetVector</a></li>
@@ -166,6 +175,10 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_results.html#class-asyncresulttarget"><em>class</em> AsyncResultTarget</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_results.html#class-asyncresulttargetvector"><em>class</em> AsyncResultTargetVector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_results.html#class-asyncwriteresult"><em>class</em> AsyncWriteResult</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_results.html#class-browsenextresult"><em>class</em> BrowseNextResult</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_results.html#class-browseresult"><em>class</em> BrowseResult</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_results.html#class-browseresulttarget"><em>class</em> BrowseResultTarget</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_results.html#class-browseresulttargetvector"><em>class</em> BrowseResultTargetVector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_results.html#class-createmonitoreddataresult"><em>class</em> CreateMonitoredDataResult</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_results.html#class-createmonitoreddataresulttarget"><em>class</em> CreateMonitoredDataResultTarget</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_results.html#class-createmonitoreddataresulttargetvector"><em>class</em> CreateMonitoredDataResultTargetVector</a></li>
@@ -188,6 +201,8 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_client_settings.html"><tt class="docutils literal"><span class="pre">pyuaf.client.settings</span></tt></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_settings.html#class-baseservicesettings"><em>class</em> BaseServiceSettings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_settings.html#class-browsenextsettings"><em>class</em> BrowseNextSettings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_settings.html#class-browsesettings"><em>class</em> BrowseSettings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_settings.html#class-clientsettings"><em>class</em> ClientSettings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_settings.html#class-createmonitoreddatasettings"><em>class</em> CreateMonitoredDataSettings</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_client_settings.html#class-createmonitoredeventssettings"><em>class</em> CreateMonitoredEventsSettings</a></li>
@@ -212,11 +227,14 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-applicationdescriptionvector"><em>class</em> ApplicationDescriptionVector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-browsepath"><em>class</em> BrowsePath</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-datachangefilter"><em>class</em> DataChangeFilter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-datetime"><em>class</em> DateTime</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-datetimevector"><em>class</em> DateTimeVector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-endpointdescription"><em>class</em> EndpointDescription</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-endpointdescriptionvector"><em>class</em> EndpointDescriptionVector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-eventfilter"><em>class</em> EventFilter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-expandednodeid"><em>class</em> ExpandedNodeId</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-expandednodeidvector"><em>class</em> ExpandedNodeIdVector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-guid"><em>class</em> Guid</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-localizedtext"><em>class</em> LocalizedText</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-logginginterface"><em>class</em> LoggingInterface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-logmessage"><em>class</em> LogMessage</a></li>
@@ -225,6 +243,8 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-nodeididentifier"><em>class</em> NodeIdIdentifier</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-qualifiedname"><em>class</em> QualifiedName</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-qualifiednamevector"><em>class</em> QualifiedNameVector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-referencedescription"><em>class</em> ReferenceDescription</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-referencedescriptionvector"><em>class</em> ReferenceDescriptionVector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-relativepath"><em>class</em> RelativePath</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-relativepathelement"><em>class</em> RelativePathElement</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-simpleattributeoperand"><em>class</em> SimpleAttributeOperand</a></li>
@@ -237,10 +257,12 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-usertokenpolicy"><em>class</em> UserTokenPolicy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-usertokenpolicyvector"><em>class</em> UserTokenPolicyVector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-variantvector"><em>class</em> VariantVector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-viewdescription"><em>class</em> ViewDescription</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_attributeids.html"><tt class="docutils literal"><span class="pre">pyuaf.util.attributeids</span></tt></a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_applicationtypes.html"><tt class="docutils literal"><span class="pre">pyuaf.util.applicationtypes</span></tt></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_browsedirections.html"><tt class="docutils literal"><span class="pre">pyuaf.util.browsedirections</span></tt></a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_constants.html"><tt class="docutils literal"><span class="pre">pyuaf.util.constants</span></tt></a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_errors.html"><tt class="docutils literal"><span class="pre">pyuaf.util.errors</span></tt></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util_errors.html#class-uaferror"><em>class</em> UafError</a></li>
@@ -268,6 +290,7 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_loglevels.html"><tt class="docutils literal"><span class="pre">pyuaf.util.loglevels</span></tt></a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_messagesecuritymodes.html"><tt class="docutils literal"><span class="pre">pyuaf.util.messagesecuritymodes</span></tt></a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_monitoringmodes.html"><tt class="docutils literal"><span class="pre">pyuaf.util.monitoringmodes</span></tt></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_nodeclasses.html"><tt class="docutils literal"><span class="pre">pyuaf.util.nodeclasses</span></tt></a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_nodeididentifiertypes.html"><tt class="docutils literal"><span class="pre">pyuaf.util.nodeididentifiertypes</span></tt></a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_opcuaidentifiers.html"><tt class="docutils literal"><span class="pre">pyuaf.util.opcuaidentifiers</span></tt></a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_opcuatypes.html"><tt class="docutils literal"><span class="pre">pyuaf.util.opcuatypes</span></tt></a></li>
@@ -283,6 +306,8 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util_primitives.html#class-uint64"><em>class</em> UInt64</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util_primitives.html#class-float"><em>class</em> Float</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util_primitives.html#class-double"><em>class</em> Double</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util_primitives.html#class-string"><em>class</em> String</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util_primitives.html#class-bytestring"><em>class</em> ByteString</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_securitypolicies.html"><tt class="docutils literal"><span class="pre">pyuaf.util.securitypolicies</span></tt></a></li>
@@ -365,7 +390,7 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
         <li class="right" >
           <a href="client_examples.html" title="Client examples"
              >next</a> |</li>
-        <li><a href="#">PyUAF 1.0 documentation</a> &raquo;</li> 
+        <li><a href="#">PyUAF 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

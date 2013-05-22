@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client.requests &mdash; PyUAF 1.0 documentation</title>
+    <title>pyuaf.client.requests &mdash; PyUAF 1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.0 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.1 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.results" href="api_pyuaf_client_results.html" />
     <link rel="prev" title="pyuaf.client.configs" href="api_pyuaf_client_configs.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_configs.html" title="pyuaf.client.configs"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -117,6 +117,411 @@ to write an attribute of one or more nodes.</p>
 <p>This class has the exact same methods and attributes as a
 <a class="reference internal" href="#pyuaf.client.requests.WriteRequest" title="pyuaf.client.requests.WriteRequest"><tt class="xref py py-class docutils literal"><span class="pre">WriteRequest</span></tt></a>, so see the documentation
 of the latter.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="class-browsenextrequest">
+<h2><em>class</em> BrowseNextRequest<a class="headerlink" href="#class-browsenextrequest" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.requests.BrowseNextRequest">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.requests.</tt><tt class="descname">BrowseNextRequest</tt><big>(</big><em>targets=0</em>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.requests.BrowseNextRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#pyuaf.client.requests.BrowseNextRequest" title="pyuaf.client.requests.BrowseNextRequest"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextRequest</span></tt></a> is a synchronous request to continue a
+previous browsing of one or more nodes.</p>
+<p>You only need to use this BrowseNext request if you have put maxAutoBrowseNext to 0 in the
+previous Browse request (or if the automatic BrowseNext calls still resulted in
+continuationPoints). For your convenience, it&#8217;s much easier to simply use the BrowseRequest,
+and let the UAF do the BrowseNext calls automatically for you!</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.requests.BrowseNextRequest.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>targets=0</em>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.requests.BrowseNextRequest.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new BrowseNextRequest object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>targets</strong> &#8211; <p>The targets of the request, either as:</p>
+<ul>
+<li>an <tt class="docutils literal"><span class="pre">int</span></tt>, specifying the number of targets (0 by default)</li>
+<li>a single target (a <a class="reference internal" href="#pyuaf.client.requests.BrowseNextRequestTarget" title="pyuaf.client.requests.BrowseNextRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextRequestTarget</span></tt></a>)</li>
+<li>a vector of targets (a <a class="reference internal" href="#pyuaf.client.requests.pyuaf.client.requests.BrowseNextRequestTargetVector" title="pyuaf.client.requests.pyuaf.client.requests.BrowseNextRequestTargetVector"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextRequestTargetVector</span></tt></a>)</li>
+</ul>
+</li>
+<li><strong>serviceConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.BrowseNextConfig" title="pyuaf.client.configs.BrowseNextConfig"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextConfig</span></tt></a>) &#8211; The config for the service settings.</li>
+<li><strong>sessionConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SessionConfig" title="pyuaf.client.configs.SessionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SessionConfig</span></tt></a>) &#8211; The config containing the session settings.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.requests.BrowseNextRequest.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=36</em><big>)</big><a class="headerlink" href="#pyuaf.client.requests.BrowseNextRequest.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a formatted string representation of the request.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.requests.BrowseNextRequest.targets">
+<tt class="descname">targets</tt><a class="headerlink" href="#pyuaf.client.requests.BrowseNextRequest.targets" title="Permalink to this definition">¶</a></dt>
+<dd><p>The targets, as a <a class="reference internal" href="#pyuaf.client.requests.pyuaf.client.requests.BrowseNextRequestTargetVector" title="pyuaf.client.requests.pyuaf.client.requests.BrowseNextRequestTargetVector"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextRequestTargetVector</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.requests.BrowseNextRequest.serviceConfig">
+<tt class="descname">serviceConfig</tt><a class="headerlink" href="#pyuaf.client.requests.BrowseNextRequest.serviceConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>The service config, as a <a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.BrowseNextConfig" title="pyuaf.client.configs.BrowseNextConfig"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextConfig</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.requests.BrowseNextRequest.sessionConfig">
+<tt class="descname">sessionConfig</tt><a class="headerlink" href="#pyuaf.client.requests.BrowseNextRequest.sessionConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>The session config, as a <a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SessionConfig" title="pyuaf.client.configs.SessionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SessionConfig</span></tt></a>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-browsenextrequesttarget">
+<h2><em>class</em> BrowseNextRequestTarget<a class="headerlink" href="#class-browsenextrequesttarget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.requests.BrowseNextRequestTarget">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.requests.</tt><tt class="descname">BrowseNextRequestTarget</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.requests.BrowseNextRequestTarget" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#pyuaf.client.requests.BrowseNextRequestTarget" title="pyuaf.client.requests.BrowseNextRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextRequestTarget</span></tt></a> is the part of
+a <a class="reference internal" href="#pyuaf.client.requests.BrowseNextRequest" title="pyuaf.client.requests.BrowseNextRequest"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextRequest</span></tt></a> that specifies the target that we were
+browsing and the corresponding continuation point.</p>
+<p>You only need to use the BrowseNext request if you have put maxAutoBrowseNext to 0 in the
+previous Browse request (or if the automatic BrowseNext calls still resulted in
+continuationPoints). For your convenience, it&#8217;s much easier to simply use the BrowseRequest,
+and let the UAF do the BrowseNext calls automatically for you!</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.requests.BrowseNextRequestTarget.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.requests.BrowseNextRequestTarget.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new BrowseNextRequestTarget object.</p>
+<p>You can specify a BrowseNextRequestTarget either by providing nothing, or by providing
+an address (of type <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) and a continuation point (of type
+<tt class="docutils literal"><span class="pre">bytearray</span></tt>).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.requests.BrowseNextRequestTarget.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=22</em><big>)</big><a class="headerlink" href="#pyuaf.client.requests.BrowseNextRequestTarget.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a formatted string representation of the target.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.requests.BrowseNextRequestTarget.address">
+<tt class="descname">address</tt><a class="headerlink" href="#pyuaf.client.requests.BrowseNextRequestTarget.address" title="Permalink to this definition">¶</a></dt>
+<dd><p>The address of the node that was already being browsed, as an
+<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>. So you can copy the address of the original
+BrowseRequest to here, so that the UAF can use this address to find out
+to which server the BrowseNext call should be sent.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.requests.BrowseNextRequestTarget.continuationPoint">
+<tt class="descname">continuationPoint</tt><a class="headerlink" href="#pyuaf.client.requests.BrowseNextRequestTarget.continuationPoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>The continuation point, as received by the previous Browse or BrowseNext call.
+This attribute is of the Python built-in type <tt class="docutils literal"><span class="pre">bytearray</span></tt>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-browsenextrequesttargetvector">
+<h2><em>class</em> BrowseNextRequestTargetVector<a class="headerlink" href="#class-browsenextrequesttargetvector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.requests.pyuaf.client.requests.BrowseNextRequestTargetVector">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.requests.</tt><tt class="descname">BrowseNextRequestTargetVector</tt><a class="headerlink" href="#pyuaf.client.requests.pyuaf.client.requests.BrowseNextRequestTargetVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>An BrowseNextRequestTargetVector is a container that holds elements of type
+<a class="reference internal" href="#pyuaf.client.requests.BrowseNextRequestTarget" title="pyuaf.client.requests.BrowseNextRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.requests.BrowseNextRequestTarget</span></tt></a>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.client.requests.BrowseNextRequestTarget" title="pyuaf.client.requests.BrowseNextRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextRequestTarget</span></tt></a>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="kn">import</span> <span class="n">BrowseRequest</span><span class="p">,</span> <span class="n">BrowseNextRequestTarget</span><span class="p">,</span> <span class="n">BrowseNextRequestTargetVector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span>  <span class="kn">import</span> <span class="n">BrowseResult</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">NodeId</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># we simulate the request and result of a previous Browse call with two targets</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># (i.e. two nodes that were being browsed simultaneously)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">originalRequest</span> <span class="o">=</span> <span class="n">BrowseRequest</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">originalResult</span> <span class="o">=</span> <span class="n">BrowseResult</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">originalResult</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a vector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">BrowseNextRequestTargetVector</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BrowseNextRequestTarget</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">originalRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">continuationPoint</span> <span class="o">=</span> <span class="n">originalResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">continuationPoint</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 4</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a vector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">otherVec</span> <span class="o">=</span> <span class="n">BrowseNextRequestTargetVector</span><span class="p">(</span>
+<span class="gp">... </span>            <span class="p">[</span> <span class="n">BrowseNextRequestTarget</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myId0&quot;</span><span class="p">,</span> <span class="s">&quot;myNs&quot;</span><span class="p">),</span> <span class="s">&quot;myServerUri&quot;</span><span class="p">),</span> <span class="nb">bytearray</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>              <span class="n">BrowseNextRequestTarget</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myId1&quot;</span><span class="p">,</span> <span class="s">&quot;myNs&quot;</span><span class="p">),</span> <span class="s">&quot;myServerUri&quot;</span><span class="p">),</span> <span class="nb">bytearray</span><span class="p">())</span> <span class="p">]</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># or you may specify a number of targets directly</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span> <span class="o">=</span> <span class="n">BrowseNextRequestTargetVector</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId0&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId1&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId2&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="class-browserequest">
+<h2><em>class</em> BrowseRequest<a class="headerlink" href="#class-browserequest" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.requests.BrowseRequest">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.requests.</tt><tt class="descname">BrowseRequest</tt><big>(</big><em>targets=0</em>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.requests.BrowseRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#pyuaf.client.requests.BrowseRequest" title="pyuaf.client.requests.BrowseRequest"><tt class="xref py py-class docutils literal"><span class="pre">BrowseRequest</span></tt></a> is a synchronous request to browse the
+references of one or more nodes.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.requests.BrowseRequest.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>targets=0</em>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.requests.BrowseRequest.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new BrowseRequest object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>targets</strong> &#8211; <p>The targets of the request, either as:</p>
+<ul>
+<li>an <tt class="docutils literal"><span class="pre">int</span></tt>, specifying the number of targets (0 by default)</li>
+<li>a single target (a <a class="reference internal" href="#pyuaf.client.requests.BrowseRequestTarget" title="pyuaf.client.requests.BrowseRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">BrowseRequestTarget</span></tt></a>)</li>
+<li>a vector of targets (a <a class="reference internal" href="#pyuaf.client.requests.pyuaf.client.requests.BrowseRequestTargetVector" title="pyuaf.client.requests.pyuaf.client.requests.BrowseRequestTargetVector"><tt class="xref py py-class docutils literal"><span class="pre">BrowseRequestTargetVector</span></tt></a>)</li>
+</ul>
+</li>
+<li><strong>serviceConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.BrowseConfig" title="pyuaf.client.configs.BrowseConfig"><tt class="xref py py-class docutils literal"><span class="pre">BrowseConfig</span></tt></a>) &#8211; The config for the service settings.</li>
+<li><strong>sessionConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SessionConfig" title="pyuaf.client.configs.SessionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SessionConfig</span></tt></a>) &#8211; The config containing the session settings.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.requests.BrowseRequest.__str__">
+<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.requests.BrowseRequest.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a formatted string representation of the request.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.requests.BrowseRequest.targets">
+<tt class="descname">targets</tt><a class="headerlink" href="#pyuaf.client.requests.BrowseRequest.targets" title="Permalink to this definition">¶</a></dt>
+<dd><p>The targets, as a <a class="reference internal" href="#pyuaf.client.requests.pyuaf.client.requests.BrowseRequestTargetVector" title="pyuaf.client.requests.pyuaf.client.requests.BrowseRequestTargetVector"><tt class="xref py py-class docutils literal"><span class="pre">BrowseRequestTargetVector</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.requests.BrowseRequest.serviceConfig">
+<tt class="descname">serviceConfig</tt><a class="headerlink" href="#pyuaf.client.requests.BrowseRequest.serviceConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>The service config, as a <a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.BrowseConfig" title="pyuaf.client.configs.BrowseConfig"><tt class="xref py py-class docutils literal"><span class="pre">BrowseConfig</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.requests.BrowseRequest.sessionConfig">
+<tt class="descname">sessionConfig</tt><a class="headerlink" href="#pyuaf.client.requests.BrowseRequest.sessionConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>The session config, as a <a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SessionConfig" title="pyuaf.client.configs.SessionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SessionConfig</span></tt></a>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-browserequesttarget">
+<h2><em>class</em> BrowseRequestTarget<a class="headerlink" href="#class-browserequesttarget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.requests.BrowseRequestTarget">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.requests.</tt><tt class="descname">BrowseRequestTarget</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.requests.BrowseRequestTarget" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#pyuaf.client.requests.BrowseRequestTarget" title="pyuaf.client.requests.BrowseRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">BrowseRequestTarget</span></tt></a> is the part of
+a <a class="reference internal" href="#pyuaf.client.requests.BrowseRequest" title="pyuaf.client.requests.BrowseRequest"><tt class="xref py py-class docutils literal"><span class="pre">BrowseRequest</span></tt></a> that specifies the target to be browsed.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.requests.BrowseRequestTarget.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>args*</em><big>)</big><a class="headerlink" href="#pyuaf.client.requests.BrowseRequestTarget.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new BrowseRequestTarget object.</p>
+<p>You can specify a BrowseRequestTarget in two ways:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>                 <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>      <span class="kn">import</span> <span class="n">BrowseRequestTarget</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">addressOfNodeToBeBrowsed</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;someId&quot;</span><span class="p">,</span> <span class="s">&quot;someNs&quot;</span><span class="p">,</span> <span class="s">&quot;someServerUri&quot;</span><span class="p">))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># there are 2 ways to define a target:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span> <span class="o">=</span> <span class="n">BrowseRequestTarget</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target1</span> <span class="o">=</span> <span class="n">BrowseRequestTarget</span><span class="p">(</span><span class="n">addressOfNodeToBeBrowsed</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># in case of the first target, you still need to specify an Address:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">addressOfNodeToBeBrowsed</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.requests.BrowseRequestTarget.__str__">
+<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.requests.BrowseRequestTarget.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a formatted string representation of the target.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.requests.BrowseRequestTarget.address">
+<tt class="descname">address</tt><a class="headerlink" href="#pyuaf.client.requests.BrowseRequestTarget.address" title="Permalink to this definition">¶</a></dt>
+<dd><p>The address of the node to be browsed, as an <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.requests.BrowseRequestTarget.browseDirection">
+<tt class="descname">browseDirection</tt><a class="headerlink" href="#pyuaf.client.requests.BrowseRequestTarget.browseDirection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Direction to follow when browsing the nodes, as an <tt class="docutils literal"><span class="pre">int</span></tt> defined in the
+<a class="reference internal" href="api_pyuaf_util_browsedirections.html#module-pyuaf.util.browsedirections" title="pyuaf.util.browsedirections"><tt class="xref py py-mod docutils literal"><span class="pre">browsedirections</span></tt></a> module.
+<a class="reference internal" href="api_pyuaf_util_browsedirections.html#pyuaf.util.browsedirections.Forward" title="pyuaf.util.browsedirections.Forward"><tt class="xref py py-attr docutils literal"><span class="pre">Forward</span></tt></a> by default.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.requests.BrowseRequestTarget.referenceTypeId">
+<tt class="descname">referenceTypeId</tt><a class="headerlink" href="#pyuaf.client.requests.BrowseRequestTarget.referenceTypeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>The ExpandedNodeId of the type of references (i.e. the ReferenceType) to follow
+(or its subtypes if the <a class="reference internal" href="#pyuaf.client.requests.BrowseRequestTarget.includeSubtypes" title="pyuaf.client.requests.BrowseRequestTarget.includeSubtypes"><tt class="xref py py-attr docutils literal"><span class="pre">includeSubtypes</span></tt></a>
+flag is <tt class="docutils literal"><span class="pre">True</span></tt>). The type of this attribute is an <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.ExpandedNodeId" title="pyuaf.util.ExpandedNodeId"><tt class="xref py py-class docutils literal"><span class="pre">ExpandedNodeId</span></tt></a>.
+By default, the nodeId is not initialized with contents (i.e. nodeId.isNull() returns
+<tt class="docutils literal"><span class="pre">True</span></tt>), so that all references will be followed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.requests.BrowseRequestTarget.includeSubtypes">
+<tt class="descname">includeSubtypes</tt><a class="headerlink" href="#pyuaf.client.requests.BrowseRequestTarget.includeSubtypes" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <tt class="docutils literal"><span class="pre">bool</span></tt> indicating that, if the
+<a class="reference internal" href="#pyuaf.client.requests.BrowseRequestTarget.referenceTypeId" title="pyuaf.client.requests.BrowseRequestTarget.referenceTypeId"><tt class="xref py py-attr docutils literal"><span class="pre">referenceTypeId</span></tt></a> points to a
+valid node, also the subtypes of the
+<a class="reference internal" href="#pyuaf.client.requests.BrowseRequestTarget.referenceTypeId" title="pyuaf.client.requests.BrowseRequestTarget.referenceTypeId"><tt class="xref py py-attr docutils literal"><span class="pre">referenceTypeId</span></tt></a>
+should be followed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.requests.BrowseRequestTarget.nodeClassMask">
+<tt class="descname">nodeClassMask</tt><a class="headerlink" href="#pyuaf.client.requests.BrowseRequestTarget.nodeClassMask" title="Permalink to this definition">¶</a></dt>
+<dd><p>A 32-bit <tt class="docutils literal"><span class="pre">int</span></tt> representing a mask that specifies the node classes that should be
+returned. The mask has the following bits assigned:</p>
+<blockquote>
+<div><ul class="simple">
+<li>0: Object</li>
+<li>1: Variable</li>
+<li>2: Method</li>
+<li>3: ObjectType</li>
+<li>4: VariableType</li>
+<li>5: ReferenceType</li>
+<li>6: DataType</li>
+<li>7: View</li>
+</ul>
+</div></blockquote>
+<p>Leave the mask 0 (=default!) to return all node classes.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.requests.BrowseRequestTarget.resultMask">
+<tt class="descname">resultMask</tt><a class="headerlink" href="#pyuaf.client.requests.BrowseRequestTarget.resultMask" title="Permalink to this definition">¶</a></dt>
+<dd><p>A 32-bit <tt class="docutils literal"><span class="pre">int</span></tt> representing a mask that specifies the fields in the reference
+description to be returned. The mask has the following bits assigned:</p>
+<blockquote>
+<div><ul class="simple">
+<li>0: ReferenceType</li>
+<li>1: IsForward</li>
+<li>2: NodeClass</li>
+<li>3: BrowseName</li>
+<li>4: DisplayName</li>
+<li>5: TypeDefinition</li>
+</ul>
+</div></blockquote>
+<p>By default, this mask is 63 (so 0b111111).</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-browserequesttargetvector">
+<h2><em>class</em> BrowseRequestTargetVector<a class="headerlink" href="#class-browserequesttargetvector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.requests.pyuaf.client.requests.BrowseRequestTargetVector">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.requests.</tt><tt class="descname">BrowseRequestTargetVector</tt><a class="headerlink" href="#pyuaf.client.requests.pyuaf.client.requests.BrowseRequestTargetVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>An BrowseRequestTargetVector is a container that holds elements of type
+<a class="reference internal" href="#pyuaf.client.requests.BrowseRequestTarget" title="pyuaf.client.requests.BrowseRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.requests.BrowseRequestTarget</span></tt></a>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.client.requests.BrowseRequestTarget" title="pyuaf.client.requests.BrowseRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">BrowseRequestTarget</span></tt></a>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="kn">import</span> <span class="n">BrowseRequestTarget</span><span class="p">,</span> <span class="n">BrowseRequestTargetVector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">NodeId</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a vector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">BrowseRequestTargetVector</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BrowseRequestTarget</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;SomeId&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">),</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 4</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a vector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">otherVec</span> <span class="o">=</span> <span class="n">BrowseRequestTargetVector</span><span class="p">(</span>
+<span class="gp">... </span>            <span class="p">[</span> <span class="n">BrowseRequestTarget</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myId0&quot;</span><span class="p">,</span> <span class="s">&quot;myNs&quot;</span><span class="p">),</span> <span class="s">&quot;myServerUri&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>              <span class="n">BrowseRequestTarget</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myId1&quot;</span><span class="p">,</span> <span class="s">&quot;myNs&quot;</span><span class="p">),</span> <span class="s">&quot;myServerUri&quot;</span><span class="p">))</span> <span class="p">]</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># or you may specify a number of targets directly</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span> <span class="o">=</span> <span class="n">BrowseRequestTargetVector</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId0&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId1&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId2&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -1269,6 +1674,12 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 <li><a class="reference internal" href="#class-asyncmethodcallrequest"><em>class</em> AsyncMethodCallRequest</a></li>
 <li><a class="reference internal" href="#class-asyncreadrequest"><em>class</em> AsyncReadRequest</a></li>
 <li><a class="reference internal" href="#class-asyncwriterequest"><em>class</em> AsyncWriteRequest</a></li>
+<li><a class="reference internal" href="#class-browsenextrequest"><em>class</em> BrowseNextRequest</a></li>
+<li><a class="reference internal" href="#class-browsenextrequesttarget"><em>class</em> BrowseNextRequestTarget</a></li>
+<li><a class="reference internal" href="#class-browsenextrequesttargetvector"><em>class</em> BrowseNextRequestTargetVector</a></li>
+<li><a class="reference internal" href="#class-browserequest"><em>class</em> BrowseRequest</a></li>
+<li><a class="reference internal" href="#class-browserequesttarget"><em>class</em> BrowseRequestTarget</a></li>
+<li><a class="reference internal" href="#class-browserequesttargetvector"><em>class</em> BrowseRequestTargetVector</a></li>
 <li><a class="reference internal" href="#class-createmonitoreddatarequest"><em>class</em> CreateMonitoredDataRequest</a></li>
 <li><a class="reference internal" href="#class-createmonitoreddatarequesttarget"><em>class</em> CreateMonitoredDataRequestTarget</a></li>
 <li><a class="reference internal" href="#class-createmonitoreddatarequesttargetvector"><em>class</em> CreateMonitoredDataRequestTargetVector</a></li>
@@ -1334,7 +1745,7 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
         <li class="right" >
           <a href="api_pyuaf_client_configs.html" title="pyuaf.client.configs"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client.results &mdash; PyUAF 1.0 documentation</title>
+    <title>pyuaf.client.results &mdash; PyUAF 1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.0 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.1 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.settings" href="api_pyuaf_client_settings.html" />
     <link rel="prev" title="pyuaf.client.requests" href="api_pyuaf_client_requests.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_requests.html" title="pyuaf.client.requests"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -79,7 +79,7 @@ and you will consume them.</p>
 
 <dl class="method">
 <dt id="pyuaf.client.results.AsyncCreateMonitoredDataResult.__str__">
-<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=0</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.AsyncCreateMonitoredDataResult.__str__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=32</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.AsyncCreateMonitoredDataResult.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the result.</p>
 </dd></dl>
 
@@ -142,7 +142,7 @@ and you will consume them.</p>
 
 <dl class="method">
 <dt id="pyuaf.client.results.AsyncCreateMonitoredEventsResult.__str__">
-<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=0</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.AsyncCreateMonitoredEventsResult.__str__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=32</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.AsyncCreateMonitoredEventsResult.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the result.</p>
 </dd></dl>
 
@@ -205,7 +205,7 @@ and you will consume them.</p>
 
 <dl class="method">
 <dt id="pyuaf.client.results.AsyncMethodCallResult.__str__">
-<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=0</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.AsyncMethodCallResult.__str__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=32</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.AsyncMethodCallResult.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the result.</p>
 </dd></dl>
 
@@ -268,7 +268,7 @@ and you will consume them.</p>
 
 <dl class="method">
 <dt id="pyuaf.client.results.AsyncReadResult.__str__">
-<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=0</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.AsyncReadResult.__str__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=32</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.AsyncReadResult.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the result.</p>
 </dd></dl>
 
@@ -425,7 +425,7 @@ and you will consume them.</p>
 
 <dl class="method">
 <dt id="pyuaf.client.results.AsyncWriteResult.__str__">
-<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=0</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.AsyncWriteResult.__str__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=32</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.AsyncWriteResult.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the result.</p>
 </dd></dl>
 
@@ -464,6 +464,190 @@ It&#8217;s a 64-bit <tt class="docutils literal"><span class="pre">long</span></
 </dd></dl>
 
 </div>
+<div class="section" id="class-browsenextresult">
+<h2><em>class</em> BrowseNextResult<a class="headerlink" href="#class-browsenextresult" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.results.BrowseNextResult">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.results.</tt><tt class="descname">BrowseNextResult</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.BrowseNextResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#pyuaf.client.results.BrowseNextResult" title="pyuaf.client.results.BrowseNextResult"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextResult</span></tt></a> is the result of a corresponding
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.BrowseNextRequest" title="pyuaf.client.requests.BrowseNextRequest"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextRequest</span></tt></a>.</p>
+<p>A <a class="reference internal" href="#pyuaf.client.results.BrowseNextResult" title="pyuaf.client.results.BrowseNextResult"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextResult</span></tt></a> is exactly the same as a
+<a class="reference internal" href="#pyuaf.client.results.BrowseResult" title="pyuaf.client.results.BrowseResult"><tt class="xref py py-class docutils literal"><span class="pre">BrowseResult</span></tt></a>. See the latter class documentation
+for a description of the attributes and methods.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="class-browseresult">
+<h2><em>class</em> BrowseResult<a class="headerlink" href="#class-browseresult" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.results.BrowseResult">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.results.</tt><tt class="descname">BrowseResult</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.BrowseResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#pyuaf.client.results.BrowseResult" title="pyuaf.client.results.BrowseResult"><tt class="xref py py-class docutils literal"><span class="pre">BrowseResult</span></tt></a> is the result of a corresponding
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.BrowseRequest" title="pyuaf.client.requests.BrowseRequest"><tt class="xref py py-class docutils literal"><span class="pre">BrowseRequest</span></tt></a>.</p>
+<p>It tells you whether or not the requested targets have been browsed, what were the resulting
+references that were found, etc.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.results.BrowseResult.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.BrowseResult.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new BrowseResult object.</p>
+<p>You should never have to create result objects yourself, the UAF will produce them
+and you will consume them.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.results.BrowseResult.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=32</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.BrowseResult.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a formatted string representation of the result.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.results.BrowseResult.targets">
+<tt class="descname">targets</tt><a class="headerlink" href="#pyuaf.client.results.BrowseResult.targets" title="Permalink to this definition">¶</a></dt>
+<dd><p>The targets, as a <a class="reference internal" href="#pyuaf.client.results.pyuaf.client.results.BrowseResultTargetVector" title="pyuaf.client.results.pyuaf.client.results.BrowseResultTargetVector"><tt class="xref py py-class docutils literal"><span class="pre">BrowseResultTargetVector</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.BrowseResult.overallStatus">
+<tt class="descname">overallStatus</tt><a class="headerlink" href="#pyuaf.client.results.BrowseResult.overallStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>The combined status of the targets, as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> instance.</p>
+<p>If this status is Good, then you know for sure that all the statuses of the targets
+are all Good.
+If this status is Bad, then you know that at least one of the targets has a Bad status.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.BrowseResult.requestHandle">
+<tt class="descname">requestHandle</tt><a class="headerlink" href="#pyuaf.client.results.BrowseResult.requestHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The unique handle that was originally assigned to the
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.BrowseRequest" title="pyuaf.client.requests.BrowseRequest"><tt class="xref py py-class docutils literal"><span class="pre">BrowseRequest</span></tt></a>
+that resulted in this
+<a class="reference internal" href="#pyuaf.client.results.BrowseResult" title="pyuaf.client.results.BrowseResult"><tt class="xref py py-class docutils literal"><span class="pre">BrowseResult</span></tt></a>.
+It&#8217;s a 64-bit <tt class="docutils literal"><span class="pre">long</span></tt> value, assigned by the UAF during the processing of the request.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-browseresulttarget">
+<h2><em>class</em> BrowseResultTarget<a class="headerlink" href="#class-browseresulttarget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.results.BrowseResultTarget">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.results.</tt><tt class="descname">BrowseResultTarget</tt><a class="headerlink" href="#pyuaf.client.results.BrowseResultTarget" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#pyuaf.client.results.BrowseResultTarget" title="pyuaf.client.results.BrowseResultTarget"><tt class="xref py py-class docutils literal"><span class="pre">BrowseResultTarget</span></tt></a> corresponds exactly to the
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.BrowseRequestTarget" title="pyuaf.client.requests.BrowseRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">BrowseRequestTarget</span></tt></a> that was part of the invoked
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.BrowseRequest" title="pyuaf.client.requests.BrowseRequest"><tt class="xref py py-class docutils literal"><span class="pre">BrowseRequest</span></tt></a>.
+So the first target of the request corresponds to the first target of the result, and so on.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.results.BrowseResultTarget.__init__">
+<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.results.BrowseResultTarget.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new BrowseRequestTarget object.</p>
+<p>You should never have to create result targets (or results for that matter) yourself,
+the UAF will produce them and you will consume them.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.results.BrowseResultTarget.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=22</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.BrowseResultTarget.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a formatted string representation of the target.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.results.BrowseResultTarget.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.client.results.BrowseResultTarget.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Status of the result target (Good if the request target was browsed, Bad if not),
+as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.BrowseResultTarget.clientConnectionId">
+<tt class="descname">clientConnectionId</tt><a class="headerlink" href="#pyuaf.client.results.BrowseResultTarget.clientConnectionId" title="Permalink to this definition">¶</a></dt>
+<dd><p>The id of the session that was used for this target, as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.BrowseResultTarget.autoBrowsedNext">
+<tt class="descname">autoBrowsedNext</tt><a class="headerlink" href="#pyuaf.client.results.BrowseResultTarget.autoBrowsedNext" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt>, clarifying how many times the UAF automatically invoked
+the &#8220;BrowseNext&#8221; OPC UA service in order to get the results?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.BrowseResultTarget.continuationPoint">
+<tt class="descname">continuationPoint</tt><a class="headerlink" href="#pyuaf.client.results.BrowseResultTarget.continuationPoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>The continuation point (a server-defined byte string) that should be provided
+to the next BrowseNext call, to get the remaining browse results. The type
+of this attribute is a built-in Python <tt class="docutils literal"><span class="pre">bytearray</span></tt>.
+Since the UAF can automatically call BrowseNext for you (via the
+<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.BrowseSettings.maxAutoBrowseNext" title="pyuaf.client.settings.BrowseSettings.maxAutoBrowseNext"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.settings.BrowseSettings.maxAutoBrowseNext</span></tt></a> attribute),
+you normally don&#8217;t have to use the continuation point and the BrowseNext service
+yourself.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.BrowseResultTarget.references">
+<tt class="descname">references</tt><a class="headerlink" href="#pyuaf.client.results.BrowseResultTarget.references" title="Permalink to this definition">¶</a></dt>
+<dd><p>The reference descriptions that were found during the browsing,
+as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.ReferenceDescriptionVector" title="pyuaf.util.ReferenceDescriptionVector"><tt class="xref py py-class docutils literal"><span class="pre">ReferenceDescriptionVector</span></tt></a>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-browseresulttargetvector">
+<h2><em>class</em> BrowseResultTargetVector<a class="headerlink" href="#class-browseresulttargetvector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.results.pyuaf.client.results.BrowseResultTargetVector">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.results.</tt><tt class="descname">BrowseResultTargetVector</tt><a class="headerlink" href="#pyuaf.client.results.pyuaf.client.results.BrowseResultTargetVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>An BrowseResultTargetVector is a container that holds elements of type
+<a class="reference internal" href="#pyuaf.client.results.BrowseResultTarget" title="pyuaf.client.results.BrowseResultTarget"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.results.BrowseResultTarget</span></tt></a>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.client.results.BrowseResultTarget" title="pyuaf.client.results.BrowseResultTarget"><tt class="xref py py-class docutils literal"><span class="pre">BrowseResultTarget</span></tt></a>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="kn">import</span> <span class="n">BrowseResultTarget</span><span class="p">,</span> <span class="n">BrowseResultTargetVector</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a realistic result, for instance one with 5 targets:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span> <span class="o">=</span> <span class="n">BrowseResultTargetVector</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c"># will be 5  (alternative: targets.size())</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)):</span>
+<span class="gp">... </span>    <span class="k">if</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()):</span>
+<span class="gp">... </span>        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">references</span><span class="p">)):</span>
+<span class="gp">... </span>            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Target </span><span class="si">%d</span><span class="s"> Reference </span><span class="si">%d</span><span class="s"> --&gt; Display name = </span><span class="si">%s</span><span class="s">&quot;</span>
+<span class="gp">... </span>                  <span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">references</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">displayName</span><span class="p">))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># other methods of the vector:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BrowseResultTarget</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">someTarget</span> <span class="o">=</span> <span class="n">targets</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># ...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
 <div class="section" id="class-createmonitoreddataresult">
 <h2><em>class</em> CreateMonitoredDataResult<a class="headerlink" href="#class-createmonitoreddataresult" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -486,7 +670,7 @@ and you will consume them.</p>
 
 <dl class="method">
 <dt id="pyuaf.client.results.CreateMonitoredDataResult.__str__">
-<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=0</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.CreateMonitoredDataResult.__str__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=32</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.CreateMonitoredDataResult.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the result.</p>
 </dd></dl>
 
@@ -565,13 +749,8 @@ as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" 
 <dl class="attribute">
 <dt id="pyuaf.client.results.CreateMonitoredDataResultTarget.clientConnectionId">
 <tt class="descname">clientConnectionId</tt><a class="headerlink" href="#pyuaf.client.results.CreateMonitoredDataResultTarget.clientConnectionId" title="Permalink to this definition">¶</a></dt>
-<dd><p>The id of the session that was used for this target.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="pyuaf.client.results.CreateMonitoredDataResultTarget.notificationHandle">
-<tt class="descname">notificationHandle</tt><a class="headerlink" href="#pyuaf.client.results.CreateMonitoredDataResultTarget.notificationHandle" title="Permalink to this definition">¶</a></dt>
-<dd><p>The notification handle that was assigned to the monitored item by the UAF
+<dd><p>The id of the session that wasThe id of the session that was used for this target, as an <tt class="docutils literal"><span class="pre">int</span></tt>.. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.notificationHandle</p>
+<p>The notification handle that was assigned to the monitored item by the UAF
 (unique per client).</p>
 <p>This is a 64-bit <tt class="docutils literal"><span class="pre">long</span></tt> value that remains unique for the whole lifetime of the client.
 So even if sessions/subscriptions/monitored items are re-created, this numerical
@@ -657,7 +836,7 @@ and you will consume them.</p>
 
 <dl class="method">
 <dt id="pyuaf.client.results.CreateMonitoredEventsResult.__str__">
-<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=0</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.CreateMonitoredEventsResult.__str__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=32</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.CreateMonitoredEventsResult.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the result.</p>
 </dd></dl>
 
@@ -736,7 +915,7 @@ as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" 
 <dl class="attribute">
 <dt id="pyuaf.client.results.CreateMonitoredEventsResultTarget.clientConnectionId">
 <tt class="descname">clientConnectionId</tt><a class="headerlink" href="#pyuaf.client.results.CreateMonitoredEventsResultTarget.clientConnectionId" title="Permalink to this definition">¶</a></dt>
-<dd><p>The id of the session that was used for this target.</p>
+<dd><p>The id of the session that was used for this target, as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -828,7 +1007,7 @@ and you will consume them.</p>
 
 <dl class="method">
 <dt id="pyuaf.client.results.MethodCallResult.__str__">
-<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=0</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.MethodCallResult.__str__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=32</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.MethodCallResult.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the result.</p>
 </dd></dl>
 
@@ -907,7 +1086,7 @@ Bad if not), as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.
 <dl class="attribute">
 <dt id="pyuaf.client.results.MethodCallResultTarget.clientConnectionId">
 <tt class="descname">clientConnectionId</tt><a class="headerlink" href="#pyuaf.client.results.MethodCallResultTarget.clientConnectionId" title="Permalink to this definition">¶</a></dt>
-<dd><p>The id of the session that was used for this target.</p>
+<dd><p>The id of the session that was used for this target, as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -982,7 +1161,7 @@ and you will consume them.</p>
 
 <dl class="method">
 <dt id="pyuaf.client.results.ReadResult.__str__">
-<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=0</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.ReadResult.__str__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=32</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.ReadResult.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the result.</p>
 </dd></dl>
 
@@ -1043,7 +1222,7 @@ the UAF will produce them and you will consume them.</p>
 
 <dl class="method">
 <dt id="pyuaf.client.results.ReadResultTarget.__str__">
-<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=20</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.ReadResultTarget.__str__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=22</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.ReadResultTarget.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the target.</p>
 </dd></dl>
 
@@ -1061,7 +1240,7 @@ as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" 
 <dl class="attribute">
 <dt id="pyuaf.client.results.ReadResultTarget.clientConnectionId">
 <tt class="descname">clientConnectionId</tt><a class="headerlink" href="#pyuaf.client.results.ReadResultTarget.clientConnectionId" title="Permalink to this definition">¶</a></dt>
-<dd><p>The id of the session that was used for this target.</p>
+<dd><p>The id of the session that was used for this target, as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -1133,7 +1312,7 @@ and you will consume them.</p>
 
 <dl class="method">
 <dt id="pyuaf.client.results.TranslateBrowsePathsToNodeIdsResult.__str__">
-<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=0</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.TranslateBrowsePathsToNodeIdsResult.__str__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=32</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.TranslateBrowsePathsToNodeIdsResult.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the result.</p>
 </dd></dl>
 
@@ -1212,7 +1391,7 @@ as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" 
 <dl class="attribute">
 <dt id="pyuaf.client.results.TranslateBrowsePathsToNodeIdsResultTarget.clientConnectionId">
 <tt class="descname">clientConnectionId</tt><a class="headerlink" href="#pyuaf.client.results.TranslateBrowsePathsToNodeIdsResultTarget.clientConnectionId" title="Permalink to this definition">¶</a></dt>
-<dd><p>The id of the session that was used for this target.</p>
+<dd><p>The id of the session that was used for this target, as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -1287,7 +1466,7 @@ and you will consume them.</p>
 
 <dl class="method">
 <dt id="pyuaf.client.results.WriteResult.__str__">
-<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=0</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.WriteResult.__str__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=32</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.WriteResult.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the result.</p>
 </dd></dl>
 
@@ -1366,7 +1545,7 @@ as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" 
 <dl class="attribute">
 <dt id="pyuaf.client.results.WriteResultTarget.clientConnectionId">
 <tt class="descname">clientConnectionId</tt><a class="headerlink" href="#pyuaf.client.results.WriteResultTarget.clientConnectionId" title="Permalink to this definition">¶</a></dt>
-<dd><p>The id of the session that was used for this target.</p>
+<dd><p>The id of the session that was used for this target, as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -1427,6 +1606,10 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 <li><a class="reference internal" href="#class-asyncresulttarget"><em>class</em> AsyncResultTarget</a></li>
 <li><a class="reference internal" href="#class-asyncresulttargetvector"><em>class</em> AsyncResultTargetVector</a></li>
 <li><a class="reference internal" href="#class-asyncwriteresult"><em>class</em> AsyncWriteResult</a></li>
+<li><a class="reference internal" href="#class-browsenextresult"><em>class</em> BrowseNextResult</a></li>
+<li><a class="reference internal" href="#class-browseresult"><em>class</em> BrowseResult</a></li>
+<li><a class="reference internal" href="#class-browseresulttarget"><em>class</em> BrowseResultTarget</a></li>
+<li><a class="reference internal" href="#class-browseresulttargetvector"><em>class</em> BrowseResultTargetVector</a></li>
 <li><a class="reference internal" href="#class-createmonitoreddataresult"><em>class</em> CreateMonitoredDataResult</a></li>
 <li><a class="reference internal" href="#class-createmonitoreddataresulttarget"><em>class</em> CreateMonitoredDataResultTarget</a></li>
 <li><a class="reference internal" href="#class-createmonitoreddataresulttargetvector"><em>class</em> CreateMonitoredDataResultTargetVector</a></li>
@@ -1492,7 +1675,7 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
         <li class="right" >
           <a href="api_pyuaf_client_requests.html" title="pyuaf.client.requests"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

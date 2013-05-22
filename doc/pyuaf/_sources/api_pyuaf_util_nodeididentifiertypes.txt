@@ -16,19 +16,19 @@
     * Attributes:
     
 
-        .. autoattribute:: pyuaf.util.nodeididentifiertypes.Numeric
+        .. autoattribute:: pyuaf.util.nodeididentifiertypes.Identifier_Numeric
         
             The NodeId identifier is a numerical value.
         
-        .. autoattribute:: pyuaf.util.nodeididentifiertypes.String
+        .. autoattribute:: pyuaf.util.nodeididentifiertypes.Identifier_String
         
             The NodeId identifier is a string.
         
-        .. autoattribute:: pyuaf.util.nodeididentifiertypes.Guid
+        .. autoattribute:: pyuaf.util.nodeididentifiertypes.Identifier_Guid
         
             The NodeId identifier is a globally unique identifier (GUID).
         
-        .. autoattribute:: pyuaf.util.nodeididentifiertypes.Opaque
+        .. autoattribute:: pyuaf.util.nodeididentifiertypes.Identifier_Opaque
         
             The NodeId identifier is an opaque value.
     
@@ -40,7 +40,7 @@
         
             Get a string representation of the NodeIdIdentifier type.
         
-            :param type: The type, e.g. :py:attr:`pyuaf.util.nodeididentifiertypes.String`.
+            :param type: The type, e.g. :py:attr:`pyuaf.util.nodeididentifiertypes.Identifier_String`.
             :type  type: ``int``
             :return: The name of the type, e.g. 'String'.
             :rtype:  ``str``

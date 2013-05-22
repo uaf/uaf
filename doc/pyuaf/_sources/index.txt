@@ -62,11 +62,13 @@ API
    api_pyuaf_util
    api_pyuaf_util_attributeids
    api_pyuaf_util_applicationtypes
+   api_pyuaf_util_browsedirections
    api_pyuaf_util_constants
    api_pyuaf_util_errors
    api_pyuaf_util_loglevels
    api_pyuaf_util_messagesecuritymodes
    api_pyuaf_util_monitoringmodes
+   api_pyuaf_util_nodeclasses
    api_pyuaf_util_nodeididentifiertypes
    api_pyuaf_util_opcuaidentifiers
    api_pyuaf_util_opcuatypes

@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client &mdash; PyUAF 1.0 documentation</title>
+    <title>pyuaf.client &mdash; PyUAF 1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.0',
+        VERSION:     '1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.0 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.1 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.configs" href="api_pyuaf_client_configs.html" />
     <link rel="prev" title="pyuaf" href="api_pyuaf.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -234,6 +234,97 @@ argument (which will be of type <a class="reference internal" href="api_pyuaf_cl
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.AsyncMethodCallResult" title="pyuaf.client.results.AsyncMethodCallResult"><tt class="xref py py-class docutils literal"><span class="pre">AsyncMethodCallResult</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">Base exception, catch this to handle any UAF errors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.browse">
+<tt class="descname">browse</tt><big>(</big><em>addresses</em>, <em>maxAutoBrowseNext=100</em>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.browse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Browse a number of nodes synchronously.</p>
+<p>This is a convenience method for calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-class docutils literal"><span class="pre">processRequest</span></tt></a> with 
+a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.BrowseRequest" title="pyuaf.client.requests.BrowseRequest"><tt class="xref py py-class docutils literal"><span class="pre">BrowseRequest</span></tt></a> as its first argument.
+A BrowseRequest has many parameters (only few of them can be configured by this convenience
+method), so for full flexibility use the other method.</p>
+<p>The second parameter (maxAutoBrowseNext) allows you to use some handy extra functionality
+of the UAF: the UAF can automatically invoke the BrowseNext service for you, if all browse
+results couldn&#8217;t be fetched by the initial Browse service. This parameter specifies how
+many times the UAF may silently invoke the BrowseNext service for you. Put it to 0 if you
+want the &#8220;normal SDK behavior&#8221;, i.e. if you want to invoke the BrowseNext service manually.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>addresses</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; A single address or a list of addresses of nodes that serve as the 
+starting point to browse.</li>
+<li><strong>maxAutoBrowseNext</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; How many times do you allow the UAF to automatically invoke a
+BrowseNext for you (if that&#8217;s needed to fetch all results)? 
+This parameter will always be used instead of the 
+maxAutoBrowseNext attribute in the serviceSettings attribute of 
+the serviceConfig parameter!</li>
+<li><strong>serviceConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.BrowseConfig" title="pyuaf.client.configs.BrowseConfig"><tt class="xref py py-class docutils literal"><span class="pre">BrowseConfig</span></tt></a>) &#8211; Additional settings for processing the browse request.
+Leave None for defaults.</li>
+<li><strong>sessionConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SessionConfig" title="pyuaf.client.configs.SessionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SessionConfig</span></tt></a>) &#8211; A config holding settings for the session creation.
+Leave None for defaults.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The result of the browse request.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.BrowseResult" title="pyuaf.client.results.BrowseResult"><tt class="xref py py-class docutils literal"><span class="pre">BrowseResult</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">Base exception, catch this to handle any UAF errors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.browseNext">
+<tt class="descname">browseNext</tt><big>(</big><em>addresses</em>, <em>continuationPoints</em>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.browseNext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Continue a previous synchronous Browse request, in case you didn&#8217;t use the automatic
+BrowseNext feature of the UAF.</p>
+<p>You only need to use this function if you have put maxAutoBrowseNext to 0 in the previous
+Browse request (or if the automatic BrowseNext calls still resulted in continuationPoints).
+For your convenience, it&#8217;s much easier to simple use the browse() method, and let the
+UAF do the BrowseNext calls for you!</p>
+<p>This is a convenience method for calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-class docutils literal"><span class="pre">processRequest</span></tt></a> with 
+a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.BrowseNextRequest" title="pyuaf.client.requests.BrowseNextRequest"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextRequest</span></tt></a> as its first argument.
+A BrowseNextRequest has many parameters (only few of them can be configured by this 
+convenience method), so for full flexibility use the other method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>addresses</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; A single address or a list of addresses of nodes that serve as the 
+starting point to browse. You need to copy the addresses here from the
+original Browse request, so that the UAF can use these addresses to find
+out to which server the BrowseNext call should be sent.</li>
+<li><strong>continuationPoints</strong> &#8211; A <tt class="docutils literal"><span class="pre">list</span></tt> of continuation points (represented by the built-in 
+Python <tt class="docutils literal"><span class="pre">bytearray</span></tt> objects).</li>
+<li><strong>serviceConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.BrowseNextConfig" title="pyuaf.client.configs.BrowseNextConfig"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextConfig</span></tt></a>) &#8211; Additional settings for processing the BrowseNext request.
+Leave None for defaults.</li>
+<li><strong>sessionConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SessionConfig" title="pyuaf.client.configs.SessionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SessionConfig</span></tt></a>) &#8211; A config holding settings for the session creation.
+Leave None for defaults.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The result of the BrowseNext request.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.BrowseNextResult" title="pyuaf.client.results.BrowseNextResult"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextResult</span></tt></a></p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
@@ -1310,7 +1401,7 @@ state of the subscription, the handle, etc.</p>
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

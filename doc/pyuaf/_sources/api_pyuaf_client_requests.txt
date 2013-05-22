@@ -76,6 +76,350 @@
 
 
 
+
+*class* BrowseNextRequest
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.client.requests.BrowseNextRequest
+
+    A :class:`~pyuaf.client.requests.BrowseNextRequest` is a synchronous request to continue a
+    previous browsing of one or more nodes.
+    
+    You only need to use this BrowseNext request if you have put maxAutoBrowseNext to 0 in the 
+    previous Browse request (or if the automatic BrowseNext calls still resulted in 
+    continuationPoints). For your convenience, it's much easier to simply use the BrowseRequest, 
+    and let the UAF do the BrowseNext calls automatically for you!
+    
+    * Methods:
+
+        .. automethod:: pyuaf.client.requests.BrowseNextRequest.__init__
+    
+            Create a new BrowseNextRequest object.
+            
+            :param targets: The targets of the request, either as:
+            
+                 - an ``int``, specifying the number of targets (0 by default)
+                 - a single target (a :class:`~pyuaf.client.requests.BrowseNextRequestTarget`)
+                 - a vector of targets (a :class:`~pyuaf.client.requests.BrowseNextRequestTargetVector`)
+    
+            :param serviceConfig: The config for the service settings.
+            :type serviceConfig: :class:`~pyuaf.client.configs.BrowseNextConfig`
+    
+            :param sessionConfig: The config containing the session settings.
+            :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
+    
+        .. automethod:: pyuaf.client.requests.BrowseNextRequest.__str__
+    
+            Get a formatted string representation of the request.
+
+
+    * Attributes
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseNextRequest.targets
+
+            The targets, as a :class:`~pyuaf.client.requests.BrowseNextRequestTargetVector`.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseNextRequest.serviceConfig
+
+            The service config, as a :class:`~pyuaf.client.configs.BrowseNextConfig`.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseNextRequest.sessionConfig
+
+            The session config, as a :class:`~pyuaf.client.configs.SessionConfig`.
+
+
+*class* BrowseNextRequestTarget
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.client.requests.BrowseNextRequestTarget
+
+    A :class:`~pyuaf.client.requests.BrowseNextRequestTarget` is the part of 
+    a :class:`~pyuaf.client.requests.BrowseNextRequest` that specifies the target that we were 
+    browsing and the corresponding continuation point.
+    
+    You only need to use the BrowseNext request if you have put maxAutoBrowseNext to 0 in the 
+    previous Browse request (or if the automatic BrowseNext calls still resulted in 
+    continuationPoints). For your convenience, it's much easier to simply use the BrowseRequest, 
+    and let the UAF do the BrowseNext calls automatically for you!
+
+    
+    * Methods:
+
+        .. automethod:: pyuaf.client.requests.BrowseNextRequestTarget.__init__
+    
+            Create a new BrowseNextRequestTarget object.
+            
+            You can specify a BrowseNextRequestTarget either by providing nothing, or by providing
+            an address (of type :class:`~pyuaf.util.Address`) and a continuation point (of type
+            ``bytearray``).
+            
+    
+        .. automethod:: pyuaf.client.requests.BrowseNextRequestTarget.__str__
+    
+            Get a formatted string representation of the target.
+
+
+    * Attributes
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseNextRequestTarget.address
+
+            The address of the node that was already being browsed, as an 
+            :class:`~pyuaf.util.Address`. So you can copy the address of the original
+            BrowseRequest to here, so that the UAF can use this address to find out 
+            to which server the BrowseNext call should be sent.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseNextRequestTarget.continuationPoint
+
+            The continuation point, as received by the previous Browse or BrowseNext call.
+            This attribute is of the Python built-in type ``bytearray``.
+    
+
+*class* BrowseNextRequestTargetVector
+----------------------------------------------------------------------------------------------------
+
+
+.. class:: pyuaf.client.requests.BrowseNextRequestTargetVector
+
+    An BrowseNextRequestTargetVector is a container that holds elements of type 
+    :class:`pyuaf.client.requests.BrowseNextRequestTarget`. 
+    It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+    as a ``list`` of :class:`~pyuaf.client.requests.BrowseNextRequestTarget`.
+
+    Usage example:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> from pyuaf.client.requests import BrowseRequest, BrowseNextRequestTarget, BrowseNextRequestTargetVector
+        >>> from pyuaf.client.results  import BrowseResult
+        >>> from pyuaf.util            import Address, ExpandedNodeId, NodeId
+        
+        >>> # we simulate the request and result of a previous Browse call with two targets 
+        >>> # (i.e. two nodes that were being browsed simultaneously)
+        >>> originalRequest = BrowseRequest(2)
+        >>> originalResult = BrowseResult()
+        >>> originalResult.targets.resize(2)
+        
+        >>> # construct a vector without elements:
+        >>> vec = BrowseNextRequestTargetVector()
+        >>> noOfElements = len(vec) # will be 0
+        
+        >>> vec.append(BrowseNextRequestTarget())
+        >>> noOfElements = len(vec) # will be 1
+        >>> vec[0].address = originalRequest.targets[0].address
+        >>> vec[0].continuationPoint = originalResult.targets[0].continuationPoint
+        
+        >>> vec.resize(4)
+        >>> noOfElements = len(vec) # will be 4
+        
+        >>> # you may construct a vector from a regular Python list:
+        >>> otherVec = BrowseNextRequestTargetVector( 
+        ...             [ BrowseNextRequestTarget(Address(NodeId("myId0", "myNs"), "myServerUri"), bytearray("abcd")),
+        ...               BrowseNextRequestTarget(Address(NodeId("myId1", "myNs"), "myServerUri"), bytearray()) ] )
+        
+        >>> # or you may specify a number of targets directly
+        >>> yetAnotherVec = BrowseNextRequestTargetVector(3)
+        >>> yetAnotherVec[0].address = Address(ExpandedNodeId("SomeId0", "SomeNs", "SomeServerUri"))
+        >>> yetAnotherVec[1].address = Address(ExpandedNodeId("SomeId1", "SomeNs", "SomeServerUri"))
+        >>> yetAnotherVec[2].address = Address(ExpandedNodeId("SomeId2", "SomeNs", "SomeServerUri"))
+
+
+*class* BrowseRequest
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.client.requests.BrowseRequest
+
+    A :class:`~pyuaf.client.requests.BrowseRequest` is a synchronous request to browse the 
+    references of one or more nodes.
+    
+    * Methods:
+
+        .. automethod:: pyuaf.client.requests.BrowseRequest.__init__
+    
+            Create a new BrowseRequest object.
+            
+            :param targets: The targets of the request, either as:
+            
+                 - an ``int``, specifying the number of targets (0 by default)
+                 - a single target (a :class:`~pyuaf.client.requests.BrowseRequestTarget`)
+                 - a vector of targets (a :class:`~pyuaf.client.requests.BrowseRequestTargetVector`)
+    
+            :param serviceConfig: The config for the service settings.
+            :type serviceConfig: :class:`~pyuaf.client.configs.BrowseConfig`
+    
+            :param sessionConfig: The config containing the session settings.
+            :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
+    
+        .. method:: __str__()
+    
+            Get a formatted string representation of the request.
+
+
+    * Attributes
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseRequest.targets
+
+            The targets, as a :class:`~pyuaf.client.requests.BrowseRequestTargetVector`.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseRequest.serviceConfig
+
+            The service config, as a :class:`~pyuaf.client.configs.BrowseConfig`.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseRequest.sessionConfig
+
+            The session config, as a :class:`~pyuaf.client.configs.SessionConfig`.
+
+
+
+*class* BrowseRequestTarget
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.client.requests.BrowseRequestTarget
+
+    A :class:`~pyuaf.client.requests.BrowseRequestTarget` is the part of 
+    a :class:`~pyuaf.client.requests.BrowseRequest` that specifies the target to be browsed.
+
+    
+    * Methods:
+
+        .. method:: __init__(args*)
+    
+            Create a new BrowseRequestTarget object.
+            
+            You can specify a BrowseRequestTarget in two ways:
+            
+            .. doctest::
+            
+                >>> import pyuaf
+                >>> from pyuaf.util                 import Address, ExpandedNodeId
+                >>> from pyuaf.client.requests      import BrowseRequestTarget
+                
+                >>> addressOfNodeToBeBrowsed = Address(ExpandedNodeId("someId", "someNs", "someServerUri"))
+                
+                >>> # there are 2 ways to define a target:
+                >>> target0 = BrowseRequestTarget()
+                >>> target1 = BrowseRequestTarget(addressOfNodeToBeBrowsed)
+                
+                >>> # in case of the first target, you still need to specify an Address:
+                >>> target0.address = addressOfNodeToBeBrowsed
+    
+    
+        .. method:: __str__()
+    
+            Get a formatted string representation of the target.
+
+
+    * Attributes
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseRequestTarget.address
+
+            The address of the node to be browsed, as an :class:`~pyuaf.util.Address`.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseRequestTarget.browseDirection
+
+            Direction to follow when browsing the nodes, as an ``int`` defined in the 
+            :mod:`~pyuaf.util.browsedirections` module. 
+            :attr:`~pyuaf.util.browsedirections.Forward` by default.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseRequestTarget.referenceTypeId
+    
+            The ExpandedNodeId of the type of references (i.e. the ReferenceType) to follow 
+            (or its subtypes if the :attr:`~pyuaf.client.requests.BrowseRequestTarget.includeSubtypes` 
+            flag is ``True``). The type of this attribute is an :class:`~pyuaf.util.ExpandedNodeId`.
+            By default, the nodeId is not initialized with contents (i.e. nodeId.isNull() returns
+            ``True``), so that all references will be followed.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseRequestTarget.includeSubtypes
+
+            A ``bool`` indicating that, if the 
+            :attr:`~pyuaf.client.requests.BrowseRequestTarget.referenceTypeId` points to a 
+            valid node, also the subtypes of the 
+            :attr:`~pyuaf.client.requests.BrowseRequestTarget.referenceTypeId` 
+            should be followed.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseRequestTarget.nodeClassMask
+        
+            A 32-bit ``int`` representing a mask that specifies the node classes that should be 
+            returned. The mask has the following bits assigned:
+            
+             - 0: Object
+             - 1: Variable
+             - 2: Method
+             - 3: ObjectType
+             - 4: VariableType
+             - 5: ReferenceType
+             - 6: DataType
+             - 7: View
+          
+            Leave the mask 0 (=default!) to return all node classes. 
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseRequestTarget.resultMask
+        
+            A 32-bit ``int`` representing a mask that specifies the fields in the reference 
+            description to be returned. The mask has the following bits assigned:
+            
+             - 0: ReferenceType
+             - 1: IsForward
+             - 2: NodeClass
+             - 3: BrowseName
+             - 4: DisplayName
+             - 5: TypeDefinition
+          
+            By default, this mask is 63 (so 0b111111).
+
+
+
+*class* BrowseRequestTargetVector
+----------------------------------------------------------------------------------------------------
+
+
+.. class:: pyuaf.client.requests.BrowseRequestTargetVector
+
+    An BrowseRequestTargetVector is a container that holds elements of type 
+    :class:`pyuaf.client.requests.BrowseRequestTarget`. 
+    It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+    as a ``list`` of :class:`~pyuaf.client.requests.BrowseRequestTarget`.
+
+    Usage example:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> from pyuaf.client.requests import BrowseRequestTarget, BrowseRequestTargetVector
+        >>> from pyuaf.util            import Address, ExpandedNodeId, NodeId
+        
+        >>> # construct a vector without elements:
+        >>> vec = BrowseRequestTargetVector()
+        >>> noOfElements = len(vec) # will be 0
+        
+        >>> vec.append(BrowseRequestTarget())
+        >>> noOfElements = len(vec) # will be 1
+        >>> vec[0].address = Address(NodeId("SomeId", "SomeNs"), "SomeServerUri")
+        
+        >>> vec.resize(4)
+        >>> noOfElements = len(vec) # will be 4
+        
+        >>> # you may construct a vector from a regular Python list:
+        >>> otherVec = BrowseRequestTargetVector( 
+        ...             [ BrowseRequestTarget(Address(NodeId("myId0", "myNs"), "myServerUri")),
+        ...               BrowseRequestTarget(Address(NodeId("myId1", "myNs"), "myServerUri")) ] )
+        
+        >>> # or you may specify a number of targets directly
+        >>> yetAnotherVec = BrowseRequestTargetVector(3)
+        >>> yetAnotherVec[0].address = Address(ExpandedNodeId("SomeId0", "SomeNs", "SomeServerUri"))
+        >>> yetAnotherVec[1].address = Address(ExpandedNodeId("SomeId1", "SomeNs", "SomeServerUri"))
+        >>> yetAnotherVec[2].address = Address(ExpandedNodeId("SomeId2", "SomeNs", "SomeServerUri"))
+
+
+
+
+
+
+
 *class* CreateMonitoredDataRequest
 ----------------------------------------------------------------------------------------------------
 
