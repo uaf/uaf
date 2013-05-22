@@ -27,6 +27,7 @@
 // SDK
 // UAF
 #include "uaf/util/timestampstoreturn.h"
+#include "uaf/util/datetime.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/settings/baseservicesettings.h"
 

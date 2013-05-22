@@ -85,7 +85,7 @@ namespace uaf
     // =============================================================================================
     bool QualifiedName::isNull() const
     {
-        return nameSpaceIndexGiven_ || nameSpaceUriGiven_ || (!nameSpaceUri_.empty());
+        return (!nameSpaceIndexGiven_) && (!nameSpaceUriGiven_) && nameSpaceUri_.empty();
     }
 
 

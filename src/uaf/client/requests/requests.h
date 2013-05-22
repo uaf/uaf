@@ -36,6 +36,7 @@
 #include "uaf/client/requests/translatebrowsepathstonodeidsrequesttarget.h"
 #include "uaf/client/requests/browserequesttarget.h"
 #include "uaf/client/requests/browsenextrequesttarget.h"
+#include "uaf/client/requests/historyreadrawmodifiedrequesttarget.h"
 
 
 
