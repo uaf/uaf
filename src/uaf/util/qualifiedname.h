@@ -142,6 +142,14 @@ namespace uaf
 
 
         /**
+         * Is the qualified name populated with some contents?
+         *
+         * @return  True if the qualified name is NULL, i.e. if it doesn't have real contents.
+         */
+        bool isNull() const;
+
+
+        /**
          * Get the name.
          *
          * @return  The name part of the qualified name.

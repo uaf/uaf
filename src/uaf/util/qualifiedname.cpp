@@ -81,11 +81,20 @@ namespace uaf
     {}
 
 
+    // Is the qualified name NULL?
+    // =============================================================================================
+    bool QualifiedName::isNull() const
+    {
+        return nameSpaceIndexGiven_ || nameSpaceUriGiven_ || (!nameSpaceUri_.empty());
+    }
+
+
     // Update a stack qualified name
     // =============================================================================================
     void QualifiedName::toSdk(OpcUa_QualifiedName *destination) const
     {
-        UaQualifiedName(name_.c_str(), nameSpaceIndex_).copyTo(destination);
+        if (!isNull())
+            UaQualifiedName(name_.c_str(), nameSpaceIndex_).copyTo(destination);
     }
 
 
@@ -93,7 +102,8 @@ namespace uaf
     // =============================================================================================
     void QualifiedName::toSdk(UaQualifiedName& destination) const
     {
-        destination = UaQualifiedName(name_.c_str(), nameSpaceIndex_);
+        if (!isNull())
+            destination = UaQualifiedName(name_.c_str(), nameSpaceIndex_);
     }
 
 
@@ -101,14 +111,26 @@ namespace uaf
     // =============================================================================================
     void QualifiedName::fromSdk(const UaQualifiedName& destination)
     {
-        if (UaString(destination.name()).isNull())
-            name_ == "";
-        else
-            name_ = string(UaString(destination.name()).toUtf8());
 
-        nameSpaceIndex_ = destination.namespaceIndex();
-        nameSpaceIndexGiven_ = true;
-        nameSpaceUriGiven_ = false;
+        if (destination.isNull())
+        {
+            name_ = "";
+            nameSpaceIndex_ = 0;
+            nameSpaceIndexGiven_ = false;
+            nameSpaceUriGiven_ = false;
+
+        }
+        else
+        {
+            if (UaString(destination.name()).isNull())
+                name_ = "";
+            else
+                name_ = string(UaString(destination.name()).toUtf8());
+
+            nameSpaceIndex_ = destination.namespaceIndex();
+            nameSpaceIndexGiven_ = true;
+            nameSpaceUriGiven_ = false;
+        }
     }
 
 
@@ -116,15 +138,27 @@ namespace uaf
     // =============================================================================================
     void QualifiedName::fromSdk(const UaQualifiedName& destination, const string& nameSpaceUri)
     {
-        if (UaString(destination.name()).isNull())
-            name_ == "";
-        else
-            name_ = string(UaString(destination.name()).toUtf8());
 
-        nameSpaceIndex_ = destination.namespaceIndex();
-        nameSpaceIndexGiven_ = true;
-        nameSpaceUri_ = nameSpaceUri;
-        nameSpaceUriGiven_ = true;
+        if (destination.isNull())
+        {
+            name_ = "";
+            nameSpaceIndex_ = 0;
+            nameSpaceIndexGiven_ = false;
+            nameSpaceUriGiven_ = false;
+
+        }
+        else
+        {
+            if (UaString(destination.name()).isNull())
+                name_ == "";
+            else
+                name_ = string(UaString(destination.name()).toUtf8());
+
+            nameSpaceIndex_ = destination.namespaceIndex();
+            nameSpaceIndexGiven_ = true;
+            nameSpaceUri_ = nameSpaceUri;
+            nameSpaceUriGiven_ = true;
+        }
     }
 
 
@@ -152,18 +186,25 @@ namespace uaf
     {
         stringstream ss;
 
-        ss << "Ns";
+        if (isNull())
+        {
+            ss << "NULL";
+        }
+        else
+        {
+            ss << "Ns";
 
-        if (nameSpaceIndexGiven_)
-            ss << "=" << nameSpaceIndex_;
+            if (nameSpaceIndexGiven_)
+                ss << "=" << nameSpaceIndex_;
 
-        if (nameSpaceUriGiven_)
-            ss << "='" << nameSpaceUri_ << "'";
+            if (nameSpaceUriGiven_)
+                ss << "='" << nameSpaceUri_ << "'";
 
-        if ( (!nameSpaceIndexGiven_) && (!nameSpaceUriGiven_) )
-            ss << "=???";
+            if ( (!nameSpaceIndexGiven_) && (!nameSpaceUriGiven_) )
+                ss << "=???";
 
-        ss << "|'" << name_ << "'";
+            ss << "|'" << name_ << "'";
+        }
 
         return ss.str();
     }
