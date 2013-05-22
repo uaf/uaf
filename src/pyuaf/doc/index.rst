@@ -75,6 +75,7 @@ API
    api_pyuaf_util_primitives
    api_pyuaf_util_securitypolicies
    api_pyuaf_util_statuscodes
+   api_pyuaf_util_timestampstoreturn
    api_pyuaf_util_usertokentypes
    api_variants
 

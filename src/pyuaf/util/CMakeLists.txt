@@ -32,6 +32,7 @@ set(  PYUAF_UTIL_TARGETS
       opcuaidentifiers
       securitypolicies
       messagesecuritymodes
+      timestampstoreturn
       monitoringmodes
       browsedirections
       nodeclasses

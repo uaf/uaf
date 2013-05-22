@@ -92,6 +92,7 @@
 %import "pyuaf/util/util_monitoringmodes.i" 
 %import "pyuaf/util/util_browsedirections.i" 
 %import "pyuaf/util/util_nodeclasses.i" 
+%import "pyuaf/util/util_timestampstoreturn.i" 
 
 
 // before including any classes in a generic way, specify the "special treatments" of certain classes:

@@ -25,8 +25,16 @@ Informally:
  - DataValues are now better supported. A DataValue class (with a status, a value, timestamps, ...)
    has been added, and ReadResultTarget and WriteRequestTarget inherit now from it.
    
+ - The "timestampstoreturn" namespace / Python module has been added to allow the user to specify 
+   which timestamps should be returned by the server. 
+   
    
 Formally:
+   
+ - The following namespaces (modules) have been added:
+ 
+    - uaf::timestampstoreturn
+      (pyuaf.util.timestampstoreturn)
    
  - The following classes have been added:
  

@@ -48,6 +48,7 @@
 %import(module="pyuaf.util.primitives")         "pyuaf/util/util_primitives.i"
 %import(module="pyuaf.util.browsedirections")   "pyuaf/util/util_browsedirections.i"
 %import(module="pyuaf.util.nodeclasses")        "pyuaf/util/util_nodeclasses.i"
+%import(module="pyuaf.util.timestampstoreturn") "pyuaf/util/util_timestampstoreturn.i"
 %import(module="pyuaf.util")                    "uaf/util/stringifiable.h"
 %import(module="pyuaf.util")                    "uaf/util/browsepath.h"
 
