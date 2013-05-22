@@ -150,14 +150,8 @@ namespace uafc
         // check the number of targets
         if (noOfTargets == uaReadValueIds_.length())
         {
-
             for (uint32_t i=0; i<noOfTargets ; i++)
-            {
-                // update the value and the status
-                targets[i].data = Variant(uaDataValues_[i].Value);
-                targets[i].status.fromSdk(uaDataValues_[i].StatusCode,
-                                          "The server reported a read failure");
-            }
+                targets[i].fromSdk(UaDataValue(uaDataValues_[i]));
 
             ret.setGood();
         }

@@ -128,16 +128,27 @@ namespace uaf
 
 
         /**
-         * Does the status object have an OPC UA status code attached?
+         * Set the OPC UA status code.
          *
-         * @return  True if an OPC UA status code is present, false if not
+         * @param opcUaStatusCode   The status code as defined by the OPC UA specs.
          */
-        bool hasOpcUaStatusCode() const { return opcUaStatusCode_; }
+        void setOpcUaStatusCode(uint32_t opcUaStatusCode) { fromSdk(opcUaStatusCode, ""); }
+
+
+        /**
+         * Does the status object have a specific OPC UA status code attached?
+         *
+         * With "specific" we mean anything more than just OpcUa_Good, OpcUa_Bad,
+         * or OpcUa_Uncertain.
+         *
+         * @return  True if a specific OPC UA status code is present, false if not
+         */
+        bool hasSpecificOpcUaStatusCode() const;
 
 
 
         /**
-         * Get the OPC UA status code (in case hasOpcUaStatusCode() is true).
+         * Get the OPC UA status code.
          *
          * @return the OPC UA status code.
          */
@@ -268,9 +279,7 @@ namespace uaf
         uaf::statuscodes::StatusCode    statusCode_;
         /** The description of the status. */
         std::string                     description_;
-        /** Does this status object have an OPC UA status code assigned, or not? */
-        bool                            hasOpcUaStatusCode_;
-        /** The OPC UA status code (if hasOpcUaStatusCode_ is true). */
+        /** The OPC UA status code. */
         OpcUa_StatusCode                opcUaStatusCode_;
     };
 

@@ -1016,22 +1016,41 @@
 
     * Attributes
     
-        .. autoattribute:: pyuaf.client.results.ReadResultTarget.status
-
-            Status of the result target (Good if the request target was read, Bad if not), 
-            as a :class:`~pyuaf.util.Status` instance.
-    
         .. autoattribute:: pyuaf.client.results.ReadResultTarget.clientConnectionId
 
             The id of the session that was used for this target, as an ``int``.
+
+
+    * Attributes inherited from :class:`pyuaf.util.DataValue`
+    
+    
+        .. autoattribute:: pyuaf.client.results.ReadResultTarget.status
+        
+            The status of the data, as a :class:`~pyuaf.util.Status` instance.
+            The status contains the OPC UA status code of the data. 
     
         .. autoattribute:: pyuaf.client.results.ReadResultTarget.data
 
-            The data that was read.
-            
-            The type of this data could be an :class:`pyuaf.util.primitives.UInt32`, 
-            an array of :class:`pyuaf.util.primitives.Float`, a ``str``, 
-            a :class:`pyuaf.util.LocalizedText`, ... See :ref:`note-variants`. 
+            The data that was read, as one of the data types described in :ref:`note-variants`.
+  
+        .. autoattribute:: pyuaf.client.results.ReadResultTarget.sourceTimestamp
+        
+            The source time stamp of the data, as a :class:`~pyuaf.util.DateTime` instance.
+  
+        .. autoattribute:: pyuaf.client.results.ReadResultTarget.serverTimestamp
+        
+            The server time stamp of the data, as a :class:`~pyuaf.util.DateTime` instance.
+  
+        .. autoattribute:: pyuaf.client.results.ReadResultTarget.sourcePicoseconds
+    
+            The number of 10 picosecond intervals that need to be added to the source timestamp
+            (to get a higher time resolution), as an ``int``.
+  
+        .. autoattribute:: pyuaf.client.results.ReadResultTarget.serverPicoseconds
+    
+            The number of 10 picosecond intervals that need to be added to the server timestamp
+            (to get a higher time resolution), as an ``int``.
+    
 
 
 

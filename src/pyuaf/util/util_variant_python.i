@@ -38,17 +38,14 @@
 %import "../typemaps/util_variant_python_typemap.h"
 
 
-
-%typemap(typecheck) const uaf::Variant&
-{
-    VARIANT_CHECK($input, $1)
-}
-
-
-
-%typemap(in) uaf::Variant 
+%typemap(in, precedence=3000) uaf::Variant 
 {
     PYOBJECT_TO_UAF_VARIANT($input, $1)
+}
+
+%typemap(typecheck, precedence=3001) const uaf::Variant&
+{
+    VARIANT_CHECK($input, $1)
 }
 
 

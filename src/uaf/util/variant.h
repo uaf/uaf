@@ -85,7 +85,7 @@ namespace uaf
          *
          * @return  True if empty.
          */
-        bool isNull() { return uaVariant_.isEmpty() == 1; }
+        bool isNull() const { return uaVariant_.isEmpty() == 1; }
 
 
         /**

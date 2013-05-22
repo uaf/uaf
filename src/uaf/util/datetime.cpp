@@ -132,6 +132,14 @@ namespace uaf
     }
 
 
+    // Get a string representation
+    // =============================================================================================
+    std::string DateTime::toString() const
+    {
+        return (uaDateTime_.isNull() ? "NULL" : std::string(uaDateTime_.toString().toUtf8()));
+    }
+
+
     // Comparison operator ==
     // =============================================================================================
     bool operator==(const DateTime& object1, const DateTime& object2)

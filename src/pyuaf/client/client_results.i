@@ -54,6 +54,7 @@
 %import(module="pyuaf.util.nodeclasses")        "pyuaf/util/util_nodeclasses.i"
 %import(module="pyuaf.util")                    "uaf/util/stringifiable.h"
 %import(module="pyuaf.util")                    "uaf/util/browsepath.h"
+%import(module="pyuaf.util")                    "uaf/util/datavalue.h"
 
 
 // also include the typemaps

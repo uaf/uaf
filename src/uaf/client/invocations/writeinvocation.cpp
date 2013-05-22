@@ -60,8 +60,9 @@ namespace uafc
                 // update the attribute id, index range, data and status code of the target
                 uaWriteValues_[i].AttributeId = targets[i].attributeId;
                 UaString(targets[i].indexRange.c_str()).copyTo(&uaWriteValues_[i].IndexRange);
-                targets[i].data.toSdk(&uaWriteValues_[i].Value.Value);
-                uaWriteValues_[i].Value.StatusCode = targets[i].opcUaStatusCode;
+
+                // copy the data value
+                targets[i].toSdk(&uaWriteValues_[i].Value);
             }
         }
 

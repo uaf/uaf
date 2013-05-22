@@ -132,7 +132,7 @@ namespace uaf
          *
          * @return The string representation.
          */
-        std::string toString() const { return std::string(uaDateTime_.toString().toUtf8()); }
+        std::string toString() const;
 
 
         /**

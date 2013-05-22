@@ -17,6 +17,37 @@ Bugfixes (which do not have any implications on the API) can only be tracked
 via the GIT version control system.
 
 
+1.2 @ 2013/05/xx
+----------------------------------------------------------------------------------------------------
+
+Informally:
+
+ - DataValues are now better supported. A DataValue class (with a status, a value, timestamps, ...)
+   has been added, and ReadResultTarget and WriteRequestTarget inherit now from it.
+   
+   
+Formally:
+   
+ - The following classes have been added:
+ 
+    - uaf::DataValue 
+      (pyuaf.util.DataValue)
+      
+ - The following class inheritances have been modified:
+ 
+    - uafc::ReadResultTarget: inherits now from uaf::DataValue
+      (pyuaf.client.results.ReadResultTarget: inherits now from pyuaf.util.DataValue)
+    - uafc::WriteRequestTarget: inherits now from uaf::DataValue
+      (pyuaf.client.requests.WriteRequestTarget: inherits now from pyuaf.util.DataValue)
+
+ - The following methods have been added to existing classes:
+ 
+    - uaf::Status::hasSpecificOpcUaStatusCode(): replaces hasOpcUaStatusCode()
+      (pyuaf.util.Status.hasSpecificOpcUaStatusCode(): replaces hasOpcUaStatusCode())
+    - uaf::Status::setOpcUaStatusCode()
+      (pyuaf.util.Status.setOpcUaStatusCode())
+ 
+ 
 
 1.1 @ 2013/05/22
 ----------------------------------------------------------------------------------------------------

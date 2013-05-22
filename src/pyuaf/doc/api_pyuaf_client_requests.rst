@@ -1282,23 +1282,45 @@
             The address of the node of which the attribute will be written, 
             as a :class:`~pyuaf.util.Address`.
     
-        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.data
-
-            The data to be written, as one of the data types described in :ref:`note-variants`.
-    
         .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.attributeId
 
             The attribute id to be written, as an ``int`` defined 
             in :mod:`~pyuaf.util.attributeids`.
-    
-        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.opcUaStatusCode
-
-            The OPC UA status code of the data to be written, as an ``int``. Default = 0 = Good.
             
         .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.indexRange
     
             The index range (as a ``str``), in case you want to partially write an array.
 
+
+    * Attributes inherited from :class:`pyuaf.util.DataValue`
+    
+        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.status
+        
+            The status of the data, as a :class:`~pyuaf.util.Status` instance.
+            The status contains the OPC UA status code of the data. 
+    
+        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.data
+
+            The data to be written, as one of the data types described in :ref:`note-variants`.
+  
+        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.sourceTimestamp
+        
+            The source time stamp of the data, as a :class:`~pyuaf.util.DateTime` instance.
+  
+        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.serverTimestamp
+        
+            The server time stamp of the data, as a :class:`~pyuaf.util.DateTime` instance.
+  
+        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.sourcePicoseconds
+    
+            The number of 10 picosecond intervals that need to be added to the source timestamp
+            (to get a higher time resolution), as an ``int``.
+  
+        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.serverPicoseconds
+    
+            The number of 10 picosecond intervals that need to be added to the server timestamp
+            (to get a higher time resolution), as an ``int``.
+    
 
 
 *class* WriteRequestTargetVector

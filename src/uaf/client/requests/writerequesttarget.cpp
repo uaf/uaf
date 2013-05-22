@@ -36,8 +36,7 @@ namespace uafc
     // Constructor
     // =============================================================================================
     WriteRequestTarget::WriteRequestTarget()
-    : attributeId(attributeids::Value),
-      opcUaStatusCode(OpcUa_Good)
+    : attributeId(attributeids::Value)
     {}
 
 
@@ -48,8 +47,6 @@ namespace uafc
             const Variant&                  data,
             uaf::attributeids::AttributeId  attributeId)
     : address(address),
-      data(data),
-      opcUaStatusCode(OpcUa_Good),
       attributeId(attributeId)
     {}
 
@@ -67,14 +64,8 @@ namespace uafc
         ss << fillToPos(ss, colon);
         ss << ": " << attributeId << " (" << attributeids::toString(attributeId) << ")\n";
 
-        ss << indent << " - data";
-        ss << fillToPos(ss, colon);
-        ss << ": " << data.toTextString() << "\n";
+        ss << DataValue::toString(indent, colon);
 
-        ss << indent << " - opcUaStatusCode";
-        ss << fillToPos(ss, colon);
-        ss << ": " << opcUaStatusCode
-                << " (" << UaStatusCode(opcUaStatusCode).toString().toUtf8() << ")";
         return ss.str();
     }
 
@@ -83,9 +74,8 @@ namespace uafc
     bool operator==(const WriteRequestTarget& object1, const WriteRequestTarget& object2)
     {
         return    object1.address == object2.address
-               && object1.data == object2.data
-               && object1.opcUaStatusCode == object2.opcUaStatusCode
-               && object1.attributeId == object2.attributeId;
+               && object1.attributeId == object2.attributeId
+               && (DataValue) object1 == (DataValue) object2;
     }
 
     // operator!=
@@ -101,12 +91,10 @@ namespace uafc
     {
         if (object1.address != object2.address)
             return object1.address < object2.address;
-        else if (object1.data != object2.data)
-            return object1.data < object2.data;
-        else if (object1.opcUaStatusCode != object2.opcUaStatusCode)
-            return object1.opcUaStatusCode < object2.opcUaStatusCode;
-        else
+        else if (object1.attributeId != object2.attributeId)
             return object1.attributeId < object2.attributeId;
+        else
+            return (DataValue) object1 < (DataValue) object2;
     }
 
 

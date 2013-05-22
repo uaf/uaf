@@ -330,5 +330,16 @@ namespace uaf
         }
 
 
+        // Convert the UAF code to a SDK/Stack code.
+        // =========================================================================================
+        OpcUa_StatusCode fromUafToSdk(StatusCode statusCode)
+        {
+            if (statusCode == statuscodes::Good)
+                return OpcUa_Good;
+            else if (statusCode == statuscodes::Uncertain)
+                return OpcUa_Uncertain;
+            else
+                return OpcUa_Bad;
+        }
     }
 }

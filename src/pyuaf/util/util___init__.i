@@ -28,6 +28,7 @@
 #include "uaf/util/localizedtext.h"
 #include "uaf/util/applicationdescription.h"
 #include "uaf/util/datachangefilter.h"
+#include "uaf/util/datavalue.h"
 #include "uaf/util/endpointdescription.h"
 #include "uaf/util/eventfilter.h"
 #include "uaf/util/logmessage.h"
@@ -142,3 +143,7 @@ UAF_WRAP_CLASS("uaf/util/referencedescription.h"   , uaf , ReferenceDescription 
 #if defined(SWIGPYTHON)
     %import "pyuaf/util/util___unittesthelper__.i"
 #endif
+
+// now include the classes that make use of the Variant typemap
+UAF_WRAP_CLASS("uaf/util/datavalue.h"              , uaf , DataValue               , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, DataValueVector)
+

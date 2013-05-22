@@ -34,27 +34,25 @@ namespace uaf
     // =============================================================================================
     Status::Status()
     : statusCode_(uaf::statuscodes::Uncertain),
-      opcUaStatusCode_(0),
-      hasOpcUaStatusCode_(false)
+      opcUaStatusCode_(OpcUa_Uncertain)
     {}
 
 
     // Constructor
     // =============================================================================================
     Status::Status(uaf::statuscodes::StatusCode statusCode)
-    : statusCode_(statusCode),
-      opcUaStatusCode_(0),
-      hasOpcUaStatusCode_(false)
-    {}
+    : statusCode_(statusCode)
+    {
+        opcUaStatusCode_ = statuscodes::fromUafToSdk(statusCode);
+    }
 
 
     // Constructor
     // =============================================================================================
     Status::Status(uaf::statuscodes::StatusCode statusCode, const char* description, ...)
-    : statusCode_(statusCode),
-      opcUaStatusCode_(0),
-      hasOpcUaStatusCode_(false)
+    : statusCode_(statusCode)
     {
+        opcUaStatusCode_ = statuscodes::fromUafToSdk(statusCode);
         va_list args;
         va_start(args, description);
         char buffer[512];
@@ -89,7 +87,7 @@ namespace uaf
         va_end(args);
         description_        = buffer;
         statusCode_         = uaf::statuscodes::Good;
-        hasOpcUaStatusCode_ = false;
+        opcUaStatusCode_    = OpcUa_Good;
     }
 
 
@@ -104,7 +102,7 @@ namespace uaf
         va_end(args);
         description_        = buffer;
         statusCode_         = uaf::statuscodes::Uncertain;
-        hasOpcUaStatusCode_ = false;
+        opcUaStatusCode_    = OpcUa_Uncertain;
     }
 
 
@@ -137,6 +135,17 @@ namespace uaf
 
 
 
+    // Does the status have a specific OPC UA status code?
+    // =============================================================================================
+    bool Status::hasSpecificOpcUaStatusCode() const
+    {
+        return    (opcUaStatusCode_ != OpcUa_Good)
+               && (opcUaStatusCode_ != OpcUa_Uncertain)
+               && (opcUaStatusCode_ != OpcUa_Bad);
+    }
+
+
+
     // Get a string representation
     // =============================================================================================
     string Status::toString() const
@@ -148,7 +157,7 @@ namespace uaf
         else
             ret = description_;
 
-        if (hasOpcUaStatusCode())
+        if (hasSpecificOpcUaStatusCode())
         {
             ret += string(" [OPC-UA:")
                    + UaStatusCode(opcUaStatusCode_).toString().toUtf8()
@@ -168,9 +177,9 @@ namespace uaf
         char buffer[512];
         vsprintf(buffer, description, args);
         va_end(args);
-        description_        = buffer;
-        statusCode_         = statusCode;
-        hasOpcUaStatusCode_ = false;
+        description_     = buffer;
+        statusCode_      = statusCode;
+        opcUaStatusCode_ = statuscodes::fromUafToSdk(statusCode);
     }
 
 
@@ -179,7 +188,6 @@ namespace uaf
     void Status::fromSdk(uint32_t opcUaCode, const char* diagnostic, ...)
     {
         opcUaStatusCode_    = opcUaCode;
-        hasOpcUaStatusCode_ = true;
         statusCode_         = uaf::statuscodes::fromSdkToUaf(opcUaCode);
         if (isBad())
         {
@@ -198,7 +206,6 @@ namespace uaf
     bool operator==(const Status& object1, const Status& object2)
     {
         return object1.opcUaStatusCode_ == object2.opcUaStatusCode_
-            && object1.hasOpcUaStatusCode_ == object2.hasOpcUaStatusCode_
             && object1.statusCode_ == object2.statusCode_
             && object1.description_ == object2.description_;
     }
@@ -216,22 +223,12 @@ namespace uaf
     // =============================================================================================
     bool operator<(const Status& object1, const Status& object2)
     {
-        if (object1.hasOpcUaStatusCode_ != object2.hasOpcUaStatusCode_)
-        {
-            return object1.hasOpcUaStatusCode_ < object2.hasOpcUaStatusCode_;
-        }
-        else if (object1.opcUaStatusCode_ != object2.opcUaStatusCode_)
-        {
+        if (object1.opcUaStatusCode_ != object2.opcUaStatusCode_)
             return object1.opcUaStatusCode_ < object2.opcUaStatusCode_;
-        }
         else if (object1.statusCode_ != object2.statusCode_)
-        {
             return object1.statusCode_ < object2.statusCode_;
-        }
         else
-        {
             return object1.description_ < object2.description_;
-        }
     }
 
 

@@ -28,6 +28,7 @@
 // UAF
 #include "uaf/util/status.h"
 #include "uaf/util/variant.h"
+#include "uaf/util/datavalue.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/clienthandles.h"
 #include "uaf/client/results/basesessionresulttarget.h"
@@ -46,7 +47,8 @@ namespace uafc
     *
     * @ingroup ClientResults
     ***********************************************************************************************/
-    class UAFC_EXPORT ReadResultTarget : public uafc::BaseSessionResultTarget
+    class UAFC_EXPORT ReadResultTarget : public uafc::BaseSessionResultTarget,
+                                         public uaf::DataValue
     {
     public:
 
@@ -54,13 +56,6 @@ namespace uafc
          * Create an empty result target.
          */
         ReadResultTarget();
-
-
-        /** The status of the read target (good if the attribute could be read, bad if not). */
-        uaf::Status status;
-
-        /**  The data value that was read. */
-        uaf::Variant data;
 
         /**
          * Get a string representation of the target.

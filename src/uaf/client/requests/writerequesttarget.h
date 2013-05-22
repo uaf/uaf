@@ -29,6 +29,7 @@
 #include "uaf/util/address.h"
 #include "uaf/util/variant.h"
 #include "uaf/util/monitoringmodes.h"
+#include "uaf/util/datavalue.h"
 #include "uaf/util/attributeids.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/requests/basesessionrequesttarget.h"
@@ -45,7 +46,8 @@ namespace uafc
     *
     * @ingroup ClientRequests
     ***********************************************************************************************/
-    class UAFC_EXPORT WriteRequestTarget : public uafc::BaseSessionRequestTarget
+    class UAFC_EXPORT WriteRequestTarget : public uafc::BaseSessionRequestTarget,
+                                           public uaf::DataValue
     {
     public:
 
@@ -71,12 +73,6 @@ namespace uafc
 
         /** Address of the node of which the attribute should be written. */
         uaf::Address address;
-
-        /** New data to be written to the attribute. */
-        uaf::Variant data;
-
-        /** The OPC UA status code of the data to be written (0 = Good by default). */
-        uint32_t opcUaStatusCode;
 
         /** Attribute id to be written. */
         uaf::attributeids::AttributeId attributeId;

@@ -43,13 +43,7 @@ namespace uafc
     {
         stringstream ss;
 
-        ss << indent << " - status";
-        ss << fillToPos(ss, colon);
-        ss << ": " << status.toString() << "\n";
-
-        ss << indent << " - data";
-        ss << fillToPos(ss, colon);
-        ss << ": " << data.toFullString() << "\n";
+        ss << DataValue::toString(indent, colon);
 
         ss << indent << " - clientConnectionId";
         ss << fillToPos(ss, colon);

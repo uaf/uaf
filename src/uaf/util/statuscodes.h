@@ -90,11 +90,19 @@ namespace uaf
 
 
         /**
-         * Convert the SDK/Stack instance to a UAF instance.
+         * Convert the SDK/Stack code to a UAF code.
          *
          * @ingroup Util
          */
         uaf::statuscodes::StatusCode UAF_EXPORT fromSdkToUaf(OpcUa_StatusCode code);
+
+
+        /**
+         * Convert the UAF code to a SDK code.
+         *
+         * @ingroup Util
+         */
+        OpcUa_StatusCode UAF_EXPORT fromUafToSdk(uaf::statuscodes::StatusCode code);
 
     }
 

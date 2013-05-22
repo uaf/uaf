@@ -581,6 +581,105 @@
 
 
 
+*class* DataValue
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.DataValue
+
+    A DataValue holds some data value, a status, timestamps, ...
+
+
+    * Methods:
+
+        .. automethod:: pyuaf.util.DataValue.__init__
+    
+            Construct a new DataValue.
+    
+        .. automethod:: pyuaf.util.DataValue.__str__
+    
+            Get a string representation
+            
+            :rtype: ``str``
+
+
+    * Attributes:
+  
+  
+        .. autoattribute:: pyuaf.util.DataValue.data
+        
+            The data, as one of the data types described in :ref:`note-variants`.
+  
+        .. autoattribute:: pyuaf.util.DataValue.status
+        
+            The status of the data, as a :class:`~pyuaf.util.Status` instance.
+            The status contains the OPC UA status code of the data. 
+  
+        .. autoattribute:: pyuaf.util.DataValue.sourceTimestamp
+        
+            The source time stamp of the data, as a :class:`~pyuaf.util.DateTime` instance.
+  
+        .. autoattribute:: pyuaf.util.DataValue.serverTimestamp
+        
+            The server time stamp of the data, as a :class:`~pyuaf.util.DateTime` instance.
+  
+        .. autoattribute:: pyuaf.util.DataValue.sourcePicoseconds
+    
+            The number of 10 picosecond intervals that need to be added to the source timestamp
+            (to get a higher time resolution), as an ``int``.
+  
+        .. autoattribute:: pyuaf.util.DataValue.serverPicoseconds
+    
+            The number of 10 picosecond intervals that need to be added to the server timestamp
+            (to get a higher time resolution), as an ``int``.
+    
+
+
+
+*class* DataValueVector
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.DataValueVector
+
+    An DataValueVector is a container that holds elements of type 
+    :class:`pyuaf.util.DataValue`. 
+    It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+    as a ``list`` of :class:`pyuaf.util.DataValue`.
+
+    Usage example:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> from pyuaf.util import DataValueVector, DataValue
+        >>> from pyuaf.util import NodeId, LocalizedText
+        >>> from pyuaf.util import primitives
+        
+        >>> # construct a DataValueVector without elements:
+        >>> vec = DataValueVector()
+        
+        >>> noOfElements = len(vec) # will be 0
+        
+        >>> vec.append( DataValue(primitives.UInt32(1234)) )
+        
+        >>> noOfElements = len(vec) # will be 1
+        
+        >>> vec.resize(4)
+        
+        >>> noOfElements = len(vec) # will be 4
+        
+        >>> # vec[0] was already assigned to an UInt32
+        >>> vec[1].data = primitives.String("some text")
+        >>> vec[2].data = NodeId("SomeId", "SomeNsUri")
+        >>> vec[3].data = LocalizedText("en", "Some English Text")
+        
+        >>> # you may construct an EndpointDescriptionVector from a regular Python list:
+        >>> otherVec = DataValueVector( [ DataValue(), DataValue(primitives.Boolean(True))] )
+        
+    
+
+
 *class* EndpointDescription
 ----------------------------------------------------------------------------------------------------
 
@@ -1743,7 +1842,7 @@
 .. autoclass:: pyuaf.util.Status
 
 
-     A Status object holds a UAF status code, a description and optionally an OPC UA status code.
+     A Status object holds a UAF status code, a description and an OPC UA status code.
     
 
     * Methods:
@@ -1791,19 +1890,21 @@
             :type  name: ``str``
 
     
-        .. automethod:: pyuaf.util.Status.hasOpcUaStatusCode
+        .. automethod:: pyuaf.util.Status.hasSpecificOpcUaStatusCode
         
-            Check if the Status object, besides a UAF status code, also contains an OPC UA status 
-            code (which can be gotten with :meth:`~pyuaf.util.Status.opcUaStatusCode`.
+            Check if the Status object, besides a UAF status code, also contains a specific OPC 
+            UA status code (which can be retrieved with :meth:`~pyuaf.util.Status.opcUaStatusCode`.
             
-            :return: True if the status object has an OPC UA status code.
+            With "specific" we mean anything more than just OpcUa_Good, OpcUa_Bad, or 
+            OpcUa_Uncertain.
+            
+            :return: True if the status object has a specific OPC UA status code.
             :rtype:  bool
 
 
         .. automethod:: pyuaf.util.Status.opcUaStatusCode
         
-            Get the OPC UA status code (only relevant 
-            if :meth:`~pyuaf.util.Status.hasOpcUaStatusCode` is True!).
+            Get the OPC UA status code.
             
             :return: The OPC UA status code.
             :rtype:  ``int``
@@ -1833,6 +1934,15 @@
             :type  statusCode: ``int``
             :param message: The optional message.
             :type  message: ``str``
+        
+        
+        .. automethod:: pyuaf.util.Status.setOpcUaStatusCode(opcUaStatusCode)
+        
+            Set the status to the given OPC UA status code.
+            
+            :param statusCode: The new OPC UA status code (as defined by the OPC UA specs and 
+                               **NOT** by the :mod:`pyuaf.util.statuscodes` module).
+            :type  statusCode: ``int``
 
     
         .. automethod:: pyuaf.util.Status.isGood
