@@ -48,9 +48,34 @@ namespace uafc
         std::stringstream ss;
         ss << BaseServiceSettings::toString(indent, colon) << "\n";
 
+        ss << indent << " - startTime";
+        ss << fillToPos(ss, colon);
+        ss << ": " << startTime.toString() << "\n";
+
+        ss << indent << " - endTime";
+        ss << fillToPos(ss, colon);
+        ss << ": " << endTime.toString() << "\n";
+
         ss << indent << " - isReadModified";
         ss << fillToPos(ss, colon);
         ss << ": " << (isReadModified ? "True" : "False") << "\n";
+
+        ss << indent << " - numValuesPerNode";
+        ss << fillToPos(ss, colon);
+        ss << ": " << int(numValuesPerNode) << "\n";
+
+        ss << indent << " - returnBounds";
+        ss << fillToPos(ss, colon);
+        ss << ": " << (returnBounds ? "True" : "False") << "\n";
+
+        ss << indent << " - timestampsToReturn";
+        ss << fillToPos(ss, colon);
+        ss << ": " << int(timestampsToReturn);
+        ss << " (" << timestampstoreturn::toString(timestampsToReturn) << ")\n";
+
+        ss << indent << " - releaseContinuationPoints";
+        ss << fillToPos(ss, colon);
+        ss << ": " << (releaseContinuationPoints ? "True" : "False");
 
         return ss.str();
     }

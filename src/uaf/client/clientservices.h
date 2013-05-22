@@ -95,6 +95,7 @@ namespace uafc
     DEFINE_SYNC_SERVICE(BrowseNext)
     DEFINE_SYNC_SERVICE(CreateMonitoredData)
     DEFINE_SYNC_SERVICE(CreateMonitoredEvents)
+    DEFINE_SYNC_SERVICE(HistoryReadRawModified)
 
     // define the asynchronous services
     DEFINE_ASYNC_SERVICE(Read)

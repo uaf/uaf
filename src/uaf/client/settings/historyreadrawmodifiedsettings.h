@@ -26,6 +26,7 @@
 // STD
 // SDK
 // UAF
+#include "uaf/util/timestampstoreturn.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/settings/baseservicesettings.h"
 
@@ -49,14 +50,46 @@ namespace uafc
          * Create default HistoryReadRawModifiedSettings settings.
          *
          * Defaults are:
-         *  - maxAgeSec : 0.0
+         *  - isReadModified            : False
+         *  - timestampsToReturn        : uaf::timestampstoreturn::Source
+         *  - releaseContinuationPoints : False
+         *  - numValuesPerNode          : 0
+         *  - returnBounds              : False
          */
         HistoryReadRawModifiedSettings();
 
-        //HistoryReadRawModifiedContext
 
-        /**  */
+        /** Begin of the time interval to read. */
+        uaf::DateTime startTime;
+
+        /** End of the time interval to read. */
+        uaf::DateTime endTime;
+
+        /** Boolean flag: False if the values stored in the history database should be returned
+         *  directly, True if the values that are replaced by other values (with the same
+         *  timestamps) should be returned. Default is False. */
         bool isReadModified;
+
+        /** The maximum number of values that may be returned for each node.
+         *  Default = 0 = no limit. */
+        uint32_t numValuesPerNode;
+
+        /** Boolean flag: True if the bounds (a value at or just before the start time and a value
+         *  at or just after the end time) should be returned, False if not.
+         *  Default is False.
+         */
+        bool returnBounds;
+
+        /** Select and return the timestamps as specified by this attribute.
+         *  If uaf::timestampstoreturn::Both is specified, the source timestamp
+         *  will be used for selection.
+         *  Default is  uaf::timestampstoreturn::Source. */
+        uaf::timestampstoreturn::TimestampsToReturn timestampsToReturn;
+
+        /** Boolean flag: True to let the Server know that no more historical data is needed,
+         *  and so the server may release any resources associated with the call.
+         *  Default is False. */
+        bool releaseContinuationPoints;
 
 
         /**
@@ -64,7 +97,7 @@ namespace uafc
          *
          * @return  String representation
          */
-        virtual std::string toString(const std::string& indent="", std::size_t colon=18) const;
+        virtual std::string toString(const std::string& indent="", std::size_t colon=28) const;
 
     };
 

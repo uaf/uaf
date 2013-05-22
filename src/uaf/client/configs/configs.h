@@ -34,6 +34,7 @@
 #include "uaf/client/settings/translatebrowsepathstonodeidssettings.h"
 #include "uaf/client/settings/browsesettings.h"
 #include "uaf/client/settings/browsenextsettings.h"
+#include "uaf/client/settings/historyreadrawmodifiedsettings.h"
 
 
 
@@ -53,6 +54,7 @@ namespace uafc
     DEFINE_CONFIG(MethodCall)
     DEFINE_CONFIG(Browse)
     DEFINE_CONFIG(BrowseNext)
+    DEFINE_CONFIG(HistoryReadRawModified)
     DEFINE_CONFIG(TranslateBrowsePathsToNodeIds)
     DEFINE_CONFIG(CreateMonitoredData)
     DEFINE_CONFIG(CreateMonitoredEvents)
