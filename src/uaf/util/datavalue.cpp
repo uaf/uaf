@@ -95,6 +95,34 @@ namespace uaf
     }
 
 
+    // Get a compact string representation
+    // =============================================================================================
+    string DataValue::toCompactString() const
+    {
+        stringstream ss;
+
+        ss << UaStatusCode(status.opcUaStatusCode()).toString().toUtf8() << "|";
+
+        data.toString();
+
+        if (!sourceTimestamp.isNull())
+        {
+            ss << "|Src=" << sourceTimestamp.toString();
+            if (sourcePicoseconds > 0)
+                ss << ",pico=" << int(sourcePicoseconds);
+        }
+
+        if (!serverTimestamp.isNull())
+        {
+            ss << "|Svr=" << serverTimestamp.toString();
+            if (serverPicoseconds > 0)
+                ss << ",pico=" << int(serverPicoseconds);
+        }
+
+        return ss.str();
+    }
+
+
     // Get the contents from a UaDataValue instance
     // =============================================================================================
     void DataValue::fromSdk(const UaDataValue& uaDataValue)

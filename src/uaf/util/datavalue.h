@@ -98,6 +98,13 @@ namespace uaf
          */
         std::string toString(const std::string& indent="", std::size_t colon=21) const;
 
+        /**
+         * Get a compact string representation.
+         *
+         * @return The string representation as a single line.
+         */
+        std::string toCompactString() const;
+
 
         /**
          * Get the contents of the DataValue from a SDK UaDataValue instance.
