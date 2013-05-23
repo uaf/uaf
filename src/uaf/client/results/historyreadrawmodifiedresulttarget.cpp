@@ -41,11 +41,40 @@ namespace uafc
     // =============================================================================================
     string HistoryReadRawModifiedResultTarget::toString(const string& indent, size_t colon) const
     {
-        //UaClientSdk::HistoryReadDataResults d;
-
         stringstream ss;
 
-        //ss << DataValue::toString(indent, colon);
+        ss << indent << " - status";
+        ss << fillToPos(ss, colon);
+        ss << ": " << status.toString() << "\n";
+
+        ss << indent << " - continuationPoint";
+        ss << fillToPos(ss, colon);
+        ss << ": " << continuationPoint.toString() << "\n";
+
+        ss << indent << " - autoReadMore";
+        ss << fillToPos(ss, colon);
+        ss << ": " << int(autoReadMore) << "\n";
+
+        ss << indent << " - dataValues";
+        if (dataValues.size() == 0)
+        {
+            ss << fillToPos(ss, colon);
+            ss << ": []\n";
+        }
+        else
+        {
+            ss << "\n";
+            for (size_t i = 0; i < dataValues.size(); i++)
+            {
+                ss << indent << "    - dataValues" << "[" << int(i) << "]";
+                ss << fillToPos(ss, colon);
+                ss << ": " << dataValues[i].toCompactString() << "\n";
+            }
+        }
+
+        ss << indent << " - modificationInformation";
+        ss << fillToPos(ss, colon);
+        ss << ": " << modificationInformation.toString() << "\n";
 
         ss << indent << " - clientConnectionId";
         ss << fillToPos(ss, colon);

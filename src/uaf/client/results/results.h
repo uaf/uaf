@@ -37,6 +37,7 @@
 #include "uaf/client/results/translatebrowsepathstonodeidsresulttarget.h"
 #include "uaf/client/results/browseresulttarget.h"
 #include "uaf/client/results/browsenextresulttarget.h"
+#include "uaf/client/results/historyreadrawmodifiedresulttarget.h"
 
 
 
@@ -63,20 +64,25 @@ typedef UAFC_EXPORT uafc::BaseSubscriptionResult<uafc::AsyncResultTarget, true> 
 
 namespace uafc
 {
-    // synchronous
+    // synchronous session results
     DEFINE_SYNC_SESSIONRESULT(Read)
     DEFINE_SYNC_SESSIONRESULT(Write)
     DEFINE_SYNC_SESSIONRESULT(MethodCall)
     DEFINE_SYNC_SESSIONRESULT(TranslateBrowsePathsToNodeIds)
     DEFINE_SYNC_SESSIONRESULT(Browse)
     typedef UAFC_EXPORT uafc::BrowseResult BrowseNextResult;
+    DEFINE_SYNC_SESSIONRESULT(HistoryReadRawModified)
+
+    // synchronous subscription results
     DEFINE_SYNC_SUBSCRIPTIONRESULT(CreateMonitoredData)
     DEFINE_SYNC_SUBSCRIPTIONRESULT(CreateMonitoredEvents)
 
-    // asynchronous
+    // asynchronous session results
     DEFINE_ASYNC_SESSIONRESULT(Read)
     DEFINE_ASYNC_SESSIONRESULT(Write)
     DEFINE_ASYNC_SESSIONRESULT(MethodCall)
+
+    // asynchronous subscription results
     DEFINE_ASYNC_SUBSCRIPTIONRESULT(CreateMonitoredData)
     DEFINE_ASYNC_SUBSCRIPTIONRESULT(CreateMonitoredEvents)
 

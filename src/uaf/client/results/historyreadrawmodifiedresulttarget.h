@@ -56,24 +56,28 @@ namespace uafc
         HistoryReadRawModifiedResultTarget();
 
 
+        /** The resulting status for the operation. */
         uaf::Status status;
 
+        /** The continuation point, in case there are still results left at the server.
+         *  If the continuation point is not NULL (i.e. if it contains more than 0 bytes),
+         *  then you should copy the continuation point to the continuation point of the
+         *  HistoryReadRawModifiedRequestTarget, and perform another call. */
         uaf::ByteString continuationPoint;
 
+        /** How many times did the UAF automatically invoke the historical read OPC UA service
+         *  in addition to the original request, in order to get the remaining results?
+         *  In case the UAF did not read more data automatically, this value will be 0. */
+        uint32_t autoReadMore;
+
+        /** The requested historical data. */
         std::vector<uaf::DataValue> dataValues;
 
-        //OpcUa_ModificationInfo
+        /** The modification information, in case the isReadModified flag was set in the
+         *  request target. */
+        uaf::ModificationInfo modificationInformation;
 
 
-
-        /** Result code for the operation */
-        //UaStatus           m_status;
-        /** Continuation point if the server was not able to return all available data */
-        //UaByteString       m_continuationPoint;
-        /** The data for the requested time frame */
-        //UaDataValues       m_dataValues;
-        /** Modification information for the provided modified data if the isReadModified flag was set. */
-        //UaModificationInfo m_modificationInformation;
         /**
          * Get a string representation of the target.
          */

@@ -35,6 +35,7 @@
 #include "uaf/client/requests/browsenextrequesttarget.h"
 #include "uaf/client/requests/translatebrowsepathstonodeidsrequesttarget.h"
 #include "uaf/client/requests/writerequesttarget.h"
+#include "uaf/client/requests/historyreadrawmodifiedrequesttarget.h"
 #include "uaf/client/requests/basesessionrequest.h"
 #include "uaf/client/requests/basesubscriptionrequest.h"
 #include "uaf/client/requests/requests.h"
@@ -82,6 +83,7 @@ MAKE_NON_DYNAMIC(uafc::TranslateBrowsePathsToNodeIdsRequestTarget)
 MAKE_NON_DYNAMIC(uafc::BrowseRequestTarget)
 MAKE_NON_DYNAMIC(uafc::BrowseNextRequestTarget)
 MAKE_NON_DYNAMIC(uafc::WriteRequestTarget)
+MAKE_NON_DYNAMIC(uafc::HistoryReadRawModifiedRequestTarget)
 %ignore operator==(const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2);
 %ignore operator!=(const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2);
 %ignore operator< (const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2);
@@ -101,6 +103,7 @@ UAF_WRAP_CLASS("uaf/client/requests/methodcallrequesttarget.h"                  
 UAF_WRAP_CLASS("uaf/client/requests/readrequesttarget.h"                         , uafc , ReadRequestTarget                          , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, ReadRequestTargetVector)
 UAF_WRAP_CLASS("uaf/client/requests/translatebrowsepathstonodeidsrequesttarget.h", uafc , TranslateBrowsePathsToNodeIdsRequestTarget , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, TranslateBrowsePathsToNodeIdsRequestTargetVector)
 UAF_WRAP_CLASS("uaf/client/requests/writerequesttarget.h"                        , uafc , WriteRequestTarget                         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, WriteRequestTargetVector)
+UAF_WRAP_CLASS("uaf/client/requests/historyreadrawmodifiedrequesttarget.h"       , uafc , HistoryReadRawModifiedRequestTarget        , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, HistoryReadRawModifiedRequestTargetVector)
 UAF_WRAP_CLASS("uaf/client/requests/basesessionrequest.h"                        , uafc , BaseSessionRequest                         , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client.requests, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/requests/basesubscriptionrequest.h"                   , uafc , BaseSubscriptionRequest                    , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client.requests, VECTOR_NO)
 
@@ -151,6 +154,7 @@ CREATE_UAFC_SYNC_SESSIONREQUEST(MethodCall)
 CREATE_UAFC_SYNC_SESSIONREQUEST(TranslateBrowsePathsToNodeIds)
 CREATE_UAFC_SYNC_SESSIONREQUEST(Browse)
 CREATE_UAFC_SYNC_SESSIONREQUEST(BrowseNext)
+CREATE_UAFC_SYNC_SESSIONREQUEST(HistoryReadRawModified)
 
 
 // create asynchronous session requests

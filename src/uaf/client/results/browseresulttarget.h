@@ -61,7 +61,7 @@ namespace uafc
         uaf::Status status;
 
 
-        /** How many times did the UAF automatically invoked the "BrowseNext" OPC UA service in
+        /** How many times did the UAF automatically invoke the "BrowseNext" OPC UA service in
          *  order to get the results? */
         uint32_t autoBrowsedNext;
 

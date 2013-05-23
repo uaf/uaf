@@ -35,6 +35,7 @@
 #include "uaf/client/settings/subscriptionsettings.h"
 #include "uaf/client/settings/translatebrowsepathstonodeidssettings.h"
 #include "uaf/client/settings/writesettings.h"
+#include "uaf/client/settings/historyreadrawmodifiedsettings.h"
 #include "uaf/util/address.h"
 #include "uaf/util/referencedescription.h"
 #include "uaf/util/modificationinfo.h"
@@ -94,6 +95,7 @@ UAF_WRAP_CLASS("uaf/client/settings/subscriptionsettings.h"                  , u
 UAF_WRAP_CLASS("uaf/client/settings/monitoreditemsettings.h"                 , uafc , MonitoredItemSettings                 , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/settings/readsettings.h"                          , uafc , ReadSettings                          , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/settings/writesettings.h"                         , uafc , WriteSettings                         , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/historyreadrawmodifiedsettings.h"        , uafc , HistoryReadRawModifiedSettings        , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/settings/methodcallsettings.h"                    , uafc , MethodCallSettings                    , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/settings/translatebrowsepathstonodeidssettings.h" , uafc , TranslateBrowsePathsToNodeIdsSettings , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/settings/browsesettings.h"                        , uafc , BrowseSettings                        , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)

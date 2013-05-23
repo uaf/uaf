@@ -34,6 +34,7 @@
 #include "uaf/client/results/readresulttarget.h"
 #include "uaf/client/results/translatebrowsepathstonodeidsresulttarget.h"
 #include "uaf/client/results/writeresulttarget.h"
+#include "uaf/client/results/historyreadrawmodifiedresulttarget.h"
 #include "uaf/client/results/results.h"
 %}
 
@@ -88,6 +89,7 @@ UAF_WRAP_CLASS("uaf/client/results/methodcallresulttarget.h"                    
 UAF_WRAP_CLASS("uaf/client/results/readresulttarget.h"                          , uafc , ReadResultTarget                          , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, ReadResultTargetVector)
 UAF_WRAP_CLASS("uaf/client/results/translatebrowsepathstonodeidsresulttarget.h" , uafc , TranslateBrowsePathsToNodeIdsResultTarget , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, TranslateBrowsePathsToNodeIdsResultTargetVector)
 UAF_WRAP_CLASS("uaf/client/results/writeresulttarget.h"                         , uafc , WriteResultTarget                         , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, WriteResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/historyreadrawmodifiedresulttarget.h"        , uafc , HistoryReadRawModifiedResultTarget        , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, HistoryReadRawModifiedVector)
 UAF_WRAP_CLASS("uaf/client/results/basesessionresult.h"                         , uafc , BaseSessionResult                         , COPY_YES, TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/results/basesubscriptionresult.h"                    , uafc , BaseSubscriptionResult                    , COPY_YES, TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
 
@@ -112,7 +114,7 @@ CREATE_UAFC_SYNC_SESSIONRESULT(MethodCall)
 CREATE_UAFC_SYNC_SESSIONRESULT(TranslateBrowsePathsToNodeIds)
 CREATE_UAFC_SYNC_SESSIONRESULT(Browse)
 %template(BrowseNextResult) uafc::BaseSessionResult<uafc::BrowseResultTarget, false>;
-
+CREATE_UAFC_SYNC_SESSIONRESULT(HistoryReadRawModified)
 
 // create the asynchronous session results
 CREATE_UAFC_ASYNC_SESSIONRESULT(Read)

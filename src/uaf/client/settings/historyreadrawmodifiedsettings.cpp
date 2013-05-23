@@ -60,6 +60,10 @@ namespace uafc
         ss << fillToPos(ss, colon);
         ss << ": " << (isReadModified ? "True" : "False") << "\n";
 
+        ss << indent << " - maxAutoReadMore";
+        ss << fillToPos(ss, colon);
+        ss << ": " << int(maxAutoReadMore) << "\n";
+
         ss << indent << " - numValuesPerNode";
         ss << fillToPos(ss, colon);
         ss << ": " << int(numValuesPerNode) << "\n";

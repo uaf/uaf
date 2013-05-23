@@ -84,6 +84,7 @@ CREATE_UAFC_CONFIG(MethodCall)
 CREATE_UAFC_CONFIG(TranslateBrowsePathsToNodeIds)
 CREATE_UAFC_CONFIG(Browse)
 CREATE_UAFC_CONFIG(BrowseNext)
+CREATE_UAFC_CONFIG(HistoryReadRawModified)
 CREATE_UAFC_CONFIG(CreateMonitoredData)
 CREATE_UAFC_CONFIG(CreateMonitoredEvents)
 

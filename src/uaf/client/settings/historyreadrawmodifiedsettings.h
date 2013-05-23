@@ -71,6 +71,17 @@ namespace uafc
          *  timestamps) should be returned. Default is False. */
         bool isReadModified;
 
+        /** A number defined by the UAF, to indicate how many times the UAF may automatically
+         *  call the history read OPC UA service **additionally** to the original request,
+         *  in order to get more data.
+         *  Default = 0, which means that there will be no extra service calls being invoked
+         *  automatically. But if you put this value to e.g. 10, then you can very easily retrieve
+         *  large amounts of historical data since you don't have to call the service manually
+         *  every time you get a non-NULL continuation point. You don't need to use this
+         *  attribute if you don't want it (you can leave it at 0 to effectively disable it),
+         *  but it can make your life easier! */
+        uint32_t maxAutoReadMore;
+
         /** The maximum number of values that may be returned for each node.
          *  Default = 0 = no limit. */
         uint32_t numValuesPerNode;

@@ -7,37 +7,39 @@ UAF - the Unified Architecture Framework
 ========================================
 
 
+Project website?
+-------------------------------------------------------------------------------
+
+ - **Main code repository: http://github.com/uaf/uaf**
+
+
 What?
 -------------------------------------------------------------------------------
 
- - The Unified Architecture Framework (UAF) is an open source software 
-   framework to simplify the development of **OPC UA** applications 
-   on **Linux** and **Microsoft Windows**, in **C++** and **Python**.
-   
+ - The Unified Architecture Framework (UAF) is an open source software framework to simplify the 
+   development of **OPC UA** applications on **Linux** and **Microsoft Windows**, in **C++** and **Python**.
+
 Why?
 -------------------------------------------------------------------------------
 
- - The UAF is a framework (or "toolkit") that helps you to create advanced 
-   OPC UA applications with minimal effort. Essentially, it takes care of
-   some *technical* aspects (such as Session and Subscription management,
-   server discovery, address resolution, ...) so that you can concentrate on 
+ - The UAF is a framework (or "toolkit") that helps you to create advanced OPC UA applications with 
+   minimal effort. Essentially, it takes care of some *technical* aspects (such as Session and 
+   Subscription management, server discovery, address resolution, ...) so that you can concentrate on 
    the *functional* aspects of your software application.
    
  - Some very concise and easy to understand examples can be found here:
  
-    - in Python:   [easiest_client_example.py](examples/pyuaf/client/easiest_client_example.py)
-    - in C++:      [easiest_client_example.cpp](examples/uaf/src/client/easiest_client_example.cpp)
+    - in Python:   [easiest_client_example.py](http://github.com/uaf/uaf/blob/master/examples/pyuaf/client/easiest_client_example.py)
+    - in C++:      [easiest_client_example.cpp](http://github.com/uaf/uaf/blob/master/examples/uaf/src/client/easiest_client_example.cpp)
 
- - The following example (a single example, split up into several pieces) 
-   shows you some advantages of the UAF, in Python.
-   In C++, the equivalent code would be a bit more verbose, but the C++ API 
+ - The following example (a single example, split up into several pieces) shows you some advantages 
+   of the UAF, in Python. In C++, the equivalent code would be a bit more verbose, but the C++ API 
    is essentially the same as the Python API.
 
     - **Intuitive API:**
 
-      All code from the Software Developers Kit is wrapped into some 
-      convenient namespaces and classes (many more than can be seen below 
-      of course).
+      All code from the Software Developers Kit is wrapped into some convenient namespaces and 
+      classes (many more than can be seen below of course).
 
         ```python
         import pyuaf
@@ -50,8 +52,8 @@ Why?
     
     - **Automatic discovery:**
     
-      Just provide one or more Discovery URL(s), and the UAF will then
-      automatically and periodically perform the discovery for you.
+      Just provide one or more Discovery URL(s), and the UAF will then automatically and periodically 
+      perform the discovery for you.
     
         ```python
         settings = ClientSettings()
@@ -64,12 +66,11 @@ Why?
     
     - **Easy node addressing**
     
-      You can address nodes in an absolute way 
-       (via "NodeIds" and "ExpandedNodeIds")
-      or in a relative way
-       (via "RelativePaths").
-      The UAF will resolve the addresses of the nodes, regardless on what 
-      server the nodes are hosted.
+      You can address nodes 
+        - in an absolute way (via "NodeIds" and "ExpandedNodeIds") 
+        - or in a relative way (via "RelativePaths").
+      
+      The UAF will resolve the addresses of the nodes, regardless on what server the nodes are hosted.
        
         ```python
         # first define some URIs (Uniform Resource Identifiers):
@@ -91,9 +92,8 @@ Why?
 
     - **Automatic address resolution**
     
-      You can now read/write/monitor/... the Value (or any other attribute) of the nodes 
-      that we addressed above. **Even if these nodes are hosted by multiple servers**,
-      the UAF will automatically:
+      You can now read/write/monitor/... the Value (or any other attribute) of the nodes that we 
+      addressed above. **Even if these nodes are hosted by multiple servers**, the UAF will automatically:
        
        - create the necessary Sessions and Subscriptions to the correct servers
          (or re-use existing ones if possible)
@@ -131,9 +131,8 @@ Why?
 
       You can create monitored items once, and then forget about them...
        - even if the server that hosts your monitored items is not online yet!
-       - even if the server that hosts your monitored items dies, and the 
-         relative addresses of your monitored items now suddenly point to  
-         nodes hosted by another (redundant) server!!
+       - even if the server that hosts your monitored items dies, and the relative addresses of your 
+         monitored items now suddenly point to nodes hosted by another (redundant) server!!
        
         ```python
         def myCallback(notification):
@@ -144,25 +143,39 @@ Why?
     
     - **More stuff**
         
-      For instance, UAF clients have also a generic `processRequest` method that can process
-      fully configurable `ReadRequest`s, `WriteRequest`s, `MethodCallRequest`s, ...
+      For instance, UAF clients have also a generic `processRequest` method that can process fully
+      configurable `ReadRequest`s, `WriteRequest`s, `MethodCallRequest`s, ...
         
-      Dive into the [documentation](http://uaf.github.io/uaf/doc/pyuaf)
-      or the [examples](http://uaf.github.io/uaf/doc/pyuaf/client_examples.html)
-      to find out more!
+      Dive into the [documentation] or the [examples] to find out more!
 
 
 
 Dependencies?
 -------------------------------------------------------------------------------
 
- - The UAF is based on the commercial C++ Software Developers Kit from 
-   Unified Automation. A demo version of this SDK can be downloaded
-   from their website for free:
-   http://www.unified-automation.com
+ - The UAF is based on the commercial C++ OPC UA Software Developers Kit from Unified Automation. A demo 
+   version of this SDK can be downloaded from their website for free: http://www.unified-automation.com
 
- - More info about the dependencies: see [dependencies.rst.txt](dependencies.rst.txt)
+ - More info about the dependencies: see [dependencies.rst.txt](http://github.com/uaf/uaf/blob/master/dependencies.rst.txt)
 
+
+
+Examples?
+-------------------------------------------------------------------------------
+
+ - [C++ examples](http://github.com/uaf/uaf/tree/master/examples/uaf/src)
+ 
+ - [Python examples](http://github.com/uaf/uaf/tree/master/examples/pyuaf)
+
+
+Documentation?
+-------------------------------------------------------------------------------
+
+ - The Python documentation is online [here](http://uaf.github.io/uaf/doc/pyuaf).
+ 
+ - The C++ documentation you can easily generate yourself by using [Doxygen].
+   Use the Doxyfile in the [src] directory.
+ 
 
 Status?
 -------------------------------------------------------------------------------
@@ -182,9 +195,9 @@ Status?
 Installation?
 -------------------------------------------------------------------------------
 
- - **Linux installation guide**: see [install_linux.rst.txt](install_linux.rst.txt)
+ - **Linux installation guide**: see [install_linux.rst.txt](http://github.com/uaf/uaf/blob/master/install_linux.rst.txt)
   
- - **Windows installation guide**: see [install_windows.rst.txt](install_windows.rst.txt)
+ - **Windows installation guide**: see [install_windows.rst.txt](http://github.com/uaf/uaf/blob/master/install_windows.rst.txt)
 
 
 Who?
@@ -215,3 +228,8 @@ License?
    You should have received a copy of the GNU Lesser General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
+[documentation]: http://uaf.github.io/uaf/doc/pyuaf
+[examples]: http://uaf.github.io/uaf/doc/pyuaf/client_examples.html
+[Doxygen]: http://www.doxygen.org
+[src]: http://github.com/uaf/uaf/blob/master/src
