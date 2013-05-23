@@ -22,6 +22,7 @@
 %{
 #define SWIG_FILE_WITH_INIT
 #include "uaf/util/primitives.h"
+#include "uaf/util/modificationinfo.h"
 #include "uaf/client/results/asyncresulttarget.h"
 #include "uaf/client/results/basesessionresult.h"
 #include "uaf/client/results/basesubscriptionresult.h"
@@ -56,6 +57,7 @@
 %import(module="pyuaf.util")                    "uaf/util/stringifiable.h"
 %import(module="pyuaf.util")                    "uaf/util/browsepath.h"
 %import(module="pyuaf.util")                    "uaf/util/datavalue.h"
+%import(module="pyuaf.util")                    "uaf/util/modificationinfo.h"
 
 
 // also include the typemaps

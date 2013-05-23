@@ -23,6 +23,7 @@
 #define SWIG_FILE_WITH_INIT
 #include "uaf/util/primitives.h"
 #include "uaf/util/referencedescription.h"
+#include "uaf/util/modificationinfo.h"
 #include "uaf/client/settings/clientsettings.h"
 #include "uaf/client/requests/basesessionrequesttarget.h"
 #include "uaf/client/requests/basesubscriptionrequesttarget.h"

@@ -29,6 +29,7 @@
 #include "uaf/client/settings/clientsettings.h"
 #include "uaf/util/address.h"
 #include "uaf/util/referencedescription.h"
+#include "uaf/util/modificationinfo.h"
 %}
 
 

@@ -35,6 +35,7 @@
 #include "uaf/util/logginginterface.h"
 #include "uaf/util/usertokenpolicy.h"
 #include "uaf/util/mask.h"
+#include "uaf/util/modificationinfo.h"
 #include "uaf/util/status.h"
 #include "uaf/util/serverarray.h"
 #include "uaf/util/simpleattributeoperand.h"
@@ -111,6 +112,7 @@ UAF_WRAP_CLASS("uaf/util/applicationdescription.h" , uaf , ApplicationDescriptio
 UAF_WRAP_CLASS("uaf/util/guid.h"                   , uaf , Guid                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/datetime.h"               , uaf , DateTime                , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, DateTimeVector)
 UAF_WRAP_CLASS("uaf/util/mask.h"                   , uaf , Mask                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/modificationinfo.h"       , uaf , ModificationInfo        , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/status.h"                 , uaf , Status                  , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, StatusVector)
 UAF_WRAP_CLASS("uaf/util/logmessage.h"             , uaf , LogMessage              , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/logginginterface.h"       , uaf , LoggingInterface        , COPY_NO,  TOSTRING_NO,  COMP_NO,  pyuaf.util, VECTOR_NO)

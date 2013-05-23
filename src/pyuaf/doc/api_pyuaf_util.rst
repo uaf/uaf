@@ -316,6 +316,106 @@
 
 
 
+
+*class* DataValue
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.DataValue
+
+    A DataValue holds some data value, a status, timestamps, ...
+
+
+    * Methods:
+
+        .. automethod:: pyuaf.util.DataValue.__init__
+    
+            Construct a new DataValue.
+    
+        .. automethod:: pyuaf.util.DataValue.__str__
+    
+            Get a string representation
+            
+            :rtype: ``str``
+
+
+    * Attributes:
+  
+  
+        .. autoattribute:: pyuaf.util.DataValue.data
+        
+            The data, as one of the data types described in :ref:`note-variants`.
+  
+        .. autoattribute:: pyuaf.util.DataValue.status
+        
+            The status of the data, as a :class:`~pyuaf.util.Status` instance.
+            The status contains the OPC UA status code of the data. 
+  
+        .. autoattribute:: pyuaf.util.DataValue.sourceTimestamp
+        
+            The source time stamp of the data, as a :class:`~pyuaf.util.DateTime` instance.
+  
+        .. autoattribute:: pyuaf.util.DataValue.serverTimestamp
+        
+            The server time stamp of the data, as a :class:`~pyuaf.util.DateTime` instance.
+  
+        .. autoattribute:: pyuaf.util.DataValue.sourcePicoseconds
+    
+            The number of 10 picosecond intervals that need to be added to the source timestamp
+            (to get a higher time resolution), as an ``int``.
+  
+        .. autoattribute:: pyuaf.util.DataValue.serverPicoseconds
+    
+            The number of 10 picosecond intervals that need to be added to the server timestamp
+            (to get a higher time resolution), as an ``int``.
+    
+
+
+
+*class* DataValueVector
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.DataValueVector
+
+    An DataValueVector is a container that holds elements of type 
+    :class:`pyuaf.util.DataValue`. 
+    It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+    as a ``list`` of :class:`pyuaf.util.DataValue`.
+
+    Usage example:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> from pyuaf.util import DataValueVector, DataValue
+        >>> from pyuaf.util import NodeId, LocalizedText
+        >>> from pyuaf.util import primitives
+        
+        >>> # construct a DataValueVector without elements:
+        >>> vec = DataValueVector()
+        
+        >>> noOfElements = len(vec) # will be 0
+        
+        >>> vec.append( DataValue(primitives.UInt32(1234)) )
+        
+        >>> noOfElements = len(vec) # will be 1
+        
+        >>> vec.resize(4)
+        
+        >>> noOfElements = len(vec) # will be 4
+        
+        >>> # vec[0] was already assigned to an UInt32
+        >>> vec[1].data = primitives.String("some text")
+        >>> vec[2].data = NodeId("SomeId", "SomeNsUri")
+        >>> vec[3].data = LocalizedText("en", "Some English Text")
+        
+        >>> # you may construct an EndpointDescriptionVector from a regular Python list:
+        >>> otherVec = DataValueVector( [ DataValue(), DataValue(primitives.Boolean(True))] )
+        
+    
+
+
 *class* DateTime
 ----------------------------------------------------------------------------------------------------
 
@@ -578,106 +678,6 @@
 
 
 
-
-
-
-*class* DataValue
-----------------------------------------------------------------------------------------------------
-
-
-.. autoclass:: pyuaf.util.DataValue
-
-    A DataValue holds some data value, a status, timestamps, ...
-
-
-    * Methods:
-
-        .. automethod:: pyuaf.util.DataValue.__init__
-    
-            Construct a new DataValue.
-    
-        .. automethod:: pyuaf.util.DataValue.__str__
-    
-            Get a string representation
-            
-            :rtype: ``str``
-
-
-    * Attributes:
-  
-  
-        .. autoattribute:: pyuaf.util.DataValue.data
-        
-            The data, as one of the data types described in :ref:`note-variants`.
-  
-        .. autoattribute:: pyuaf.util.DataValue.status
-        
-            The status of the data, as a :class:`~pyuaf.util.Status` instance.
-            The status contains the OPC UA status code of the data. 
-  
-        .. autoattribute:: pyuaf.util.DataValue.sourceTimestamp
-        
-            The source time stamp of the data, as a :class:`~pyuaf.util.DateTime` instance.
-  
-        .. autoattribute:: pyuaf.util.DataValue.serverTimestamp
-        
-            The server time stamp of the data, as a :class:`~pyuaf.util.DateTime` instance.
-  
-        .. autoattribute:: pyuaf.util.DataValue.sourcePicoseconds
-    
-            The number of 10 picosecond intervals that need to be added to the source timestamp
-            (to get a higher time resolution), as an ``int``.
-  
-        .. autoattribute:: pyuaf.util.DataValue.serverPicoseconds
-    
-            The number of 10 picosecond intervals that need to be added to the server timestamp
-            (to get a higher time resolution), as an ``int``.
-    
-
-
-
-*class* DataValueVector
-----------------------------------------------------------------------------------------------------
-
-
-.. autoclass:: pyuaf.util.DataValueVector
-
-    An DataValueVector is a container that holds elements of type 
-    :class:`pyuaf.util.DataValue`. 
-    It is an artifact automatically generated from the C++ UAF code, and has the same functionality
-    as a ``list`` of :class:`pyuaf.util.DataValue`.
-
-    Usage example:
-    
-    .. doctest::
-    
-        >>> import pyuaf
-        >>> from pyuaf.util import DataValueVector, DataValue
-        >>> from pyuaf.util import NodeId, LocalizedText
-        >>> from pyuaf.util import primitives
-        
-        >>> # construct a DataValueVector without elements:
-        >>> vec = DataValueVector()
-        
-        >>> noOfElements = len(vec) # will be 0
-        
-        >>> vec.append( DataValue(primitives.UInt32(1234)) )
-        
-        >>> noOfElements = len(vec) # will be 1
-        
-        >>> vec.resize(4)
-        
-        >>> noOfElements = len(vec) # will be 4
-        
-        >>> # vec[0] was already assigned to an UInt32
-        >>> vec[1].data = primitives.String("some text")
-        >>> vec[2].data = NodeId("SomeId", "SomeNsUri")
-        >>> vec[3].data = LocalizedText("en", "Some English Text")
-        
-        >>> # you may construct an EndpointDescriptionVector from a regular Python list:
-        >>> otherVec = DataValueVector( [ DataValue(), DataValue(primitives.Boolean(True))] )
-        
-    
 
 
 *class* EndpointDescription
@@ -1227,6 +1227,68 @@
             :return: A new mask, the logical AND result of the current one and the other one.
             :rtype:  :class:`pyuaf.util.Mask`
 
+
+
+
+*class* ModificationInfo
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.ModificationInfo
+
+    A ModificationInfo instance holds some information about a historical data modification.
+    
+    
+    * Methods:
+
+        .. automethod:: pyuaf.util.ModificationInfo.__init__
+            
+            Create a default ModificationInfo instance.
+
+        .. automethod:: pyuaf.util.ModificationInfo.__str__
+            
+            Get a string representation.
+
+
+    * Class attributes:
+
+        * Possible HistoryUpdateType values:
+
+            .. autoattribute:: pyuaf.util.ModificationInfo.HistoryUpdateType_Insert
+    
+                An ``int`` identifying the type of modification: in this case an insertion!
+    
+            .. autoattribute:: pyuaf.util.ModificationInfo.HistoryUpdateType_Replace
+    
+                An ``int`` identifying the type of modification: in this case a replacement!
+    
+            .. autoattribute:: pyuaf.util.ModificationInfo.HistoryUpdateType_Update
+    
+                An ``int`` identifying the type of modification: in this case an update! 
+                (in percent).
+                
+            .. autoattribute:: pyuaf.util.ModificationInfo.HistoryUpdateType_Delete
+    
+                An ``int`` identifying the type of modification: in this case a deletion!
+
+    * Attributes:
+    
+        .. autoattribute:: pyuaf.util.ModificationInfo.modificationTime
+        
+            The time when the modification took place, as a :class:`~pyuaf.util.DateTime`.
+    
+        .. autoattribute:: pyuaf.util.ModificationInfo.historyUpdateType
+        
+            The type of the modification of the historical data, as an ``int``. This value
+            should be one of the following values:
+             - :attr:`pyuaf.util.ModificationInfo.HistoryUpdateType_Insert`
+             - :attr:`pyuaf.util.ModificationInfo.HistoryUpdateType_Replace`
+             - :attr:`pyuaf.util.ModificationInfo.HistoryUpdateType_Update`
+             - :attr:`pyuaf.util.ModificationInfo.HistoryUpdateType_Delete`
+
+        .. autoattribute:: pyuaf.util.ModificationInfo.userName
+        
+            Name of the user that modified the data, as a ``str``.
 
 
 
