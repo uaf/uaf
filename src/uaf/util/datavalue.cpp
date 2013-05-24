@@ -208,7 +208,7 @@ namespace uaf
             return object1.serverTimestamp < object2.serverTimestamp;
         else if (object1.sourcePicoseconds != object2.sourcePicoseconds)
             return object1.sourcePicoseconds < object2.sourcePicoseconds;
-        else if (object1.serverPicoseconds != object2.serverPicoseconds)
+        else
             return object1.serverPicoseconds < object2.serverPicoseconds;
     }
 
