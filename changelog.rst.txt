@@ -76,6 +76,8 @@ Formally:
 
  - The following methods have been added to existing classes:
  
+    - uafc::Client.historyReadRaw() and historyReadModified()
+      (pyuaf.client.Client.historyReadRaw() and historyReadModified())
     - uaf::Status::hasSpecificOpcUaStatusCode(): replaces hasOpcUaStatusCode()
       (pyuaf.util.Status.hasSpecificOpcUaStatusCode(): replaces hasOpcUaStatusCode())
     - uaf::Status::setOpcUaStatusCode()
