@@ -36,6 +36,11 @@ Informally:
    UAF can deal with continuation points automatically.
    
 Formally:
+
+ - !!!Breaking change!!!
+    
+   A WriteResultTarget now has a 'status' attribute (of type uaf::Status / pyuaf.util.Status) 
+   instead of a 'opcUaStatusCode' attribute (of type uint32_t / int).
    
  - The following namespaces (modules) have been added:
  
