@@ -39,7 +39,8 @@ Formally:
 
  - !!!Breaking change!!!
     
-   A WriteResultTarget now has a 'status' attribute (of type uaf::Status / pyuaf.util.Status) 
+   An uafc::WriteRequestTarget / pyuaf.client.requests.WriteRequestTarget now has 
+   a 'status' attribute (of type uaf::Status / pyuaf.util.Status) 
    instead of a 'opcUaStatusCode' attribute (of type uint32_t / int).
    
  - The following namespaces (modules) have been added:
