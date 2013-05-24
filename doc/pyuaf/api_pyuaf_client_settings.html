@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client.settings &mdash; PyUAF 1.1 documentation</title>
+    <title>pyuaf.client.settings &mdash; PyUAF 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.1',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.1 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.2 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.sessionstates" href="api_pyuaf_client_sessionstates.html" />
     <link rel="prev" title="pyuaf.client.results" href="api_pyuaf_client_results.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_results.html" title="pyuaf.client.results"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -457,6 +457,118 @@ defines some properties of an OPC UA CreateMonitoredItems service invocation for
 <tt class="descclassname">BaseServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredEventsSettings.BaseServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
 in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-historyreadrawmodifiedsettings">
+<h2><em>class</em> HistoryReadRawModifiedSettings<a class="headerlink" href="#class-historyreadrawmodifiedsettings" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">HistoryReadRawModifiedSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A HistoryReadRawModifiedSettings is a subclass of
+<a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a> and
+defines some properties of an OPC UA HistoryReadRawModified service invocation.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new HistoryReadRawModifiedSettings object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=28</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a formatted string representation of the settings.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a>:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.BaseServiceSettings.callTimeoutSec">
+<tt class="descclassname">BaseServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.BaseServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<dd><p>The maximum time allowed for each service communication between client and server,
+in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Additional attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.startTime">
+<tt class="descname">startTime</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.startTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begin of the time interval to read, as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.DateTime</span></tt></a> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.endTime">
+<tt class="descname">endTime</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.endTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>End of the time interval to read, as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.DateTime</span></tt></a> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified">
+<tt class="descname">isReadModified</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified" title="Permalink to this definition">¶</a></dt>
+<dd><p><tt class="docutils literal"><span class="pre">bool</span></tt> flag: False if the values stored in the history database should be returned
+directly, True if the values that are replaced by other values (with the same
+timestamps) should be returned. Default is False.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.maxAutoReadMore">
+<tt class="descname">maxAutoReadMore</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.maxAutoReadMore" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> defined by the UAF, to indicate how many times the UAF may automatically
+call the history read OPC UA service <strong>additionally</strong> to the original request,
+in order to get more data.
+Default = 0, which means that there will be no extra service calls being invoked
+automatically. But if you put this value to e.g. 10, then you can very easily retrieve
+large amounts of historical data since you don&#8217;t have to call the service manually
+every time you get a non-NULL continuation point. You don&#8217;t need to use this
+attribute if you don&#8217;t want it (you can leave it at 0 to effectively disable it),
+but it can make your life easier!</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.numValuesPerNode">
+<tt class="descname">numValuesPerNode</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.numValuesPerNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> specifying the maximum number of values that may be returned for each node.
+Default = 0 = no limit.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.returnBounds">
+<tt class="descname">returnBounds</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.returnBounds" title="Permalink to this definition">¶</a></dt>
+<dd><p><tt class="docutils literal"><span class="pre">bool</span></tt> flag: True if the bounds (a value at or just before the start time and a value
+at or just after the end time) should be returned, False if not.
+Default is False.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.timestampsToReturn">
+<tt class="descname">timestampsToReturn</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.timestampsToReturn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select and return the timestamps as specified by this <tt class="docutils literal"><span class="pre">int</span></tt> attribute (as defined
+in the <a class="reference internal" href="api_pyuaf_util_timestampstoreturn.html#module-pyuaf.util.timestampstoreturn" title="pyuaf.util.timestampstoreturn"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.timestampstoreturn</span></tt></a> module).
+If <a class="reference internal" href="api_pyuaf_util_timestampstoreturn.html#pyuaf.util.timestampstoreturn.Both" title="pyuaf.util.timestampstoreturn.Both"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.timestampstoreturn.Both</span></tt></a> is specified, the Source timestamp
+will be used for selection.
+Default is <a class="reference internal" href="api_pyuaf_util_timestampstoreturn.html#pyuaf.util.timestampstoreturn.Source" title="pyuaf.util.timestampstoreturn.Source"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.timestampstoreturn.Source</span></tt></a>.
+Default = 0 = no limit.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.releaseContinuationPoints">
+<tt class="descname">releaseContinuationPoints</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.releaseContinuationPoints" title="Permalink to this definition">¶</a></dt>
+<dd><p><tt class="docutils literal"><span class="pre">bool</span></tt> flag: True to let the Server know that no more historical data is needed,
+and so the server may release any resources associated with the call.
+Default is False.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -1177,6 +1289,7 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
 <li><a class="reference internal" href="#class-clientsettings"><em>class</em> ClientSettings</a></li>
 <li><a class="reference internal" href="#class-createmonitoreddatasettings"><em>class</em> CreateMonitoredDataSettings</a></li>
 <li><a class="reference internal" href="#class-createmonitoredeventssettings"><em>class</em> CreateMonitoredEventsSettings</a></li>
+<li><a class="reference internal" href="#class-historyreadrawmodifiedsettings"><em>class</em> HistoryReadRawModifiedSettings</a></li>
 <li><a class="reference internal" href="#class-methodcallsettings"><em>class</em> MethodCallSettings</a></li>
 <li><a class="reference internal" href="#class-monitoreditemsettings"><em>class</em> MonitoredItemSettings</a></li>
 <li><a class="reference internal" href="#class-readsettings"><em>class</em> ReadSettings</a></li>
@@ -1235,7 +1348,7 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
         <li class="right" >
           <a href="api_pyuaf_client_results.html" title="pyuaf.client.results"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

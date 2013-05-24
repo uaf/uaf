@@ -6,12 +6,32 @@
 .. automodule:: pyuaf.util.statuscodes
 
     This module defines the status codes as specified by the UAF.
-    These status codes are more general than the (more than hundred!) status codes specified by the
-    OPC UA standard. Each "OPC UA status code" can be mapped to exactly one "UAF statuscode". 
     
-    For instance, an ``OpcUa_BadUserAccessDenied``, ``OpcUa_BadCertificateInvalid``, 
-    ``OpcUa_BadCertificateUntrusted`` (and many more) OPC UA status codes lead to a 
-    :py:attr:`pyuaf.util.statuscodes.SecurityError` status code.  
+    The *UAF status codes* 
+    (which are defined in the :mod:`pyuaf.util.statuscodes` module)
+    are not to be confused with the *OPC UA status codes* 
+    (which are defined in the :mod:`pyuaf.util.opcuastatuscodes` module). 
+    The *OPC UA status codes* are more than 200 "detailed" codes defined by the OPC UA standard, 
+    while the *UAF status codes* are around 20 more "general" codes.
+    Each one of the more than 200 *OPC UA status codes* can be mapped to exactly one *UAF status code*.
+    
+    E.g. the OPC UA :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_GoodMoreData`, 
+    :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_GoodNoData`, 
+    :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_GoodShutdownEvent` etc. codes are 
+    all mapped to the UAF :attr:`~pyuaf.util.statuscodes.Good` code since there is only one 
+    "Good" *UAF status code*.
+    
+    Similarly, an  :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadUserAccessDenied`, 
+    :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateInvalid`, 
+    :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateUntrusted` (and many more) 
+    *OPC UA status codes* lead to a 
+    :py:attr:`~pyuaf.util.statuscodes.SecurityError` *UAF status code*.  
+    
+    Simply read the *UAF status code* (e.g. with :meth:`pyuaf.util.Status.statusCode`) if you're 
+    happy with general status information, or read the *UAF + OPC UA status codes* (e.g. with 
+    :meth:`pyuaf.util.Status.statusCode` and :meth:`pyuaf.util.Status.opcUaStatusCode`) if you 
+    want more detailed status information. 
+    
     
 
     * Attributes:

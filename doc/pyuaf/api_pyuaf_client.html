@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client &mdash; PyUAF 1.1 documentation</title>
+    <title>pyuaf.client &mdash; PyUAF 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.1',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.1 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.2 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.configs" href="api_pyuaf_client_configs.html" />
     <link rel="prev" title="pyuaf" href="api_pyuaf.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -262,8 +262,9 @@ want the &#8220;normal SDK behavior&#8221;, i.e. if you want to invoke the Brows
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>addresses</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; A single address or a list of addresses of nodes that serve as the 
-starting point to browse.</li>
+<li><strong>addresses</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> of 
+<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; A single address or a list of addresses of nodes that serve as 
+the starting point to browse.</li>
 <li><strong>maxAutoBrowseNext</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; How many times do you allow the UAF to automatically invoke a
 BrowseNext for you (if that&#8217;s needed to fetch all results)? 
 This parameter will always be used instead of the 
@@ -308,11 +309,14 @@ convenience method), so for full flexibility use the other method.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>addresses</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; A single address or a list of addresses of nodes that serve as the 
-starting point to browse. You need to copy the addresses here from the
-original Browse request, so that the UAF can use these addresses to find
-out to which server the BrowseNext call should be sent.</li>
-<li><strong>continuationPoints</strong> &#8211; A <tt class="docutils literal"><span class="pre">list</span></tt> of continuation points (represented by the built-in 
+<li><strong>addresses</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> 
+of <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; A single address or a list of addresses of nodes that serve as 
+the starting point to browse. You need to copy the addresses 
+here from the original Browse request, so that the UAF can use 
+these addresses to find out to which server the BrowseNext call 
+should be sent.</li>
+<li><strong>continuationPoints</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.ByteStringVector" title="pyuaf.util.ByteStringVector"><tt class="xref py py-class docutils literal"><span class="pre">ByteStringVector</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> of 
+Python <tt class="docutils literal"><span class="pre">bytearray</span></tt> objects.) &#8211; A <tt class="docutils literal"><span class="pre">list</span></tt> of continuation points (represented by the built-in 
 Python <tt class="docutils literal"><span class="pre">bytearray</span></tt> objects).</li>
 <li><strong>serviceConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.BrowseNextConfig" title="pyuaf.client.configs.BrowseNextConfig"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextConfig</span></tt></a>) &#8211; Additional settings for processing the BrowseNext request.
 Leave None for defaults.</li>
@@ -601,6 +605,167 @@ multiple threads (created by the user, or running in the background of the Clien
 instance) try to use the FindServers service at the same time.</li>
 <li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any other errors.</li>
 </ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.historyReadModified">
+<tt class="descname">historyReadModified</tt><big>(</big><em>addresses</em>, <em>startTime</em>, <em>endTime</em>, <em>numValuesPerNode=0</em>, <em>maxAutoReadMore=0</em>, <em>continuationPoints=</em><span class="optional">[</span><span class="optional">]</span>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.historyReadModified" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the modification information of the historical data from one or more nodes
+synchronously.</p>
+<p>This is a convenience function for calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-class docutils literal"><span class="pre">processRequest</span></tt></a> with 
+a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.HistoryReadRawModifiedRequest" title="pyuaf.client.requests.HistoryReadRawModifiedRequest"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedRequest</span></tt></a> as its first argument.
+For full flexibility, use that function.</p>
+<p>Since this convenience method is meant to fetch the modification info of historical data, 
+the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified" title="pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified"><tt class="xref py py-attr docutils literal"><span class="pre">isReadModified</span></tt></a>
+flag of the serviceSettings attribute of the serviceConfig parameter
+will be forced to True!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>addresses</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> of 
+<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; A single address or a list of addresses of nodes of which the 
+historical data should be retrieved.</li>
+<li><strong>startTime</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">DateTime</span></tt></a>) &#8211; The start time of the interval from which you would like
+to see the historical data. This parameter will always be used 
+instead of the startTime attribute in the serviceSettings 
+attribute of the serviceConfig parameter!</li>
+<li><strong>endTime</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">DateTime</span></tt></a>) &#8211; The end time of the interval from which you would like
+to see the historical data. This parameter will always be used 
+instead of the startTime attribute in the serviceSettings 
+attribute of the serviceConfig parameter!</li>
+<li><strong>numValuesPerNode</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The maximum number of values that may be returned for each
+node. 0 means no limit, but you may want to put it to a
+&#8220;safe&#8221; value (e.g. 100 if you expect to receive at most
+50 historical values or so) to make sure that you&#8217;re not
+flooded by a huge stream of data values, e.g. in case you&#8217;ve
+made some mistake in the time interval!
+Default = 0.</li>
+<li><strong>maxAutoReadMore</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; How many times do you allow the UAF to automatically invoke
+a &#8220;continuation request&#8221; for you (if that&#8217;s needed to fetch
+all results)? E.g. if you specify maxAutoReadMore = 10,
+then the UAF will automatically perform subsequent
+history requests, until either all results are fetched, or
+until 10 additional requests have been invoked
+automatically.
+This parameter will always be used instead of the
+maxAutoReadMore attribute in the serviceSettings attribute
+of the serviceConfig parameter!
+Default = 0, which means that no &#8220;automatic&#8221; continuation 
+requests will be invoked by the UAF (so if you leave this
+parameter as 0 and you see that the 
+len(result.targets[x].continuationPoint) &gt; 0, then you must
+call the historyReadRaw method again with this continuationPoint
+to receive more historical data).</li>
+<li><strong>continuationPoints</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.ByteStringVector" title="pyuaf.util.ByteStringVector"><tt class="xref py py-class docutils literal"><span class="pre">ByteStringVector</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> of 
+Python <tt class="docutils literal"><span class="pre">bytearray</span></tt> objects.) &#8211; Continuation points, in case you&#8217;re continuing to read the
+istorical data of a previous request manually. By
+specifying a sufficiently large number for maxAutoReadMore,
+you can actually let the UAF handle the &#8220;continuation
+requests&#8221;, if you want. If you&#8217;re not using
+continuationPoints manually, you can simply provide an
+empty list or vector.
+Default = empty list.</li>
+<li><strong>serviceConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.HistoryReadRawModifiedConfig" title="pyuaf.client.configs.HistoryReadRawModifiedConfig"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedConfig</span></tt></a>) &#8211; Additional settings for processing the historical read request.
+Leave None for defaults.</li>
+<li><strong>sessionConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SessionConfig" title="pyuaf.client.configs.SessionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SessionConfig</span></tt></a>) &#8211; A config holding settings for the session creation.
+Leave None for defaults.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The result of the history read request.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.HistoryReadRawModifiedResult" title="pyuaf.client.results.HistoryReadRawModifiedResult"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedResult</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">Base exception, catch this to handle any UAF errors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.historyReadRaw">
+<tt class="descname">historyReadRaw</tt><big>(</big><em>addresses</em>, <em>startTime</em>, <em>endTime</em>, <em>numValuesPerNode=0</em>, <em>maxAutoReadMore=0</em>, <em>continuationPoints=</em><span class="optional">[</span><span class="optional">]</span>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.historyReadRaw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the raw historical data from one or more nodes synchronously.</p>
+<p>This is a convenience function for calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-class docutils literal"><span class="pre">processRequest</span></tt></a> with 
+a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.HistoryReadRawModifiedRequest" title="pyuaf.client.requests.HistoryReadRawModifiedRequest"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedRequest</span></tt></a> as its first argument.
+For full flexibility, use that function.</p>
+<p>Since this convenience method is meant to fetch raw historical data, the 
+<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified" title="pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified"><tt class="xref py py-attr docutils literal"><span class="pre">isReadModified</span></tt></a>
+flag of the serviceSettings attribute of the serviceConfig parameter
+will be forced to False!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>addresses</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> of 
+<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; A single address or a list of addresses of nodes of which the 
+historical data should be retrieved.</li>
+<li><strong>startTime</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">DateTime</span></tt></a>) &#8211; The start time of the interval from which you would like
+to see the historical data. This parameter will always be used 
+instead of the startTime attribute in the serviceSettings 
+attribute of the serviceConfig parameter!</li>
+<li><strong>endTime</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">DateTime</span></tt></a>) &#8211; The end time of the interval from which you would like
+to see the historical data. This parameter will always be used 
+instead of the startTime attribute in the serviceSettings 
+attribute of the serviceConfig parameter!</li>
+<li><strong>numValuesPerNode</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The maximum number of values that may be returned for each
+node. 0 means no limit, but you may want to put it to a
+&#8220;safe&#8221; value (e.g. 100 if you expect to receive at most
+50 historical values or so) to make sure that you&#8217;re not
+flooded by a huge stream of data values, e.g. in case you&#8217;ve
+made some mistake in the time interval!
+Default = 0.</li>
+<li><strong>maxAutoReadMore</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; How many times do you allow the UAF to automatically invoke
+a &#8220;continuation request&#8221; for you (if that&#8217;s needed to fetch
+all results)? E.g. if you specify maxAutoReadMore = 10,
+then the UAF will automatically perform subsequent
+history requests, until either all results are fetched, or
+until 10 additional requests have been invoked
+automatically.
+This parameter will always be used instead of the
+maxAutoReadMore attribute in the serviceSettings attribute
+of the serviceConfig parameter!
+Default = 0, which means that no &#8220;automatic&#8221; continuation 
+requests will be invoked by the UAF (so if you leave this
+parameter as 0 and you see that the 
+len(result.targets[x].continuationPoint) &gt; 0, then you must
+call the historyReadRaw method again with this continuationPoint
+to receive more historical data).</li>
+<li><strong>continuationPoints</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.ByteStringVector" title="pyuaf.util.ByteStringVector"><tt class="xref py py-class docutils literal"><span class="pre">ByteStringVector</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> of 
+Python <tt class="docutils literal"><span class="pre">bytearray</span></tt> objects.) &#8211; Continuation points, in case you&#8217;re continuing to read the
+istorical data of a previous request manually. By
+specifying a sufficiently large number for maxAutoReadMore,
+you can actually let the UAF handle the &#8220;continuation
+requests&#8221;, if you want. If you&#8217;re not using
+continuationPoints manually, you can simply provide an
+empty list or vector.
+Default = empty list.</li>
+<li><strong>serviceConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.HistoryReadRawModifiedConfig" title="pyuaf.client.configs.HistoryReadRawModifiedConfig"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedConfig</span></tt></a>) &#8211; Additional settings for processing the historical read request.
+Leave None for defaults.</li>
+<li><strong>sessionConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SessionConfig" title="pyuaf.client.configs.SessionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SessionConfig</span></tt></a>) &#8211; A config holding settings for the session creation.
+Leave None for defaults.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The result of the history read request.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.HistoryReadRawModifiedResult" title="pyuaf.client.results.HistoryReadRawModifiedResult"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedResult</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">Base exception, catch this to handle any UAF errors.</p>
 </td>
 </tr>
 </tbody>
@@ -1401,7 +1566,7 @@ state of the subscription, the handle, etc.</p>
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

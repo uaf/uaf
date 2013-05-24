@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util &mdash; PyUAF 1.1 documentation</title>
+    <title>pyuaf.util &mdash; PyUAF 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.1',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.1 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.2 documentation" href="index.html" />
     <link rel="next" title="pyuaf.util.attributeids" href="api_pyuaf_util_attributeids.html" />
     <link rel="prev" title="pyuaf.client.subscriptionstates" href="api_pyuaf_client_subscriptionstates.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -349,6 +349,41 @@ which resembles a <tt class="docutils literal"><span class="pre">list</span></tt
 </dd></dl>
 
 </div>
+<div class="section" id="class-bytestringvector">
+<h2><em>class</em> ByteStringVector<a class="headerlink" href="#class-bytestringvector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.ByteStringVector">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">ByteStringVector</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.ByteStringVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ByteStringVector is a container that holds elements of the built-in Python type
+<tt class="docutils literal"><span class="pre">bytearray</span></tt>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">bytearray</span></tt>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">ByteStringVector</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a ByteStringVector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">ByteStringVector</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 4</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># vec[0] was already assigned to bytearray(&quot;abcd&quot;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="s">&quot;efgh&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="s">&quot;ijkl&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="s">&quot;mnop&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
 <div class="section" id="class-datachangefilter">
 <h2><em>class</em> DataChangeFilter<a class="headerlink" href="#class-datachangefilter" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -463,6 +498,124 @@ or <a class="reference internal" href="#pyuaf.util.DataChangeFilter.DeadBandType
 </div></blockquote>
 </li>
 </ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-datavalue">
+<h2><em>class</em> DataValue<a class="headerlink" href="#class-datavalue" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.DataValue">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">DataValue</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.DataValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>A DataValue holds some data value, a status, timestamps, ...</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.DataValue.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.DataValue.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new DataValue.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.DataValue.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=21</em><big>)</big><a class="headerlink" href="#pyuaf.util.DataValue.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.DataValue.data">
+<tt class="descname">data</tt><a class="headerlink" href="#pyuaf.util.DataValue.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>The data, as one of the data types described in <a class="reference internal" href="api_variants.html#note-variants"><em>A note on dynamic data types</em></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.DataValue.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.DataValue.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The status of the data, as a <a class="reference internal" href="#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> instance.
+The status contains the OPC UA status code of the data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.DataValue.sourceTimestamp">
+<tt class="descname">sourceTimestamp</tt><a class="headerlink" href="#pyuaf.util.DataValue.sourceTimestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>The source time stamp of the data, as a <a class="reference internal" href="#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">DateTime</span></tt></a> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.DataValue.serverTimestamp">
+<tt class="descname">serverTimestamp</tt><a class="headerlink" href="#pyuaf.util.DataValue.serverTimestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>The server time stamp of the data, as a <a class="reference internal" href="#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">DateTime</span></tt></a> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.DataValue.sourcePicoseconds">
+<tt class="descname">sourcePicoseconds</tt><a class="headerlink" href="#pyuaf.util.DataValue.sourcePicoseconds" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of 10 picosecond intervals that need to be added to the source timestamp
+(to get a higher time resolution), as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.DataValue.serverPicoseconds">
+<tt class="descname">serverPicoseconds</tt><a class="headerlink" href="#pyuaf.util.DataValue.serverPicoseconds" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of 10 picosecond intervals that need to be added to the server timestamp
+(to get a higher time resolution), as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-datavaluevector">
+<h2><em>class</em> DataValueVector<a class="headerlink" href="#class-datavaluevector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.DataValueVector">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">DataValueVector</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.DataValueVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>An DataValueVector is a container that holds elements of type
+<a class="reference internal" href="#pyuaf.util.DataValue" title="pyuaf.util.DataValue"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.DataValue</span></tt></a>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.util.DataValue" title="pyuaf.util.DataValue"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.DataValue</span></tt></a>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">DataValueVector</span><span class="p">,</span> <span class="n">DataValue</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">NodeId</span><span class="p">,</span> <span class="n">LocalizedText</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">primitives</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a DataValueVector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">DataValueVector</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">DataValue</span><span class="p">(</span><span class="n">primitives</span><span class="o">.</span><span class="n">UInt32</span><span class="p">(</span><span class="mi">1234</span><span class="p">))</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 4</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># vec[0] was already assigned to an UInt32</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">primitives</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="s">&quot;some text&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;SomeId&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNsUri&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">LocalizedText</span><span class="p">(</span><span class="s">&quot;en&quot;</span><span class="p">,</span> <span class="s">&quot;Some English Text&quot;</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct an DataValueVector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">otherVec</span> <span class="o">=</span> <span class="n">DataValueVector</span><span class="p">(</span> <span class="p">[</span> <span class="n">DataValue</span><span class="p">(),</span> <span class="n">DataValue</span><span class="p">(</span><span class="n">primitives</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="bp">True</span><span class="p">))]</span> <span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -799,6 +952,34 @@ FILETIME (= the number of 100-nanosecond intervals since January 1, 1601 UTC).</
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The time as a <a class="reference internal" href="#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">DateTime</span></tt></a> object.</td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">DateTime</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.DateTime.sleep">
+<tt class="descname">sleep</tt><big>(</big><em>secs</em><big>)</big><a class="headerlink" href="#pyuaf.util.DateTime.sleep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static function to sleep a number of seconds.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>secs</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; Number of seconds to sleep.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.DateTime.msleep">
+<tt class="descname">msleep</tt><big>(</big><em>msecs</em><big>)</big><a class="headerlink" href="#pyuaf.util.DateTime.msleep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static function to sleep a number of milliseconds.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>msecs</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; Number of milliseconds to sleep.</td>
 </tr>
 </tbody>
 </table>
@@ -1581,6 +1762,136 @@ given.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="class-modificationinfo">
+<h2><em>class</em> ModificationInfo<a class="headerlink" href="#class-modificationinfo" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.ModificationInfo">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">ModificationInfo</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.ModificationInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>A ModificationInfo instance holds some information about a historical data modification.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.ModificationInfo.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.ModificationInfo.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a default ModificationInfo instance.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.ModificationInfo.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=21</em><big>)</big><a class="headerlink" href="#pyuaf.util.ModificationInfo.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Class attributes:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Possible HistoryUpdateType values:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.ModificationInfo.HistoryUpdateType_Insert">
+<tt class="descname">HistoryUpdateType_Insert</tt><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.util.ModificationInfo.HistoryUpdateType_Insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> identifying the type of modification: in this case an insertion!</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.ModificationInfo.HistoryUpdateType_Replace">
+<tt class="descname">HistoryUpdateType_Replace</tt><em class="property"> = 2</em><a class="headerlink" href="#pyuaf.util.ModificationInfo.HistoryUpdateType_Replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> identifying the type of modification: in this case a replacement!</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.ModificationInfo.HistoryUpdateType_Update">
+<tt class="descname">HistoryUpdateType_Update</tt><em class="property"> = 3</em><a class="headerlink" href="#pyuaf.util.ModificationInfo.HistoryUpdateType_Update" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> identifying the type of modification: in this case an update!
+(in percent).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.ModificationInfo.HistoryUpdateType_Delete">
+<tt class="descname">HistoryUpdateType_Delete</tt><em class="property"> = 4</em><a class="headerlink" href="#pyuaf.util.ModificationInfo.HistoryUpdateType_Delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> identifying the type of modification: in this case a deletion!</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.ModificationInfo.modificationTime">
+<tt class="descname">modificationTime</tt><a class="headerlink" href="#pyuaf.util.ModificationInfo.modificationTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>The time when the modification took place, as a <a class="reference internal" href="#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">DateTime</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.ModificationInfo.historyUpdateType">
+<tt class="descname">historyUpdateType</tt><a class="headerlink" href="#pyuaf.util.ModificationInfo.historyUpdateType" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type of the modification of the historical data, as an <tt class="docutils literal"><span class="pre">int</span></tt>. This value
+should be one of the following values:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#pyuaf.util.ModificationInfo.HistoryUpdateType_Insert" title="pyuaf.util.ModificationInfo.HistoryUpdateType_Insert"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.ModificationInfo.HistoryUpdateType_Insert</span></tt></a></li>
+<li><a class="reference internal" href="#pyuaf.util.ModificationInfo.HistoryUpdateType_Replace" title="pyuaf.util.ModificationInfo.HistoryUpdateType_Replace"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.ModificationInfo.HistoryUpdateType_Replace</span></tt></a></li>
+<li><a class="reference internal" href="#pyuaf.util.ModificationInfo.HistoryUpdateType_Update" title="pyuaf.util.ModificationInfo.HistoryUpdateType_Update"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.ModificationInfo.HistoryUpdateType_Update</span></tt></a></li>
+<li><a class="reference internal" href="#pyuaf.util.ModificationInfo.HistoryUpdateType_Delete" title="pyuaf.util.ModificationInfo.HistoryUpdateType_Delete"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.ModificationInfo.HistoryUpdateType_Delete</span></tt></a></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.ModificationInfo.userName">
+<tt class="descname">userName</tt><a class="headerlink" href="#pyuaf.util.ModificationInfo.userName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the user that modified the data, as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-modificationinfovector">
+<h2><em>class</em> ModificationInfoVector<a class="headerlink" href="#class-modificationinfovector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.ModificationInfoVector">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">ModificationInfoVector</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.ModificationInfoVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A ModificationInfoVector is a container that holds elements of type
+<a class="reference internal" href="#pyuaf.util.ModificationInfo" title="pyuaf.util.ModificationInfo"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.ModificationInfo</span></tt></a>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.util.ModificationInfo" title="pyuaf.util.ModificationInfo"><tt class="xref py py-class docutils literal"><span class="pre">ModificationInfo</span></tt></a>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">ModificationInfoVector</span><span class="p">,</span> <span class="n">ModificationInfo</span><span class="p">,</span> <span class="n">DateTime</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a ModificationInfoVector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">ModificationInfoVector</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ModificationInfo</span><span class="p">())</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">userName</span> <span class="o">=</span> <span class="s">&quot;John&quot;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">userName</span>          <span class="o">=</span> <span class="s">&quot;Wim&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">historyUpdateType</span> <span class="o">=</span> <span class="n">ModificationInfo</span><span class="o">.</span><span class="n">HistoryUpdateType_Delete</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">modificationTime</span>  <span class="o">=</span> <span class="n">DateTime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a ModificationInfoVector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">someOtherVec</span> <span class="o">=</span> <span class="n">ModificationInfoVector</span><span class="p">(</span> <span class="p">[</span> <span class="n">ModificationInfo</span><span class="p">(),</span> <span class="n">ModificationInfo</span><span class="p">()</span> <span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
 <div class="section" id="class-nodeid">
 <h2><em>class</em> NodeId<a class="headerlink" href="#class-nodeid" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -2353,7 +2664,7 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 <dt id="pyuaf.util.Status">
 <em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">Status</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Status" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
-<div>A Status object holds a UAF status code, a description and optionally an OPC UA status code.</div></blockquote>
+<div>A Status object holds a UAF status code, a description and an OPC UA status code.</div></blockquote>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
@@ -2377,12 +2688,15 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 <dl class="method">
 <dt id="pyuaf.util.Status.statusCode">
 <tt class="descname">statusCode</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.statusCode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the UAF status code (as defined by <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a>).</p>
+<dd><p>Get the UAF status code (as defined by <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a>).</p>
+<p>UAF status codes are not the same as OPC UA status codes!
+See the <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> and <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> modules
+for more info!</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The UAF status code (as defined by <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a>).</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The UAF status code (as defined by <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a>).</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
 </tr>
@@ -2394,6 +2708,9 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 <dt id="pyuaf.util.Status.statusCodeName">
 <tt class="descname">statusCodeName</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.statusCodeName" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the name of the UAF status code.</p>
+<p>UAF status codes are not the same as OPC UA status codes!
+See the <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> and <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> modules
+for more info!</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2421,15 +2738,22 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 </dd></dl>
 
 <dl class="method">
-<dt id="pyuaf.util.Status.hasOpcUaStatusCode">
-<tt class="descname">hasOpcUaStatusCode</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.hasOpcUaStatusCode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if the Status object, besides a UAF status code, also contains an OPC UA status
-code (which can be gotten with <a class="reference internal" href="#pyuaf.util.Status.opcUaStatusCode" title="pyuaf.util.Status.opcUaStatusCode"><tt class="xref py py-meth docutils literal"><span class="pre">opcUaStatusCode()</span></tt></a>.</p>
+<dt id="pyuaf.util.Status.hasSpecificOpcUaStatusCode">
+<tt class="descname">hasSpecificOpcUaStatusCode</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.hasSpecificOpcUaStatusCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the Status object, besides a UAF status code, also contains a specific OPC
+UA status code (which can be retrieved with <a class="reference internal" href="#pyuaf.util.Status.opcUaStatusCode" title="pyuaf.util.Status.opcUaStatusCode"><tt class="xref py py-meth docutils literal"><span class="pre">opcUaStatusCode()</span></tt></a>.</p>
+<p>With &#8220;specific&#8221; we mean anything more than just
+<a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Good" title="pyuaf.util.opcuastatuscodes.OpcUa_Good"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_Good</span></tt></a>,
+<a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Bad" title="pyuaf.util.opcuastatuscodes.OpcUa_Bad"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_Bad</span></tt></a>, or
+<a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Uncertain" title="pyuaf.util.opcuastatuscodes.OpcUa_Uncertain"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_Uncertain</span></tt></a>.</p>
+<p>UAF status codes are not the same as OPC UA status codes!
+See the <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> and <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> modules
+for more info!</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the status object has an OPC UA status code.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the status object has a specific OPC UA status code.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
 </tr>
@@ -2440,13 +2764,15 @@ code (which can be gotten with <a class="reference internal" href="#pyuaf.util.S
 <dl class="method">
 <dt id="pyuaf.util.Status.opcUaStatusCode">
 <tt class="descname">opcUaStatusCode</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.opcUaStatusCode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the OPC UA status code (only relevant
-if <a class="reference internal" href="#pyuaf.util.Status.hasOpcUaStatusCode" title="pyuaf.util.Status.hasOpcUaStatusCode"><tt class="xref py py-meth docutils literal"><span class="pre">hasOpcUaStatusCode()</span></tt></a> is True!).</p>
+<dd><p>Get the OPC UA status code.</p>
+<p>UAF status codes are not the same as OPC UA status codes!
+See the <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> and <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> modules
+for more info!</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The OPC UA status code.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The OPC UA status code, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a>.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
 </tr>
@@ -2491,10 +2817,27 @@ if <a class="reference internal" href="#pyuaf.util.Status.hasOpcUaStatusCode" ti
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>statusCode</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The new UAF status code (as defined by <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a>).</li>
+<li><strong>statusCode</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The new UAF status code (as defined by <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a>).</li>
 <li><strong>message</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The optional message.</li>
 </ul>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.setOpcUaStatusCode">
+<tt class="descname">setOpcUaStatusCode</tt><big>(</big><em>opcUaStatusCode</em><big>)</big><a class="headerlink" href="#pyuaf.util.Status.setOpcUaStatusCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the status to the given OPC UA status code.</p>
+<p>UAF status codes are not the same as OPC UA status codes!
+See the <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> and <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> modules
+for more info!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>statusCode</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The new OPC UA status code, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a>.</td>
 </tr>
 </tbody>
 </table>
@@ -3032,7 +3375,10 @@ will return True) if you want to specify the whole address space.</p>
 <li><a class="reference internal" href="#class-applicationdescription"><em>class</em> ApplicationDescription</a></li>
 <li><a class="reference internal" href="#class-applicationdescriptionvector"><em>class</em> ApplicationDescriptionVector</a></li>
 <li><a class="reference internal" href="#class-browsepath"><em>class</em> BrowsePath</a></li>
+<li><a class="reference internal" href="#class-bytestringvector"><em>class</em> ByteStringVector</a></li>
 <li><a class="reference internal" href="#class-datachangefilter"><em>class</em> DataChangeFilter</a></li>
+<li><a class="reference internal" href="#class-datavalue"><em>class</em> DataValue</a></li>
+<li><a class="reference internal" href="#class-datavaluevector"><em>class</em> DataValueVector</a></li>
 <li><a class="reference internal" href="#class-datetime"><em>class</em> DateTime</a></li>
 <li><a class="reference internal" href="#class-datetimevector"><em>class</em> DateTimeVector</a></li>
 <li><a class="reference internal" href="#class-endpointdescription"><em>class</em> EndpointDescription</a></li>
@@ -3045,6 +3391,8 @@ will return True) if you want to specify the whole address space.</p>
 <li><a class="reference internal" href="#class-logginginterface"><em>class</em> LoggingInterface</a></li>
 <li><a class="reference internal" href="#class-logmessage"><em>class</em> LogMessage</a></li>
 <li><a class="reference internal" href="#class-mask"><em>class</em> Mask</a></li>
+<li><a class="reference internal" href="#class-modificationinfo"><em>class</em> ModificationInfo</a></li>
+<li><a class="reference internal" href="#class-modificationinfovector"><em>class</em> ModificationInfoVector</a></li>
 <li><a class="reference internal" href="#class-nodeid"><em>class</em> NodeId</a></li>
 <li><a class="reference internal" href="#class-nodeididentifier"><em>class</em> NodeIdIdentifier</a></li>
 <li><a class="reference internal" href="#class-qualifiedname"><em>class</em> QualifiedName</a></li>
@@ -3111,7 +3459,7 @@ will return True) if you want to specify the whole address space.</p>
         <li class="right" >
           <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

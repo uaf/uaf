@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client.configs &mdash; PyUAF 1.1 documentation</title>
+    <title>pyuaf.client.configs &mdash; PyUAF 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.1',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.1 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.2 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.requests" href="api_pyuaf_client_requests.html" />
     <link rel="prev" title="pyuaf.client" href="api_pyuaf_client.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client.html" title="pyuaf.client"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -279,6 +279,66 @@ will only be used to resolve the addresses that are part of the
 <dt id="pyuaf.client.configs.CreateMonitoredEventsConfig.translationSettings">
 <tt class="descname">translationSettings</tt><a class="headerlink" href="#pyuaf.client.configs.CreateMonitoredEventsConfig.translationSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>The settings that will be used if the CreateMonitoredEvents request contains addresses
+that have relative paths that need to be translated.</p>
+<p>This attribute is a
+<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings" title="pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings"><tt class="xref py py-class docutils literal"><span class="pre">TranslateBrowsePathsToNodeIdsSettings</span></tt></a> instance.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-historyreadrawmodifiedconfig">
+<h2><em>class</em> HistoryReadRawModifiedConfig<a class="headerlink" href="#class-historyreadrawmodifiedconfig" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.configs.HistoryReadRawModifiedConfig">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.configs.</tt><tt class="descname">HistoryReadRawModifiedConfig</tt><a class="headerlink" href="#pyuaf.client.configs.HistoryReadRawModifiedConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>A HistoryReadRawModifiedConfig contains all service-related settings to process a
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.HistoryReadRawModifiedRequest" title="pyuaf.client.requests.HistoryReadRawModifiedRequest"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedRequest</span></tt></a>.</p>
+<p>It contains:</p>
+<blockquote>
+<div><ul class="simple">
+<li>a <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.HistoryReadRawModifiedSettings" title="pyuaf.client.settings.HistoryReadRawModifiedSettings"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedSettings</span></tt></a> instance, containing the
+settings for the actual HistoryReadRawModified service (and subsequent
+HistoryReadRawModified services that are automatically invoked
+by the UAF, if you allow the UAF to do so).</li>
+<li>a <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings" title="pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings"><tt class="xref py py-class docutils literal"><span class="pre">TranslateBrowsePathsToNodeIdsSettings</span></tt></a> instance, that
+will only be used to resolve the addresses that are part of the
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.HistoryReadRawModifiedRequest" title="pyuaf.client.requests.HistoryReadRawModifiedRequest"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedRequest</span></tt></a> (if needed).</li>
+</ul>
+</div></blockquote>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.configs.HistoryReadRawModifiedConfig.__init__">
+<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.configs.HistoryReadRawModifiedConfig.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new HistoryReadRawModifiedConfig object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.configs.HistoryReadRawModifiedConfig.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=40</em><big>)</big><a class="headerlink" href="#pyuaf.client.configs.HistoryReadRawModifiedConfig.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a formatted string representation of the config.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.configs.HistoryReadRawModifiedConfig.serviceSettings">
+<tt class="descname">serviceSettings</tt><a class="headerlink" href="#pyuaf.client.configs.HistoryReadRawModifiedConfig.serviceSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The settings that will be used for the HistoryReadRawModified service invocation.</p>
+<p>This attribute is a <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.HistoryReadRawModifiedSettings" title="pyuaf.client.settings.HistoryReadRawModifiedSettings"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedSettings</span></tt></a> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.configs.HistoryReadRawModifiedConfig.translationSettings">
+<tt class="descname">translationSettings</tt><a class="headerlink" href="#pyuaf.client.configs.HistoryReadRawModifiedConfig.translationSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The settings that will be used if the HistoryReadRawModified request contains addresses
 that have relative paths that need to be translated.</p>
 <p>This attribute is a
 <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings" title="pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings"><tt class="xref py py-class docutils literal"><span class="pre">TranslateBrowsePathsToNodeIdsSettings</span></tt></a> instance.</p>
@@ -671,6 +731,7 @@ paths that need to be translated.</p>
 <li><a class="reference internal" href="#class-browsenextconfig"><em>class</em> BrowseNextConfig</a></li>
 <li><a class="reference internal" href="#class-createmonitoreddataconfig"><em>class</em> CreateMonitoredDataConfig</a></li>
 <li><a class="reference internal" href="#class-createmonitoredeventsconfig"><em>class</em> CreateMonitoredEventsConfig</a></li>
+<li><a class="reference internal" href="#class-historyreadrawmodifiedconfig"><em>class</em> HistoryReadRawModifiedConfig</a></li>
 <li><a class="reference internal" href="#class-methodcallconfig"><em>class</em> MethodCallConfig</a></li>
 <li><a class="reference internal" href="#class-readconfig"><em>class</em> ReadConfig</a></li>
 <li><a class="reference internal" href="#class-sessionconfig"><em>class</em> SessionConfig</a></li>
@@ -724,7 +785,7 @@ paths that need to be translated.</p>
         <li class="right" >
           <a href="api_pyuaf_client.html" title="pyuaf.client"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

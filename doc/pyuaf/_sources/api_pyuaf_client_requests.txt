@@ -739,6 +739,185 @@
         >>> yetAnotherVec[2].queueSize = 10
 
 
+
+
+
+
+
+
+
+
+*class* HistoryReadRawModifiedRequest
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.client.requests.HistoryReadRawModifiedRequest
+
+    A :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequest` is a synchronous request to 
+    read historical data within a given time interval.
+    
+    * Methods:
+
+        .. automethod:: pyuaf.client.requests.HistoryReadRawModifiedRequest.__init__
+    
+            Create a new HistoryReadRawModifiedRequest object.
+            
+            :param targets: The targets of the request, either as:
+            
+                 - an ``int``, specifying the number of targets (0 by default)
+                 - a single target (a :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequestTarget`)
+                 - a vector of targets (a :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequestTargetVector`)
+    
+            :param serviceConfig: The config for the service settings.
+            :type serviceConfig: :class:`~pyuaf.client.configs.HistoryReadRawModifiedConfig`
+    
+            :param sessionConfig: The config containing the session settings.
+            :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
+    
+        .. method:: __str__()
+    
+            Get a formatted string representation of the request.
+
+
+    * Attributes
+    
+        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequest.targets
+
+            The targets, as a :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequestTargetVector`.
+    
+        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequest.serviceConfig
+
+            The service config, as a :class:`~pyuaf.client.configs.HistoryReadRawModifiedConfig`.
+    
+        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequest.sessionConfig
+
+            The session config, as a :class:`~pyuaf.client.configs.SessionConfig`.
+
+
+
+*class* HistoryReadRawModifiedRequestTarget
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.client.requests.HistoryReadRawModifiedRequestTarget
+
+    A :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequestTarget` is the part of 
+    a :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequest` that specifies the node
+    that provides the historical information, the continuation point in case you want to 
+    manually continue a history reading, etc.
+
+    
+    * Methods:
+
+        .. method:: __init__(args*)
+    
+            Create a new HistoryReadRawModifiedRequestTarget object.
+            
+            You can specify a HistoryReadRawModifiedRequestTarget in three ways:
+            
+            .. doctest::
+            
+                >>> import pyuaf
+                >>> from pyuaf.util                 import Address, ExpandedNodeId
+                >>> from pyuaf.client.requests      import HistoryReadRawModifiedRequestTarget
+                
+                >>> addressOfNodeToBeRead = Address(ExpandedNodeId("someId", "someNs", "someServerUri"))
+                >>> somePreviousContinuationPoint = bytearray() # normally you would copy the bytearray
+                >>>                                             # from a previous HistoryReadRawModifiedResult
+                
+                >>> # there are 3 ways to define a target:
+                >>> target0 = HistoryReadRawModifiedRequestTarget()
+                >>> target1 = HistoryReadRawModifiedRequestTarget(addressOfNodeToBeRead)
+                >>> target2 = HistoryReadRawModifiedRequestTarget(addressOfNodeToBeRead, somePreviousContinuationPoint)
+                
+                >>> # in case of the first target, you still need to specify an Address:
+                >>> target0.address = addressOfNodeToBeBrowsed
+    
+    
+        .. method:: __str__()
+    
+            Get a formatted string representation of the target.
+
+
+    * Attributes
+    
+        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequestTarget.address
+
+            The address of the node from which the historical data should be retrieved, 
+            as an :class:`~pyuaf.util.Address`.
+    
+        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequestTarget.continuationPoint
+
+            The continuation point of a previous HistoryRead service call, as a built-in Python ``bytearray``.
+            The UAF can automatically handle continuation points, for more info take a look
+            at the documentation of :attr:`pyuaf.client.settings.HistoryReadRawModifiedSettings.maxAutoReadMore`.
+            If you decide to use the continuation points manually, you can still do so of course
+            by copying the continuation point of a previous result
+            (:attr:`pyuaf.client.results.HistoryReadRawModifiedResultTarget.continuationPoint`) to here.
+    
+        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequestTarget.indexRange
+    
+            The index range in case the node is an array, as a ``str``.
+    
+        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequestTarget.dataEncoding
+
+            The data encoding, as a :class:`~pyuaf.util.QualifiedName`.
+            Leave NULL (i.e. don't touch) if you want to use the default encoding.
+    
+
+
+
+*class* HistoryReadRawModifiedRequestTargetVector
+----------------------------------------------------------------------------------------------------
+
+
+.. class:: pyuaf.client.requests.HistoryReadRawModifiedRequestTargetVector
+
+    An HistoryReadRawModifiedRequestTargetVector is a container that holds elements of type 
+    :class:`pyuaf.client.requests.HistoryReadRawModifiedRequestTarget`. 
+    It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+    as a ``list`` of :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequestTarget`.
+
+    Usage example:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> from pyuaf.client.requests import HistoryReadRawModifiedRequestTarget, HistoryReadRawModifiedRequestTargetVector
+        >>> from pyuaf.util            import Address, ExpandedNodeId, NodeId
+        
+        >>> # construct a vector without elements:
+        >>> vec = HistoryReadRawModifiedRequestTargetVector()
+        >>> noOfElements = len(vec) # will be 0
+        
+        >>> vec.append(HistoryReadRawModifiedRequestTarget())
+        >>> noOfElements = len(vec) # will be 1
+        >>> vec[0].address = Address(NodeId("SomeId", "SomeNs"), "SomeServerUri")
+        
+        >>> vec.resize(4)
+        >>> noOfElements = len(vec) # will be 4
+        
+        >>> # you may construct a vector from a regular Python list:
+        >>> otherVec = HistoryReadRawModifiedRequestTargetVector( 
+        ...             [ HistoryReadRawModifiedRequestTarget(Address(NodeId("myId0", "myNs"), "myServerUri")),
+        ...               HistoryReadRawModifiedRequestTarget(Address(NodeId("myId1", "myNs"), "myServerUri")) ] )
+        
+        >>> # or you may specify a number of targets directly
+        >>> yetAnotherVec = HistoryReadRawModifiedRequestTargetVector(3)
+        >>> yetAnotherVec[0].address = Address(ExpandedNodeId("SomeId0", "SomeNs", "SomeServerUri"))
+        >>> yetAnotherVec[1].address = Address(ExpandedNodeId("SomeId1", "SomeNs", "SomeServerUri"))
+        >>> yetAnotherVec[2].address = Address(ExpandedNodeId("SomeId2", "SomeNs", "SomeServerUri"))
+
+
+
+
+
+
+
+
+
+
+
 *class* MethodCallRequest
 ----------------------------------------------------------------------------------------------------
 
@@ -1282,23 +1461,45 @@
             The address of the node of which the attribute will be written, 
             as a :class:`~pyuaf.util.Address`.
     
-        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.data
-
-            The data to be written, as one of the data types described in :ref:`note-variants`.
-    
         .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.attributeId
 
             The attribute id to be written, as an ``int`` defined 
             in :mod:`~pyuaf.util.attributeids`.
-    
-        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.opcUaStatusCode
-
-            The OPC UA status code of the data to be written, as an ``int``. Default = 0 = Good.
             
         .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.indexRange
     
             The index range (as a ``str``), in case you want to partially write an array.
 
+
+    * Attributes inherited from :class:`pyuaf.util.DataValue`
+    
+        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.status
+        
+            The status of the data, as a :class:`~pyuaf.util.Status` instance.
+            The status contains the OPC UA status code of the data. 
+    
+        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.data
+
+            The data to be written, as one of the data types described in :ref:`note-variants`.
+  
+        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.sourceTimestamp
+        
+            The source time stamp of the data, as a :class:`~pyuaf.util.DateTime` instance.
+  
+        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.serverTimestamp
+        
+            The server time stamp of the data, as a :class:`~pyuaf.util.DateTime` instance.
+  
+        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.sourcePicoseconds
+    
+            The number of 10 picosecond intervals that need to be added to the source timestamp
+            (to get a higher time resolution), as an ``int``.
+  
+        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.serverPicoseconds
+    
+            The number of 10 picosecond intervals that need to be added to the server timestamp
+            (to get a higher time resolution), as an ``int``.
+    
 
 
 *class* WriteRequestTargetVector

@@ -71,10 +71,12 @@ API
    api_pyuaf_util_nodeclasses
    api_pyuaf_util_nodeididentifiertypes
    api_pyuaf_util_opcuaidentifiers
+   api_pyuaf_util_opcuastatuscodes
    api_pyuaf_util_opcuatypes
    api_pyuaf_util_primitives
    api_pyuaf_util_securitypolicies
    api_pyuaf_util_statuscodes
+   api_pyuaf_util_timestampstoreturn
    api_pyuaf_util_usertokentypes
    api_variants
 

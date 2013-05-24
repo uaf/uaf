@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client.results &mdash; PyUAF 1.1 documentation</title>
+    <title>pyuaf.client.results &mdash; PyUAF 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.1',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.1 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.2 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.settings" href="api_pyuaf_client_settings.html" />
     <link rel="prev" title="pyuaf.client.requests" href="api_pyuaf_client_requests.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_requests.html" title="pyuaf.client.requests"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -985,6 +985,199 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 </dd></dl>
 
 </div>
+<div class="section" id="class-historyreadrawmodifiedresult">
+<h2><em>class</em> HistoryReadRawModifiedResult<a class="headerlink" href="#class-historyreadrawmodifiedresult" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.results.HistoryReadRawModifiedResult">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.results.</tt><tt class="descname">HistoryReadRawModifiedResult</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.HistoryReadRawModifiedResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#pyuaf.client.results.HistoryReadRawModifiedResult" title="pyuaf.client.results.HistoryReadRawModifiedResult"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedResult</span></tt></a> is the result of a corresponding
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.HistoryReadRawModifiedRequest" title="pyuaf.client.requests.HistoryReadRawModifiedRequest"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedRequest</span></tt></a>.</p>
+<p>It tells you whether or not the requested targets have returned some historical data,
+it provides you the retrieved historical data, any continuation points left, etc.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.results.HistoryReadRawModifiedResult.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.HistoryReadRawModifiedResult.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new HistoryReadRawModifiedResult object.</p>
+<p>You should never have to create result objects yourself, the UAF will produce them
+and you will consume them.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.results.HistoryReadRawModifiedResult.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=32</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.HistoryReadRawModifiedResult.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a formatted string representation of the result.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.results.HistoryReadRawModifiedResult.targets">
+<tt class="descname">targets</tt><a class="headerlink" href="#pyuaf.client.results.HistoryReadRawModifiedResult.targets" title="Permalink to this definition">¶</a></dt>
+<dd><p>The targets, as a <a class="reference internal" href="#pyuaf.client.results.pyuaf.client.results.HistoryReadRawModifiedResultTargetVector" title="pyuaf.client.results.pyuaf.client.results.HistoryReadRawModifiedResultTargetVector"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedResultTargetVector</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.HistoryReadRawModifiedResult.overallStatus">
+<tt class="descname">overallStatus</tt><a class="headerlink" href="#pyuaf.client.results.HistoryReadRawModifiedResult.overallStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>The combined status of the targets, as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> instance.</p>
+<p>If this status is Good, then you know for sure that all the statuses of the targets
+are all Good.
+If this status is Bad, then you know that at least one of the targets has a Bad status.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.HistoryReadRawModifiedResult.requestHandle">
+<tt class="descname">requestHandle</tt><a class="headerlink" href="#pyuaf.client.results.HistoryReadRawModifiedResult.requestHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The unique handle that was originally assigned to the
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.HistoryReadRawModifiedRequest" title="pyuaf.client.requests.HistoryReadRawModifiedRequest"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedRequest</span></tt></a>
+that resulted in this
+<a class="reference internal" href="#pyuaf.client.results.HistoryReadRawModifiedResult" title="pyuaf.client.results.HistoryReadRawModifiedResult"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedResult</span></tt></a>.
+It&#8217;s a 64-bit <tt class="docutils literal"><span class="pre">long</span></tt> value, assigned by the UAF during the processing of the request.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-historyreadrawmodifiedresulttarget">
+<h2><em>class</em> HistoryReadRawModifiedResultTarget<a class="headerlink" href="#class-historyreadrawmodifiedresulttarget" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.results.HistoryReadRawModifiedResultTarget">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.results.</tt><tt class="descname">HistoryReadRawModifiedResultTarget</tt><a class="headerlink" href="#pyuaf.client.results.HistoryReadRawModifiedResultTarget" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#pyuaf.client.results.HistoryReadRawModifiedResultTarget" title="pyuaf.client.results.HistoryReadRawModifiedResultTarget"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedResultTarget</span></tt></a> corresponds exactly to the
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.HistoryReadRawModifiedRequestTarget" title="pyuaf.client.requests.HistoryReadRawModifiedRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedRequestTarget</span></tt></a> that was part of the invoked
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.HistoryReadRawModifiedRequest" title="pyuaf.client.requests.HistoryReadRawModifiedRequest"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedRequest</span></tt></a>.
+So the first target of the request corresponds to the first target of the result, and so on.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.results.HistoryReadRawModifiedResultTarget.__init__">
+<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.results.HistoryReadRawModifiedResultTarget.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new HistoryReadRawModifiedRequestTarget object.</p>
+<p>You should never have to create result targets (or results for that matter) yourself,
+the UAF will produce them and you will consume them.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.results.HistoryReadRawModifiedResultTarget.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=22</em><big>)</big><a class="headerlink" href="#pyuaf.client.results.HistoryReadRawModifiedResultTarget.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a formatted string representation of the target.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.results.HistoryReadRawModifiedResultTarget.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.client.results.HistoryReadRawModifiedResultTarget.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Status of the result target (Good if the requested data was retrieved, Bad if not),
+as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> instance.
+Apart from the UAF status code (which are defined in the
+<a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> module), you may also check the OPC UA statuscode
+(which are defined in the <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> module) since
+this provides more information (e.g. OpcUa_GoodNoData and OpcUa_GoodMoreData).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span>        <span class="kn">import</span> <span class="n">HistoryReadRawModifiedResult</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.opcuastatuscodes</span> <span class="kn">import</span> <span class="n">OpcUa_GoodNoData</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># create some simulated result, that we may have received from the client:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">someReceivedResult</span> <span class="o">=</span> <span class="n">HistoryReadRawModifiedResult</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">someReceivedResult</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># if the result didn&#39;t return any data values, you may want to check if there is</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># simply no historical data that matches your request:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">someReceivedResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dataValues</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="n">noDataFound</span> <span class="o">=</span> <span class="p">(</span><span class="n">someReceivedResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">opcUaStatusCode</span><span class="p">()</span> <span class="o">==</span> <span class="n">OpcUa_GoodNoData</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.HistoryReadRawModifiedResultTarget.clientConnectionId">
+<tt class="descname">clientConnectionId</tt><a class="headerlink" href="#pyuaf.client.results.HistoryReadRawModifiedResultTarget.clientConnectionId" title="Permalink to this definition">¶</a></dt>
+<dd><p>The id of the session that was used for this target, as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.HistoryReadRawModifiedResultTarget.autoReadMore">
+<tt class="descname">autoReadMore</tt><a class="headerlink" href="#pyuaf.client.results.HistoryReadRawModifiedResultTarget.autoReadMore" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt>, clarifying how many times did the UAF automatically invoke the historical read OPC UA service
+in addition to the original request, in order to get the remaining results?
+In case the UAF did not read more data automatically, this value will be 0.
+See <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.HistoryReadRawModifiedSettings.maxAutoReadMore" title="pyuaf.client.settings.HistoryReadRawModifiedSettings.maxAutoReadMore"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.settings.HistoryReadRawModifiedSettings.maxAutoReadMore</span></tt></a> for more info.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.HistoryReadRawModifiedResultTarget.continuationPoint">
+<tt class="descname">continuationPoint</tt><a class="headerlink" href="#pyuaf.client.results.HistoryReadRawModifiedResultTarget.continuationPoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>The continuation point, in case there are still results left at the server.The type
+of this attribute is a built-in Python <tt class="docutils literal"><span class="pre">bytearray</span></tt>.
+If the continuation point is not NULL (i.e. if it contains more than 0 bytes),
+then you should copy the continuation point to the continuation point of the next
+HistoryReadRawModifiedRequest, and perform another call.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.HistoryReadRawModifiedResultTarget.dataValues">
+<tt class="descname">dataValues</tt><a class="headerlink" href="#pyuaf.client.results.HistoryReadRawModifiedResultTarget.dataValues" title="Permalink to this definition">¶</a></dt>
+<dd><p>The requested historical data, as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DataValueVector" title="pyuaf.util.DataValueVector"><tt class="xref py py-class docutils literal"><span class="pre">DataValueVector</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.HistoryReadRawModifiedResultTarget.modificationInfos">
+<tt class="descname">modificationInfos</tt><a class="headerlink" href="#pyuaf.client.results.HistoryReadRawModifiedResultTarget.modificationInfos" title="Permalink to this definition">¶</a></dt>
+<dd><p>The requested modification information, in case the
+<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified" title="pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified</span></tt></a> flag
+was set in the settings of the original request.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-historyreadrawmodifiedresulttargetvector">
+<h2><em>class</em> HistoryReadRawModifiedResultTargetVector<a class="headerlink" href="#class-historyreadrawmodifiedresulttargetvector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.results.pyuaf.client.results.HistoryReadRawModifiedResultTargetVector">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.results.</tt><tt class="descname">HistoryReadRawModifiedResultTargetVector</tt><a class="headerlink" href="#pyuaf.client.results.pyuaf.client.results.HistoryReadRawModifiedResultTargetVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>An HistoryReadRawModifiedResultTargetVector is a container that holds elements of type
+<a class="reference internal" href="#pyuaf.client.results.HistoryReadRawModifiedResultTarget" title="pyuaf.client.results.HistoryReadRawModifiedResultTarget"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.results.HistoryReadRawModifiedResultTarget</span></tt></a>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.client.results.HistoryReadRawModifiedResultTarget" title="pyuaf.client.results.HistoryReadRawModifiedResultTarget"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedResultTarget</span></tt></a>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="kn">import</span> <span class="n">HistoryReadRawModifiedResultTarget</span><span class="p">,</span> <span class="n">HistoryReadRawModifiedResultTargetVector</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a realistic result, for instance one with 5 targets:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span> <span class="o">=</span> <span class="n">HistoryReadRawModifiedResultTargetVector</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c"># will be 5  (alternative: targets.size())</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target0_isGood</span>        <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target0_retrievedData</span> <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dataValues</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># other methods of the vector:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">HistoryReadRawModifiedResultTarget</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">someTarget</span> <span class="o">=</span> <span class="n">targets</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># ...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
 <div class="section" id="class-methodcallresult">
 <h2><em>class</em> MethodCallResult<a class="headerlink" href="#class-methodcallresult" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -1231,25 +1424,52 @@ the UAF will produce them and you will consume them.</p>
 <li><p class="first">Attributes</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.results.ReadResultTarget.status">
-<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.client.results.ReadResultTarget.status" title="Permalink to this definition">¶</a></dt>
-<dd><p>Status of the result target (Good if the request target was read, Bad if not),
-as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> instance.</p>
-</dd></dl>
-
-<dl class="attribute">
 <dt id="pyuaf.client.results.ReadResultTarget.clientConnectionId">
 <tt class="descname">clientConnectionId</tt><a class="headerlink" href="#pyuaf.client.results.ReadResultTarget.clientConnectionId" title="Permalink to this definition">¶</a></dt>
 <dd><p>The id of the session that was used for this target, as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
 </dd></dl>
 
+</div></blockquote>
+</li>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DataValue" title="pyuaf.util.DataValue"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.DataValue</span></tt></a></p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.results.ReadResultTarget.status">
+<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.client.results.ReadResultTarget.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The status of the data, as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> instance.
+The status contains the OPC UA status code of the data.</p>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="pyuaf.client.results.ReadResultTarget.data">
 <tt class="descname">data</tt><a class="headerlink" href="#pyuaf.client.results.ReadResultTarget.data" title="Permalink to this definition">¶</a></dt>
-<dd><p>The data that was read.</p>
-<p>The type of this data could be an <a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.UInt32" title="pyuaf.util.primitives.UInt32"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.primitives.UInt32</span></tt></a>,
-an array of <a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.Float" title="pyuaf.util.primitives.Float"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.primitives.Float</span></tt></a>, a <tt class="docutils literal"><span class="pre">str</span></tt>,
-a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.LocalizedText</span></tt></a>, ... See <a class="reference internal" href="api_variants.html#note-variants"><em>A note on dynamic data types</em></a>.</p>
+<dd><p>The data that was read, as one of the data types described in <a class="reference internal" href="api_variants.html#note-variants"><em>A note on dynamic data types</em></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.ReadResultTarget.sourceTimestamp">
+<tt class="descname">sourceTimestamp</tt><a class="headerlink" href="#pyuaf.client.results.ReadResultTarget.sourceTimestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>The source time stamp of the data, as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">DateTime</span></tt></a> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.ReadResultTarget.serverTimestamp">
+<tt class="descname">serverTimestamp</tt><a class="headerlink" href="#pyuaf.client.results.ReadResultTarget.serverTimestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>The server time stamp of the data, as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">DateTime</span></tt></a> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.ReadResultTarget.sourcePicoseconds">
+<tt class="descname">sourcePicoseconds</tt><a class="headerlink" href="#pyuaf.client.results.ReadResultTarget.sourcePicoseconds" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of 10 picosecond intervals that need to be added to the source timestamp
+(to get a higher time resolution), as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.ReadResultTarget.serverPicoseconds">
+<tt class="descname">serverPicoseconds</tt><a class="headerlink" href="#pyuaf.client.results.ReadResultTarget.serverPicoseconds" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of 10 picosecond intervals that need to be added to the server timestamp
+(to get a higher time resolution), as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -1616,6 +1836,9 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 <li><a class="reference internal" href="#class-createmonitoredeventsresult"><em>class</em> CreateMonitoredEventsResult</a></li>
 <li><a class="reference internal" href="#class-createmonitoredeventsresulttarget"><em>class</em> CreateMonitoredEventsResultTarget</a></li>
 <li><a class="reference internal" href="#class-createmonitoredeventsresulttargetvector"><em>class</em> CreateMonitoredEventsResultTargetVector</a></li>
+<li><a class="reference internal" href="#class-historyreadrawmodifiedresult"><em>class</em> HistoryReadRawModifiedResult</a></li>
+<li><a class="reference internal" href="#class-historyreadrawmodifiedresulttarget"><em>class</em> HistoryReadRawModifiedResultTarget</a></li>
+<li><a class="reference internal" href="#class-historyreadrawmodifiedresulttargetvector"><em>class</em> HistoryReadRawModifiedResultTargetVector</a></li>
 <li><a class="reference internal" href="#class-methodcallresult"><em>class</em> MethodCallResult</a></li>
 <li><a class="reference internal" href="#class-methodcallresulttarget"><em>class</em> MethodCallResultTarget</a></li>
 <li><a class="reference internal" href="#class-methodcallresulttargetvector"><em>class</em> MethodCallResultTargetVector</a></li>
@@ -1675,7 +1898,7 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
         <li class="right" >
           <a href="api_pyuaf_client_requests.html" title="pyuaf.client.requests"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

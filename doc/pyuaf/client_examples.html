@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Client examples &mdash; PyUAF 1.1 documentation</title>
+    <title>Client examples &mdash; PyUAF 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.1',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.1 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.2 documentation" href="index.html" />
     <link rel="next" title="pyuaf" href="api_pyuaf.html" />
     <link rel="prev" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)" href="index.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="index.html" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -409,29 +409,18 @@
 
 
 
-<span class="c"># read the node attributes all at once</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;First option: use the convenience function </span><span class="se">\&quot;</span><span class="s">browse()</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;===================================================&quot;</span><span class="p">)</span>
     
-    <span class="c"># OPTIONAL: You could also provide a BrowseConfig to configure a call timeout</span>
-    <span class="n">serviceConfig</span> <span class="o">=</span> <span class="n">BrowseConfig</span><span class="p">()</span>
-    <span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">2.0</span>
-    
-    <span class="c"># OPTIONAL: And you could also provide a SessionConfig to configure the sessions </span>
-    <span class="c">#           (e.g. set the timeout to 600.0 seconds)</span>
-    <span class="c">#           For more info about SessionConfigs, see the sessionconfig example</span>
-    <span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">SessionConfig</span><span class="p">()</span>
-    <span class="n">sessionConfig</span><span class="o">.</span><span class="n">defaultSessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">600.0</span>
-    
     <span class="c"># now browse the root node</span>
     <span class="c"># (notice that there is also an argument called &#39;maxAutoBrowseNext&#39;, which we don&#39;t mention</span>
     <span class="c">#  here because we can leave it at the default value (100), to make sure that BrowseNext is </span>
     <span class="c"># automatically being called for us as much as needed!)</span>
-    <span class="n">firstLevelBrowseResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">browse</span><span class="p">(</span> <span class="n">addresses</span>     <span class="o">=</span> <span class="p">[</span><span class="n">rootNode</span><span class="p">],</span>
-                                              <span class="n">serviceConfig</span> <span class="o">=</span> <span class="n">serviceConfig</span><span class="p">,</span> <span class="c"># optional argument</span>
-                                              <span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">sessionConfig</span><span class="p">)</span> <span class="c"># optional argument</span>
+    <span class="c"># (notice too that you can optionally provide a BrowseConfig and a SessionConfig for </span>
+    <span class="c">#  more detailed configuration)</span>
+    <span class="n">firstLevelBrowseResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">browse</span><span class="p">([</span><span class="n">rootNode</span><span class="p">])</span>
     
     <span class="c"># print the result</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot; - Browse result of the first level:&quot;</span><span class="p">)</span>
@@ -449,9 +438,7 @@
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">noOfFoundReferences</span><span class="p">):</span>
         <span class="n">newNodesToBeBrowsed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">Address</span><span class="p">(</span><span class="n">firstLevelBrowseResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">references</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">nodeId</span><span class="p">)</span> <span class="p">)</span>
     
-    <span class="n">secondLevelBrowseResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">browse</span><span class="p">(</span> <span class="n">addresses</span>     <span class="o">=</span> <span class="n">newNodesToBeBrowsed</span><span class="p">,</span>
-                                               <span class="n">serviceConfig</span> <span class="o">=</span> <span class="n">serviceConfig</span><span class="p">,</span> <span class="c"># optional argument</span>
-                                               <span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">sessionConfig</span><span class="p">)</span> <span class="c"># optional argument</span>
+    <span class="n">secondLevelBrowseResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">browse</span><span class="p">(</span><span class="n">newNodesToBeBrowsed</span><span class="p">)</span>
     
     <span class="c"># print the result</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot; - Browse result of the second level:&quot;</span><span class="p">)</span>
@@ -505,6 +492,243 @@
 <span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;Some error occurred: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
     <span class="k">raise</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-read-some-historical-data">
+<h2>How to read some historical data?<a class="headerlink" href="#how-to-read-some-historical-data" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># examples/pyuaf/client/how_to_read_some_historical_data.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">EXAMPLE: how to read some historical data</span>
+<span class="sd">====================================================================================================</span>
+
+<span class="sd">A UAF Client can read historical data in two ways:</span>
+<span class="sd">  - either using the &quot;convenience&quot; methods: historyReadRaw() and historyReadModified()</span>
+<span class="sd">  - or using the &quot;generic&quot; method: processRequest() </span>
+
+<span class="sd">The &quot;convenience&quot; methods (such as read(), write(), call(), ...) are conveniently to use </span>
+<span class="sd"> (since they accept the most frequently used parameters directly), </span>
+<span class="sd">but they are less powerful than the &quot;generic&quot; processRequest() method </span>
+<span class="sd"> (since this method accepts ReadRequests, WriteRequests, etc. that can be fully configured).</span>
+
+<span class="sd">In this example, we will use both ways to read historical data.</span>
+
+<span class="sd">As will be shown in this example, the UAF can automatically take care of subsequent </span>
+<span class="sd">history reading calls, when the first call returned a continuation point (because either the server</span>
+<span class="sd">or the client restricted the number of results that were passed in one OPC UA message).</span>
+<span class="sd">With this &quot;automatic&quot; UAF feature, you don&#39;t have to worry about incomplete results anymore!</span>
+
+<span class="sd">To run the example, start the UaDemoServer of UnifiedAutomation first on the same machine. </span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client</span>           <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>  <span class="kn">import</span> <span class="n">HistoryReadRawModifiedRequest</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.configs</span>   <span class="kn">import</span> <span class="n">HistoryReadRawModifiedConfig</span><span class="p">,</span> <span class="n">SessionConfig</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">DateTime</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">DataValue</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Status</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">primitives</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">opcuaidentifiers</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">opcuastatuscodes</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util.errors</span>      <span class="kn">import</span> <span class="n">UafError</span>
+
+
+<span class="c"># define the namespace URI and server URI of the UaDemoServer</span>
+<span class="n">demoNsUri</span>     <span class="o">=</span> <span class="s">&quot;DemoNodeManager&quot;</span>
+<span class="n">demoServerUri</span> <span class="o">=</span> <span class="s">&quot;urn:UnifiedAutomation:UaDemoserver&quot;</span>
+
+<span class="c"># define the address of the node that provides the historical data</span>
+<span class="n">counterAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;CounterWithHistory&quot;</span><span class="p">,</span> <span class="n">demoNsUri</span><span class="p">),</span> <span class="n">demoServerUri</span> <span class="p">)</span>
+
+<span class="c"># define the ClientSettings:</span>
+<span class="n">settings</span> <span class="o">=</span> <span class="n">ClientSettings</span><span class="p">()</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">applicationName</span> <span class="o">=</span> <span class="s">&quot;MyClient&quot;</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">)</span>
+
+<span class="c"># create the client</span>
+<span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+
+
+<span class="c"># apparently, the counter of the demo server starts only to keep history after we read it once</span>
+<span class="n">readResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">([</span><span class="n">counterAddress</span><span class="p">])</span>
+<span class="k">if</span> <span class="n">readResult</span><span class="o">.</span><span class="n">overallStatus</span><span class="o">.</span><span class="n">isGood</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;The counter was read (value: </span><span class="si">%d</span><span class="s">)&quot;</span> <span class="o">%</span><span class="n">readResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+<span class="c"># now wait a bit more than a second, so that we have at least one second of historical data</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;First option: use the convenience functions historyReadRaw() and historyReadModified()&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;======================================================================================&quot;</span><span class="p">)</span>
+    
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;First example:&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;-------------&quot;</span><span class="p">)</span>
+    
+    <span class="c"># Read the raw historical data </span>
+    <span class="c">#   - that is provided by the counter node,</span>
+    <span class="c">#   - that was recorded during the past second</span>
+    <span class="c">#   - with a maximum of a 100 returned values </span>
+    <span class="c">#     (we expect around 10 values, so 100 is a very safe margin) </span>
+    <span class="c">#   - and let the UAF invoke at most 10 &quot;continuation calls&quot;</span>
+    <span class="c">#     (we expect that all data can be returned by a single call, so a maximum of 10 </span>
+    <span class="c">#      additional calls is again a very safe margin)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">historyReadRaw</span><span class="p">(</span><span class="n">addresses</span>          <span class="o">=</span> <span class="p">[</span><span class="n">counterAddress</span><span class="p">],</span>
+                                     <span class="n">startTime</span>          <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+                                     <span class="n">endTime</span>            <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span>
+                                     <span class="n">numValuesPerNode</span>   <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> 
+                                     <span class="n">maxAutoReadMore</span>    <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+    
+    <span class="c"># print the result:</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+    
+    <span class="c"># do some processing on the result</span>
+    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isNotGood</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Could not read historical data from the counter: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dataValues</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c"># Strange, we didn&#39;t receive any historical data.</span>
+            <span class="c"># Check if this is expected behavior:</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">opcUaStatusCode</span><span class="p">()</span> <span class="o">==</span> <span class="n">opcuastatuscodes</span><span class="o">.</span><span class="n">OpcUa_GoodNoData</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&quot;OK, no data could be received because he server reports that there is &quot;</span>
+                      <span class="s">&quot;no data that matches your request&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">allStatuses</span>    <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">allIntValues</span>   <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">allSourceTimes</span> <span class="o">=</span> <span class="p">[]</span>
+            
+            <span class="k">for</span> <span class="n">dataValue</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dataValues</span><span class="p">:</span>
+                <span class="c"># check the data type</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">dataValue</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="n">primitives</span><span class="o">.</span><span class="n">UInt32</span><span class="p">:</span>
+                    
+                    <span class="c"># NOTE that dataValue is just a POINTER!</span>
+                    <span class="c"># So if you want to copy any objects </span>
+                    <span class="c">#  (like we&#39;re copying Status or DateTime objects to a Python list in this case),</span>
+                    <span class="c"># then you must use the copy constructors </span>
+                    <span class="c">#  (like Status(...) and DateTime(...) in this case),</span>
+                    <span class="c"># to actually copy the data!</span>
+                    <span class="c"># If you don&#39;t do this, then you will just create pointers to the underlying data.</span>
+                    <span class="c"># And when Python garbage collects this data, your pointers will point to</span>
+                    <span class="c"># invalid memory, and your software will crash when you try to use them!</span>
+                    
+                    <span class="n">allStatuses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">Status</span><span class="p">(</span><span class="n">dataValue</span><span class="o">.</span><span class="n">status</span><span class="p">)</span> <span class="p">)</span>               <span class="c"># notice the copy constructor!</span>
+                    <span class="n">allIntValues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">dataValue</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span> <span class="p">)</span>                  <span class="c"># an int, no copy constructor needed</span>
+                    <span class="n">allSourceTimes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">dataValue</span><span class="o">.</span><span class="n">sourceTimestamp</span><span class="p">)</span> <span class="p">)</span> <span class="c"># notice the copy constructor!</span>
+            
+            <span class="c"># now print the lists </span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;The results are:&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">allIntValues</span><span class="p">)):</span>
+                
+                <span class="n">timeFloat</span>  <span class="o">=</span> <span class="n">allSourceTimes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">ctime</span><span class="p">()</span>
+                <span class="n">timeTuple</span>  <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span> <span class="nb">long</span><span class="p">(</span><span class="n">timeFloat</span><span class="p">)</span> <span class="p">)</span>
+                <span class="n">timeString</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&quot;%H:%M:%S&quot;</span><span class="p">,</span> <span class="n">timeTuple</span><span class="p">)</span>   \
+                             <span class="o">+</span> <span class="s">&quot;.&quot;</span>                                  \
+                             <span class="o">+</span> <span class="p">(</span><span class="s">&quot;</span><span class="si">%.3d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">allSourceTimes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">msec</span><span class="p">())</span>
+                
+                <span class="k">print</span><span class="p">(</span><span class="s">&quot;Code=</span><span class="si">%d</span><span class="s"> - Value=</span><span class="si">%d</span><span class="s"> - Time=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">allStatuses</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">statusCode</span><span class="p">(),</span> <span class="n">allIntValues</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">timeString</span><span class="p">))</span>
+    
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Second example:&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;--------------&quot;</span><span class="p">)</span>
+    <span class="c"># Now do the same, but this time get the modifications of the data of the last second.</span>
+    <span class="c"># Since we didn&#39;t do any modifications, none will be reported!</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">historyReadModified</span><span class="p">(</span><span class="n">addresses</span>          <span class="o">=</span> <span class="p">[</span><span class="n">counterAddress</span><span class="p">],</span>
+                                          <span class="n">startTime</span>          <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+                                          <span class="n">endTime</span>            <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span>
+                                          <span class="n">numValuesPerNode</span>   <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> 
+                                          <span class="n">maxAutoReadMore</span>    <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+    
+    <span class="c"># print the result:</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+    
+    
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Third example:&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;--------------&quot;</span><span class="p">)</span>
+    
+    <span class="c"># Now suppose we want to use the continuation points manually, </span>
+    <span class="c"># instead of letting the UAF handle them.</span>
+    <span class="c"># We therefore put </span>
+    <span class="c">#   - numValuesPerNode to a very low value, so that not all results will be retrieved at once</span>
+    <span class="c">#   - maxAutoReadMore to 0, so that the UAF may not invoke &quot;continuation request&quot; automatically</span>
+    
+    <span class="n">startTime</span> <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">endTime</span>   <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+    
+    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">historyReadRaw</span><span class="p">(</span><span class="n">addresses</span>          <span class="o">=</span> <span class="p">[</span><span class="n">counterAddress</span><span class="p">],</span>
+                                     <span class="n">startTime</span>          <span class="o">=</span> <span class="n">startTime</span><span class="p">,</span>
+                                     <span class="n">endTime</span>            <span class="o">=</span> <span class="n">endTime</span><span class="p">,</span>
+                                     <span class="n">numValuesPerNode</span>   <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> 
+                                     <span class="n">maxAutoReadMore</span>    <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+    
+    <span class="c"># append all DataValues to the following list:</span>
+    <span class="n">allDataValues</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="k">for</span> <span class="n">dataValue</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dataValues</span><span class="p">:</span>
+        <span class="n">allDataValues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">DataValue</span><span class="p">(</span><span class="n">dataValue</span><span class="p">)</span> <span class="p">)</span> <span class="c"># notice the copy constructor!!!</span>
+    
+    <span class="c"># as long as we get continuation points, we must continue to read the data</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">continuationPoint</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        
+        <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">historyReadRaw</span><span class="p">(</span><span class="n">addresses</span>          <span class="o">=</span> <span class="p">[</span><span class="n">counterAddress</span><span class="p">],</span>
+                                         <span class="n">startTime</span>          <span class="o">=</span> <span class="n">startTime</span><span class="p">,</span>
+                                         <span class="n">endTime</span>            <span class="o">=</span> <span class="n">endTime</span><span class="p">,</span>
+                                         <span class="n">numValuesPerNode</span>   <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> 
+                                         <span class="n">maxAutoReadMore</span>    <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+                                         <span class="n">continuationPoints</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">continuationPoint</span><span class="p">])</span>
+        
+        <span class="k">for</span> <span class="n">dataValue</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dataValues</span><span class="p">:</span>
+            <span class="n">allDataValues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">DataValue</span><span class="p">(</span><span class="n">dataValue</span><span class="p">)</span> <span class="p">)</span> <span class="c"># notice the copy constructor!!!</span>
+    
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;The following values were received:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">dataValue</span> <span class="ow">in</span> <span class="n">allDataValues</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot; - </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">dataValue</span><span class="o">.</span><span class="n">toCompactString</span><span class="p">())</span>
+    
+    
+    
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Second option: use the generic method processRequest()&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;======================================================&quot;</span><span class="p">)</span>
+    
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Fourth example:&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;---------------&quot;</span><span class="p">)</span>
+    
+    <span class="c"># create a request with 1 target</span>
+    <span class="n">request</span> <span class="o">=</span> <span class="n">HistoryReadRawModifiedRequest</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">counterAddress</span>
+    
+    <span class="c"># configure the request:</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">startTime</span>                <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">endTime</span>                  <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span>           <span class="o">=</span> <span class="mf">2.0</span>                        <span class="c"># optional of course</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">numValuesPerNode</span>         <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">maxAutoReadMore</span>          <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">isReadModified</span>           <span class="o">=</span> <span class="bp">False</span>                      <span class="c"># we want raw historical data</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">sessionConfig</span><span class="o">.</span><span class="n">defaultSessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">600.0</span>                      <span class="c"># optional of course</span>
+    
+    <span class="c"># process the request</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">processRequest</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    
+    <span class="c"># print the result</span>
+    <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+    
+    <span class="c"># process the result in the same way as before</span>
+    
+<span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Some error occurred: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
+    <span class="k">raise</span>
+
+<span class="c"># don&#39;t worry about closing sessions etc., the UAF client will cleanup everything</span>
+<span class="c"># when it&#39;s garbage collected</span>
 </pre></div>
 </div>
 </div>
@@ -719,6 +943,7 @@
 <li><a class="reference internal" href="#how-to-define-addresses">How to define addresses?</a></li>
 <li><a class="reference internal" href="#how-to-read-some-data">How to read some data?</a></li>
 <li><a class="reference internal" href="#how-to-browse-some-nodes">How to browse some nodes?</a></li>
+<li><a class="reference internal" href="#how-to-read-some-historical-data">How to read some historical data?</a></li>
 <li><a class="reference internal" href="#how-to-change-the-default-session-behavior">How to change the default session behavior?</a></li>
 <li><a class="reference internal" href="#how-to-change-the-default-subscription-behavior">How to change the default subscription_behavior?</a></li>
 </ul>
@@ -768,7 +993,7 @@
         <li class="right" >
           <a href="index.html" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

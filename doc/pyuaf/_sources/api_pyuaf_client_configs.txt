@@ -209,6 +209,57 @@ In UAF terminology, a ``Config`` contains one or more ``Settings`` (which are de
 
 
 
+*class* HistoryReadRawModifiedConfig
+----------------------------------------------------------------------------------------------------
+
+.. autoclass:: pyuaf.client.configs.HistoryReadRawModifiedConfig
+
+    A HistoryReadRawModifiedConfig contains all service-related settings to process a 
+    :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequest`.
+    
+    It contains:
+    
+      - a :class:`~pyuaf.client.settings.HistoryReadRawModifiedSettings` instance, containing the 
+        settings for the actual HistoryReadRawModified service (and subsequent 
+        HistoryReadRawModified services that are automatically invoked
+        by the UAF, if you allow the UAF to do so).
+        
+      - a :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings` instance, that
+        will only be used to resolve the addresses that are part of the 
+        :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequest` (if needed).
+
+
+    * Methods:
+
+        .. automethod:: pyuaf.client.configs.HistoryReadRawModifiedConfig.__init__
+    
+            Create a new HistoryReadRawModifiedConfig object.
+            
+    
+        .. automethod:: pyuaf.client.configs.HistoryReadRawModifiedConfig.__str__
+    
+            Get a formatted string representation of the config.
+
+
+    * Attributes
+    
+        .. autoattribute:: pyuaf.client.configs.HistoryReadRawModifiedConfig.serviceSettings
+
+            The settings that will be used for the HistoryReadRawModified service invocation.
+            
+            This attribute is a :class:`~pyuaf.client.settings.HistoryReadRawModifiedSettings` instance.
+    
+        .. autoattribute:: pyuaf.client.configs.HistoryReadRawModifiedConfig.translationSettings
+
+            The settings that will be used if the HistoryReadRawModified request contains addresses 
+            that have relative paths that need to be translated.
+            
+            This attribute is a 
+            :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings` instance.
+
+
+
+
 
 *class* MethodCallConfig
 ----------------------------------------------------------------------------------------------------

@@ -341,6 +341,98 @@
 
 
 
+
+
+
+
+*class* HistoryReadRawModifiedSettings
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.client.settings.HistoryReadRawModifiedSettings
+
+    A HistoryReadRawModifiedSettings is a subclass of 
+    :class:`pyuaf.client.settings.BaseServiceSettings` and 
+    defines some properties of an OPC UA HistoryReadRawModified service invocation.
+
+    
+    * Methods:
+
+        .. automethod:: pyuaf.client.settings.HistoryReadRawModifiedSettings.__init__
+    
+            Create a new HistoryReadRawModifiedSettings object.
+            
+        .. automethod:: pyuaf.client.settings.HistoryReadRawModifiedSettings.__str__
+    
+            Get a formatted string representation of the settings.
+
+
+    * Attributes inherited from :class:`pyuaf.client.settings.BaseServiceSettings`:
+    
+        .. autoattribute:: pyuaf.client.settings.BaseServiceSettings.callTimeoutSec
+
+            The maximum time allowed for each service communication between client and server,
+            in seconds, as a ``float``.
+    
+    * Additional attributes:
+        
+        .. autoattribute:: pyuaf.client.settings.HistoryReadRawModifiedSettings.startTime
+        
+            Begin of the time interval to read, as a :class:`pyuaf.util.DateTime` instance.
+        
+        .. autoattribute:: pyuaf.client.settings.HistoryReadRawModifiedSettings.endTime
+        
+            End of the time interval to read, as a :class:`pyuaf.util.DateTime` instance.
+        
+        .. autoattribute:: pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified
+        
+            ``bool`` flag: False if the values stored in the history database should be returned
+            directly, True if the values that are replaced by other values (with the same
+            timestamps) should be returned. Default is False.
+        
+        .. autoattribute:: pyuaf.client.settings.HistoryReadRawModifiedSettings.maxAutoReadMore
+        
+            An ``int`` defined by the UAF, to indicate how many times the UAF may automatically
+            call the history read OPC UA service **additionally** to the original request,
+            in order to get more data.
+            Default = 0, which means that there will be no extra service calls being invoked
+            automatically. But if you put this value to e.g. 10, then you can very easily retrieve
+            large amounts of historical data since you don't have to call the service manually
+            every time you get a non-NULL continuation point. You don't need to use this
+            attribute if you don't want it (you can leave it at 0 to effectively disable it),
+            but it can make your life easier!
+        
+        .. autoattribute:: pyuaf.client.settings.HistoryReadRawModifiedSettings.numValuesPerNode
+        
+            An ``int`` specifying the maximum number of values that may be returned for each node.
+            Default = 0 = no limit.
+        
+        .. autoattribute:: pyuaf.client.settings.HistoryReadRawModifiedSettings.returnBounds
+        
+            ``bool`` flag: True if the bounds (a value at or just before the start time and a value
+            at or just after the end time) should be returned, False if not.
+            Default is False.
+        
+        .. autoattribute:: pyuaf.client.settings.HistoryReadRawModifiedSettings.timestampsToReturn
+        
+            Select and return the timestamps as specified by this ``int`` attribute (as defined
+            in the :mod:`pyuaf.util.timestampstoreturn` module).
+            If :attr:`pyuaf.util.timestampstoreturn.Both` is specified, the Source timestamp
+            will be used for selection.
+            Default is :attr:`pyuaf.util.timestampstoreturn.Source`.
+            Default = 0 = no limit.
+        
+        .. autoattribute:: pyuaf.client.settings.HistoryReadRawModifiedSettings.releaseContinuationPoints
+        
+            ``bool`` flag: True to let the Server know that no more historical data is needed,
+            and so the server may release any resources associated with the call.
+            Default is False. 
+
+
+
+
+
+
 *class* MethodCallSettings
 ----------------------------------------------------------------------------------------------------
 

@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util.statuscodes &mdash; PyUAF 1.1 documentation</title>
+    <title>pyuaf.util.statuscodes &mdash; PyUAF 1.2 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.1',
+        VERSION:     '1.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.1 documentation" href="index.html" />
-    <link rel="next" title="pyuaf.util.usertokentypes" href="api_pyuaf_util_usertokentypes.html" />
+    <link rel="top" title="PyUAF 1.2 documentation" href="index.html" />
+    <link rel="next" title="pyuaf.util.timestampstoreturn" href="api_pyuaf_util_timestampstoreturn.html" />
     <link rel="prev" title="pyuaf.util.securitypolicies" href="api_pyuaf_util_securitypolicies.html" /> 
   </head>
   <body>
@@ -39,12 +39,12 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="api_pyuaf_util_usertokentypes.html" title="pyuaf.util.usertokentypes"
+          <a href="api_pyuaf_util_timestampstoreturn.html" title="pyuaf.util.timestampstoreturn"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="api_pyuaf_util_securitypolicies.html" title="pyuaf.util.securitypolicies"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -55,12 +55,28 @@
             
   <div class="section" id="module-pyuaf.util.statuscodes">
 <span id="pyuaf-util-statuscodes"></span><h1><tt class="docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt><a class="headerlink" href="#module-pyuaf.util.statuscodes" title="Permalink to this headline">¶</a></h1>
-<p>This module defines the status codes as specified by the UAF.
-These status codes are more general than the (more than hundred!) status codes specified by the
-OPC UA standard. Each &#8220;OPC UA status code&#8221; can be mapped to exactly one &#8220;UAF statuscode&#8221;.</p>
-<p>For instance, an <tt class="docutils literal"><span class="pre">OpcUa_BadUserAccessDenied</span></tt>, <tt class="docutils literal"><span class="pre">OpcUa_BadCertificateInvalid</span></tt>,
-<tt class="docutils literal"><span class="pre">OpcUa_BadCertificateUntrusted</span></tt> (and many more) OPC UA status codes lead to a
-<a class="reference internal" href="#pyuaf.util.statuscodes.SecurityError" title="pyuaf.util.statuscodes.SecurityError"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.statuscodes.SecurityError</span></tt></a> status code.</p>
+<p>This module defines the status codes as specified by the UAF.</p>
+<p>The <em>UAF status codes</em>
+(which are defined in the <a class="reference internal" href="#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> module)
+are not to be confused with the <em>OPC UA status codes</em>
+(which are defined in the <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> module).
+The <em>OPC UA status codes</em> are more than 200 &#8220;detailed&#8221; codes defined by the OPC UA standard,
+while the <em>UAF status codes</em> are around 20 more &#8220;general&#8221; codes.
+Each one of the more than 200 <em>OPC UA status codes</em> can be mapped to exactly one <em>UAF status code</em>.</p>
+<p>E.g. the OPC UA <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_GoodMoreData" title="pyuaf.util.opcuastatuscodes.OpcUa_GoodMoreData"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_GoodMoreData</span></tt></a>,
+<a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_GoodNoData" title="pyuaf.util.opcuastatuscodes.OpcUa_GoodNoData"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_GoodNoData</span></tt></a>,
+<a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_GoodShutdownEvent" title="pyuaf.util.opcuastatuscodes.OpcUa_GoodShutdownEvent"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_GoodShutdownEvent</span></tt></a> etc. codes are
+all mapped to the UAF <a class="reference internal" href="#pyuaf.util.statuscodes.Good" title="pyuaf.util.statuscodes.Good"><tt class="xref py py-attr docutils literal"><span class="pre">Good</span></tt></a> code since there is only one
+&#8220;Good&#8221; <em>UAF status code</em>.</p>
+<p>Similarly, an  <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadUserAccessDenied" title="pyuaf.util.opcuastatuscodes.OpcUa_BadUserAccessDenied"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadUserAccessDenied</span></tt></a>,
+<a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateInvalid" title="pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateInvalid"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadCertificateInvalid</span></tt></a>,
+<a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateUntrusted" title="pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateUntrusted"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadCertificateUntrusted</span></tt></a> (and many more)
+<em>OPC UA status codes</em> lead to a
+<a class="reference internal" href="#pyuaf.util.statuscodes.SecurityError" title="pyuaf.util.statuscodes.SecurityError"><tt class="xref py py-attr docutils literal"><span class="pre">SecurityError</span></tt></a> <em>UAF status code</em>.</p>
+<p>Simply read the <em>UAF status code</em> (e.g. with <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status.statusCode" title="pyuaf.util.Status.statusCode"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.Status.statusCode()</span></tt></a>) if you&#8217;re
+happy with general status information, or read the <em>UAF + OPC UA status codes</em> (e.g. with
+<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status.statusCode" title="pyuaf.util.Status.statusCode"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.Status.statusCode()</span></tt></a> and <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status.opcUaStatusCode" title="pyuaf.util.Status.opcUaStatusCode"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.Status.opcUaStatusCode()</span></tt></a>) if you
+want more detailed status information.</p>
 <ul>
 <li><p class="first">Attributes:</p>
 <blockquote>
@@ -209,8 +225,8 @@ OPC UA standard. Each &#8220;OPC UA status code&#8221; can be mapped to exactly 
   <p class="topless"><a href="api_pyuaf_util_securitypolicies.html"
                         title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">pyuaf.util.securitypolicies</span></tt></a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="api_pyuaf_util_usertokentypes.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.util.usertokentypes</span></tt></a></p>
+  <p class="topless"><a href="api_pyuaf_util_timestampstoreturn.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.util.timestampstoreturn</span></tt></a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/api_pyuaf_util_statuscodes.txt"
@@ -243,12 +259,12 @@ OPC UA standard. Each &#8220;OPC UA status code&#8221; can be mapped to exactly 
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="api_pyuaf_util_usertokentypes.html" title="pyuaf.util.usertokentypes"
+          <a href="api_pyuaf_util_timestampstoreturn.html" title="pyuaf.util.timestampstoreturn"
              >next</a> |</li>
         <li class="right" >
           <a href="api_pyuaf_util_securitypolicies.html" title="pyuaf.util.securitypolicies"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
