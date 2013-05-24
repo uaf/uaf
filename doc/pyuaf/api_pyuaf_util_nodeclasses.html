@@ -1,0 +1,194 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyuaf.util.nodeclasses &mdash; PyUAF 1.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyUAF 1.2 documentation" href="index.html" />
+    <link rel="next" title="pyuaf.util.nodeididentifiertypes" href="api_pyuaf_util_nodeididentifiertypes.html" />
+    <link rel="prev" title="pyuaf.util.monitoringmodes" href="api_pyuaf_util_monitoringmodes.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_util_nodeididentifiertypes.html" title="pyuaf.util.nodeididentifiertypes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_util_monitoringmodes.html" title="pyuaf.util.monitoringmodes"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pyuaf.util.nodeclasses">
+<span id="pyuaf-util-nodeclasses"></span><h1><tt class="docutils literal"><span class="pre">pyuaf.util.nodeclasses</span></tt><a class="headerlink" href="#module-pyuaf.util.nodeclasses" title="Permalink to this headline">¶</a></h1>
+<p>This module defines the different classes of nodes (e.g. an Object node, an ObjectType node,
+a Variable node, ...).</p>
+<ul>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.nodeclasses.Unspecified">
+<tt class="descclassname">nodeclasses.</tt><tt class="descname">Unspecified</tt><em class="property"> = 0</em><a class="headerlink" href="#pyuaf.util.nodeclasses.Unspecified" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.nodeclasses.Object">
+<tt class="descclassname">nodeclasses.</tt><tt class="descname">Object</tt><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.util.nodeclasses.Object" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.nodeclasses.Variable">
+<tt class="descclassname">nodeclasses.</tt><tt class="descname">Variable</tt><em class="property"> = 2</em><a class="headerlink" href="#pyuaf.util.nodeclasses.Variable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.nodeclasses.Method">
+<tt class="descclassname">nodeclasses.</tt><tt class="descname">Method</tt><em class="property"> = 4</em><a class="headerlink" href="#pyuaf.util.nodeclasses.Method" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.nodeclasses.ObjectType">
+<tt class="descclassname">nodeclasses.</tt><tt class="descname">ObjectType</tt><em class="property"> = 8</em><a class="headerlink" href="#pyuaf.util.nodeclasses.ObjectType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.nodeclasses.VariableType">
+<tt class="descclassname">nodeclasses.</tt><tt class="descname">VariableType</tt><em class="property"> = 16</em><a class="headerlink" href="#pyuaf.util.nodeclasses.VariableType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.nodeclasses.ReferenceType">
+<tt class="descclassname">nodeclasses.</tt><tt class="descname">ReferenceType</tt><em class="property"> = 32</em><a class="headerlink" href="#pyuaf.util.nodeclasses.ReferenceType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.nodeclasses.DataType">
+<tt class="descclassname">nodeclasses.</tt><tt class="descname">DataType</tt><em class="property"> = 64</em><a class="headerlink" href="#pyuaf.util.nodeclasses.DataType" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.nodeclasses.View">
+<tt class="descclassname">nodeclasses.</tt><tt class="descname">View</tt><em class="property"> = 128</em><a class="headerlink" href="#pyuaf.util.nodeclasses.View" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Functions:</p>
+<blockquote>
+<div><dl class="function">
+<dt id="pyuaf.util.nodeclasses.toString">
+<tt class="descclassname">pyuaf.util.nodeclasses.</tt><tt class="descname">toString</tt><big>(</big><em>nodeClass</em><big>)</big><a class="headerlink" href="#pyuaf.util.nodeclasses.toString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation of the node class.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nodeClass</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The node class, e.g. <a class="reference internal" href="#pyuaf.util.nodeclasses.Variable" title="pyuaf.util.nodeclasses.Variable"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.nodeclasses.Variable</span></tt></a>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The name of the node class, e.g. &#8216;Variable&#8217;.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/uaf_logo_200x67_transparent.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api_pyuaf_util_monitoringmodes.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">pyuaf.util.monitoringmodes</span></tt></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api_pyuaf_util_nodeididentifiertypes.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.util.nodeididentifiertypes</span></tt></a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/api_pyuaf_util_nodeclasses.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_util_nodeididentifiertypes.html" title="pyuaf.util.nodeididentifiertypes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_util_monitoringmodes.html" title="pyuaf.util.monitoringmodes"
+             >previous</a> |</li>
+        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Wim Pessemier (Institute for Astronomy, KU Leuven) - http://github.com/uaf.
+    </div>
+  </body>
+</html>
