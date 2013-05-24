@@ -45,6 +45,7 @@ namespace uafc
 
         ss << DataValue::toString(indent, colon);
 
+        ss << "\n";
         ss << indent << " - clientConnectionId";
         ss << fillToPos(ss, colon);
         ss << ": " << int(clientConnectionId);

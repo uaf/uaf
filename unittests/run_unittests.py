@@ -37,7 +37,8 @@ ALL_MODULES = [ "util.expandednodeid",
                 "client.client_monitordata",
                 "client.client_monitorevents",
                 "client.client_browse",
-                "client.client_browsenext" ]
+                "client.client_browsenext",
+                "client.client_historyreadrawmodified" ]
 
 
 import pyuaftests
@@ -168,6 +169,7 @@ for module in modulesToTest:
         print "Valid tests are:"
         for testModule in ALL_MODULES:
             print("  %s" %testModule)
+        raise
         sys.exit()
 
 if len(modulesToTest) > 0:

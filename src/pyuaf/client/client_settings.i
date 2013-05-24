@@ -65,6 +65,7 @@
 %import(module="pyuaf.util.statuscodes")            "pyuaf/util/util_statuscodes.i"
 %import(module="pyuaf.util.opcuatypes")             "pyuaf/util/util_opcuatypes.i"
 %import(module="pyuaf.util.opcuaidentifiers")       "pyuaf/util/util_opcuaidentifiers.i"
+%import(module="pyuaf.util.opcuaidentifiers")       "pyuaf/util/util_opcuastatuscodes.i"
 %import(module="pyuaf.util.primitives")             "pyuaf/util/util_primitives.i"
 %import(module="pyuaf.util.securitypolicies")       "pyuaf/util/util_securitypolicies.i"
 %import(module="pyuaf.util.monitoringmodes")        "pyuaf/util/util_monitoringmodes.i"

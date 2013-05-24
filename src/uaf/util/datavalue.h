@@ -68,7 +68,8 @@ namespace uaf
         /**
          * Construct a DataValue from the given data and status.
          *
-         * @param data  The data.
+         * @param data      The data.
+         * @param status    The status.
          */
         DataValue(const uaf::Variant& data, const uaf::Status& status);
 

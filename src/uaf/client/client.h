@@ -246,10 +246,135 @@ namespace uafc
          */
         uaf::Status browse(
                 const std::vector<uaf::Address>&    addresses,
-                const uint32_t                      maxAutoBrowseNext,
+                uint32_t                            maxAutoBrowseNext,
                 const uafc::BrowseConfig&           serviceConfig,
                 const uafc::SessionConfig&          sessionConfig,
                 uafc::BrowseResult&                 result);
+
+
+        /**
+         * Read the raw historical data from one or more nodes synchronously.
+         *
+         * This is a convenience method, with few parameters. Use the
+         * processRequest(HistoryReadRawModifiedRequest()) function to specify your history read
+         * request much more in detail!
+         *
+         * Since this convenience method is meant to fetch raw historical data, the isReadModified
+         * flag of the serviceSettings attribute of the serviceConfig parameter
+         * will be forced to False!
+         *
+         * @param addresses             Addresses of the nodes to that provide the historical data.
+         * @param startTime             The start time of the interval from which you would like
+         *                              to see the historical data.
+         *                              This parameter will always be used instead of the
+         *                              startTime attribute in the serviceSettings attribute
+         *                              of the serviceConfig parameter!
+         * @param endTime               The end time of the interval from which you would like
+         *                              to see the historical data.
+         *                              This parameter will always be used instead of the
+         *                              endTime attribute in the serviceSettings attribute
+         *                              of the serviceConfig parameter!
+         * @param numValuesPerNode      The maximum number of values that may be returned for each
+         *                              node. 0 means no limit, but you may want to put it to a
+         *                              "safe" value (e.g. 100 if you expect to receive at most
+         *                              50 historical values or so) to make sure that you're not
+         *                              flooded by a huge stream of data values, e.g. in case you've
+         *                              made some mistake in the time interval!
+         * @param maxAutoReadMore       How many times do you allow the UAF to automatically invoke
+         *                              a "continuation request" for you (if that's needed to fetch
+         *                              all results)? E.g. if you specify maxAutoReadMore = 10,
+         *                              then the UAF will automatically perform subsequent
+         *                              history requests, until either all results are fetched, or
+         *                              until 10 additional requests have been invoked
+         *                              automatically.
+         *                              This parameter will always be used instead of the
+         *                              maxAutoReadMore attribute in the serviceSettings attribute
+         *                              of the serviceConfig parameter!
+         * @param continuationPoints    Continuation points, in case you're continuing to read the
+         *                              historical data of a previous request manually. By
+         *                              specifying a sufficiently large number for maxAutoReadMore,
+         *                              you can actually let the UAF handle the "continuation
+         *                              requests", if you want. If you're not using
+         *                              continuationPoints manually, you can simply provide an
+         *                              empty vector.
+         * @param serviceConfig         HistoryReadRawModifiedConfig config.
+         * @param sessionConfig         Session config.
+         * @param result                Result of the request.
+         * @return                      Client-side status.
+         */
+        uaf::Status historyReadRaw(
+                const std::vector<uaf::Address>&            addresses,
+                const uaf::DateTime&                        startTime,
+                const uaf::DateTime&                        endTime,
+                uint32_t                                    numValuesPerNode,
+                uint32_t                                    maxAutoReadMore,
+                const std::vector<uaf::ByteString>&         continuationPoints,
+                const uafc::HistoryReadRawModifiedConfig&   serviceConfig,
+                const uafc::SessionConfig&                  sessionConfig,
+                uafc::HistoryReadRawModifiedResult&         result);
+
+
+        /**
+         * Read the modification information of the historical data from one or more nodes
+         * synchronously.
+         *
+         * This is a convenience method, with few parameters. Use the
+         * processRequest(HistoryReadRawModifiedRequest()) function to specify your history read
+         * request much more in detail!
+         *
+         * Since this convenience method is meant to fetch the modification information of the
+         * historical data, the isReadModified flag of the serviceSettings attribute of the
+         * serviceConfig parameter will be forced to True!
+         *
+         * @param addresses             Addresses of the nodes to that provide the historical data.
+         *                              continuationPoints manually, you can simply provide an
+         *                              empty vector.
+         * @param startTime             The start time of the interval from which you would like
+         *                              to see the historical data.
+         *                              This parameter will always be used instead of the
+         *                              startTime attribute in the serviceSettings attribute
+         *                              of the serviceConfig parameter!
+         * @param endTime               The end time of the interval from which you would like
+         *                              to see the historical data.
+         *                              This parameter will always be used instead of the
+         *                              endTime attribute in the serviceSettings attribute
+         *                              of the serviceConfig parameter!
+         * @param numValuesPerNode      The maximum number of values that may be returned for each
+         *                              node. 0 means no limit, but you may want to put it to a
+         *                              "safe" value (e.g. 100 if you expect to receive at most
+         *                              50 historical values or so) to make sure that you're not
+         *                              flooded by a huge stream of data values, e.g. in case you've
+         *                              made some mistake in the time interval!
+         * @param maxAutoReadMore       How many times do you allow the UAF to automatically invoke
+         *                              a "continuation request" for you (if that's needed to fetch
+         *                              all results)? E.g. if you specify maxAutoReadMore = 10,
+         *                              then the UAF will automatically perform subsequent
+         *                              history requests, until either all results are fetched, or
+         *                              until 10 additional requests have been invoked
+         *                              automatically.
+         *                              This parameter will always be used instead of the
+         *                              maxAutoReadMore attribute in the serviceSettings attribute
+         *                              of the serviceConfig parameter!
+         * @param continuationPoints    Continuation points, in case you're continuing to read the
+         *                              historical data of a previous request manually. By
+         *                              specifying a sufficiently large number for maxAutoReadMore,
+         *                              you can actually let the UAF handle the "continuation
+         *                              requests", if you want. If you're not using
+         * @param serviceConfig         HistoryReadRawModifiedConfig config.
+         * @param sessionConfig         Session config.
+         * @param result                Result of the request.
+         * @return                      Client-side status.
+         */
+        uaf::Status historyReadModified(
+                const std::vector<uaf::Address>&            addresses,
+                const uaf::DateTime&                        startTime,
+                const uaf::DateTime&                        endTime,
+                uint32_t                                    numValuesPerNode,
+                uint32_t                                    maxAutoReadMore,
+                const std::vector<uaf::ByteString>&         continuationPoints,
+                const uafc::HistoryReadRawModifiedConfig&   serviceConfig,
+                const uafc::SessionConfig&                  sessionConfig,
+                uafc::HistoryReadRawModifiedResult&         result);
 
 
         /**
@@ -444,6 +569,17 @@ namespace uafc
         uaf::Status processRequest(
                 const uafc::CreateMonitoredEventsRequest&   request,
                 uafc::CreateMonitoredEventsResult&          result);
+
+        /**
+         * Process a synchronous HistoryReadRawModified request.
+         *
+         * @param request   The request.
+         * @param result    The result.
+         * @return          The client-side status.
+         */
+        uaf::Status processRequest(
+                const uafc::HistoryReadRawModifiedRequest&  request,
+                uafc::HistoryReadRawModifiedResult&         result);
 
 
 

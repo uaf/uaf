@@ -64,15 +64,15 @@ namespace uafc
         ss << indent << " - address\n";
         ss << address.toString(indent + "   ", colon) << "\n";
 
-        ss << indent << " - continuationPoint\n";
+        ss << indent << " - continuationPoint";
         ss << fillToPos(ss, colon);
         ss << ": " << continuationPoint.toString() << "\n";
 
-        ss << indent << " - indexRange\n";
+        ss << indent << " - indexRange";
         ss << fillToPos(ss, colon);
         ss << ": " << indexRange << "\n";
 
-        ss << indent << " - dataEncoding\n";
+        ss << indent << " - dataEncoding";
         ss << fillToPos(ss, colon);
         ss << ": " << dataEncoding.toString();
 

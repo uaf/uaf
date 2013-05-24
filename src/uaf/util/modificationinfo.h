@@ -86,6 +86,14 @@ namespace uaf
 
 
         /**
+         * Get a compact string representation.
+         *
+         * @return  A one-line short string representation.
+         */
+        virtual std::string toCompactString() const;
+
+
+        /**
          * Get the contents from a stack OpcUa_ModificationInfo instance.
          *
          * @param uaInfo   OpcUa_ModificationInfo instance (as defined by the stack)

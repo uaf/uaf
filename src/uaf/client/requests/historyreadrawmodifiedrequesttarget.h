@@ -81,13 +81,19 @@ namespace uafc
         /** The address of the node from which the historical data should be read. */
         uaf::Address address;
 
-        /** The continuation point of a previous HistoryRead service call. */
+        /** The continuation point of a previous HistoryRead service call.
+         *  The UAF can automatically handle continuation points, for more info take a look
+         *  at the documentation of uafc::HistoryReadRawModifiedSettings::maxAutoReadMore
+         *  If you decide to use the continuation points manually, you can still do so of course
+         *  by copying the continuation point of a previous result
+         *  (uafc::HistoryReadRawModifiedResultTarget::continuationPoint) to here. */
         uaf::ByteString continuationPoint;
 
         /** The index range in case the node is an array. */
         std::string indexRange;
 
-        /** The data encoding (leave NULL for default encoding). */
+        /** The data encoding.
+         *  Leave NULL (i.e. don't touch) to use the default encoding. */
         uaf::QualifiedName dataEncoding;
 
 
@@ -133,7 +139,7 @@ namespace uafc
         /**
          * Get the number of resolvable items of this kind of target.
          */
-        std::size_t resolvableItemsCount() const { return 2; }
+        std::size_t resolvableItemsCount() const { return 1; }
 
 
         /**

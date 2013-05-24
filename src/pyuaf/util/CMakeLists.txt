@@ -30,6 +30,7 @@ set(  PYUAF_UTIL_TARGETS
       statuscodes
       opcuatypes
       opcuaidentifiers
+      opcuastatuscodes
       securitypolicies
       messagesecuritymodes
       timestampstoreturn

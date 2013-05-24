@@ -882,25 +882,26 @@ class Client(ClientBase):
         many times the UAF may silently invoke the BrowseNext service for you. Put it to 0 if you
         want the "normal SDK behavior", i.e. if you want to invoke the BrowseNext service manually. 
         
-        :param addresses: A single address or a list of addresses of nodes that serve as the 
-                          starting point to browse.
-        :type  addresses: :class:`~pyuaf.util.Address` or a ``list`` of :class:`~pyuaf.util.Address` 
-        :param maxAutoBrowseNext: How many times do you allow the UAF to automatically invoke a
-                                  BrowseNext for you (if that's needed to fetch all results)? 
-                                  This parameter will always be used instead of the 
-                                  maxAutoBrowseNext attribute in the serviceSettings attribute of 
-                                  the serviceConfig parameter!
-        :type maxAutoBrowseNext: ``int``
-        :param serviceConfig: Additional settings for processing the browse request.
-                              Leave None for defaults.
-        :type serviceConfig: :class:`~pyuaf.client.configs.BrowseConfig`
-        :param sessionConfig: A config holding settings for the session creation.
-                              Leave None for defaults.
-        :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
-        :return: The result of the browse request.
-        :rtype:  :class:`~pyuaf.client.results.BrowseResult`
+        :param addresses:          A single address or a list of addresses of nodes that serve as 
+                                   the starting point to browse.
+        :type  addresses:          :class:`~pyuaf.util.Address` or a ``list`` of 
+                                   :class:`~pyuaf.util.Address` 
+        :param maxAutoBrowseNext:  How many times do you allow the UAF to automatically invoke a
+                                   BrowseNext for you (if that's needed to fetch all results)? 
+                                   This parameter will always be used instead of the 
+                                   maxAutoBrowseNext attribute in the serviceSettings attribute of 
+                                   the serviceConfig parameter!
+        :type maxAutoBrowseNext:   ``int``
+        :param serviceConfig:      Additional settings for processing the browse request.
+                                   Leave None for defaults.
+        :type serviceConfig:       :class:`~pyuaf.client.configs.BrowseConfig`
+        :param sessionConfig:      A config holding settings for the session creation.
+                                   Leave None for defaults.
+        :type sessionConfig:       :class:`~pyuaf.client.configs.SessionConfig`
+        :return:                   The result of the browse request.
+        :rtype:                    :class:`~pyuaf.client.results.BrowseResult`
         :raise pyuaf.util.errors.UafError:
-             Base exception, catch this to handle any UAF errors.
+                                   Base exception, catch this to handle any UAF errors.
         """
         if type(addresses) == pyuaf.util.Address:
             addressVector = pyuaf.util.AddressVector([addresses])
@@ -944,24 +945,27 @@ class Client(ClientBase):
         A BrowseNextRequest has many parameters (only few of them can be configured by this 
         convenience method), so for full flexibility use the other method.
         
-        :param addresses: A single address or a list of addresses of nodes that serve as the 
-                          starting point to browse. You need to copy the addresses here from the
-                          original Browse request, so that the UAF can use these addresses to find
-                          out to which server the BrowseNext call should be sent.
-        :type  addresses: :class:`~pyuaf.util.Address` or a ``list`` of :class:`~pyuaf.util.Address` 
+        :param addresses:          A single address or a list of addresses of nodes that serve as 
+                                   the starting point to browse. You need to copy the addresses 
+                                   here from the original Browse request, so that the UAF can use 
+                                   these addresses to find out to which server the BrowseNext call 
+                                   should be sent.
+        :type  addresses:          :class:`~pyuaf.util.Address` or a ``list`` 
+                                   of :class:`~pyuaf.util.Address` 
         :param continuationPoints: A ``list`` of continuation points (represented by the built-in 
                                    Python ``bytearray`` objects).
-        :type maxAutoBrowseNext: ``list`` of ``bytearray``
-        :param serviceConfig: Additional settings for processing the BrowseNext request.
-                              Leave None for defaults.
-        :type serviceConfig: :class:`~pyuaf.client.configs.BrowseNextConfig`
-        :param sessionConfig: A config holding settings for the session creation.
-                              Leave None for defaults.
-        :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
-        :return: The result of the BrowseNext request.
-        :rtype:  :class:`~pyuaf.client.results.BrowseNextResult`
+        :type  continuationPoints: :class:`~pyuaf.util.ByteStringVector` or a ``list`` of 
+                                   Python ``bytearray`` objects.
+        :param serviceConfig:      Additional settings for processing the BrowseNext request.
+                                   Leave None for defaults.
+        :type serviceConfig:       :class:`~pyuaf.client.configs.BrowseNextConfig`
+        :param sessionConfig:      A config holding settings for the session creation.
+                                   Leave None for defaults.
+        :type sessionConfig:       :class:`~pyuaf.client.configs.SessionConfig`
+        :return:                   The result of the BrowseNext request.
+        :rtype:                    :class:`~pyuaf.client.results.BrowseNextResult`
         :raise pyuaf.util.errors.UafError:
-             Base exception, catch this to handle any UAF errors.
+                                   Base exception, catch this to handle any UAF errors.
         """
         if type(addresses) == pyuaf.util.Address:
             addressVector = pyuaf.util.AddressVector([addresses])
@@ -976,7 +980,7 @@ class Client(ClientBase):
             for continuationPoint in continuationPoints:
                 byteStringVector.append(continuationPoint)
         elif type(continuationPoints) == pyuaf.util.ByteStringVector:
-            pass
+            byteStringVector = continuationPoints
         else:
             raise TypeError("The 'continuationPoints' argument must be of type bytearray, or "
                             "a list of bytearray, or a pyuaf.util.ByteStringVector")
@@ -1000,6 +1004,247 @@ class Client(ClientBase):
         
         pyuaf.util.errors.evaluate(status)
         return result
+    
+    
+    def historyReadRaw(self, addresses, startTime, endTime, numValuesPerNode=0, maxAutoReadMore=0, 
+                       continuationPoints=[], serviceConfig=None, sessionConfig=None):
+        """
+        Read the raw historical data from one or more nodes synchronously.
+        
+        This is a convenience function for calling :class:`~pyuaf.client.Client.processRequest` with 
+        a :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequest` as its first argument.
+        For full flexibility, use that function.
+        
+        Since this convenience method is meant to fetch raw historical data, the 
+        :attr:`~pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified`
+        flag of the serviceSettings attribute of the serviceConfig parameter
+        will be forced to False!
+        
+        :param addresses:          A single address or a list of addresses of nodes of which the 
+                                   historical data should be retrieved.
+        :type addresses:           :class:`~pyuaf.util.Address` or a ``list`` of 
+                                   :class:`~pyuaf.util.Address` 
+        :param startTime:          The start time of the interval from which you would like
+                                   to see the historical data. This parameter will always be used 
+                                   instead of the startTime attribute in the serviceSettings 
+                                   attribute of the serviceConfig parameter!
+        :type startTime:           :class:`~pyuaf.util.DateTime`
+        :param endTime:            The end time of the interval from which you would like
+                                   to see the historical data. This parameter will always be used 
+                                   instead of the startTime attribute in the serviceSettings 
+                                   attribute of the serviceConfig parameter!
+        :type endTime:             :class:`~pyuaf.util.DateTime`
+        :param numValuesPerNode:   The maximum number of values that may be returned for each
+                                   node. 0 means no limit, but you may want to put it to a
+                                   "safe" value (e.g. 100 if you expect to receive at most
+                                   50 historical values or so) to make sure that you're not
+                                   flooded by a huge stream of data values, e.g. in case you've
+                                   made some mistake in the time interval!
+                                   Default = 0.
+        :type numValuesPerNode:    ``int``
+        :param maxAutoReadMore:    How many times do you allow the UAF to automatically invoke
+                                   a "continuation request" for you (if that's needed to fetch
+                                   all results)? E.g. if you specify maxAutoReadMore = 10,
+                                   then the UAF will automatically perform subsequent
+                                   history requests, until either all results are fetched, or
+                                   until 10 additional requests have been invoked
+                                   automatically.
+                                   This parameter will always be used instead of the
+                                   maxAutoReadMore attribute in the serviceSettings attribute
+                                   of the serviceConfig parameter!
+                                   Default = 0, which means that no "automatic" continuation 
+                                   requests will be invoked by the UAF (so if you leave this
+                                   parameter as 0 and you see that the 
+                                   len(result.targets[x].continuationPoint) > 0, then you must
+                                   call the historyReadRaw method again with this continuationPoint
+                                   to receive more historical data).
+        :type maxAutoReadMore:     ``int``
+        :param continuationPoints: Continuation points, in case you're continuing to read the
+                                   istorical data of a previous request manually. By
+                                   specifying a sufficiently large number for maxAutoReadMore,
+                                   you can actually let the UAF handle the "continuation
+                                   requests", if you want. If you're not using
+                                   continuationPoints manually, you can simply provide an
+                                   empty list or vector.
+                                   Default = empty list.
+        :type  continuationPoints: :class:`~pyuaf.util.ByteStringVector` or a ``list`` of 
+                                   Python ``bytearray`` objects.
+        :param serviceConfig:      Additional settings for processing the historical read request.
+                                   Leave None for defaults.
+        :type serviceConfig:       :class:`~pyuaf.client.configs.HistoryReadRawModifiedConfig`
+        :param sessionConfig:      A config holding settings for the session creation.
+                                   Leave None for defaults.
+        :type sessionConfig:       :class:`~pyuaf.client.configs.SessionConfig`
+        :return:                   The result of the history read request.
+        :rtype:                    :class:`~pyuaf.client.results.HistoryReadRawModifiedResult`
+        :raise pyuaf.util.errors.UafError:
+                                   Base exception, catch this to handle any UAF errors.
+        """
+        if type(addresses) == pyuaf.util.Address:
+            addressVector = pyuaf.util.AddressVector([addresses])
+        else:
+            addressVector = pyuaf.util.AddressVector(addresses)
+            
+        if type(continuationPoints) == bytearray:
+            byteStringVector = pyuaf.util.ByteStringVector()
+            byteStringVector.append(continuationPoints)
+        elif type(continuationPoints) == list:
+            byteStringVector = pyuaf.util.ByteStringVector()
+            for continuationPoint in continuationPoints:
+                byteStringVector.append(continuationPoint)
+        elif type(continuationPoints) == pyuaf.util.ByteStringVector:
+            byteStringVector = continuationPoints
+        else:
+            raise TypeError("The 'continuationPoints' argument must be of type bytearray, or "
+                            "a list of bytearray, or a pyuaf.util.ByteStringVector")
+            
+        result = pyuaf.client.results.HistoryReadRawModifiedResult()
+        
+        # make sure the arguments are valid (to avoid the ugly SWIG error output)
+        pyuaf.util.errors.evaluateArg(startTime, "startTime", pyuaf.util.DateTime, [])
+        pyuaf.util.errors.evaluateArg(endTime, "endTime", pyuaf.util.DateTime, [])
+        pyuaf.util.errors.evaluateArg(numValuesPerNode, "numValuesPerNode", int, [])
+        pyuaf.util.errors.evaluateArg(numValuesPerNode, "maxAutoReadMore", int, [])
+        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
+                                      pyuaf.client.configs.HistoryReadRawModifiedConfig, [None])
+        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
+                                      pyuaf.client.configs.SessionConfig, [None])
+        
+        if serviceConfig is None:
+            serviceConfig = pyuaf.client.configs.HistoryReadRawModifiedConfig()
+        
+        if sessionConfig is None:
+            sessionConfig = pyuaf.client.configs.SessionConfig()
+        
+        status = ClientBase.historyReadRaw(self, addressVector, startTime, 
+                                           endTime, numValuesPerNode, maxAutoReadMore, 
+                                           byteStringVector, serviceConfig, sessionConfig, result)
+        
+        pyuaf.util.errors.evaluate(status)
+        return result
+    
+    
+    def historyReadModified(self, addresses, startTime, endTime, numValuesPerNode=0, 
+                            maxAutoReadMore=0, continuationPoints=[], serviceConfig=None, 
+                            sessionConfig=None):
+        """
+        Read the modification information of the historical data from one or more nodes
+        synchronously.
+        
+        This is a convenience function for calling :class:`~pyuaf.client.Client.processRequest` with 
+        a :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequest` as its first argument.
+        For full flexibility, use that function.
+        
+        Since this convenience method is meant to fetch the modification info of historical data, 
+        the :attr:`~pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified`
+        flag of the serviceSettings attribute of the serviceConfig parameter
+        will be forced to True!
+        
+        :param addresses:          A single address or a list of addresses of nodes of which the 
+                                   historical data should be retrieved.
+        :type addresses:           :class:`~pyuaf.util.Address` or a ``list`` of 
+                                   :class:`~pyuaf.util.Address` 
+        :param startTime:          The start time of the interval from which you would like
+                                   to see the historical data. This parameter will always be used 
+                                   instead of the startTime attribute in the serviceSettings 
+                                   attribute of the serviceConfig parameter!
+        :type startTime:           :class:`~pyuaf.util.DateTime`
+        :param endTime:            The end time of the interval from which you would like
+                                   to see the historical data. This parameter will always be used 
+                                   instead of the startTime attribute in the serviceSettings 
+                                   attribute of the serviceConfig parameter!
+        :type endTime:             :class:`~pyuaf.util.DateTime`
+        :param numValuesPerNode:   The maximum number of values that may be returned for each
+                                   node. 0 means no limit, but you may want to put it to a
+                                   "safe" value (e.g. 100 if you expect to receive at most
+                                   50 historical values or so) to make sure that you're not
+                                   flooded by a huge stream of data values, e.g. in case you've
+                                   made some mistake in the time interval!
+                                   Default = 0.
+        :type numValuesPerNode:    ``int``
+        :param maxAutoReadMore:    How many times do you allow the UAF to automatically invoke
+                                   a "continuation request" for you (if that's needed to fetch
+                                   all results)? E.g. if you specify maxAutoReadMore = 10,
+                                   then the UAF will automatically perform subsequent
+                                   history requests, until either all results are fetched, or
+                                   until 10 additional requests have been invoked
+                                   automatically.
+                                   This parameter will always be used instead of the
+                                   maxAutoReadMore attribute in the serviceSettings attribute
+                                   of the serviceConfig parameter!
+                                   Default = 0, which means that no "automatic" continuation 
+                                   requests will be invoked by the UAF (so if you leave this
+                                   parameter as 0 and you see that the 
+                                   len(result.targets[x].continuationPoint) > 0, then you must
+                                   call the historyReadRaw method again with this continuationPoint
+                                   to receive more historical data).
+        :type maxAutoReadMore:     ``int``
+        :param continuationPoints: Continuation points, in case you're continuing to read the
+                                   istorical data of a previous request manually. By
+                                   specifying a sufficiently large number for maxAutoReadMore,
+                                   you can actually let the UAF handle the "continuation
+                                   requests", if you want. If you're not using
+                                   continuationPoints manually, you can simply provide an
+                                   empty list or vector.
+                                   Default = empty list.
+        :type  continuationPoints: :class:`~pyuaf.util.ByteStringVector` or a ``list`` of 
+                                   Python ``bytearray`` objects.
+        :param serviceConfig:      Additional settings for processing the historical read request.
+                                   Leave None for defaults.
+        :type serviceConfig:       :class:`~pyuaf.client.configs.HistoryReadRawModifiedConfig`
+        :param sessionConfig:      A config holding settings for the session creation.
+                                   Leave None for defaults.
+        :type sessionConfig:       :class:`~pyuaf.client.configs.SessionConfig`
+        :return:                   The result of the history read request.
+        :rtype:                    :class:`~pyuaf.client.results.HistoryReadRawModifiedResult`
+        :raise pyuaf.util.errors.UafError:
+                                   Base exception, catch this to handle any UAF errors.
+        """
+        if type(addresses) == pyuaf.util.Address:
+            addressVector = pyuaf.util.AddressVector([addresses])
+        else:
+            addressVector = pyuaf.util.AddressVector(addresses)
+            
+        if type(continuationPoints) == bytearray:
+            byteStringVector = pyuaf.util.ByteStringVector()
+            byteStringVector.append(continuationPoints)
+        elif type(continuationPoints) == list:
+            byteStringVector = pyuaf.util.ByteStringVector()
+            for continuationPoint in continuationPoints:
+                byteStringVector.append(continuationPoint)
+        elif type(continuationPoints) == pyuaf.util.ByteStringVector:
+            byteStringVector = continuationPoints
+        else:
+            raise TypeError("The 'continuationPoints' argument must be of type bytearray, or "
+                            "a list of bytearray, or a pyuaf.util.ByteStringVector")
+            
+        result = pyuaf.client.results.HistoryReadRawModifiedResult()
+        
+        # make sure the arguments are valid (to avoid the ugly SWIG error output)
+        pyuaf.util.errors.evaluateArg(startTime, "startTime", pyuaf.util.DateTime, [])
+        pyuaf.util.errors.evaluateArg(endTime, "endTime", pyuaf.util.DateTime, [])
+        pyuaf.util.errors.evaluateArg(numValuesPerNode, "numValuesPerNode", int, [])
+        pyuaf.util.errors.evaluateArg(numValuesPerNode, "maxAutoReadMore", int, [])
+        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
+                                      pyuaf.client.configs.HistoryReadRawModifiedConfig, [None])
+        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
+                                      pyuaf.client.configs.SessionConfig, [None])
+        
+        if serviceConfig is None:
+            serviceConfig = pyuaf.client.configs.HistoryReadRawModifiedConfig()
+        
+        if sessionConfig is None:
+            sessionConfig = pyuaf.client.configs.SessionConfig()
+        
+        status = ClientBase.historyReadModified(self, addressVector, startTime, 
+                                                endTime, numValuesPerNode, maxAutoReadMore, 
+                                                byteStringVector, serviceConfig, sessionConfig, 
+                                                result)
+        
+        pyuaf.util.errors.evaluate(status)
+        return result
+    
+    
     
     
     def createMonitoredData(self, addresses, serviceConfig=None, sessionConfig=None, 
@@ -1269,6 +1514,8 @@ class Client(ClientBase):
             result = pyuaf.client.results.BrowseResult()
         elif type(request) == pyuaf.client.requests.BrowseNextRequest:
             result = pyuaf.client.results.BrowseNextResult()
+        elif type(request) == pyuaf.client.requests.HistoryReadRawModifiedRequest:
+            result = pyuaf.client.results.HistoryReadRawModifiedResult()
         elif type(request) == pyuaf.client.requests.AsyncMethodCallRequest:
             result = pyuaf.client.results.AsyncMethodCallResult()
         elif type(request) == pyuaf.client.requests.CreateMonitoredDataRequest:

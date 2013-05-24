@@ -34,9 +34,7 @@ namespace uaf
     : status(statuscodes::Good),
       sourcePicoseconds(0),
       serverPicoseconds(0)
-    {
-        status.setOpcUaStatusCode(OpcUa_Good);
-    }
+    {}
 
 
     // Constructor
@@ -46,9 +44,7 @@ namespace uaf
       data(data),
       sourcePicoseconds(0),
       serverPicoseconds(0)
-    {
-        status.setOpcUaStatusCode(OpcUa_Good);
-    }
+    {}
 
 
     // Constructor
@@ -103,7 +99,7 @@ namespace uaf
 
         ss << UaStatusCode(status.opcUaStatusCode()).toString().toUtf8() << "|";
 
-        data.toString();
+        ss << data.toString();
 
         if (!sourceTimestamp.isNull())
         {

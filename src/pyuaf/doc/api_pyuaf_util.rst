@@ -231,6 +231,43 @@
              which resembles a ``list`` of :class:`~pyuaf.util.RelativePathElement`.
 
 
+*class* ByteStringVector
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.ByteStringVector
+
+    An ByteStringVector is a container that holds elements of the built-in Python type 
+    ``bytearray``.
+    It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+    as a ``list`` of ``bytearray``.
+
+    Usage example:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> from pyuaf.util import ByteStringVector
+        
+        >>> # construct a ByteStringVector without elements:
+        >>> vec = ByteStringVector()
+        
+        >>> noOfElements = len(vec) # will be 0
+        
+        >>> vec.append(bytearray("abcd"))
+        
+        >>> noOfElements = len(vec) # will be 1
+        
+        >>> vec.resize(4)
+        
+        >>> noOfElements = len(vec) # will be 4
+        
+        >>> # vec[0] was already assigned to bytearray("abcd")
+        >>> vec[1] = bytearray("efgh")
+        >>> vec[2] = bytearray("ijkl")
+        >>> vec[3] = bytearray("mnop")
+        
+    
 
 *class* DataChangeFilter
 ----------------------------------------------------------------------------------------------------
@@ -410,7 +447,7 @@
         >>> vec[2].data = NodeId("SomeId", "SomeNsUri")
         >>> vec[3].data = LocalizedText("en", "Some English Text")
         
-        >>> # you may construct an EndpointDescriptionVector from a regular Python list:
+        >>> # you may construct an DataValueVector from a regular Python list:
         >>> otherVec = DataValueVector( [ DataValue(), DataValue(primitives.Boolean(True))] )
         
     
@@ -623,6 +660,22 @@
             :type t: ``long``
             :return: The time as a :class:`~pyuaf.util.DateTime` object.
             :rtype:  :class:`~pyuaf.util.DateTime`
+            
+            
+        .. automethod:: pyuaf.util.DateTime.sleep(secs)
+        
+            Static function to sleep a number of seconds.
+           
+            :param secs: Number of seconds to sleep.
+            :type secs:  ``int``
+            
+            
+        .. automethod:: pyuaf.util.DateTime.msleep(msecs)
+        
+            Static function to sleep a number of milliseconds.
+           
+            :param msecs: Number of milliseconds to sleep.
+            :type msecs:  ``int``
             
 
 
@@ -1281,6 +1334,7 @@
         
             The type of the modification of the historical data, as an ``int``. This value
             should be one of the following values:
+            
              - :attr:`pyuaf.util.ModificationInfo.HistoryUpdateType_Insert`
              - :attr:`pyuaf.util.ModificationInfo.HistoryUpdateType_Replace`
              - :attr:`pyuaf.util.ModificationInfo.HistoryUpdateType_Update`
@@ -1290,6 +1344,48 @@
         
             Name of the user that modified the data, as a ``str``.
 
+
+
+*class* ModificationInfoVector
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.ModificationInfoVector
+
+    A ModificationInfoVector is a container that holds elements of type 
+    :class:`pyuaf.util.ModificationInfo`. 
+    It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+    as a ``list`` of :class:`~pyuaf.util.ModificationInfo`.
+
+    Usage example:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> from pyuaf.util import ModificationInfoVector, ModificationInfo, DateTime
+        
+        >>> # construct a ModificationInfoVector without elements:
+        >>> vec = ModificationInfoVector()
+        
+        >>> noOfElements = len(vec) # will be 0
+        
+        >>> vec.append(ModificationInfo())
+        
+        >>> noOfElements = len(vec) # will be 1
+        
+        >>> vec[0].userName = "John"
+        
+        >>> vec.resize(2)
+        >>> noOfElements = len(vec) # will be 2
+        >>> vec[1].userName          = "Wim"
+        >>> vec[1].historyUpdateType = ModificationInfo.HistoryUpdateType_Delete
+        >>> vec[1].modificationTime  = DateTime.now()
+        
+        >>> # you may construct a ModificationInfoVector from a regular Python list:
+        >>> someOtherVec = ModificationInfoVector( [ ModificationInfo(), ModificationInfo() ] )
+
+
+    
 
 
 
@@ -1930,15 +2026,23 @@
         
         .. automethod:: pyuaf.util.Status.statusCode
         
-            Get the UAF status code (as defined by :class:`pyuaf.util.statuscodes`).
+            Get the UAF status code (as defined by :mod:`pyuaf.util.statuscodes`).
             
-            :return: The UAF status code (as defined by :class:`pyuaf.util.statuscodes`).
+            UAF status codes are not the same as OPC UA status codes! 
+            See the :mod:`pyuaf.util.statuscodes` and :mod:`pyuaf.util.opcuastatuscodes` modules
+            for more info!
+            
+            :return: The UAF status code (as defined by :mod:`pyuaf.util.statuscodes`).
             :rtype:  ``int``
         
         
         .. automethod:: pyuaf.util.Status.statusCodeName
         
             Get the name of the UAF status code.
+            
+            UAF status codes are not the same as OPC UA status codes! 
+            See the :mod:`pyuaf.util.statuscodes` and :mod:`pyuaf.util.opcuastatuscodes` modules
+            for more info!
             
             :return: The name of the UAF status code.
             :rtype:  ``str``
@@ -1957,8 +2061,14 @@
             Check if the Status object, besides a UAF status code, also contains a specific OPC 
             UA status code (which can be retrieved with :meth:`~pyuaf.util.Status.opcUaStatusCode`.
             
-            With "specific" we mean anything more than just OpcUa_Good, OpcUa_Bad, or 
-            OpcUa_Uncertain.
+            With "specific" we mean anything more than just
+            :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Good`, 
+            :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Bad`, or 
+            :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Uncertain`.
+            
+            UAF status codes are not the same as OPC UA status codes! 
+            See the :mod:`pyuaf.util.statuscodes` and :mod:`pyuaf.util.opcuastatuscodes` modules
+            for more info!
             
             :return: True if the status object has a specific OPC UA status code.
             :rtype:  bool
@@ -1968,7 +2078,11 @@
         
             Get the OPC UA status code.
             
-            :return: The OPC UA status code.
+            UAF status codes are not the same as OPC UA status codes! 
+            See the :mod:`pyuaf.util.statuscodes` and :mod:`pyuaf.util.opcuastatuscodes` modules
+            for more info!
+            
+            :return: The OPC UA status code, as defined by :mod:`pyuaf.util.opcuastatuscodes`.
             :rtype:  ``int``
 
         
@@ -1992,7 +2106,7 @@
         
             Set the status to the given status code (and optionally add a message).
             
-            :param statusCode: The new UAF status code (as defined by :class:`pyuaf.util.statuscodes`).
+            :param statusCode: The new UAF status code (as defined by :mod:`pyuaf.util.statuscodes`).
             :type  statusCode: ``int``
             :param message: The optional message.
             :type  message: ``str``
@@ -2002,8 +2116,11 @@
         
             Set the status to the given OPC UA status code.
             
-            :param statusCode: The new OPC UA status code (as defined by the OPC UA specs and 
-                               **NOT** by the :mod:`pyuaf.util.statuscodes` module).
+            UAF status codes are not the same as OPC UA status codes! 
+            See the :mod:`pyuaf.util.statuscodes` and :mod:`pyuaf.util.opcuastatuscodes` modules
+            for more info!
+            
+            :param statusCode: The new OPC UA status code, as defined by :mod:`pyuaf.util.opcuastatuscodes`.
             :type  statusCode: ``int``
 
     

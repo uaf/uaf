@@ -51,29 +51,18 @@ myClient = Client(settings)
 
 
 
-# read the node attributes all at once
 try:
     print("")
     print("First option: use the convenience function \"browse()\"")
     print("===================================================")
     
-    # OPTIONAL: You could also provide a BrowseConfig to configure a call timeout
-    serviceConfig = BrowseConfig()
-    serviceConfig.serviceSettings.callTimeoutSec = 2.0
-    
-    # OPTIONAL: And you could also provide a SessionConfig to configure the sessions 
-    #           (e.g. set the timeout to 600.0 seconds)
-    #           For more info about SessionConfigs, see the sessionconfig example
-    sessionConfig = SessionConfig()
-    sessionConfig.defaultSessionSettings.sessionTimeoutSec = 600.0
-    
     # now browse the root node
     # (notice that there is also an argument called 'maxAutoBrowseNext', which we don't mention
     #  here because we can leave it at the default value (100), to make sure that BrowseNext is 
     # automatically being called for us as much as needed!)
-    firstLevelBrowseResult = myClient.browse( addresses     = [rootNode],
-                                              serviceConfig = serviceConfig, # optional argument
-                                              sessionConfig = sessionConfig) # optional argument
+    # (notice too that you can optionally provide a BrowseConfig and a SessionConfig for 
+    #  more detailed configuration)
+    firstLevelBrowseResult = myClient.browse([rootNode])
     
     # print the result
     print(" - Browse result of the first level:")
@@ -91,9 +80,7 @@ try:
     for i in xrange(noOfFoundReferences):
         newNodesToBeBrowsed.append( Address(firstLevelBrowseResult.targets[0].references[i].nodeId) )
     
-    secondLevelBrowseResult = myClient.browse( addresses     = newNodesToBeBrowsed,
-                                               serviceConfig = serviceConfig, # optional argument
-                                               sessionConfig = sessionConfig) # optional argument
+    secondLevelBrowseResult = myClient.browse(newNodesToBeBrowsed)
     
     # print the result
     print(" - Browse result of the second level:")

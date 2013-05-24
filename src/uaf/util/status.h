@@ -132,7 +132,9 @@ namespace uaf
          *
          * @param opcUaStatusCode   The status code as defined by the OPC UA specs.
          */
-        void setOpcUaStatusCode(uint32_t opcUaStatusCode) { fromSdk(opcUaStatusCode, ""); }
+        void setOpcUaStatusCode(uint32_t opcUaStatusCode) {
+            opcUaStatusCode_    = opcUaStatusCode;
+            statusCode_         = uaf::statuscodes::fromSdkToUaf(opcUaStatusCode); }
 
 
         /**

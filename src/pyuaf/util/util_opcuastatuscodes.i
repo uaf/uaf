@@ -17,27 +17,26 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-#ifndef UAFC_INVOCATIONS_H_
-#define UAFC_INVOCATIONS_H_
-
-// STD
-// SDK
-// UAF
-#include "uaf/client/clientexport.h"
-#include "uaf/client/invocations/readinvocation.h"
-#include "uaf/client/invocations/writeinvocation.h"
-#include "uaf/client/invocations/methodcallinvocation.h"
-#include "uaf/client/invocations/createmonitoreddatainvocation.h"
-#include "uaf/client/invocations/createmonitoredeventsinvocation.h"
-#include "uaf/client/invocations/translatebrowsepathstonodeidsinvocation.h"
-#include "uaf/client/invocations/browseinvocation.h"
-#include "uaf/client/invocations/browsenextinvocation.h"
-#include "uaf/client/invocations/historyreadrawmodifiedinvocation.h"
+ 
+%module opcuastatuscodes
+%{
+#define SWIG_FILE_WITH_INIT
+#include "uastack/opcua_platformdefs.h"
+#include "uastack/opcua_statuscodes.h"
+%}
 
 
-// no declarations, just an #include for each invocation
+// import the stack header file
+%import "uastack/opcua_platformdefs.h"
 
 
+// include common definitions
+%include "../pyuaf.i"
 
-#endif /* UAFC_INVOCATIONS_H_ */
+// include the OPC UA status codes from the stack
+%include "uastack/opcua_statuscodes.h"
+
+// include some more status codes
+#define OpcUa_Good      0x00000000
+#define OpcUa_Uncertain 0x40000000
+#define OpcUa_Bad       0x80000000

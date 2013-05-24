@@ -34,6 +34,7 @@ namespace uafc
     // Constructor
     // =============================================================================================
     HistoryReadRawModifiedResultTarget::HistoryReadRawModifiedResultTarget()
+    : autoReadMore(0)
     {}
 
 
@@ -55,30 +56,43 @@ namespace uafc
         ss << fillToPos(ss, colon);
         ss << ": " << int(autoReadMore) << "\n";
 
+        ss << indent << " - clientConnectionId";
+        ss << fillToPos(ss, colon);
+        ss << ": " << int(clientConnectionId) << "\n";
+
         ss << indent << " - dataValues";
         if (dataValues.size() == 0)
         {
             ss << fillToPos(ss, colon);
-            ss << ": []\n";
+            ss << ": []";
         }
         else
         {
-            ss << "\n";
             for (size_t i = 0; i < dataValues.size(); i++)
             {
-                ss << indent << "    - dataValues" << "[" << int(i) << "]";
+                ss << "\n" << indent << "    - dataValues" << "[" << int(i) << "]";
                 ss << fillToPos(ss, colon);
-                ss << ": " << dataValues[i].toCompactString() << "\n";
+                ss << ": " << dataValues[i].toCompactString();
             }
         }
 
-        ss << indent << " - modificationInformation";
-        ss << fillToPos(ss, colon);
-        ss << ": " << modificationInformation.toString() << "\n";
+        ss << "\n";
 
-        ss << indent << " - clientConnectionId";
-        ss << fillToPos(ss, colon);
-        ss << ": " << int(clientConnectionId);
+        ss << indent << " - modificationInfos";
+        if (modificationInfos.size() == 0)
+        {
+            ss << fillToPos(ss, colon);
+            ss << ": []";
+        }
+        else
+        {
+            for (size_t i = 0; i < modificationInfos.size(); i++)
+            {
+                ss << "\n" << indent << "    - modificationInfos" << "[" << int(i) << "]";
+                ss << fillToPos(ss, colon);
+                ss << ": " << modificationInfos[i].toCompactString();
+            }
+        }
 
         return ss.str();
     }

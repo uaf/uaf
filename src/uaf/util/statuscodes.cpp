@@ -56,7 +56,7 @@ namespace uaf
                 case UnexpectedError:           return "UnexpectedError";
                 case UnknownHandleError:        return "UnknownHandleError";
                 case UnsupportedError:          return "UnsupportedError";
-                default:                                return "UnknownStatusCodeBUG";
+                default:                        return "UnknownStatusCodeBUG";
             }
         }
 

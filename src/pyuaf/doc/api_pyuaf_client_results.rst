@@ -805,6 +805,176 @@
 
 
 
+
+
+*class* HistoryReadRawModifiedResult
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.client.results.HistoryReadRawModifiedResult
+
+    A :class:`~pyuaf.client.results.HistoryReadRawModifiedResult` is the result of a corresponding 
+    :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequest`. 
+    
+    It tells you whether or not the requested targets have returned some historical data, 
+    it provides you the retrieved historical data, any continuation points left, etc.
+    
+    * Methods:
+
+        .. automethod:: pyuaf.client.results.HistoryReadRawModifiedResult.__init__
+    
+            Create a new HistoryReadRawModifiedResult object.
+            
+            You should never have to create result objects yourself, the UAF will produce them
+            and you will consume them.
+            
+        .. automethod:: pyuaf.client.results.HistoryReadRawModifiedResult.__str__
+    
+            Get a formatted string representation of the result.
+
+
+    * Attributes
+    
+        .. autoattribute:: pyuaf.client.results.HistoryReadRawModifiedResult.targets
+
+            The targets, as a :class:`~pyuaf.client.results.HistoryReadRawModifiedResultTargetVector`.
+    
+        .. autoattribute:: pyuaf.client.results.HistoryReadRawModifiedResult.overallStatus
+
+            The combined status of the targets, as a :class:`~pyuaf.util.Status` instance.
+            
+            If this status is Good, then you know for sure that all the statuses of the targets
+            are all Good.
+            If this status is Bad, then you know that at least one of the targets has a Bad status.
+    
+        .. autoattribute:: pyuaf.client.results.HistoryReadRawModifiedResult.requestHandle
+
+            The unique handle that was originally assigned to the 
+            :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequest` 
+            that resulted in this 
+            :class:`~pyuaf.client.results.HistoryReadRawModifiedResult`. 
+            It's a 64-bit ``long`` value, assigned by the UAF during the processing of the request.
+
+
+*class* HistoryReadRawModifiedResultTarget
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.client.results.HistoryReadRawModifiedResultTarget
+
+    A :class:`~pyuaf.client.results.HistoryReadRawModifiedResultTarget` corresponds exactly to the
+    :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequestTarget` that was part of the invoked
+    :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequest`. 
+    So the first target of the request corresponds to the first target of the result, and so on.
+    
+    
+    * Methods:
+
+        .. automethod:: pyuaf.client.results.HistoryReadRawModifiedResultTarget.__init__
+    
+            Create a new HistoryReadRawModifiedRequestTarget object.
+            
+            You should never have to create result targets (or results for that matter) yourself, 
+            the UAF will produce them and you will consume them.
+            
+        .. automethod:: pyuaf.client.results.HistoryReadRawModifiedResultTarget.__str__
+    
+            Get a formatted string representation of the target.
+
+
+    * Attributes
+    
+        .. autoattribute:: pyuaf.client.results.HistoryReadRawModifiedResultTarget.status
+
+            Status of the result target (Good if the requested data was retrieved, Bad if not), 
+            as a :class:`~pyuaf.util.Status` instance.
+            Apart from the UAF status code (which are defined in the 
+            :mod:`pyuaf.util.statuscodes` module), you may also check the OPC UA statuscode 
+            (which are defined in the :mod:`pyuaf.util.opcuastatuscodes` module) since
+            this provides more information (e.g. OpcUa_GoodNoData and OpcUa_GoodMoreData).
+            
+            .. doctest::
+                
+                >>> import pyuaf
+                >>> from pyuaf.client.results        import HistoryReadRawModifiedResult
+                >>> from pyuaf.util.opcuastatuscodes import OpcUa_GoodNoData
+                
+                >>> # create some simulated result, that we may have received from the client:
+                >>> someReceivedResult = HistoryReadRawModifiedResult()
+                >>> someReceivedResult.targets.resize(1)
+                
+                >>> # if the result didn't return any data values, you may want to check if there is
+                >>> # simply no historical data that matches your request:
+                >>> if len(someReceivedResult.targets[0].dataValues) == 0:
+                ...    noDataFound = (someReceivedResult.targets[0].status.opcUaStatusCode() == OpcUa_GoodNoData)
+    
+        .. autoattribute:: pyuaf.client.results.HistoryReadRawModifiedResultTarget.clientConnectionId
+
+            The id of the session that was used for this target, as an ``int``.
+    
+        .. autoattribute:: pyuaf.client.results.HistoryReadRawModifiedResultTarget.autoReadMore
+
+            An ``int``, clarifying how many times did the UAF automatically invoke the historical read OPC UA service
+            in addition to the original request, in order to get the remaining results?
+            In case the UAF did not read more data automatically, this value will be 0.
+            See :attr:`pyuaf.client.settings.HistoryReadRawModifiedSettings.maxAutoReadMore` for more info.
+    
+        .. autoattribute:: pyuaf.client.results.HistoryReadRawModifiedResultTarget.continuationPoint
+ 
+            The continuation point, in case there are still results left at the server.The type 
+            of this attribute is a built-in Python ``bytearray``.
+            If the continuation point is not NULL (i.e. if it contains more than 0 bytes),
+            then you should copy the continuation point to the continuation point of the next
+            HistoryReadRawModifiedRequest, and perform another call.
+        
+        .. autoattribute:: pyuaf.client.results.HistoryReadRawModifiedResultTarget.dataValues
+        
+            The requested historical data, as a :class:`~pyuaf.util.DataValueVector`.
+        
+        .. autoattribute:: pyuaf.client.results.HistoryReadRawModifiedResultTarget.modificationInfos
+        
+            The requested modification information, in case the 
+            :attr:`pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified` flag 
+            was set in the settings of the original request.
+
+
+
+*class* HistoryReadRawModifiedResultTargetVector
+----------------------------------------------------------------------------------------------------
+
+
+.. class:: pyuaf.client.results.HistoryReadRawModifiedResultTargetVector
+
+    An HistoryReadRawModifiedResultTargetVector is a container that holds elements of type 
+    :class:`pyuaf.client.results.HistoryReadRawModifiedResultTarget`. 
+    It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+    as a ``list`` of :class:`~pyuaf.client.results.HistoryReadRawModifiedResultTarget`.
+
+    Usage example:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> from pyuaf.client.results import HistoryReadRawModifiedResultTarget, HistoryReadRawModifiedResultTargetVector
+        
+        >>> # construct a realistic result, for instance one with 5 targets:
+        >>> targets = HistoryReadRawModifiedResultTargetVector(5)
+        
+        >>> noOfElements = len(targets) # will be 5  (alternative: targets.size())
+        
+        >>> target0_isGood        = targets[0].status.isGood()
+        >>> target0_retrievedData = targets[0].dataValues
+        
+        >>> # other methods of the vector:
+        >>> targets.resize(6)
+        >>> targets.append(HistoryReadRawModifiedResultTarget())
+        >>> someTarget = targets.pop()
+        >>> targets.clear()
+        >>> # ...
+
+
+
+
 *class* MethodCallResult
 ----------------------------------------------------------------------------------------------------
 

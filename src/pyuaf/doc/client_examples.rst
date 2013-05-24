@@ -30,7 +30,16 @@ How to browse some nodes?
 .. literalinclude:: ../../../examples/pyuaf/client/how_to_browse_some_nodes.py
 
 
+
+How to read some historical data?
+====================================================================================================
+
+.. literalinclude:: ../../../examples/pyuaf/client/how_to_read_some_historical_data.py
+
+
+
 .. _sessionconfig-example: 
+
 
 How to change the default session behavior?
 ====================================================================================================

@@ -17,17 +17,23 @@ Bugfixes (which do not have any implications on the API) can only be tracked
 via the GIT version control system.
 
 
-1.2 @ 2013/05/xx
+1.2 @ 2013/05/24
 ----------------------------------------------------------------------------------------------------
 
 Informally:
 
  - DataValues are now better supported. A DataValue class (with a status, a value, timestamps, ...)
-   has been added, and ReadResultTarget and WriteRequestTarget inherit now from it.
+   has been added, and ReadResultTarget and WriteRequestTarget inherit now from this class.
    
  - The "timestampstoreturn" namespace / Python module has been added to allow the user to specify 
    which timestamps should be returned by the server. 
    
+ - The "opcuastatuscodes" Python module has been added to allow Python users to access all 
+   OPC UA status codes symbolically.
+   
+ - A new service has been added: it's now possible to read raw historical data, and the 
+   modifications of this historical data. As with the Browse service implementation, the
+   UAF can deal with continuation points automatically.
    
 Formally:
    
@@ -40,6 +46,20 @@ Formally:
  
     - uaf::DataValue 
       (pyuaf.util.DataValue)
+    - uafc::HistoryReadRawModifiedRequest
+      (pyuaf.client.requests.HistoryReadRawModifiedRequest)
+    - uafc::HistoryReadRawModifiedRequestTarget 
+      (pyuaf.client.requests.HistoryReadRawModifiedRequestTarget 
+       and pyuaf.client.requests.HistoryReadRawModifiedRequestTargetVector)
+    - uafc::HistoryReadRawModifiedConfig 
+      (pyuaf.client.configs.HistoryReadRawModifiedConfig)
+    - uafc::HistoryReadRawModifiedSettings 
+      (pyuaf.client.configs.HistoryReadRawModifiedSettings)
+    - uafc::HistoryReadRawModifiedResult 
+      (pyuaf.client.requests.HistoryReadRawModifiedResult)
+    - uafc::HistoryReadRawModifiedResultTarget 
+      (pyuaf.client.requests.HistoryReadRawModifiedResultTarget 
+       and pyuaf.client.requests.HistoryReadRawModifiedResultTargetVector)
       
  - The following class inheritances have been modified:
  
@@ -54,6 +74,8 @@ Formally:
       (pyuaf.util.Status.hasSpecificOpcUaStatusCode(): replaces hasOpcUaStatusCode())
     - uaf::Status::setOpcUaStatusCode()
       (pyuaf.util.Status.setOpcUaStatusCode())
+    - uaf::DateTime::sleep() and msleep()
+      (pyuaf.util.DateTime.sleep() and msleep())
  
  
 

@@ -7,6 +7,7 @@ set(  UAF_CLIENT_EXAMPLES
       easiest_client_example
       how_to_read_some_data
       how_to_browse_some_nodes
+      how_to_read_some_historical_data
       how_to_change_the_default_session_behavior
       how_to_change_the_default_subscription_behavior
    )

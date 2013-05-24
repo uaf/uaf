@@ -85,6 +85,27 @@ namespace uaf
     }
 
 
+
+    // Get a string representation
+    // =============================================================================================
+    string ModificationInfo::toCompactString() const
+    {
+        stringstream ss;
+
+        if      (historyUpdateType == HistoryUpdateType_Insert)  ss << "Insert";
+        else if (historyUpdateType == HistoryUpdateType_Replace) ss << "Replace";
+        else if (historyUpdateType == HistoryUpdateType_Update)  ss << "Update";
+        else if (historyUpdateType == HistoryUpdateType_Delete)  ss << "Delete";
+        else                                                     ss << "!!!INVALID!!!\n";
+
+        ss << "|" << modificationTime.toString();
+
+        ss << "|'" << userName << "'";
+
+        return ss.str();
+    }
+
+
     // operator==
     // =============================================================================================
     bool operator==( const ModificationInfo& object1, const ModificationInfo& object2)

@@ -47,7 +47,10 @@ namespace uaf
     string ByteString::toString() const
     {
         stringstream ss;
-        ss << length() << "bytes";
+        if (uaByteString_.length() > 0)
+            ss << length() << " bytes";
+        else
+            ss << "NULL";
         return ss.str();
     }
 

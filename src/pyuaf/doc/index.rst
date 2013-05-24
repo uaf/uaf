@@ -71,6 +71,7 @@ API
    api_pyuaf_util_nodeclasses
    api_pyuaf_util_nodeididentifiertypes
    api_pyuaf_util_opcuaidentifiers
+   api_pyuaf_util_opcuastatuscodes
    api_pyuaf_util_opcuatypes
    api_pyuaf_util_primitives
    api_pyuaf_util_securitypolicies

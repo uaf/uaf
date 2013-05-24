@@ -35,9 +35,8 @@ namespace uaf
     // Constructor
     // =============================================================================================
     Variant::Variant(const OpcUa_Variant& variant)
-    {
-        uaVariant_ = variant;
-    }
+    : uaVariant_(variant)
+    {}
 
 
     // Get a string representation

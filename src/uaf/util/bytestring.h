@@ -65,6 +65,14 @@ namespace uaf
 
 
         /**
+         * Check if the bytestring is NULL.
+         *
+         * An empty (NULL) ByteString has 0 length!
+         */
+        bool isNull() const { return uaByteString_.length() <= 0; }
+
+
+        /**
          * Get the length of the byte string (i.e. the number of bytes).
          *
          * An empty (NULL) ByteString has 0 length!

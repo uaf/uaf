@@ -56,6 +56,7 @@ namespace uafc
          *  - releaseContinuationPoints : False
          *  - numValuesPerNode          : 0
          *  - returnBounds              : False
+         *  - maxAutoReadMore           : 0
          */
         HistoryReadRawModifiedSettings();
 

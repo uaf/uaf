@@ -282,7 +282,7 @@ namespace uafc
     //==============================================================================================
     uaf::Status Client::browse(
             const std::vector<uaf::Address>&    addresses,
-            const uint32_t                      maxAutoBrowseNext,
+            uint32_t                            maxAutoBrowseNext,
             const uafc::BrowseConfig&           serviceConfig,
             const uafc::SessionConfig&          sessionConfig,
             uafc::BrowseResult&                 result)
@@ -302,6 +302,90 @@ namespace uafc
             request.targets.push_back(BrowseRequestTarget(*it));
 
         // perform the browse request
+        return processRequest(request, result);
+    }
+
+
+    // Read raw historical data
+    //==============================================================================================
+    uaf::Status Client::historyReadRaw(
+            const std::vector<uaf::Address>&            addresses,
+            const uaf::DateTime&                        startTime,
+            const uaf::DateTime&                        endTime,
+            uint32_t                                    numValuesPerNode,
+            uint32_t                                    maxAutoReadMore,
+            const std::vector<uaf::ByteString>&         continuationPoints,
+            const uafc::HistoryReadRawModifiedConfig&   serviceConfig,
+            const uafc::SessionConfig&                  sessionConfig,
+            uafc::HistoryReadRawModifiedResult&         result)
+    {
+        // log read request
+        logger_->debug("Reading the raw historical data of %d nodes", addresses.size());
+
+        // override the necessary parameters
+        HistoryReadRawModifiedConfig serviceConfigCopy(serviceConfig);
+        serviceConfigCopy.serviceSettings.isReadModified    = false;
+        serviceConfigCopy.serviceSettings.numValuesPerNode  = numValuesPerNode;
+        serviceConfigCopy.serviceSettings.maxAutoReadMore   = maxAutoReadMore;
+        serviceConfigCopy.serviceSettings.startTime         = startTime;
+        serviceConfigCopy.serviceSettings.endTime           = endTime;
+
+        HistoryReadRawModifiedRequest request(0, serviceConfigCopy, sessionConfig);
+
+        bool noContinuationPoints = (continuationPoints.size() == 0);
+
+        request.targets.reserve(addresses.size());
+        for (size_t i = 0; i < addresses.size(); i++)
+            if (noContinuationPoints)
+                request.targets.push_back(HistoryReadRawModifiedRequestTarget(addresses[i]));
+            else
+                request.targets.push_back(HistoryReadRawModifiedRequestTarget(
+                        addresses[i],
+                        continuationPoints[i]));
+
+        // perform the request
+        return processRequest(request, result);
+    }
+
+
+    // Read modification info of historical data
+    //==============================================================================================
+    uaf::Status Client::historyReadModified(
+            const std::vector<uaf::Address>&            addresses,
+            const uaf::DateTime&                        startTime,
+            const uaf::DateTime&                        endTime,
+            uint32_t                                    numValuesPerNode,
+            uint32_t                                    maxAutoReadMore,
+            const std::vector<uaf::ByteString>&         continuationPoints,
+            const uafc::HistoryReadRawModifiedConfig&   serviceConfig,
+            const uafc::SessionConfig&                  sessionConfig,
+            uafc::HistoryReadRawModifiedResult&         result)
+    {
+        // log read request
+        logger_->debug("Reading the historical data modifications of %d nodes", addresses.size());
+
+        // override the necessary parameters
+        HistoryReadRawModifiedConfig serviceConfigCopy(serviceConfig);
+        serviceConfigCopy.serviceSettings.isReadModified    = true;
+        serviceConfigCopy.serviceSettings.numValuesPerNode  = numValuesPerNode;
+        serviceConfigCopy.serviceSettings.maxAutoReadMore   = maxAutoReadMore;
+        serviceConfigCopy.serviceSettings.startTime         = startTime;
+        serviceConfigCopy.serviceSettings.endTime           = endTime;
+
+        HistoryReadRawModifiedRequest request(0, serviceConfigCopy, sessionConfig);
+
+        bool noContinuationPoints = (continuationPoints.size() == 0);
+
+        request.targets.reserve(addresses.size());
+        for (size_t i = 0; i < addresses.size(); i++)
+            if (noContinuationPoints)
+                request.targets.push_back(HistoryReadRawModifiedRequestTarget(addresses[i]));
+            else
+                request.targets.push_back(HistoryReadRawModifiedRequestTarget(
+                        addresses[i],
+                        continuationPoints[i]));
+
+        // perform the request
         return processRequest(request, result);
     }
 
@@ -608,6 +692,16 @@ namespace uafc
             uafc::CreateMonitoredEventsResult&         result)
     {
         return processRequest<uafc::CreateMonitoredEventsService>(request, result);
+    }
+
+
+    // Process a HistoryReadRawModifiedRequest
+    // =============================================================================================
+    Status Client::processRequest(
+            const uafc::HistoryReadRawModifiedRequest&  request,
+            uafc::HistoryReadRawModifiedResult&         result)
+    {
+        return processRequest<uafc::HistoryReadRawModifiedService>(request, result);
     }
 
 

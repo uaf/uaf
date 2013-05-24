@@ -35,6 +35,7 @@
 
 // SDK
 #include "uabase/uadatetime.h"
+#include "uabase/uathread.h"
 // UAF
 #include "uaf/util/util.h"
 
@@ -116,6 +117,22 @@ namespace uaf
          * @return  The timestamp as a DateTime instance.
          */
         static DateTime fromFileTime(int64_t t);
+
+
+        /**
+         * Static function to sleep a number of seconds.
+         *
+         * @param secs The number of seconds to sleep.
+         */
+        static void sleep(uint32_t secs) { UaThread::sleep(secs); }
+
+
+        /**
+         * Static function to sleep a number of milliseconds.
+         *
+         * @param msecs The number of milliseconds to sleep.
+         */
+        static void msleep(uint32_t msecs) { UaThread::msleep(msecs); }
 
 
         /**
