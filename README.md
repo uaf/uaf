@@ -18,6 +18,10 @@ What?
 
  - The Unified Architecture Framework (UAF) is an open source software framework to simplify the 
    development of **OPC UA** applications on **Linux** and **Microsoft Windows**, in **C++** and **Python**.
+   
+ - OPC UA (OPC Unified Architecture) is the next generation standard for secure, reliable
+   and scalable industrial communication.
+
 
 Why?
 -------------------------------------------------------------------------------
