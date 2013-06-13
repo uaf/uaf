@@ -101,7 +101,7 @@ namespace uaf
          * @param msec  Number of milliseconds past t.
          * @return      String formatted as "YYYY-MM-DD hh:mm:ss.sss".
          */
-        std::string toTimeString(int64_t t, int16_t msec) const;
+        std::string toTimeString(time_t t, int16_t msec) const;
 
     };
 
