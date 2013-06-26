@@ -4,7 +4,7 @@ project(uaf)
 
 
 # Specify a minimum version for CMake
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 
 # Provide the path which contains CMake modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}")

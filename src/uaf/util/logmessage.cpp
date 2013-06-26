@@ -93,7 +93,7 @@ namespace uaf
 
     // Convert a number of seconds and milliseconds to a time string like "YYYY-MM-DD hh:mm:ss.sss"
     // =============================================================================================
-    string LogMessage::toTimeString(int64_t t, int16_t msec) const
+    string LogMessage::toTimeString(time_t t, int16_t msec) const
     {
         char buffer[20];
 #ifdef _MSC_VER
