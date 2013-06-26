@@ -46,8 +46,8 @@ namespace uafc
             const Address&                  address,
             const Variant&                  data,
             uaf::attributeids::AttributeId  attributeId)
-    : address(address),
-      DataValue::DataValue(data, statuscodes::Good),
+    : DataValue(data, Status(statuscodes::Good)),
+      address(address),
       attributeId(attributeId)
     {}
 
