@@ -153,7 +153,7 @@ namespace uafc
                         uaf::Status status;
                         status.fromSdk(discoveryStatus.statusCode(),
                                        "Could not find servers at '%s'", url.c_str());
-                        logger_->error(ret);
+                        logger_->error(status);
                     }
                 }
 
