@@ -113,7 +113,9 @@ namespace uafc
                 {
                     string url(*iter);
 
-                    logger_->debug("Finding the servers for URL '%s'", url.c_str());
+                    logger_->debug("Finding the servers for URL '%s' (timeout %dms)",
+                                   url.c_str(),
+                                   serviceSettings.callTimeout);
 
                     // invoke the FindServers service for the current URL
                     UaApplicationDescriptions desc;
@@ -153,7 +155,7 @@ namespace uafc
                         uaf::Status status;
                         status.fromSdk(discoveryStatus.statusCode(),
                                        "Could not find servers at '%s'", url.c_str());
-                        logger_->error(ret);
+                        logger_->error(status);
                     }
                 }
 
