@@ -653,7 +653,7 @@ class Client(ClientBase):
     def beginRead(self, addresses, attributeId=pyuaf.util.attributeids.Value, serviceConfig=None, 
                   sessionConfig=None, callback=None):
         """
-        Read a number of node attributes synchronously.
+        Read a number of node attributes asynchronously.
         
         This is a convenience function for calling :class:`~pyuaf.client.Client.processRequest` with 
         a :class:`~pyuaf.client.requests.ReadRequest` as its first argument.
@@ -806,7 +806,7 @@ class Client(ClientBase):
     def beginWrite(self, addresses, data, attributeId=pyuaf.util.attributeids.Value, 
                    serviceConfig=None, sessionConfig=None, callback=None):
         """
-        Write a number of node attributes synchronously.
+        Write a number of node attributes asynchronously.
         
         This is a convenience function for calling :class:`~pyuaf.client.Client.processRequest` with 
         a :class:`~pyuaf.client.requests.AsyncWriteRequest` as its first argument.
