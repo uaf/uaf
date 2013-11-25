@@ -17,6 +17,25 @@ Bugfixes (which do not have any implications on the API) can only be tracked
 via the GIT version control system.
 
 
+1.3 @ 2013/11/25
+----------------------------------------------------------------------------------------------------
+
+Informally:
+
+ - Added the convenience functions for asynchronous reading and writing (beginRead and beginWrite).
+   (Asynchronous reading and writing was already available before, but only using the generic
+   processRequest function).
+
+Formally:
+
+ - The following methods have been added to existing classes:
+
+   - uafc::Client::beginRead
+     (pyuaf.client.Client.beginRead)
+   - uafc::Client::beginWrite
+     (pyuaf.client.Client.beginWrite)
+
+
 1.2 @ 2013/05/24
 ----------------------------------------------------------------------------------------------------
 
