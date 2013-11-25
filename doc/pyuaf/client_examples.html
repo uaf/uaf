@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Client examples &mdash; PyUAF 1.2 documentation</title>
+    <title>Client examples &mdash; PyUAF 1.3 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.2',
+        VERSION:     '1.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.2 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.3 documentation" href="index.html" />
     <link rel="next" title="pyuaf" href="api_pyuaf.html" />
     <link rel="prev" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)" href="index.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="index.html" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.3 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -199,12 +199,18 @@
 <span class="sd">  - either using the &quot;convenience&quot; method: read()</span>
 <span class="sd">  - or using the &quot;generic&quot; method: processRequest() </span>
 
-<span class="sd">The &quot;convenience&quot; methods (such as read(), write(), call(), ...) are conveniently to use </span>
+<span class="sd">The &quot;convenience&quot; methods (such as read(), beginRead(), write(), ...) are conveniently to use </span>
 <span class="sd"> (since they accept the most frequently used parameters directly), </span>
 <span class="sd">but they are less powerful than the &quot;generic&quot; processRequest() method </span>
-<span class="sd"> (since this method accepts ReadRequests, WriteRequests, etc. that can be fully configured).</span>
+<span class="sd"> (since this method accepts ReadRequests, AsyncReadRequests, etc. that can be fully configured).</span>
 
-<span class="sd">In this example, we will use both ways to read data.</span>
+<span class="sd">In this example, we will use several ways to read data:</span>
+<span class="sd"> - first option  : &quot;convenience&quot; synchronous  function read()</span>
+<span class="sd"> - second option : &quot;generic&quot;     synchronous  function processRequest()</span>
+<span class="sd"> - third option  : &quot;convenience&quot; asynchronous function beginRead()       , with external callback</span>
+<span class="sd"> - fourth option : &quot;generic&quot;     asynchronous function processRequest()  , with external callback</span>
+<span class="sd"> - fifth option  : &quot;convenience&quot; asynchronous function beginRead()       , with overridden callback</span>
+<span class="sd"> - sixth option  : &quot;generic&quot;     asynchronous function processRequest()  , with overridden callback</span>
 
 <span class="sd">To run the example, start the UaDemoServer of UnifiedAutomation first on the same machine. </span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -214,7 +220,7 @@
 <span class="kn">import</span> <span class="nn">pyuaf</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client</span>           <span class="kn">import</span> <span class="n">Client</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span>
-<span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>  <span class="kn">import</span> <span class="n">ReadRequest</span><span class="p">,</span> <span class="n">ReadRequestTarget</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>  <span class="kn">import</span> <span class="n">ReadRequest</span><span class="p">,</span> <span class="n">AsyncReadRequest</span><span class="p">,</span> <span class="n">ReadRequestTarget</span> 
 <span class="kn">from</span> <span class="nn">pyuaf.client.configs</span>   <span class="kn">import</span> <span class="n">ReadConfig</span><span class="p">,</span> <span class="n">SessionConfig</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span><span class="p">,</span> <span class="n">RelativePathElement</span><span class="p">,</span> <span class="n">QualifiedName</span><span class="p">,</span> <span class="n">LocalizedText</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">primitives</span>
@@ -284,23 +290,23 @@
 
 
 <span class="c"># read the node attributes all at once</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;First option: use the convenience function read() to read data synchronously&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;============================================================================&quot;</span><span class="p">)</span>
+    
+<span class="c"># OPTIONAL: You could also provide a ReadConfig to configure a call timeout, </span>
+<span class="c">#           or maximum age of the values, or ... </span>
+<span class="n">serviceConfig</span> <span class="o">=</span> <span class="n">ReadConfig</span><span class="p">()</span>
+<span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">maxAgeSec</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="c"># OPTIONAL: And you could also provide a SessionConfig to configure the sessions </span>
+<span class="c">#           (e.g. set the timeout to 600.0 seconds)</span>
+<span class="c">#           For more info about SessionConfigs, see the sessionconfig_example</span>
+<span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">SessionConfig</span><span class="p">()</span>
+<span class="n">sessionConfig</span><span class="o">.</span><span class="n">defaultSessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">600.0</span>
+
 <span class="k">try</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;First option: use the convenience function </span><span class="se">\&quot;</span><span class="s">read()</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;===================================================&quot;</span><span class="p">)</span>
-    
-    <span class="c"># OPTIONAL: You could also provide a ReadConfig to configure a call timeout, </span>
-    <span class="c">#           or maximum age of the values, or ... </span>
-    <span class="n">serviceConfig</span> <span class="o">=</span> <span class="n">ReadConfig</span><span class="p">()</span>
-    <span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">0.5</span>
-    <span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">maxAgeSec</span> <span class="o">=</span> <span class="mf">1.0</span>
-    
-    <span class="c"># OPTIONAL: And you could also provide a SessionConfig to configure the sessions </span>
-    <span class="c">#           (e.g. set the timeout to 600.0 seconds)</span>
-    <span class="c">#           For more info about SessionConfigs, see the sessionconfig_example</span>
-    <span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">SessionConfig</span><span class="p">()</span>
-    <span class="n">sessionConfig</span><span class="o">.</span><span class="n">defaultSessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">600.0</span>
-    
     <span class="c"># now read the node attributes</span>
     <span class="n">readResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="n">addresses</span>     <span class="o">=</span> <span class="p">[</span><span class="n">someDoubleNode</span><span class="p">,</span> <span class="n">someUInt32Node</span><span class="p">,</span> <span class="n">someStringNode</span><span class="p">,</span> 
                                                  <span class="n">someLocalizedTextNode</span><span class="p">,</span> <span class="n">someSByteArrayNode</span><span class="p">],</span>
@@ -309,33 +315,38 @@
     
     <span class="c"># print the result using the function we defined before</span>
     <span class="n">printResult</span><span class="p">(</span><span class="n">readResult</span><span class="p">)</span>
-    
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Second option: use the generic function </span><span class="se">\&quot;</span><span class="s">processRequest()</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;==========================================================&quot;</span><span class="p">)</span>
-    
-    <span class="c"># create a request with 5 targets</span>
-    <span class="n">readRequest</span> <span class="o">=</span> <span class="n">ReadRequest</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-    <span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">someDoubleNode</span>
-    <span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">someUInt32Node</span>
-    <span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">someStringNode</span>
-    <span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">someLocalizedTextNode</span>
-    <span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">someSByteArrayNode</span>
-    
-    <span class="c"># we could also add a 6th node, of which we want to read the DisplayName (= of type LocalizedText)</span>
-    <span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReadRequestTarget</span><span class="p">())</span> <span class="c"># or readRequest.targets.resize(6)</span>
-    <span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">address</span>     <span class="o">=</span> <span class="n">someDoubleNode</span>
-    <span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">attributeId</span> <span class="o">=</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">attributeids</span><span class="o">.</span><span class="n">DisplayName</span>
-    
-    <span class="c"># OPTIONAL: let&#39;s also specify a small call timeout, since the UaDemoServer is running </span>
-    <span class="c">#           on the local machine anyway</span>
-    <span class="n">readRequest</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">0.5</span>
-    <span class="c"># OPTIONAL: let&#39;s also specify that the values cannot be older than 1 second</span>
-    <span class="n">readRequest</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">maxAgeSec</span> <span class="o">=</span> <span class="mf">1.0</span>
-    <span class="c"># OPTIONAL: and finally let&#39;s also specify that sessions should have a timeout of 600 seconds</span>
-    <span class="c">#           For more info about SessionConfigs, see the sessionconfig_example</span>
-    <span class="n">readRequest</span><span class="o">.</span><span class="n">sessionConfig</span><span class="o">.</span><span class="n">defaultSessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">600.0</span>
-    
+<span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Some error occurred: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
+
+
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Second option: use the generic function processRequest() to read data synchronously&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===================================================================================&quot;</span><span class="p">)</span>
+
+<span class="c"># create a request with 5 targets</span>
+<span class="n">readRequest</span> <span class="o">=</span> <span class="n">ReadRequest</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">someDoubleNode</span>
+<span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">someUInt32Node</span>
+<span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">someStringNode</span>
+<span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">someLocalizedTextNode</span>
+<span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">someSByteArrayNode</span>
+
+<span class="c"># we could also add a 6th node, of which we want to read the DisplayName (= of type LocalizedText)</span>
+<span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReadRequestTarget</span><span class="p">())</span> <span class="c"># or readRequest.targets.resize(6)</span>
+<span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">address</span>     <span class="o">=</span> <span class="n">someDoubleNode</span>
+<span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">attributeId</span> <span class="o">=</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">attributeids</span><span class="o">.</span><span class="n">DisplayName</span>
+
+<span class="c"># OPTIONAL: let&#39;s also specify a small call timeout, since the UaDemoServer is running </span>
+<span class="c">#           on the local machine anyway</span>
+<span class="n">readRequest</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="c"># OPTIONAL: let&#39;s also specify that the values cannot be older than 1 second</span>
+<span class="n">readRequest</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">maxAgeSec</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="c"># OPTIONAL: and finally let&#39;s also specify that sessions should have a timeout of 600 seconds</span>
+<span class="c">#           For more info about SessionConfigs, see the sessionconfig_example</span>
+<span class="n">readRequest</span><span class="o">.</span><span class="n">sessionConfig</span><span class="o">.</span><span class="n">defaultSessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">600.0</span>
+
+<span class="k">try</span><span class="p">:</span>    
     <span class="c"># process the request</span>
     <span class="n">readResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">processRequest</span><span class="p">(</span><span class="n">readRequest</span><span class="p">)</span>
     
@@ -347,10 +358,147 @@
     <span class="n">data</span>   <span class="o">=</span> <span class="n">readResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
     <span class="k">if</span> <span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">LocalizedText</span><span class="p">):</span>
         <span class="k">print</span><span class="p">(</span><span class="s">&quot;The DisplayName-locale is: &#39;</span><span class="si">%s</span><span class="s">&#39;, the DisplayName-text is: &#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">locale</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">text</span><span class="p">()))</span>
+<span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Some error occurred: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
     
+    
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Third option: use the convenience function beginRead() to read data asynchronously&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;==================================================================================&quot;</span><span class="p">)</span>
+
+<span class="c"># notice we enable asynchronous communication now by providing the printResult() method as </span>
+<span class="c"># a callback function!</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">asyncReadResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">beginRead</span><span class="p">(</span><span class="n">addresses</span>     <span class="o">=</span> <span class="p">[</span><span class="n">someDoubleNode</span><span class="p">,</span> <span class="n">someUInt32Node</span><span class="p">,</span> 
+                                                          <span class="n">someStringNode</span><span class="p">,</span> <span class="n">someLocalizedTextNode</span><span class="p">,</span> 
+                                                          <span class="n">someSByteArrayNode</span><span class="p">],</span>
+                                         <span class="n">serviceConfig</span> <span class="o">=</span> <span class="n">serviceConfig</span><span class="p">,</span> <span class="c"># optional argument</span>
+                                         <span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">sessionConfig</span><span class="p">,</span> <span class="c"># optional argument</span>
+                                         <span class="n">callback</span>      <span class="o">=</span> <span class="n">printResult</span><span class="p">)</span> <span class="c"># callback function!</span>
+    
+    <span class="c"># check if there was an &quot;immediate&quot; error on the client side when executing the asynchronous </span>
+    <span class="c"># service call:</span>
+    <span class="k">if</span> <span class="n">asyncReadResult</span><span class="o">.</span><span class="n">overallStatus</span><span class="o">.</span><span class="n">isGood</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;OK, the client could invoke the asynchronous request without problems.&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Let&#39;s wait a second for the result ...&quot;</span><span class="p">)</span>
+        
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The read result should have been received by now!&quot;</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Some error occurred: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
+
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Fourth option: use the generic function processRequest() to read data asynchronously&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;====================================================================================&quot;</span><span class="p">)</span>
+
+<span class="c"># notice we enable asynchronous communication now by providing the printResult() method as </span>
+<span class="c"># a callback function!</span>
+
+<span class="c"># create an asynchronous (!) request with 5 targets</span>
+<span class="n">asyncReadRequest</span> <span class="o">=</span> <span class="n">AsyncReadRequest</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c"># we can simply copy the targets of the synchronous request to the asynchronous request:</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">asyncReadRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    
+<span class="c"># OPTIONAL: also copy the service config and session config:</span>
+<span class="n">asyncReadRequest</span><span class="o">.</span><span class="n">serviceConfig</span> <span class="o">=</span> <span class="n">readRequest</span><span class="o">.</span><span class="n">serviceConfig</span>
+<span class="n">asyncReadRequest</span><span class="o">.</span><span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">readRequest</span><span class="o">.</span><span class="n">sessionConfig</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c"># process the request</span>
+    <span class="n">asyncReadResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">processRequest</span><span class="p">(</span><span class="n">asyncReadRequest</span><span class="p">,</span> <span class="n">resultCallback</span><span class="o">=</span><span class="n">printResult</span><span class="p">)</span>
+    
+    <span class="c"># check if there was an &quot;immediate&quot; error on the client side when executing the asynchronous </span>
+    <span class="c"># service call:</span>
+    <span class="k">if</span> <span class="n">asyncReadResult</span><span class="o">.</span><span class="n">overallStatus</span><span class="o">.</span><span class="n">isGood</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;OK, the client could invoke the asynchronous request without problems.&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Let&#39;s wait a second for the result ...&quot;</span><span class="p">)</span>
+        
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The read result should have been received by now!&quot;</span><span class="p">)</span>
+
     
 <span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;Some error occurred: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
+
+
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Fifth option: read data asynchronously using beginRead() without specifying external callbacks&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;==============================================================================================&quot;</span><span class="p">)</span>
+
+<span class="c"># instead of using &quot;external&quot; callback functions (such as printResult() above), we can also use</span>
+<span class="c"># the &quot;internal&quot; callback function of the Client class. If the argument &#39;callback&#39; of beginRead() is </span>
+<span class="c"># not used (or &#39;resultCallback&#39; is not used in case of processRequest()), the asynchronous result</span>
+<span class="c"># will be dispatched to the readComplete() method of the Client class. </span>
+<span class="c"># In other words, when you subclass Client, you can simply override the readComplete() method</span>
+<span class="c"># to receive the asynchronous read results.</span>
+
+<span class="k">class</span> <span class="nc">MySubClasssedClient</span><span class="p">(</span><span class="n">Client</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">readComplete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">):</span> <span class="c"># overridden method!</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;This is the overridden method readComplete() speaking:&quot;</span><span class="p">)</span>
+        <span class="n">printResult</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="c"># create the client</span>
+<span class="n">mySubClassedClient</span> <span class="o">=</span> <span class="n">MySubClasssedClient</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+    
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">asyncReadResult</span> <span class="o">=</span> <span class="n">mySubClassedClient</span><span class="o">.</span><span class="n">beginRead</span><span class="p">(</span>
+                                         <span class="n">addresses</span>     <span class="o">=</span> <span class="p">[</span><span class="n">someDoubleNode</span><span class="p">,</span> <span class="n">someUInt32Node</span><span class="p">,</span> 
+                                                          <span class="n">someStringNode</span><span class="p">,</span> <span class="n">someLocalizedTextNode</span><span class="p">,</span> 
+                                                          <span class="n">someSByteArrayNode</span><span class="p">],</span>
+                                         <span class="n">serviceConfig</span> <span class="o">=</span> <span class="n">serviceConfig</span><span class="p">,</span> <span class="c"># optional argument</span>
+                                         <span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">sessionConfig</span><span class="p">)</span> <span class="c"># optional argument!</span>
+    <span class="c"># note: the &#39;callback&#39; argument is not used in the above call!</span>
+    
+    <span class="c"># check if there was an &quot;immediate&quot; error on the client side when executing the asynchronous </span>
+    <span class="c"># service call:</span>
+    <span class="k">if</span> <span class="n">asyncReadResult</span><span class="o">.</span><span class="n">overallStatus</span><span class="o">.</span><span class="n">isGood</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;OK, the client could invoke the asynchronous request without problems.&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Let&#39;s wait a second for the result ...&quot;</span><span class="p">)</span>
+        
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The read result should have been received by now!&quot;</span><span class="p">)</span>
+    
+<span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Some error occurred: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
+    
+
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Sixth option: read data asynchronously using processRequest() without specifying external callbacks&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===================================================================================================&quot;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c"># process the request</span>
+    <span class="n">asyncReadResult</span> <span class="o">=</span> <span class="n">mySubClassedClient</span><span class="o">.</span><span class="n">processRequest</span><span class="p">(</span><span class="n">asyncReadRequest</span><span class="p">)</span> 
+    <span class="c"># note: the &#39;resultCallback&#39; argument is not used in the above call!</span>
+    
+    <span class="c"># check if there was an &quot;immediate&quot; error on the client side when executing the asynchronous </span>
+    <span class="c"># service call:</span>
+    <span class="k">if</span> <span class="n">asyncReadResult</span><span class="o">.</span><span class="n">overallStatus</span><span class="o">.</span><span class="n">isGood</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;OK, the client could invoke the asynchronous request without problems.&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Let&#39;s wait a second for the result ...&quot;</span><span class="p">)</span>
+        
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The read result should have been received by now!&quot;</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Some error occurred: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
+    
 </pre></div>
 </div>
 </div>
@@ -993,7 +1141,7 @@
         <li class="right" >
           <a href="index.html" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.3 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

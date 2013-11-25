@@ -598,13 +598,15 @@
 
             Status of the result (Good if the monitored item was created, Bad if not), 
             as a :class:`~pyuaf.util.Status` instance.
-            
-        .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.clientMonitoredItemHandle
+    
+        .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.clientConnectionId
 
-            The monitored item client handle that was assigned to the monitored item by the UAF 
-            (unique per client, for the whole lifetime of the client).
+            The id of the session that wasThe id of the session that was used for this target, as an ``int``.. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.notificationHandle
+
+            The notification handle that was assigned to the monitored item by the UAF 
+            (unique per client).
             
-            This is a 32-bit ``int`` value that remains unique for the whole lifetime of the client.
+            This is a 64-bit ``long`` value that remains unique for the whole lifetime of the client.
             So even if sessions/subscriptions/monitored items are re-created, this numerical
             value will always refer to the same monitored item.
     
@@ -645,8 +647,8 @@
         
         >>> noOfElements = len(targets) # will be 5  (alternative: targets.size())
         
-        >>> target0_isGood       = targets[0].status.isGood()
-        >>> target0_clientHandle = targets[0].clientMonitoredItemHandle
+        >>> target0_isGood             = targets[0].status.isGood()
+        >>> target0_notificationHandle = targets[0].notificationHandle
         
         >>> # other methods of the vector:
         >>> targets.resize(6)
@@ -744,12 +746,12 @@
 
             The id of the session that was used for this target, as an ``int``.
     
-        .. autoattribute:: pyuaf.client.results.CreateMonitoredEventsResultTarget.clientMonitoredItemHandle
+        .. autoattribute:: pyuaf.client.results.CreateMonitoredEventsResultTarget.notificationHandle
 
-            The client monitored item handle that was assigned to the monitored item by the UAF client
+            The notification handle that was assigned to the monitored item by the UAF 
             (unique per client).
             
-            This is a 32-bit ``int`` value that remains unique for the whole lifetime of the client.
+            This is a 64-bit ``long`` value that remains unique for the whole lifetime of the client.
             So even if sessions/subscriptions/monitored items are re-created, this numerical
             value will always refer to the same monitored item.
     
@@ -790,8 +792,8 @@
         
         >>> noOfElements = len(targets) # will be 5  (alternative: targets.size())
         
-        >>> target0_isGood       = targets[0].status.isGood()
-        >>> target0_clientHandle = targets[0].clientMonitoredItemHandle
+        >>> target0_isGood             = targets[0].status.isGood()
+        >>> target0_notificationHandle = targets[0].notificationHandle
         
         >>> # other methods of the vector:
         >>> targets.resize(6)

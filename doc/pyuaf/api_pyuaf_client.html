@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client &mdash; PyUAF 1.2 documentation</title>
+    <title>pyuaf.client &mdash; PyUAF 1.3 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.2',
+        VERSION:     '1.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.2 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.3 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.configs" href="api_pyuaf_client_configs.html" />
     <link rel="prev" title="pyuaf" href="api_pyuaf.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.3 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -234,6 +234,118 @@ argument (which will be of type <a class="reference internal" href="api_pyuaf_cl
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.AsyncMethodCallResult" title="pyuaf.client.results.AsyncMethodCallResult"><tt class="xref py py-class docutils literal"><span class="pre">AsyncMethodCallResult</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">Base exception, catch this to handle any UAF errors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.beginRead">
+<tt class="descname">beginRead</tt><big>(</big><em>addresses</em>, <em>attributeId=13</em>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em>, <em>callback=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.beginRead" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a number of node attributes synchronously.</p>
+<p>This is a convenience function for calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-class docutils literal"><span class="pre">processRequest</span></tt></a> with 
+a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.ReadRequest" title="pyuaf.client.requests.ReadRequest"><tt class="xref py py-class docutils literal"><span class="pre">ReadRequest</span></tt></a> as its first argument.
+For full flexibility, use that function.</p>
+<dl class="docutils">
+<dt>Asynchronous communication can be handled in two ways:</dt>
+<dd><ul class="first last simple">
+<li>you specify a callback function (a function with one argument). This function 
+will be called by the UAF when the asynchronous result is received. The argument of this
+function call will be of type <a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.ReadResult" title="pyuaf.client.results.ReadResult"><tt class="xref py py-class docutils literal"><span class="pre">ReadResult</span></tt></a>.</li>
+<li>you leave the &#8216;callback&#8217; argument None. In this case, your client application need to 
+inherit from the <a class="reference internal" href="#pyuaf.client.Client" title="pyuaf.client.Client"><tt class="xref py py-class docutils literal"><span class="pre">Client</span></tt></a> class, so it can override the  
+<a class="reference internal" href="#pyuaf.client.Client.readComplete" title="pyuaf.client.Client.readComplete"><tt class="xref py py-meth docutils literal"><span class="pre">readComplete()</span></tt></a> method.</li>
+</ul>
+</dd>
+</dl>
+<p>Note that asynchronous requests MUST be invoked on a single session. Meaning:
+if you provide multiple addresses to beginRead(), the addresses MUST point to nodes that 
+belong to the same server (as the UAF can currently not reconstruct an asynchronous 
+request that must be &#8220;split up&#8221; to be called on multiple servers).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>addresses</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; A single address or a list of addresses of nodes of which the specified 
+attribute should be read.</li>
+<li><strong>attributeId</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The id of the attribute to be read (e.g. <a class="reference internal" href="api_pyuaf_util_attributeids.html#pyuaf.util.attributeids.Value" title="pyuaf.util.attributeids.Value"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.attributeids.Value</span></tt></a>
+or <a class="reference internal" href="api_pyuaf_util_attributeids.html#pyuaf.util.attributeids.DisplayName" title="pyuaf.util.attributeids.DisplayName"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.attributeids.DisplayName</span></tt></a>).</li>
+<li><strong>serviceConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.ReadConfig" title="pyuaf.client.configs.ReadConfig"><tt class="xref py py-class docutils literal"><span class="pre">ReadConfig</span></tt></a>) &#8211; Additional settings for processing the read request.
+Leave None for defaults.</li>
+<li><strong>sessionConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SessionConfig" title="pyuaf.client.configs.SessionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SessionConfig</span></tt></a>) &#8211; A config holding settings for the session creation.
+Leave None for defaults.</li>
+<li><strong>callback</strong> &#8211; A callback function to receive the asynchronous result. This function 
+should have one argument (which will be of type <a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.ReadResult" title="pyuaf.client.results.ReadResult"><tt class="xref py py-class docutils literal"><span class="pre">ReadResult</span></tt></a>).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The &#8220;immediate&#8221; result of the asynchronous read request.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.AsyncReadResult" title="pyuaf.client.results.AsyncReadResult"><tt class="xref py py-class docutils literal"><span class="pre">AsyncReadResult</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">Base exception, catch this to handle any UAF errors.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.beginWrite">
+<tt class="descname">beginWrite</tt><big>(</big><em>addresses</em>, <em>data</em>, <em>attributeId=13</em>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em>, <em>callback=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.beginWrite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a number of node attributes synchronously.</p>
+<p>This is a convenience function for calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-class docutils literal"><span class="pre">processRequest</span></tt></a> with 
+a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.AsyncWriteRequest" title="pyuaf.client.requests.AsyncWriteRequest"><tt class="xref py py-class docutils literal"><span class="pre">AsyncWriteRequest</span></tt></a> as its first argument.
+For full flexibility, use that function.</p>
+<dl class="docutils">
+<dt>Asynchronous communication can be handled in two ways:</dt>
+<dd><ul class="first last simple">
+<li>you specify a callback function (a function with one argument). This function 
+will be called by the UAF when the asynchronous result is received. The argument of this
+function call will be of type <a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.WriteResult" title="pyuaf.client.results.WriteResult"><tt class="xref py py-class docutils literal"><span class="pre">WriteResult</span></tt></a>.</li>
+<li>you leave the &#8216;callback&#8217; argument None. In this case, your client application need to 
+inherit from the <a class="reference internal" href="#pyuaf.client.Client" title="pyuaf.client.Client"><tt class="xref py py-class docutils literal"><span class="pre">Client</span></tt></a> class, so it can override the  
+<a class="reference internal" href="#pyuaf.client.Client.writeComplete" title="pyuaf.client.Client.writeComplete"><tt class="xref py py-meth docutils literal"><span class="pre">writeComplete()</span></tt></a> method.</li>
+</ul>
+</dd>
+</dl>
+<p>Note that asynchronous requests MUST be invoked on a single session. Meaning:
+if you provide multiple addresses to beginWrite(), the addresses MUST point to nodes that 
+belong to the same server (as the UAF can currently not reconstruct an asynchronous 
+request that must be &#8220;split up&#8221; to be called on multiple servers).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>addresses</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a> or a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Address" title="pyuaf.util.Address"><tt class="xref py py-class docutils literal"><span class="pre">Address</span></tt></a>) &#8211; A single address or a list of addresses of nodes of which the specified 
+attribute should be written.</li>
+<li><strong>data</strong> (<a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.UInt32" title="pyuaf.util.primitives.UInt32"><tt class="xref py py-class docutils literal"><span class="pre">UInt32</span></tt></a> or <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.UInt32" title="pyuaf.util.primitives.UInt32"><tt class="xref py py-class docutils literal"><span class="pre">UInt32</span></tt></a>
+or any other data type of the supported dynamic data types (or a <tt class="docutils literal"><span class="pre">list</span></tt> of them).) &#8211; A single value or a list of values to be written.</li>
+<li><strong>attributeId</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The id of the attribute to be written (e.g. <a class="reference internal" href="api_pyuaf_util_attributeids.html#pyuaf.util.attributeids.Value" title="pyuaf.util.attributeids.Value"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.attributeids.Value</span></tt></a>
+or <a class="reference internal" href="api_pyuaf_util_attributeids.html#pyuaf.util.attributeids.DisplayName" title="pyuaf.util.attributeids.DisplayName"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.attributeids.DisplayName</span></tt></a>) for all addresses.</li>
+<li><strong>serviceConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.WriteConfig" title="pyuaf.client.configs.WriteConfig"><tt class="xref py py-class docutils literal"><span class="pre">WriteConfig</span></tt></a>) &#8211; Additional settings for processing the write request.
+Leave None for defaults.</li>
+<li><strong>sessionConfig</strong> (<a class="reference internal" href="api_pyuaf_client_configs.html#pyuaf.client.configs.SessionConfig" title="pyuaf.client.configs.SessionConfig"><tt class="xref py py-class docutils literal"><span class="pre">SessionConfig</span></tt></a>) &#8211; A config holding settings for the session creation.
+Leave None for defaults.</li>
+<li><strong>callback</strong> &#8211; A callback function to receive the asynchronous result. This function 
+should have one argument (which will be of type <a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.WriteResult" title="pyuaf.client.results.WriteResult"><tt class="xref py py-class docutils literal"><span class="pre">WriteResult</span></tt></a>).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The &#8220;immediate&#8221; result of the asynchronous write request.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.AsyncWriteResult" title="pyuaf.client.results.AsyncWriteResult"><tt class="xref py py-class docutils literal"><span class="pre">AsyncWriteResult</span></tt></a></p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
@@ -1014,10 +1126,11 @@ function already when you began the asynchronous read request.</p>
 <p>In other words, there are two ways how you can catch the result of asynchronous read requests:</p>
 <blockquote>
 <div><ul class="simple">
-<li>either by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> <em>without</em> providing an external callback function
-via the &#8216;resultCallback&#8217; argument &#8211;&gt; then you need to override <a class="reference internal" href="#pyuaf.client.Client.callComplete" title="pyuaf.client.Client.callComplete"><tt class="xref py py-meth docutils literal"><span class="pre">callComplete()</span></tt></a></li>
-<li>or by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> <em>with</em> providing an external callback function
-via the &#8216;resultCallback&#8217; argument &#8211;&gt; then only the external callback function will be called.</li>
+<li>either by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> or <cite>:meth:~pyuaf.client.Client.beginRead</cite> 
+<em>without</em> providing an external callback function &#8211;&gt; then you need to override 
+<a class="reference internal" href="#pyuaf.client.Client.readComplete" title="pyuaf.client.Client.readComplete"><tt class="xref py py-meth docutils literal"><span class="pre">readComplete()</span></tt></a></li>
+<li>or by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> <em>with</em> providing an external 
+callback function &#8211;&gt; then only the external callback function will be called.</li>
 </ul>
 </div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1195,10 +1308,11 @@ function already when you began the asynchronous write request.</p>
 <p>In other words, there are two ways how you can catch the result of asynchronous write requests:</p>
 <blockquote>
 <div><ul class="simple">
-<li>either by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> <em>without</em> providing an external callback function
-via the &#8216;resultCallback&#8217; argument &#8211;&gt; then you need to override <a class="reference internal" href="#pyuaf.client.Client.callComplete" title="pyuaf.client.Client.callComplete"><tt class="xref py py-meth docutils literal"><span class="pre">callComplete()</span></tt></a></li>
-<li>or by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> <em>with</em> providing an external callback function
-via the &#8216;resultCallback&#8217; argument &#8211;&gt; then only the external callback function will be called.</li>
+<li>either by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> or <cite>:meth:~pyuaf.client.Client.beginWrite</cite> 
+<em>without</em> providing an external callback function &#8211;&gt; then you need to override 
+<a class="reference internal" href="#pyuaf.client.Client.writeComplete" title="pyuaf.client.Client.writeComplete"><tt class="xref py py-meth docutils literal"><span class="pre">writeComplete()</span></tt></a></li>
+<li>or by calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-meth docutils literal"><span class="pre">processRequest()</span></tt></a> <em>with</em> providing an external 
+callback function &#8211;&gt; then only the external callback function will be called.</li>
 </ul>
 </div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1566,7 +1680,7 @@ state of the subscription, the handle, etc.</p>
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.2 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.3 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
