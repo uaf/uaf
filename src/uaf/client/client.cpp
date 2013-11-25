@@ -199,6 +199,28 @@ namespace uafc
     }
 
 
+    // Read a number of node attributes asynchronously
+    //==============================================================================================
+    uaf::Status Client::beginRead(
+            const std::vector<uaf::Address>&        addresses,
+            const uafc::attributeids::AttributeId   attributeId,
+            const uafc::ReadConfig&                 serviceConfig,
+            const uafc::SessionConfig&              sessionConfig,
+            uafc::AsyncReadResult&                  result)
+    {
+        // log read request
+        logger_->debug("Reading %d node attributes", addresses.size());
+
+        AsyncReadRequest request(0, serviceConfig, sessionConfig);
+
+        request.targets.reserve(addresses.size());
+
+        for (vector<Address>::const_iterator it = addresses.begin(); it != addresses.end(); ++it)
+            request.targets.push_back(ReadRequestTarget(*it, attributeId));
+
+        // perform the read request
+        return processRequest(request, result);
+    }
 
 
     // Write a number of node attributes
@@ -214,13 +236,16 @@ namespace uafc
         // log write request
         logger_->debug("Writing %d node attributes", addresses.size());
 
-        // create a write target and write result
+        // create a write request
         WriteRequest request(0, serviceConfig, sessionConfig);
 
         // check if the addresses and the data match
         if (addresses.size() != data.size())
             return uaf::Status(uaf::statuscodes::InvalidRequestError,
                                "Data doesn't match addresses");
+
+        // reserve some space to speed up the adding of the targets
+        request.targets.reserve(addresses.size());
 
         // fill the targets
         for (std::size_t i = 0; i < addresses.size(); i++)
@@ -230,6 +255,38 @@ namespace uafc
         return processRequest(request, result);
     }
 
+
+    // Write a number of node attributes asynchronously
+    //==============================================================================================
+    uaf::Status Client::beginWrite(
+            const std::vector<uaf::Address>&        addresses,
+            const std::vector<uaf::Variant>&        data,
+            const uafc::attributeids::AttributeId   attributeId,
+            const uafc::WriteConfig&                serviceConfig,
+            const uafc::SessionConfig&              sessionConfig,
+            uafc::AsyncWriteResult&                 result)
+    {
+        // log write request
+        logger_->debug("Writing %d node attributes", addresses.size());
+
+        // create a write request
+        AsyncWriteRequest request(0, serviceConfig, sessionConfig);
+
+        // check if the addresses and the data match
+        if (addresses.size() != data.size())
+            return uaf::Status(uaf::statuscodes::InvalidRequestError,
+                               "Data doesn't match addresses");
+
+        // reserve some space to speed up the adding of the targets
+        request.targets.reserve(addresses.size());
+
+        // fill the targets
+        for (std::size_t i = 0; i < addresses.size(); i++)
+            request.targets.push_back(WriteRequestTarget(addresses[i], data[i], attributeId));
+
+        // perform the write request
+        return processRequest(request, result);
+    }
 
 
     // Call a method synchronously

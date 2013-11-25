@@ -162,6 +162,29 @@ namespace uafc
 
 
         /**
+         * Read a number of node attributes asynchronously.
+         *
+         * Note that asynchronous requests MUST be invoked on a single session. Meaning:
+         * if you provide multiple addresses to beginRead(), the addresses MUST point to nodes that
+         * belong to the same server (as the UAF can currently not reconstruct an asynchronous
+         * request that must be "split up" to be called on multiple servers).
+         *
+         * @param addresses     Addresses of the nodes of which the attributes should be read.
+         * @param attributeId   The attribute to be read (e.g. Value or DisplayName).
+         * @param serviceConfig Read config.
+         * @param sessionConfig Session config.
+         * @param result        Result of the request.
+         * @return              Client-side status.
+         */
+        uaf::Status beginRead(
+                const std::vector<uaf::Address>&     addresses,
+                const uaf::attributeids::AttributeId attributeId,
+                const uafc::ReadConfig&              serviceConfig,
+                const uafc::SessionConfig&           sessionConfig,
+                uafc::AsyncReadResult&               result);
+
+
+        /**
          * Write a number of node attributes synchronously.
          *
          * @param addresses         Addresses of the nodes of which the attribute should be written.
@@ -179,6 +202,31 @@ namespace uafc
                 const uafc::WriteConfig&             serviceConfig,
                 const uafc::SessionConfig&           sessionConfig,
                 uafc::WriteResult&                   result);
+
+
+        /**
+         * Write a number of node attributes asynchronously.
+         *
+         * Note that asynchronous requests MUST be invoked on a single session. Meaning:
+         * if you provide multiple addresses to beginWrite(), the addresses MUST point to nodes that
+         * belong to the same server (as the UAF can currently not reconstruct an asynchronous
+         * request that must be "split up" to be called on multiple servers).
+         *
+         * @param addresses         Addresses of the nodes of which the attribute should be written.
+         * @param data              Data values that should be written (one data value per address).
+         * @param attributeId       Attribute id that should be written for all nodes.
+         * @param serviceConfig     Write config.
+         * @param sessionConfig     Session config.
+         * @param result            Result of the request.
+         * @return                  Client-side status.
+         */
+        uaf::Status beginWrite(
+                const std::vector<uaf::Address>&     addresses,
+                const std::vector<uaf::Variant>&     data,
+                const uaf::attributeids::AttributeId attributeId,
+                const uafc::WriteConfig&             serviceConfig,
+                const uafc::SessionConfig&           sessionConfig,
+                uafc::AsyncWriteResult&              result);
 
 
         /**

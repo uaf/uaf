@@ -101,10 +101,11 @@ class Client(ClientBase):
         
         In other words, there are two ways how you can catch the result of asynchronous read requests:
         
-         - either by calling :meth:`~pyuaf.client.Client.processRequest` *without* providing an external callback function
-           via the 'resultCallback' argument --> then you need to override :meth:`~pyuaf.client.Client.callComplete`
-         - or by calling :meth:`~pyuaf.client.Client.processRequest` *with* providing an external callback function
-           via the 'resultCallback' argument --> then only the external callback function will be called.
+         - either by calling :meth:`~pyuaf.client.Client.processRequest` or `:meth:~pyuaf.client.Client.beginRead` 
+           *without* providing an external callback function --> then you need to override 
+           :meth:`~pyuaf.client.Client.readComplete`
+         - or by calling :meth:`~pyuaf.client.Client.processRequest` *with* providing an external 
+           callback function --> then only the external callback function will be called.
         
         :param result: The asynchronously received read result.
         :type  result: :class:`~pyuaf.client.results.ReadResult`
@@ -144,10 +145,11 @@ class Client(ClientBase):
         
         In other words, there are two ways how you can catch the result of asynchronous write requests:
         
-         - either by calling :meth:`~pyuaf.client.Client.processRequest` *without* providing an external callback function
-           via the 'resultCallback' argument --> then you need to override :meth:`~pyuaf.client.Client.callComplete`
-         - or by calling :meth:`~pyuaf.client.Client.processRequest` *with* providing an external callback function
-           via the 'resultCallback' argument --> then only the external callback function will be called.
+         - either by calling :meth:`~pyuaf.client.Client.processRequest` or `:meth:~pyuaf.client.Client.beginWrite` 
+           *without* providing an external callback function --> then you need to override 
+           :meth:`~pyuaf.client.Client.writeComplete`
+         - or by calling :meth:`~pyuaf.client.Client.processRequest` *with* providing an external 
+           callback function --> then only the external callback function will be called.
         
         :param result: The asynchronously received write result.
         :type  result: :class:`~pyuaf.client.results.WriteResult`
@@ -648,6 +650,91 @@ class Client(ClientBase):
         return result
     
     
+    def beginRead(self, addresses, attributeId=pyuaf.util.attributeids.Value, serviceConfig=None, 
+                  sessionConfig=None, callback=None):
+        """
+        Read a number of node attributes synchronously.
+        
+        This is a convenience function for calling :class:`~pyuaf.client.Client.processRequest` with 
+        a :class:`~pyuaf.client.requests.ReadRequest` as its first argument.
+        For full flexibility, use that function.
+        
+        Asynchronous communication can be handled in two ways:
+         - you specify a callback function (a function with one argument). This function 
+           will be called by the UAF when the asynchronous result is received. The argument of this
+           function call will be of type :class:`~pyuaf.client.results.ReadResult`.
+         - you leave the 'callback' argument None. In this case, your client application need to 
+           inherit from the :class:`~pyuaf.client.Client` class, so it can override the  
+           :meth:`~pyuaf.client.Client.readComplete` method.
+        
+        Note that asynchronous requests MUST be invoked on a single session. Meaning:
+        if you provide multiple addresses to beginRead(), the addresses MUST point to nodes that 
+        belong to the same server (as the UAF can currently not reconstruct an asynchronous 
+        request that must be "split up" to be called on multiple servers).
+        
+        :param addresses: A single address or a list of addresses of nodes of which the specified 
+                          attribute should be read.
+        :type  addresses: :class:`~pyuaf.util.Address` or a ``list`` of :class:`~pyuaf.util.Address` 
+        :param attributeId: The id of the attribute to be read (e.g. :attr:`pyuaf.util.attributeids.Value`
+                            or :attr:`pyuaf.util.attributeids.DisplayName`).
+        :type attributeId: ``int``
+        :param serviceConfig: Additional settings for processing the read request.
+                              Leave None for defaults.
+        :type serviceConfig: :class:`~pyuaf.client.configs.ReadConfig`
+        :param sessionConfig: A config holding settings for the session creation.
+                              Leave None for defaults.
+        :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
+        :param callback: A callback function to receive the asynchronous result. This function 
+                         should have one argument (which will be of type :class:`~pyuaf.client.results.ReadResult`).
+        :return: The "immediate" result of the asynchronous read request.
+        :rtype:  :class:`~pyuaf.client.results.AsyncReadResult`
+        :raise pyuaf.util.errors.UafError:
+             Base exception, catch this to handle any UAF errors.
+        """
+        # make sure the arguments are valid (to avoid the ugly SWIG error output)
+        
+        if callback is not None:
+            if not hasattr(callback, '__call__'):
+                raise TypeError("Callback argument must be callable (i.e. a function!)")
+            
+        pyuaf.util.errors.evaluateArg(attributeId, "attributeId", 
+                                      int, [pyuaf.util.attributeids.Value])
+        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
+                                      pyuaf.client.configs.ReadConfig, [None])
+        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
+                                      pyuaf.client.configs.SessionConfig, [None])
+        
+        # put the address(es) in a vector
+        if type(addresses) == pyuaf.util.Address: # the user has called read(someAddress)
+            addressVector = pyuaf.util.AddressVector([addresses])
+        else: # the user has called read([one or more Addresses in a list])
+            addressVector = pyuaf.util.AddressVector(addresses)
+            
+        result = pyuaf.client.results.AsyncReadResult()
+        
+        if serviceConfig is None:
+            serviceConfig = pyuaf.client.configs.ReadConfig()
+        
+        if sessionConfig is None:
+            sessionConfig = pyuaf.client.configs.SessionConfig()
+        
+        try:
+            self.__asyncReadLock__.acquire()
+        
+            status = ClientBase.beginRead(self, addressVector, attributeId, serviceConfig, sessionConfig, result)
+            
+            pyuaf.util.errors.evaluate(status)
+                    
+            # register the callback function if necessary
+            if callback is not None:
+                self.__asyncReadCallbacks__[result.requestHandle] = callback
+            
+            return result
+        finally:
+            self.__asyncReadLock__.release()
+
+    
+    
     def write(self, addresses, data, attributeId=pyuaf.util.attributeids.Value, serviceConfig=None, sessionConfig=None):
         """
         Write a number of node attributes synchronously.
@@ -714,8 +801,106 @@ class Client(ClientBase):
         
         pyuaf.util.errors.evaluate(status)
         return result
+
     
+    def beginWrite(self, addresses, data, attributeId=pyuaf.util.attributeids.Value, 
+                   serviceConfig=None, sessionConfig=None, callback=None):
+        """
+        Write a number of node attributes synchronously.
+        
+        This is a convenience function for calling :class:`~pyuaf.client.Client.processRequest` with 
+        a :class:`~pyuaf.client.requests.AsyncWriteRequest` as its first argument.
+        For full flexibility, use that function.
+        
+        Asynchronous communication can be handled in two ways:
+         - you specify a callback function (a function with one argument). This function 
+           will be called by the UAF when the asynchronous result is received. The argument of this
+           function call will be of type :class:`~pyuaf.client.results.WriteResult`.
+         - you leave the 'callback' argument None. In this case, your client application need to 
+           inherit from the :class:`~pyuaf.client.Client` class, so it can override the  
+           :meth:`~pyuaf.client.Client.writeComplete` method.
+        
+        Note that asynchronous requests MUST be invoked on a single session. Meaning:
+        if you provide multiple addresses to beginWrite(), the addresses MUST point to nodes that 
+        belong to the same server (as the UAF can currently not reconstruct an asynchronous 
+        request that must be "split up" to be called on multiple servers).
+        
+        :param addresses: A single address or a list of addresses of nodes of which the specified 
+                          attribute should be written.
+        :type  addresses: :class:`~pyuaf.util.Address` or a ``list`` of :class:`~pyuaf.util.Address` 
+        :param data: A single value or a list of values to be written.
+        :type  data: :class:`~pyuaf.util.primitives.UInt32` or ``list`` of :class:`~pyuaf.util.primitives.UInt32`
+                     or any other data type of the supported dynamic data types (or a ``list`` of them).
+        :param attributeId: The id of the attribute to be written (e.g. :attr:`pyuaf.util.attributeids.Value`
+                            or :attr:`pyuaf.util.attributeids.DisplayName`) for all addresses.
+        :type attributeId: ``int``
+        :param serviceConfig: Additional settings for processing the write request.
+                              Leave None for defaults.
+        :type serviceConfig: :class:`~pyuaf.client.configs.WriteConfig`
+        :param sessionConfig: A config holding settings for the session creation.
+                              Leave None for defaults.
+        :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
+        :param callback: A callback function to receive the asynchronous result. This function 
+                         should have one argument (which will be of type :class:`~pyuaf.client.results.WriteResult`).
+        :return: The "immediate" result of the asynchronous write request.
+        :rtype:  :class:`~pyuaf.client.results.AsyncWriteResult`
+        :raise pyuaf.util.errors.UafError:
+             Base exception, catch this to handle any UAF errors.
+        """
+        # make sure the arguments are valid (to avoid the ugly SWIG error output)
+        
+        if callback is not None:
+            if not hasattr(callback, '__call__'):
+                raise TypeError("Callback argument must be callable (i.e. a function!)")
+            
+        pyuaf.util.errors.evaluateArg(attributeId, "attributeId", 
+                                      int, [pyuaf.util.attributeids.Value])
+        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
+                                      pyuaf.client.configs.WriteConfig, [None])
+        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
+                                      pyuaf.client.configs.SessionConfig, [None])
+        
+        if len(addresses) != len(data):
+            raise TypeError("The 'addresses' and 'data' arguments must either be both a " 
+                            "single object, or both a list of the same size") 
+        
+        # if a single Address and single value are given, create vectors out of them:
+        if type(addresses) == pyuaf.util.Address:
+            addressVector = pyuaf.util.AddressVector([addresses])
+            dataVector    = pyuaf.util.VariantVector()
+            dataVector.append(data)
+        # if lists are already provided, convert the lists to vectors
+        else:
+            addressVector = pyuaf.util.AddressVector(addresses)
+            dataVector    = pyuaf.util.VariantVector()
+            for item in data:
+                dataVector.append(item)
+        
+        result = pyuaf.client.results.AsyncWriteResult()
+        
+        if serviceConfig is None:
+            serviceConfig = pyuaf.client.configs.WriteConfig()
+        
+        if sessionConfig is None:
+            sessionConfig = pyuaf.client.configs.SessionConfig()
+        
+        try:
+            self.__asyncWriteLock__.acquire()
+        
+            status = ClientBase.beginWrite(self, addressVector, dataVector, attributeId, serviceConfig, 
+                                           sessionConfig, result)
+            
+            pyuaf.util.errors.evaluate(status)
+                    
+            # register the callback function if necessary
+            if callback is not None:
+                self.__asyncWriteCallbacks__[result.requestHandle] = callback
+            
+            return result
+        finally:
+            self.__asyncWriteLock__.release()
     
+        
     def call(self, objectAddress, methodAddress, inputArgs=[], serviceConfig=None, sessionConfig=None):
         """
         Invoke a remote method call.
