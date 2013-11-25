@@ -655,10 +655,10 @@ namespace uafc
                     sessionFactory_->doHouseKeeping();
 
                 if (!doFinishThread_)
-                    processPersistentRequests(database_->createMonitoredDataRequestStore);
+                    processPersistedRequests(database_->createMonitoredDataRequestStore);
 
                 if (!doFinishThread_)
-                    processPersistentRequests(database_->createMonitoredEventsRequestStore);
+                    processPersistedRequests(database_->createMonitoredEventsRequestStore);
             }
         }
     }
@@ -803,7 +803,7 @@ namespace uafc
     // Private template function implementation: process persistent requests
     // =============================================================================================
     template<typename _Store>
-    void Client::processPersistentRequests(_Store& store)
+    void Client::processPersistedRequests(_Store& store)
     {
         // create a typedef for the vector holding the correct type of items
         typedef std::vector<typename _Store::Item> Items;

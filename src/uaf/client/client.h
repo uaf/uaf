@@ -867,7 +867,8 @@ namespace uafc
 
 
         /**
-         * Private templated member function to process persistent requests.
+         * Private templated member function to process requests that were already stored in a
+         * Store.
          *
          * Persistent requests are requests such as CreateMonitoredDataRequests that we want to
          * reconstruct automatically after severe failures. E.g. when the NodeId of a monitored
@@ -880,7 +881,7 @@ namespace uafc
          *                  reconstructed.
          */
         template<typename _Store>
-        void processPersistentRequests(_Store& store);
+        void processPersistedRequests(_Store& store);
         // Private template functions can be implemented in the CPP file (keeps the header clean!)
 
 
