@@ -110,6 +110,24 @@ def test(args):
     assert t.noOfSuccessFullyFinishedCallbacks == 1
     
     
+    print(" - testing pyuaf.client.Client().beginRead(<addresses>,<callback>) for some addresses")
+    
+    
+    t = TestClass()
+    asyncResult = client.beginRead([address_Byte, address_Int32, address_Float], callback=t.myCallback)
+    
+    if args.verbose:
+        print("Asynchronous request was executed (handle assigned: %d)" %asyncResult.requestHandle)
+        print("Waiting for the result...")
+    
+    t_timeout = time.time() + 5.0
+    while time.time() < t_timeout and t.noOfSuccessFullyFinishedCallbacks == 0:
+        time.sleep(0.01)
+    
+    # assert if the callback function was successfully finished
+    assert t.noOfSuccessFullyFinishedCallbacks == 1
+    
+    
     print(" - testing pyuaf.client.Client().processRequest(<AsyncReadRequest>, <longLastingcallbackFunction>) 30 times in parallel")
     if args.verbose:
         print("   (you should notice that all 30 callback functions are running simultaneously and thus mixing their output)")
@@ -140,6 +158,29 @@ def test(args):
     # start 30 processes
     for i in xrange(30):
         client.processRequest(request, t.myCallback)
+    
+    # sleep while the callbacks are running
+    if args.verbose: print("Waiting for the callbacks to finish...")
+    
+    t_timeout = time.time() + 10.0
+    while time.time() < t_timeout and t.noOfSuccessFullyFinishedCallbacks < 30:
+        time.sleep(0.01)
+    
+    # assert if all callback functions were successfully finished
+    assert t.noOfSuccessFullyFinishedCallbacks == 30
+    
+    
+    
+    print(" - testing pyuaf.client.Client().beginRead(<addresses>,<longLastingcallbackFunction>) 30 times in parallel")
+    if args.verbose:
+        print("   (you should notice that all 30 callback functions are running simultaneously and thus mixing their output)")
+    
+    
+    t = LongLastingTestClass()
+    
+    # start 30 processes
+    for i in xrange(30):
+        client.beginRead([address_Byte, address_Int32, address_Float], callback=t.myCallback)
     
     # sleep while the callbacks are running
     if args.verbose: print("Waiting for the callbacks to finish...")
