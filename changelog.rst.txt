@@ -17,6 +17,45 @@ Bugfixes (which do not have any implications on the API) can only be tracked
 via the GIT version control system.
 
 
+1.4 @ 2013/11/25
+----------------------------------------------------------------------------------------------------
+
+Informally:
+
+ - As of now, when monitored items are created by the client (e.g. by calling 
+   uafc::Client::createMonitoredData in C++ or pyuaf.client.Client.createMonitoredData in Python), 
+   but these monitored items cannot be created on the server initially due to some (communication) 
+   failure, you can access the handles that were already assigned to them. This was already
+   possible for the C++ API, but not for the Python API because the latter raises exceptions on 
+   failures and therefore doesn't return you a result object that contains the handles.
+   From a client's point of view, it's important to receive these handles, because at some point
+   (e.g. when the server comes online), the UAF will be able to create the monitored items on the 
+   server automatically in the background. At that point you will be able to identify the 
+   notifications that you start to receive, by correlating them to the handles that you previously
+   received. In Python, these handles are provided to you by the exception that was raised
+   when createMonitoredData() or createMonitoredEvents() or processRequest() failed.
+
+Formally:
+      
+ - !!!Breaking change (only for the C++ API)!!!
+ 
+   The handles from "uaf/client/clienthandles.h" (that were part of the uafc namespace) are now 
+   part of the "uaf/util/handles.h" file (so they are not part of the uaf namespace).
+   Also uaf::NotificationHandle (formerly uafc::NotificationHandle) is now a 32-bit unsigned int
+   instead of 64-bit unsigned int.
+   All this has no consequences for the Python API.
+   
+ - The following classes have been added:
+ 
+    - uaf::StatusDiagnostics 
+      (pyuaf.util.StatusDiagnostics)
+      
+ - The following methods were added to existing classes
+ 
+    - uaf::Status::additionalDiagnostics() 
+      (pyuaf.util.Status.additionalDiagnostics())
+
+
 1.3 @ 2013/11/25
 ----------------------------------------------------------------------------------------------------
 
