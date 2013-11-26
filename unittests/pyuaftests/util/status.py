@@ -67,3 +67,9 @@ def test(args):
     assert s4 > s3
     assert s5 > s3
     
+    print(" - testing pyuaf.util.Status().addDiagnostic()")
+    s0.addDiagnostic("test")
+    assert s0.additionalDiagnostics().hasDescription() == True
+    assert s0.additionalDiagnostics().getDescription() == "test"
+    
+    
