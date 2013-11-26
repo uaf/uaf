@@ -1441,6 +1441,25 @@ class Client(ClientBase):
         a :class:`~pyuaf.client.requests.CreateMonitoredDataRequest` as its first argument.
         For full flexibility, use that function.
         
+        Note that :class:`~pyuaf.client.requests.CreateMonitoredDataRequest` and 
+        :class:`~pyuaf.client.requests.CreateMonitoredEventsRequest` are "persistent" requests.
+        It means that even when communication fails (e.g. because the server was not online),
+        a handle is already assigned to each monitored item as soon as you call 
+        createMonitoredEvents(). 
+        In the background, the UAF will try to (re)establish the connection, and as soon as this 
+        is successful, it will create the monitored items for you on the server. 
+        From that point on, you may start to receive notifications (that can be identified by the 
+        handles that were already assigned and returned to you now).
+        So when createMonitoredData() fails, you need to be aware that in the background the UAF
+        will retry to create them on the server. You can access the handles that will identify 
+        their notifications:
+         - via the returned  :class:`~pyuaf.client.results.CreateMonitoredDataResult`, in case
+           createMonitoredData() was successful and didn't raise an exception
+         - via the exception that was raised in case createMonitoredData() was not successful. 
+           This exception has a "status" attribute (of type :class:`~pyuaf.util.Status`),
+           and this will provide you a diagnostics object (see :meth:`pyuaf.util.Status.additionalDiagnostics`),
+           which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getNotificationHandles`).
+        
         :param addresses: A single address or a list of addresses, identifying the nodes to be monitored.
         :type  addresses: :class:`~pyuaf.util.Address` or a ``list`` of :class:`~pyuaf.util.Address` 
         :param serviceConfig: Additional settings for processing the request.
@@ -1539,6 +1558,25 @@ class Client(ClientBase):
         This is a convenience function for calling :class:`~pyuaf.client.Client.processRequest` with 
         a :class:`~pyuaf.client.requests.CreateMonitoredEventsRequest` as its first argument.
         For full flexibility, use that function.
+        
+        Note that :class:`~pyuaf.client.requests.CreateMonitoredDataRequest` and 
+        :class:`~pyuaf.client.requests.CreateMonitoredEventsRequest` are "persistent" requests.
+        It means that even when communication fails (e.g. because the server was not online),
+        a handle is already assigned to each monitored item as soon as you call 
+        createMonitoredEvents(). 
+        In the background, the UAF will try to (re)establish the connection, and as soon as this 
+        is successful, it will create the monitored items for you on the server. 
+        From that point on, you may start to receive notifications (that can be identified by the 
+        handles that were already assigned and returned to you now).
+        So when createMonitoredData() fails, you need to be aware that in the background the UAF
+        will retry to create them on the server. You can access the handles that will identify 
+        their notifications:
+         - via the returned  :class:`~pyuaf.client.results.CreateMonitoredDataResult`, in case
+           createMonitoredData() was successful and didn't raise an exception
+         - via the exception that was raised in case createMonitoredData() was not successful. 
+           This exception has a "status" attribute (of type :class:`~pyuaf.util.Status`),
+           and this will provide you a diagnostics object (see :meth:`pyuaf.util.Status.additionalDiagnostics`),
+           which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getNotificationHandles`).
         
         :param addresses: A single address or a list of addresses, identifying the nodes to be monitored.
         :type  addresses: :class:`~pyuaf.util.Address` or a ``list`` of :class:`~pyuaf.util.Address` 
@@ -1660,6 +1698,24 @@ class Client(ClientBase):
            CreateMonitoredEventsRequests, AsyncCreateMonitoredDataRequests and 
            AsyncCreateMonitoredEventsRequests!). The number of callbacks must correspond exactly to
            the number of targets of the request.
+        
+        Note that :class:`~pyuaf.client.requests.CreateMonitoredDataRequest` and 
+        :class:`~pyuaf.client.requests.CreateMonitoredEventsRequest` are "persistent" requests.
+        It means that even when communication fails (e.g. because the server was not online),
+        a handle is already assigned to each monitored item as soon as you call processRequest(). 
+        In the background, the UAF will try to (re)establish the connection, and as soon as this 
+        is successful, it will create the monitored items for you on the server. 
+        From that point on, you may start to receive notifications (that can be identified by the 
+        handles that were already assigned and returned to you now).
+        So when createMonitoredData() fails, you need to be aware that in the background the UAF
+        will retry to create them on the server. You can access the handles that will identify 
+        their notifications:
+         - via the returned  :class:`~pyuaf.client.results.CreateMonitoredDataResult`, in case
+           createMonitoredData() was successful and didn't raise an exception
+         - via the exception that was raised in case createMonitoredData() was not successful. 
+           This exception has a "status" attribute (of type :class:`~pyuaf.util.Status`),
+           and this will provide you a diagnostics object (see :meth:`pyuaf.util.Status.additionalDiagnostics`),
+           which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getNotificationHandles`).
         
         :param request: The request (e.g. a :class:`~pyuaf.client.requests.ReadRequest` 
                         or class:`~pyuaf.client.requests.WriteRequest` or ... 

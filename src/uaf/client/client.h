@@ -460,6 +460,15 @@ namespace uafc
         /**
          * Start to monitor data.
          *
+         * Note that even when communication failed (e.g. because the server was not online),
+         * a handle is already assigned to each monitored item when you call processRequest().
+         * In the background, the UAF will try to (re)establish the connection, and as soon as
+         * this is successful, it will create the monitored items for you on the server.
+         * From that point on, you may start to receive notifications (that can be identified by
+         * the handles that were already assigned and returned to you now).
+         * You can access these assigned handles by looking at the 'result' parameter, or by looking
+         * at the diagnostics object of the returned Status object.
+         *
          * @param addresses                 The addresses of the nodes of which the Value
          *                                  attribute should be monitored.
          * @param serviceConfig             Create monitored data config.
@@ -478,6 +487,15 @@ namespace uafc
 
         /**
          * Start to monitor events.
+         *
+         * Note that even when communication failed (e.g. because the server was not online),
+         * a handle is already assigned to each monitored item when you call processRequest().
+         * In the background, the UAF will try to (re)establish the connection, and as soon as
+         * this is successful, it will create the monitored items for you on the server.
+         * From that point on, you may start to receive notifications (that can be identified by
+         * the handles that were already assigned and returned to you now).
+         * You can access these assigned handles by looking at the 'result' parameter, or by looking
+         * at the diagnostics object of the returned Status object.
          *
          * @param addresses             The addresses of the nodes that should be monitored
          *                              for events.
@@ -599,6 +617,15 @@ namespace uafc
         /**
          * Process a synchronous "create monitored data" request.
          *
+         * Note that even when communication failed (e.g. because the server was not online),
+         * a handle is already assigned to each monitored item when you call processRequest().
+         * In the background, the UAF will try to (re)establish the connection, and as soon as
+         * this is successful, it will create the monitored items for you on the server.
+         * From that point on, you may start to receive notifications (that can be identified by
+         * the handles that were already assigned and returned to you now).
+         * You can access these assigned handles by looking at the 'result' parameter, or by looking
+         * at the diagnostics object of the returned Status object.
+         *
          * @param request   The request.
          * @param result    The result.
          * @return          The client-side status.
@@ -609,6 +636,15 @@ namespace uafc
 
         /**
          * Process a synchronous "create monitored events" request.
+         *
+         * Note that even when communication failed (e.g. because the server was not online),
+         * a handle is already assigned to each monitored item when you call processRequest().
+         * In the background, the UAF will try to (re)establish the connection, and as soon as
+         * this is successful, it will create the monitored items for you on the server.
+         * From that point on, you may start to receive notifications (that can be identified by
+         * the handles that were already assigned and returned to you now).
+         * You can access these assigned handles by looking at the 'result' parameter, or by looking
+         * at the diagnostics object of the returned Status object.
          *
          * @param request   The request.
          * @param result    The result.
@@ -672,7 +708,7 @@ namespace uafc
         /**
          * Disconnect a session that was created manually.
          *
-         *A session which has been disconnected manually is "garbage collected" on the client side.
+         * A session which has been disconnected manually is "garbage collected" on the client side.
          * When a session is created afterwards, a new ClientConnectionId will be assigned to this
          * session (even if the properties of the new session are exactly the same as the old one).
          *
