@@ -33,6 +33,7 @@
 #include "uaf/util/util.h"
 #include "uaf/util/stringifiable.h"
 #include "uaf/util/statuscodes.h"
+#include "uaf/util/statusdiagnostics.h"
 
 
 
@@ -112,7 +113,7 @@ namespace uaf
 
 
         /**
-         * Add diagnostic information.
+         * Add more description text.
          *
          *@param info  additional information given by the UAF
          */
@@ -120,11 +121,23 @@ namespace uaf
 
 
         /**
-         * Add diagnostic information.
+         * Add textual diagnostic information.
          *
-         *@param msg  Additional information given by the UAF.
+         * @param msg  Additional information given by the UAF.
          */
         void addDiagnostic(const std::string& msg) { addDiagnostic(msg.c_str()); }
+
+
+        /**
+         * Get additional diagnostic information.
+         */
+        uaf::StatusDiagnostics& additionalDiagnostics() { return additionalDiagnostics_; }
+
+
+        /**
+         * Get additional diagnostic information (const).
+         */
+        const uaf::StatusDiagnostics& additionalDiagnostics() const { return additionalDiagnostics_; }
 
 
         /**
@@ -283,6 +296,8 @@ namespace uaf
         std::string                     description_;
         /** The OPC UA status code. */
         OpcUa_StatusCode                opcUaStatusCode_;
+        /** Additional diagnostic info */
+        uaf::StatusDiagnostics          additionalDiagnostics_;
     };
 
 }
