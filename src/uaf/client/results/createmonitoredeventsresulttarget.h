@@ -27,8 +27,8 @@
 // SDK
 // UAF
 #include "uaf/util/status.h"
+#include "uaf/util/handles.h"
 #include "uaf/client/clientexport.h"
-#include "uaf/client/clienthandles.h"
 #include "uaf/client/results/basesubscriptionresulttarget.h"
 
 
@@ -55,7 +55,7 @@ namespace uafc
          * Create a default result target.
          */
         CreateMonitoredEventsResultTarget()
-        : notificationHandle(uafc::NOTIFICATIONHANDLE_NOT_ASSIGNED),
+        : notificationHandle(uaf::NOTIFICATIONHANDLE_NOT_ASSIGNED),
           clientHandle(0),
           monitoredItemId(0),
           revisedSamplingIntervalSec(0.0),
@@ -65,11 +65,11 @@ namespace uafc
         /** Status of the result (Good if the monitored item was created, Bad if not). */
         uaf::Status status;
         /** Notification handle that was assigned by the UAF (unique per client). */
-        uafc::NotificationHandle notificationHandle;
+        uaf::NotificationHandle notificationHandle;
         /** ClientHandle that was assigned to the monitored item (unique per subscription). */
-        uafc::ClientMonitoredItemHandle clientHandle;
+        uaf::ClientMonitoredItemHandle clientHandle;
         /** MonitoredItemId that was assigned to the monitored item by the server. */
-        uafc::MonitoredItemId monitoredItemId;
+        uaf::MonitoredItemId monitoredItemId;
         /** The revised sampling interval of the monitored item, in seconds. */
         double revisedSamplingIntervalSec;
         /** The revised queue size on the server side. */

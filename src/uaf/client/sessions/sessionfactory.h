@@ -102,7 +102,7 @@ namespace uafc
         uaf::Status manuallyConnect(
                 const std::string&              serverUri,
                 const uafc::SessionSettings&    settings,
-                uafc::ClientConnectionId&       clientConnectionId);
+                uaf::ClientConnectionId&        clientConnectionId);
 
 
         /**
@@ -114,7 +114,7 @@ namespace uafc
          *                              of the manuallyConnect method.
          * @return                      Good if the session was successfully deleted, bad if not.
          */
-        uaf::Status manuallyDisconnect(uafc::ClientConnectionId clientConnectionId);
+        uaf::Status manuallyDisconnect(uaf::ClientConnectionId clientConnectionId);
 
 
         /**
@@ -135,7 +135,7 @@ namespace uafc
          *                              pointing to a session that is not available (anymore).
          */
         uaf::Status sessionInformation(
-                 uafc::ClientConnectionId   clientConnectionId,
+                 uaf::ClientConnectionId    clientConnectionId,
                  uafc::SessionInformation&  sessionInformation);
 
         /**
@@ -162,9 +162,9 @@ namespace uafc
          *                              something went wrong.
          */
         uaf::Status manuallySubscribe(
-                uafc::ClientConnectionId            clientConnectionId,
+                uaf::ClientConnectionId             clientConnectionId,
                 const uafc::SubscriptionSettings&   settings,
-                uafc::ClientSubscriptionHandle&     clientSubscriptionHandle);
+                uaf::ClientSubscriptionHandle&      clientSubscriptionHandle);
 
 
         /**
@@ -176,8 +176,8 @@ namespace uafc
          *                                  was some problem.
          */
         uaf::Status manuallyUnsubscribe(
-                uafc::ClientConnectionId        clientConnectionId,
-                uafc::ClientSubscriptionHandle  clientSubscriptionHandle);
+                uaf::ClientConnectionId        clientConnectionId,
+                uaf::ClientSubscriptionHandle  clientSubscriptionHandle);
 
 
         /**
@@ -189,7 +189,7 @@ namespace uafc
          * @return                          Good if the subscription could be found, Bad if not.
          */
         uaf::Status subscriptionInformation(
-                 uafc::ClientSubscriptionHandle     clientSubscriptionHandle,
+                 uaf::ClientSubscriptionHandle     clientSubscriptionHandle,
                  uafc::SubscriptionInformation&     subscriptionInformation);
 
 
@@ -231,7 +231,7 @@ namespace uafc
             result.targets.resize(request.targets.size());
 
             // store the UAF handle and map it to a transaction id, if request is asynchronous
-            TransactionId transactionId;
+            uaf::TransactionId transactionId;
             bool handleStored = storeRequestHandleIfNeeded<_Service>(request, transactionId);
 
             // create an invocation factory
@@ -336,11 +336,11 @@ namespace uafc
         typedef uint32_t Activity;
 
         // define a map to store all sessions, and their number of running activities
-        typedef std::map<uafc::ClientConnectionId, uafc::Session*>   SessionMap;
-        typedef std::map<uafc::ClientConnectionId, Activity>         ActivityMap;
+        typedef std::map<uaf::ClientConnectionId, uafc::Session*>   SessionMap;
+        typedef std::map<uaf::ClientConnectionId, Activity>         ActivityMap;
 
         // define a map to relate transaction ids with request handles
-        typedef std::map<TransactionId, uafc::RequestHandle>  TransactionMap;
+        typedef std::map<uaf::TransactionId, uaf::RequestHandle>  TransactionMap;
 
 
         /**
@@ -374,7 +374,7 @@ namespace uafc
          *                              could be provided via the 'session' argument.
          */
         uaf::Status acquireExistingSession(
-                uafc::ClientConnectionId    clientConnectionId,
+                uaf::ClientConnectionId     clientConnectionId,
                 uafc::Session*&             session);
 
 
@@ -399,7 +399,7 @@ namespace uafc
          *
          * @return  A unique transaction ID.
          */
-        TransactionId getNewTransactionId();
+        uaf::TransactionId getNewTransactionId();
 
 
         /**
@@ -467,7 +467,7 @@ namespace uafc
                 const uafc::BaseSessionRequest<typename _Service::Config,
                                                typename _Service::RequestTarget,
                                                _Service::asynchronous>& request,
-                TransactionId& transactionId)
+                uaf::TransactionId& transactionId)
         {
             bool stored;
 
@@ -500,7 +500,7 @@ namespace uafc
                 const uafc::BaseSubscriptionRequest<typename _Service::Config,
                                                     typename _Service::RequestTarget,
                                                     _Service::asynchronous>& request,
-                TransactionId& transactionId)
+                uaf::TransactionId& transactionId)
         {
             // nothing to do
             bool stored = false;
@@ -520,8 +520,8 @@ namespace uafc
         uafc::ClientInterface* clientInterface_;
 
         // the current transaction id, and a mutex to safely increment it
-        TransactionId   transactionId_;
-        UaMutex         transactionIdMutex_;
+        uaf::TransactionId  transactionId_;
+        UaMutex             transactionIdMutex_;
 
         // the map to store the transacton ids and the associated request handles
         TransactionMap transactionMap_;

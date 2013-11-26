@@ -81,7 +81,7 @@ namespace uafc
                 uaf::LoggerFactory*             loggerFactory,
                 const uafc::SessionSettings&    sessionSettings,
                 const std::string&              serverUri,
-                uafc::ClientConnectionId        clientConnectionId,
+                uaf::ClientConnectionId         clientConnectionId,
                 UaClientSdk::UaSessionCallback* uaSessionCallback,
                 uafc::ClientInterface*          clientInterface,
                 uafc::Discoverer*               discoverer,
@@ -142,7 +142,7 @@ namespace uafc
         /**
          * Get the client connection id of the session.
          */
-        uafc::ClientConnectionId clientConnectionId()       const { return clientConnectionId_; };
+        uaf::ClientConnectionId clientConnectionId()        const { return clientConnectionId_; };
 
         /**
          * Get the server URI of the session.
@@ -181,7 +181,7 @@ namespace uafc
          */
         uaf::Status manuallySubscribe(
                 const uafc::SubscriptionSettings&   settings,
-                uafc::ClientSubscriptionHandle&     clientSubscriptionHandle);
+                uaf::ClientSubscriptionHandle&      clientSubscriptionHandle);
 
 
         /**
@@ -191,7 +191,7 @@ namespace uafc
          * @return                          Good if the subscription could be deleted, bad if there
          *                                  was some problem.
          */
-        uaf::Status manuallyUnsubscribe(uafc::ClientSubscriptionHandle clientSubscriptionHandle);
+        uaf::Status manuallyUnsubscribe(uaf::ClientSubscriptionHandle clientSubscriptionHandle);
 
 
         /**
@@ -203,7 +203,7 @@ namespace uafc
          * @return                          Good if the subscription could be found, Bad if not.
          */
         uaf::Status subscriptionInformation(
-                 uafc::ClientSubscriptionHandle     clientSubscriptionHandle,
+                 uaf::ClientSubscriptionHandle      clientSubscriptionHandle,
                  uafc::SubscriptionInformation&     subscriptionInformation);
 
         /**
@@ -303,7 +303,7 @@ namespace uafc
         /**
          * Update the connection info.
          */
-        void updateConnectionInfo(uafc::ClientConnectionId clientConnectionId);
+        void updateConnectionInfo(uaf::ClientConnectionId clientConnectionId);
 
 
         // Wrapped SDK session instance and callback instance
@@ -318,7 +318,7 @@ namespace uafc
         uafc::sessionstates::SessionState   sessionState_;
 
         // fixed session properties:
-        uafc::ClientConnectionId            clientConnectionId_;
+        uaf::ClientConnectionId             clientConnectionId_;
         std::string                         serverUri_;
         uafc::SessionSettings               sessionSettings_;
 

@@ -33,10 +33,10 @@
 #include "uaf/util/variant.h"
 #include "uaf/util/logger.h"
 #include "uaf/util/address.h"
+#include "uaf/util/handles.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/settings/monitoreditemsettings.h"
 #include "uaf/client/database/database.h"
-#include "uaf/client/clienthandles.h"
 
 namespace uafc
 {
@@ -56,17 +56,17 @@ namespace uafc
 
         /** The request handle of the monitored item (i.e. the handle that identifies the request
          * that created this monitored item). */
-        uafc::RequestHandle             requestHandle;
+        uaf::RequestHandle             requestHandle;
 
         /** The order number of the target of the request that was used to create this monitored
          * item. E.g. requestHandle=12 targetRank=0 means that the first target of the
          * CreateMonitoredDataRequest (or CreateMonitoredEventsRequest) with handle 12 resulted in
          * the creation of this monitored item. */
-        std::size_t                     targetRank;
+        std::size_t                    targetRank;
 
         /** The notification handle that identifies the notifications that are produced by this
          *  monitored item. */
-        uafc::NotificationHandle        notificationHandle;
+        uaf::NotificationHandle        notificationHandle;
     };
 }
 

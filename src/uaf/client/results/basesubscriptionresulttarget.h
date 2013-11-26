@@ -25,9 +25,9 @@
 // STD
 // SDK
 // UAF
+#include "uaf/util/handles.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/results/basesessionresulttarget.h"
-#include "uaf/client/clienthandles.h"
 
 
 namespace uafc
@@ -60,7 +60,7 @@ namespace uafc
         {}
 
         /** The clientSubscriptionHandle of the subscription that was used to handle this target. */
-        uafc::ClientSubscriptionHandle clientSubscriptionHandle;
+        uaf::ClientSubscriptionHandle clientSubscriptionHandle;
 
     };
 

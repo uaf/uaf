@@ -31,7 +31,7 @@
 
 // import the EXPORT macro and some numeric typedefs
 %import "uaf/client/clientexport.h"
-%import "uaf/client/clienthandles.h"
+%import "uaf/util/handles.h"
 
 
 // include the session states

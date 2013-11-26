@@ -109,10 +109,10 @@ namespace uafc
         const uafc::SubscriptionSettings&   subscriptionSettings()  const { return subscriptionSettings_; }
 
         /** Get the request handle associated with the request. */
-        const uafc::RequestHandle&          requestHandle()         const { return requestHandle_; }
+        const uaf::RequestHandle&           requestHandle()         const { return requestHandle_; }
 
         /** Get the transaction id associated with the request (in case of an asynchronous one). */
-        const TransactionId&                transactionId()         const { return transactionId_; }
+        const uaf::TransactionId&           transactionId()         const { return transactionId_; }
 
         /** Get the resultTargets after the service invocation. */
         const std::vector<_ResultTarget>&   resultTargets()         const { return resultTargets_; }
@@ -162,7 +162,7 @@ namespace uafc
 
 
         /** Set the transaction Id associated with the request (in case of an asynchronous one). */
-        void setTransactionId(uafc::TransactionId transactionId)
+        void setTransactionId(uaf::TransactionId transactionId)
         { transactionId_ = transactionId; }
 
 
@@ -608,7 +608,7 @@ namespace uafc
          */
         virtual uaf::Status invokeAsyncSdkService(
                 UaClientSdk::UaSession*     uaSession,
-                TransactionId               transactionId)
+                uaf::TransactionId          transactionId)
         {
             if (!asynchronous_ || (invocationLevel_ != SessionLevel))
                 return uaf::Status(uaf::statuscodes::UnexpectedError,
@@ -654,7 +654,7 @@ namespace uafc
          */
         virtual uaf::Status invokeAsyncSdkService(
                 UaClientSdk::UaSubscription*    uaSubscription,
-                uafc::TransactionId             transactionId)
+                uaf::TransactionId              transactionId)
         {
             if (!asynchronous_ || (invocationLevel_ != SubscriptionLevel))
                 return uaf::Status(uaf::statuscodes::UnexpectedError,
@@ -695,7 +695,7 @@ namespace uafc
         // should the service be invoked asynchronously, or not?
         bool                        asynchronous_;
         // the transactionId of the service call, if it is asynchronous
-        TransactionId               transactionId_;
+        uaf::TransactionId          transactionId_;
         // the original request targets
         std::vector<_RequestTarget> requestTargets_;
         // the order number of the targets that were given
@@ -707,7 +707,7 @@ namespace uafc
         // the results of the service invocation
         std::vector<_ResultTarget>  resultTargets_;
         // the unique handle of the request (defined by the UAF, not by the OPC UA standard!)
-        uafc::RequestHandle         requestHandle_;
+        uaf::RequestHandle          requestHandle_;
         // some details about the session
         uafc::SessionInformation    sessionInformation_;
         // the level at which the service should be invoked

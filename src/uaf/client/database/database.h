@@ -74,7 +74,7 @@ namespace uafc
          *
          * @return  A unique notification handle.
          */
-        uafc::NotificationHandle createUniqueNotificationHandle();
+        uaf::NotificationHandle createUniqueNotificationHandle();
 
 
         /**
@@ -82,7 +82,7 @@ namespace uafc
          *
          * @return  A unique client connection ID.
          */
-        uafc::ClientConnectionId createUniqueClientConnectionId();
+        uaf::ClientConnectionId createUniqueClientConnectionId();
 
 
         /**
@@ -90,7 +90,7 @@ namespace uafc
          *
          * @return  A new client handle for the subscription.
          */
-        uafc::ClientSubscriptionHandle createUniqueClientSubscriptionHandle();
+        uaf::ClientSubscriptionHandle createUniqueClientSubscriptionHandle();
 
 
         /**
@@ -98,25 +98,25 @@ namespace uafc
          *
          * @return  A new client handle for the monitored item.
          */
-        uafc::ClientMonitoredItemHandle createUniqueClientMonitoredItemHandle();
+        uaf::ClientMonitoredItemHandle createUniqueClientMonitoredItemHandle();
 
 
     private:
 
 
-        uafc::NotificationHandle        nofiticationHandle_;
+        uaf::NotificationHandle         nofiticationHandle_;
         UaMutex                         notificationHandleMutex_;
 
         // The current client connection ID.
-        uafc::ClientConnectionId        clientConnectionId_;
+        uaf::ClientConnectionId         clientConnectionId_;
         UaMutex                         clientConnectionIdMutex_;
 
         // The current client connection ID.
-        uafc::ClientSubscriptionHandle  clientSubscriptionHandle_;
+        uaf::ClientSubscriptionHandle   clientSubscriptionHandle_;
         UaMutex                         clientSubscriptionHandleMutex_;
 
         // The current client connection ID.
-        uafc::ClientSubscriptionHandle  clientMonitoredItemHandle_;
+        uaf::ClientSubscriptionHandle   clientMonitoredItemHandle_;
         UaMutex                         clientMonitoredItemHandleMutex_;
 
         // no copying or assigning allowed
@@ -258,13 +258,17 @@ namespace uafc
      * @param result    The result.
      * @param mask      Only assign the targets indicated by the mask.
      * @param database  The database.
+     * @param assigned  True if the function will (try to) assign notification handles (always false
+     *                  for this particular template function).
      */
     template <typename _Service>
     uaf::Status UAFC_EXPORT assignNotificationHandlesIfNeeded(
             typename _Service::Result&  result,
             const uaf::Mask&            mask,
-            uafc::Database*             database)
+            uafc::Database*             database,
+            bool&                       assigned)
     {
+        assigned = false;
         return uaf::Status(uaf::statuscodes::Good);
     }
 
@@ -276,6 +280,8 @@ namespace uafc
      * @param result    The result.
      * @param mask      Only assign the targets indicated by the mask.
      * @param database  The database.
+     * @param assigned  True if the function will (try to) assign notification handles (always true
+     *                  for this particular template function).
      * @return          Good if notification handles could be assigned, or if they were already
      *                  assigned.
      */
@@ -283,9 +289,11 @@ namespace uafc
     inline uaf::Status UAFC_EXPORT assignNotificationHandlesIfNeeded<uafc::CreateMonitoredDataService>(
             uafc::CreateMonitoredDataResult&    result,
             const uaf::Mask&                    mask,
-            uafc::Database*                     database)
+            uafc::Database*                     database,
+            bool&                               assigned)
     {
         uaf::Status ret;
+        assigned = true;
 
         if (mask.size() == result.targets.size())
         {
@@ -294,13 +302,22 @@ namespace uafc
                 if (mask.isSet(i))
                 {
                     if (result.targets[i].notificationHandle
-                        == uafc::NOTIFICATIONHANDLE_NOT_ASSIGNED)
+                        == uaf::NOTIFICATIONHANDLE_NOT_ASSIGNED)
                     {
-                        uafc::NotificationHandle handle = database->createUniqueNotificationHandle();
+                        uaf::NotificationHandle handle = database->createUniqueNotificationHandle();
                         result.targets[i].notificationHandle = handle;
                     }
                 }
             }
+
+            // add the notification handles to the status diagnostics object!
+            std::vector<uaf::NotificationHandle> notificationHandles;
+            notificationHandles.reserve(result.targets.size());
+
+            for (std::size_t i = 0; i < result.targets.size(); i++)
+                notificationHandles.push_back(result.targets[i].notificationHandle);
+
+            ret.additionalDiagnostics().setNotificationHandles(notificationHandles);
 
             ret.setGood();
         }
@@ -320,6 +337,8 @@ namespace uafc
      * @param result    The result.
      * @param mask      Only assign the targets indicated by the mask.
      * @param database  The database.
+     * @param assigned  True if the function will (try to) assign notification handles (always true
+     *                  for this particular template function).
      * @return          Good if notification handles could be assigned, or if they were already
      *                  assigned.
      */
@@ -327,9 +346,11 @@ namespace uafc
     inline uaf::Status UAFC_EXPORT assignNotificationHandlesIfNeeded<uafc::CreateMonitoredEventsService>(
             uafc::CreateMonitoredEventsResult&  result,
             const uaf::Mask&                    mask,
-            uafc::Database*                     database)
+            uafc::Database*                     database,
+            bool&                               assigned)
     {
         uaf::Status ret;
+        assigned = true;
 
         if (mask.size() == result.targets.size())
         {
@@ -338,13 +359,22 @@ namespace uafc
                 if (mask.isSet(i))
                 {
                     if (result.targets[i].notificationHandle
-                        == uafc::NOTIFICATIONHANDLE_NOT_ASSIGNED)
+                        == uaf::NOTIFICATIONHANDLE_NOT_ASSIGNED)
                     {
-                        uafc::NotificationHandle handle = database->createUniqueNotificationHandle();
+                        uaf::NotificationHandle handle = database->createUniqueNotificationHandle();
                         result.targets[i].notificationHandle = handle;
                     }
                 }
             }
+
+            // add the notification handles to the status diagnostics object!
+            std::vector<uaf::NotificationHandle> notificationHandles;
+            notificationHandles.reserve(result.targets.size());
+
+            for (std::size_t i = 0; i < result.targets.size(); i++)
+                notificationHandles.push_back(result.targets[i].notificationHandle);
+
+            ret.additionalDiagnostics().setNotificationHandles(notificationHandles);
 
             ret.setGood();
         }

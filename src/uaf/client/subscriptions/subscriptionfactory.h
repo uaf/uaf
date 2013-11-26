@@ -33,6 +33,7 @@
 // UAF
 #include "uaf/util/status.h"
 #include "uaf/util/logger.h"
+#include "uaf/util/handles.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/subscriptions/subscription.h"
 #include "uaf/client/clientinterface.h"
@@ -69,7 +70,7 @@ namespace uafc
          */
         SubscriptionFactory(
                 uaf::LoggerFactory*             loggerFactory,
-                uafc::ClientConnectionId        clientConnectionId,
+                uaf::ClientConnectionId         clientConnectionId,
                 UaClientSdk::UaSession*         uaSession,
                 uafc::ClientInterface*          clientInterface,
                 uafc::Database*                 database);
@@ -95,7 +96,7 @@ namespace uafc
          */
         uaf::Status manuallySubscribe(
                 const uafc::SubscriptionSettings&   settings,
-                uafc::ClientSubscriptionHandle&     clientSubscriptionHandle);
+                uaf::ClientSubscriptionHandle&      clientSubscriptionHandle);
 
         /**
          * Manually delete a subscription.
@@ -104,7 +105,7 @@ namespace uafc
          * @return                          Good if the subscription could be deleted, bad if there
          *                                  was some problem.
          */
-        uaf::Status manuallyUnsubscribe(uafc::ClientSubscriptionHandle clientSubscriptionHandle);
+        uaf::Status manuallyUnsubscribe(uaf::ClientSubscriptionHandle clientSubscriptionHandle);
 
 
         /**
@@ -116,7 +117,7 @@ namespace uafc
          * @return                          Good if the subscription could be found, Bad if not.
          */
         uaf::Status subscriptionInformation(
-                 uafc::ClientSubscriptionHandle     clientSubscriptionHandle,
+                 uaf::ClientSubscriptionHandle      clientSubscriptionHandle,
                  uafc::SubscriptionInformation&     subscriptionInformation);
 
 
@@ -190,13 +191,13 @@ namespace uafc
         typedef uint32_t Activity;
 
         // private typedef: a map to store all subscriptions
-        typedef std::map<uafc::ClientSubscriptionHandle, uafc::Subscription*> SubscriptionMap;
+        typedef std::map<uaf::ClientSubscriptionHandle, uafc::Subscription*> SubscriptionMap;
 
         // private typedef: a map to store the activities
-        typedef std::map<uafc::ClientSubscriptionHandle, Activity>            ActivityMap;
+        typedef std::map<uaf::ClientSubscriptionHandle, Activity>            ActivityMap;
 
         // private typedef: a map to relate transaction ids with request handles
-        typedef std::map<TransactionId, uafc::RequestHandle> TransactionMap;
+        typedef std::map<uaf::TransactionId, uaf::RequestHandle> TransactionMap;
 
 
         /**
@@ -229,8 +230,8 @@ namespace uafc
          *                                  argument.
          */
         uaf::Status acquireExistingSubscription(
-                uafc::ClientSubscriptionHandle  clientSubscriptionHandle,
-                uafc::Subscription*&            subscription);
+                uaf::ClientSubscriptionHandle  clientSubscriptionHandle,
+                uafc::Subscription*&           subscription);
 
 
         /**
@@ -270,8 +271,8 @@ namespace uafc
         // the RequesterInterface to call when asynchronous messages are received
         uafc::ClientInterface* clientInterface_;
         // the current transaction id (gets incremented every time), and its mutex
-        TransactionId transactionId_;
-        UaMutex       transactionIdMutex_;
+        uaf::TransactionId transactionId_;
+        UaMutex            transactionIdMutex_;
         // the container that stores the transactions, and its mutex
         TransactionMap transactionMap_;
         UaMutex        transactionMapMutex_;
@@ -371,7 +372,7 @@ namespace uafc
          *
          * @return      A unique transaction ID.
          */
-        TransactionId getNewTransactionId_();
+        uaf::TransactionId getNewTransactionId_();
 
 
         /**
@@ -379,7 +380,7 @@ namespace uafc
          *
          * @param requestHandle The request handle to store.
          */
-        void storeRequestHandle(uafc::RequestHandle requestHandle)
+        void storeRequestHandle(uaf::RequestHandle requestHandle)
         {
             transactionMapMutex_.lock();
             transactionMap_[getNewTransactionId_()]  = requestHandle;

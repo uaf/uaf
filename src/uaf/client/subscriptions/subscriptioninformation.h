@@ -28,8 +28,8 @@
 #include "uaclient/uaclientsdk.h"
 // UAF
 #include "uaf/util/stringifiable.h"
+#include "uaf/util/handles.h"
 #include "uaf/client/clientexport.h"
-#include "uaf/client/clienthandles.h"
 #include "uaf/client/subscriptions/subscriptionstates.h"
 
 namespace uafc
@@ -60,16 +60,16 @@ namespace uafc
          * @param subscriptionState         The state of the subscription.
          */
         SubscriptionInformation(
-                uafc::ClientConnectionId                    clientConnectionId,
-                uafc::ClientSubscriptionHandle              clientSubscriptionHandle,
+                uaf::ClientConnectionId                     clientConnectionId,
+                uaf::ClientSubscriptionHandle               clientSubscriptionHandle,
                 uafc::subscriptionstates::SubscriptionState subscriptionState);
 
 
         /** The id of the session that hosts the subscription. */
-        uafc::ClientConnectionId                    clientConnectionId;
+        uaf::ClientConnectionId                     clientConnectionId;
 
         /** The handle of the subscription. */
-        uafc::ClientSubscriptionHandle              clientSubscriptionHandle;
+        uaf::ClientSubscriptionHandle               clientSubscriptionHandle;
 
         /** The state of the subscription. */
         uafc::subscriptionstates::SubscriptionState subscriptionState;

@@ -55,8 +55,8 @@ namespace uafc
 
 
         // some public typedefs of handles that are needed for the invocation.
-        typedef std::vector<uafc::ClientMonitoredItemHandle> ClientHandles;
-        typedef std::vector<uafc::NotificationHandle>        NotificationHandles;
+        typedef std::vector<uaf::ClientMonitoredItemHandle> ClientHandles;
+        typedef std::vector<uaf::NotificationHandle>        NotificationHandles;
 
 
         /**
@@ -109,7 +109,7 @@ namespace uafc
          */
         uaf::Status invokeAsyncSdkService(
                 UaClientSdk::UaSubscription* uaSubscription,
-                TransactionId                transactionId);
+                uaf::TransactionId           transactionId);
 
 
         /**

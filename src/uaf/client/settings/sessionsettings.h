@@ -29,7 +29,7 @@
 // SDK
 // UAF
 #include "uaf/util/stringifiable.h"
-#include "uaf/client/clienthandles.h"
+#include "uaf/util/handles.h"
 #include "uaf/client/settings/sessionsecuritysettings.h"
 #include "uaf/client/settings/readsettings.h"
 

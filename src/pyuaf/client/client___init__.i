@@ -113,7 +113,7 @@ import threading
  
 // import the EXPORT macro and some numeric types
 %include "uaf/client/clientexport.h"
-%include "uaf/client/clienthandles.h"
+%import "uaf/util/handles.h"
 
 
 // now import the submodules of pyuaf.client
@@ -146,8 +146,8 @@ UAF_WRAP_CLASS("uaf/client/clientinterface.h"                       , uafc , Cli
 %rename(ClientBase) uafc::Client;
 %include <typemaps.i>
 // apply the OUTPUT and INOUT directives
-%apply uafc::ClientConnectionId & OUTPUT { uafc::ClientConnectionId & clientConnectionId };
-%apply uafc::ClientSubscriptionHandle & OUTPUT { uafc::ClientSubscriptionHandle & clientSubscriptionHandle };
+%apply uaf::ClientConnectionId & OUTPUT { uaf::ClientConnectionId & clientConnectionId };
+%apply uaf::ClientSubscriptionHandle & OUTPUT { uaf::ClientSubscriptionHandle & clientSubscriptionHandle };
 %include "uaf/client/client.h"
 // clear the OUTPUT and INOUT directives
 %clear uafc::ClientConnectionId & clientConnectionId;

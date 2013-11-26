@@ -31,6 +31,7 @@
 #include "uaclient/uaclientsdk.h"
 // UAF
 #include "uaf/util/monitoringmodes.h"
+#include "uaf/util/handles.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/invocations/baseserviceinvocation.h"
 #include "uaf/client/requests/requests.h"
@@ -55,8 +56,8 @@ namespace uafc
 
 
         // some public typedefs of handles that are needed for the invocation.
-        typedef std::vector<uafc::ClientMonitoredItemHandle> ClientHandles;
-        typedef std::vector<uafc::NotificationHandle>        NotificationHandles;
+        typedef std::vector<uaf::ClientMonitoredItemHandle> ClientHandles;
+        typedef std::vector<uaf::NotificationHandle>        NotificationHandles;
 
 
         /**
@@ -109,7 +110,7 @@ namespace uafc
          */
         uaf::Status invokeAsyncSdkService(
                 UaClientSdk::UaSubscription* uaSubscription,
-                TransactionId                transactionId);
+                uaf::TransactionId           transactionId);
 
 
         /**

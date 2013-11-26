@@ -28,7 +28,7 @@
 // UAF
 #include "uaf/util/stringifiable.h"
 #include "uaf/client/clientexport.h"
-#include "uaf/client/clienthandles.h"
+#include "uaf/util/handles.h"
 
 
 namespace uafc
@@ -62,7 +62,7 @@ namespace uafc
 
 
         /** The ClientConnectionId of the session that was used to handle this target. */
-        uafc::ClientConnectionId clientConnectionId;
+        uaf::ClientConnectionId clientConnectionId;
 
     };
 

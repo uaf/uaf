@@ -666,7 +666,7 @@ namespace uafc
         uaf::Status manuallyConnect(
                 const std::string&              serverUri,
                 const uafc::SessionSettings&    settings,
-                uafc::ClientConnectionId&       clientConnectionId);
+                uaf::ClientConnectionId&        clientConnectionId);
 
 
         /**
@@ -682,7 +682,7 @@ namespace uafc
          *                              of the manuallyConnect method.
          * @return                      Good if the session was successfully deleted, bad if not.
          */
-        uaf::Status manuallyDisconnect(uafc::ClientConnectionId clientConnectionId);
+        uaf::Status manuallyDisconnect(uaf::ClientConnectionId clientConnectionId);
 
 
         ///@} //////////////////////////////////////////////////////////////////////////////////////
@@ -704,7 +704,7 @@ namespace uafc
          *                              pointing to a session that is not available (anymore).
          */
         uaf::Status sessionInformation(
-                 uafc::ClientConnectionId   clientConnectionId,
+                 uaf::ClientConnectionId   clientConnectionId,
                  uafc::SessionInformation&  sessionInformation);
 
 
@@ -740,9 +740,9 @@ namespace uafc
          *                              something went wrong.
          */
         uaf::Status manuallySubscribe(
-                uafc::ClientConnectionId            clientConnectionId,
+                uaf::ClientConnectionId             clientConnectionId,
                 const uafc::SubscriptionSettings&   settings,
-                uafc::ClientSubscriptionHandle&     clientSubscriptionHandle);
+                uaf::ClientSubscriptionHandle&      clientSubscriptionHandle);
 
 
         /**
@@ -759,8 +759,8 @@ namespace uafc
          *                                  was some problem.
          */
         uaf::Status manuallyUnsubscribe(
-                uafc::ClientConnectionId        clientConnectionId,
-                uafc::ClientSubscriptionHandle  clientSubscriptionHandle);
+                uaf::ClientConnectionId        clientConnectionId,
+                uaf::ClientSubscriptionHandle  clientSubscriptionHandle);
 
 
         ///@} //////////////////////////////////////////////////////////////////////////////////////
@@ -780,7 +780,7 @@ namespace uafc
          * @return                          Good if the subscription could be found, Bad if not.
          */
         uaf::Status subscriptionInformation(
-                 uafc::ClientSubscriptionHandle     clientSubscriptionHandle,
+                 uaf::ClientSubscriptionHandle      clientSubscriptionHandle,
                  uafc::SubscriptionInformation&     subscriptionInformation);
 
 
@@ -815,7 +815,7 @@ namespace uafc
         bool doFinishThread_;
 
         /** The current request handle (only to be incremented when requestHandleMutex_ is locked). */
-        uafc::RequestHandle currentRequestHandle_;
+        uaf::RequestHandle currentRequestHandle_;
 
         /** The mutex to lock when the currentRequestHandle_ is read or manipulated. */
         UaMutex requestHandleMutex_;

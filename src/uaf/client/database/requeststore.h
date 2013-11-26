@@ -116,7 +116,7 @@ namespace uafc
          * @return          Good if handle was found and the item could be removed,
          *                  InvalidRequestError if not.
          */
-        uaf::Status remove(uafc::RequestHandle handle);
+        uaf::Status remove(uaf::RequestHandle handle);
 
 
         /**
@@ -126,7 +126,7 @@ namespace uafc
          * @param item      The stored item.
          * @return          Good if the item was present, InvalidRequestError if not.
          */
-        uaf::Status get(uafc::RequestHandle handle, Item& item);
+        uaf::Status get(uaf::RequestHandle handle, Item& item);
 
 
         /**
@@ -138,7 +138,7 @@ namespace uafc
 
 
         uaf::Status updateTargetStatus(
-                uafc::RequestHandle requestHandle,
+                uaf::RequestHandle  requestHandle,
                 std::size_t         targetRank,
                 const uaf::Status&  status);
 
@@ -176,7 +176,7 @@ namespace uafc
 
 
         // typedef the map to store the items
-        typedef typename std::map<uafc::RequestHandle, Item> ItemsMap;
+        typedef typename std::map<uaf::RequestHandle, Item> ItemsMap;
 
         /* The map that stores the items. */
         ItemsMap itemsMap_;
@@ -245,7 +245,7 @@ namespace uafc
     // Remove a result
     // =============================================================================================
     template <typename _Service>
-    uaf::Status RequestStore<_Service>::remove(uafc::RequestHandle handle)
+    uaf::Status RequestStore<_Service>::remove(uaf::RequestHandle handle)
     {
         logger_->debug("Now removing handle %d", handle);
 
@@ -274,7 +274,7 @@ namespace uafc
     // =============================================================================================
     template <typename _Service>
     uaf::Status RequestStore<_Service>::updateTargetStatus(
-                    uafc::RequestHandle requestHandle,
+                    uaf::RequestHandle  requestHandle,
                     std::size_t         targetRank,
                     const uaf::Status&  status)
     {
@@ -326,7 +326,7 @@ namespace uafc
     // =============================================================================================
     template <typename _Service>
     uaf::Status RequestStore<_Service>::get(
-            uafc::RequestHandle                     handle,
+            uaf::RequestHandle                      handle,
             typename RequestStore<_Service>::Item&  item)
     {
         uaf::Status ret;
@@ -438,7 +438,7 @@ namespace uafc
         if (itemsMap_.find(result.requestHandle) == itemsMap_.end())
         {
             // add a new item
-            itemsMap_.insert(std::pair<uafc::RequestHandle, Item>(
+            itemsMap_.insert(std::pair<uaf::RequestHandle, Item>(
                     result.requestHandle,
                     Item(request, result, badTargetsMask)));
 

@@ -33,8 +33,8 @@
 #include "uaf/util/logger.h"
 #include "uaf/util/address.h"
 #include "uaf/util/stringifiable.h"
+#include "uaf/util/handles.h"
 #include "uaf/client/clientexport.h"
-#include "uaf/client/clienthandles.h"
 
 
 namespace uafc
@@ -68,7 +68,7 @@ namespace uafc
          * items once, you can be sure that the notification handle will always correctly identify
          * the same item, for the whole lifetime of the client.
          */
-        uafc::NotificationHandle notificationHandle;
+        uaf::NotificationHandle notificationHandle;
 
         /**
          * A clientHandle is a 32-bit number assigned by the UAF to newly created
@@ -76,7 +76,7 @@ namespace uafc
          * theory it will take 2**32 items that have to be created before the number starts
          * to count from 0 again. In practice, it will never happen.
          */
-        uafc::ClientMonitoredItemHandle clientHandle;
+        uaf::ClientMonitoredItemHandle clientHandle;
 
         /**
          * Get a string representation of the notification.
