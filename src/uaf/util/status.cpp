@@ -71,7 +71,12 @@ namespace uaf
         char buffer[512];
         vsprintf(buffer, info, args);
         va_end(args);
-        description_ = std::string(buffer) + " (" + description_ + ")";
+
+        if (additionalDiagnostics_.hasDescription())
+            additionalDiagnostics_.setDescription(
+                    std::string(buffer) + "(" + additionalDiagnostics_.getDescription() + ")");
+        else
+            additionalDiagnostics_.setDescription(std::string(buffer));
     }
 
 
@@ -164,6 +169,9 @@ namespace uaf
                    + std::string("]");
         }
 
+        if (!additionalDiagnostics_.isEmpty())
+            ret += std::string(" - ") + additionalDiagnostics_.toCompactString();
+
         return ret;
     }
 
@@ -207,7 +215,8 @@ namespace uaf
     {
         return object1.opcUaStatusCode_ == object2.opcUaStatusCode_
             && object1.statusCode_ == object2.statusCode_
-            && object1.description_ == object2.description_;
+            && object1.description_ == object2.description_
+            && object1.additionalDiagnostics_ == object2.additionalDiagnostics_;
     }
 
 
@@ -227,8 +236,10 @@ namespace uaf
             return object1.opcUaStatusCode_ < object2.opcUaStatusCode_;
         else if (object1.statusCode_ != object2.statusCode_)
             return object1.statusCode_ < object2.statusCode_;
-        else
+        else if (object1.description_ != object2.description_)
             return object1.description_ < object2.description_;
+        else
+            return object1.additionalDiagnostics_ < object2.additionalDiagnostics_;
     }
 
 

@@ -34,7 +34,7 @@
 #include "uaf/util/address.h"
 #include "uaf/util/stringifiable.h"
 #include "uaf/client/clientexport.h"
-#include "uaf/client/clienthandles.h"
+#include "uaf/util/handles.h"
 #include "uaf/client/resolution/resolvable.h"
 #include "uaf/client/requests/basesessionrequesttarget.h"
 #include "uaf/client/configs/baseserviceconfig.h"
@@ -64,7 +64,7 @@ namespace uafc
          * Construct an empty session request.
          */
         BaseSessionRequest()
-        : requestHandle_(uafc::REQUESTHANDLE_NOT_ASSIGNED)
+        : requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
         {}
 
 
@@ -79,7 +79,7 @@ namespace uafc
                 std::size_t                 noOfTargets,
                 const _ServiceConfig&       serviceConfig = _ServiceConfig(),
                 const uafc::SessionConfig&  sessionConfig = uafc::SessionConfig())
-        : requestHandle_(uafc::REQUESTHANDLE_NOT_ASSIGNED),
+        : requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED),
           serviceConfig(serviceConfig),
           sessionConfig(sessionConfig),
           targets(noOfTargets)
@@ -97,7 +97,7 @@ namespace uafc
                 const _Target&              target,
                 const _ServiceConfig&       serviceConfig = _ServiceConfig(),
                 const uafc::SessionConfig&  sessionConfig = uafc::SessionConfig())
-        : requestHandle_(uafc::REQUESTHANDLE_NOT_ASSIGNED),
+        : requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED),
           serviceConfig(serviceConfig),
           sessionConfig(sessionConfig)
         { targets.push_back(target); }
@@ -114,7 +114,7 @@ namespace uafc
                 const typename std::vector<_Target>&    targets,
                 const _ServiceConfig&                   serviceConfig = _ServiceConfig(),
                 const uafc::SessionConfig&              sessionConfig = uafc::SessionConfig())
-        : requestHandle_(uafc::REQUESTHANDLE_NOT_ASSIGNED),
+        : requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED),
           serviceConfig(serviceConfig),
           sessionConfig(sessionConfig),
           targets(targets)
@@ -142,7 +142,7 @@ namespace uafc
          *
          * @return The request handle, as assigned by the UAF.
          */
-        uafc::RequestHandle requestHandle() const { return requestHandle_; }
+        uaf::RequestHandle requestHandle() const { return requestHandle_; }
 
 
         /**
@@ -156,7 +156,7 @@ namespace uafc
 
             ss << indent << " - requestHandle";
             ss << uaf::fillToPos(ss, colon);
-            if (requestHandle_ == uafc::REQUESTHANDLE_NOT_ASSIGNED)
+            if (requestHandle_ == uaf::REQUESTHANDLE_NOT_ASSIGNED)
                 ss << ": NOT_ASSIGNED\n";
             else
                 ss << ": " << requestHandle_ << "\n";
@@ -244,7 +244,7 @@ namespace uafc
 
 
         // the UAF handle is private since it will be assigned by the "befriended" Client class
-        uafc::RequestHandle requestHandle_;
+        uaf::RequestHandle requestHandle_;
 
     };
 

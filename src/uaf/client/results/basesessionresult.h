@@ -32,7 +32,7 @@
 #include "uaf/util/mask.h"
 #include "uaf/util/stringifiable.h"
 #include "uaf/client/clientexport.h"
-#include "uaf/client/clienthandles.h"
+#include "uaf/util/handles.h"
 #include "uaf/client/results/basesessionresulttarget.h"
 
 namespace uafc
@@ -80,7 +80,7 @@ namespace uafc
         typedef _Target TargetType;
 
         /** The UAF handle assigned to the result (and its corresponding request). */
-        uafc::RequestHandle requestHandle;
+        uaf::RequestHandle requestHandle;
 
         /**
          * The overall status of the result.

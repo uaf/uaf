@@ -32,7 +32,7 @@
 #include "uaf/util/address.h"
 #include "uaf/util/mask.h"
 #include "uaf/client/clientexport.h"
-#include "uaf/client/clienthandles.h"
+#include "uaf/util/handles.h"
 
 namespace uafc
 {

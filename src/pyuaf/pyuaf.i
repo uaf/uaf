@@ -23,12 +23,16 @@
 #if defined(SWIGPYTHON)
     %include "python/typemaps.i"
 #endif
+
+
+
 %include "std_string.i"
 %include "std_vector.i"
 %include "std_pair.i"
 %include "std_map.i"
 %include "stdint.i"
 %include "std_except.i"
+
 
 
 // don't wrap the following methods, since they only make sense for the (internal) C++ UAF code:
@@ -45,4 +49,5 @@
 // typemap for time_t
 %typemap(in)  time_t { $1 = (time_t) PyLong_AsLong($input); }
 %typemap(out) time_t { $result = PyLong_FromLong((long)$1); }
+
 

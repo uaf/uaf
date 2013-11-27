@@ -19,16 +19,17 @@
  */
 
 
-#ifndef UAFC_CLIENTHANDLES_H_
-#define UAFC_CLIENTHANDLES_H_
+#ifndef UAF_HANDLES_H_
+#define UAF_HANDLES_H_
 
 
 // STD
 #include <stdint.h>
 // SDK
+#include "uabase/uaplatformlayer.h"
 // UAF
 
-namespace uafc
+namespace uaf
 {
 
     /**
@@ -36,21 +37,21 @@ namespace uafc
      * client. The handle is 64 bit, meaning that even at 1 million requests per second, the client
      * will be able to assign unique handles for more than 500000 years...
      *
-     * @ingroup Client
+     * @ingroup Util
      */
     typedef uint64_t RequestHandle;
 
     /** RequestHandle value when it was not assigned. */
-    static const uafc::RequestHandle REQUESTHANDLE_NOT_ASSIGNED = OpcUa_UInt64_Max;
+    static const uaf::RequestHandle REQUESTHANDLE_NOT_ASSIGNED = OpcUa_UInt64_Max;
 
     /** Maximum RequestHandle value. */
-    static const uafc::RequestHandle REQUESTHANDLE_MAX          = OpcUa_UInt64_Max - 1;
+    static const uaf::RequestHandle REQUESTHANDLE_MAX          = OpcUa_UInt64_Max - 1;
 
     /**
      * A TransactionId is internally assigned and stored by the UAF to keep track of asynchronous
      * requests and their results.
      *
-     * @ingroup Client
+     * @ingroup Util
      */
     typedef uint32_t TransactionId;
 
@@ -59,14 +60,14 @@ namespace uafc
      * The number will be incremented on each new session creation, so in theory it will take 2**32
      * sessions that have to be created before the number starts to count from 0 again.
      *
-     * @ingroup Client
+     * @ingroup Util
      */
     typedef uint32_t ClientConnectionId;
 
     /**
      * A SubscriptionId is assigned to a subscription by the server (so NOT by the client!).
      *
-     * @ingroup Client
+     * @ingroup Util
      */
     typedef uint32_t SubscriptionId;
 
@@ -76,14 +77,14 @@ namespace uafc
      * theory it will take 2**32 subscriptions that have to be created before the number starts
      * to count from 0 again. In practice, it will never happen.
      *
-     * @ingroup Client
+     * @ingroup Util
      */
     typedef uint32_t ClientSubscriptionHandle;
 
     /**
      * A SubscriptionId is assigned to a monitored item by the server (so NOT by the client!).
      *
-     * @ingroup Client
+     * @ingroup Util
      */
     typedef uint32_t MonitoredItemId;
 
@@ -93,14 +94,18 @@ namespace uafc
      * theory it will take 2**32 items that have to be created before the number starts
      * to count from 0 again. In practice, it will never happen.
      *
-     * @ingroup Client
+     * @ingroup Util
      */
     typedef uint32_t ClientMonitoredItemHandle;
 
     /**
+     * NOTE: A NotificationHandle is a redundant concept of ClientMonitoredItemHandle
+     * ... so it is deprecated!
+     *
+     *
      * A NotificationHandle is a handle defined by the UAF (not by the OPC UA standard!) to
      * associate monitored item notifications with the CreateMonitoredDataRequestTarget (or
-     * CreateMonitoredEventsRequestTarget) that originally created them. It is a 64-bit number
+     * CreateMonitoredEventsRequestTarget) that originally created them. It is a 32-bit number
      * that gets a unique value as soon as you create a monitored item. Even if the server of this
      * monitored item would crash, and the UAF determines that the monitored item should be
      * re-established on another server (e.g. because the browse path now points to a node in
@@ -108,18 +113,18 @@ namespace uafc
      * items once, you can be sure that the notification handle will always correctly identify
      * the same item, for the whole lifetime of the client.
      *
-     * @ingroup Client
+     * @ingroup Util
      */
-    typedef uint64_t NotificationHandle;
+    typedef uint32_t NotificationHandle;
 
     /** NotificationHandle value when it was not assigned. */
-    static const uafc::NotificationHandle NOTIFICATIONHANDLE_NOT_ASSIGNED = OpcUa_UInt64_Max;
+    static const uaf::NotificationHandle NOTIFICATIONHANDLE_NOT_ASSIGNED = OpcUa_UInt32_Max;
 
     /** Maximum NotificationHandle value. */
-    static const uafc::NotificationHandle NOTIFICATIONHANDLE_MAX          = OpcUa_UInt64_Max - 1;
+    static const uaf::NotificationHandle NOTIFICATIONHANDLE_MAX          = OpcUa_UInt32_Max - 1;
 
 }
 
 
 
-#endif /* UAFC_CLIENTHANDLES_H_ */
+#endif /* UAF_HANDLES_H_ */

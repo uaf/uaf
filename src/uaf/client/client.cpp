@@ -655,10 +655,10 @@ namespace uafc
                     sessionFactory_->doHouseKeeping();
 
                 if (!doFinishThread_)
-                    processPersistentRequests(database_->createMonitoredDataRequestStore);
+                    processPersistedRequests(database_->createMonitoredDataRequestStore);
 
                 if (!doFinishThread_)
-                    processPersistentRequests(database_->createMonitoredEventsRequestStore);
+                    processPersistedRequests(database_->createMonitoredEventsRequestStore);
             }
         }
     }
@@ -803,7 +803,7 @@ namespace uafc
     // Private template function implementation: process persistent requests
     // =============================================================================================
     template<typename _Store>
-    void Client::processPersistentRequests(_Store& store)
+    void Client::processPersistedRequests(_Store& store)
     {
         // create a typedef for the vector holding the correct type of items
         typedef std::vector<typename _Store::Item> Items;
@@ -867,8 +867,13 @@ namespace uafc
 
         // assign notification handles if necessary
         // (this is only needed for CreateMonitoredDataRequests and CreateMonitoredEventsRequests)
+        std::vector<uaf::NotificationHandle> assignedNotificationHandles;
+        bool assigned;
         if (ret.isGood())
-            ret = uafc::assignNotificationHandlesIfNeeded<_Service>(result, mask, database_);
+            ret = uafc::assignNotificationHandlesIfNeeded<_Service>(
+                    result, mask, database_, assigned);
+            if (assigned)
+                assignedNotificationHandles = ret.additionalDiagnostics().getNotificationHandles();
 
         // if no error occurred, store the copied request if needed
         // (this is only needed for 'persistent' requests such as CreateMonitoredDataRequests)
@@ -905,6 +910,10 @@ namespace uafc
             logger_->debug("%sResult %d:", _Service::name().c_str(), result.requestHandle);
             logger_->debug(result.toString());
         }
+
+        // if notification handles were assigned, copy them to the diagnostics of the Status object
+        if (assigned)
+            ret.additionalDiagnostics().setNotificationHandles(assignedNotificationHandles);
 
         return ret;
     }

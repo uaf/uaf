@@ -28,8 +28,8 @@
 #include "uaclient/uaclientsdk.h"
 // UAF
 #include "uaf/util/stringifiable.h"
+#include "uaf/util/handles.h"
 #include "uaf/client/clientexport.h"
-#include "uaf/client/clienthandles.h"
 #include "uaf/client/sessions/sessionstates.h"
 
 namespace uafc
@@ -61,7 +61,7 @@ namespace uafc
          *                              connected.
          */
         SessionInformation(
-                uafc::ClientConnectionId            clientConnectionId,
+                uaf::ClientConnectionId             clientConnectionId,
                 uafc::sessionstates::SessionState   sessionState,
                 const std::string&                  serverUri);
 
@@ -70,7 +70,7 @@ namespace uafc
         uafc::sessionstates::SessionState   sessionState;
 
         /** The id of the session. */
-        uafc::ClientConnectionId            clientConnectionId;
+        uaf::ClientConnectionId             clientConnectionId;
 
         /** The URI of the server to which the session should be connected. */
         std::string                         serverUri;

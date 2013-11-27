@@ -25,6 +25,7 @@
 #include "uaf/util/bytestring.h"
 #include "uaf/util/guid.h"
 #include "uaf/util/datetime.h"
+#include "uaf/util/handles.h"
 #include "uaf/util/localizedtext.h"
 #include "uaf/util/applicationdescription.h"
 #include "uaf/util/datachangefilter.h"
@@ -69,6 +70,9 @@
 // include the initializeUaf() function
 %include "uaf/util/util.h"
 
+// include the handles
+%include "uaf/util/handles.h"
+
 // include the ByteString typemap
 #if defined(SWIGPYTHON)
     %include "pyuaf/util/util_bytestring_python.i"
@@ -104,6 +108,7 @@
 %ignore uaf::Address::operator=;
 %ignore operator>(const DateTime&, const DateTime&);
 %ignore uaf::DateTime::DateTime(const FILETIME& t);
+%ignore uaf::StatusDiagnostics::operator=;
 
 
 // now include all classes in a generic way
@@ -133,6 +138,7 @@ UAF_WRAP_CLASS("uaf/util/usertokenpolicy.h"        , uaf , UserTokenPolicy      
 UAF_WRAP_CLASS("uaf/util/endpointdescription.h"    , uaf , EndpointDescription     , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, EndpointDescriptionVector)
 UAF_WRAP_CLASS("uaf/util/viewdescription.h"        , uaf , ViewDescription         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/referencedescription.h"   , uaf , ReferenceDescription    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ReferenceDescriptionVector)
+UAF_WRAP_CLASS("uaf/util/statusdiagnostics.h"      , uaf , StatusDiagnostics       , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 
 
 // also include the Variant typemap(s)

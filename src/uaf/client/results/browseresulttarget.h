@@ -29,8 +29,8 @@
 #include "uaf/util/status.h"
 #include "uaf/util/bytestring.h"
 #include "uaf/util/referencedescription.h"
+#include "uaf/util/handles.h"
 #include "uaf/client/clientexport.h"
-#include "uaf/client/clienthandles.h"
 #include "uaf/client/results/basesessionresulttarget.h"
 
 

@@ -33,8 +33,8 @@
 #include "uaf/util/logger.h"
 #include "uaf/util/address.h"
 #include "uaf/util/stringifiable.h"
+#include "uaf/util/handles.h"
 #include "uaf/client/clientexport.h"
-#include "uaf/client/clienthandles.h"
 #include "uaf/client/subscriptions/basenotification.h"
 #include "uaf/client/settings/monitoreditemsettings.h"
 

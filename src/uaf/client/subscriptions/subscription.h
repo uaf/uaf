@@ -33,6 +33,7 @@
 // UAF
 #include "uaf/util/status.h"
 #include "uaf/util/logger.h"
+#include "uaf/util/handles.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/clientinterface.h"
 #include "uaf/client/settings/subscriptionsettings.h"
@@ -40,7 +41,6 @@
 #include "uaf/client/subscriptions/subscriptionstates.h"
 #include "uaf/client/subscriptions/subscriptioninformation.h"
 #include "uaf/client/database/database.h"
-#include "uaf/client/clienthandles.h"
 #include "uaf/client/invocations/invocations.h"
 
 
@@ -75,7 +75,7 @@ namespace uafc
         Subscription(
                 uaf::LoggerFactory*                     loggerFactory,
                 const uafc::SubscriptionSettings&       subscriptionSettings,
-                uafc::ClientSubscriptionHandle          clientSubscriptionHandle,
+                uaf::ClientSubscriptionHandle           clientSubscriptionHandle,
                 UaClientSdk::UaSession*                 uaSession,
                 UaClientSdk::UaSubscriptionCallback*    uaSubscriptionCallback,
                 uafc::ClientInterface*                  clientInterface,
@@ -151,20 +151,20 @@ namespace uafc
             uaf::Status ret;
 
             // create a vector to store the ClientHandles
-            std::vector<uafc::ClientMonitoredItemHandle> clientHandles;
-            std::vector<uafc::NotificationHandle>        notificationHandles;
+            std::vector<uaf::ClientMonitoredItemHandle> clientHandles;
+            std::vector<uaf::NotificationHandle>        notificationHandles;
 
             for (std::size_t i = 0; i < invocation.requestTargets().size(); i++)
             {
-                uafc::NotificationHandle notificationHandle;
+                uaf::NotificationHandle notificationHandle;
                 notificationHandle = invocation.resultTargets()[i].notificationHandle;
 
                 // create a new unique NotificationHandle if necessary
-                if (notificationHandle == uafc::NOTIFICATIONHANDLE_NOT_ASSIGNED)
+                if (notificationHandle == uaf::NOTIFICATIONHANDLE_NOT_ASSIGNED)
                     notificationHandle = database_->createUniqueNotificationHandle();
 
                 // create a new client handle
-                uafc::ClientMonitoredItemHandle clientHandle;
+                uaf::ClientMonitoredItemHandle clientHandle;
                 clientHandle = database_->createUniqueClientMonitoredItemHandle();
 
                 // store the monitored item
@@ -208,20 +208,20 @@ namespace uafc
             uaf::Status ret;
 
             // create a vector to store the ClientHandles
-            std::vector<uafc::ClientMonitoredItemHandle> clientHandles;
-            std::vector<uafc::NotificationHandle>        notificationHandles;
+            std::vector<uaf::ClientMonitoredItemHandle> clientHandles;
+            std::vector<uaf::NotificationHandle>        notificationHandles;
 
             for (std::size_t i = 0; i < invocation.requestTargets().size(); i++)
             {
-                uafc::NotificationHandle notificationHandle;
+                uaf::NotificationHandle notificationHandle;
                 notificationHandle = invocation.resultTargets()[i].notificationHandle;
 
                 // create a new unique NotificationHandle if necessary
-                if (notificationHandle == uafc::NOTIFICATIONHANDLE_NOT_ASSIGNED)
+                if (notificationHandle == uaf::NOTIFICATIONHANDLE_NOT_ASSIGNED)
                     notificationHandle = database_->createUniqueNotificationHandle();
 
                 // create a new client handle
-                uafc::ClientMonitoredItemHandle clientHandle;
+                uaf::ClientMonitoredItemHandle clientHandle;
                 clientHandle = database_->createUniqueClientMonitoredItemHandle();
 
                 // store the monitored item
@@ -254,7 +254,7 @@ namespace uafc
          *
          * @return  The ID of the subscription.
          */
-        uafc::ClientSubscriptionHandle clientSubscriptionHandle()
+        uaf::ClientSubscriptionHandle clientSubscriptionHandle()
         { return clientSubscriptionHandle_; };
 
 
@@ -292,7 +292,7 @@ namespace uafc
 
 
         // a private typedef for the container that will hold the monitored items.
-        typedef std::map<uafc::ClientMonitoredItemHandle, uafc::MonitoredItem> MonitoredItemsMap;
+        typedef std::map<uaf::ClientMonitoredItemHandle, uafc::MonitoredItem> MonitoredItemsMap;
 
 
         // logger of the subscription
@@ -306,7 +306,7 @@ namespace uafc
         // the settings of the subscription
         uafc::SubscriptionSettings                  subscriptionSettings_;
         // the client handle of the subscription
-        uafc::ClientSubscriptionHandle              clientSubscriptionHandle_;
+        uaf::ClientSubscriptionHandle               clientSubscriptionHandle_;
         // the current status of the subscription
         uafc::subscriptionstates::SubscriptionState subscriptionState_;
         // the shared client database
@@ -316,7 +316,7 @@ namespace uafc
         uafc::ClientInterface*                      clientInterface_;
 
         // the current monitored item handle (gets incremented every time!) and its mutex.
-        uafc::ClientMonitoredItemHandle             clientMonitoredItemHandle_;
+        uaf::ClientMonitoredItemHandle              clientMonitoredItemHandle_;
         UaMutex                                     clientMonitoredItemHandleMutex_;
 
         // the container that will hold the monitored items, and its mutex.

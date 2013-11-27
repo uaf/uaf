@@ -460,6 +460,15 @@ namespace uafc
         /**
          * Start to monitor data.
          *
+         * Note that even when communication failed (e.g. because the server was not online),
+         * a handle is already assigned to each monitored item when you call processRequest().
+         * In the background, the UAF will try to (re)establish the connection, and as soon as
+         * this is successful, it will create the monitored items for you on the server.
+         * From that point on, you may start to receive notifications (that can be identified by
+         * the handles that were already assigned and returned to you now).
+         * You can access these assigned handles by looking at the 'result' parameter, or by looking
+         * at the diagnostics object of the returned Status object.
+         *
          * @param addresses                 The addresses of the nodes of which the Value
          *                                  attribute should be monitored.
          * @param serviceConfig             Create monitored data config.
@@ -478,6 +487,15 @@ namespace uafc
 
         /**
          * Start to monitor events.
+         *
+         * Note that even when communication failed (e.g. because the server was not online),
+         * a handle is already assigned to each monitored item when you call processRequest().
+         * In the background, the UAF will try to (re)establish the connection, and as soon as
+         * this is successful, it will create the monitored items for you on the server.
+         * From that point on, you may start to receive notifications (that can be identified by
+         * the handles that were already assigned and returned to you now).
+         * You can access these assigned handles by looking at the 'result' parameter, or by looking
+         * at the diagnostics object of the returned Status object.
          *
          * @param addresses             The addresses of the nodes that should be monitored
          *                              for events.
@@ -599,6 +617,15 @@ namespace uafc
         /**
          * Process a synchronous "create monitored data" request.
          *
+         * Note that even when communication failed (e.g. because the server was not online),
+         * a handle is already assigned to each monitored item when you call processRequest().
+         * In the background, the UAF will try to (re)establish the connection, and as soon as
+         * this is successful, it will create the monitored items for you on the server.
+         * From that point on, you may start to receive notifications (that can be identified by
+         * the handles that were already assigned and returned to you now).
+         * You can access these assigned handles by looking at the 'result' parameter, or by looking
+         * at the diagnostics object of the returned Status object.
+         *
          * @param request   The request.
          * @param result    The result.
          * @return          The client-side status.
@@ -609,6 +636,15 @@ namespace uafc
 
         /**
          * Process a synchronous "create monitored events" request.
+         *
+         * Note that even when communication failed (e.g. because the server was not online),
+         * a handle is already assigned to each monitored item when you call processRequest().
+         * In the background, the UAF will try to (re)establish the connection, and as soon as
+         * this is successful, it will create the monitored items for you on the server.
+         * From that point on, you may start to receive notifications (that can be identified by
+         * the handles that were already assigned and returned to you now).
+         * You can access these assigned handles by looking at the 'result' parameter, or by looking
+         * at the diagnostics object of the returned Status object.
          *
          * @param request   The request.
          * @param result    The result.
@@ -666,13 +702,13 @@ namespace uafc
         uaf::Status manuallyConnect(
                 const std::string&              serverUri,
                 const uafc::SessionSettings&    settings,
-                uafc::ClientConnectionId&       clientConnectionId);
+                uaf::ClientConnectionId&        clientConnectionId);
 
 
         /**
          * Disconnect a session that was created manually.
          *
-         *A session which has been disconnected manually is "garbage collected" on the client side.
+         * A session which has been disconnected manually is "garbage collected" on the client side.
          * When a session is created afterwards, a new ClientConnectionId will be assigned to this
          * session (even if the properties of the new session are exactly the same as the old one).
          *
@@ -682,7 +718,7 @@ namespace uafc
          *                              of the manuallyConnect method.
          * @return                      Good if the session was successfully deleted, bad if not.
          */
-        uaf::Status manuallyDisconnect(uafc::ClientConnectionId clientConnectionId);
+        uaf::Status manuallyDisconnect(uaf::ClientConnectionId clientConnectionId);
 
 
         ///@} //////////////////////////////////////////////////////////////////////////////////////
@@ -704,7 +740,7 @@ namespace uafc
          *                              pointing to a session that is not available (anymore).
          */
         uaf::Status sessionInformation(
-                 uafc::ClientConnectionId   clientConnectionId,
+                 uaf::ClientConnectionId   clientConnectionId,
                  uafc::SessionInformation&  sessionInformation);
 
 
@@ -740,9 +776,9 @@ namespace uafc
          *                              something went wrong.
          */
         uaf::Status manuallySubscribe(
-                uafc::ClientConnectionId            clientConnectionId,
+                uaf::ClientConnectionId             clientConnectionId,
                 const uafc::SubscriptionSettings&   settings,
-                uafc::ClientSubscriptionHandle&     clientSubscriptionHandle);
+                uaf::ClientSubscriptionHandle&      clientSubscriptionHandle);
 
 
         /**
@@ -759,8 +795,8 @@ namespace uafc
          *                                  was some problem.
          */
         uaf::Status manuallyUnsubscribe(
-                uafc::ClientConnectionId        clientConnectionId,
-                uafc::ClientSubscriptionHandle  clientSubscriptionHandle);
+                uaf::ClientConnectionId        clientConnectionId,
+                uaf::ClientSubscriptionHandle  clientSubscriptionHandle);
 
 
         ///@} //////////////////////////////////////////////////////////////////////////////////////
@@ -780,7 +816,7 @@ namespace uafc
          * @return                          Good if the subscription could be found, Bad if not.
          */
         uaf::Status subscriptionInformation(
-                 uafc::ClientSubscriptionHandle     clientSubscriptionHandle,
+                 uaf::ClientSubscriptionHandle      clientSubscriptionHandle,
                  uafc::SubscriptionInformation&     subscriptionInformation);
 
 
@@ -815,7 +851,7 @@ namespace uafc
         bool doFinishThread_;
 
         /** The current request handle (only to be incremented when requestHandleMutex_ is locked). */
-        uafc::RequestHandle currentRequestHandle_;
+        uaf::RequestHandle currentRequestHandle_;
 
         /** The mutex to lock when the currentRequestHandle_ is read or manipulated. */
         UaMutex requestHandleMutex_;
@@ -867,7 +903,8 @@ namespace uafc
 
 
         /**
-         * Private templated member function to process persistent requests.
+         * Private templated member function to process requests that were already stored in a
+         * Store.
          *
          * Persistent requests are requests such as CreateMonitoredDataRequests that we want to
          * reconstruct automatically after severe failures. E.g. when the NodeId of a monitored
@@ -880,7 +917,7 @@ namespace uafc
          *                  reconstructed.
          */
         template<typename _Store>
-        void processPersistentRequests(_Store& store);
+        void processPersistedRequests(_Store& store);
         // Private template functions can be implemented in the CPP file (keeps the header clean!)
 
 

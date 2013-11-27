@@ -83,7 +83,7 @@ namespace uafc
          */
         uaf::Status invokeAsyncSdkService(
                 UaClientSdk::UaSession*     uaSession,
-                TransactionId               transactionId);
+                uaf::TransactionId          transactionId);
 
 
         /**
