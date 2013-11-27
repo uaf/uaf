@@ -22,34 +22,34 @@ via the GIT version control system.
 
 Informally:
 
- - When createMonitoredData() or createMonitoredEvents() fail, you can now access the handles that
-   were assigned to the monitored items 
-   in Python (<the raised exception>.status.additionalDiagnostics().getNotificationHandles())
-   and C++ (<the returned Status>.additionalDiagnostics().getNotificationHandles()). This is useful
-   because when createMonitoredData() or createMonitoredEvents() fail (e.g. because the server is 
-   not online yet), the UAF will still try to create the monitored items automatically in the 
-   background. So as soon as the UAF succeeds in creating the monitored items, you will need the 
-   handles to identify the notifications that you start to receive.
+- When createMonitoredData() or createMonitoredEvents() fail, you can now access the handles that
+  were assigned to the monitored items 
+  in Python (<the raised exception>.status.additionalDiagnostics().getNotificationHandles())
+  and C++ (<the returned Status>.additionalDiagnostics().getNotificationHandles()). This is useful
+  because when createMonitoredData() or createMonitoredEvents() fail (e.g. because the server is 
+  not online yet), the UAF will still try to create the monitored items automatically in the 
+  background. So as soon as the UAF succeeds in creating the monitored items, you will need the 
+  handles to identify the notifications that you start to receive.
 
 Formally:
       
- - !!!Breaking change (only for the C++ API)!!!
+- !!!Breaking change (only for the C++ API)!!!
  
-   The handles from "uaf/client/clienthandles.h" (that were part of the uafc namespace) are now 
-   part of the "uaf/util/handles.h" file (so they are not part of the uaf namespace).
-   Also uaf::NotificationHandle (formerly uafc::NotificationHandle) is now a 32-bit unsigned int
-   instead of 64-bit unsigned int.
-   All this has no consequences for the Python API.
+  The handles from "uaf/client/clienthandles.h" (that were part of the uafc namespace) are now 
+  part of the "uaf/util/handles.h" file (so they are not part of the uaf namespace).
+  Also uaf::NotificationHandle (formerly uafc::NotificationHandle) is now a 32-bit unsigned int
+  instead of 64-bit unsigned int.
+  All this has no consequences for the Python API.
    
- - The following classes have been added:
+- The following classes have been added:
  
-   - uaf::StatusDiagnostics 
-     (pyuaf.util.StatusDiagnostics)
+  - uaf::StatusDiagnostics 
+    (pyuaf.util.StatusDiagnostics)
       
- - The following methods were added to existing classes
+- The following methods were added to existing classes
  
-   - uaf::Status::additionalDiagnostics() 
-     (pyuaf.util.Status.additionalDiagnostics())
+  - uaf::Status::additionalDiagnostics() 
+    (pyuaf.util.Status.additionalDiagnostics())
 
 
 1.3 @ 2013/11/25
@@ -57,18 +57,18 @@ Formally:
 
 Informally:
 
- - Added the convenience functions for asynchronous reading and writing (beginRead and beginWrite).
-   (Asynchronous reading and writing was already available before, but only using the generic
-   processRequest function).
+- Added the convenience functions for asynchronous reading and writing (beginRead and beginWrite).
+  (Asynchronous reading and writing was already available before, but only using the generic
+  processRequest function).
 
 Formally:
 
- - The following methods have been added to existing classes:
+- The following methods have been added to existing classes:
 
-   - uafc::Client::beginRead
-     (pyuaf.client.Client.beginRead)
-   - uafc::Client::beginWrite
-     (pyuaf.client.Client.beginWrite)
+  - uafc::Client::beginRead
+    (pyuaf.client.Client.beginRead)
+  - uafc::Client::beginWrite
+    (pyuaf.client.Client.beginWrite)
 
 
 1.2 @ 2013/05/24
@@ -76,68 +76,68 @@ Formally:
 
 Informally:
 
- - DataValues are now better supported. A DataValue class (with a status, a value, timestamps, ...)
-   has been added, and ReadResultTarget and WriteRequestTarget inherit now from this class.
+- DataValues are now better supported. A DataValue class (with a status, a value, timestamps, ...)
+  has been added, and ReadResultTarget and WriteRequestTarget inherit now from this class.
    
- - The "timestampstoreturn" namespace / Python module has been added to allow the user to specify 
-   which timestamps should be returned by the server. 
+- The "timestampstoreturn" namespace / Python module has been added to allow the user to specify 
+  which timestamps should be returned by the server. 
    
- - The "opcuastatuscodes" Python module has been added to allow Python users to access all 
-   OPC UA status codes symbolically.
+- The "opcuastatuscodes" Python module has been added to allow Python users to access all 
+  OPC UA status codes symbolically.
    
- - A new service has been added: it's now possible to read raw historical data, and the 
-   modifications of this historical data. As with the Browse service implementation, the
-   UAF can deal with continuation points automatically.
+- A new service has been added: it's now possible to read raw historical data, and the 
+  modifications of this historical data. As with the Browse service implementation, the
+  UAF can deal with continuation points automatically.
    
 Formally:
 
- - !!!Breaking change!!!
+- !!!Breaking change!!!
     
-   An uafc::WriteRequestTarget / pyuaf.client.requests.WriteRequestTarget now has 
-   a 'status' attribute (of type uaf::Status / pyuaf.util.Status) 
-   instead of a 'opcUaStatusCode' attribute (of type uint32_t / int).
+  An uafc::WriteRequestTarget / pyuaf.client.requests.WriteRequestTarget now has 
+  a 'status' attribute (of type uaf::Status / pyuaf.util.Status) 
+  instead of a 'opcUaStatusCode' attribute (of type uint32_t / int).
    
- - The following namespaces (modules) have been added:
+- The following namespaces (modules) have been added:
  
-   - uaf::timestampstoreturn
-     (pyuaf.util.timestampstoreturn)
+  - uaf::timestampstoreturn
+    (pyuaf.util.timestampstoreturn)
    
- - The following classes have been added:
+- The following classes have been added:
  
-   - uaf::DataValue 
-     (pyuaf.util.DataValue)
-   - uafc::HistoryReadRawModifiedRequest
-     (pyuaf.client.requests.HistoryReadRawModifiedRequest)
-   - uafc::HistoryReadRawModifiedRequestTarget 
-     (pyuaf.client.requests.HistoryReadRawModifiedRequestTarget 
-     and pyuaf.client.requests.HistoryReadRawModifiedRequestTargetVector)
-   - uafc::HistoryReadRawModifiedConfig 
-     (pyuaf.client.configs.HistoryReadRawModifiedConfig)
-   - uafc::HistoryReadRawModifiedSettings 
-     (pyuaf.client.configs.HistoryReadRawModifiedSettings)
-   - uafc::HistoryReadRawModifiedResult 
-     (pyuaf.client.requests.HistoryReadRawModifiedResult)
-   - uafc::HistoryReadRawModifiedResultTarget 
-     (pyuaf.client.requests.HistoryReadRawModifiedResultTarget 
-     and pyuaf.client.requests.HistoryReadRawModifiedResultTargetVector)
+  - uaf::DataValue 
+    (pyuaf.util.DataValue)
+  - uafc::HistoryReadRawModifiedRequest
+    (pyuaf.client.requests.HistoryReadRawModifiedRequest)
+  - uafc::HistoryReadRawModifiedRequestTarget 
+    (pyuaf.client.requests.HistoryReadRawModifiedRequestTarget 
+    and pyuaf.client.requests.HistoryReadRawModifiedRequestTargetVector)
+  - uafc::HistoryReadRawModifiedConfig 
+    (pyuaf.client.configs.HistoryReadRawModifiedConfig)
+  - uafc::HistoryReadRawModifiedSettings 
+    (pyuaf.client.configs.HistoryReadRawModifiedSettings)
+  - uafc::HistoryReadRawModifiedResult 
+    (pyuaf.client.requests.HistoryReadRawModifiedResult)
+  - uafc::HistoryReadRawModifiedResultTarget 
+    (pyuaf.client.requests.HistoryReadRawModifiedResultTarget 
+    and pyuaf.client.requests.HistoryReadRawModifiedResultTargetVector)
       
- - The following class inheritances have been modified:
+- The following class inheritances have been modified:
  
-   - uafc::ReadResultTarget: inherits now from uaf::DataValue
-     (pyuaf.client.results.ReadResultTarget: inherits now from pyuaf.util.DataValue)
-   - uafc::WriteRequestTarget: inherits now from uaf::DataValue
-     (pyuaf.client.requests.WriteRequestTarget: inherits now from pyuaf.util.DataValue)
+  - uafc::ReadResultTarget: inherits now from uaf::DataValue
+    (pyuaf.client.results.ReadResultTarget: inherits now from pyuaf.util.DataValue)
+  - uafc::WriteRequestTarget: inherits now from uaf::DataValue
+    (pyuaf.client.requests.WriteRequestTarget: inherits now from pyuaf.util.DataValue)
 
- - The following methods have been added to existing classes:
+- The following methods have been added to existing classes:
  
-   - uafc::Client.historyReadRaw() and historyReadModified()
-     (pyuaf.client.Client.historyReadRaw() and historyReadModified())
-   - uaf::Status::hasSpecificOpcUaStatusCode(): replaces hasOpcUaStatusCode()
-     (pyuaf.util.Status.hasSpecificOpcUaStatusCode(): replaces hasOpcUaStatusCode())
-   - uaf::Status::setOpcUaStatusCode()
-     (pyuaf.util.Status.setOpcUaStatusCode())
-   - uaf::DateTime::sleep() and msleep()
-     (pyuaf.util.DateTime.sleep() and msleep())
+  - uafc::Client.historyReadRaw() and historyReadModified()
+    (pyuaf.client.Client.historyReadRaw() and historyReadModified())
+  - uaf::Status::hasSpecificOpcUaStatusCode(): replaces hasOpcUaStatusCode()
+    (pyuaf.util.Status.hasSpecificOpcUaStatusCode(): replaces hasOpcUaStatusCode())
+  - uaf::Status::setOpcUaStatusCode()
+    (pyuaf.util.Status.setOpcUaStatusCode())
+  - uaf::DateTime::sleep() and msleep()
+    (pyuaf.util.DateTime.sleep() and msleep())
  
  
 
@@ -146,83 +146,83 @@ Formally:
 
 Informally:
 
- - The Browse service is now supported (including the functionality to let the UAF invoke 
-   BrowseNext automatically).
+- The Browse service is now supported (including the functionality to let the UAF invoke 
+  BrowseNext automatically).
    
- - Strings and ByteStrings that are part of OPC UA requests and results have become 
-   "primitive" values in Python (i.e. they are encapsulated in Python by 
-   pyuaf.util.primitives.String and pyuaf.util.primitives.ByteString classes).
+- Strings and ByteStrings that are part of OPC UA requests and results have become 
+  "primitive" values in Python (i.e. they are encapsulated in Python by 
+  pyuaf.util.primitives.String and pyuaf.util.primitives.ByteString classes).
    
- - Bytestrings are now better supported in Python: a typemap has been added that maps a 
-   uaf::ByteString to a built-in Python bytearray and the other way around.
+- Bytestrings are now better supported in Python: a typemap has been added that maps a 
+  uaf::ByteString to a built-in Python bytearray and the other way around.
    
- - Timestamps are now supported via the DateTime class.
- 
- - NodeId identifiers can now also be GUIDs (Globally Unique Identifiers) and bytestrings.
+- Timestamps are now supported via the DateTime class.
 
- - Browse examples have been added
+- NodeId identifiers can now also be GUIDs (Globally Unique Identifiers) and bytestrings.
+
+- Browse examples have been added
 
 Formally:
 
- - The following namespaces (modules) have been added:
+- The following namespaces (modules) have been added:
  
-   - uaf::nodeclasses 
-     (pyuaf.util.nodeclasses)
-   - uaf::browsedirections 
-     (pyuaf.util.browsedirections)
+  - uaf::nodeclasses 
+    (pyuaf.util.nodeclasses)
+  - uaf::browsedirections 
+    (pyuaf.util.browsedirections)
    
- - The following classes have been added:
+- The following classes have been added:
  
-   - uaf::ViewDescription 
-     (pyuaf.util.ViewDescription)
-   - uaf::Guid 
-     (pyuaf.util.Guid)
-   - uaf::ReferenceDescription 
-     (pyuaf.util.ReferenceDescription and pyuaf.util.ReferenceDescriptionVector)
-   - uaf::DateTime 
-     (pyuaf.util.DateTime)
-   - uafc::BrowseRequest
-     (pyuaf.client.requests.BrowseRequest)
-   - uafc::BrowseRequestTarget 
-     (pyuaf.client.requests.BrowseRequestTarget and pyuaf.client.requests.BrowseRequestTargetVector)
-   - uafc::BrowseConfig 
-     (pyuaf.client.configs.BrowseConfig)
-   - uafc::BrowseSettings 
-     (pyuaf.client.configs.BrowseSettings)
-   - uafc::BrowseResult 
-     (pyuaf.client.requests.BrowseResult)
-   - uafc::BrowseResultTarget 
-     (pyuaf.client.requests.BrowseResultTarget and pyuaf.client.requests.BrowseResultTargetVector)
-   - uafc::BrowseNextRequest
-     (pyuaf.client.requests.BrowseNextRequest)
-   - uafc::BrowseNextRequestTarget 
-     (pyuaf.client.requests.BrowseNextRequestTarget and pyuaf.client.requests.BrowseNextRequestTargetVector)
-   - uafc::BrowseNextConfig 
-     (pyuaf.client.configs.BrowseNextConfig)
-   - uafc::BrowseNextSettings 
-     (pyuaf.client.configs.BrowseNextSettings)
-   - uafc::BrowseNextResult 
-     (pyuaf.client.requests.BrowseNextResult)
-   - uafc::BrowseNextResultTarget 
-     (same as pyuaf.client.requests.BrowseResultTarget and pyuaf.client.requests.BrowseResultTargetVector)
+  - uaf::ViewDescription 
+    (pyuaf.util.ViewDescription)
+  - uaf::Guid 
+    (pyuaf.util.Guid)
+  - uaf::ReferenceDescription 
+    (pyuaf.util.ReferenceDescription and pyuaf.util.ReferenceDescriptionVector)
+  - uaf::DateTime 
+    (pyuaf.util.DateTime)
+  - uafc::BrowseRequest
+    (pyuaf.client.requests.BrowseRequest)
+  - uafc::BrowseRequestTarget 
+    (pyuaf.client.requests.BrowseRequestTarget and pyuaf.client.requests.BrowseRequestTargetVector)
+  - uafc::BrowseConfig 
+    (pyuaf.client.configs.BrowseConfig)
+  - uafc::BrowseSettings 
+    (pyuaf.client.configs.BrowseSettings)
+  - uafc::BrowseResult 
+    (pyuaf.client.requests.BrowseResult)
+  - uafc::BrowseResultTarget 
+    (pyuaf.client.requests.BrowseResultTarget and pyuaf.client.requests.BrowseResultTargetVector)
+  - uafc::BrowseNextRequest
+    (pyuaf.client.requests.BrowseNextRequest)
+  - uafc::BrowseNextRequestTarget 
+    (pyuaf.client.requests.BrowseNextRequestTarget and pyuaf.client.requests.BrowseNextRequestTargetVector)
+  - uafc::BrowseNextConfig 
+    (pyuaf.client.configs.BrowseNextConfig)
+  - uafc::BrowseNextSettings 
+    (pyuaf.client.configs.BrowseNextSettings)
+  - uafc::BrowseNextResult 
+    (pyuaf.client.requests.BrowseNextResult)
+  - uafc::BrowseNextResultTarget 
+    (same as pyuaf.client.requests.BrowseResultTarget and pyuaf.client.requests.BrowseResultTargetVector)
 
- - The following methods and attributes have been added to existing classes:
+- The following methods and attributes have been added to existing classes:
 
-   - uafc::Client::browse() 
-     (pyuaf.util.Client.browse()) 
-   - uaf::NodeId::isNull() 
-     (pyuaf.util.NodeId.isNull()) 
-   - uaf::NodeIdIdentifier::isNull(), idGuid, idOpaque 
-     (pyuaf.util.NodeIdIdentifier.isNull(), idGuid, idOpaque)
-   - uaf::Variant::toDateTime(), toDateTimeArray(), fromDateTime(), fromDateTimeArray() 
-     (DateTime Variants are converted automatically into DateTime instances in Python) 
-   - uaf::Variant::toByteString(), fromByteString(), toByteStringArray(), fromByteStringArray()
-     (ByteString Variants are converted automatically into bytearray instances in Python) 
+  - uafc::Client::browse() 
+    (pyuaf.util.Client.browse()) 
+  - uaf::NodeId::isNull() 
+    (pyuaf.util.NodeId.isNull()) 
+  - uaf::NodeIdIdentifier::isNull(), idGuid, idOpaque 
+    (pyuaf.util.NodeIdIdentifier.isNull(), idGuid, idOpaque)
+  - uaf::Variant::toDateTime(), toDateTimeArray(), fromDateTime(), fromDateTimeArray() 
+    (DateTime Variants are converted automatically into DateTime instances in Python) 
+  - uaf::Variant::toByteString(), fromByteString(), toByteStringArray(), fromByteStringArray()
+    (ByteString Variants are converted automatically into bytearray instances in Python) 
  
 
 
 1.0 @ 2013/05/14
 ----------------------------------------------------------------------------------------------------
 
- - Public release on GitHub.
+- Public release on GitHub.
 
