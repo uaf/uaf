@@ -43,13 +43,13 @@ Formally:
    
  - The following classes have been added:
  
-    - uaf::StatusDiagnostics 
-      (pyuaf.util.StatusDiagnostics)
+   - uaf::StatusDiagnostics 
+     (pyuaf.util.StatusDiagnostics)
       
  - The following methods were added to existing classes
  
-    - uaf::Status::additionalDiagnostics() 
-      (pyuaf.util.Status.additionalDiagnostics())
+   - uaf::Status::additionalDiagnostics() 
+     (pyuaf.util.Status.additionalDiagnostics())
 
 
 1.3 @ 2013/11/25
@@ -99,45 +99,45 @@ Formally:
    
  - The following namespaces (modules) have been added:
  
-    - uaf::timestampstoreturn
-      (pyuaf.util.timestampstoreturn)
+   - uaf::timestampstoreturn
+     (pyuaf.util.timestampstoreturn)
    
  - The following classes have been added:
  
-    - uaf::DataValue 
-      (pyuaf.util.DataValue)
-    - uafc::HistoryReadRawModifiedRequest
-      (pyuaf.client.requests.HistoryReadRawModifiedRequest)
-    - uafc::HistoryReadRawModifiedRequestTarget 
-      (pyuaf.client.requests.HistoryReadRawModifiedRequestTarget 
-       and pyuaf.client.requests.HistoryReadRawModifiedRequestTargetVector)
-    - uafc::HistoryReadRawModifiedConfig 
-      (pyuaf.client.configs.HistoryReadRawModifiedConfig)
-    - uafc::HistoryReadRawModifiedSettings 
-      (pyuaf.client.configs.HistoryReadRawModifiedSettings)
-    - uafc::HistoryReadRawModifiedResult 
-      (pyuaf.client.requests.HistoryReadRawModifiedResult)
-    - uafc::HistoryReadRawModifiedResultTarget 
-      (pyuaf.client.requests.HistoryReadRawModifiedResultTarget 
-       and pyuaf.client.requests.HistoryReadRawModifiedResultTargetVector)
+   - uaf::DataValue 
+     (pyuaf.util.DataValue)
+   - uafc::HistoryReadRawModifiedRequest
+     (pyuaf.client.requests.HistoryReadRawModifiedRequest)
+   - uafc::HistoryReadRawModifiedRequestTarget 
+     (pyuaf.client.requests.HistoryReadRawModifiedRequestTarget 
+     and pyuaf.client.requests.HistoryReadRawModifiedRequestTargetVector)
+   - uafc::HistoryReadRawModifiedConfig 
+     (pyuaf.client.configs.HistoryReadRawModifiedConfig)
+   - uafc::HistoryReadRawModifiedSettings 
+     (pyuaf.client.configs.HistoryReadRawModifiedSettings)
+   - uafc::HistoryReadRawModifiedResult 
+     (pyuaf.client.requests.HistoryReadRawModifiedResult)
+   - uafc::HistoryReadRawModifiedResultTarget 
+     (pyuaf.client.requests.HistoryReadRawModifiedResultTarget 
+     and pyuaf.client.requests.HistoryReadRawModifiedResultTargetVector)
       
  - The following class inheritances have been modified:
  
-    - uafc::ReadResultTarget: inherits now from uaf::DataValue
-      (pyuaf.client.results.ReadResultTarget: inherits now from pyuaf.util.DataValue)
-    - uafc::WriteRequestTarget: inherits now from uaf::DataValue
-      (pyuaf.client.requests.WriteRequestTarget: inherits now from pyuaf.util.DataValue)
+   - uafc::ReadResultTarget: inherits now from uaf::DataValue
+     (pyuaf.client.results.ReadResultTarget: inherits now from pyuaf.util.DataValue)
+   - uafc::WriteRequestTarget: inherits now from uaf::DataValue
+     (pyuaf.client.requests.WriteRequestTarget: inherits now from pyuaf.util.DataValue)
 
  - The following methods have been added to existing classes:
  
-    - uafc::Client.historyReadRaw() and historyReadModified()
-      (pyuaf.client.Client.historyReadRaw() and historyReadModified())
-    - uaf::Status::hasSpecificOpcUaStatusCode(): replaces hasOpcUaStatusCode()
-      (pyuaf.util.Status.hasSpecificOpcUaStatusCode(): replaces hasOpcUaStatusCode())
-    - uaf::Status::setOpcUaStatusCode()
-      (pyuaf.util.Status.setOpcUaStatusCode())
-    - uaf::DateTime::sleep() and msleep()
-      (pyuaf.util.DateTime.sleep() and msleep())
+   - uafc::Client.historyReadRaw() and historyReadModified()
+     (pyuaf.client.Client.historyReadRaw() and historyReadModified())
+   - uaf::Status::hasSpecificOpcUaStatusCode(): replaces hasOpcUaStatusCode()
+     (pyuaf.util.Status.hasSpecificOpcUaStatusCode(): replaces hasOpcUaStatusCode())
+   - uaf::Status::setOpcUaStatusCode()
+     (pyuaf.util.Status.setOpcUaStatusCode())
+   - uaf::DateTime::sleep() and msleep()
+     (pyuaf.util.DateTime.sleep() and msleep())
  
  
 
@@ -166,58 +166,58 @@ Formally:
 
  - The following namespaces (modules) have been added:
  
-    - uaf::nodeclasses 
-      (pyuaf.util.nodeclasses)
-    - uaf::browsedirections 
-      (pyuaf.util.browsedirections)
+   - uaf::nodeclasses 
+     (pyuaf.util.nodeclasses)
+   - uaf::browsedirections 
+     (pyuaf.util.browsedirections)
    
  - The following classes have been added:
  
-    - uaf::ViewDescription 
-      (pyuaf.util.ViewDescription)
-    - uaf::Guid 
-      (pyuaf.util.Guid)
-    - uaf::ReferenceDescription 
-      (pyuaf.util.ReferenceDescription and pyuaf.util.ReferenceDescriptionVector)
-    - uaf::DateTime 
-      (pyuaf.util.DateTime)
-    - uafc::BrowseRequest
-      (pyuaf.client.requests.BrowseRequest)
-    - uafc::BrowseRequestTarget 
-      (pyuaf.client.requests.BrowseRequestTarget and pyuaf.client.requests.BrowseRequestTargetVector)
-    - uafc::BrowseConfig 
-      (pyuaf.client.configs.BrowseConfig)
-    - uafc::BrowseSettings 
-      (pyuaf.client.configs.BrowseSettings)
-    - uafc::BrowseResult 
-      (pyuaf.client.requests.BrowseResult)
-    - uafc::BrowseResultTarget 
-      (pyuaf.client.requests.BrowseResultTarget and pyuaf.client.requests.BrowseResultTargetVector)
-    - uafc::BrowseNextRequest
-      (pyuaf.client.requests.BrowseNextRequest)
-    - uafc::BrowseNextRequestTarget 
-      (pyuaf.client.requests.BrowseNextRequestTarget and pyuaf.client.requests.BrowseNextRequestTargetVector)
-    - uafc::BrowseNextConfig 
-      (pyuaf.client.configs.BrowseNextConfig)
-    - uafc::BrowseNextSettings 
-      (pyuaf.client.configs.BrowseNextSettings)
-    - uafc::BrowseNextResult 
-      (pyuaf.client.requests.BrowseNextResult)
-    - uafc::BrowseNextResultTarget 
-      (same as pyuaf.client.requests.BrowseResultTarget and pyuaf.client.requests.BrowseResultTargetVector)
+   - uaf::ViewDescription 
+     (pyuaf.util.ViewDescription)
+   - uaf::Guid 
+     (pyuaf.util.Guid)
+   - uaf::ReferenceDescription 
+     (pyuaf.util.ReferenceDescription and pyuaf.util.ReferenceDescriptionVector)
+   - uaf::DateTime 
+     (pyuaf.util.DateTime)
+   - uafc::BrowseRequest
+     (pyuaf.client.requests.BrowseRequest)
+   - uafc::BrowseRequestTarget 
+     (pyuaf.client.requests.BrowseRequestTarget and pyuaf.client.requests.BrowseRequestTargetVector)
+   - uafc::BrowseConfig 
+     (pyuaf.client.configs.BrowseConfig)
+   - uafc::BrowseSettings 
+     (pyuaf.client.configs.BrowseSettings)
+   - uafc::BrowseResult 
+     (pyuaf.client.requests.BrowseResult)
+   - uafc::BrowseResultTarget 
+     (pyuaf.client.requests.BrowseResultTarget and pyuaf.client.requests.BrowseResultTargetVector)
+   - uafc::BrowseNextRequest
+     (pyuaf.client.requests.BrowseNextRequest)
+   - uafc::BrowseNextRequestTarget 
+     (pyuaf.client.requests.BrowseNextRequestTarget and pyuaf.client.requests.BrowseNextRequestTargetVector)
+   - uafc::BrowseNextConfig 
+     (pyuaf.client.configs.BrowseNextConfig)
+   - uafc::BrowseNextSettings 
+     (pyuaf.client.configs.BrowseNextSettings)
+   - uafc::BrowseNextResult 
+     (pyuaf.client.requests.BrowseNextResult)
+   - uafc::BrowseNextResultTarget 
+     (same as pyuaf.client.requests.BrowseResultTarget and pyuaf.client.requests.BrowseResultTargetVector)
 
  - The following methods and attributes have been added to existing classes:
 
-    - uafc::Client::browse() 
-      (pyuaf.util.Client.browse()) 
-    - uaf::NodeId::isNull() 
-      (pyuaf.util.NodeId.isNull()) 
-    - uaf::NodeIdIdentifier::isNull(), idGuid, idOpaque 
-      (pyuaf.util.NodeIdIdentifier.isNull(), idGuid, idOpaque)
-    - uaf::Variant::toDateTime(), toDateTimeArray(), fromDateTime(), fromDateTimeArray() 
-      (DateTime Variants are converted automatically into DateTime instances in Python) 
-    - uaf::Variant::toByteString(), fromByteString(), toByteStringArray(), fromByteStringArray()
-      (ByteString Variants are converted automatically into bytearray instances in Python) 
+   - uafc::Client::browse() 
+     (pyuaf.util.Client.browse()) 
+   - uaf::NodeId::isNull() 
+     (pyuaf.util.NodeId.isNull()) 
+   - uaf::NodeIdIdentifier::isNull(), idGuid, idOpaque 
+     (pyuaf.util.NodeIdIdentifier.isNull(), idGuid, idOpaque)
+   - uaf::Variant::toDateTime(), toDateTimeArray(), fromDateTime(), fromDateTimeArray() 
+     (DateTime Variants are converted automatically into DateTime instances in Python) 
+   - uaf::Variant::toByteString(), fromByteString(), toByteStringArray(), fromByteStringArray()
+     (ByteString Variants are converted automatically into bytearray instances in Python) 
  
 
 
