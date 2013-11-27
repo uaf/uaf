@@ -22,18 +22,14 @@ via the GIT version control system.
 
 Informally:
 
- - As of now, when monitored items are created by the client (e.g. by calling 
-   uafc::Client::createMonitoredData in C++ or pyuaf.client.Client.createMonitoredData in Python), 
-   but these monitored items cannot be created on the server initially due to some (communication) 
-   failure, you can access the handles that were already assigned to them. This was already
-   possible for the C++ API, but not for the Python API because the latter raises exceptions on 
-   failures and therefore doesn't return you a result object that contains the handles.
-   From a client's point of view, it's important to receive these handles, because at some point
-   (e.g. when the server comes online), the UAF will be able to create the monitored items on the 
-   server automatically in the background. At that point you will be able to identify the 
-   notifications that you start to receive, by correlating them to the handles that you previously
-   received. In Python, these handles are provided to you by the exception that was raised
-   when createMonitoredData() or createMonitoredEvents() or processRequest() failed.
+ - When createMonitoredData() or createMonitoredEvents() fail, you can now access the handles that
+   were assigned to the monitored items 
+   in Python (<the raised exception>.status.additionalDiagnostics().getNotificationHandles())
+   and C++ (<the returned Status>.additionalDiagnostics().getNotificationHandles()). This is useful
+   because when createMonitoredData() or createMonitoredEvents() fail (e.g. because the server is 
+   not online yet), the UAF will still try to create the monitored items automatically in the 
+   background. So as soon as the UAF succeeds in creating the monitored items, you will need the 
+   handles to identify the notifications that you start to receive.
 
 Formally:
       
