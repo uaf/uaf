@@ -2273,8 +2273,8 @@
             Set the description text. As a result of this, 
             :meth:`~pyuaf.util.StatusDiagnostics.hasDescription` will return True.
             
-            :param handles: Additional description text.
-            :type handles: ``str``
+            :param desc: Additional description text.
+            :type desc: ``str``
 
 
         .. automethod:: pyuaf.util.StatusDiagnostics.setNotificationHandles
