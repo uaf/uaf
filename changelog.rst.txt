@@ -5,12 +5,12 @@ UAF changelog
 
 Version = X.Y with
 
- - X : major version number
-    - incremented only when major functionality has been added
-    - e.g. when a Server implementation has been added
- - Y : minor version number 
-    - incremented every time some minor functionality has been added
-    - e.g. when the Client implementation supports another OPC UA service
+- X : major version number
+   - incremented only when major functionality has been added
+   - e.g. when a Server implementation has been added
+- Y : minor version number 
+   - incremented every time some minor functionality has been added
+   - e.g. when the Client implementation supports another OPC UA service
     
 
 Bugfixes (which do not have any implications on the API) can only be tracked 
