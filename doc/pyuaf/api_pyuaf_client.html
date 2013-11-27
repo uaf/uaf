@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client &mdash; PyUAF 1.3 documentation</title>
+    <title>pyuaf.client &mdash; PyUAF 1.4 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.3',
+        VERSION:     '1.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.3 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.4 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.configs" href="api_pyuaf_client_configs.html" />
     <link rel="prev" title="pyuaf" href="api_pyuaf.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.4 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -212,6 +212,12 @@ a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.clien
 For full flexibility, use that function. For instance, if you want to call multiple 
 methods at once, you can do so by creating a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.MethodCallRequest" title="pyuaf.client.requests.MethodCallRequest"><tt class="xref py py-class docutils literal"><span class="pre">MethodCallRequest</span></tt></a> 
 and adding multiple targets.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The callbacks will run in a separate thread, and therefore any exception they 
+raise will <em>not</em> be handled or propagated. So your callbacks should have a try-except 
+clause if you want to be able to properly handle the exceptions that they may raise.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -247,7 +253,7 @@ argument (which will be of type <a class="reference internal" href="api_pyuaf_cl
 <dl class="method">
 <dt id="pyuaf.client.Client.beginRead">
 <tt class="descname">beginRead</tt><big>(</big><em>addresses</em>, <em>attributeId=13</em>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em>, <em>callback=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.beginRead" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read a number of node attributes synchronously.</p>
+<dd><p>Read a number of node attributes asynchronously.</p>
 <p>This is a convenience function for calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-class docutils literal"><span class="pre">processRequest</span></tt></a> with 
 a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.ReadRequest" title="pyuaf.client.requests.ReadRequest"><tt class="xref py py-class docutils literal"><span class="pre">ReadRequest</span></tt></a> as its first argument.
 For full flexibility, use that function.</p>
@@ -263,10 +269,19 @@ inherit from the <a class="reference internal" href="#pyuaf.client.Client" title
 </ul>
 </dd>
 </dl>
-<p>Note that asynchronous requests MUST be invoked on a single session. Meaning:
-if you provide multiple addresses to beginRead(), the addresses MUST point to nodes that 
-belong to the same server (as the UAF can currently not reconstruct an asynchronous 
-request that must be &#8220;split up&#8221; to be called on multiple servers).</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Asynchronous requests MUST be invoked on a single session. Meaning:
+the targets of asynchronous requests MUST belong to the same server (as the UAF can 
+currently not reconstruct an asynchronous request that must be &#8220;split up&#8221; to be called
+on multiple servers). If they don&#8217;t belong to the same server, an error will be raised.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The callbacks will run in a separate thread, and therefore any exception they 
+raise will <em>not</em> be handled or propagated. So your callbacks should have a try-except 
+clause if you want to be able to properly handle the exceptions that they may raise.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -302,7 +317,7 @@ should have one argument (which will be of type <a class="reference internal" hr
 <dl class="method">
 <dt id="pyuaf.client.Client.beginWrite">
 <tt class="descname">beginWrite</tt><big>(</big><em>addresses</em>, <em>data</em>, <em>attributeId=13</em>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em>, <em>callback=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.beginWrite" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write a number of node attributes synchronously.</p>
+<dd><p>Write a number of node attributes asynchronously.</p>
 <p>This is a convenience function for calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-class docutils literal"><span class="pre">processRequest</span></tt></a> with 
 a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.AsyncWriteRequest" title="pyuaf.client.requests.AsyncWriteRequest"><tt class="xref py py-class docutils literal"><span class="pre">AsyncWriteRequest</span></tt></a> as its first argument.
 For full flexibility, use that function.</p>
@@ -318,10 +333,19 @@ inherit from the <a class="reference internal" href="#pyuaf.client.Client" title
 </ul>
 </dd>
 </dl>
-<p>Note that asynchronous requests MUST be invoked on a single session. Meaning:
-if you provide multiple addresses to beginWrite(), the addresses MUST point to nodes that 
-belong to the same server (as the UAF can currently not reconstruct an asynchronous 
-request that must be &#8220;split up&#8221; to be called on multiple servers).</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Asynchronous requests MUST be invoked on a single session. Meaning:
+the targets of asynchronous requests MUST belong to the same server (as the UAF can 
+currently not reconstruct an asynchronous request that must be &#8220;split up&#8221; to be called
+on multiple servers). If they don&#8217;t belong to the same server, an error will be raised.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The callbacks will run in a separate thread, and therefore any exception they 
+raise will <em>not</em> be handled or propagated. So your callbacks should have a try-except 
+clause if you want to be able to properly handle the exceptions that they may raise.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -549,6 +573,37 @@ via the &#8216;resultCallback&#8217; argument &#8211;&gt; then only the external
 <p>This is a convenience function for calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-class docutils literal"><span class="pre">processRequest</span></tt></a> with 
 a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredDataRequest" title="pyuaf.client.requests.CreateMonitoredDataRequest"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredDataRequest</span></tt></a> as its first argument.
 For full flexibility, use that function.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Both <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredDataRequest" title="pyuaf.client.requests.CreateMonitoredDataRequest"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredDataRequest</span></tt></a> and 
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredEventsRequest" title="pyuaf.client.requests.CreateMonitoredEventsRequest"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsRequest</span></tt></a> are &#8220;persistent&#8221; requests.
+It means that even when communication fails (e.g. because the server was not online),
+a handle is already assigned to each monitored item as soon as you call 
+createMonitoredEvents(). 
+In the background, the UAF will try to (re)establish the connection, and as soon as this 
+is successful, it will create the monitored items for you on the server. 
+From that point on, you may start to receive notifications (that can be identified by the 
+handles that were already assigned and returned to you now).
+So when createMonitoredData() fails, you need to be aware that in the background the UAF
+will retry to create them on the server. You can access the handles that will identify 
+their notifications</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li>via the returned  <a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.CreateMonitoredDataResult" title="pyuaf.client.results.CreateMonitoredDataResult"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredDataResult</span></tt></a>, in case
+createMonitoredData() was successful and didn&#8217;t raise an exception</li>
+<li>via the exception that was raised in case createMonitoredData() was not successful. 
+This exception has a &#8220;status&#8221; attribute (of type <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>),
+and this will provide you a diagnostics object (see <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status.additionalDiagnostics" title="pyuaf.util.Status.additionalDiagnostics"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.Status.additionalDiagnostics()</span></tt></a>),
+which will finally provide you the handles (see <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.StatusDiagnostics.getNotificationHandles" title="pyuaf.util.StatusDiagnostics.getNotificationHandles"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.StatusDiagnostics.getNotificationHandles()</span></tt></a>).</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The callbacks will run in a separate thread, and therefore any exception they 
+raise will <em>not</em> be handled or propagated. So your callbacks should have a try-except 
+clause if you want to be able to properly handle the exceptions that they may raise.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -591,6 +646,37 @@ in order to receive the notifications.</li>
 <p>This is a convenience function for calling <a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-class docutils literal"><span class="pre">processRequest</span></tt></a> with 
 a <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredEventsRequest" title="pyuaf.client.requests.CreateMonitoredEventsRequest"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsRequest</span></tt></a> as its first argument.
 For full flexibility, use that function.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Both <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredDataRequest" title="pyuaf.client.requests.CreateMonitoredDataRequest"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredDataRequest</span></tt></a> and 
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredEventsRequest" title="pyuaf.client.requests.CreateMonitoredEventsRequest"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsRequest</span></tt></a> are &#8220;persistent&#8221; requests.
+It means that even when communication fails (e.g. because the server was not online),
+a handle is already assigned to each monitored item as soon as you call 
+createMonitoredEvents(). 
+In the background, the UAF will try to (re)establish the connection, and as soon as this 
+is successful, it will create the monitored items for you on the server. 
+From that point on, you may start to receive notifications (that can be identified by the 
+handles that were already assigned and returned to you now).
+So when createMonitoredEvents() fails, you need to be aware that in the background the UAF
+will retry to create them on the server. You can access the handles that will identify 
+their notifications</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li>via the returned  <a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.CreateMonitoredEventsResult" title="pyuaf.client.results.CreateMonitoredEventsResult"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsResult</span></tt></a>, in case
+createMonitoredEvents() was successful and didn&#8217;t raise an exception</li>
+<li>via the exception that was raised in case createMonitoredEvents() was not successful. 
+This exception has a &#8220;status&#8221; attribute (of type <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>),
+and this will provide you a diagnostics object (see <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status.additionalDiagnostics" title="pyuaf.util.Status.additionalDiagnostics"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.Status.additionalDiagnostics()</span></tt></a>),
+which will finally provide you the handles (see <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.StatusDiagnostics.getNotificationHandles" title="pyuaf.util.StatusDiagnostics.getNotificationHandles"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.StatusDiagnostics.getNotificationHandles()</span></tt></a>).</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The callbacks will run in a separate thread, and therefore any exception they 
+raise will <em>not</em> be handled or propagated. So your callbacks should have a try-except 
+clause if you want to be able to properly handle the exceptions that they may raise.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1043,10 +1129,6 @@ session (even if the properties of the new subscription are exactly the same as 
 <dt id="pyuaf.client.Client.processRequest">
 <tt class="descname">processRequest</tt><big>(</big><em>request</em>, <em>resultCallback=None</em>, <em>notificationCallbacks=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.client.Client.processRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process a generic request (as found in <a class="reference internal" href="api_pyuaf_client_requests.html#module-pyuaf.client.requests" title="pyuaf.client.requests"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.client.requests</span></tt></a>).</p>
-<p>Note that asynchronous requests MUST be invoked on a single session. Meaning:
-the targets of asynchronous requests MUST belong to the same server (as the UAF can 
-currently not reconstruct an asynchronous request that must be &#8220;split up&#8221; to be called
-on multiple servers).</p>
 <dl class="docutils">
 <dt>As for callbacks, you may:</dt>
 <dd><ul class="first last simple">
@@ -1063,6 +1145,44 @@ the number of targets of the request.</li>
 </ul>
 </dd>
 </dl>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Both <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredDataRequest" title="pyuaf.client.requests.CreateMonitoredDataRequest"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredDataRequest</span></tt></a> and 
+<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredEventsRequest" title="pyuaf.client.requests.CreateMonitoredEventsRequest"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsRequest</span></tt></a> are &#8220;persistent&#8221; requests.
+It means that even when communication fails (e.g. because the server was not online),
+a handle is already assigned to each monitored item as soon as you call processRequest(). 
+In the background, the UAF will try to (re)establish the connection, and as soon as this 
+is successful, it will create the monitored items for you on the server. 
+From that point on, you may start to receive notifications (that can be identified by the 
+handles that were already assigned and returned to you now).
+So when processRequest() fails, you need to be aware that in the background the UAF
+will retry to create them on the server. You can access the handles that will identify 
+their notifications:</p>
+<blockquote class="last">
+<div><ul class="simple">
+<li>via the returned <a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.CreateMonitoredDataResult" title="pyuaf.client.results.CreateMonitoredDataResult"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredDataResult</span></tt></a> (or
+<a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.CreateMonitoredEventsResult" title="pyuaf.client.results.CreateMonitoredEventsResult"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsResult</span></tt></a>), in case
+processRequest() was successful and didn&#8217;t raise an exception</li>
+<li>via the exception that was raised in case processRequest() was not successful. 
+This exception has a &#8220;status&#8221; attribute (of type <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>),
+and this will provide you a diagnostics object (see <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status.additionalDiagnostics" title="pyuaf.util.Status.additionalDiagnostics"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.Status.additionalDiagnostics()</span></tt></a>),
+which will finally provide you the handles (see <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.StatusDiagnostics.getNotificationHandles" title="pyuaf.util.StatusDiagnostics.getNotificationHandles"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.StatusDiagnostics.getNotificationHandles()</span></tt></a>).</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Asynchronous requests MUST be invoked on a single session. Meaning:
+the targets of asynchronous requests MUST belong to the same server (as the UAF can 
+currently not reconstruct an asynchronous request that must be &#8220;split up&#8221; to be called
+on multiple servers). If they don&#8217;t belong to the same server, an error will be raised.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The callbacks will run in a separate thread, and therefore any exception they 
+raise will <em>not</em> be handled or propagated. So your callbacks should have a try-except 
+clause if you want to be able to properly handle the exceptions that they may raise.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -1367,11 +1487,14 @@ that are received when a subscription is made.</p>
 <div><dl class="attribute">
 <dt id="pyuaf.client.BaseNotification.notificationHandle">
 <tt class="descname">notificationHandle</tt><a class="headerlink" href="#pyuaf.client.BaseNotification.notificationHandle" title="Permalink to this definition">¶</a></dt>
-<dd><p>A NotificationHandle is a handle (an <tt class="docutils literal"><span class="pre">int</span></tt>) defined by the UAF (not by the OPC UA standard!) to
+<dd><p>Deprecated! A notification handle is essentially the same as a client monitored item
+handle, so soon these two handles will merge (notificationHandle will disappear,
+the client monitored item handle will stay).</p>
+<p>A NotificationHandle is a handle (an <tt class="docutils literal"><span class="pre">int</span></tt>) defined by the UAF (not by the OPC UA standard!) to
 associate monitored item notifications with the
 <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredDataRequestTarget" title="pyuaf.client.requests.CreateMonitoredDataRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredDataRequestTarget</span></tt></a> (or
 <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredEventsRequestTarget" title="pyuaf.client.requests.CreateMonitoredEventsRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsRequestTarget</span></tt></a>) that originally
-created them. It is a 64-bit number
+created them. It is a 32-bit number
 that gets a unique value as soon as you create a monitored item. Even if the server of
 this monitored item would crash, and the UAF determines that the monitored item should be
 re-established on another server (e.g. because the browse path now points to a node in
@@ -1639,7 +1762,7 @@ state of the subscription, the handle, etc.</p>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="api_pyuaf.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">pyuaf</span></tt></a></p>
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">pyuaf</span></tt></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="api_pyuaf_client_configs.html"
                         title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.client.configs</span></tt></a></p>
@@ -1680,7 +1803,7 @@ state of the subscription, the handle, etc.</p>
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.4 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

@@ -2050,10 +2050,23 @@
         
         .. automethod:: pyuaf.util.Status.addDiagnostic
         
-            Add some diagnostic info.
+            Add some diagnostic info (extra description text).
+            
+            This text will end up in the additionalDiagnostics object of this Status object
+            (it will be appended to the description of this diagnostics object, that can be 
+            accessed via :meth:`pyuaf.util.StatusDiagnostics.getDescription`.
             
             :param name: The extra diagnostic info.
             :type  name: ``str``
+        
+        
+        .. automethod:: pyuaf.util.Status.additionalDiagnostics
+        
+            Get the additional diagnostics object (that can hold extra descriptions of the Status,
+            or some data specific to a particular use-case of the Status).
+            
+            :return: The additional StatusDiagnostics object that belongs to the Status.
+            :rtype:  :class:`~pyuaf.util.StatusDiagnostics`
 
     
         .. automethod:: pyuaf.util.Status.hasSpecificOpcUaStatusCode
@@ -2184,6 +2197,94 @@
             :param statuses: The statuses to summarize.
             :type  statuses: :class:`pyuaf.util.StatusVector`.
 
+
+
+
+*class* StatusDiagnostics
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.StatusDiagnostics
+
+
+    A StatusDiagnostics object holds some more detailed diagnostic info for a Status object,
+    depending on the use case of this Status object
+    
+
+    * Methods:
+
+        .. automethod:: pyuaf.util.StatusDiagnostics.__init__
+        
+            Construct an empty StatusDiagnostics object.
+            
+            You normally don't create these objects: they are part of a Status object.
+
+        
+        .. automethod:: pyuaf.util.StatusDiagnostics.clear
+        
+            Remove any diagnostic information.
+        
+        
+        .. automethod:: pyuaf.util.StatusDiagnostics.isEmpty
+        
+            Is any diagnostic info given?
+            
+            :return: True if the object holds some data (e.g. some description text or some other 
+                     data), False if not.
+            :rtype:  ``bool``
+        
+        
+        .. automethod:: pyuaf.util.StatusDiagnostics.hasDescription
+        
+            Does the diagnostic object has a description?
+            
+            :return: True if the object holds some description text, False if not.
+            :rtype:  ``bool``
+        
+        
+        .. automethod:: pyuaf.util.StatusDiagnostics.hasNotificationHandles
+        
+            Does the diagnostic object has notification handles?
+            
+            :return: True if the object holds some notification handles, False if not.
+            :rtype:  ``bool``
+
+
+        .. automethod:: pyuaf.util.StatusDiagnostics.getDescription
+        
+            Get the description (only makes sense in case 
+            :meth:`~pyuaf.util.StatusDiagnostics.hasDescription` is True).
+            
+            :return: Additional description text.
+            :rtype:  ``str``
+
+
+        .. automethod:: pyuaf.util.StatusDiagnostics.getNotificationHandles
+        
+            Get the notification handles (only makes sense in case 
+            :meth:`~pyuaf.util.StatusDiagnostics.hasNotificationHandles` is True).
+            
+            :return: A tuple of notification handles (=integers), e.g. (1,2,3).
+            :rtype:  ``tuple`` of ``int``
+
+
+        .. automethod:: pyuaf.util.StatusDiagnostics.setDescription
+        
+            Set the description text. As a result of this, 
+            :meth:`~pyuaf.util.StatusDiagnostics.hasDescription` will return True.
+            
+            :param handles: Additional description text.
+            :type handles: ``str``
+
+
+        .. automethod:: pyuaf.util.StatusDiagnostics.setNotificationHandles
+        
+            Set the notification handles. As a result of this, 
+            :meth:`~pyuaf.util.StatusDiagnostics.hasNotificationHandles` will return True.
+            
+            :param handles: A tuple of notification handles (=integers), e.g. (1,2,3).
+            :type handles: ``tuple`` of ``int``
+            
 
 
 *class* StatusVector

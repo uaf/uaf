@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util &mdash; PyUAF 1.3 documentation</title>
+    <title>pyuaf.util &mdash; PyUAF 1.4 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.3',
+        VERSION:     '1.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.3 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.4 documentation" href="index.html" />
     <link rel="next" title="pyuaf.util.attributeids" href="api_pyuaf_util_attributeids.html" />
     <link rel="prev" title="pyuaf.client.subscriptionstates" href="api_pyuaf_client_subscriptionstates.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.4 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -2726,12 +2726,32 @@ for more info!</p>
 <dl class="method">
 <dt id="pyuaf.util.Status.addDiagnostic">
 <tt class="descname">addDiagnostic</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Status.addDiagnostic" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add some diagnostic info.</p>
+<dd><p>Add some diagnostic info (extra description text).</p>
+<p>This text will end up in the additionalDiagnostics object of this Status object
+(it will be appended to the description of this diagnostics object, that can be
+accessed via <a class="reference internal" href="#pyuaf.util.StatusDiagnostics.getDescription" title="pyuaf.util.StatusDiagnostics.getDescription"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.StatusDiagnostics.getDescription()</span></tt></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The extra diagnostic info.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.additionalDiagnostics">
+<tt class="descname">additionalDiagnostics</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Status.additionalDiagnostics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the additional diagnostics object (that can hold extra descriptions of the Status,
+or some data specific to a particular use-case of the Status).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The additional StatusDiagnostics object that belongs to the Status.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.StatusDiagnostics" title="pyuaf.util.StatusDiagnostics"><tt class="xref py py-class docutils literal"><span class="pre">StatusDiagnostics</span></tt></a></td>
 </tr>
 </tbody>
 </table>
@@ -2952,6 +2972,148 @@ Uncertain. And if only Good statuses are present, the summary will be Good.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>statuses</strong> (<a class="reference internal" href="#pyuaf.util.StatusVector" title="pyuaf.util.StatusVector"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.StatusVector</span></tt></a>.) &#8211; The statuses to summarize.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-statusdiagnostics">
+<h2><em>class</em> StatusDiagnostics<a class="headerlink" href="#class-statusdiagnostics" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.StatusDiagnostics">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">StatusDiagnostics</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics" title="Permalink to this definition">¶</a></dt>
+<dd><p>A StatusDiagnostics object holds some more detailed diagnostic info for a Status object,
+depending on the use case of this Status object</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.StatusDiagnostics.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct an empty StatusDiagnostics object.</p>
+<p>You normally don&#8217;t create these objects: they are part of a Status object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StatusDiagnostics.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove any diagnostic information.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StatusDiagnostics.isEmpty">
+<tt class="descname">isEmpty</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.isEmpty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is any diagnostic info given?</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the object holds some data (e.g. some description text or some other
+data), False if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StatusDiagnostics.hasDescription">
+<tt class="descname">hasDescription</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.hasDescription" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the diagnostic object has a description?</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the object holds some description text, False if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StatusDiagnostics.hasNotificationHandles">
+<tt class="descname">hasNotificationHandles</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.hasNotificationHandles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the diagnostic object has notification handles?</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the object holds some notification handles, False if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StatusDiagnostics.getDescription">
+<tt class="descname">getDescription</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.getDescription" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the description (only makes sense in case
+<a class="reference internal" href="#pyuaf.util.StatusDiagnostics.hasDescription" title="pyuaf.util.StatusDiagnostics.hasDescription"><tt class="xref py py-meth docutils literal"><span class="pre">hasDescription()</span></tt></a> is True).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Additional description text.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StatusDiagnostics.getNotificationHandles">
+<tt class="descname">getNotificationHandles</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.getNotificationHandles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the notification handles (only makes sense in case
+<a class="reference internal" href="#pyuaf.util.StatusDiagnostics.hasNotificationHandles" title="pyuaf.util.StatusDiagnostics.hasNotificationHandles"><tt class="xref py py-meth docutils literal"><span class="pre">hasNotificationHandles()</span></tt></a> is True).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A tuple of notification handles (=integers), e.g. (1,2,3).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">tuple</span></tt> of <tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StatusDiagnostics.setDescription">
+<tt class="descname">setDescription</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.setDescription" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the description text. As a result of this,
+<a class="reference internal" href="#pyuaf.util.StatusDiagnostics.hasDescription" title="pyuaf.util.StatusDiagnostics.hasDescription"><tt class="xref py py-meth docutils literal"><span class="pre">hasDescription()</span></tt></a> will return True.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>handles</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; Additional description text.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StatusDiagnostics.setNotificationHandles">
+<tt class="descname">setNotificationHandles</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.setNotificationHandles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the notification handles. As a result of this,
+<a class="reference internal" href="#pyuaf.util.StatusDiagnostics.hasNotificationHandles" title="pyuaf.util.StatusDiagnostics.hasNotificationHandles"><tt class="xref py py-meth docutils literal"><span class="pre">hasNotificationHandles()</span></tt></a> will return True.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>handles</strong> (<tt class="docutils literal"><span class="pre">tuple</span></tt> of <tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; A tuple of notification handles (=integers), e.g. (1,2,3).</td>
 </tr>
 </tbody>
 </table>
@@ -3404,6 +3566,7 @@ will return True) if you want to specify the whole address space.</p>
 <li><a class="reference internal" href="#class-simpleattributeoperand"><em>class</em> SimpleAttributeOperand</a></li>
 <li><a class="reference internal" href="#class-simpleattributeoperandvector"><em>class</em> SimpleAttributeOperandVector</a></li>
 <li><a class="reference internal" href="#class-status"><em>class</em> Status</a></li>
+<li><a class="reference internal" href="#class-statusdiagnostics"><em>class</em> StatusDiagnostics</a></li>
 <li><a class="reference internal" href="#class-statusvector"><em>class</em> StatusVector</a></li>
 <li><a class="reference internal" href="#class-stringifiable"><em>class</em> Stringifiable</a></li>
 <li><a class="reference internal" href="#class-stringvector"><em>class</em> StringVector</a></li>
@@ -3459,7 +3622,7 @@ will return True) if you want to specify the whole address space.</p>
         <li class="right" >
           <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.4 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

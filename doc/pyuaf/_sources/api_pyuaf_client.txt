@@ -45,12 +45,16 @@
   
   
         .. autoattribute:: pyuaf.client.BaseNotification.notificationHandle
-        
+            
+            Deprecated! A notification handle is essentially the same as a client monitored item 
+            handle, so soon these two handles will merge (notificationHandle will disappear, 
+            the client monitored item handle will stay).
+            
             A NotificationHandle is a handle (an ``int``) defined by the UAF (not by the OPC UA standard!) to
             associate monitored item notifications with the 
             :class:`~pyuaf.client.requests.CreateMonitoredDataRequestTarget` (or
             :class:`~pyuaf.client.requests.CreateMonitoredEventsRequestTarget`) that originally 
-            created them. It is a 64-bit number
+            created them. It is a 32-bit number
             that gets a unique value as soon as you create a monitored item. Even if the server of
             this monitored item would crash, and the UAF determines that the monitored item should be
             re-established on another server (e.g. because the browse path now points to a node in
