@@ -366,7 +366,6 @@ class Client(ClientBase):
         pass
     
     
-    
     def unregisterLoggingCallback(self):
         """
         Unregister a callback function to stop receiving all log messages.
