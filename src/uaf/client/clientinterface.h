@@ -29,6 +29,7 @@
 #include "uaf/client/results/results.h"
 #include "uaf/client/subscriptions/datachangenotification.h"
 #include "uaf/client/subscriptions/eventnotification.h"
+#include "uaf/client/subscriptions/keepalivenotification.h"
 
 
 namespace uafc
@@ -90,6 +91,13 @@ namespace uafc
          */
         virtual void dataChangesReceived(std::vector<uafc::DataChangeNotification> notifications) {}
 
+
+        /**
+         * Override this method to handle keep alive notifications.
+         *
+         * @param notifications Received Keep Alive notifications.
+         */
+        virtual void keepAliveReceived(uafc::KeepAliveNotification notification) {}
     };
 }
 

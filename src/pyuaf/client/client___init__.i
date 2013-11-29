@@ -61,6 +61,7 @@
 #include "uaf/client/subscriptions/basenotification.h"
 #include "uaf/client/subscriptions/datachangenotification.h"
 #include "uaf/client/subscriptions/eventnotification.h"
+#include "uaf/client/subscriptions/keepalivenotification.h"
 #include "uaf/client/subscriptions/subscriptioninformation.h"
 #include "uaf/client/sessions/sessionstates.h"
 #include "uaf/client/sessions/sessioninformation.h"
@@ -131,14 +132,16 @@ import threading
 %rename(__dispatch_callComplete__)          uafc::ClientInterface::callComplete;
 %rename(__dispatch_dataChangesReceived__)   uafc::ClientInterface::dataChangesReceived;
 %rename(__dispatch_eventsReceived__)        uafc::ClientInterface::eventsReceived;
+%rename(__dispatch_keepAliveReceived__)     uafc::ClientInterface::keepAliveReceived;
 
 
 // now include all classes in a generic way
+UAF_WRAP_CLASS("uaf/client/subscriptions/subscriptioninformation.h" , uafc , SubscriptionInformation , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, SubscriptionInformationVector)
 UAF_WRAP_CLASS("uaf/client/subscriptions/basenotification.h"        , uafc , BaseNotification        , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/subscriptions/datachangenotification.h"  , uafc , DataChangeNotification  , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client, DataChangeNotificationVector)
 UAF_WRAP_CLASS("uaf/client/subscriptions/eventnotification.h"       , uafc , EventNotification       , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client, EventNotificationVector)
+UAF_WRAP_CLASS("uaf/client/subscriptions/keepalivenotification.h"   , uafc , KeepAliveNotification   , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/sessions/sessioninformation.h"           , uafc , SessionInformation      , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, SessionInformationVector)
-UAF_WRAP_CLASS("uaf/client/subscriptions/subscriptioninformation.h" , uafc , SubscriptionInformation , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, SubscriptionInformationVector)
 UAF_WRAP_CLASS("uaf/client/clientinterface.h"                       , uafc , ClientInterface         , COPY_NO,  TOSTRING_NO,  COMP_NO,  pyuaf.client, VECTOR_NO)
 
 

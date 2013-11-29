@@ -431,6 +431,23 @@ namespace uafc
     void SubscriptionFactory::keepAlive(OpcUa_UInt32 clientSubscriptionHandle)
     {
         logger_->debug("Subscription %d received a keep alive message", clientSubscriptionHandle);
+
+        // acquire the subscription for which the event was meant:
+        Subscription* subscription = 0;
+        Status acquireStatus = acquireExistingSubscription(clientSubscriptionHandle, subscription);
+
+        if (acquireStatus.isGood())
+        {
+            // update the session state
+            subscription->keepAlive();
+
+            // release the acquired session
+            releaseSubscription(subscription);
+        }
+        else
+        {
+            logger_->warning("Unknown ClientSubscriptionHandle, discarding notification!");
+        }
     }
 
 

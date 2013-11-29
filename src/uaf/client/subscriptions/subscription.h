@@ -40,6 +40,7 @@
 #include "uaf/client/subscriptions/monitoreditem.h"
 #include "uaf/client/subscriptions/subscriptionstates.h"
 #include "uaf/client/subscriptions/subscriptioninformation.h"
+#include "uaf/client/subscriptions/keepalivenotification.h"
 #include "uaf/client/database/database.h"
 #include "uaf/client/invocations/invocations.h"
 
@@ -110,6 +111,13 @@ namespace uafc
          * @return  True if the subscription is established.
          */
         bool isCreated() const;
+
+
+
+        /**
+         * Tell the subscription that it's still alive.
+         */
+        void keepAlive();
 
 
         /**

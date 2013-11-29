@@ -201,6 +201,32 @@ namespace uafc
     }
 
 
+    // keep the subscription alive
+    // =============================================================================================
+    void Subscription::keepAlive()
+    {
+        logger_->debug("The subscription is still alive");
+
+        // create the notification
+        KeepAliveNotification notification;
+
+        notification.clientSubscriptionHandle = clientSubscriptionHandle_;
+        notification.subscriptionState = subscriptionState_;
+
+        UaMutexLocker locker(&monitoredItemsMapMutex_); // unlocks when locker goes out of scope
+
+        // now add the monitored item handles
+        MonitoredItemsMap::iterator it = monitoredItemsMap_.begin();
+        while (it != monitoredItemsMap_.end())
+        {
+            notification.notificationHandles.push_back(it->second.notificationHandle);
+        }
+
+        // call the callback interface
+        clientInterface_->keepAliveReceived(notification);
+    }
+
+
     // implemented from callback interface
     // =============================================================================================
     void Subscription::dataChange(

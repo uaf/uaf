@@ -346,6 +346,26 @@ class Client(ClientBase):
         self.__loggingCallback__ = callback
     
     
+    def __dispatch_keepAliveReceived__(self, notification):
+        """
+        Dispatch the KeepAliveNofications to the keepAliveReceived function.
+        """
+        try:
+            self.keepAliveReceived(notification)
+        except:
+            pass # nothing we can do at this point!
+    
+    
+    def keepAliveReceived(self, notification):
+        """
+        You should override this method if you want to process keep alive messages from the UAF. 
+        
+        :param message: The received KeepAliveNotification.
+        :type  message: :class:`pyuaf.client.KeepAliveNotification`
+        """
+        pass
+    
+    
     
     def unregisterLoggingCallback(self):
         """
