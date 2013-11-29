@@ -216,11 +216,10 @@ namespace uafc
         UaMutexLocker locker(&monitoredItemsMapMutex_); // unlocks when locker goes out of scope
 
         // now add the monitored item handles
-        MonitoredItemsMap::iterator it = monitoredItemsMap_.begin();
-        while (it != monitoredItemsMap_.end())
-        {
+
+        for (MonitoredItemsMap::iterator it = monitoredItemsMap_.begin();
+                it != monitoredItemsMap_.end(); ++it)
             notification.notificationHandles.push_back(it->second.notificationHandle);
-        }
 
         // call the callback interface
         clientInterface_->keepAliveReceived(notification);
