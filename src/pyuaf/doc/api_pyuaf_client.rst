@@ -169,6 +169,65 @@
 
 
 
+*class* KeepAliveNotification
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.client.KeepAliveNotification
+
+
+    A KeepAliveNotification is sent by the server to notify the client that the subscription is
+    still alive. 
+    
+    It is sent when the data that is monitored by the client has not changed for a 
+    while. E.g. suppose a client wants to monitor some data, and it specifies a 
+    :attr:`~pyuaf.client.settings.SubscriptionSettings.publishingIntervalSec` of 1.0 seconds 
+    and a :attr:`~pyuaf.client.settings.SubscriptionSettings.maxKeepAliveCount` of 5. 
+    As a result, when the monitored data changes rapidly, the client will be notified once per 
+    second. But every time the monitored data remains constant for 1.0 * 5 = 5.0 seconds,
+    a KeepAliveNotification will be sent instead to notify the client that everything is still OK.
+    
+
+    
+    * Methods:
+    
+        .. automethod:: pyuaf.client.KeepAliveNotification.__init__
+    
+            Construct a new KeepAliveNotification. 
+            
+            You'll never need to create notifications like this yourself, because the UAF will 
+            produce them and provide them to you, so you can consume them.
+        
+
+    * Attributes inherited from :class:`~pyuaf.client.SubscriptionInformation`:
+    
+    
+        .. autoattribute:: pyuaf.client.KeepAliveNotification.clientConnectionId
+
+            --> See :attr:`pyuaf.client.SubscriptionInformation.clientConnectionId`.
+        
+    
+        .. autoattribute:: pyuaf.client.KeepAliveNotification.clientSubscriptionHandle
+
+            --> See :attr:`pyuaf.client.SubscriptionInformation.clientSubscriptionHandle`.
+        
+    
+        .. autoattribute:: pyuaf.client.KeepAliveNotification.subscriptionState
+
+            --> See :attr:`pyuaf.client.SubscriptionInformation.subscriptionState`.
+
+
+    * Other attributes:
+
+        .. autoattribute:: pyuaf.client.KeepAliveNotification.notificationHandles
+
+            The notification handles assigned to the subscription that got a keep alive message.
+            
+            So if you receive a KeepAliveNotification, you know that the monitored items identified
+            by these handles are OK. 
+
+
+
 *class* SessionInformation
 ----------------------------------------------------------------------------------------------------
 
