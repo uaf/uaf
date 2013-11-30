@@ -39,7 +39,8 @@ namespace uafc
             Database*                   database)
     : uaSession_(uaSession),
       clientInterface_(clientInterface),
-      database_(database)
+      database_(database),
+      clientConnectionId_(clientConnectionId)
     {
         // build the logger name:
         stringstream loggerName;
@@ -249,6 +250,7 @@ namespace uafc
                     logger_->loggerFactory(),
                     subscriptionSettings,
                     clientSubscriptionHandle,
+                    clientConnectionId_,
                     uaSession_,
                     this,
                     clientInterface_,

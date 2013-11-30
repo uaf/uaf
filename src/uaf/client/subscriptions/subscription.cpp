@@ -37,12 +37,14 @@ namespace uafc
             LoggerFactory*                          loggerFactory,
             const SubscriptionSettings&             subscriptionSettings,
             ClientSubscriptionHandle                clientSubscriptionHandle,
+            ClientConnectionId                      clientConnectionId,
             UaClientSdk::UaSession*                 uaSession,
             UaClientSdk::UaSubscriptionCallback*    uaSubscriptionCallback,
             uafc::ClientInterface*                  clientInterface,
             Database*                               database)
     : subscriptionSettings_(subscriptionSettings),
       clientSubscriptionHandle_(clientSubscriptionHandle),
+      clientConnectionId_(clientConnectionId),
       uaSession_(uaSession),
       uaSubscriptionCallback_(uaSubscriptionCallback),
       database_(database),
@@ -195,6 +197,7 @@ namespace uafc
     uafc::SubscriptionInformation Subscription::subscriptionInformation() const
     {
         uafc::SubscriptionInformation info;
+        info.clientConnectionId = clientConnectionId_;
         info.clientSubscriptionHandle = clientSubscriptionHandle_;
         info.subscriptionState = subscriptionState_;
         return info;
@@ -210,8 +213,9 @@ namespace uafc
         // create the notification
         KeepAliveNotification notification;
 
-        notification.clientSubscriptionHandle = clientSubscriptionHandle_;
-        notification.subscriptionState = subscriptionState_;
+        notification.clientConnectionId         = clientConnectionId_;
+        notification.clientSubscriptionHandle   = clientSubscriptionHandle_;
+        notification.subscriptionState          = subscriptionState_;
 
         UaMutexLocker locker(&monitoredItemsMapMutex_); // unlocks when locker goes out of scope
 
