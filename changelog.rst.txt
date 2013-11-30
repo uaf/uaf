@@ -17,6 +17,40 @@ Bugfixes (which do not have any implications on the API) can only be tracked
 via the GIT version control system.
 
 
+1.5 @ 2013/11/30
+----------------------------------------------------------------------------------------------------
+
+Informally:
+
+- KeepAlive notifications are now supported. KeepAlive notifications make sure that the client 
+  is aware that a subscription (and its monitored items) is still alive even though no notifications
+  were send lately (since no data had changed or no events were sent).
+
+- BaseNotification is now known as MonitoredItemNotification, to clarify that it is only a 
+  superclass of DataChangeNotification and EventNotification, and not of other notifications such as
+  the new KeepAliveNotification.
+
+Formally:
+
+- !!!Breaking change!!!
+
+  uafc::BaseNotification (pyuaf.client.BaseNotification) is now known as 
+  uafc::MonitoredItemNotification (pyuaf.client.MonitoredItemNotification). Only the name has
+  changed (because it's more correct, see above), nothing else.
+
+- The following classes have been added:
+ 
+  - uafc::KeepAliveNotification 
+    (pyuaf.client.KeepAliveNotification)
+
+
+- The following methods were added to existing classes
+ 
+  - uafc::ClientInterface::keepAliveReceived() 
+    (pyuaf.client.Client.keepAliveReceived())
+
+
+
 1.4 @ 2013/11/27
 ----------------------------------------------------------------------------------------------------
 
@@ -40,7 +74,7 @@ Formally:
   Also uaf::NotificationHandle (formerly uafc::NotificationHandle) is now a 32-bit unsigned int
   instead of 64-bit unsigned int.
   All this has no consequences for the Python API.
-   
+
 - The following classes have been added:
  
   - uaf::StatusDiagnostics 
