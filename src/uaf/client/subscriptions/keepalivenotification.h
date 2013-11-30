@@ -35,7 +35,6 @@
 #include "uaf/util/stringifiable.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/util/handles.h"
-#include "uaf/client/subscriptions/basenotification.h"
 #include "uaf/client/subscriptions/subscriptioninformation.h"
 
 

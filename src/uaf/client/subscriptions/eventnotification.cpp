@@ -36,7 +36,7 @@ namespace uafc
     // Constructor
     // =============================================================================================
     EventNotification::EventNotification()
-    : BaseNotification()
+    : MonitoredItemNotification()
     {}
 
 
@@ -46,7 +46,7 @@ namespace uafc
     {
         stringstream ss;
 
-        ss << BaseNotification::toString(indent, colon) << "\n";
+        ss << MonitoredItemNotification::toString(indent, colon) << "\n";
 
         ss << indent << " - fields[]";
 

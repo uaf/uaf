@@ -35,7 +35,7 @@
 #include "uaf/util/stringifiable.h"
 #include "uaf/util/handles.h"
 #include "uaf/client/clientexport.h"
-#include "uaf/client/subscriptions/basenotification.h"
+#include "uaf/client/subscriptions/monitoreditemnotification.h"
 #include "uaf/client/settings/monitoreditemsettings.h"
 
 
@@ -48,7 +48,7 @@ namespace uafc
     *
     * @ingroup ClientSubscriptions
     ***********************************************************************************************/
-    class UAFC_EXPORT DataChangeNotification : public BaseNotification
+    class UAFC_EXPORT DataChangeNotification : public MonitoredItemNotification
     {
     public:
 

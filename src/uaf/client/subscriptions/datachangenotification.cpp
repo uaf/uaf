@@ -40,7 +40,7 @@ namespace uafc
     // Constructor
     // =============================================================================================
     DataChangeNotification::DataChangeNotification()
-    : BaseNotification()
+    : MonitoredItemNotification()
     {}
 
 
@@ -50,7 +50,7 @@ namespace uafc
     {
         stringstream ss;
 
-        ss << BaseNotification::toString(indent, colon);
+        ss << MonitoredItemNotification::toString(indent, colon);
         ss << "\n";
         ss << indent << " - status";
         ss << fillToPos(ss, colon);
