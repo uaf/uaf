@@ -360,8 +360,8 @@ class Client(ClientBase):
         """
         You should override this method if you want to process keep alive messages from the UAF. 
         
-        :param message: The received KeepAliveNotification.
-        :type  message: :class:`pyuaf.client.KeepAliveNotification`
+        :param notification: The received KeepAliveNotification.
+        :type  notification: :class:`pyuaf.client.KeepAliveNotification`
         """
         pass
     

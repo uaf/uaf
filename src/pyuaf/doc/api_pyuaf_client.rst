@@ -221,7 +221,8 @@
 
         .. autoattribute:: pyuaf.client.KeepAliveNotification.notificationHandles
 
-            The notification handles assigned to the subscription that got a keep alive message.
+            The notification handles assigned to the subscription that got a keep alive message,
+            as a :class:`~pyuaf.util.UInt32Vector`.
             
             So if you receive a KeepAliveNotification, you know that the monitored items identified
             by these handles are OK. 
