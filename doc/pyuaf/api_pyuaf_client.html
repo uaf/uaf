@@ -978,7 +978,7 @@ Leave None for defaults.</li>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<a class="reference internal" href="#pyuaf.client.KeepAliveNotification" title="pyuaf.client.KeepAliveNotification"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.KeepAliveNotification</span></tt></a>) &#8211; The received KeepAliveNotification.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>notification</strong> (<a class="reference internal" href="#pyuaf.client.KeepAliveNotification" title="pyuaf.client.KeepAliveNotification"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.KeepAliveNotification</span></tt></a>) &#8211; The received KeepAliveNotification.</td>
 </tr>
 </tbody>
 </table>
@@ -1700,7 +1700,8 @@ produce them and provide them to you, so you can consume them.</p>
 <div><dl class="attribute">
 <dt id="pyuaf.client.KeepAliveNotification.notificationHandles">
 <tt class="descname">notificationHandles</tt><a class="headerlink" href="#pyuaf.client.KeepAliveNotification.notificationHandles" title="Permalink to this definition">¶</a></dt>
-<dd><p>The notification handles assigned to the subscription that got a keep alive message.</p>
+<dd><p>The notification handles assigned to the subscription that got a keep alive message,
+as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.UInt32Vector" title="pyuaf.util.UInt32Vector"><tt class="xref py py-class docutils literal"><span class="pre">UInt32Vector</span></tt></a>.</p>
 <p>So if you receive a KeepAliveNotification, you know that the monitored items identified
 by these handles are OK.</p>
 </dd></dl>
@@ -1842,7 +1843,7 @@ state of the subscription, the handle, etc.</p>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="api_pyuaf.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">pyuaf</span></tt></a></p>
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">pyuaf</span></tt></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="api_pyuaf_client_configs.html"
                         title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.client.configs</span></tt></a></p>
