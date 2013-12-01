@@ -9,7 +9,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Index &mdash; PyUAF 1.4 documentation</title>
+    <title>Index &mdash; PyUAF 1.5 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,7 +17,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.4',
+        VERSION:     '1.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.4 documentation" href="index.html" /> 
+    <link rel="top" title="PyUAF 1.5 documentation" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,7 +38,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="index.html">PyUAF 1.4 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.5 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -91,7 +91,7 @@
   </dl></td>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="api_pyuaf_client.html#pyuaf.client.BaseNotification.__init__">__init__() (pyuaf.client.BaseNotification method)</a>
+  <dt><a href="api_pyuaf_client_configs.html#pyuaf.client.configs.BrowseConfig.__init__">__init__() (pyuaf.client.configs.BrowseConfig method)</a>
   </dt>
 
       <dd><dl>
@@ -104,15 +104,19 @@
   </dt>
 
         
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.KeepAliveNotification.__init__">(pyuaf.client.KeepAliveNotification method)</a>
+  </dt>
+
+        
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.MonitoredItemNotification.__init__">(pyuaf.client.MonitoredItemNotification method)</a>
+  </dt>
+
+        
   <dt><a href="api_pyuaf_client.html#pyuaf.client.SessionInformation.__init__">(pyuaf.client.SessionInformation method)</a>
   </dt>
 
         
   <dt><a href="api_pyuaf_client.html#pyuaf.client.SubscriptionInformation.__init__">(pyuaf.client.SubscriptionInformation method)</a>
-  </dt>
-
-        
-  <dt><a href="api_pyuaf_client_configs.html#pyuaf.client.configs.BrowseConfig.__init__">(pyuaf.client.configs.BrowseConfig method)</a>
   </dt>
 
         
@@ -605,20 +609,20 @@
 
       </dl></dd>
       
-  <dt><a href="api_pyuaf_client.html#pyuaf.client.BaseNotification.__str__">__str__() (pyuaf.client.BaseNotification method)</a>
+  <dt><a href="api_pyuaf_client_configs.html#pyuaf.client.configs.BrowseConfig.__str__">__str__() (pyuaf.client.configs.BrowseConfig method)</a>
   </dt>
 
       <dd><dl>
+        
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.MonitoredItemNotification.__str__">(pyuaf.client.MonitoredItemNotification method)</a>
+  </dt>
+
         
   <dt><a href="api_pyuaf_client.html#pyuaf.client.SessionInformation.__str__">(pyuaf.client.SessionInformation method)</a>
   </dt>
 
         
   <dt><a href="api_pyuaf_client.html#pyuaf.client.SubscriptionInformation.__str__">(pyuaf.client.SubscriptionInformation method)</a>
-  </dt>
-
-        
-  <dt><a href="api_pyuaf_client_configs.html#pyuaf.client.configs.BrowseConfig.__str__">(pyuaf.client.configs.BrowseConfig method)</a>
   </dt>
 
         
@@ -1113,10 +1117,6 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
-  <dt><a href="api_pyuaf_client.html#pyuaf.client.BaseNotification">BaseNotification (class in pyuaf.client)</a>
-  </dt>
-
-      
   <dt><a href="api_pyuaf_client_settings.html#pyuaf.client.settings.BaseServiceSettings">BaseServiceSettings (class in pyuaf.client.settings)</a>
   </dt>
 
@@ -1180,12 +1180,12 @@
   <dt><a href="api_pyuaf_client_configs.html#pyuaf.client.configs.BrowseNextConfig">BrowseNextConfig (class in pyuaf.client.configs)</a>
   </dt>
 
-  </dl></td>
-  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="api_pyuaf_client_requests.html#pyuaf.client.requests.BrowseNextRequest">BrowseNextRequest (class in pyuaf.client.requests)</a>
   </dt>
 
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
       
   <dt><a href="api_pyuaf_client_requests.html#pyuaf.client.requests.BrowseNextRequestTarget">BrowseNextRequestTarget (class in pyuaf.client.requests)</a>
   </dt>
@@ -1347,7 +1347,7 @@
   </dt>
 
       
-  <dt><a href="api_pyuaf_client_results.html#pyuaf.client.results.AsyncResultTarget.clientConnectionId">clientConnectionId (pyuaf.client.results.AsyncResultTarget attribute)</a>
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.KeepAliveNotification.clientConnectionId">clientConnectionId (pyuaf.client.KeepAliveNotification attribute)</a>
   </dt>
 
       <dd><dl>
@@ -1357,6 +1357,10 @@
 
         
   <dt><a href="api_pyuaf_client.html#pyuaf.client.SubscriptionInformation.clientConnectionId">(pyuaf.client.SubscriptionInformation attribute)</a>
+  </dt>
+
+        
+  <dt><a href="api_pyuaf_client_results.html#pyuaf.client.results.AsyncResultTarget.clientConnectionId">(pyuaf.client.results.AsyncResultTarget attribute)</a>
   </dt>
 
         
@@ -1393,16 +1397,16 @@
 
       </dl></dd>
       
-  <dt><a href="api_pyuaf_client.html#pyuaf.client.BaseNotification.clientHandle">clientHandle (pyuaf.client.BaseNotification attribute)</a>
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.DataChangeNotification.clientHandle">clientHandle (pyuaf.client.DataChangeNotification attribute)</a>
   </dt>
 
       <dd><dl>
         
-  <dt><a href="api_pyuaf_client.html#pyuaf.client.DataChangeNotification.clientHandle">(pyuaf.client.DataChangeNotification attribute)</a>
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.EventNotification.clientHandle">(pyuaf.client.EventNotification attribute)</a>
   </dt>
 
         
-  <dt><a href="api_pyuaf_client.html#pyuaf.client.EventNotification.clientHandle">(pyuaf.client.EventNotification attribute)</a>
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.MonitoredItemNotification.clientHandle">(pyuaf.client.MonitoredItemNotification attribute)</a>
   </dt>
 
       </dl></dd>
@@ -1419,9 +1423,15 @@
   </dt>
 
       
-  <dt><a href="api_pyuaf_client.html#pyuaf.client.SubscriptionInformation.clientSubscriptionHandle">clientSubscriptionHandle (pyuaf.client.SubscriptionInformation attribute)</a>
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.KeepAliveNotification.clientSubscriptionHandle">clientSubscriptionHandle (pyuaf.client.KeepAliveNotification attribute)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.SubscriptionInformation.clientSubscriptionHandle">(pyuaf.client.SubscriptionInformation attribute)</a>
+  </dt>
+
+      </dl></dd>
       
   <dt><a href="api_pyuaf_util_errors.html#pyuaf.util.errors.ConfigurationError">ConfigurationError (class in pyuaf.util.errors)</a>
   </dt>
@@ -2345,6 +2355,16 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
       
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.KeepAliveNotification">KeepAliveNotification (class in pyuaf.client)</a>
+  </dt>
+
+      
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.Client.keepAliveReceived">keepAliveReceived() (pyuaf.client.Client method)</a>
+  </dt>
+
+  </dl></td>
+  <td style="width: 33%" valign="top"><dl>
+      
   <dt><a href="api_pyuaf_client_settings.html#pyuaf.client.settings.MonitoredItemSettings.kind">kind() (pyuaf.client.settings.MonitoredItemSettings method)</a>
   </dt>
 
@@ -2555,6 +2575,10 @@
 
       </dl></dd>
       
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.MonitoredItemNotification">MonitoredItemNotification (class in pyuaf.client)</a>
+  </dt>
+
+      
   <dt><a href="api_pyuaf_client_settings.html#pyuaf.client.settings.MonitoredItemSettings">MonitoredItemSettings (class in pyuaf.client.settings)</a>
   </dt>
 
@@ -2673,16 +2697,16 @@
 
       </dl></dd>
       
-  <dt><a href="api_pyuaf_client.html#pyuaf.client.BaseNotification.notificationHandle">notificationHandle (pyuaf.client.BaseNotification attribute)</a>
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.DataChangeNotification.notificationHandle">notificationHandle (pyuaf.client.DataChangeNotification attribute)</a>
   </dt>
 
       <dd><dl>
         
-  <dt><a href="api_pyuaf_client.html#pyuaf.client.DataChangeNotification.notificationHandle">(pyuaf.client.DataChangeNotification attribute)</a>
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.EventNotification.notificationHandle">(pyuaf.client.EventNotification attribute)</a>
   </dt>
 
         
-  <dt><a href="api_pyuaf_client.html#pyuaf.client.EventNotification.notificationHandle">(pyuaf.client.EventNotification attribute)</a>
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.MonitoredItemNotification.notificationHandle">(pyuaf.client.MonitoredItemNotification attribute)</a>
   </dt>
 
         
@@ -2690,6 +2714,10 @@
   </dt>
 
       </dl></dd>
+      
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.KeepAliveNotification.notificationHandles">notificationHandles (pyuaf.client.KeepAliveNotification attribute)</a>
+  </dt>
+
       
   <dt><a href="api_pyuaf_util.html#pyuaf.util.DateTime.now">now() (pyuaf.util.DateTime method)</a>
   </dt>
@@ -4007,9 +4035,15 @@
   </dt>
 
       
-  <dt><a href="api_pyuaf_client.html#pyuaf.client.SubscriptionInformation.subscriptionState">subscriptionState (pyuaf.client.SubscriptionInformation attribute)</a>
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.KeepAliveNotification.subscriptionState">subscriptionState (pyuaf.client.KeepAliveNotification attribute)</a>
   </dt>
 
+      <dd><dl>
+        
+  <dt><a href="api_pyuaf_client.html#pyuaf.client.SubscriptionInformation.subscriptionState">(pyuaf.client.SubscriptionInformation attribute)</a>
+  </dt>
+
+      </dl></dd>
       
   <dt><a href="api_pyuaf_util.html#pyuaf.util.Status.summarize">summarize() (pyuaf.util.Status method)</a>
   </dt>
@@ -4820,7 +4854,7 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="index.html">PyUAF 1.4 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

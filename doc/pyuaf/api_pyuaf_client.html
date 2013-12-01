@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client &mdash; PyUAF 1.4 documentation</title>
+    <title>pyuaf.client &mdash; PyUAF 1.5 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.4',
+        VERSION:     '1.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.4 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.5 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.configs" href="api_pyuaf_client_configs.html" />
     <link rel="prev" title="pyuaf" href="api_pyuaf.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.4 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.5 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -971,6 +971,20 @@ Leave None for defaults.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyuaf.client.Client.keepAliveReceived">
+<tt class="descname">keepAliveReceived</tt><big>(</big><em>notification</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.keepAliveReceived" title="Permalink to this definition">¶</a></dt>
+<dd><p>You should override this method if you want to process keep alive messages from the UAF.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<a class="reference internal" href="#pyuaf.client.KeepAliveNotification" title="pyuaf.client.KeepAliveNotification"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.KeepAliveNotification</span></tt></a>) &#8211; The received KeepAliveNotification.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyuaf.client.Client.logMessageReceived">
 <tt class="descname">logMessageReceived</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.logMessageReceived" title="Permalink to this definition">¶</a></dt>
 <dd><p>You should override this method if you want to process logging output from the UAF.</p>
@@ -1448,26 +1462,26 @@ callback function &#8211;&gt; then only the external callback function will be c
 </dd></dl>
 
 </div>
-<div class="section" id="class-basenotification">
-<h2><em>class</em> BaseNotification<a class="headerlink" href="#class-basenotification" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="class-monitoreditemnotification">
+<h2><em>class</em> MonitoredItemNotification<a class="headerlink" href="#class-monitoreditemnotification" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="pyuaf.client.BaseNotification">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.</tt><tt class="descname">BaseNotification</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.BaseNotification" title="Permalink to this definition">¶</a></dt>
-<dd><p>A BaseNotification is the common superclass class of <a class="reference internal" href="#pyuaf.client.DataChangeNotification" title="pyuaf.client.DataChangeNotification"><tt class="xref py py-class docutils literal"><span class="pre">DataChangeNotification</span></tt></a>
-and <a class="reference internal" href="#pyuaf.client.EventNotification" title="pyuaf.client.EventNotification"><tt class="xref py py-class docutils literal"><span class="pre">EventNotification</span></tt></a>. It contains the common attributes of notifications
-that are received when a subscription is made.</p>
+<dt id="pyuaf.client.MonitoredItemNotification">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.</tt><tt class="descname">MonitoredItemNotification</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.MonitoredItemNotification" title="Permalink to this definition">¶</a></dt>
+<dd><p>A MonitoredItemNotification is the common superclass class of
+<a class="reference internal" href="#pyuaf.client.DataChangeNotification" title="pyuaf.client.DataChangeNotification"><tt class="xref py py-class docutils literal"><span class="pre">DataChangeNotification</span></tt></a> and <a class="reference internal" href="#pyuaf.client.EventNotification" title="pyuaf.client.EventNotification"><tt class="xref py py-class docutils literal"><span class="pre">EventNotification</span></tt></a>.</p>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
-<dt id="pyuaf.client.BaseNotification.__init__">
-<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.BaseNotification.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct a new BaseNotification.</p>
+<dt id="pyuaf.client.MonitoredItemNotification.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.MonitoredItemNotification.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new MonitoredItemNotification.</p>
 <dl class="docutils">
 <dt>You&#8217;ll never need to create notifications like this yourself because:</dt>
 <dd><ul class="first last simple">
 <li>only the subclasses <a class="reference internal" href="#pyuaf.client.DataChangeNotification" title="pyuaf.client.DataChangeNotification"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.DataChangeNotification</span></tt></a> and
-<a class="reference internal" href="#pyuaf.client.EventNotification" title="pyuaf.client.EventNotification"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.EventNotification</span></tt></a> will be instantiated, never the superclass itself</li>
+<a class="reference internal" href="#pyuaf.client.EventNotification" title="pyuaf.client.EventNotification"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.EventNotification</span></tt></a> will be instantiated, never the
+superclass itself</li>
 <li>the UAF will produce notifications and provide them to you, so you can consume them.</li>
 </ul>
 </dd>
@@ -1475,8 +1489,8 @@ that are received when a subscription is made.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyuaf.client.BaseNotification.__str__">
-<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=20</em><big>)</big><a class="headerlink" href="#pyuaf.client.BaseNotification.__str__" title="Permalink to this definition">¶</a></dt>
+<dt id="pyuaf.client.MonitoredItemNotification.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=20</em><big>)</big><a class="headerlink" href="#pyuaf.client.MonitoredItemNotification.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a string representation.</p>
 </dd></dl>
 
@@ -1485,8 +1499,8 @@ that are received when a subscription is made.</p>
 <li><p class="first">Attributes:</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.BaseNotification.notificationHandle">
-<tt class="descname">notificationHandle</tt><a class="headerlink" href="#pyuaf.client.BaseNotification.notificationHandle" title="Permalink to this definition">¶</a></dt>
+<dt id="pyuaf.client.MonitoredItemNotification.notificationHandle">
+<tt class="descname">notificationHandle</tt><a class="headerlink" href="#pyuaf.client.MonitoredItemNotification.notificationHandle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Deprecated! A notification handle is essentially the same as a client monitored item
 handle, so soon these two handles will merge (notificationHandle will disappear,
 the client monitored item handle will stay).</p>
@@ -1504,8 +1518,8 @@ the same item, for the whole lifetime of the client.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="pyuaf.client.BaseNotification.clientHandle">
-<tt class="descname">clientHandle</tt><a class="headerlink" href="#pyuaf.client.BaseNotification.clientHandle" title="Permalink to this definition">¶</a></dt>
+<dt id="pyuaf.client.MonitoredItemNotification.clientHandle">
+<tt class="descname">clientHandle</tt><a class="headerlink" href="#pyuaf.client.MonitoredItemNotification.clientHandle" title="Permalink to this definition">¶</a></dt>
 <dd><p>A clientHandle is a 32-bit number assigned by the UAF to newly created
 monitored items. The number will be incremented on each new item creation, so in
 theory it will take 2**32 items that have to be created before the number starts
@@ -1537,18 +1551,18 @@ produce them and provide them to you, so you can consume them.</p>
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.BaseNotification" title="pyuaf.client.BaseNotification"><tt class="xref py py-class docutils literal"><span class="pre">BaseNotification</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.MonitoredItemNotification" title="pyuaf.client.MonitoredItemNotification"><tt class="xref py py-class docutils literal"><span class="pre">MonitoredItemNotification</span></tt></a>:</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.DataChangeNotification.notificationHandle">
 <tt class="descname">notificationHandle</tt><a class="headerlink" href="#pyuaf.client.DataChangeNotification.notificationHandle" title="Permalink to this definition">¶</a></dt>
-<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.BaseNotification.notificationHandle" title="pyuaf.client.BaseNotification.notificationHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.BaseNotification.notificationHandle</span></tt></a>.</p>
+<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.MonitoredItemNotification.notificationHandle" title="pyuaf.client.MonitoredItemNotification.notificationHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.MonitoredItemNotification.notificationHandle</span></tt></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.DataChangeNotification.clientHandle">
 <tt class="descname">clientHandle</tt><a class="headerlink" href="#pyuaf.client.DataChangeNotification.clientHandle" title="Permalink to this definition">¶</a></dt>
-<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.BaseNotification.clientHandle" title="pyuaf.client.BaseNotification.clientHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.BaseNotification.clientHandle</span></tt></a>.</p>
+<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.MonitoredItemNotification.clientHandle" title="pyuaf.client.MonitoredItemNotification.clientHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.MonitoredItemNotification.clientHandle</span></tt></a>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -1598,18 +1612,18 @@ produce them and provide them to you, so you can consume them.</p>
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.BaseNotification" title="pyuaf.client.BaseNotification"><tt class="xref py py-class docutils literal"><span class="pre">BaseNotification</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.MonitoredItemNotification" title="pyuaf.client.MonitoredItemNotification"><tt class="xref py py-class docutils literal"><span class="pre">MonitoredItemNotification</span></tt></a>:</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.EventNotification.notificationHandle">
 <tt class="descname">notificationHandle</tt><a class="headerlink" href="#pyuaf.client.EventNotification.notificationHandle" title="Permalink to this definition">¶</a></dt>
-<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.BaseNotification.notificationHandle" title="pyuaf.client.BaseNotification.notificationHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.BaseNotification.notificationHandle</span></tt></a>.</p>
+<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.MonitoredItemNotification.notificationHandle" title="pyuaf.client.MonitoredItemNotification.notificationHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.MonitoredItemNotification.notificationHandle</span></tt></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.EventNotification.clientHandle">
 <tt class="descname">clientHandle</tt><a class="headerlink" href="#pyuaf.client.EventNotification.clientHandle" title="Permalink to this definition">¶</a></dt>
-<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.BaseNotification.clientHandle" title="pyuaf.client.BaseNotification.clientHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.BaseNotification.clientHandle</span></tt></a>.</p>
+<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.MonitoredItemNotification.clientHandle" title="pyuaf.client.MonitoredItemNotification.clientHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.MonitoredItemNotification.clientHandle</span></tt></a>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -1624,6 +1638,71 @@ you specified in the <a class="reference internal" href="api_pyuaf_client_reques
 <p>Since the type of the fields depend on the type of the select clauses of your
 <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredEventsRequestTarget" title="pyuaf.client.requests.CreateMonitoredEventsRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.requests.CreateMonitoredEventsRequestTarget</span></tt></a>, the fields are
 presented to you as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.VariantVector" title="pyuaf.util.VariantVector"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.VariantVector</span></tt></a>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-keepalivenotification">
+<h2><em>class</em> KeepAliveNotification<a class="headerlink" href="#class-keepalivenotification" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.KeepAliveNotification">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.</tt><tt class="descname">KeepAliveNotification</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.KeepAliveNotification" title="Permalink to this definition">¶</a></dt>
+<dd><p>A KeepAliveNotification is sent by the server to notify the client that the subscription is
+still alive.</p>
+<p>It is sent when the data that is monitored by the client has not changed for a
+while. E.g. suppose a client wants to monitor some data, and it specifies a
+<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.SubscriptionSettings.publishingIntervalSec" title="pyuaf.client.settings.SubscriptionSettings.publishingIntervalSec"><tt class="xref py py-attr docutils literal"><span class="pre">publishingIntervalSec</span></tt></a> of 1.0 seconds
+and a <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.SubscriptionSettings.maxKeepAliveCount" title="pyuaf.client.settings.SubscriptionSettings.maxKeepAliveCount"><tt class="xref py py-attr docutils literal"><span class="pre">maxKeepAliveCount</span></tt></a> of 5.
+As a result, when the monitored data changes rapidly, the client will be notified once per
+second. But every time the monitored data remains constant for 1.0 * 5 = 5.0 seconds,
+a KeepAliveNotification will be sent instead to notify the client that everything is still OK.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.KeepAliveNotification.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.KeepAliveNotification.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new KeepAliveNotification.</p>
+<p>You&#8217;ll never need to create notifications like this yourself, because the UAF will
+produce them and provide them to you, so you can consume them.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.SubscriptionInformation" title="pyuaf.client.SubscriptionInformation"><tt class="xref py py-class docutils literal"><span class="pre">SubscriptionInformation</span></tt></a>:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.KeepAliveNotification.clientConnectionId">
+<tt class="descname">clientConnectionId</tt><a class="headerlink" href="#pyuaf.client.KeepAliveNotification.clientConnectionId" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.SubscriptionInformation.clientConnectionId" title="pyuaf.client.SubscriptionInformation.clientConnectionId"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.SubscriptionInformation.clientConnectionId</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.KeepAliveNotification.clientSubscriptionHandle">
+<tt class="descname">clientSubscriptionHandle</tt><a class="headerlink" href="#pyuaf.client.KeepAliveNotification.clientSubscriptionHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.SubscriptionInformation.clientSubscriptionHandle" title="pyuaf.client.SubscriptionInformation.clientSubscriptionHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.SubscriptionInformation.clientSubscriptionHandle</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.KeepAliveNotification.subscriptionState">
+<tt class="descname">subscriptionState</tt><a class="headerlink" href="#pyuaf.client.KeepAliveNotification.subscriptionState" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.SubscriptionInformation.subscriptionState" title="pyuaf.client.SubscriptionInformation.subscriptionState"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.SubscriptionInformation.subscriptionState</span></tt></a>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Other attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.KeepAliveNotification.notificationHandles">
+<tt class="descname">notificationHandles</tt><a class="headerlink" href="#pyuaf.client.KeepAliveNotification.notificationHandles" title="Permalink to this definition">¶</a></dt>
+<dd><p>The notification handles assigned to the subscription that got a keep alive message.</p>
+<p>So if you receive a KeepAliveNotification, you know that the monitored items identified
+by these handles are OK.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -1751,9 +1830,10 @@ state of the subscription, the handle, etc.</p>
   <ul>
 <li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">pyuaf.client</span></tt></a><ul>
 <li><a class="reference internal" href="#class-client"><em>class</em> Client</a></li>
-<li><a class="reference internal" href="#class-basenotification"><em>class</em> BaseNotification</a></li>
+<li><a class="reference internal" href="#class-monitoreditemnotification"><em>class</em> MonitoredItemNotification</a></li>
 <li><a class="reference internal" href="#class-datachangenotification"><em>class</em> DataChangeNotification</a></li>
 <li><a class="reference internal" href="#class-eventnotification"><em>class</em> EventNotification</a></li>
+<li><a class="reference internal" href="#class-keepalivenotification"><em>class</em> KeepAliveNotification</a></li>
 <li><a class="reference internal" href="#class-sessioninformation"><em>class</em> SessionInformation</a></li>
 <li><a class="reference internal" href="#class-subscriptioninformation"><em>class</em> SubscriptionInformation</a></li>
 </ul>
@@ -1762,7 +1842,7 @@ state of the subscription, the handle, etc.</p>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="api_pyuaf.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">pyuaf</span></tt></a></p>
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">pyuaf</span></tt></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="api_pyuaf_client_configs.html"
                         title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.client.configs</span></tt></a></p>
@@ -1803,7 +1883,7 @@ state of the subscription, the handle, etc.</p>
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.4 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
