@@ -81,6 +81,12 @@ namespace uaf
 
 
         /**
+         * Construct a data change filter
+         */
+        DataChangeFilter(DataChangeTrigger trigger, DeadBandType type, double value);
+
+
+        /**
          * The trigger of the data change.
          */
         DataChangeTrigger trigger;

@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_DATACHANGENOTIFICATION_H_
-#define UAFC_DATACHANGENOTIFICATION_H_
+#ifndef UAFC_KEEPALIVENOTIFICATION_H_
+#define UAFC_KEEPALIVENOTIFICATION_H_
 
 
 // STD
@@ -33,46 +33,41 @@
 #include "uaf/util/logger.h"
 #include "uaf/util/address.h"
 #include "uaf/util/stringifiable.h"
-#include "uaf/util/handles.h"
 #include "uaf/client/clientexport.h"
-#include "uaf/client/subscriptions/monitoreditemnotification.h"
-#include "uaf/client/settings/monitoreditemsettings.h"
+#include "uaf/util/handles.h"
+#include "uaf/client/subscriptions/subscriptioninformation.h"
 
 
 namespace uafc
 {
 
-
     /*******************************************************************************************//**
-    * A uafc::DataChangeNotification is a notification for a monitored data item.
+    * A uafc::KeepAliveNotification is the notification that a subscription is still alive.
     *
     * @ingroup ClientSubscriptions
     ***********************************************************************************************/
-    class UAFC_EXPORT DataChangeNotification : public MonitoredItemNotification
+    class UAFC_EXPORT KeepAliveNotification : public uafc::SubscriptionInformation
     {
     public:
 
-        /**
-         * Construct a data change notification.
-         */
-        DataChangeNotification();
-
-
-        /** The status of the data. */
-        uaf::Status status;
-
-
-        /** The new data value. */
-        uaf::Variant data;
+        typedef std::vector<uaf::NotificationHandle> NotificationHandles;
 
 
         /**
-         * Get a string representation of the data notification.
+         * Construct a keep alive notification.
          */
-        std::string toString(const std::string& indent="", std::size_t colon=22) const;
+        KeepAliveNotification();
+
+
+        /** The notification handles assigned to the subscription that got a keep alive message. */
+        NotificationHandles notificationHandles;
+
+
+        /**
+         * Get a string representation of the notification.
+         */
+        std::string toString(const std::string& indent="", std::size_t colon=24) const;
     };
-
-
 
 
 
@@ -81,4 +76,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_DATACHANGENOTIFICATION_H_ */
+#endif /* UAFC_KEEPALIVENOTIFICATION_H_ */

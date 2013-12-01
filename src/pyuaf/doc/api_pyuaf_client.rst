@@ -14,29 +14,29 @@
 
 
 
-*class* BaseNotification
+*class* MonitoredItemNotification
 ----------------------------------------------------------------------------------------------------
 
-.. autoclass:: pyuaf.client.BaseNotification
+.. autoclass:: pyuaf.client.MonitoredItemNotification
 
-    A BaseNotification is the common superclass class of :class:`~pyuaf.client.DataChangeNotification` 
-    and :class:`~pyuaf.client.EventNotification`. It contains the common attributes of notifications 
-    that are received when a subscription is made.
+    A MonitoredItemNotification is the common superclass class of 
+    :class:`~pyuaf.client.DataChangeNotification` and :class:`~pyuaf.client.EventNotification`.
 
 
     * Methods:
 
-        .. automethod:: pyuaf.client.BaseNotification.__init__
+        .. automethod:: pyuaf.client.MonitoredItemNotification.__init__
     
-            Construct a new BaseNotification. 
+            Construct a new MonitoredItemNotification. 
             
             You'll never need to create notifications like this yourself because:
               - only the subclasses :class:`pyuaf.client.DataChangeNotification` and 
-                :class:`pyuaf.client.EventNotification` will be instantiated, never the superclass itself
+                :class:`pyuaf.client.EventNotification` will be instantiated, never the 
+                superclass itself
               - the UAF will produce notifications and provide them to you, so you can consume them.
         
         
-        .. automethod:: pyuaf.client.BaseNotification.__str__
+        .. automethod:: pyuaf.client.MonitoredItemNotification.__str__
         
             Get a string representation.
     
@@ -44,7 +44,7 @@
     * Attributes:
   
   
-        .. autoattribute:: pyuaf.client.BaseNotification.notificationHandle
+        .. autoattribute:: pyuaf.client.MonitoredItemNotification.notificationHandle
             
             Deprecated! A notification handle is essentially the same as a client monitored item 
             handle, so soon these two handles will merge (notificationHandle will disappear, 
@@ -62,7 +62,7 @@
             items once, you can be sure that the notification handle will always correctly identify
             the same item, for the whole lifetime of the client.
         
-        .. autoattribute:: pyuaf.client.BaseNotification.clientHandle
+        .. autoattribute:: pyuaf.client.MonitoredItemNotification.clientHandle
         
             A clientHandle is a 32-bit number assigned by the UAF to newly created
             monitored items. The number will be incremented on each new item creation, so in
@@ -91,17 +91,17 @@
             produce them and provide them to you, so you can consume them.
         
 
-    * Attributes inherited from :class:`~pyuaf.client.BaseNotification`:
+    * Attributes inherited from :class:`~pyuaf.client.MonitoredItemNotification`:
     
     
         .. autoattribute:: pyuaf.client.DataChangeNotification.notificationHandle
 
-            --> See :attr:`pyuaf.client.BaseNotification.notificationHandle`.
+            --> See :attr:`pyuaf.client.MonitoredItemNotification.notificationHandle`.
         
     
         .. autoattribute:: pyuaf.client.DataChangeNotification.clientHandle
 
-            --> See :attr:`pyuaf.client.BaseNotification.clientHandle`.
+            --> See :attr:`pyuaf.client.MonitoredItemNotification.clientHandle`.
 
 
     * Other attributes:
@@ -143,17 +143,17 @@
             produce them and provide them to you, so you can consume them.
         
 
-    * Attributes inherited from :class:`~pyuaf.client.BaseNotification`:
+    * Attributes inherited from :class:`~pyuaf.client.MonitoredItemNotification`:
     
     
         .. autoattribute:: pyuaf.client.EventNotification.notificationHandle
 
-            --> See :attr:`pyuaf.client.BaseNotification.notificationHandle`.
+            --> See :attr:`pyuaf.client.MonitoredItemNotification.notificationHandle`.
         
     
         .. autoattribute:: pyuaf.client.EventNotification.clientHandle
 
-            --> See :attr:`pyuaf.client.BaseNotification.clientHandle`.
+            --> See :attr:`pyuaf.client.MonitoredItemNotification.clientHandle`.
 
 
     * Other attributes:
@@ -166,6 +166,65 @@
             Since the type of the fields depend on the type of the select clauses of your
             :class:`pyuaf.client.requests.CreateMonitoredEventsRequestTarget`, the fields are 
             presented to you as a :class:`pyuaf.util.VariantVector`.
+
+
+
+*class* KeepAliveNotification
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.client.KeepAliveNotification
+
+
+    A KeepAliveNotification is sent by the server to notify the client that the subscription is
+    still alive. 
+    
+    It is sent when the data that is monitored by the client has not changed for a 
+    while. E.g. suppose a client wants to monitor some data, and it specifies a 
+    :attr:`~pyuaf.client.settings.SubscriptionSettings.publishingIntervalSec` of 1.0 seconds 
+    and a :attr:`~pyuaf.client.settings.SubscriptionSettings.maxKeepAliveCount` of 5. 
+    As a result, when the monitored data changes rapidly, the client will be notified once per 
+    second. But every time the monitored data remains constant for 1.0 * 5 = 5.0 seconds,
+    a KeepAliveNotification will be sent instead to notify the client that everything is still OK.
+    
+
+    
+    * Methods:
+    
+        .. automethod:: pyuaf.client.KeepAliveNotification.__init__
+    
+            Construct a new KeepAliveNotification. 
+            
+            You'll never need to create notifications like this yourself, because the UAF will 
+            produce them and provide them to you, so you can consume them.
+        
+
+    * Attributes inherited from :class:`~pyuaf.client.SubscriptionInformation`:
+    
+    
+        .. autoattribute:: pyuaf.client.KeepAliveNotification.clientConnectionId
+
+            --> See :attr:`pyuaf.client.SubscriptionInformation.clientConnectionId`.
+        
+    
+        .. autoattribute:: pyuaf.client.KeepAliveNotification.clientSubscriptionHandle
+
+            --> See :attr:`pyuaf.client.SubscriptionInformation.clientSubscriptionHandle`.
+        
+    
+        .. autoattribute:: pyuaf.client.KeepAliveNotification.subscriptionState
+
+            --> See :attr:`pyuaf.client.SubscriptionInformation.subscriptionState`.
+
+
+    * Other attributes:
+
+        .. autoattribute:: pyuaf.client.KeepAliveNotification.notificationHandles
+
+            The notification handles assigned to the subscription that got a keep alive message.
+            
+            So if you receive a KeepAliveNotification, you know that the monitored items identified
+            by these handles are OK. 
 
 
 

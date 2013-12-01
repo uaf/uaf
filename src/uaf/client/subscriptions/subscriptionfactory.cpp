@@ -39,7 +39,8 @@ namespace uafc
             Database*                   database)
     : uaSession_(uaSession),
       clientInterface_(clientInterface),
-      database_(database)
+      database_(database),
+      clientConnectionId_(clientConnectionId)
     {
         // build the logger name:
         stringstream loggerName;
@@ -249,6 +250,7 @@ namespace uafc
                     logger_->loggerFactory(),
                     subscriptionSettings,
                     clientSubscriptionHandle,
+                    clientConnectionId_,
                     uaSession_,
                     this,
                     clientInterface_,
@@ -431,6 +433,23 @@ namespace uafc
     void SubscriptionFactory::keepAlive(OpcUa_UInt32 clientSubscriptionHandle)
     {
         logger_->debug("Subscription %d received a keep alive message", clientSubscriptionHandle);
+
+        // acquire the subscription for which the event was meant:
+        Subscription* subscription = 0;
+        Status acquireStatus = acquireExistingSubscription(clientSubscriptionHandle, subscription);
+
+        if (acquireStatus.isGood())
+        {
+            // update the session state
+            subscription->keepAlive();
+
+            // release the acquired session
+            releaseSubscription(subscription);
+        }
+        else
+        {
+            logger_->warning("Unknown ClientSubscriptionHandle, discarding notification!");
+        }
     }
 
 

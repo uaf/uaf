@@ -37,12 +37,14 @@ namespace uafc
             LoggerFactory*                          loggerFactory,
             const SubscriptionSettings&             subscriptionSettings,
             ClientSubscriptionHandle                clientSubscriptionHandle,
+            ClientConnectionId                      clientConnectionId,
             UaClientSdk::UaSession*                 uaSession,
             UaClientSdk::UaSubscriptionCallback*    uaSubscriptionCallback,
             uafc::ClientInterface*                  clientInterface,
             Database*                               database)
     : subscriptionSettings_(subscriptionSettings),
       clientSubscriptionHandle_(clientSubscriptionHandle),
+      clientConnectionId_(clientConnectionId),
       uaSession_(uaSession),
       uaSubscriptionCallback_(uaSubscriptionCallback),
       database_(database),
@@ -195,9 +197,36 @@ namespace uafc
     uafc::SubscriptionInformation Subscription::subscriptionInformation() const
     {
         uafc::SubscriptionInformation info;
+        info.clientConnectionId = clientConnectionId_;
         info.clientSubscriptionHandle = clientSubscriptionHandle_;
         info.subscriptionState = subscriptionState_;
         return info;
+    }
+
+
+    // keep the subscription alive
+    // =============================================================================================
+    void Subscription::keepAlive()
+    {
+        logger_->debug("The subscription is still alive");
+
+        // create the notification
+        KeepAliveNotification notification;
+
+        notification.clientConnectionId         = clientConnectionId_;
+        notification.clientSubscriptionHandle   = clientSubscriptionHandle_;
+        notification.subscriptionState          = subscriptionState_;
+
+        UaMutexLocker locker(&monitoredItemsMapMutex_); // unlocks when locker goes out of scope
+
+        // now add the monitored item handles
+
+        for (MonitoredItemsMap::iterator it = monitoredItemsMap_.begin();
+                it != monitoredItemsMap_.end(); ++it)
+            notification.notificationHandles.push_back(it->second.notificationHandle);
+
+        // call the callback interface
+        clientInterface_->keepAliveReceived(notification);
     }
 
 

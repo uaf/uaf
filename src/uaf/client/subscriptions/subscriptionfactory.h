@@ -256,6 +256,8 @@ namespace uafc
         // pointer to the SDK session instance of the uafc::Session instance that owns
         // this subscription factory.
         UaClientSdk::UaSession* uaSession_;
+        // the connection ID of the uafc::Session instance that owns this subscription factory.
+        uaf::ClientConnectionId clientConnectionId_;
         // logger of the subscription factory
         uaf::Logger* logger_;
         // pointer to the client database

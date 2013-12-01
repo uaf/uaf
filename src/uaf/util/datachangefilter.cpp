@@ -38,6 +38,14 @@ namespace uaf
     {}
 
 
+    // Constructor
+    // =============================================================================================
+    DataChangeFilter::DataChangeFilter(DataChangeTrigger trigger, DeadBandType type, double value)
+    : trigger(trigger),
+      deadBandType(type),
+      deadBandValue(value)
+    {}
+
 
     // Update a stack object
     // =============================================================================================

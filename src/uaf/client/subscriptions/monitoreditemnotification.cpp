@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "uaf/client/subscriptions/eventnotification.h"
+#include "uaf/client/subscriptions/monitoreditemnotification.h"
 
 
 
@@ -31,43 +31,35 @@ namespace uafc
     using std::string;
     using std::stringstream;
     using std::vector;
+    using std::size_t;
+
 
 
     // Constructor
     // =============================================================================================
-    EventNotification::EventNotification()
-    : MonitoredItemNotification()
+    MonitoredItemNotification::MonitoredItemNotification()
+    : notificationHandle(NOTIFICATIONHANDLE_NOT_ASSIGNED),
+      clientHandle(0)
     {}
 
 
     // Get a string representation
     // =============================================================================================
-    string EventNotification::toString(const string& indent, size_t colon) const
+    string MonitoredItemNotification::toString(const string& indent, size_t colon) const
     {
         stringstream ss;
-
-        ss << MonitoredItemNotification::toString(indent, colon) << "\n";
-
-        ss << indent << " - fields[]";
-
-
-        if (fields.size() == 0)
-        {
-            ss << fillToPos(ss, colon);
-            ss << ": []";
-        }
+        ss << indent << " - notificationHandle";
+        ss << fillToPos(ss, colon);
+        if (notificationHandle == NOTIFICATIONHANDLE_NOT_ASSIGNED)
+            ss << ": NOTIFICATIONHANDLE_NOT_ASSIGNED\n";
         else
-        {
-            for (std::size_t i=0; i<fields.size(); i++)
-            {
-               ss << "\n" << indent << "   " << " - fields[" << i << "]";
-               ss << fillToPos(ss, colon);
-               ss << ": " << fields[i].toString();
-            }
-        }
-
+            ss << ": " << notificationHandle << "\n";
+        ss << indent << " - clientHandle";
+        ss << fillToPos(ss, colon);
+        ss << ": " << clientHandle;
         return ss.str();
     }
+
 
 }
 

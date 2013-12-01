@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_BASENOTIFICATION_H_
-#define UAFC_BASENOTIFICATION_H_
+#ifndef UAFC_MONITOREDITEMNOTIFICATION_H_
+#define UAFC_MONITOREDITEMNOTIFICATION_H_
 
 
 // STD
@@ -42,20 +42,19 @@ namespace uafc
 
 
     /*******************************************************************************************//**
-    * A uafc::BaseNotification is the common superclass class of uafc::DataChangeNotification and
-    * uafc::EventNotification. It contains the common attributes of notifications that are received
-    * when a subscription is made.
+    * A uafc::MonitoredItemNotification is the common superclass class of
+    * uafc::DataChangeNotification and uafc::EventNotification.
     *
     * @ingroup ClientSubscriptions
     ***********************************************************************************************/
-    class UAFC_EXPORT BaseNotification : public uaf::Stringifiable
+    class UAFC_EXPORT MonitoredItemNotification : public uaf::Stringifiable
     {
     public:
 
         /**
          * Construct a notification.
          */
-        BaseNotification();
+        MonitoredItemNotification();
 
         /**
          * A NotificationHandle is a handle defined by the UAF (not by the OPC UA standard!) to
@@ -90,4 +89,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_BASENOTIFICATION_H_ */
+#endif /* UAFC_MONITOREDITEMNOTIFICATION_H_ */

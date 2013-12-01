@@ -40,6 +40,7 @@
 #include "uaf/client/subscriptions/monitoreditem.h"
 #include "uaf/client/subscriptions/subscriptionstates.h"
 #include "uaf/client/subscriptions/subscriptioninformation.h"
+#include "uaf/client/subscriptions/keepalivenotification.h"
 #include "uaf/client/database/database.h"
 #include "uaf/client/invocations/invocations.h"
 
@@ -67,6 +68,7 @@ namespace uafc
          * @param clientSubscriptionHandle  Client handle of the subscription (unique per
          *                                  UaSubscriptionCallback instance, so in the case of UAF,
          *                                  also unique per session).
+         * @param clientConnectionId        The id of the session hosting the subscription.
          * @param uaSession                 SDK Session object hosting the subscription.
          * @param uaSubscriptionCallback    SDK Subscription callback to call.
          * @param clientInterface           The client interface to pass the callbacks to.
@@ -76,6 +78,7 @@ namespace uafc
                 uaf::LoggerFactory*                     loggerFactory,
                 const uafc::SubscriptionSettings&       subscriptionSettings,
                 uaf::ClientSubscriptionHandle           clientSubscriptionHandle,
+                uaf::ClientConnectionId                 clientConnectionId,
                 UaClientSdk::UaSession*                 uaSession,
                 UaClientSdk::UaSubscriptionCallback*    uaSubscriptionCallback,
                 uafc::ClientInterface*                  clientInterface,
@@ -110,6 +113,13 @@ namespace uafc
          * @return  True if the subscription is established.
          */
         bool isCreated() const;
+
+
+
+        /**
+         * Tell the subscription that it's still alive.
+         */
+        void keepAlive();
 
 
         /**
@@ -307,6 +317,8 @@ namespace uafc
         uafc::SubscriptionSettings                  subscriptionSettings_;
         // the client handle of the subscription
         uaf::ClientSubscriptionHandle               clientSubscriptionHandle_;
+        // the connection ID of the uafc::Session instance that hosts this subscription.
+        uaf::ClientConnectionId                     clientConnectionId_;
         // the current status of the subscription
         uafc::subscriptionstates::SubscriptionState subscriptionState_;
         // the shared client database

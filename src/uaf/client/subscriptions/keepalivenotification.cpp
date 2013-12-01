@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "uaf/client/subscriptions/basenotification.h"
+#include "uaf/client/subscriptions/keepalivenotification.h"
 
 
 
@@ -31,35 +31,37 @@ namespace uafc
     using std::string;
     using std::stringstream;
     using std::vector;
-    using std::size_t;
-
 
 
     // Constructor
     // =============================================================================================
-    BaseNotification::BaseNotification()
-    : notificationHandle(NOTIFICATIONHANDLE_NOT_ASSIGNED),
-      clientHandle(0)
+    KeepAliveNotification::KeepAliveNotification()
+    : SubscriptionInformation()
     {}
 
 
     // Get a string representation
     // =============================================================================================
-    string BaseNotification::toString(const string& indent, size_t colon) const
+    string KeepAliveNotification::toString(const string& indent, size_t colon) const
     {
         stringstream ss;
-        ss << indent << " - notificationHandle";
+
+        ss << SubscriptionInformation::toString(indent, colon) << "\n";
+
+        ss << indent << " - notificationHandles";
         ss << fillToPos(ss, colon);
-        if (notificationHandle == NOTIFICATIONHANDLE_NOT_ASSIGNED)
-            ss << ": NOTIFICATIONHANDLE_NOT_ASSIGNED\n";
-        else
-            ss << ": " << notificationHandle << "\n";
-        ss << indent << " - clientHandle";
-        ss << fillToPos(ss, colon);
-        ss << ": " << clientHandle;
+        ss << ": [";
+        for(size_t i = 0; i < notificationHandles.size(); i++)
+        {
+            ss << notificationHandles[i];
+            // add a comma unless we're printing the last handle
+            if (i != notificationHandles.size() - 1)
+                ss << ",";
+        }
+        ss << "]";
+
         return ss.str();
     }
-
 
 }
 
