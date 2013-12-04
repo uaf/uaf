@@ -41,8 +41,8 @@ namespace uaf
     // =============================================================================================
     NodeIdIdentifier::NodeIdIdentifier(const NodeIdIdentifier& other)
     : type(other.type),
-      idNumeric(other.idNumeric),
       idString(other.idString),
+      idNumeric(other.idNumeric),
       idGuid(other.idGuid),
       idOpaque(other.idOpaque)
     {}
@@ -51,33 +51,35 @@ namespace uaf
     // Constructor
     // =============================================================================================
     NodeIdIdentifier::NodeIdIdentifier(const string& idString)
-    : idString(idString),
-      idNumeric(0),
-      type(Identifier_String)
+    : type(Identifier_String),
+      idString(idString),
+      idNumeric(0)
     {}
 
 
     // Constructor
     // =============================================================================================
     NodeIdIdentifier::NodeIdIdentifier(uint32_t idNumeric)
-    : idNumeric(idNumeric),
-      type(Identifier_Numeric)
+    : type(Identifier_Numeric),
+      idNumeric(idNumeric)
     {}
 
 
     // Constructor
     // =============================================================================================
     NodeIdIdentifier::NodeIdIdentifier(const Guid& idGuid)
-    : idGuid(idGuid),
-      type(Identifier_Guid)
+    : type(Identifier_Guid),
+      idNumeric(0),
+      idGuid(idGuid)
     {}
 
 
     // Constructor
     // =============================================================================================
     NodeIdIdentifier::NodeIdIdentifier(const ByteString& idOpaque)
-    : idOpaque(idOpaque),
-      type(Identifier_Opaque)
+    : type(Identifier_Opaque),
+      idNumeric(0),
+      idOpaque(idOpaque)
     {}
 
 

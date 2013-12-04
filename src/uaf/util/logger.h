@@ -181,8 +181,8 @@ namespace uaf
     private:
         DISALLOW_COPY_AND_ASSIGN(LoggerFactory);
 
-        uaf::LoggingInterface* callbackInterface_;
-        bool callbackInterfaceRegistered_;
+        // name of the logger factory
+        std::string name_;
 
         /** When logging to the stdout, only log messages from at least this loglevel. */
         uaf::loglevels::LogLevel stdOutLevel_;
@@ -190,8 +190,9 @@ namespace uaf
         /** When logging to the callback interface, only log messages from at least this loglevel.*/
         uaf::loglevels::LogLevel callbackLevel_;
 
-        // name of the logger factory
-        std::string name_;
+        uaf::LoggingInterface* callbackInterface_;
+
+        bool callbackInterfaceRegistered_;
     };
 
 

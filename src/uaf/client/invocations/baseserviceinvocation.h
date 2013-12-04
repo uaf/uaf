@@ -87,9 +87,9 @@ namespace uafc
          */
         BaseServiceInvocation()
         : asynchronous_(false),
-          invocationLevel_(uafc::SessionLevel),
+          transactionId_(0),
           requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED),
-          transactionId_(0)
+          invocationLevel_(uafc::SessionLevel)
         {}
 
 

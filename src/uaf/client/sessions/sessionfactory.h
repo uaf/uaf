@@ -512,12 +512,12 @@ namespace uafc
 
         // logger of the session factory
         uaf::Logger* logger_;
-        // pointer to the client database
-        uafc::Database* database_;
-        // the discoverer of the servers in the system
-        uafc::Discoverer* discoverer_;
         // the client interface to call whenever an asynchronous message is received
         uafc::ClientInterface* clientInterface_;
+        // the discoverer of the servers in the system
+        uafc::Discoverer* discoverer_;
+        // pointer to the client database
+        uafc::Database* database_;
 
         // the current transaction id, and a mutex to safely increment it
         uaf::TransactionId  transactionId_;

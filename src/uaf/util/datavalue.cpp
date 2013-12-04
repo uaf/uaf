@@ -40,8 +40,8 @@ namespace uaf
     // Constructor
     // =============================================================================================
     DataValue::DataValue(const Variant& data)
-    : status(statuscodes::Good),
-      data(data),
+    : data(data),
+      status(statuscodes::Good),
       sourcePicoseconds(0),
       serverPicoseconds(0)
     {}
@@ -50,8 +50,8 @@ namespace uaf
     // Constructor
     // =============================================================================================
     DataValue::DataValue(const Variant& data, const Status& status)
-    : status(status),
-      data(data),
+    : data(data),
+      status(status),
       sourcePicoseconds(0),
       serverPicoseconds(0)
     {}

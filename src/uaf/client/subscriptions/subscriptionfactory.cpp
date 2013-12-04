@@ -38,9 +38,10 @@ namespace uafc
             ClientInterface*            clientInterface,
             Database*                   database)
     : uaSession_(uaSession),
-      clientInterface_(clientInterface),
+      clientConnectionId_(clientConnectionId),
       database_(database),
-      clientConnectionId_(clientConnectionId)
+      clientInterface_(clientInterface),
+      transactionId_(0)
     {
         // build the logger name:
         stringstream loggerName;

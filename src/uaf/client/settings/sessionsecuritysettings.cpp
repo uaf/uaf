@@ -33,8 +33,8 @@ namespace uafc
     // Constructor
     // =============================================================================================
     SessionSecuritySettings::SessionSecuritySettings()
-    : messageSecurityMode(messagesecuritymodes::Mode_None),
-      securityPolicy(securitypolicies::UA_None),
+    : securityPolicy(securitypolicies::UA_None),
+      messageSecurityMode(messagesecuritymodes::Mode_None),
       userTokenType(usertokentypes::Anonymous)
     {}
 

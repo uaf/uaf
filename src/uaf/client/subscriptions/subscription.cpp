@@ -42,11 +42,11 @@ namespace uafc
             UaClientSdk::UaSubscriptionCallback*    uaSubscriptionCallback,
             uafc::ClientInterface*                  clientInterface,
             Database*                               database)
-    : subscriptionSettings_(subscriptionSettings),
+    : uaSession_(uaSession),
+      uaSubscriptionCallback_(uaSubscriptionCallback),
+      subscriptionSettings_(subscriptionSettings),
       clientSubscriptionHandle_(clientSubscriptionHandle),
       clientConnectionId_(clientConnectionId),
-      uaSession_(uaSession),
-      uaSubscriptionCallback_(uaSubscriptionCallback),
       database_(database),
       clientInterface_(clientInterface),
       clientMonitoredItemHandle_(0)

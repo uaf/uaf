@@ -42,14 +42,14 @@ namespace uafc
             ClientInterface*                clientInterface,
             Discoverer*                     discoverer,
             Database*                       database)
-    : sessionSettings_(sessionSettings),
-      serverUri_(serverUri),
+    : uaSessionCallback_(uaSessionCallback),
+      sessionState_(uafc::sessionstates::Disconnected),
       clientConnectionId_(clientConnectionId),
-      uaSessionCallback_(uaSessionCallback),
-      clientInterface_(clientInterface),
-      discoverer_(discoverer),
+      serverUri_(serverUri),
+      sessionSettings_(sessionSettings),
       database_(database),
-      sessionState_(uafc::sessionstates::Disconnected)
+      clientInterface_(clientInterface),
+      discoverer_(discoverer)
     {
         // build the logger name:
         stringstream loggerName;

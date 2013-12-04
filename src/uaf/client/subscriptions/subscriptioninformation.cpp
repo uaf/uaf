@@ -32,6 +32,9 @@ namespace uafc
     // Constructor
     // =============================================================================================
     SubscriptionInformation::SubscriptionInformation()
+    : clientConnectionId(0),
+      clientSubscriptionHandle(0),
+      subscriptionState(uafc::subscriptionstates::Deleted)
     {}
 
 
@@ -41,9 +44,9 @@ namespace uafc
             uafc::ClientConnectionId                    clientConnectionId,
             uafc::ClientSubscriptionHandle              clientSubscriptionHandle,
             uafc::subscriptionstates::SubscriptionState subscriptionState)
-    : subscriptionState(subscriptionState),
+    : clientConnectionId(clientConnectionId),
       clientSubscriptionHandle(clientSubscriptionHandle),
-      clientConnectionId(clientConnectionId)
+      subscriptionState(subscriptionState)
     {}
 
     // Get a new client connection id

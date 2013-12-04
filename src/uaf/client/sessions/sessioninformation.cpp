@@ -32,6 +32,8 @@ namespace uafc
     // Constructor
     // =============================================================================================
     SessionInformation::SessionInformation()
+    : sessionState(uafc::sessionstates::Disconnected),
+      clientConnectionId(0)
     {}
 
 
@@ -41,9 +43,9 @@ namespace uafc
             ClientConnectionId                  clientConnectionId,
             uafc::sessionstates::SessionState   sessionState,
             const string&                       serverUri)
-      : clientConnectionId(clientConnectionId),
-      sessionState(sessionState),
-      serverUri(serverUri)
+      : sessionState(sessionState),
+        clientConnectionId(clientConnectionId),
+        serverUri(serverUri)
     {}
 
 

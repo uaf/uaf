@@ -59,8 +59,8 @@ namespace uaf
          * Create a new mask with the given initial size, each item of the mask being 'false'.
          */
         Mask(std::size_t initialSize)
-        : deq_(initialSize, false),
-          noOfTrue(0)
+        : noOfTrue(0),
+          deq_(initialSize, false)
         {}
 
 
