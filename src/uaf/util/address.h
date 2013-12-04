@@ -106,7 +106,7 @@ namespace uaf
         /**
          * Destructor.
          */
-        virtual ~Address();
+        ~Address();
 
 
         /**
@@ -173,7 +173,7 @@ namespace uaf
          *
          * @return String representation.
          */
-        virtual std::string toString(const std::string& indent="", std::size_t colon=20) const;
+        std::string toString(const std::string& indent="", std::size_t colon=20) const;
 
 
         uaf::Status toSdk(OpcUa_NodeId* uaNodeId) const;

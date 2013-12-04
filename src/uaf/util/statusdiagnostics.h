@@ -66,7 +66,7 @@ namespace uaf
         /**
          * Destructor.
          */
-        virtual ~StatusDiagnostics();
+        ~StatusDiagnostics();
 
 
         /**
@@ -131,7 +131,7 @@ namespace uaf
          *
          * @return String representation.
          */
-        virtual std::string toCompactString() const;
+        std::string toCompactString() const;
 
 
         /**
@@ -139,7 +139,7 @@ namespace uaf
          *
          * @return String representation.
          */
-        virtual std::string toString(const std::string& indent="", std::size_t colon=20) const;
+        std::string toString(const std::string& indent="", std::size_t colon=20) const;
 
 
         // comparison operators

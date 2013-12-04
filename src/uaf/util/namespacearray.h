@@ -82,7 +82,7 @@ namespace uaf
          *
          * @return  The string representation.
          */
-        virtual std::string toString() const;
+        std::string toString() const;
 
 
         /**

@@ -255,7 +255,7 @@ namespace uaf
          * Depending on how the Logger was constructed, destructing the logger may destruct the
          * associated loggerFactory, or not!
          */
-        virtual ~Logger();
+        ~Logger();
 
 
         /**

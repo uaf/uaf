@@ -102,7 +102,7 @@ namespace uaf
          *
          * @return string representation
          */
-        virtual std::string toString(const std::string& indent="", std::size_t colon=16) const;
+        std::string toString(const std::string& indent="", std::size_t colon=16) const;
 
 
         // comparison operators

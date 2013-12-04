@@ -278,7 +278,7 @@ namespace uaf
          *
          * @return a string representation of the status
          */
-        virtual std::string toString() const;
+        std::string toString() const;
 
 
 
