@@ -297,7 +297,7 @@ namespace uafc
                 notification.clientHandle       = clientHandle;
 
                 // update the event fields
-                for (uint32_t j=0; j < uaEventFieldList[i].NoOfEventFields; j++)
+                for (int32_t j=0; j < uaEventFieldList[i].NoOfEventFields; j++)
                     notification.fields.push_back(Variant(uaEventFieldList[i].EventFields[j]));
 
                 // add it to the vector of notifications for the callback

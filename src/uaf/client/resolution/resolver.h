@@ -395,10 +395,12 @@ namespace uafc
                                 for (std::size_t k = 0; k < targetStatuses.size(); k++)
                                 {
                                     if (targetStatuses[k].isNotGood())
+                                    {
                                         if (unresolvedStringStream.str().size() == 0)
                                             unresolvedStringStream << k;
                                         else
                                             unresolvedStringStream << ", " << k;
+                                    }
                                 }
 
                                 if (unresolvedStringStream.str().size() == 0)

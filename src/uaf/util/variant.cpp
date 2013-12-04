@@ -65,7 +65,6 @@ namespace uaf
                 return string("\"") + string(uaVariant_.toFullString().toUtf8()) + string("\"");
             default:
             {
-                opcuatypes::OpcUaType type = opcuatypes::fromSdkToUaf(uaVariant_.type());
                 return toFullString();
             }
         }

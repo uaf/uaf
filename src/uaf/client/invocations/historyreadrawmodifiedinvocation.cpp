@@ -210,8 +210,8 @@ namespace uafc
 
                         // now we want to append the retrieved data values to the existing data
                         // values
-                        int32_t oldDataLength  = uaResults_[rank].m_dataValues.length();
-                        int32_t nextDataLength = uaNextResults[iNext].m_dataValues.length();
+                        uint32_t oldDataLength  = uaResults_[rank].m_dataValues.length();
+                        uint32_t nextDataLength = uaNextResults[iNext].m_dataValues.length();
 
                         // resize the original results, so that it can hold the new results
                         uaResults_[rank].m_dataValues.resize(oldDataLength + nextDataLength);

@@ -842,7 +842,7 @@ namespace uaf
         {
             UaByteArray arr;
             arr.resize(vec.size());
-            for (int i = 0; i < vec.size(); i++) { arr[i] = vec[i]; }
+            for (std::size_t i = 0; i < vec.size(); i++) { arr[int(i)] = vec[i]; }
             uaVariant_.setByteArray(arr);
         }
 
