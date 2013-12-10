@@ -35,17 +35,34 @@ Installation procedure for Linux
        cmake ../src
 
 
- - The path to the Unified Automation SDK can also be specified explicitely, for instance::
+ - If needed, you may also specify the path to the Unified Automation SDK explicitly, 
+   for instance::
 
        cd build
        cmake ../src -DUASDK=/path/to/sdk
 
 
- - You may also specify other paths by setting the ``CMAKE_PREFIX_PATH`` variable, for instance::
+ - If needed, you may also use an easy (dirty!) hack to make sure CMake can find the SDK, 
+   by creating a symlink in your home directory::
+ 
+       cd build
+       ln -s /some/path/to/the/SDK ~/.UaSdk
+       cmake ../src
+
+
+ - If needed, you may also specify other paths by setting the ``CMAKE_PREFIX_PATH`` 
+   variable, for instance::
 
        export CMAKE_PREFIX_PATH=/software/Python-2.5.1:/software/Python-2.5.1/include/python2.5
        cd build
        cmake ../src -DUASDK=/path/to/sdk
+
+
+ - If needed, you could also specify paths explicitly for your "special" configuration, e.g.:
+ 
+        cmake ../src/ -DUASDK=/software/unifiedautomation/sdk/ \
+                      -DCMAKE_LIBRARY_PATH=/software/python/lib \
+                      -DCMAKE_INCLUDE_PATH=/software/python/include
 
 
  - If you're building the UAF on a 64-bit platform but you're using the 32-bit 
