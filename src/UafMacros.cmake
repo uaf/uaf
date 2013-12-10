@@ -96,7 +96,7 @@ MACRO(handleUnifiedAutomationSdk)
     if (UASDK)
     
         if (EXISTS "${UASDK}/include")
-            message("-- The specified Unified Automation SDK directory was found" )
+            message(STATUS "The specified Unified Automation SDK directory was found" )
             set(UASDK_FOUND TRUE)
             set(UASDK_DIR "${UASDK}")
             set(UASDK_LIBRARIES_DIR "${UASDK}/lib")
@@ -105,12 +105,14 @@ MACRO(handleUnifiedAutomationSdk)
             set(UASDK_FOUND FALSE)
             message("")
             message(FATAL_ERROR
-                    "-- The Unified Automation SDK path was specified (${UASDK}) "
+                    "The Unified Automation SDK path was specified (${UASDK}) "
                     "but doesn't exist!")
         endif (EXISTS "${UASDK}/include")
     
     else (UASDK)
         
+        message(STATUS "The Unified Automation SDK directory was not specified using " 
+                "the -DUASDK flag, so we will try to find it")
         find_package(UaSdk REQUIRED)
     
     endif (UASDK)
@@ -217,7 +219,7 @@ MACRO(handleSwig)
                 set(UASDK_FOUND FALSE)
                 message("")
                 message(FATAL_ERROR
-                        "-- The Unified Automation SDK path was specified (${UASDK}) "
+                        "The Unified Automation SDK path was specified (${UASDK}) "
                         "but doesn't exist!")
             endif ()
             
