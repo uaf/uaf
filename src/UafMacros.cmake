@@ -313,8 +313,8 @@ ENDMACRO(setUafOutputDirectories)
 
 
 # ----------------------------------------------------------------------------
-# setUafOutputDirectories()
-#    This macro will set the correct output directories for the UAF.
+# setPyUafTargetProperties()
+#    This macro will set the correct target properties for PyUAF
 # ----------------------------------------------------------------------------
 MACRO(setPyUafTargetProperties  _PREFIX _NAME _OUTDIR _UAFLINKLIB)
 
