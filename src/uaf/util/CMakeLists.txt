@@ -11,9 +11,9 @@ if (WIN32)
     target_link_libraries(uafutil 
                           ${OPENSSL_LIBRARIES}
                           oleaut32 ole32 Version ws2_32 rpcrt4 crypt32 
-                          uafutil uabase uapki uastack )
+                          uabase uapki uastack )
 else (WIN32)
     target_link_libraries(uafutil
                           ssl crypto dl rt pthread 
-                          uafutil uabase uapki uastack )
+                          uabase uapki uastack )
 endif (WIN32)
