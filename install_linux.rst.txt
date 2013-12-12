@@ -14,7 +14,7 @@ Installation procedure for Linux
   - SWIG
   - Python
 
-  You may need to install "devel" packages (=openssl-devel= and =libxml2-devel= in particular), 
+  You may need to install "devel" packages (``openssl-devel`` and ``libxml2-devel`` in particular), 
   and if you're running a 64-bit operating system you may need to install the appropriate 32-bit
   packages.
 
