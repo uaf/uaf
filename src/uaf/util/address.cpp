@@ -34,8 +34,8 @@ namespace uaf
     // =============================================================================================
     Address::Address()
     : isRelativePath_(false),
-      startingAddress_(0),
       relativePath_(0),
+      startingAddress_(0),
       expandedNodeId_(new ExpandedNodeId)
     {}
 
@@ -45,7 +45,8 @@ namespace uaf
     Address::Address(Address* startingAddress, const vector<RelativePathElement>& relativePath)
     : isRelativePath_(true),
       relativePath_(new vector<RelativePathElement>(relativePath)),
-      startingAddress_(startingAddress)
+      startingAddress_(startingAddress),
+      expandedNodeId_(0)
     {}
 
 

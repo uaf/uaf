@@ -68,10 +68,6 @@ namespace uafc
     {
         logger_->debug("Deleting all sessions and their subscriptions and monitored items");
 
-        int successfullyDeleted;
-        int unsuccessfullyDeleted;
-        string unsuccessfullyDeletedString;
-
         // lock the mutex to make sure the sessionMap is not being manipulated
         UaMutexLocker sessionMapLocker(&sessionMapMutex_);
 

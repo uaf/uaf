@@ -37,10 +37,10 @@ namespace uafc
     // Constructor
     // =============================================================================================
     CreateMonitoredEventsRequestTarget::CreateMonitoredEventsRequestTarget()
-    : samplingIntervalSec(0.0),
+    : monitoringMode(uaf::monitoringmodes::Reporting),
+      samplingIntervalSec(0.0),
       queueSize(0),
-      discardOldest(false),
-      monitoringMode(uaf::monitoringmodes::Reporting)
+      discardOldest(false)
     {}
 
 
@@ -48,10 +48,10 @@ namespace uafc
     // =============================================================================================
     CreateMonitoredEventsRequestTarget::CreateMonitoredEventsRequestTarget(const Address& address)
     : address(address),
+      monitoringMode(uaf::monitoringmodes::Reporting),
       samplingIntervalSec(0.0),
       queueSize(0),
-      discardOldest(false),
-      monitoringMode(uaf::monitoringmodes::Reporting)
+      discardOldest(false)
     {}
 
 
@@ -61,10 +61,10 @@ namespace uafc
             const Address&      address,
             const EventFilter&  eventFilter)
     : address(address),
+      monitoringMode(uaf::monitoringmodes::Reporting),
       samplingIntervalSec(0.0),
       queueSize(0),
       discardOldest(false),
-      monitoringMode(uaf::monitoringmodes::Reporting),
       eventFilter(eventFilter)
     {}
 

@@ -79,10 +79,10 @@ namespace uafc
                 std::size_t                 noOfTargets,
                 const _ServiceConfig&       serviceConfig = _ServiceConfig(),
                 const uafc::SessionConfig&  sessionConfig = uafc::SessionConfig())
-        : requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED),
+        : targets(noOfTargets),
           serviceConfig(serviceConfig),
           sessionConfig(sessionConfig),
-          targets(noOfTargets)
+          requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
         {}
 
 
@@ -97,9 +97,9 @@ namespace uafc
                 const _Target&              target,
                 const _ServiceConfig&       serviceConfig = _ServiceConfig(),
                 const uafc::SessionConfig&  sessionConfig = uafc::SessionConfig())
-        : requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED),
-          serviceConfig(serviceConfig),
-          sessionConfig(sessionConfig)
+        : serviceConfig(serviceConfig),
+          sessionConfig(sessionConfig),
+          requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
         { targets.push_back(target); }
 
 
@@ -114,10 +114,10 @@ namespace uafc
                 const typename std::vector<_Target>&    targets,
                 const _ServiceConfig&                   serviceConfig = _ServiceConfig(),
                 const uafc::SessionConfig&              sessionConfig = uafc::SessionConfig())
-        : requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED),
+        : targets(targets),
           serviceConfig(serviceConfig),
           sessionConfig(sessionConfig),
-          targets(targets)
+          requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
         {}
 
 

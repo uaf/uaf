@@ -34,22 +34,22 @@ namespace uafc
     // Constructor
     // =============================================================================================
     ClientSettings::ClientSettings()
-    : discoveryFindServersTimeoutSec(2.0),
+    : logToStdOutLevel(uaf::loglevels::Disabled),
+      logToCallbackLevel(uaf::loglevels::Disabled),
+      discoveryFindServersTimeoutSec(2.0),
       discoveryGetEndpointsTimeoutSec(1.0),
-      discoveryIntervalSec(30.0),
-      logToStdOutLevel(uaf::loglevels::Disabled),
-      logToCallbackLevel(uaf::loglevels::Disabled)
+      discoveryIntervalSec(30.0)
     {}
 
     // Constructor
     // =============================================================================================
     ClientSettings::ClientSettings(const string& applicationName)
     : applicationName(applicationName),
+      logToStdOutLevel(uaf::loglevels::Disabled),
+      logToCallbackLevel(uaf::loglevels::Disabled),
       discoveryFindServersTimeoutSec(2.0),
       discoveryGetEndpointsTimeoutSec(1.0),
-      discoveryIntervalSec(30.0),
-      logToStdOutLevel(uaf::loglevels::Disabled),
-      logToCallbackLevel(uaf::loglevels::Disabled)
+      discoveryIntervalSec(30.0)
     {}
 
     // Constructor
@@ -58,12 +58,12 @@ namespace uafc
             const string&           applicationName,
             const vector<string>&   discoveryUrls)
     : applicationName(applicationName),
+      logToStdOutLevel(uaf::loglevels::Disabled),
+      logToCallbackLevel(uaf::loglevels::Disabled),
       discoveryUrls(discoveryUrls),
       discoveryFindServersTimeoutSec(2.0),
       discoveryGetEndpointsTimeoutSec(1.0),
-      discoveryIntervalSec(30.0),
-      logToStdOutLevel(uaf::loglevels::Disabled),
-      logToCallbackLevel(uaf::loglevels::Disabled)
+      discoveryIntervalSec(30.0)
     {}
 
 

@@ -842,7 +842,7 @@ namespace uaf
         {
             UaByteArray arr;
             arr.resize(vec.size());
-            for (int i = 0; i < vec.size(); i++) { arr[i] = vec[i]; }
+            for (std::size_t i = 0; i < vec.size(); i++) { arr[int(i)] = vec[i]; }
             uaVariant_.setByteArray(arr);
         }
 
@@ -1233,7 +1233,7 @@ namespace uaf
          *
          * @return  String representation.
          */
-        virtual std::string toString() const;
+        std::string toString() const;
 
 
         /**
@@ -1244,7 +1244,7 @@ namespace uaf
          *
          * @return  String representation.
          */
-        virtual std::string toTextString() const;
+        std::string toTextString() const;
 
 
         /**
@@ -1252,7 +1252,7 @@ namespace uaf
          *
          * @return  Full string representation.
          */
-        virtual std::string toFullString() const;
+        std::string toFullString() const;
 
 
         // comparison operators

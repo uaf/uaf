@@ -37,8 +37,8 @@ namespace uafc
     // Constructor
     // =============================================================================================
     MonitoredItemSettings::MonitoredItemSettings()
-    : kind_(MonitoredItemSettings::Data),
-      eventFilter(0)
+    : eventFilter(0),
+      kind_(MonitoredItemSettings::Data)
     {
         dataChangeFilter    = new DataChangeFilter();
         samplingIntervalSec = 1.0;
@@ -79,12 +79,12 @@ namespace uafc
                 uint32_t                queueSize,
                 bool                    discardOldest,
                 const DataChangeFilter& dataChangeFilter)
-    : kind_(MonitoredItemSettings::Data),
+    : dataChangeFilter(new DataChangeFilter(dataChangeFilter)),
       eventFilter(0),
       samplingIntervalSec(samplingIntervalSec),
       queueSize(queueSize),
       discardOldest(discardOldest),
-      dataChangeFilter(new DataChangeFilter(dataChangeFilter))
+      kind_(MonitoredItemSettings::Data)
     {}
 
 
@@ -95,12 +95,12 @@ namespace uafc
                 uint32_t                queueSize,
                 bool                    discardOldest,
                 const EventFilter&      eventFilter)
-    : kind_(MonitoredItemSettings::Event),
-      dataChangeFilter(0),
+    : dataChangeFilter(0),
+      eventFilter(new EventFilter(eventFilter)),
       samplingIntervalSec(samplingIntervalSec),
       queueSize(queueSize),
       discardOldest(discardOldest),
-      eventFilter(new EventFilter(eventFilter))
+      kind_(MonitoredItemSettings::Event)
     {}
 
 

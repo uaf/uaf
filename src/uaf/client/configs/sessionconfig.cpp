@@ -40,8 +40,8 @@ namespace uafc
     // Constructor
     // =============================================================================================
     SessionConfig::SessionConfig(const SessionSettings& defaultSettings)
-    : useOnlySpecificSettings(false),
-      defaultSessionSettings(defaultSettings)
+    : defaultSessionSettings(defaultSettings),
+      useOnlySpecificSettings(false)
     {}
 
 

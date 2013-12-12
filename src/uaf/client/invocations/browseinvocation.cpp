@@ -222,8 +222,8 @@ namespace uafc
                         // now we want to append the BrowseNext results to the existing Browse
                         // results. This requires some memory copying
 
-                        int32_t oldDataLength = uaBrowseResults_[rank].NoOfReferences;
-                        int32_t nextDataLength = uaNextResults[iNext].NoOfReferences;
+                        uint32_t oldDataLength = uaBrowseResults_[rank].NoOfReferences;
+                        uint32_t nextDataLength = uaNextResults[iNext].NoOfReferences;
 
                         // create an array that will hold the existing ("old") data + the data
                         // from the BrowseNext call:

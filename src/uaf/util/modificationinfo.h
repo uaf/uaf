@@ -82,7 +82,7 @@ namespace uaf
          *
          * @return  A string representation.
          */
-        virtual std::string toString(const std::string& indent="", std::size_t colon=21) const;
+        std::string toString(const std::string& indent="", std::size_t colon=21) const;
 
 
         /**
@@ -90,7 +90,7 @@ namespace uaf
          *
          * @return  A one-line short string representation.
          */
-        virtual std::string toCompactString() const;
+        std::string toCompactString() const;
 
 
         /**

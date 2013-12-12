@@ -12,32 +12,46 @@
 if (WIN32)
     # make a list of folders that may contain the SDK
     set(SDK_SEARCH_PATHS
-        "C:/*unified*/*sdk*/lib"
-        "C:/*unified*/lib"
-        "C:/*uasdk*/*/lib"
-        "C:/Program Files/*uasdk*/*/lib"
-        "C:/Program Files/*unified*/*/lib"
-        "C:/Program Files (x86)/*uasdk*/*/lib"
-        "C:/Program Files (x86)/*unified*/*/lib")
+        "C:/*[U,u]nified*/*sdk*/lib"
+        "C:/*[U,u]nified*/lib"
+        "C:/*[U,u][A,a][S,s][D,d][K,k]*/*/lib"
+        "C:/Program Files/*[U,u][A,a][S,s][D,d][K,k]*/*/lib"
+        "C:/Program Files/*[U,u]nified*/*/lib"
+        "C:/Program Files/*[U,u]nified*/lib"
+        "C:/Program Files (x86)/*[U,u][A,a][S,s][D,d][K,k]*/*/lib"
+        "C:/Program Files (x86)/*[U,u]nified*/*/lib"
+        "C:/Program Files (x86)/*[U,u]nified*/lib")
     set(SDK_SEARCH_LIB "uabase.lib")
 else (WIN32)
     # make a list of folders that may contain the SDK
     set(SDK_SEARCH_PATHS
-        "/opt/unifiedautomation/*sdk*/lib"
+        "/opt/*[U,u]nified[A,a]utomation*/*sdk*/lib"
+        "/opt/*[U,u]nified[A,a]utomation*/*SDK*/lib"
         "/opt/sdk*/lib"
-        "/opt/*unified*/*sdk*/lib"
-        "/opt/*sdk*/lib")
+        "/opt/SDK*/lib"
+        "/opt/*[U,u]nified*/*sdk*/lib"
+        "/opt/*[U,u]nified*/*SDK*/lib"
+        "/opt/*sdk*/lib"
+        "/opt/*SDK*/lib"
+        "/opt/*[U,u][A,a][S,s][D,d][K,k]*/lib"
+        "$ENV{HOME}/*[U,u][A,a][S,s][D,d][K,k]*/") # could be an easy hack: symlink ~/.UaSdk to the SDK directory
     set(SDK_SEARCH_LIB "libuabase.a")
 endif (WIN32)
 
 
+message(STATUS "Verifying if one of the following directories exist:")
 foreach(SDK_SEARCH_PATH ${SDK_SEARCH_PATHS})
+    message(STATUS " * ${SDK_SEARCH_PATH}")
     file(GLOB SDK_SEARCH_RESULTS ${SDK_SEARCH_PATH})
     foreach(SDK_SEARCH_RESULT ${SDK_SEARCH_RESULTS})
         get_filename_component(POTENTIAL_SDK_FOLDER "${SDK_SEARCH_RESULT}" ABSOLUTE)
         list(APPEND POTENTIAL_SDK_FOLDERS ${POTENTIAL_SDK_FOLDER})
     endforeach(SDK_SEARCH_RESULT)
 endforeach(SDK_SEARCH_PATH)
+
+if(NOT DEFINED POTENTIAL_SDK_FOLDERS)
+    message(FATAL_ERROR "!!! No potential SDK directories were found !!!")
+endif(NOT DEFINED POTENTIAL_SDK_FOLDERS)
 
 list(REMOVE_DUPLICATES POTENTIAL_SDK_FOLDERS)
 
@@ -74,6 +88,11 @@ foreach(POTENTIAL_SDK_FOLDER ${POTENTIAL_SDK_FOLDERS})
 
         # break out of the foreach loop
         break()
+    
+    else(LIBRESULTS)
+    
+        message(STATUS "The ${SDK_SEARCH_LIB} library was not found recursively  this directory")
+    
     endif(LIBRESULTS)
 
 endforeach(POTENTIAL_SDK_FOLDER)

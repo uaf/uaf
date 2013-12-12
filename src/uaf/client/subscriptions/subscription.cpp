@@ -42,11 +42,11 @@ namespace uafc
             UaClientSdk::UaSubscriptionCallback*    uaSubscriptionCallback,
             uafc::ClientInterface*                  clientInterface,
             Database*                               database)
-    : subscriptionSettings_(subscriptionSettings),
+    : uaSession_(uaSession),
+      uaSubscriptionCallback_(uaSubscriptionCallback),
+      subscriptionSettings_(subscriptionSettings),
       clientSubscriptionHandle_(clientSubscriptionHandle),
       clientConnectionId_(clientConnectionId),
-      uaSession_(uaSession),
-      uaSubscriptionCallback_(uaSubscriptionCallback),
       database_(database),
       clientInterface_(clientInterface),
       clientMonitoredItemHandle_(0)
@@ -297,7 +297,7 @@ namespace uafc
                 notification.clientHandle       = clientHandle;
 
                 // update the event fields
-                for (uint32_t j=0; j < uaEventFieldList[i].NoOfEventFields; j++)
+                for (int32_t j=0; j < uaEventFieldList[i].NoOfEventFields; j++)
                     notification.fields.push_back(Variant(uaEventFieldList[i].EventFields[j]));
 
                 // add it to the vector of notifications for the callback

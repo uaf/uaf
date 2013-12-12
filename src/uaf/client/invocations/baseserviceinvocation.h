@@ -85,7 +85,18 @@ namespace uafc
         /**
          * Create a service invocation.
          */
-        BaseServiceInvocation() {}
+        BaseServiceInvocation()
+        : asynchronous_(false),
+          transactionId_(0),
+          requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED),
+          invocationLevel_(uafc::SessionLevel)
+        {}
+
+
+        /**
+         * Destruct the service invocation.
+         */
+        virtual ~BaseServiceInvocation() {}
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////

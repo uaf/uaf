@@ -43,9 +43,9 @@ namespace uaf
             const string&   idString,
             const string&   nameSpaceUri,
             const string&   serverUri)
-    : serverIndex_(0),
+    : nodeId_(idString, nameSpaceUri),
       serverUri_(serverUri),
-      nodeId_(idString, nameSpaceUri),
+      serverIndex_(0),
       serverIndexGiven_(false),
       serverUriGiven_(true)
     {}
@@ -57,9 +57,9 @@ namespace uaf
             const string&   idString,
             NameSpaceIndex  nameSpaceIndex,
             const string&   serverUri)
-    : serverIndex_(0),
+    : nodeId_(idString, nameSpaceIndex),
       serverUri_(serverUri),
-      nodeId_(idString, nameSpaceIndex),
+      serverIndex_(0),
       serverIndexGiven_(false),
       serverUriGiven_(true)
     {}
@@ -71,9 +71,9 @@ namespace uaf
             uint32_t        idNumeric,
             const string&   nameSpaceUri,
             const string&   serverUri)
-    : serverIndex_(0),
+    : nodeId_(idNumeric, nameSpaceUri),
       serverUri_(serverUri),
-      nodeId_(idNumeric, nameSpaceUri),
+      serverIndex_(0),
       serverIndexGiven_(false),
       serverUriGiven_(true)
     {}
@@ -85,9 +85,9 @@ namespace uaf
             uint32_t        idNumeric,
             NameSpaceIndex  nameSpaceIndex,
             const string&   serverUri)
-    : serverIndex_(0),
+    : nodeId_(idNumeric, nameSpaceIndex),
       serverUri_(serverUri),
-      nodeId_(idNumeric, nameSpaceIndex),
+      serverIndex_(0),
       serverIndexGiven_(false),
       serverUriGiven_(true)
     {}
@@ -100,9 +100,9 @@ namespace uaf
             const string&   nameSpaceUri,
             const string&   serverUri,
             ServerIndex     serverIndex)
-    : serverIndex_(serverIndex),
+    : nodeId_(idString, nameSpaceUri),
       serverUri_(serverUri),
-      nodeId_(idString, nameSpaceUri),
+      serverIndex_(serverIndex),
       serverIndexGiven_(true),
       serverUriGiven_(true)
     {}
@@ -115,9 +115,9 @@ namespace uaf
             NameSpaceIndex  nameSpaceIndex,
             const string&   serverUri,
             ServerIndex     serverIndex)
-    : serverIndex_(serverIndex),
+    : nodeId_(idString, nameSpaceIndex),
       serverUri_(serverUri),
-      nodeId_(idString, nameSpaceIndex),
+      serverIndex_(serverIndex),
       serverIndexGiven_(true),
       serverUriGiven_(true)
     {}
@@ -130,9 +130,9 @@ namespace uaf
             const string&   nameSpaceUri,
             const string&   serverUri,
             ServerIndex     serverIndex)
-    : serverIndex_(serverIndex),
+    : nodeId_(idNumeric, nameSpaceUri),
       serverUri_(serverUri),
-      nodeId_(idNumeric, nameSpaceUri),
+      serverIndex_(serverIndex),
       serverIndexGiven_(true),
       serverUriGiven_(true)
     {}
@@ -145,9 +145,9 @@ namespace uaf
             NameSpaceIndex  nameSpaceIndex,
             const string&   serverUri,
             ServerIndex     serverIndex)
-    : serverIndex_(serverIndex),
+    : nodeId_(idNumeric, nameSpaceIndex),
       serverUri_(serverUri),
-      nodeId_(idNumeric, nameSpaceIndex),
+      serverIndex_(serverIndex),
       serverIndexGiven_(true),
       serverUriGiven_(true)
     {}
@@ -159,8 +159,8 @@ namespace uaf
             const string&   idString,
             const string&   nameSpaceUri,
             ServerIndex     serverIndex)
-    : serverIndex_(serverIndex),
-      nodeId_(idString, nameSpaceUri),
+    : nodeId_(idString, nameSpaceUri),
+      serverIndex_(serverIndex),
       serverIndexGiven_(true),
       serverUriGiven_(false)
     {}
@@ -172,8 +172,8 @@ namespace uaf
             const string&   idString,
             NameSpaceIndex  nameSpaceIndex,
             ServerIndex     serverIndex)
-    : serverIndex_(serverIndex),
-      nodeId_(idString, nameSpaceIndex),
+    : nodeId_(idString, nameSpaceIndex),
+      serverIndex_(serverIndex),
       serverIndexGiven_(true),
       serverUriGiven_(false)
     {}
@@ -185,8 +185,8 @@ namespace uaf
             uint32_t        idNumeric,
             const string&   nameSpaceUri,
             ServerIndex     serverIndex)
-    : serverIndex_(serverIndex),
-      nodeId_(idNumeric, nameSpaceUri),
+    : nodeId_(idNumeric, nameSpaceUri),
+      serverIndex_(serverIndex),
       serverIndexGiven_(true),
       serverUriGiven_(false)
     {}
@@ -198,8 +198,8 @@ namespace uaf
             uint32_t             idNumeric,
             NameSpaceIndex       nameSpaceIndex,
             ServerIndex          serverIndex)
-    : serverIndex_(serverIndex),
-      nodeId_(idNumeric, nameSpaceIndex),
+    : nodeId_(idNumeric, nameSpaceIndex),
+      serverIndex_(serverIndex),
       serverIndexGiven_(true),
       serverUriGiven_(false)
     {}

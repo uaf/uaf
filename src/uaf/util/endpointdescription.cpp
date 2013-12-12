@@ -34,6 +34,8 @@ namespace uaf
     // Constructor
     // =============================================================================================
     EndpointDescription::EndpointDescription()
+    : securityMode(messagesecuritymodes::Mode_None),
+      securityLevel(0)
     {}
 
 
@@ -42,8 +44,8 @@ namespace uaf
     EndpointDescription::EndpointDescription(const OpcUa_EndpointDescription& uaDesc)
     : server(uaDesc.Server),
       serverCertificate(uaDesc.ServerCertificate.Length, uaDesc.ServerCertificate.Data),
-      securityLevel(uaDesc.SecurityLevel),
-      securityMode(uaf::messagesecuritymodes::fromSdkToUaf(uaDesc.SecurityMode))
+      securityMode(uaf::messagesecuritymodes::fromSdkToUaf(uaDesc.SecurityMode)),
+      securityLevel(uaDesc.SecurityLevel)
     {
         if (!UaString(&uaDesc.EndpointUrl).isEmpty())
             endpointUrl = UaString(&uaDesc.EndpointUrl).toUtf8();

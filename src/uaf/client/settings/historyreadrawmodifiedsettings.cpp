@@ -38,11 +38,11 @@ namespace uafc
     HistoryReadRawModifiedSettings::HistoryReadRawModifiedSettings()
     : BaseServiceSettings(),
       isReadModified(false),
-      timestampsToReturn(timestampstoreturn::Source),
-      releaseContinuationPoints(false),
-      returnBounds(false),
+      maxAutoReadMore(0),
       numValuesPerNode(0),
-      maxAutoReadMore(0)
+      returnBounds(false),
+      timestampsToReturn(timestampstoreturn::Source),
+      releaseContinuationPoints(false)
     {}
 
 

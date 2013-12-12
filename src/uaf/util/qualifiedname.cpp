@@ -31,8 +31,8 @@ namespace uaf
     // =============================================================================================
     QualifiedName::QualifiedName()
     : nameSpaceIndex_(0),
-      nameSpaceIndexGiven_(false),
-      nameSpaceUriGiven_(false)
+      nameSpaceUriGiven_(false),
+      nameSpaceIndexGiven_(false)
     {}
 
 
@@ -41,8 +41,8 @@ namespace uaf
     QualifiedName::QualifiedName(const string& name)
     : name_(name),
       nameSpaceIndex_(0),
-      nameSpaceIndexGiven_(false),
-      nameSpaceUriGiven_(false)
+      nameSpaceUriGiven_(false),
+      nameSpaceIndexGiven_(false)
     {}
 
 
@@ -51,8 +51,8 @@ namespace uaf
     QualifiedName::QualifiedName(const string& name, uint16_t nameSpaceIndex)
     : name_(name),
       nameSpaceIndex_(nameSpaceIndex),
-      nameSpaceIndexGiven_(true),
-      nameSpaceUriGiven_(false)
+      nameSpaceUriGiven_(false),
+      nameSpaceIndexGiven_(true)
     {}
 
 
@@ -60,10 +60,10 @@ namespace uaf
     // =============================================================================================
     QualifiedName::QualifiedName(const string& name, const string& nameSpaceUri)
     : name_(name),
-      nameSpaceIndex_(0),
       nameSpaceUri_(nameSpaceUri),
-      nameSpaceIndexGiven_(false),
-      nameSpaceUriGiven_(true)
+      nameSpaceIndex_(0),
+      nameSpaceUriGiven_(true),
+      nameSpaceIndexGiven_(false)
     {}
 
 
@@ -74,10 +74,10 @@ namespace uaf
             const string&   nameSpaceUri,
             uint16_t        nameSpaceIndex)
     : name_(name),
-      nameSpaceIndex_(nameSpaceIndex),
       nameSpaceUri_(nameSpaceUri),
-      nameSpaceIndexGiven_(true),
-      nameSpaceUriGiven_(true)
+      nameSpaceIndex_(nameSpaceIndex),
+      nameSpaceUriGiven_(true),
+      nameSpaceIndexGiven_(true)
     {}
 
 

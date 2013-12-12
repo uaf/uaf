@@ -31,20 +31,20 @@ namespace uaf
     // Constructor
     // =============================================================================================
     NodeId::NodeId()
-    : nameSpaceIndexGiven_(false),
-      nameSpaceUriGiven_(false),
-      nameSpaceIndex_(0)
+    : nameSpaceIndex_(0),
+      nameSpaceIndexGiven_(false),
+      nameSpaceUriGiven_(false)
     {}
 
 
     // Constructor
     // =============================================================================================
     NodeId::NodeId(const string& idString, const string& nameSpaceUri)
-    : nameSpaceIndexGiven_(false),
-      nameSpaceUriGiven_(true),
-      nameSpaceIndex_(0),
+    : nameSpaceIndex_(0),
+      nameSpaceUri_(nameSpaceUri),
       identifier_(idString),
-      nameSpaceUri_(nameSpaceUri)
+      nameSpaceIndexGiven_(false),
+      nameSpaceUriGiven_(true)
     {}
 
 
@@ -54,53 +54,53 @@ namespace uaf
             const string& idString,
             const string& nameSpaceUri,
             NameSpaceIndex nameSpaceIndex)
-    : nameSpaceIndexGiven_(true),
-      nameSpaceUriGiven_(true),
-      nameSpaceIndex_(nameSpaceIndex),
+    : nameSpaceIndex_(nameSpaceIndex),
+      nameSpaceUri_(nameSpaceUri),
       identifier_(idString),
-      nameSpaceUri_(nameSpaceUri)
+      nameSpaceIndexGiven_(true),
+      nameSpaceUriGiven_(true)
     {}
 
 
     // Constructor
     // =============================================================================================
     NodeId::NodeId(const string& idString, NameSpaceIndex nameSpaceIndex)
-    : nameSpaceIndexGiven_(true),
-      nameSpaceUriGiven_(false),
-      nameSpaceIndex_(nameSpaceIndex),
-      identifier_(idString)
+    : nameSpaceIndex_(nameSpaceIndex),
+      identifier_(idString),
+      nameSpaceIndexGiven_(true),
+      nameSpaceUriGiven_(false)
     {}
 
 
     // Constructor
     // =============================================================================================
     NodeId::NodeId(uint32_t idNumeric, const string& nameSpaceUri)
-    : nameSpaceIndexGiven_(false),
-      nameSpaceUriGiven_(true),
-      nameSpaceIndex_(0),
+    : nameSpaceIndex_(0),
       nameSpaceUri_(nameSpaceUri),
-      identifier_(idNumeric)
+      identifier_(idNumeric),
+      nameSpaceIndexGiven_(false),
+      nameSpaceUriGiven_(true)
     {}
 
 
     // Constructor
     // =============================================================================================
     NodeId::NodeId(uint32_t idNumeric, const string& nameSpaceUri, NameSpaceIndex nameSpaceIndex)
-    : nameSpaceIndexGiven_(true),
-      nameSpaceUriGiven_(true),
-      nameSpaceIndex_(nameSpaceIndex),
+    : nameSpaceIndex_(nameSpaceIndex),
       nameSpaceUri_(nameSpaceUri),
-      identifier_(idNumeric)
+      identifier_(idNumeric),
+      nameSpaceIndexGiven_(true),
+      nameSpaceUriGiven_(true)
     {}
 
 
     // Constructor
     // =============================================================================================
     NodeId::NodeId(uint32_t idNumeric, NameSpaceIndex nameSpaceIndex)
-    : nameSpaceIndexGiven_(true),
-      nameSpaceUriGiven_(false),
-      nameSpaceIndex_(nameSpaceIndex),
-      identifier_(idNumeric)
+    : nameSpaceIndex_(nameSpaceIndex),
+      identifier_(idNumeric),
+      nameSpaceIndexGiven_(true),
+      nameSpaceUriGiven_(false)
     {}
 
 

@@ -30,8 +30,8 @@ namespace uafc
     // Constructor
     // =============================================================================================
     Database::Database(LoggerFactory* loggerFactory)
-    : createMonitoredEventsRequestStore (loggerFactory, "MonEvtsReqStore"),
-      createMonitoredDataRequestStore   (loggerFactory, "MonDataReqStore"),
+    : createMonitoredDataRequestStore   (loggerFactory, "MonDataReqStore"),
+      createMonitoredEventsRequestStore (loggerFactory, "MonEvtsReqStore"),
       addressCache                      (loggerFactory),
       nofiticationHandle_(0),
       clientConnectionId_(0),

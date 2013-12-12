@@ -104,7 +104,7 @@ namespace uaf
         strftime(buffer, sizeof(buffer), "%Y-%m-%d %X", localtime_r(&t, &r));
 #endif
         char result[100] = {0};
-        sprintf(result, "%s.%03ld", buffer, msec);
+        sprintf(result, "%s.%03d", buffer, msec);
         return result;
     }
 

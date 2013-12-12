@@ -70,6 +70,8 @@ namespace uaf
          * @param colon     In case of key : value pairs, the colon will be put at this position.
          */
         virtual std::string toString(const std::string& indent="", std::size_t colon=0) const = 0;
+
+        virtual ~Stringifiable() {}
     };
 
 

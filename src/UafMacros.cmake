@@ -56,7 +56,9 @@ MACRO(setUafCompilerFlags)
         add_definitions(-D_CRT_SECURE_NO_DEPRECATE -D_CRT_SECURE_NO_WARNINGS -DUNICODE -D_UNICODE -D_UA_STACK_USE_DLL)  
     else (WIN32)
         if (FORCE32)
-            set(CMAKE_CXX_FLAGS "-m32")
+            set(CMAKE_CXX_FLAGS "-Wall -Wno-unused-function -Wno-comment -m32")
+        else (FORCE32)
+            set(CMAKE_CXX_FLAGS "-Wall -Wno-unused-function -Wno-comment")
         endif (FORCE32)
     endif (WIN32)
     
@@ -94,7 +96,7 @@ MACRO(handleUnifiedAutomationSdk)
     if (UASDK)
     
         if (EXISTS "${UASDK}/include")
-            message("-- The specified Unified Automation SDK directory was found" )
+            message(STATUS "The specified Unified Automation SDK directory was found" )
             set(UASDK_FOUND TRUE)
             set(UASDK_DIR "${UASDK}")
             set(UASDK_LIBRARIES_DIR "${UASDK}/lib")
@@ -103,12 +105,14 @@ MACRO(handleUnifiedAutomationSdk)
             set(UASDK_FOUND FALSE)
             message("")
             message(FATAL_ERROR
-                    "-- The Unified Automation SDK path was specified (${UASDK}) "
+                    "The Unified Automation SDK path was specified (${UASDK}) "
                     "but doesn't exist!")
         endif (EXISTS "${UASDK}/include")
     
     else (UASDK)
         
+        message(STATUS "The Unified Automation SDK directory was not specified using " 
+                "the -DUASDK flag, so we will try to find it")
         find_package(UaSdk REQUIRED)
     
     endif (UASDK)
@@ -215,7 +219,7 @@ MACRO(handleSwig)
                 set(UASDK_FOUND FALSE)
                 message("")
                 message(FATAL_ERROR
-                        "-- The Unified Automation SDK path was specified (${UASDK}) "
+                        "The Unified Automation SDK path was specified (${UASDK}) "
                         "but doesn't exist!")
             endif ()
             
@@ -309,8 +313,8 @@ ENDMACRO(setUafOutputDirectories)
 
 
 # ----------------------------------------------------------------------------
-# setUafOutputDirectories()
-#    This macro will set the correct output directories for the UAF.
+# setPyUafTargetProperties()
+#    This macro will set the correct target properties for PyUAF
 # ----------------------------------------------------------------------------
 MACRO(setPyUafTargetProperties  _PREFIX _NAME _OUTDIR _UAFLINKLIB)
 
