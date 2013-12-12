@@ -116,10 +116,10 @@ Installation procedure for Linux
       simplest_client_example
        
 
-   **Note** that some of the examples require that you start the Unified Automation 
-   UA Demo Server on the local machine. The UA Demo Server was already installed 
-   when you installed the SDK: you can find the ``uademoserver`` executable in the ``bin`` 
-   directory of the SDK installation directory::
+  **Note** that some of the examples require that you start the Unified Automation 
+  UA Demo Server on the local machine. The UA Demo Server was already installed 
+  when you installed the SDK: you can find the ``uademoserver`` executable in the ``bin`` 
+  directory of the SDK installation directory::
        
       /opt/unifiedautomation/sdk/bin/uademoserver
 
