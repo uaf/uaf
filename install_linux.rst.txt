@@ -58,11 +58,11 @@ Installation procedure for Linux
        cmake ../src -DUASDK=/path/to/sdk
 
 
- - If needed, you could also specify paths explicitly for your "special" configuration, e.g.:
+ - If needed, you could also specify paths explicitly for your "special" configuration, e.g.::
  
-        cmake ../src/ -DUASDK=/software/unifiedautomation/sdk/ \
-                      -DCMAKE_LIBRARY_PATH=/software/python/lib \
-                      -DCMAKE_INCLUDE_PATH=/software/python/include
+       cmake ../src/ -DUASDK=/software/unifiedautomation/sdk/ \
+                     -DCMAKE_LIBRARY_PATH=/software/python/lib \
+                     -DCMAKE_INCLUDE_PATH=/software/python/include
 
 
  - If you're building the UAF on a 64-bit platform but you're using the 32-bit 
