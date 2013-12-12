@@ -7,9 +7,9 @@ Installation procedure for Microsoft Windows
 ----------------------------------------------------------------------------------------------------
 
 
- - Get the C++ SDK from Unified Automation (http://www.unified-automation.com)
-   and install it, for instance, in its default directory:
-   ``C:\Program Files\UnifiedAutomation\UaSdkCppBundleEval``
+- Get the C++ SDK from Unified Automation (http://www.unified-automation.com)
+  and install it, for instance, in its default directory:
+  ``C:\Program Files\UnifiedAutomation\UaSdkCppBundleEval``
 
 
 
@@ -17,7 +17,7 @@ Installation procedure for Microsoft Windows
 ----------------------------------------------------------------------------------------------------
 
 
- - Download CMake (http://www.cmake.org) and install it.
+- Download CMake (http://www.cmake.org) and install it.
 
 
 
@@ -25,8 +25,8 @@ Installation procedure for Microsoft Windows
 ----------------------------------------------------------------------------------------------------
 
 
- - Download SWIG (http://www.swig.org) and extract it for instance in ``C:\Program Files``, 
-   so you end up with a directory resembling ``C:\Program Files\swigwin-2.0.8``.
+- Download SWIG (http://www.swig.org) and extract it for instance in ``C:\Program Files``, 
+  so you end up with a directory resembling ``C:\Program Files\swigwin-2.0.8``.
 
 
 
@@ -34,9 +34,9 @@ Installation procedure for Microsoft Windows
 ----------------------------------------------------------------------------------------------------
 
 
- - Get the Python Windows MSI installer (http://www.python.org) and install it,
-   for instance in ``C:\``  (so you end up with a directory resembling ``C:\Python27``)
-   or in ``C:\Program Files\``  (so you end up with a directory like ``C:\Program Files\Python27``).
+- Get the Python Windows MSI installer (http://www.python.org) and install it,
+  for instance in ``C:\``  (so you end up with a directory resembling ``C:\Python27``)
+  or in ``C:\Program Files\``  (so you end up with a directory like ``C:\Program Files\Python27``).
 
 
 
@@ -44,103 +44,105 @@ Installation procedure for Microsoft Windows
 ----------------------------------------------------------------------------------------------------
 
 
- - Open Command Prompt (Start --> All Programs --> Accessories --> Command Prompt)
+- Open Command Prompt (Start --> All Programs --> Accessories --> Command Prompt)
 
- - Go to the UAF build directory, for instance::
+- Go to the UAF build directory, for instance::
 
        cd "C:\Users\john\uaf\build"
 
 
- - Enter the cmake command::
+- Enter the cmake command::
 
-       "C:\Program Files\CMake 2.8\bin\cmake.exe" ..\src
+      "C:\Program Files\CMake 2.8\bin\cmake.exe" ..\src
 
          
-   The installation procedure will try to find the SDK, Python and SWIG in their default directories
-   (in ``C:\`` or ``C:\Program Files\``).
-   If necessary, provide the SDK directory via the ``-DUASDK`` flag 
-   (e.g. ``-DUASDK="C:\Program Files\UnifiedAutomation\UaSdkCppBundleEval"``).
-   You can also specify the SWIG directory via the ``-DSWIG`` flag
-   (e.g. ``-DSWIG="C:\Program Files\swigwin-2.0.8"``).
-   More paths (e.g. for a specific Python installation) can be specified with 
-   the ``-DCMAKE_PREFIX_PATH`` flag.
+  The installation procedure will try to find the SDK, Python and SWIG in their default directories
+  (in ``C:\`` or ``C:\Program Files\``).
+  If necessary, provide the SDK directory via the ``-DUASDK`` flag 
+  (e.g. ``-DUASDK="C:\Program Files\UnifiedAutomation\UaSdkCppBundleEval"``).
+  You can also specify the SWIG directory via the ``-DSWIG`` flag
+  (e.g. ``-DSWIG="C:\Program Files\swigwin-2.0.8"``).
+  More paths (e.g. for a specific Python installation) can be specified with 
+  the ``-DCMAKE_PREFIX_PATH`` flag.
+  More ``lib`` and ``include`` paths may also be specified explicitly using the 
+  ``-DCMAKE_LIBRARY_PATH`` and ``-DCMAKE_INCLUDE_PATH`` flags.
 
 
- - There should not be any errors. The final line should say::
+- There should not be any errors. The final line should say::
 
-    -- Build files have been written to: C:/Users/john/uaf/build
+   -- Build files have been written to: C:/Users/john/uaf/build
 
 
 
 6. Open the Visual Studio solution and build the framework
 ----------------------------------------------------------------------------------------------------
 
- - In Windows explorer, navigate to ``C:\Users\john\uaf\build`` and double click **uaf.sln**.
+- In Windows explorer, navigate to ``C:\Users\john\uaf\build`` and double click **uaf.sln**.
 
- - Make sure the **Release** configuration in the Visual C++ toolbar is selected, 
-   and build the solution.
+- Make sure the **Release** configuration in the Visual C++ toolbar is selected, 
+  and build the solution.
 
- - If all goes well (it should!), you will find the UAF libraries after compilation 
-   in ``C:\Users\john\uaf\lib``.
+- If all goes well (it should!), you will find the UAF libraries after compilation 
+  in ``C:\Users\john\uaf\lib``.
 
 
 
 7. (OPTIONAL) Build and run the C++ examples
 ----------------------------------------------------------------------------------------------------
 
- - In Command Prompt, navigate to the ``examples\uaf\build`` directory::
+- In Command Prompt, navigate to the ``examples\uaf\build`` directory::
 
-       cd "C:\Users\john\uaf\examples\uaf\build"
+      cd "C:\Users\john\uaf\examples\uaf\build"
 
  
- - Enter the cmake command::
+- Enter the cmake command::
    
-       "C:\Program Files\CMake 2.8\bin\cmake.exe" ..\src
+      "C:\Program Files\CMake 2.8\bin\cmake.exe" ..\src
 
    
-   The installation procedure will try to find the SDK in it's default directory
-   (in C:\ or C:\Program Files). 
-   If necessary, you may have to specify some alternative directories, see above (point 5).
+  The installation procedure will try to find the SDK in it's default directory
+  (in C:\ or C:\Program Files). 
+  If necessary, you may have to specify some alternative directories, see above (point 5).
    
- - There should not be any errors. The final line should say::
+- There should not be any errors. The final line should say::
  
-       -- Build files have been written to: C:/Users/john/uaf/examples/uaf/build
+      -- Build files have been written to: C:/Users/john/uaf/examples/uaf/build
      
- - In Windows explorer, navigate to ``C:\Users\john\uaf\examples\uaf\build`` 
-   and double click **uaf-test.sln**.
+- In Windows explorer, navigate to ``C:\Users\john\uaf\examples\uaf\build`` 
+  and double click **uaf-test.sln**.
     
- - Make sure the **Release** configuration in the Visual C++ toolbar is selected, 
-   and build the solution.
+- Make sure the **Release** configuration in the Visual C++ toolbar is selected, 
+  and build the solution.
 
- - If all goes well (it should!), you will find the UAF C++ example binaries after 
-   compilation in ``C:\Users\john\uaf\examples\bin``. Run them from this directory, 
-   e.g. using Command Prompt or the Windows PowerShell. In order to set the 
-   necessary environment variables, you may first run ``uaf-commandprompt.bat`` 
-   or ``uaf-powershell.bat``::
+- If all goes well (it should!), you will find the UAF C++ example binaries after 
+  compilation in ``C:\Users\john\uaf\examples\bin``. Run them from this directory, 
+  e.g. using Command Prompt or the Windows PowerShell. In order to set the 
+  necessary environment variables, you may first run ``uaf-commandprompt.bat`` 
+  or ``uaf-powershell.bat``::
 
-       cd "C:\Users\john\uaf\examples\"
-       uaf-commandprompt.bat
-       cd uaf\bin
-       simplest_client_example
+      cd "C:\Users\john\uaf\examples\"
+      uaf-commandprompt.bat
+      cd uaf\bin
+      simplest_client_example
 
 
- - Note that some of the examples require that you start the Unified Automation 
-   UA Demo Server on the local machine. The UA Demo Server was already installed 
-   when you installed the SDK: you can find ``uademoserver.exe`` in the ``bin`` 
-   directory of the SDK installation directory.
+- **Note** that some of the examples require that you start the Unified Automation 
+  UA Demo Server on the local machine. The UA Demo Server was already installed 
+  when you installed the SDK: you can find ``uademoserver.exe`` in the ``bin`` 
+  directory of the SDK installation directory.
 
 
 8. (OPTIONAL) Run the Python examples
 ----------------------------------------------------------------------------------------------------
 
- - Go to the ``examples\pyuaf\client`` or ``examples\pyuaf\util`` directory and 
-   run the examples. If necessary, you can set the environment variables first
-   by executing the ``uaf-commandprompt.bat`` or ``uaf-powershell.bat`` scripts::
+- Go to the ``examples\pyuaf\client`` or ``examples\pyuaf\util`` directory and 
+  run the examples. If necessary, you can set the environment variables first
+  by executing the ``uaf-commandprompt.bat`` or ``uaf-powershell.bat`` scripts::
 
-       cd "C:\Users\john\uaf\examples\"
-       uaf-commandprompt.bat
-       cd pyuaf\client
-       C:\Python27\python.exe simplest_client_example.py
+      cd "C:\Users\john\uaf\examples\"
+      uaf-commandprompt.bat
+      cd pyuaf\client
+      C:\Python27\python.exe simplest_client_example.py
 
 
 
