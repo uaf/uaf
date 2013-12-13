@@ -385,7 +385,8 @@ namespace uafc
             else
             {
                 ret.setStatus(uaf::statuscodes::UnexpectedError,
-                              "Result does not match the received resultTargets");
+                              "Result (%d targets) does not match the received resultTargets " \
+                              "(%d targets)", result.targets.size(), resultTargets_.size());
             }
 
             return ret;
