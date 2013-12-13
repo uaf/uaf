@@ -369,25 +369,32 @@ namespace uafc
          */
         uaf::Status copyToResult(SessionResultType& result)
         {
-            uaf::Status ret;
+            uaf::Status ret(uaf::statuscodes::Good);
 
-            if (result.targets.size() == resultTargets_.size())
+            if (resultTargets_.size() != ranks_.size())
+                ret.setStatus(uaf::statuscodes::UnexpectedError,
+                              "Bug in BaseServiceInvocation: " \
+                              "number of result targets (%d) != number of ranks (%d)",
+                              resultTargets_.size(), ranks_.size());
+
+
+            for (std::size_t i = 0; i < resultTargets_.size() && ret.isGood(); i++)
             {
-                for (std::size_t i = 0; i < resultTargets_.size(); i++)
+                std::size_t rank = ranks_[i];
+
+                if (rank < result.targets.size())
                 {
-                    result.targets[ranks_[i]] = resultTargets_[i];
-                    result.targets[ranks_[i]].clientConnectionId
+                    result.targets[rank] = resultTargets_[i];
+                    result.targets[rank].clientConnectionId
                         = sessionInformation_.clientConnectionId;
                 }
-
-                ret.setGood();
+                else
+                {
+                    ret.setStatus(uaf::statuscodes::UnexpectedError,
+                                  "Bug in BaseServiceInvocation: rank (%d) > targets.size() (%d)",
+                                  rank, result.targets.size());
+                }
             }
-            else
-            {
-                ret.setStatus(uaf::statuscodes::UnexpectedError,
-                              "Result does not match the received resultTargets");
-            }
-
             return ret;
         }
 
@@ -401,25 +408,32 @@ namespace uafc
          */
         uaf::Status copyToResult(SubscriptionResultType& result)
         {
-            uaf::Status ret;
+            uaf::Status ret(uaf::statuscodes::Good);
 
-            if (result.targets.size() == resultTargets_.size())
+            if (resultTargets_.size() != ranks_.size())
+                ret.setStatus(uaf::statuscodes::UnexpectedError,
+                              "Bug in BaseServiceInvocation: " \
+                              "number of result targets (%d) != number of ranks (%d)",
+                              resultTargets_.size(), ranks_.size());
+
+
+            for (std::size_t i = 0; i < resultTargets_.size() && ret.isGood(); i++)
             {
-                for (std::size_t i = 0; i < resultTargets_.size(); i++)
+                std::size_t rank = ranks_[i];
+
+                if (rank < result.targets.size())
                 {
-                    result.targets[ranks_[i]] = resultTargets_[i];
-                    result.targets[ranks_[i]].clientConnectionId
+                    result.targets[rank] = resultTargets_[i];
+                    result.targets[rank].clientConnectionId
                         = sessionInformation_.clientConnectionId;
                 }
-
-                ret.setGood();
+                else
+                {
+                    ret.setStatus(uaf::statuscodes::UnexpectedError,
+                                  "Bug in BaseServiceInvocation: rank (%d) > targets.size() (%d)",
+                                  rank, result.targets.size());
+                }
             }
-            else
-            {
-                ret.setStatus(uaf::statuscodes::UnexpectedError,
-                              "Result does not match the received result targets");
-            }
-
             return ret;
         }
 
@@ -435,14 +449,15 @@ namespace uafc
         {
             uaf::Status ret;
 
-            if (result.targets.size() == resultTargets_.size())
+            if (ranks_.size() == resultTargets_.size())
             {
                 ret.setGood();
             }
             else
             {
                 ret.setStatus(uaf::statuscodes::UnexpectedError,
-                              "Result does not match the received result targets");
+                              "Bug in BaseServiceInvocation: Ranks do not match the received " \
+                              "result targets");
             }
 
             return ret;
@@ -460,14 +475,15 @@ namespace uafc
         {
             uaf::Status ret;
 
-            if (result.targets.size() == resultTargets_.size())
+            if (ranks_.size() == resultTargets_.size())
             {
                 ret.setGood();
             }
             else
             {
                 ret.setStatus(uaf::statuscodes::UnexpectedError,
-                              "Result does not match the received result targets");
+                              "Bug in BaseServiceInvocation: Ranks do not match the received " \
+                              "result targets");
             }
 
             return ret;
