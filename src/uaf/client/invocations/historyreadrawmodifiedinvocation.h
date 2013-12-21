@@ -101,6 +101,7 @@ namespace uafc
         UaHistoryReadValueIds                       uaNodesToRead_;
         UaClientSdk::HistoryReadDataResults         uaResults_;
         std::vector<uint32_t>                       autoReadMorePerTarget_;
+        UaDiagnosticInfos                           uaDiagnosticInfos_;
     };
 
 }

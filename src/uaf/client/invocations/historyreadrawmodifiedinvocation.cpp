@@ -124,7 +124,8 @@ namespace uafc
                 uaServiceSettings_,
                 uaContext_,
                 uaNodesToRead_,
-                uaResults_);
+                uaResults_,
+                uaDiagnosticInfos_);
 
         ret.fromSdk(uaStatus.statusCode(), "Synchronous HistoryRead invocation failed");
 
@@ -183,7 +184,8 @@ namespace uafc
                         uaServiceSettings_,
                         uaContext_,
                         uaNextNodesToRead,
-                        uaNextResults);
+                        uaNextResults,
+                        uaDiagnosticInfos_);
 
                 ret.fromSdk(uaNextStatus.statusCode(),
                             "Synchronous HistoryReadRawModified invocation failed");
