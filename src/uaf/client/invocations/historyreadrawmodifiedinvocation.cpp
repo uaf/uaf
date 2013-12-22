@@ -120,12 +120,20 @@ namespace uafc
     {
         Status ret;
 
+#ifdef UASDK_VERSION_BEFORE_14
+        UaStatus uaStatus = uaSession->historyReadRawModified(
+                uaServiceSettings_,
+                uaContext_,
+                uaNodesToRead_,
+                uaResults_);
+#else
         UaStatus uaStatus = uaSession->historyReadRawModified(
                 uaServiceSettings_,
                 uaContext_,
                 uaNodesToRead_,
                 uaResults_,
                 uaDiagnosticInfos_);
+#endif
 
         ret.fromSdk(uaStatus.statusCode(), "Synchronous HistoryRead invocation failed");
 
@@ -179,13 +187,22 @@ namespace uafc
             // if necessary, call the historyReadRawModified service again
             if (uaNextNodesToRead.length() > 0)
             {
+
                 // perform the BrowseNext call
+#ifdef UASDK_VERSION_BEFORE_14
+                UaStatus uaNextStatus = uaSession->historyReadRawModified(
+                        uaServiceSettings_,
+                        uaContext_,
+                        uaNextNodesToRead,
+                        uaNextResults);
+#else
                 UaStatus uaNextStatus = uaSession->historyReadRawModified(
                         uaServiceSettings_,
                         uaContext_,
                         uaNextNodesToRead,
                         uaNextResults,
                         uaDiagnosticInfos_);
+#endif
 
                 ret.fromSdk(uaNextStatus.statusCode(),
                             "Synchronous HistoryReadRawModified invocation failed");
