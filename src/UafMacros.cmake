@@ -116,6 +116,15 @@ MACRO(handleUnifiedAutomationSdk)
         find_package(UaSdk REQUIRED)
     
     endif (UASDK)
+    
+    # figure out if the SDK version <1.4 by checking if include/uabase/uafile.h exists
+    if(EXISTS "${UASDK_INCLUDE_DIR}/uabase/uafile.h")
+        message(STATUS "The SDK has version 1.4 or higher")
+    else()
+        message(STATUS "The SDK has an old version (prior to 1.4)")
+        set(UASDK_VERSION_BEFORE_14 TRUE)
+    endif()
+    
 
 ENDMACRO(handleUnifiedAutomationSdk)
 
