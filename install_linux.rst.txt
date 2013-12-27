@@ -37,6 +37,13 @@ Installation procedure for Linux
       cmake ../src
 
 
+- If you built the Unified Automation SDK with custom options (such as HTTPS support), you must 
+  provide these options also to the UAF::
+
+      cd build
+      cmake ../src -DUASTACK_WITH_HTTPS=ON
+
+
 - If needed, you may also specify the path to the Unified Automation SDK explicitly, 
   for instance::
 
