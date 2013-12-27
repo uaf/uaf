@@ -10,10 +10,13 @@ add_library(uafutil SHARED ${UTIL_SOURCES})
 if (WIN32)
     target_link_libraries(uafutil 
                           ${OPENSSL_LIBRARIES}
+                          ${LIBXML2_LIBRARIES}
                           oleaut32 ole32 Version ws2_32 rpcrt4 crypt32 
-                          uabase uapki uastack )
+                          uabase uapki uastack xmlparser )
 else (WIN32)
     target_link_libraries(uafutil
-                          ssl crypto dl rt pthread 
-                          uabase uapki uastack )
+                          ${OPENSSL_LIBRARIES}
+                          ${LIBXML2_LIBRARIES}
+                          dl rt pthread
+                          uabase uapki uastack xmlparser )
 endif (WIN32)
