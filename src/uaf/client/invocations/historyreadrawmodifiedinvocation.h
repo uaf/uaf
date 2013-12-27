@@ -102,10 +102,8 @@ namespace uafc
         UaClientSdk::HistoryReadDataResults         uaResults_;
         std::vector<uint32_t>                       autoReadMorePerTarget_;
 
-        // onwards from version 1.4 we require
-#ifndef UASDK_VERSION_BEFORE_14
+        // onwards from version 1.4 we require a UaDiagnosticInfos object for the service calls
         UaDiagnosticInfos                           uaDiagnosticInfos_;
-#endif
     };
 
 }
