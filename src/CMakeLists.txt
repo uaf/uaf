@@ -12,6 +12,9 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}")
 # Load the macros defined by the UAF
 include(UafMacros)
 
+# Handle some command line options (default values are the same as for the SDK!)
+handleOptions()
+
 # Set the build type to release
 setBuildTypeToRelease()
 
@@ -27,6 +30,7 @@ setUafLinkerRestrictions()
 # Make sure the necessary third-party packages are found
 handleUnifiedAutomationSdk()
 handleOpenSsl()
+handleLibXml2()
 handleSwig()
 handlePythonLibs()
 
@@ -36,7 +40,6 @@ include_directories("${UASDK_INCLUDE_DIR}")
 include_directories("${UASDK_INCLUDE_DIR}/uabase")
 include_directories("${UASDK_INCLUDE_DIR}/uapki")
 include_directories("${UASDK_INCLUDE_DIR}/uastack")
-include_directories("${UASDK_INCLUDE_DIR}/xmlparser")
 
 # Include the OpenSSL headers
 include_directories("${OPENSSL_INCLUDE_DIR}")
@@ -67,11 +70,12 @@ endif (SWIG_FOUND)
 setUafOutputDirectories()
 
 # Print a summary
-message("")
-message("========== SUMMARY ==========")
-message("-- SDK was found    : TRUE (${UASDK_DIR})")
-message("-- SWIG was found   : ${SWIG_FOUND} (${SWIG_EXECUTABLE})")
-message("-- Python was found : ${PYTHONLIBS_FOUND} (${PYTHON_LIBRARIES})")
+message(STATUS "")
+message(STATUS "========== SUMMARY ==========")
+message(STATUS "SDK was found    : TRUE (${UASDK_DIR})")
+message(STATUS "SWIG was found   : ${SWIG_FOUND} (${SWIG_EXECUTABLE})")
+message(STATUS "Python was found : ${PYTHONLIBS_FOUND} (${PYTHON_LIBRARIES})")
+message(STATUS "Options          : UASTACK_WITH_HTTPS = ${UASTACK_WITH_HTTPS}")
 if(SWIG_FOUND)
 	if (PYTHONLIBS_FOUND)
         message(STATUS "This means that the UAF will be built, including Python wrappers")

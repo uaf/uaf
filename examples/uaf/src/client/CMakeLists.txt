@@ -29,7 +29,7 @@ foreach(UAF_CLIENT_EXAMPLE ${UAF_CLIENT_EXAMPLES})
         target_link_libraries(${UAF_CLIENT_EXAMPLE} 
                               uafclient uafutil
                               ssl crypto dl rt pthread 
-                              uafutil uabase uapki uastack xmlparser)
+                              uafutil uabase uapki uastack )
     endif(WIN32)
     
     

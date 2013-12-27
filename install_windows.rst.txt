@@ -58,6 +58,9 @@ Installation procedure for Microsoft Windows
          
   The installation procedure will try to find the SDK, Python and SWIG in their default directories
   (in ``C:\`` or ``C:\Program Files\``).
+  If you built the Unified Automation SDK with custom options (such as HTTPS support), you must 
+  provide these options also to the UAF
+  (e.g. ``-DUASTACK_WITH_HTTPS=ON``).
   If necessary, provide the SDK directory via the ``-DUASDK`` flag 
   (e.g. ``-DUASDK="C:\Program Files\UnifiedAutomation\UaSdkCppBundleEval"``).
   You can also specify the SWIG directory via the ``-DSWIG`` flag
