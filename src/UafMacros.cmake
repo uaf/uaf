@@ -12,6 +12,24 @@ ENDMACRO(setBuildTypeToRelease)
 
 
 
+# ----------------------------------------------------------------------------
+# handleOptions()
+#    This macro handles some command line options.
+# ----------------------------------------------------------------------------
+MACRO(handleOptions)
+
+    OPTION( UASTACK_WITH_HTTPS   "Set to OFF if the Stack was built without HTTPS support." OFF )
+    
+    IF ( UASTACK_WITH_HTTPS )
+        ADD_DEFINITIONS( -DOPCUA_HAVE_HTTPS=1 )
+    ELSE ( UASTACK_WITH_HTTPS )
+        ADD_DEFINITIONS( -DOPCUA_HAVE_HTTPS=0 )
+    ENDIF ( UASTACK_WITH_HTTPS )
+
+ENDMACRO(setBuildTypeToRelease)
+
+
+
 
 # ----------------------------------------------------------------------------
 # setUnifiedAutomationSdkCompilerDir(NEW_VAR)
@@ -117,12 +135,11 @@ MACRO(handleUnifiedAutomationSdk)
     
     endif (UASDK)
     
-    # figure out if the SDK version <1.4 by checking if include/uabase/uafile.h exists
+    # figure out if the SDK version is at least 1.4 by checking if include/uabase/uafile.h exists
     if(EXISTS "${UASDK_INCLUDE_DIR}/uabase/uafile.h")
-        message(STATUS "The SDK has version 1.4 or higher")
+        message(STATUS "OK, the SDK has version 1.4 or higher")
     else()
-        message(STATUS "The SDK has an old version (prior to 1.4)")
-        set(UASDK_VERSION_BEFORE_14 TRUE)
+        message(FATAL_ERROR "The Unified Automation SDK must be at least version 1.4.0")
     endif()
     
 
@@ -166,7 +183,7 @@ ENDMACRO(handleLibXml2)
 
 # ----------------------------------------------------------------------------
 # handleOpenSsl()
-#    This macro will set the necessary LibXml2 variables 
+#    This macro will set the necessary OpenSSL variables 
 #    (OPENSSL_FOUND, OPENSSL_INCLUDE_DIR, OPENSSL_LIBRARIES)
 #    and install the dlls in case of Windows.
 # ----------------------------------------------------------------------------
