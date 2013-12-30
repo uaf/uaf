@@ -1,6 +1,3 @@
-# Ignore generated files
-unittests/pyuaf/demoserver.py
-
 # Ignore project files
 .project
 .cproject
