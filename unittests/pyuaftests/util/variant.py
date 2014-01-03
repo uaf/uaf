@@ -1,442 +1,454 @@
 import pyuaf
+import unittest
+from pyuaf.util.unittesting import parseArgs
 
 
-def test(args):
+ARGS = parseArgs()
+
+
+def suite(args=None):
+    if args is not None:
+        global ARGS
+        ARGS = args
+    
+    return unittest.TestLoader().loadTestsFromTestCase(VariantTest)
+
+
+
+class VariantTest(unittest.TestCase):
+    
+    def setUp(self):
         
-    
-    print "util.variant"
-    
-    tester = pyuaf.util.__unittesthelper__.UnitTestHelper()
-    
-    ######## output typemaps ########
-    
-    
-    print(" - testing output typemap for pyuaf.util.primitives.Boolean")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Boolean)
-    assert v.type() == pyuaf.util.opcuatypes.Boolean
-    assert v.value == True
-    assert type(v) == type(pyuaf.util.primitives.Boolean())
-    
-    print(" - testing output typemap for pyuaf.util.primitives.Byte")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Byte)
-    assert v.type() == pyuaf.util.opcuatypes.Byte
-    assert v.value == 3
-    assert type(v) == type(pyuaf.util.primitives.Byte())
-    
-    print(" - testing output typemap for pyuaf.util.primitives.SByte")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.SByte)
-    assert v.type() == pyuaf.util.opcuatypes.SByte
-    assert v.value == -3
-    assert type(v) == type(pyuaf.util.primitives.SByte())
-    
-    print(" - testing output typemap for pyuaf.util.primitives.UInt16")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.UInt16)
-    assert v.type() == pyuaf.util.opcuatypes.UInt16
-    assert v.value == 3
-    assert type(v) == type(pyuaf.util.primitives.UInt16())
-    
-    print(" - testing output typemap for pyuaf.util.primitives.Int16")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Int16)
-    assert v.type() == pyuaf.util.opcuatypes.Int16
-    assert v.value == -3
-    assert type(v) == type(pyuaf.util.primitives.Int16())
-    
-    print(" - testing output typemap for pyuaf.util.primitives.UInt32")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.UInt32)
-    assert v.type() == pyuaf.util.opcuatypes.UInt32
-    assert v.value == 3
-    assert type(v) == type(pyuaf.util.primitives.UInt32())
-    
-    print(" - testing output typemap for pyuaf.util.primitives.Int32")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Int32)
-    assert v.type() == pyuaf.util.opcuatypes.Int32
-    assert v.value == -3
-    assert type(v) == type(pyuaf.util.primitives.Int32())
-    
-    print(" - testing output typemap for pyuaf.util.primitives.UInt64")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.UInt64)
-    assert v.type() == pyuaf.util.opcuatypes.UInt64
-    assert v.value == 3
-    assert type(v) == type(pyuaf.util.primitives.UInt64())
-    
-    print(" - testing output typemap for pyuaf.util.primitives.Int64")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Int64)
-    assert v.type() == pyuaf.util.opcuatypes.Int64
-    assert v.value == -3
-    assert type(v) == type(pyuaf.util.primitives.Int64())
-    
-    print(" - testing output typemap for pyuaf.util.primitives.Float")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Float)
-    assert v.type() == pyuaf.util.opcuatypes.Float
-    assert 3.1399999 < v.value < 3.140001
-    assert type(v) == type(pyuaf.util.primitives.Float())
-    
-    print(" - testing output typemap for pyuaf.util.primitives.Double")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Double)
-    assert v.type() == pyuaf.util.opcuatypes.Double
-    assert 3.1399999 < v.value < 3.140001
-    assert type(v) == type(pyuaf.util.primitives.Double())
-    
-    print(" - testing output typemap for unicode string")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.String)
-    assert v.value == (u"test \u00B0").encode("UTF-8")
-    assert type(v) == type(pyuaf.util.primitives.String())
-    
-    print(" - testing output typemap for bytearray")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.ByteString)
-    assert type(v.value) == type(bytearray())
-    assert len(v.value) == 3
-    assert v.value[0] == 1
-    assert v.value[1] == 2
-    assert v.value[2] == 3
-    
-    print(" - testing output typemap for pyuaf.util.NodeId")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.NodeId)
-    assert v == pyuaf.util.NodeId("SomeIdentifier", 42)
-    
-    print(" - testing output typemap for pyuaf.util.ExpandedNodeId")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.ExpandedNodeId)
-    assert v == pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21)
-    
-    print(" - testing output typemap for pyuaf.util.LocalizedText")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.LocalizedText)
-    assert v == pyuaf.util.LocalizedText("en", "SomeText")
-    
-    print(" - testing output typemap for pyuaf.util.QualifiedName")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.QualifiedName)
-    assert v == pyuaf.util.QualifiedName("SomeName", 42)
-    
-    print(" - testing output typemap for pyuaf.util.DateTime")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.DateTime)
-    assert v == pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z")
-    
-    print(" - testing output typemap for pyuaf.util.primitives.Boolean array")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Boolean, True)
-    assert v == [ pyuaf.util.primitives.Boolean(True), 
-                  pyuaf.util.primitives.Boolean(False), 
-                  pyuaf.util.primitives.Boolean(True) ]
-    
-    print(" - testing output typemap for pyuaf.util.primitives.Byte array")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Byte, True)
-    assert v == [ pyuaf.util.primitives.Byte(1), 
-                  pyuaf.util.primitives.Byte(2), 
-                  pyuaf.util.primitives.Byte(3) ]
-    
-    print(" - testing output typemap for pyuaf.util.primitives.Byte array")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.SByte, True)
-    assert v == [ pyuaf.util.primitives.SByte(-1), 
-                  pyuaf.util.primitives.SByte(2), 
-                  pyuaf.util.primitives.SByte(-3) ]
-    
-    print(" - testing output typemap for pyuaf.util.primitives.UInt16 array")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.UInt16, True)
-    assert v == [ pyuaf.util.primitives.UInt16(1), 
-                  pyuaf.util.primitives.UInt16(2), 
-                  pyuaf.util.primitives.UInt16(3) ]
-    
-    print(" - testing output typemap for pyuaf.util.primitives.Int16 array")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Int16, True)
-    assert v == [ pyuaf.util.primitives.Int16(-1), 
-                  pyuaf.util.primitives.Int16(2), 
-                  pyuaf.util.primitives.Int16(-3) ]
-    
-    print(" - testing output typemap for pyuaf.util.primitives.UInt32 array")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.UInt32, True)
-    assert v == [ pyuaf.util.primitives.UInt32(1), 
-                  pyuaf.util.primitives.UInt32(2), 
-                  pyuaf.util.primitives.UInt32(3) ]
-    
-    print(" - testing output typemap for pyuaf.util.primitives.Int32 array")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Int32, True)
-    assert v == [ pyuaf.util.primitives.Int32(-1), 
-                  pyuaf.util.primitives.Int32(2), 
-                  pyuaf.util.primitives.Int32(-3) ]
-    
-    print(" - testing output typemap for pyuaf.util.primitives.UInt64 array")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.UInt64, True)
-    assert v == [ pyuaf.util.primitives.UInt64(1), 
-                  pyuaf.util.primitives.UInt64(2), 
-                  pyuaf.util.primitives.UInt64(3) ]
-    
-    print(" - testing output typemap for pyuaf.util.primitives.Int64 array")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Int64, True)
-    assert v == [ pyuaf.util.primitives.Int64(-1), 
-                  pyuaf.util.primitives.Int64(2), 
-                  pyuaf.util.primitives.Int64(-3) ]
-    
-    print(" - testing output typemap for pyuaf.util.primitives.Float array")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Float, True)
-    assert -3.13999 > v[0].value > -3.14001
-    assert 3.13999 < v[1].value < 3.14001
-    assert -3.13999 > v[2].value > -3.14001
-    
-    print(" - testing output typemap for pyuaf.util.primitives.Double array")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Double, True)
-    assert -3.13999 > v[0].value > -3.14001
-    assert 3.13999 < v[1].value < 3.14001
-    assert -3.13999 > v[2].value > -3.14001
-    
-    print(" - testing output typemap for pyuaf.util.primitives.String array")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.String, True)
-    assert v == [pyuaf.util.primitives.String("test1"), 
-                 pyuaf.util.primitives.String("test2"),
-                 pyuaf.util.primitives.String("test3")]
-    
-    print(" - testing output typemap for pyuaf.util.NodeId array")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.NodeId, True)
-    assert v == [pyuaf.util.NodeId("SomeIdentifier", 42), 
-                 pyuaf.util.NodeId("SomeIdentifier", 42),
-                 pyuaf.util.NodeId("SomeIdentifier", 42)]
-    
-    print(" - testing output typemap for pyuaf.util.ExpandedNodeId array")
-    try:
-        v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.ExpandedNodeId, True)
-        assert v == [pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21), 
-                     pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21),
-                     pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21)]
-    except TypeError:
-        print("*** warning: bug in SDK <= v1.3.2 present (in uavariant.cpp, see forum Unified Automation) ***")
-    
-    
-    print(" - testing output typemap for pyuaf.util.LocalizedText array")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.LocalizedText, True)
-    assert v == [pyuaf.util.LocalizedText("en", "SomeText"), 
-                 pyuaf.util.LocalizedText("en", "SomeText"),
-                 pyuaf.util.LocalizedText("en", "SomeText")]
-    
-    
-    print(" - testing output typemap for pyuaf.util.QualifiedName array")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.QualifiedName, True)
-    assert v == [pyuaf.util.QualifiedName("SomeName", 42), 
-                 pyuaf.util.QualifiedName("SomeName", 42),
-                 pyuaf.util.QualifiedName("SomeName", 42)]
-    
-    
-    print(" - testing output typemap for pyuaf.util.DateTime array")
-    v = tester.testVariantTypemap_out(pyuaf.util.opcuatypes.DateTime, True)
-    assert v == [pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"), 
-                 pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"),
-                 pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z")]
-    
-    
-    
-    ######## input typemaps ########
-    
-    
-    print(" - testing input typemap for pyuaf.util.primitives.Boolean")
-    v = tester.testVariantTypemap_in(pyuaf.util.primitives.Boolean(True))
-    assert v == pyuaf.util.primitives.Boolean(True)
-    
-    print(" - testing input typemap for pyuaf.util.primitives.Byte")
-    v = tester.testVariantTypemap_in(pyuaf.util.primitives.Byte(3))
-    assert v == pyuaf.util.primitives.Byte(3)
-    
-    print(" - testing input typemap for pyuaf.util.primitives.SByte")
-    v = tester.testVariantTypemap_in(pyuaf.util.primitives.SByte(-3))
-    assert v == pyuaf.util.primitives.SByte(-3)
-    
-    print(" - testing input typemap for pyuaf.util.primitives.UInt16")
-    v = tester.testVariantTypemap_in(pyuaf.util.primitives.UInt16(3))
-    assert v == pyuaf.util.primitives.UInt16(3)
-    
-    print(" - testing input typemap for pyuaf.util.primitives.Int16")
-    v = tester.testVariantTypemap_in(pyuaf.util.primitives.Int16(-3))
-    assert v == pyuaf.util.primitives.Int16(-3)
-    
-    print(" - testing input typemap for pyuaf.util.primitives.UInt32")
-    v = tester.testVariantTypemap_in(pyuaf.util.primitives.UInt32(3))
-    assert v == pyuaf.util.primitives.UInt32(3)
-    
-    print(" - testing input typemap for pyuaf.util.primitives.Int32")
-    v = tester.testVariantTypemap_in(pyuaf.util.primitives.Int32(-3))
-    assert v == pyuaf.util.primitives.Int32(-3)
-    
-    print(" - testing input typemap for pyuaf.util.primitives.UInt64")
-    v = tester.testVariantTypemap_in(pyuaf.util.primitives.UInt64(3))
-    assert v == pyuaf.util.primitives.UInt64(3)
-    
-    print(" - testing input typemap for pyuaf.util.primitives.Int64")
-    v = tester.testVariantTypemap_in(pyuaf.util.primitives.Int64(-3))
-    assert v == pyuaf.util.primitives.Int64(-3)
-    
-    print(" - testing input typemap for pyuaf.util.primitives.Float")
-    v = tester.testVariantTypemap_in(pyuaf.util.primitives.Float(3.14))
-    assert v == pyuaf.util.primitives.Float(3.14)
-    
-    print(" - testing input typemap for pyuaf.util.primitives.Double")
-    v = tester.testVariantTypemap_in(pyuaf.util.primitives.Double(3.14))
-    assert v == pyuaf.util.primitives.Double(3.14)
-    
-    print(" - testing input typemap for non-unicode string")
-    v = tester.testVariantTypemap_in("test")
-    assert v == pyuaf.util.primitives.String("test")
-    
-    print(" - testing input typemap for unicode string")
-    v = tester.testVariantTypemap_in(u"test \u00B0")
-    assert v == pyuaf.util.primitives.String((u"test \u00B0").encode("UTF-8"))
-    
-    print(" - testing input typemap for bytearray")
-    v = tester.testVariantTypemap_in(bytearray(b"abc"))
-    assert v == pyuaf.util.primitives.ByteString(bytearray(b"abc"))
-    
-    print(" - testing input typemap for pyuaf.util.NodeId")
-    v = tester.testVariantTypemap_in(pyuaf.util.NodeId("SomeIdentifier", 42))
-    assert v == pyuaf.util.NodeId("SomeIdentifier", 42)
-    
-    print(" - testing input typemap for pyuaf.util.ExpandedNodeId")
-    v = tester.testVariantTypemap_in(pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21))
-    assert v == pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21)
-    
-    print(" - testing input typemap for pyuaf.util.LocalizedText")
-    v = tester.testVariantTypemap_in(pyuaf.util.LocalizedText("en", "SomeText"))
-    assert v == pyuaf.util.LocalizedText("en", "SomeText")
-    
-    print(" - testing input typemap for pyuaf.util.QualifiedName")
-    v = tester.testVariantTypemap_in(pyuaf.util.QualifiedName("SomeName", 42))
-    assert v == pyuaf.util.QualifiedName("SomeName", 42)
-
-    print(" - testing input typemap for pyuaf.util.DateTime")
-    v = tester.testVariantTypemap_in(pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"))
-    assert v == pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z")
-
-    print(" - testing input typemap for pyuaf.util.primitives.Boolean array")
-    v = tester.testVariantTypemap_in( [pyuaf.util.primitives.Boolean(True),
-                                       pyuaf.util.primitives.Boolean(False),
-                                       pyuaf.util.primitives.Boolean(True) ])
-    assert v == [pyuaf.util.primitives.Boolean(True),
-                 pyuaf.util.primitives.Boolean(False),
-                 pyuaf.util.primitives.Boolean(True) ]
-
-    print(" - testing input typemap for pyuaf.util.primitives.Byte array")
-    v = tester.testVariantTypemap_in( [pyuaf.util.primitives.Byte(1),
-                                       pyuaf.util.primitives.Byte(2),
-                                       pyuaf.util.primitives.Byte(3) ])
-    assert v == [pyuaf.util.primitives.Byte(1),
-                 pyuaf.util.primitives.Byte(2),
-                 pyuaf.util.primitives.Byte(3) ]
-
-    print(" - testing input typemap for pyuaf.util.primitives.SByte array")
-    v = tester.testVariantTypemap_in( [pyuaf.util.primitives.SByte(-1),
-                                       pyuaf.util.primitives.SByte(2),
-                                       pyuaf.util.primitives.SByte(-3) ])
-    assert v == [pyuaf.util.primitives.SByte(-1),
-                 pyuaf.util.primitives.SByte(2),
-                 pyuaf.util.primitives.SByte(-3) ]
-
-    print(" - testing input typemap for pyuaf.util.primitives.UInt16 array")
-    v = tester.testVariantTypemap_in( [pyuaf.util.primitives.UInt16(1),
-                                       pyuaf.util.primitives.UInt16(2),
-                                       pyuaf.util.primitives.UInt16(3) ])
-    assert v == [pyuaf.util.primitives.UInt16(1),
-                 pyuaf.util.primitives.UInt16(2),
-                 pyuaf.util.primitives.UInt16(3) ]
-
-    print(" - testing input typemap for pyuaf.util.primitives.Int16 array")
-    v = tester.testVariantTypemap_in( [pyuaf.util.primitives.Int16(1),
-                                       pyuaf.util.primitives.Int16(-2),
-                                       pyuaf.util.primitives.Int16(3) ])
-    assert v == [pyuaf.util.primitives.Int16(1),
-                 pyuaf.util.primitives.Int16(-2),
-                 pyuaf.util.primitives.Int16(3) ]
-
-    print(" - testing input typemap for pyuaf.util.primitives.UInt32 array")
-    v = tester.testVariantTypemap_in( [pyuaf.util.primitives.UInt32(1),
-                                       pyuaf.util.primitives.UInt32(2),
-                                       pyuaf.util.primitives.UInt32(3) ])
-    assert v == [pyuaf.util.primitives.UInt32(1),
-                 pyuaf.util.primitives.UInt32(2),
-                 pyuaf.util.primitives.UInt32(3) ]
-
-    print(" - testing input typemap for pyuaf.util.primitives.Int32 array")
-    v = tester.testVariantTypemap_in( [pyuaf.util.primitives.Int32(1),
-                                       pyuaf.util.primitives.Int32(-2),
-                                       pyuaf.util.primitives.Int32(3) ])
-    assert v == [pyuaf.util.primitives.Int32(1),
-                 pyuaf.util.primitives.Int32(-2),
-                 pyuaf.util.primitives.Int32(3) ]
-
-    print(" - testing input typemap for pyuaf.util.primitives.UInt64 array")
-    v = tester.testVariantTypemap_in( [pyuaf.util.primitives.UInt64(1),
-                                       pyuaf.util.primitives.UInt64(2),
-                                       pyuaf.util.primitives.UInt64(3) ])
-    assert v == [pyuaf.util.primitives.UInt64(1),
-                 pyuaf.util.primitives.UInt64(2),
-                 pyuaf.util.primitives.UInt64(3) ]
-
-    print(" - testing input typemap for pyuaf.util.primitives.Int64 array")
-    v = tester.testVariantTypemap_in( [pyuaf.util.primitives.Int64(1),
-                                       pyuaf.util.primitives.Int64(-2),
-                                       pyuaf.util.primitives.Int64(3) ])
-    assert v == [pyuaf.util.primitives.Int64(1),
-                 pyuaf.util.primitives.Int64(-2),
-                 pyuaf.util.primitives.Int64(3) ]
-
-    print(" - testing input typemap for pyuaf.util.primitives.Float array")
-    v = tester.testVariantTypemap_in( [pyuaf.util.primitives.Float(-3.14),
-                                       pyuaf.util.primitives.Float(3.14),
-                                       pyuaf.util.primitives.Float(-3.14) ])
-    assert -3.13999 > v[0].value > -3.14001
-    assert 3.13999 < v[1].value < 3.14001
-    assert -3.13999 > v[2].value > -3.14001
-
-    print(" - testing input typemap for pyuaf.util.primitives.Double array")
-    v = tester.testVariantTypemap_in( [pyuaf.util.primitives.Double(-3.14),
-                                       pyuaf.util.primitives.Double(3.14),
-                                       pyuaf.util.primitives.Double(-3.14) ])
-    assert -3.13999 > v[0].value > -3.14001
-    assert 3.13999 < v[1].value < 3.14001
-    assert -3.13999 > v[2].value > -3.14001
-
-    print(" - testing input typemap for pyuaf.util.primitives.String array")
-    v = tester.testVariantTypemap_in([pyuaf.util.primitives.String("test1"),
-                                      pyuaf.util.primitives.String("test2"),
-                                      pyuaf.util.primitives.String("test3") ])
-    assert v == [pyuaf.util.primitives.String("test1"),
-                 pyuaf.util.primitives.String("test2"),
-                 pyuaf.util.primitives.String("test3") ]
-
-    print(" - testing input typemap for unicode objects array")
-    v = tester.testVariantTypemap_in([u"test1 \u00B0", u"test2 \u00B0", u"test3 \u00B0"])
-    assert v == [ pyuaf.util.primitives.String((u"test1 \u00B0").encode("UTF-8")), 
-                  pyuaf.util.primitives.String((u"test2 \u00B0").encode("UTF-8")), 
-                  pyuaf.util.primitives.String((u"test3 \u00B0").encode("UTF-8")) ]
-    
-    print(" - testing input typemap for pyuaf.util.NodeId array")
-    v = tester.testVariantTypemap_in( [pyuaf.util.NodeId("SomeIdentifier", 42), 
-                                       pyuaf.util.NodeId("SomeIdentifier", 42),
-                                       pyuaf.util.NodeId("SomeIdentifier", 42)] )
-    assert v == [pyuaf.util.NodeId("SomeIdentifier", 42), 
-                 pyuaf.util.NodeId("SomeIdentifier", 42),
-                 pyuaf.util.NodeId("SomeIdentifier", 42)]
-    
-    print(" - testing input typemap for pyuaf.util.ExpandedNodeId array")
-    
-    try:
-        v = tester.testVariantTypemap_in( [pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21), 
+        self.tester = pyuaf.util.__unittesthelper__.UnitTestHelper()
+        
+        
+        
+        ######## output typemaps ########
+        
+    def test_util_primitives_Boolean_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Boolean)
+        self.assertEqual( v.type() , pyuaf.util.opcuatypes.Boolean )
+        self.assertEqual( v.value  , True )
+        self.assertEqual( type(v)  , type(pyuaf.util.primitives.Boolean()) )
+        
+    def test_util_primitives_Byte_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Byte)
+        self.assertEqual( v.type() , pyuaf.util.opcuatypes.Byte )
+        self.assertEqual( v.value , 3 )
+        self.assertEqual( type(v) , type(pyuaf.util.primitives.Byte()) )
+        
+    def test_util_primitives_SByte_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.SByte)
+        self.assertEqual( v.type() , pyuaf.util.opcuatypes.SByte )
+        self.assertEqual( v.value , -3 )
+        self.assertEqual( type(v) , type(pyuaf.util.primitives.SByte()) )
+        
+    def test_util_primitives_UInt16_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.UInt16)
+        self.assertEqual( v.type() , pyuaf.util.opcuatypes.UInt16 )
+        self.assertEqual( v.value , 3 )
+        self.assertEqual( type(v) , type(pyuaf.util.primitives.UInt16()) )
+        
+    def test_util_primitives_Int16_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Int16)
+        self.assertEqual( v.type() , pyuaf.util.opcuatypes.Int16 )
+        self.assertEqual( v.value , -3 )
+        self.assertEqual( type(v) , type(pyuaf.util.primitives.Int16()) )
+        
+    def test_util_primitives_UInt32_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.UInt32)
+        self.assertEqual( v.type() , pyuaf.util.opcuatypes.UInt32 )
+        self.assertEqual( v.value , 3 )
+        self.assertEqual( type(v) , type(pyuaf.util.primitives.UInt32()) )
+        
+    def test_util_primitives_Int32_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Int32)
+        self.assertEqual( v.type() , pyuaf.util.opcuatypes.Int32 ) 
+        self.assertEqual( v.value , -3 )
+        self.assertEqual( type(v) , type(pyuaf.util.primitives.Int32()) )
+        
+    def test_util_primitives_UInt64_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.UInt64)
+        self.assertEqual( v.type() , pyuaf.util.opcuatypes.UInt64 )
+        self.assertEqual( v.value , 3 )
+        self.assertEqual( type(v) , type(pyuaf.util.primitives.UInt64()) )
+        
+    def test_util_primitives_Int64_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Int64)
+        self.assertEqual( v.type() , pyuaf.util.opcuatypes.Int64 )
+        self.assertEqual( v.value , -3 )
+        self.assertEqual( type(v) , type(pyuaf.util.primitives.Int64()) )
+        
+    def test_util_primitives_Float_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Float)
+        self.assertEqual( v.type() , pyuaf.util.opcuatypes.Float )
+        self.assertTrue( 3.1399999 < v.value < 3.140001 )
+        self.assertEqual( type(v) , type(pyuaf.util.primitives.Float()) )
+        
+    def test_util_primitives_Double_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Double)
+        self.assertEqual( v.type() , pyuaf.util.opcuatypes.Double )
+        self.assertTrue( 3.1399999 < v.value < 3.140001 )
+        self.assertEqual( type(v) , type(pyuaf.util.primitives.Double()) )
+        
+    def test_unicodeStr_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.String)
+        self.assertEqual( v.value , (u"test \u00B0").encode("UTF-8") )
+        self.assertEqual( type(v) , type(pyuaf.util.primitives.String()) )
+        
+    def test_bytearray_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.ByteString)
+        self.assertEqual( type(v.value) , type(bytearray()) )
+        self.assertEqual( len(v.value) , 3 )
+        self.assertEqual( v.value[0] , 1 )
+        self.assertEqual( v.value[1] , 2 )
+        self.assertEqual( v.value[2] , 3 )
+        
+    def test_util_NodeId_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.NodeId)
+        self.assertEqual( v , pyuaf.util.NodeId("SomeIdentifier", 42) )
+        
+    def test_util_ExpandedNodeId_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.ExpandedNodeId)
+        self.assertEqual( v , pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21) )
+        
+    def test_util_LocalizedText_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.LocalizedText)
+        self.assertEqual( v , pyuaf.util.LocalizedText("en", "SomeText") )
+        
+    def test_util_QualifiedName_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.QualifiedName)
+        self.assertEqual( v , pyuaf.util.QualifiedName("SomeName", 42) )
+        
+    def test_util_DateTime_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.DateTime)
+        self.assertEqual( v , pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z") )
+        
+    def test_util_primitives_Boolean_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Boolean, True)
+        self.assertEqual( v , [ pyuaf.util.primitives.Boolean(True), 
+                                pyuaf.util.primitives.Boolean(False), 
+                                pyuaf.util.primitives.Boolean(True) ] )
+        
+    def test_util_primitives_Byte_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Byte, True)
+        self.assertEqual( v , [ pyuaf.util.primitives.Byte(1), 
+                                pyuaf.util.primitives.Byte(2), 
+                                pyuaf.util.primitives.Byte(3) ] )
+        
+    def test_util_primitives_Byte_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.SByte, True)
+        self.assertEqual( v , [ pyuaf.util.primitives.SByte(-1), 
+                                pyuaf.util.primitives.SByte(2), 
+                                pyuaf.util.primitives.SByte(-3) ] )
+        
+    def test_util_primitives_UInt16_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.UInt16, True)
+        self.assertEqual( v , [ pyuaf.util.primitives.UInt16(1), 
+                                pyuaf.util.primitives.UInt16(2), 
+                                pyuaf.util.primitives.UInt16(3) ] )
+        
+    def test_util_primitives_Int16_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Int16, True)
+        self.assertEqual( v , [ pyuaf.util.primitives.Int16(-1), 
+                                pyuaf.util.primitives.Int16(2), 
+                                pyuaf.util.primitives.Int16(-3) ] )
+        
+    def test_util_primitives_UInt32_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.UInt32, True)
+        self.assertEqual( v , [ pyuaf.util.primitives.UInt32(1), 
+                                pyuaf.util.primitives.UInt32(2), 
+                                pyuaf.util.primitives.UInt32(3) ] )
+        
+    def test_util_primitives_Int32_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Int32, True)
+        self.assertEqual( v , [ pyuaf.util.primitives.Int32(-1), 
+                                pyuaf.util.primitives.Int32(2), 
+                                pyuaf.util.primitives.Int32(-3) ] )
+        
+    def test_util_primitives_UInt64_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.UInt64, True)
+        self.assertEqual( v , [ pyuaf.util.primitives.UInt64(1), 
+                                pyuaf.util.primitives.UInt64(2), 
+                                pyuaf.util.primitives.UInt64(3) ] )
+        
+    def test_util_primitives_Int64_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Int64, True)
+        self.assertEqual( v , [ pyuaf.util.primitives.Int64(-1), 
+                                pyuaf.util.primitives.Int64(2), 
+                                pyuaf.util.primitives.Int64(-3) ] )
+        
+    def test_util_primitives_Float_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Float, True)
+        self.assertTrue( -3.13999 > v[0].value > -3.14001 )
+        self.assertTrue( 3.13999 < v[1].value < 3.14001   )
+        self.assertTrue( -3.13999 > v[2].value > -3.14001 )
+        
+    def test_util_primitives_Double_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Double, True)
+        self.assertTrue( -3.13999 > v[0].value > -3.14001 )
+        self.assertTrue( 3.13999 < v[1].value < 3.14001   )
+        self.assertTrue( -3.13999 > v[2].value > -3.14001 )
+        
+    def test_util_primitives_String_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.String, True)
+        self.assertEqual( v , [pyuaf.util.primitives.String("test1"), 
+                               pyuaf.util.primitives.String("test2"),
+                               pyuaf.util.primitives.String("test3")] )
+        
+    def test_util_NodeId_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.NodeId, True)
+        self.assertEqual( v , [pyuaf.util.NodeId("SomeIdentifier", 42), 
+                               pyuaf.util.NodeId("SomeIdentifier", 42),
+                               pyuaf.util.NodeId("SomeIdentifier", 42)] )
+        
+    def test_util_ExpandedNodeId_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.ExpandedNodeId, True)
+        self.assertEqual( v , [pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21), 
+                               pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21),
+                               pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21)] )
+        
+    def test_util_LocalizedText_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.LocalizedText, True)
+        self.assertEqual( v , [pyuaf.util.LocalizedText("en", "SomeText"), 
+                               pyuaf.util.LocalizedText("en", "SomeText"),
+                               pyuaf.util.LocalizedText("en", "SomeText")] )
+        
+    def test_util_QualifiedName_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.QualifiedName, True)
+        self.assertEqual( v , [pyuaf.util.QualifiedName("SomeName", 42), 
+                               pyuaf.util.QualifiedName("SomeName", 42),
+                               pyuaf.util.QualifiedName("SomeName", 42)] )
+        
+    def test_util_DateTime_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.DateTime, True)
+        self.assertEqual( v , [pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"), 
+                               pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"),
+                               pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z")] )
+        
+        
+        
+        ######## input typemaps ########
+        
+        
+    def test_util_primitives_Boolean_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.primitives.Boolean(True))
+        self.assertEqual( v , pyuaf.util.primitives.Boolean(True) )
+        
+    def test_util_primitives_Byte_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.primitives.Byte(3))
+        self.assertEqual( v , pyuaf.util.primitives.Byte(3) )
+        
+    def test_util_primitives_SByte_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.primitives.SByte(-3))
+        self.assertEqual( v , pyuaf.util.primitives.SByte(-3) )
+        
+    def test_util_primitives_UInt16_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.primitives.UInt16(3))
+        self.assertEqual( v , pyuaf.util.primitives.UInt16(3) )
+        
+    def test_util_primitives_Int16_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.primitives.Int16(-3))
+        self.assertEqual( v , pyuaf.util.primitives.Int16(-3) )
+        
+    def test_util_primitives_UInt32_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.primitives.UInt32(3))
+        self.assertEqual( v , pyuaf.util.primitives.UInt32(3) )
+        
+    def test_util_primitives_Int32_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.primitives.Int32(-3))
+        self.assertEqual( v , pyuaf.util.primitives.Int32(-3) )
+        
+    def test_util_primitives_UInt64_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.primitives.UInt64(3))
+        self.assertEqual( v , pyuaf.util.primitives.UInt64(3) )
+        
+    def test_util_primitives_Int64_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.primitives.Int64(-3))
+        self.assertEqual( v , pyuaf.util.primitives.Int64(-3) )
+        
+    def test_util_primitives_Float_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.primitives.Float(3.14))
+        self.assertEqual( v , pyuaf.util.primitives.Float(3.14) )
+        
+    def test_util_primitives_Double_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.primitives.Double(3.14))
+        self.assertEqual( v , pyuaf.util.primitives.Double(3.14) )
+        
+    def test_util_primitives_String_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in("test")
+        self.assertEqual( v , pyuaf.util.primitives.String("test") )
+        
+    def test_unicodeStr_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(u"test \u00B0")
+        self.assertEqual( v , pyuaf.util.primitives.String((u"test \u00B0").encode("UTF-8")) )
+        
+    def test_bytearray_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(bytearray(b"abc"))
+        self.assertEqual( v , pyuaf.util.primitives.ByteString(bytearray(b"abc")) )
+        
+    def test_util_NodeId_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.NodeId("SomeIdentifier", 42))
+        self.assertEqual( v , pyuaf.util.NodeId("SomeIdentifier", 42) )
+        
+    def test_util_ExpandedNodeId_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21))
+        self.assertEqual( v , pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21) )
+        
+    def test_util_LocalizedText_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.LocalizedText("en", "SomeText"))
+        self.assertEqual( v , pyuaf.util.LocalizedText("en", "SomeText") )
+        
+    def test_util_QualifiedName_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.QualifiedName("SomeName", 42))
+        self.assertEqual( v , pyuaf.util.QualifiedName("SomeName", 42) )
+        
+    def test_util_DateTime_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"))
+        self.assertEqual( v , pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z") )
+    
+    def test_util_primitives_Boolean_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.primitives.Boolean(True),
+                                           pyuaf.util.primitives.Boolean(False),
+                                           pyuaf.util.primitives.Boolean(True) ])
+        self.assertEqual( v , [pyuaf.util.primitives.Boolean(True),
+                               pyuaf.util.primitives.Boolean(False),
+                               pyuaf.util.primitives.Boolean(True) ] )
+    
+    def test_util_primitives_Byte_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.primitives.Byte(1),
+                                           pyuaf.util.primitives.Byte(2),
+                                           pyuaf.util.primitives.Byte(3) ])
+        self.assertEqual( v , [pyuaf.util.primitives.Byte(1),
+                               pyuaf.util.primitives.Byte(2),
+                               pyuaf.util.primitives.Byte(3) ] )
+    
+    def test_util_primitives_SByte_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.primitives.SByte(-1),
+                                           pyuaf.util.primitives.SByte(2),
+                                           pyuaf.util.primitives.SByte(-3) ])
+        self.assertEqual( v , [pyuaf.util.primitives.SByte(-1),
+                               pyuaf.util.primitives.SByte(2),
+                               pyuaf.util.primitives.SByte(-3) ] )
+    
+    def test_util_primitives_UInt16_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.primitives.UInt16(1),
+                                           pyuaf.util.primitives.UInt16(2),
+                                           pyuaf.util.primitives.UInt16(3) ])
+        self.assertEqual( v , [pyuaf.util.primitives.UInt16(1),
+                               pyuaf.util.primitives.UInt16(2),
+                               pyuaf.util.primitives.UInt16(3) ] )
+    
+    def test_util_primitives_Int16_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.primitives.Int16(1),
+                                           pyuaf.util.primitives.Int16(-2),
+                                           pyuaf.util.primitives.Int16(3) ])
+        self.assertEqual( v , [pyuaf.util.primitives.Int16(1),
+                               pyuaf.util.primitives.Int16(-2),
+                               pyuaf.util.primitives.Int16(3) ] )
+    
+    def test_util_primitives_UInt32_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.primitives.UInt32(1),
+                                           pyuaf.util.primitives.UInt32(2),
+                                           pyuaf.util.primitives.UInt32(3) ])
+        self.assertEqual( v , [pyuaf.util.primitives.UInt32(1),
+                               pyuaf.util.primitives.UInt32(2),
+                               pyuaf.util.primitives.UInt32(3) ] )
+    
+    def test_util_primitives_Int32_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.primitives.Int32(1),
+                                           pyuaf.util.primitives.Int32(-2),
+                                           pyuaf.util.primitives.Int32(3) ])
+        self.assertEqual( v , [pyuaf.util.primitives.Int32(1),
+                               pyuaf.util.primitives.Int32(-2),
+                               pyuaf.util.primitives.Int32(3) ] )
+    
+    def test_util_primitives_UInt64_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.primitives.UInt64(1),
+                                           pyuaf.util.primitives.UInt64(2),
+                                           pyuaf.util.primitives.UInt64(3) ])
+        self.assertEqual( v , [pyuaf.util.primitives.UInt64(1),
+                               pyuaf.util.primitives.UInt64(2),
+                               pyuaf.util.primitives.UInt64(3) ] )
+    
+    def test_util_primitives_Int64_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.primitives.Int64(1),
+                                           pyuaf.util.primitives.Int64(-2),
+                                           pyuaf.util.primitives.Int64(3) ])
+        self.assertEqual( v , [pyuaf.util.primitives.Int64(1),
+                               pyuaf.util.primitives.Int64(-2),
+                               pyuaf.util.primitives.Int64(3) ] )
+    
+    def test_util_primitives_Float_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.primitives.Float(-3.14),
+                                           pyuaf.util.primitives.Float(3.14),
+                                           pyuaf.util.primitives.Float(-3.14) ])
+        self.assertTrue( -3.13999 > v[0].value > -3.14001 )
+        self.assertTrue( 3.13999 < v[1].value < 3.14001 )
+        self.assertTrue( -3.13999 > v[2].value > -3.14001 )
+    
+    def test_util_primitives_Double_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.primitives.Double(-3.14),
+                                           pyuaf.util.primitives.Double(3.14),
+                                           pyuaf.util.primitives.Double(-3.14) ])
+        self.assertTrue( -3.13999 > v[0].value > -3.14001 )
+        self.assertTrue( 3.13999 < v[1].value < 3.14001 )
+        self.assertTrue( -3.13999 > v[2].value > -3.14001 )
+    
+    def test_util_primitives_String_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in([pyuaf.util.primitives.String("test1"),
+                                          pyuaf.util.primitives.String("test2"),
+                                          pyuaf.util.primitives.String("test3") ])
+        self.assertEqual( v , [pyuaf.util.primitives.String("test1"),
+                               pyuaf.util.primitives.String("test2"),
+                               pyuaf.util.primitives.String("test3") ] )
+        
+    def test_unicodeStr_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in([u"test1 \u00B0", u"test2 \u00B0", u"test3 \u00B0"])
+        self.assertEqual( v , [ pyuaf.util.primitives.String((u"test1 \u00B0").encode("UTF-8")), 
+                                pyuaf.util.primitives.String((u"test2 \u00B0").encode("UTF-8")), 
+                                pyuaf.util.primitives.String((u"test3 \u00B0").encode("UTF-8")) ] )
+    
+    def test_util_NodeId_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.NodeId("SomeIdentifier", 42), 
+                                           pyuaf.util.NodeId("SomeIdentifier", 42),
+                                           pyuaf.util.NodeId("SomeIdentifier", 42)] )
+        self.assertEqual( v , [pyuaf.util.NodeId("SomeIdentifier", 42), 
+                               pyuaf.util.NodeId("SomeIdentifier", 42),
+                               pyuaf.util.NodeId("SomeIdentifier", 42)] )
+    
+    def test_util_ExpandedNodeId_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21), 
                                            pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21),
                                            pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21)] )
-        assert v == [pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21), 
-                     pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21),
-                     pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21)]
-    except TypeError:
-        print("*** warning: bug in SDK <= v1.3.2 present (in uavariant.cpp, see forum Unified Automation) ***")
+        self.assertEqual( v , [pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21), 
+                               pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21),
+                               pyuaf.util.ExpandedNodeId("SomeIdentifier", 42, 21)] )
     
+    def test_util_LocalizedText_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.LocalizedText("en", "SomeText"), 
+                                           pyuaf.util.LocalizedText("en", "SomeText"),
+                                           pyuaf.util.LocalizedText("en", "SomeText")])
+        self.assertEqual( v , [pyuaf.util.LocalizedText("en", "SomeText"), 
+                               pyuaf.util.LocalizedText("en", "SomeText"),
+                               pyuaf.util.LocalizedText("en", "SomeText")] )
     
-    print(" - testing input typemap for pyuaf.util.LocalizedText array")
-    v = tester.testVariantTypemap_in( [pyuaf.util.LocalizedText("en", "SomeText"), 
-                                       pyuaf.util.LocalizedText("en", "SomeText"),
-                                       pyuaf.util.LocalizedText("en", "SomeText")])
-    assert v == [pyuaf.util.LocalizedText("en", "SomeText"), 
-                 pyuaf.util.LocalizedText("en", "SomeText"),
-                 pyuaf.util.LocalizedText("en", "SomeText")]
+    def test_util_QualifiedName_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.QualifiedName("SomeName", 42), 
+                                                pyuaf.util.QualifiedName("SomeName", 43),
+                                                pyuaf.util.QualifiedName("SomeName", 44)] )
+        self.assertEqual( v , [pyuaf.util.QualifiedName("SomeName", 42), 
+                               pyuaf.util.QualifiedName("SomeName", 43),
+                               pyuaf.util.QualifiedName("SomeName", 44)] )
     
-    print(" - testing input typemap for pyuaf.util.QualifiedName array")
-    v = tester.testVariantTypemap_in( [pyuaf.util.QualifiedName("SomeName", 42), 
-                                       pyuaf.util.QualifiedName("SomeName", 43),
-                                       pyuaf.util.QualifiedName("SomeName", 44)] )
-    
-    print(" - testing input typemap for pyuaf.util.DateTime array")
-    v = tester.testVariantTypemap_in( [pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"), 
-                                       pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"), 
-                                       pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z")] )
+    def test_util_DateTime_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"), 
+                                                pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"), 
+                                                pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z")] )
+        self.assertEqual( v , [pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"), 
+                               pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"), 
+                               pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z")] )
 
+
+if __name__ == '__main__':
+    unittest.TextTestRunner(verbosity = ARGS.verbosity).run(suite())

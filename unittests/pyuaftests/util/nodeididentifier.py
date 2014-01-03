@@ -1,47 +1,63 @@
 import pyuaf
+import unittest
+from pyuaf.util.unittesting import parseArgs
 
 
-def test(args):
-        
-    print("util.nodeididentifier")
+ARGS = parseArgs()
+
+
+def suite(args=None):
+    if args is not None:
+        global ARGS
+        ARGS = args
     
-    print(" - testing pyuaf.util.NodeIdIdentifier()")
-    n0  = pyuaf.util.NodeIdIdentifier("SomeStringIdentifier")
-    n0_ = pyuaf.util.NodeIdIdentifier("SomeStringIdentifier")
-    n1  = pyuaf.util.NodeIdIdentifier(42)
-    n2  = pyuaf.util.NodeIdIdentifier("SomeOtherStringIdentifier")
-    n3  = pyuaf.util.NodeIdIdentifier(pyuaf.util.Guid("{10000000-0000-0000-0000-000000000000}"))
-    n4  = pyuaf.util.NodeIdIdentifier(bytearray("abcd"))
+    return unittest.TestLoader().loadTestsFromTestCase(NodeIdIdentifierTest)
+
+
+
+class NodeIdIdentifierTest(unittest.TestCase):
     
-    print(" - testing pyuaf.util.NodeIdIdentifier().type")
-    assert n1.type == pyuaf.util.nodeididentifiertypes.Identifier_Numeric
-    assert n2.type == pyuaf.util.nodeididentifiertypes.Identifier_String
-    assert n3.type == pyuaf.util.nodeididentifiertypes.Identifier_Guid
-    assert n4.type == pyuaf.util.nodeididentifiertypes.Identifier_Opaque
+    def setUp(self):
+        self.n0  = pyuaf.util.NodeIdIdentifier("SomeStringIdentifier")
+        self.n0_ = pyuaf.util.NodeIdIdentifier("SomeStringIdentifier")
+        self.n1  = pyuaf.util.NodeIdIdentifier(42)
+        self.n2  = pyuaf.util.NodeIdIdentifier("SomeOtherStringIdentifier")
+        self.n3  = pyuaf.util.NodeIdIdentifier(pyuaf.util.Guid("{10000000-0000-0000-0000-000000000000}"))
+        self.n4  = pyuaf.util.NodeIdIdentifier(bytearray("abcd"))
     
-    print(" - testing pyuaf.util.NodeIdIdentifier().idString")
-    assert n0.idString == "SomeStringIdentifier"
+    def test_util_NodeIdIdentifier_type(self):
+        self.assertEqual( self.n1.type , pyuaf.util.nodeididentifiertypes.Identifier_Numeric )
+        self.assertEqual( self.n2.type , pyuaf.util.nodeididentifiertypes.Identifier_String  )
+        self.assertEqual( self.n3.type , pyuaf.util.nodeididentifiertypes.Identifier_Guid    )
+        self.assertEqual( self.n4.type , pyuaf.util.nodeididentifiertypes.Identifier_Opaque  )
     
-    print(" - testing pyuaf.util.NodeIdIdentifier().idInt")
-    assert n1.idNumeric == 42
+    def test_util_NodeIdIdentifier_idString(self):
+        self.assertEqual( self.n0.idString , "SomeStringIdentifier" )
     
-    print(" - testing pyuaf.util.NodeIdIdentifier().idGuid")
-    assert n3.idGuid == pyuaf.util.Guid("{10000000-0000-0000-0000-000000000000}")
+    def test_util_NodeIdIdentifier_idNumeric(self):
+        self.assertEqual( self.n1.idNumeric , 42 )
     
-    print(" - testing pyuaf.util.NodeIdIdentifier().idOpaque")
-    assert n4.idOpaque == bytearray("abcd")
+    def test_util_NodeIdIdentifier_idGuid(self):
+        self.assertEqual( self.n3.idGuid , pyuaf.util.Guid("{10000000-0000-0000-0000-000000000000}") )
     
-    print(" - testing pyuaf.util.NodeIdIdentifier().__eq__()")
-    assert n0 == n0_
+    def test_util_NodeIdIdentifier_idOpaque(self):
+        self.assertEqual( self.n4.idOpaque , bytearray("abcd") )
     
-    print(" - testing pyuaf.util.NodeIdIdentifier().__ne__()")
-    assert n0 != n1
-    assert n0 != n2
+    def test_util_NodeIdIdentifier___eq__(self):
+        self.assertTrue( self.n0 == self.n0_ )
     
-    print(" - testing pyuaf.util.NodeIdIdentifier().__lt__()")
-    assert n1 < n0
-    assert n2 < n0
+    def test_util_NodeIdIdentifier___ne__(self):
+        self.assertTrue( self.n0 != self.n1 )
+        self.assertTrue( self.n0 != self.n2 )
     
-    print(" - testing pyuaf.util.NodeIdIdentifier().__gt__()")
-    assert n0 > n1
-    assert n0 > n2
+    def test_util_NodeIdIdentifier___lt__(self):
+        self.assertTrue( self.n1 < self.n0 )
+        self.assertTrue( self.n2 < self.n0 )
+    
+    def test_util_NodeIdIdentifier___gt__(self):
+        self.assertTrue( self.n0 > self.n1 )
+        self.assertTrue( self.n0 > self.n2 )
+
+
+if __name__ == '__main__':
+    unittest.TextTestRunner(verbosity = ARGS.verbosity).run(suite())

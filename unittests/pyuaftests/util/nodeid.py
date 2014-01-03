@@ -1,90 +1,106 @@
 import pyuaf
+import unittest
+from pyuaf.util.unittesting import parseArgs
 
 
-def test(args):
+ARGS = parseArgs()
+
+
+def suite(args=None):
+    if args is not None:
+        global ARGS
+        ARGS = args
+    
+    return unittest.TestLoader().loadTestsFromTestCase(NodeIdTest)
+
+
+
+class NodeIdTest(unittest.TestCase):
+    
+    def setUp(self):
+        self.n0  = pyuaf.util.NodeId()
+        self.n0_ = pyuaf.util.NodeId()
+        self.n1  = pyuaf.util.NodeId("SomeStringIdentifier", "SomeNameSpaceUri")
+        self.n1_ = pyuaf.util.NodeId("SomeStringIdentifier", "SomeNameSpaceUri")
+        self.n1a = pyuaf.util.NodeId("SomeOtherStringIdentifier", "SomeNameSpaceUri")
+        self.n1b = pyuaf.util.NodeId("SomeStringIdentifier", "SomeOtherNameSpaceUri")
+        self.n1c = pyuaf.util.NodeId("SomeOtherStringIdentifier", "SomeOtherNameSpaceUri")
+        self.n2  = pyuaf.util.NodeId("SomeStringIdentifier", "SomeNameSpaceUri", 42)
+        self.n2_ = pyuaf.util.NodeId("SomeStringIdentifier", "SomeNameSpaceUri", 42)
+        self.n3  = pyuaf.util.NodeId("SomeStringIdentifier", 42)
+        self.n3_ = pyuaf.util.NodeId("SomeStringIdentifier", 42)
+        self.n4  = pyuaf.util.NodeId(21, "SomeNameSpaceUri")
+        self.n4_ = pyuaf.util.NodeId(21, "SomeNameSpaceUri")
+        self.n5  = pyuaf.util.NodeId(21, "SomeNameSpaceUri", 42)
+        self.n5_ = pyuaf.util.NodeId(21, "SomeNameSpaceUri", 42)
+        self.n6  = pyuaf.util.NodeId(21, 42)
+        self.n6_ = pyuaf.util.NodeId(21, 42)
+    
+    def test_util_NodeId_hasNameSpaceIndex(self):
+        self.assertEquals( self.n0.hasNameSpaceIndex() , False )
+        self.assertEquals( self.n1.hasNameSpaceIndex() , False )
+        self.assertEquals( self.n2.hasNameSpaceIndex() , True  )
+        self.assertEquals( self.n3.hasNameSpaceIndex() , True  )
+        self.assertEquals( self.n4.hasNameSpaceIndex() , False )
+        self.assertEquals( self.n5.hasNameSpaceIndex() , True  )
+        self.assertEquals( self.n6.hasNameSpaceIndex() , True  )
+    
+    def test_util_NodeId_hasNameSpaceUri(self):
+        self.assertEquals( self.n0.hasNameSpaceUri() , False )
+        self.assertEquals( self.n1.hasNameSpaceUri() , True  )
+        self.assertEquals( self.n2.hasNameSpaceUri() , True  )
+        self.assertEquals( self.n3.hasNameSpaceUri() , False )
+        self.assertEquals( self.n4.hasNameSpaceUri() , True  )
+        self.assertEquals( self.n5.hasNameSpaceUri() , True  )
+        self.assertEquals( self.n6.hasNameSpaceUri() , False )
         
-    print("util.nodeid")
-    
-    print(" - testing pyuaf.util.NodeId()")
-    n0  = pyuaf.util.NodeId()
-    n0_ = pyuaf.util.NodeId()
-    n1  = pyuaf.util.NodeId("SomeStringIdentifier", "SomeNameSpaceUri")
-    n1_ = pyuaf.util.NodeId("SomeStringIdentifier", "SomeNameSpaceUri")
-    n1a = pyuaf.util.NodeId("SomeOtherStringIdentifier", "SomeNameSpaceUri")
-    n1b = pyuaf.util.NodeId("SomeStringIdentifier", "SomeOtherNameSpaceUri")
-    n1c = pyuaf.util.NodeId("SomeOtherStringIdentifier", "SomeOtherNameSpaceUri")
-    n2  = pyuaf.util.NodeId("SomeStringIdentifier", "SomeNameSpaceUri", 42)
-    n2_ = pyuaf.util.NodeId("SomeStringIdentifier", "SomeNameSpaceUri", 42)
-    n3  = pyuaf.util.NodeId("SomeStringIdentifier", 42)
-    n3_ = pyuaf.util.NodeId("SomeStringIdentifier", 42)
-    n4  = pyuaf.util.NodeId(21, "SomeNameSpaceUri")
-    n4_ = pyuaf.util.NodeId(21, "SomeNameSpaceUri")
-    n5  = pyuaf.util.NodeId(21, "SomeNameSpaceUri", 42)
-    n5_ = pyuaf.util.NodeId(21, "SomeNameSpaceUri", 42)
-    n6  = pyuaf.util.NodeId(21, 42)
-    n6_ = pyuaf.util.NodeId(21, 42)
-    
-    print(" - testing pyuaf.util.NodeId().hasNameSpaceIndex()")
-    assert n0.hasNameSpaceIndex() == False
-    assert n1.hasNameSpaceIndex() == False
-    assert n2.hasNameSpaceIndex() == True
-    assert n3.hasNameSpaceIndex() == True
-    assert n4.hasNameSpaceIndex() == False
-    assert n5.hasNameSpaceIndex() == True
-    assert n6.hasNameSpaceIndex() == True
-    
-    print(" - testing pyuaf.util.NodeId().hasNameSpaceUri()")
-    assert n0.hasNameSpaceUri() == False
-    assert n1.hasNameSpaceUri() == True
-    assert n2.hasNameSpaceUri() == True
-    assert n3.hasNameSpaceUri() == False
-    assert n4.hasNameSpaceUri() == True
-    assert n5.hasNameSpaceUri() == True
-    assert n6.hasNameSpaceUri() == False
-    
-    print(" - testing pyuaf.util.NodeId().nameSpaceIndex()")
-    assert n2.nameSpaceIndex() == 42
-    
-    print(" - testing pyuaf.util.NodeId().nameSpaceUri()")
-    assert n1.nameSpaceUri() == "SomeNameSpaceUri"
-    
-    print(" - testing pyuaf.util.NodeId().setNameSpaceIndex()")
-    n = pyuaf.util.NodeId(n2)
-    n.setNameSpaceIndex(43)
-    assert n.nameSpaceIndex() == 43
-    
-    print(" - testing pyuaf.util.NodeId().setNameSpaceUri()")
-    n = pyuaf.util.NodeId(n2)
-    n.setNameSpaceUri("SomeOtherNameSpaceUri")
-    assert n.nameSpaceUri() == "SomeOtherNameSpaceUri"
-    
-    print(" - testing pyuaf.util.NodeId().identifier()")
-    assert n1.identifier() == pyuaf.util.NodeIdIdentifier("SomeStringIdentifier")
-    assert n4.identifier() == pyuaf.util.NodeIdIdentifier(21)
-    
-    print(" - testing pyuaf.util.NodeId().__eq__()")
-    assert n0 == n0_ 
-    assert n1 == n1_ 
-    assert n2 == n2_ 
-    assert n3 == n3_ 
-    assert n4 == n4_ 
-    assert n5 == n5_ 
-    assert n6 == n6_
-    
-    print(" - testing pyuaf.util.NodeId().__ne__()")
-    assert n0 != n1 
-    assert n1 != n1a 
-    assert n1 != n1b 
-    assert n1 != n1c 
-    assert n1 != n2  
-    assert n2 != n3 
-    assert n3 != n4 
-    assert n5 != n6
-    
-    print(" - testing pyuaf.util.NodeId().__lt__()")
-    assert n4 < n3
-    assert n6 < n5
-    
-    print(" - testing pyuaf.util.NodeId().__gt__()")
-    assert n1 > n0
-    assert n2 > n0
+    def test_util_NodeId_nameSpaceIndex(self):
+        self.assertEquals( self.n2.nameSpaceIndex() , 42 )
+        
+    def test_util_NodeId_nameSpaceUri(self):
+        self.assertEquals( self.n1.nameSpaceUri() , "SomeNameSpaceUri" )
+        
+    def test_util_NodeId_setNameSpaceIndex(self):
+        n = pyuaf.util.NodeId(self.n2)
+        n.setNameSpaceIndex(43)
+        self.assertEquals( n.nameSpaceIndex() , 43 )
+        
+    def test_util_NodeId_setNameSpaceUri(self):
+        n = pyuaf.util.NodeId(self.n2)
+        n.setNameSpaceUri("SomeOtherNameSpaceUri")
+        self.assertEquals( n.nameSpaceUri() , "SomeOtherNameSpaceUri" )
+        
+    def test_util_NodeId_identifier(self):
+        self.assertEquals( self.n1.identifier() , pyuaf.util.NodeIdIdentifier("SomeStringIdentifier") )
+        self.assertEquals( self.n4.identifier() , pyuaf.util.NodeIdIdentifier(21) )
+        
+    def test_util_NodeId___eq__(self):
+        self.assertTrue( self.n0 == self.n0_ )
+        self.assertTrue( self.n1 == self.n1_ )
+        self.assertTrue( self.n2 == self.n2_ )
+        self.assertTrue( self.n3 == self.n3_ )
+        self.assertTrue( self.n4 == self.n4_ )
+        self.assertTrue( self.n5 == self.n5_ )
+        self.assertTrue( self.n6 == self.n6_ )
+        
+    def test_util_NodeId___ne__(self):
+        self.assertTrue( self.n0 != self.n1  )
+        self.assertTrue( self.n1 != self.n1a )
+        self.assertTrue( self.n1 != self.n1b )
+        self.assertTrue( self.n1 != self.n1c )
+        self.assertTrue( self.n1 != self.n2  )
+        self.assertTrue( self.n2 != self.n3  )
+        self.assertTrue( self.n3 != self.n4  )
+        self.assertTrue( self.n5 != self.n6  )
+        
+    def test_util_NodeId___lt__(self):
+        self.assertTrue( self.n4 < self.n3 )
+        self.assertTrue( self.n6 < self.n5 )
+        
+    def test_util_NodeId___gt__(self):
+        self.assertTrue( self.n1 > self.n0 )
+        self.assertTrue( self.n2 > self.n0 )
+
+
+if __name__ == '__main__':
+    unittest.TextTestRunner(verbosity = ARGS.verbosity).run(suite())
