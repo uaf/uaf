@@ -128,13 +128,22 @@ namespace uafc
 
         if (uaSession_->isConnected())
         {
-            logger_->debug("Now deleting subscription %d and thereby deleting all monitored items",
-                           clientSubscriptionHandle_);
 
-            UaClientSdk::ServiceSettings serviceSettings;
-            UaStatus uaStatus = uaSession_->deleteSubscription(serviceSettings, &uaSubscription_);
+            if (isCreated())
+            {
+                logger_->debug("Now deleting subscription %d and thereby deleting all monitored items",
+                               clientSubscriptionHandle_);
+                UaClientSdk::ServiceSettings serviceSettings;
+                UaStatus uaStatus = uaSession_->deleteSubscription(serviceSettings, &uaSubscription_);
 
-            ret.fromSdk(uaStatus.statusCode(), "Could not delete the subscription");
+                ret.fromSdk(uaStatus.statusCode(), "Could not delete the subscription");
+            }
+            else
+            {
+                logger_->debug("No need to delete subscription %d on the server side, as it was " \
+                               "already deleted", clientSubscriptionHandle_);
+                ret.setGood();
+            }
         }
         else
         {
@@ -167,9 +176,13 @@ namespace uafc
 
         // log the result
         if (ret.isGood())
+        {
             logger_->debug("The subscription has been deleted successfully");
-        else
+            setSubscriptionState(uafc::subscriptionstates::Deleted);
+        } else
+        {
             logger_->error(ret);
+        }
 
         return ret;
     }
@@ -187,6 +200,8 @@ namespace uafc
     void Subscription::setSubscriptionState(
             uafc::subscriptionstates::SubscriptionState subscriptionState)
     {
+        logger_->debug("The subscription status has changed to %s",
+                       uafc::subscriptionstates::toString(subscriptionState).c_str());
         Subscription::subscriptionState_ = subscriptionState;
 
     }
@@ -263,6 +278,10 @@ namespace uafc
 
                 // add it to the vector of notifications for the callback
                 notifications.push_back(notification);
+
+                // log the notification
+                logger_->debug(" - Notification %d:", int(i));
+                logger_->debug(notification.toString("   ", 25));
             }
         }
 
@@ -277,6 +296,8 @@ namespace uafc
     {
         // get the number of notifications
         uint32_t noOfNotifications = uaEventFieldList.length();
+
+        logger_->debug("A total of %d notifications were received", noOfNotifications);
 
         // create the notifications
         vector<EventNotification> notifications;
@@ -302,6 +323,10 @@ namespace uafc
 
                 // add it to the vector of notifications for the callback
                 notifications.push_back(notification);
+
+                // log the notification
+                logger_->debug(" - Notification %d:", int(i));
+                logger_->debug(notification.toString("   ", 25));
             }
         }
 
