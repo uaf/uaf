@@ -36,18 +36,17 @@ from pyuaf.util.errors      import UafError
 
 
 # define the namespace URI and server URI of the UaDemoServer
-demoNsUri     = "DemoNodeManager"
-dataNsUri     = "http://opcfoundation.org/UA/DI/"
-demoServerUri = "urn:UnifiedAutomation:UaDemoserver"
+demoNsUri     = "http://www.unifiedautomation.com/DemoServer"
+demoServerUri = "urn:UnifiedAutomation:UaServerCpp"
 
 # define some addresses of nodes of which we will read the Value attribute
 # (you could also define addresses as Relative Paths to other addresses, 
 #  see the example that shows you how to define addresses)
-someDoubleNode        = Address( NodeId("MyDemoObject.Temperature"               , demoNsUri), demoServerUri )
-someUInt32Node        = Address( NodeId("MyDemoObject.Counter"                   , demoNsUri), demoServerUri )
-someStringNode        = Address( NodeId("AllDataTypesStatic/StaticString"        , demoNsUri), demoServerUri )
-someLocalizedTextNode = Address( NodeId("AllDataTypesStatic/StaticLocalizedText" , demoNsUri), demoServerUri )
-someSByteArrayNode    = Address( NodeId("AllDataTypesStatic/StaticSByteArray"    , demoNsUri), demoServerUri )
+someDoubleNode        = Address( NodeId("Demo.Static.Scalar.Byte"                , demoNsUri), demoServerUri )
+someUInt32Node        = Address( NodeId("Demo.Static.Scalar.UInt32"              , demoNsUri), demoServerUri )
+someStringNode        = Address( NodeId("Demo.Static.Scalar.String"              , demoNsUri), demoServerUri )
+someLocalizedTextNode = Address( NodeId("Demo.Static.Scalar.LocalizedText"       , demoNsUri), demoServerUri )
+someSByteArrayNode    = Address( NodeId("Demo.Static.Arrays.SByte"               , demoNsUri), demoServerUri )
 
 # define a function to print the readResult (which is of type pyuaf.client.results.ReadResult)
 def printResult(readResult):
@@ -90,7 +89,7 @@ def printResult(readResult):
 # define the ClientSettings:
 settings = ClientSettings()
 settings.applicationName = "MyClient"
-settings.discoveryUrls.append("opc.tcp://localhost:4841")
+settings.discoveryUrls.append("opc.tcp://localhost:48010")
 
 # create the client
 myClient = Client(settings)

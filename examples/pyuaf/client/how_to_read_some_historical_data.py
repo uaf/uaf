@@ -33,6 +33,8 @@ from pyuaf.util             import Address, NodeId
 from pyuaf.util             import DateTime
 from pyuaf.util             import DataValue
 from pyuaf.util             import Status
+from pyuaf.util             import RelativePathElement
+from pyuaf.util             import QualifiedName
 from pyuaf.util             import primitives
 from pyuaf.util             import opcuaidentifiers
 from pyuaf.util             import opcuastatuscodes
@@ -40,25 +42,56 @@ from pyuaf.util.errors      import UafError
 
 
 # define the namespace URI and server URI of the UaDemoServer
-demoNsUri     = "DemoNodeManager"
-demoServerUri = "urn:UnifiedAutomation:UaDemoserver"
+demoNsUri     = "http://www.unifiedautomation.com/DemoServer"
+demoServerUri = "urn:UnifiedAutomation:UaServerCpp"
 
-# define the address of the node that provides the historical data
-counterAddress = Address( NodeId("CounterWithHistory", demoNsUri), demoServerUri )
+# also define the addresses of some useful nodes
+# (demoAddress is an absolute address, all the others are relative ones) 
+demoAddress             = Address( NodeId("Demo", demoNsUri), demoServerUri )
+simulationActiveAddress = Address( demoAddress, [RelativePathElement(QualifiedName("SimulationActive", demoNsUri))] )
+startSimulationAddress  = Address( demoAddress, [RelativePathElement(QualifiedName("StartSimulation" , demoNsUri))] )
+historyAddress          = Address( demoAddress, [RelativePathElement(QualifiedName("History", demoNsUri))] )
+loggingActiveAddress    = Address( historyAddress, [RelativePathElement(QualifiedName("DataLoggerActive", demoNsUri))] )
+startLoggingAddress     = Address( historyAddress, [RelativePathElement(QualifiedName("StartLogging", demoNsUri))] )
+doubleAddress           = Address( historyAddress, [RelativePathElement(QualifiedName("DoubleWithHistory", demoNsUri))] )
 
 # define the ClientSettings:
 settings = ClientSettings()
 settings.applicationName = "MyClient"
-settings.discoveryUrls.append("opc.tcp://localhost:4841")
+settings.discoveryUrls.append("opc.tcp://localhost:48010")
 
 # create the client
 myClient = Client(settings)
 
+# first, we need to start the simulation (if it's not already started),
+# and we need to start the logging (if it's not already started)
+res = myClient.read( [simulationActiveAddress,loggingActiveAddress]  )
 
-# apparently, the counter of the demo server starts only to keep history after we read it once
-readResult = myClient.read([counterAddress])
-if readResult.overallStatus.isGood():
-    print("The counter was read (value: %d)" %readResult.targets[0].data.value)
+if not res.overallStatus.isGood():
+    raise Exception("Couldn't read some nodes of the server: is uaservercpp started and properly configured?")
+
+isSimulationActive = res.targets[0].data.value
+isLoggingActive    = res.targets[1].data.value
+
+print("isSimulationActive : %s" %isSimulationActive)
+print("isLoggingActive    : %s" %isLoggingActive)
+
+if not isSimulationActive:
+    res = myClient.call(demoAddress, startSimulationAddress)
+    
+    if res.overallStatus.isGood():
+        print("The simulation was started")
+    else:
+        raise Exception("Couldn't start the simulation: %s" %res.overallStatus)
+
+if not isLoggingActive:
+    res = myClient.call(historyAddress, startLoggingAddress)
+    
+    if res.overallStatus.isGood():
+        print("The logging was started")
+    else:
+        raise Exception("Couldn't start the logging: %s" %res.overallStatus)
+    
 
 # now wait a bit more than a second, so that we have at least one second of historical data
 time.sleep(1.5)
@@ -74,15 +107,15 @@ try:
     print("-------------")
     
     # Read the raw historical data 
-    #   - that is provided by the counter node,
+    #   - that is provided by the double node,
     #   - that was recorded during the past second
     #   - with a maximum of a 100 returned values 
     #     (we expect around 10 values, so 100 is a very safe margin) 
     #   - and let the UAF invoke at most 10 "continuation calls"
     #     (we expect that all data can be returned by a single call, so a maximum of 10 
     #      additional calls is again a very safe margin)
-    result = myClient.historyReadRaw(addresses          = [counterAddress],
-                                     startTime          = DateTime(time.time() - 1),
+    result = myClient.historyReadRaw(addresses          = [doubleAddress],
+                                     startTime          = DateTime(time.time() - 1.5),
                                      endTime            = DateTime(time.time()),
                                      numValuesPerNode   = 100, 
                                      maxAutoReadMore    = 10)
@@ -92,7 +125,7 @@ try:
     
     # do some processing on the result
     if result.targets[0].status.isNotGood():
-        print("Could not read historical data from the counter: %s" %str(result.targets[0].status))
+        print("Could not read historical data from the double: %s" %str(result.targets[0].status))
     else:
         if len(result.targets[0].dataValues) == 0:
             # Strange, we didn't receive any historical data.
@@ -101,13 +134,13 @@ try:
                 print("OK, no data could be received because he server reports that there is "
                       "no data that matches your request")
         else:
-            allStatuses    = []
-            allIntValues   = []
-            allSourceTimes = []
+            allStatuses     = []
+            allDoubleValues = []
+            allSourceTimes  = []
             
             for dataValue in result.targets[0].dataValues:
                 # check the data type
-                if type(dataValue.data) == primitives.UInt32:
+                if type(dataValue.data) == primitives.Double:
                     
                     # NOTE that dataValue is just a POINTER!
                     # So if you want to copy any objects 
@@ -120,13 +153,13 @@ try:
                     # invalid memory, and your software will crash when you try to use them!
                     
                     allStatuses.append( Status(dataValue.status) )               # notice the copy constructor!
-                    allIntValues.append( dataValue.data.value )                  # an int, no copy constructor needed
+                    allDoubleValues.append( dataValue.data.value )                  # an int, no copy constructor needed
                     allSourceTimes.append( DateTime(dataValue.sourceTimestamp) ) # notice the copy constructor!
             
             # now print the lists 
             print("")
             print("The results are:")
-            for i in xrange(len(allIntValues)):
+            for i in xrange(len(allDoubleValues)):
                 
                 timeFloat  = allSourceTimes[i].ctime()
                 timeTuple  = time.localtime( long(timeFloat) )
@@ -134,14 +167,14 @@ try:
                              + "."                                  \
                              + ("%.3d" %allSourceTimes[i].msec())
                 
-                print("Code=%d - Value=%d - Time=%s" %(allStatuses[i].statusCode(), allIntValues[i], timeString))
+                print("Code=%d - Value=%s - Time=%s" %(allStatuses[i].statusCode(), allDoubleValues[i], timeString))
     
     print("")
     print("Second example:")
     print("--------------")
     # Now do the same, but this time get the modifications of the data of the last second.
     # Since we didn't do any modifications, none will be reported!
-    result = myClient.historyReadModified(addresses          = [counterAddress],
+    result = myClient.historyReadModified(addresses          = [doubleAddress],
                                           startTime          = DateTime(time.time() - 1),
                                           endTime            = DateTime(time.time()),
                                           numValuesPerNode   = 100, 
@@ -164,7 +197,7 @@ try:
     startTime = DateTime(time.time() - 1)
     endTime   = DateTime(time.time())
     
-    result = myClient.historyReadRaw(addresses          = [counterAddress],
+    result = myClient.historyReadRaw(addresses          = [doubleAddress],
                                      startTime          = startTime,
                                      endTime            = endTime,
                                      numValuesPerNode   = 3, 
@@ -179,7 +212,7 @@ try:
     # as long as we get continuation points, we must continue to read the data
     while len(result.targets[0].continuationPoint) > 0:
         
-        result = myClient.historyReadRaw(addresses          = [counterAddress],
+        result = myClient.historyReadRaw(addresses          = [doubleAddress],
                                          startTime          = startTime,
                                          endTime            = endTime,
                                          numValuesPerNode   = 3, 
@@ -205,7 +238,7 @@ try:
     
     # create a request with 1 target
     request = HistoryReadRawModifiedRequest(1)
-    request.targets[0].address = counterAddress
+    request.targets[0].address = doubleAddress
     
     # configure the request:
     request.serviceConfig.serviceSettings.startTime                = DateTime(time.time() - 1)
