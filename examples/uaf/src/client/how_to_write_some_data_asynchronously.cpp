@@ -82,6 +82,19 @@ int main(int argc, char* argv[])
     addresses.push_back(someLocalizedTextNode);
     addresses.push_back(someSByteArrayNode);
 
+    UaWriteValues writeValues;
+    writeValues.create(1);
+
+    UaNodeId nodeId("Demo.Scalar.Static.UInt32", 2);
+    UaVariant variant;
+    variant.setUInt32(3);
+
+    nodeId.copyTo(&writeValues[0].NodeId);
+    variant.copyTo(&writeValues[0].Value.Value);
+    writeValues[0].AttributeId = OpcUa_Attributes_Value;
+
+
+
     vector<Variant> data(5);
     data[0].setDouble(3.14);
     data[1].setUInt32(4);
