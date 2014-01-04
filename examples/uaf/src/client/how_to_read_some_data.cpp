@@ -14,7 +14,7 @@
  *
  * In this example, we will use both ways to read data.
  *
- * To run the example, start the UaDemoServer of UnifiedAutomation first on the same machine.
+ * To run the example, start the UaServerCPP of UnifiedAutomation first on the same machine.
  */
 
 #include "uaf/client/client.h"
