@@ -136,12 +136,25 @@ MACRO(handleUnifiedAutomationSdk)
     endif (UASDK)
     
     # figure out if the SDK version is at least 1.4 by checking if include/uabase/uafile.h exists
-    if(EXISTS "${UASDK_INCLUDE_DIR}/uabase/uafile.h")
+    if (EXISTS "${UASDK_INCLUDE_DIR}/uabase/uafile.h")
         message(STATUS "OK, the SDK has version 1.4 or higher")
-    else()
+    else (EXISTS "${UASDK_INCLUDE_DIR}/uabase/uafile.h")
         message(FATAL_ERROR "The Unified Automation SDK must be at least version 1.4.0")
-    endif()
+    endif (EXISTS "${UASDK_INCLUDE_DIR}/uabase/uafile.h")
     
+    # store the path to the UaServerCPP executable, since it is required for the unit tests
+    if (WIN32)
+        set(DEMOSERVER_COMMAND "${UASDK_DIR}/bin/uaservercpp.exe")
+    else (WIN32)
+        set(DEMOSERVER_COMMAND "${UASDK_DIR}/bin/uaservercpp")
+    endif (WIN32)
+    
+    # display a warning if the UaServerCPP demoserver cannot be found
+    if (EXISTS ${DEMOSERVER_COMMAND})
+        message(STATUS "The UaServerCPP demo server was found, so the unit tests can be run.")
+    else (EXISTS ${DEMOSERVER_COMMAND})
+        message(WARNING "The demo server (UaServerCPP) cannot be found: ${DEMOSERVER_COMMAND} does not exist! This demo server is only needed to run the client unit tests, so you can safely ignore this warning if you do not intend to run unit tests.\n")
+    endif (EXISTS ${DEMOSERVER_COMMAND})
 
 ENDMACRO(handleUnifiedAutomationSdk)
 

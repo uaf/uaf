@@ -43,8 +43,8 @@ standard OPC UA namespace, so it ALWAYS (!) refers to namespace URI "http://opcf
 import pyuaf
 from pyuaf.client                   import Client
 from pyuaf.client.settings          import ClientSettings
-from pyuaf.util                     import Address, ExpandedNodeId, RelativePathElement, QualifiedName, LocalizedText
-from pyuaf.util.opcuaidentifiers    import OpcUaId_RootFolder, OpcUaId_ObjectsFolder, OpcUaId_ObjectsFolder
+from pyuaf.util                     import Address, ExpandedNodeId, RelativePathElement, QualifiedName, LocalizedText, NodeId
+from pyuaf.util.opcuaidentifiers    import OpcUaId_RootFolder, OpcUaId_ObjectsFolder, OpcUaId_ObjectsFolder, OpcUaId_Server
 from pyuaf.util.constants           import OPCUA_NAMESPACE_URI, OPCUA_NAMESPACE_ID
 
 #========================================================#

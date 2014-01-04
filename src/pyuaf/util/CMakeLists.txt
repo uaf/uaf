@@ -14,8 +14,9 @@ file(  MAKE_DIRECTORY       ${LIB_PYUAF_UTIL_DIR}  )
 set(  LIBRARY_OUTPUT_PATH   ${LIB_PYUAF_UTIL_DIR} )
 set(  CMAKE_SWIG_OUTDIR     ${LIB_PYUAF_UTIL_DIR} )
 
-# Copy the errors.py file
-configure_file(  "errors.py"   "${LIB_PYUAF_UTIL_DIR}"  )
+# Copy the errors.py and unittesting.py files
+configure_file(  "errors.py"       "${LIB_PYUAF_UTIL_DIR}"   )
+configure_file(  "unittesting.py"  "${LIB_PYUAF_UTIL_DIR}"   )
 
 
 # declare the targets

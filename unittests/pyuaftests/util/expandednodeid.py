@@ -1,103 +1,118 @@
 import pyuaf
+import unittest
+from pyuaf.util.unittesting import parseArgs
 
 
-def test(args):
+ARGS = parseArgs()
+
+
+def suite(args=None):
+    if args is not None:
+        global ARGS
+        ARGS = args
     
-    print("util.expandednodeid")
+    return unittest.TestLoader().loadTestsFromTestCase(ExpandedNodeIdTest)
+
+
+
+class ExpandedNodeIdTest(unittest.TestCase):
     
-    print(" - testing pyuaf.util.ExpandedNodeId()")
+    def setUp(self):
+        self.n0  = pyuaf.util.ExpandedNodeId()
+        self.n1  = pyuaf.util.ExpandedNodeId("SomeStringIdentifier", "SomeNameSpaceUri", "SomeServerUri")
+        self.n2  = pyuaf.util.ExpandedNodeId("SomeStringIdentifier", 42, "SomeServerUri")
+        self.n3  = pyuaf.util.ExpandedNodeId(21, "SomeNameSpaceUri", "SomeServerUri")
+        self.n4  = pyuaf.util.ExpandedNodeId(21, 42, "SomeServerUri")
+        self.n5  = pyuaf.util.ExpandedNodeId("SomeStringIdentifier", "SomeNameSpaceUri", 84)
+        self.n6  = pyuaf.util.ExpandedNodeId("SomeStringIdentifier", 42, 84)
+        self.n7  = pyuaf.util.ExpandedNodeId(21, "SomeNameSpaceUri", 84)
+        self.n8  = pyuaf.util.ExpandedNodeId(21, 42, 84)
+        self.n9  = pyuaf.util.ExpandedNodeId(pyuaf.util.NodeId(21, "SomeNameSpaceUri"), "SomeServerUri", 84)
+        self.n10 = pyuaf.util.ExpandedNodeId(pyuaf.util.NodeId("SomeStringIdentifier", 42), "SomeServerUri", 84)
+        
+        self.n0_  = pyuaf.util.ExpandedNodeId()
+        self.n1_  = pyuaf.util.ExpandedNodeId("SomeStringIdentifier", "SomeNameSpaceUri", "SomeServerUri")
+        self.n2_  = pyuaf.util.ExpandedNodeId("SomeStringIdentifier", 42, "SomeServerUri")
+        self.n3_  = pyuaf.util.ExpandedNodeId(21, "SomeNameSpaceUri", "SomeServerUri")
+        self.n4_  = pyuaf.util.ExpandedNodeId(21, 42, "SomeServerUri")
+        self.n5_  = pyuaf.util.ExpandedNodeId("SomeStringIdentifier", "SomeNameSpaceUri", 84)
+        self.n6_  = pyuaf.util.ExpandedNodeId("SomeStringIdentifier", 42, 84)
+        self.n7_  = pyuaf.util.ExpandedNodeId(21, "SomeNameSpaceUri", 84)
+        self.n8_  = pyuaf.util.ExpandedNodeId(21, 42, 84)
+        self.n9_  = pyuaf.util.ExpandedNodeId(pyuaf.util.NodeId(21, "SomeNameSpaceUri"), "SomeServerUri", 84)
+        self.n10_ = pyuaf.util.ExpandedNodeId(pyuaf.util.NodeId("SomeStringIdentifier", 42), "SomeServerUri", 84)
+        
+    def test_util_ExpandedNodeId_hasServerIndex(self):
+        self.assertEqual( self.n0.hasServerIndex()  , False )
+        self.assertEqual( self.n1.hasServerIndex()  , False )
+        self.assertEqual( self.n2.hasServerIndex()  , False )
+        self.assertEqual( self.n3.hasServerIndex()  , False )
+        self.assertEqual( self.n4.hasServerIndex()  , False )
+        self.assertEqual( self.n5.hasServerIndex()  , True  )
+        self.assertEqual( self.n6.hasServerIndex()  , True  )
+        self.assertEqual( self.n7.hasServerIndex()  , True  )
+        self.assertEqual( self.n8.hasServerIndex()  , True  )
+        self.assertEqual( self.n9.hasServerIndex()  , True  )
+        self.assertEqual( self.n10.hasServerIndex() , True  )
     
-    n0  = pyuaf.util.ExpandedNodeId()
-    n1  = pyuaf.util.ExpandedNodeId("SomeStringIdentifier", "SomeNameSpaceUri", "SomeServerUri")
-    n2  = pyuaf.util.ExpandedNodeId("SomeStringIdentifier", 42, "SomeServerUri")
-    n3  = pyuaf.util.ExpandedNodeId(21, "SomeNameSpaceUri", "SomeServerUri")
-    n4  = pyuaf.util.ExpandedNodeId(21, 42, "SomeServerUri")
-    n5  = pyuaf.util.ExpandedNodeId("SomeStringIdentifier", "SomeNameSpaceUri", 84)
-    n6  = pyuaf.util.ExpandedNodeId("SomeStringIdentifier", 42, 84)
-    n7  = pyuaf.util.ExpandedNodeId(21, "SomeNameSpaceUri", 84)
-    n8  = pyuaf.util.ExpandedNodeId(21, 42, 84)
-    n9  = pyuaf.util.ExpandedNodeId(pyuaf.util.NodeId(21, "SomeNameSpaceUri"), "SomeServerUri", 84)
-    n10 = pyuaf.util.ExpandedNodeId(pyuaf.util.NodeId("SomeStringIdentifier", 42), "SomeServerUri", 84)
+    def test_util_ExpandedNodeId_hasServerUri(self):
+        self.assertEqual( self.n0.hasServerUri()  , False )
+        self.assertEqual( self.n1.hasServerUri()  , True  )
+        self.assertEqual( self.n2.hasServerUri()  , True  )
+        self.assertEqual( self.n3.hasServerUri()  , True  )
+        self.assertEqual( self.n4.hasServerUri()  , True  )
+        self.assertEqual( self.n5.hasServerUri()  , False )
+        self.assertEqual( self.n6.hasServerUri()  , False )
+        self.assertEqual( self.n7.hasServerUri()  , False )
+        self.assertEqual( self.n8.hasServerUri()  , False )
+        self.assertEqual( self.n9.hasServerUri()  , True  )
+        self.assertEqual( self.n10.hasServerUri() , True  )
     
-    n0_  = pyuaf.util.ExpandedNodeId()
-    n1_  = pyuaf.util.ExpandedNodeId("SomeStringIdentifier", "SomeNameSpaceUri", "SomeServerUri")
-    n2_  = pyuaf.util.ExpandedNodeId("SomeStringIdentifier", 42, "SomeServerUri")
-    n3_  = pyuaf.util.ExpandedNodeId(21, "SomeNameSpaceUri", "SomeServerUri")
-    n4_  = pyuaf.util.ExpandedNodeId(21, 42, "SomeServerUri")
-    n5_  = pyuaf.util.ExpandedNodeId("SomeStringIdentifier", "SomeNameSpaceUri", 84)
-    n6_  = pyuaf.util.ExpandedNodeId("SomeStringIdentifier", 42, 84)
-    n7_  = pyuaf.util.ExpandedNodeId(21, "SomeNameSpaceUri", 84)
-    n8_  = pyuaf.util.ExpandedNodeId(21, 42, 84)
-    n9_  = pyuaf.util.ExpandedNodeId(pyuaf.util.NodeId(21, "SomeNameSpaceUri"), "SomeServerUri", 84)
-    n10_ = pyuaf.util.ExpandedNodeId(pyuaf.util.NodeId("SomeStringIdentifier", 42), "SomeServerUri", 84)
+    def test_util_ExpandedNodeId_serverIndex(self):
+        self.assertEqual( self.n5.serverIndex() , 84 )
     
+    def test_util_ExpandedNodeId_serverUri(self):
+        self.assertEqual( self.n1.serverUri() , "SomeServerUri" )
     
-    print(" - testing pyuaf.util.ExpandedNodeId().hasServerIndex()")
-    assert (    n0.hasServerIndex()  == False
-            and n1.hasServerIndex()  == False
-            and n2.hasServerIndex()  == False
-            and n3.hasServerIndex()  == False
-            and n4.hasServerIndex()  == False
-            and n5.hasServerIndex()  == True
-            and n6.hasServerIndex()  == True
-            and n7.hasServerIndex()  == True
-            and n8.hasServerIndex()  == True
-            and n9.hasServerIndex()  == True
-            and n10.hasServerIndex() == True)
+    def test_util_ExpandedNodeId_nodeId(self):
+        self.assertEqual( self.n1.nodeId() , pyuaf.util.NodeId("SomeStringIdentifier", "SomeNameSpaceUri") )
+        self.assertEqual( self.n3.nodeId() , pyuaf.util.NodeId(21, "SomeNameSpaceUri") )
     
-    print(" - testing pyuaf.util.ExpandedNodeId().hasNameSpaceUri()")
-    assert (    n0.hasServerUri()  == False
-            and n1.hasServerUri()  == True
-            and n2.hasServerUri()  == True
-            and n3.hasServerUri()  == True
-            and n4.hasServerUri()  == True
-            and n5.hasServerUri()  == False
-            and n6.hasServerUri()  == False
-            and n7.hasServerUri()  == False
-            and n8.hasServerUri()  == False
-            and n9.hasServerUri()  == True
-            and n10.hasServerUri() == True)
-    
-    print(" - testing pyuaf.util.ExpandedNodeId().serverIndex()")
-    assert n5.serverIndex() == 84
-    
-    print(" - testing pyuaf.util.ExpandedNodeId().serverUri()")
-    assert n1.serverUri() == "SomeServerUri"
-    
-    print(" - testing pyuaf.util.ExpandedNodeId().nodeId()")
-    assert n1.nodeId() == pyuaf.util.NodeId("SomeStringIdentifier", "SomeNameSpaceUri")
-    assert n3.nodeId() == pyuaf.util.NodeId(21, "SomeNameSpaceUri")
-    
-    print(" - testing pyuaf.util.ExpandedNodeId().__eq__()")
-    assert (    n0  == n0_ 
-            and n1  == n1_ 
-            and n2  == n2_ 
-            and n3  == n3_ 
-            and n4  == n4_ 
-            and n5  == n5_ 
-            and n6  == n6_ 
-            and n7  == n7_ 
-            and n8  == n8_ 
-            and n9  == n9_ 
-            and n10 == n10_)
-    
-    print(" - testing pyuaf.util.ExpandedNodeId().__ne__()")
-    assert (    n0  != n1 
-            and n1  != n2  
-            and n2  != n3 
-            and n3  != n4 
-            and n4  != n5 
-            and n5  != n6 
-            and n6  != n7 
-            and n7  != n8 
-            and n8  != n9 
-            and n9  != n10 
-            and n10 != n0)
-    
-    print(" - testing pyuaf.util.ExpandedNodeId().__lt__()")
-    assert n3 < n4
-    assert n5 < n6
-    
-    print(" - testing pyuaf.util.ExpandedNodeId().__gt__()")
-    assert n1 > n0
-    assert n2 > n0
+    def test_util_ExpandedNodeId___eq__(self):
+        self.assertTrue( self.n0  == self.n0_ ) 
+        self.assertTrue( self.n1  == self.n1_ )
+        self.assertTrue( self.n2  == self.n2_ )
+        self.assertTrue( self.n3  == self.n3_ )
+        self.assertTrue( self.n4  == self.n4_ )
+        self.assertTrue( self.n5  == self.n5_ )
+        self.assertTrue( self.n6  == self.n6_ )
+        self.assertTrue( self.n7  == self.n7_ )
+        self.assertTrue( self.n8  == self.n8_ )
+        self.assertTrue( self.n9  == self.n9_ )
+        self.assertTrue( self.n10 == self.n10_ )
+        
+    def test_util_ExpandedNodeId___ne__(self):
+        self.assertTrue( self.n0  != self.n1  )
+        self.assertTrue( self.n1  != self.n2  )
+        self.assertTrue( self.n2  != self.n3  )
+        self.assertTrue( self.n3  != self.n4  )
+        self.assertTrue( self.n4  != self.n5  )
+        self.assertTrue( self.n5  != self.n6  )
+        self.assertTrue( self.n6  != self.n7  )
+        self.assertTrue( self.n7  != self.n8  )
+        self.assertTrue( self.n8  != self.n9  )
+        self.assertTrue( self.n9  != self.n10 )
+        self.assertTrue( self.n10 != self.n0  )
+        
+    def test_util_ExpandedNodeId___lt__(self):
+        self.assertTrue( self.n3 < self.n4 )
+        self.assertTrue( self.n5 < self.n6 )
+        
+    def test_util_ExpandedNodeId___gt__(self):
+        self.assertTrue( self.n1 > self.n0 )
+        self.assertTrue( self.n2 > self.n0 )
+
+
+
+if __name__ == '__main__':
+    unittest.TextTestRunner(verbosity = ARGS.verbosity).run(suite())

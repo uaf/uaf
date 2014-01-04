@@ -25,7 +25,7 @@
         .. autoattribute:: pyuaf.util.opcuaidentifiers.OpcUaId_VariableTypeNode
         .. autoattribute:: pyuaf.util.opcuaidentifiers.OpcUaId_EUInformation
         .. autoattribute:: pyuaf.util.opcuaidentifiers.OpcUaId_ConditionType_Disable
-        .. autoattribute:: pyuaf.util.opcuaidentifiers.OpcUaId_ExclusiveDeviationAlarmType_Acknowledge
+        .. autoattribute:: pyuaf.util.opcuaidentifiers.OpcUaId_ExclusiveDeviationAlarmType
         .. autoattribute:: pyuaf.util.opcuaidentifiers.OpcUaId_RootFolder
         .. autoattribute:: pyuaf.util.opcuaidentifiers.OpcUaId_ObjectsFolder
         .. autoattribute:: pyuaf.util.opcuaidentifiers.OpcUaId_TypesFolder

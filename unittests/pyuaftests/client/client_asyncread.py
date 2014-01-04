@@ -1,6 +1,8 @@
 import pyuaf
 import time
 import thread, threading
+import unittest
+from pyuaf.util.unittesting import parseArgs
 
 from pyuaf.util import NodeId, Address, ExpandedNodeId, BrowsePath, \
                        RelativePathElement, QualifiedName, opcuaidentifiers
@@ -9,191 +11,159 @@ from pyuaf.client.results  import AsyncReadResult,  ReadResultTarget
 from pyuaf.util.primitives import Byte, Int32, Float
 
 
+ARGS = parseArgs()
+
+
+def suite(args=None):
+    if args is not None:
+        global ARGS
+        ARGS = args
+    
+    return unittest.TestLoader().loadTestsFromTestCase(ClientAsyncReadTest)
+
 
 class MyClient(pyuaf.client.Client):
 
-    def __init__(self, settings, verbose):
+    def __init__(self, settings):
         pyuaf.client.Client.__init__(self, settings)
-        self.verbose = verbose
+        self.lock = threading.Lock()
         self.noOfReadCompletes = 0
             
     def readComplete(self, result):
+        self.lock.acquire()
         self.noOfReadCompletes += 1
-        if self.verbose:
-            print("***** readComplete started *****")
-            print(result)
-            print("***** readComplete finished *****")
+        self.lock.release()
 
 
-def test(args):
+# define a TestClass with a callback
+class TestClass:
+    def __init__(self):
+        self.lock = threading.Lock()
+        self.noOfSuccessFullyFinishedCallbacks = 0
     
-    print("client.client_asyncread")
-    
-    
-    
-    
-    # create a new ClientSettings instance and add the localhost to the URLs to discover
-    settings = pyuaf.client.settings.ClientSettings()
-    settings.discoveryUrls.append(args.demo_url)
-    settings.applicationName = "client"
-    settings.logToStdOutLevel = args.loglevel
-    
-    client = MyClient(settings, args.verbose)
+    def myCallback(self, result):
+        self.lock.acquire()
+        self.noOfSuccessFullyFinishedCallbacks += 1
+        self.lock.release()
 
 
-    serverUri = args.demo_server_uri
-    demoNsUri = args.demo_ns_uri
-    plcOpenNsUri = "http://PLCopen.org/OpcUa/IEC61131-3/"
+# define a TestClass with a callback that lasts several seconds
+class LongLastingTestClass:
+    def __init__(self):
+        self.noOfSuccessFullyFinishedCallbacks = 0
+        self.lock = threading.Lock()
     
-    print(" - testing pyuaf.client.Client().processRequest(<AsyncReadRequest>) for some addresses")
-    
-    address_AnalogStatic   = Address(ExpandedNodeId("AnalogStatic", demoNsUri, serverUri))
-    address_Byte           = Address(address_AnalogStatic, [RelativePathElement(QualifiedName("StaticAnalogByte", demoNsUri))] )
-    address_Int32          = Address(address_AnalogStatic, [RelativePathElement(QualifiedName("StaticAnalogInt32", demoNsUri))] )
-    address_Float          = Address(address_AnalogStatic, [RelativePathElement(QualifiedName("StaticAnalogFloat", demoNsUri))] )
-    
-    target0  = ReadRequestTarget(address_Byte)
-    target1  = ReadRequestTarget(address_Int32)
-    target2  = ReadRequestTarget(address_Float)
-    request = AsyncReadRequest([target0, target1, target2])
-    
-    asyncResult = client.processRequest(request)
-    
-    if args.verbose:
-        print("Async result:")
-        print(asyncResult)
-    
-    if args.verbose:
-        print("Waiting for the result...")
-    
-    t_timeout = time.time() + 5.0
-    while time.time() < t_timeout and client.noOfReadCompletes == 0:
-        time.sleep(0.01)
-    
-    # assert if the read was received
-    assert client.noOfReadCompletes == 1
+    def myCallback(self, result):
+        time.sleep(2.0)
+        self.lock.acquire()
+        self.noOfSuccessFullyFinishedCallbacks += 1
+        self.lock.release()
+
+
+class ClientAsyncReadTest(unittest.TestCase):
     
     
-    
-    print(" - testing pyuaf.client.Client().processRequest(<AsyncReadRequest>, <callbackFunction>)")
-    
-    # define a TestClass with a callback
-    class TestClass:
-        def __init__(self):
-            self.noOfSuccessFullyFinishedCallbacks = 0
-            self.lock = threading.Lock()
+    def setUp(self):
         
-        def myCallback(self, result):
-            self.lock.acquire()
-            self.noOfSuccessFullyFinishedCallbacks += 1
-            
-            if args.verbose:
-                print("--- Callback started ---")
-                print(result)
-                print("--- Callback finished ---")
-            
-            self.lock.release()
+        # create a new ClientSettings instance and add the localhost to the URLs to discover
+        settings = pyuaf.client.settings.ClientSettings()
+        settings.discoveryUrls.append(ARGS.demo_url)
+        settings.applicationName = "client"
+        settings.logToStdOutLevel = ARGS.loglevel
     
-    
-    t = TestClass()
-    asyncResult = client.processRequest(request, t.myCallback)
-    
-    if args.verbose:
-        print("Asynchronous request was executed (handle assigned: %d)" %asyncResult.requestHandle)
-        print("Waiting for the result...")
-    
-    t_timeout = time.time() + 5.0
-    while time.time() < t_timeout and t.noOfSuccessFullyFinishedCallbacks == 0:
-        time.sleep(0.01)
-    
-    # assert if the callback function was successfully finished
-    assert t.noOfSuccessFullyFinishedCallbacks == 1
-    
-    
-    print(" - testing pyuaf.client.Client().beginRead(<addresses>,<callback>) for some addresses")
-    
-    
-    t = TestClass()
-    asyncResult = client.beginRead([address_Byte, address_Int32, address_Float], callback=t.myCallback)
-    
-    if args.verbose:
-        print("Asynchronous request was executed (handle assigned: %d)" %asyncResult.requestHandle)
-        print("Waiting for the result...")
-    
-    t_timeout = time.time() + 5.0
-    while time.time() < t_timeout and t.noOfSuccessFullyFinishedCallbacks == 0:
-        time.sleep(0.01)
-    
-    # assert if the callback function was successfully finished
-    assert t.noOfSuccessFullyFinishedCallbacks == 1
-    
-    
-    print(" - testing pyuaf.client.Client().processRequest(<AsyncReadRequest>, <longLastingcallbackFunction>) 30 times in parallel")
-    if args.verbose:
-        print("   (you should notice that all 30 callback functions are running simultaneously and thus mixing their output)")
-    
-    
-    # define a TestClass with a callback that lasts several seconds
-    class LongLastingTestClass:
-        def __init__(self):
-            self.noOfSuccessFullyFinishedCallbacks = 0
-            self.lock = threading.Lock()
+        self.client = MyClient(settings)
+
         
-        def myCallback(self, result):
-            if args.verbose: print("Result %d is now started" %result.requestHandle)
-            
-            totalSeconds = 2
-            for secondsFinished in xrange(totalSeconds):
-                if args.verbose: print("Result %d is now busy for %d seconds" %(result.requestHandle, secondsFinished))
-                time.sleep(1)
-            
-            if args.verbose: print("Result %d is now finished" %result.requestHandle)
-            
-            self.lock.acquire()
-            self.noOfSuccessFullyFinishedCallbacks += 1
-            self.lock.release()
+        serverUri    = ARGS.demo_server_uri
+        demoNsUri    = ARGS.demo_ns_uri
+        plcOpenNsUri = "http://PLCopen.org/OpcUa/IEC61131-3/"
+        
+        self.address_Scalar = Address(ExpandedNodeId("Demo.Static.Scalar", demoNsUri, serverUri))
+        self.address_Byte   = Address(self.address_Scalar, [RelativePathElement(QualifiedName("Byte", demoNsUri))] )
+        self.address_Int32  = Address(self.address_Scalar, [RelativePathElement(QualifiedName("Int32", demoNsUri))] )
+        self.address_Float  = Address(self.address_Scalar, [RelativePathElement(QualifiedName("Float", demoNsUri))] )
     
-    t = LongLastingTestClass()
+        self.target0  = ReadRequestTarget(self.address_Byte)
+        self.target1  = ReadRequestTarget(self.address_Int32)
+        self.target2  = ReadRequestTarget(self.address_Float)
+        self.request = AsyncReadRequest([self.target0, self.target1, self.target2])
     
-    # start 30 processes
-    for i in xrange(30):
-        client.processRequest(request, t.myCallback)
-    
-    # sleep while the callbacks are running
-    if args.verbose: print("Waiting for the callbacks to finish...")
-    
-    t_timeout = time.time() + 10.0
-    while time.time() < t_timeout and t.noOfSuccessFullyFinishedCallbacks < 30:
-        time.sleep(0.01)
-    
-    # assert if all callback functions were successfully finished
-    assert t.noOfSuccessFullyFinishedCallbacks == 30
+    def test_client_Client_processRequest_for_an_async_read_request(self):
+        asyncResult = self.client.processRequest(self.request)
+        
+        # wait for the result
+        t_timeout = time.time() + 5.0
+        while time.time() < t_timeout and self.client.noOfReadCompletes == 0:
+            time.sleep(0.01)
+        
+        # assert if the read was received
+        self.assertEqual( self.client.noOfReadCompletes , 1 )
     
     
+    def test_client_Client_processRequest_for_an_async_read_request_with_callback(self):
+        t = TestClass()
+        asyncResult = self.client.processRequest(self.request, t.myCallback)
+        
+        t_timeout = time.time() + 5.0
+        while time.time() < t_timeout and t.noOfSuccessFullyFinishedCallbacks == 0:
+            time.sleep(0.01)
+        
+        # assert if the callback function was successfully finished
+        self.assertEqual( t.noOfSuccessFullyFinishedCallbacks , 1 )
+        
     
-    print(" - testing pyuaf.client.Client().beginRead(<addresses>,<longLastingcallbackFunction>) 30 times in parallel")
-    if args.verbose:
-        print("   (you should notice that all 30 callback functions are running simultaneously and thus mixing their output)")
+    def test_client_Client_beginRead(self):
+        t = TestClass()
+        asyncResult = self.client.beginRead([self.address_Byte, self.address_Int32, self.address_Float], callback=t.myCallback)
+        
+        t_timeout = time.time() + 5.0
+        while time.time() < t_timeout and t.noOfSuccessFullyFinishedCallbacks == 0:
+            time.sleep(0.01)
+        
+        # assert if the callback function was successfully finished
+        self.assertEqual( t.noOfSuccessFullyFinishedCallbacks , 1 )
     
     
-    t = LongLastingTestClass()
+    def test_client_Client_processRequest_for_an_async_read_request_with_long_lasting_callback_many_times_in_parallel(self):
+        
+        t = LongLastingTestClass()
+        
+        # start 30 processes
+        for i in xrange(30):
+            self.client.processRequest(self.request, t.myCallback)
+        
+        # sleep while the callbacks are running
+        t_timeout = time.time() + 10.0
+        while time.time() < t_timeout and t.noOfSuccessFullyFinishedCallbacks < 30:
+            time.sleep(0.01)
+        
+        # assert if all callback functions were successfully finished
+        self.assertEqual( t.noOfSuccessFullyFinishedCallbacks , 30 )
+        
     
-    # start 30 processes
-    for i in xrange(30):
-        client.beginRead([address_Byte, address_Int32, address_Float], callback=t.myCallback)
+    def test_client_Client_beginRead_with_long_lasting_callback_many_times_in_parallel(self):
     
-    # sleep while the callbacks are running
-    if args.verbose: print("Waiting for the callbacks to finish...")
+        t = LongLastingTestClass()
+        
+        # start 30 processes
+        for i in xrange(30):
+            self.client.beginRead([self.address_Byte, self.address_Int32, self.address_Float], callback=t.myCallback)
+        
+        # sleep while the callbacks are running
+        t_timeout = time.time() + 10.0
+        while time.time() < t_timeout and t.noOfSuccessFullyFinishedCallbacks < 30:
+            time.sleep(0.01)
+        
+        # assert if all callback functions were successfully finished
+        self.assertEqual( t.noOfSuccessFullyFinishedCallbacks , 30 )
     
-    t_timeout = time.time() + 10.0
-    while time.time() < t_timeout and t.noOfSuccessFullyFinishedCallbacks < 30:
-        time.sleep(0.01)
+    def tearDown(self):
+        # delete the client instances manually (now!) instead of letting them be garbage collected 
+        # automatically (which may happen during a another test, and which may cause logging output
+        # of the destruction to be mixed with the logging output of the other test).
+        del self.client
     
-    # assert if all callback functions were successfully finished
-    assert t.noOfSuccessFullyFinishedCallbacks == 30
-    
-    # delete the client instances manually (now!) instead of letting them be garbage collected 
-    # automatically (which may happen during a another test, and which may cause logging output
-    # of the destruction to be mixed with the logging output of the other test).
-    del client
-    
+        
+
+if __name__ == '__main__':
+    unittest.TextTestRunner(verbosity = ARGS.verbosity).run(suite())

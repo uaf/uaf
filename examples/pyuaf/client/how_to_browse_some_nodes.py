@@ -17,7 +17,8 @@ In this example, we will use both ways to browse nodes.
 As will be shown in this example, the UAF can automatically take care of BrowseNext calls,
 so as a user you don't have to worry about incomplete Browse results!
 
-To run the example, start the UaDemoServer of UnifiedAutomation first on the same machine. 
+To run the example, start the UaServerCPP of UnifiedAutomation first on the same machine. 
+($SDK/bin/uaservercpp, this executable is part of the SDK).
 """
 
 import time, os, sys
@@ -33,10 +34,8 @@ from pyuaf.util             import opcuaidentifiers
 from pyuaf.util.errors      import UafError
 
 
-# define the namespace URI and server URI of the UaDemoServer
-demoNsUri     = "DemoNodeManager"
-dataNsUri     = "http://opcfoundation.org/UA/DI/"
-demoServerUri = "urn:UnifiedAutomation:UaDemoserver"
+# define the namespace URI and server URI of the UaServerCPP demo server
+demoServerUri = "urn:UnifiedAutomation:UaServerCpp"
 
 # define the address of the Root node which we would like to start browsing
 rootNode = Address( NodeId(opcuaidentifiers.OpcUaId_RootFolder, 0), demoServerUri )
@@ -44,7 +43,7 @@ rootNode = Address( NodeId(opcuaidentifiers.OpcUaId_RootFolder, 0), demoServerUr
 # define the ClientSettings:
 settings = ClientSettings()
 settings.applicationName = "MyClient"
-settings.discoveryUrls.append("opc.tcp://localhost:4841")
+settings.discoveryUrls.append("opc.tcp://localhost:48010")
 
 # create the client
 myClient = Client(settings)

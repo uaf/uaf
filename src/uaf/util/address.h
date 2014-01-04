@@ -77,6 +77,18 @@ namespace uaf
 
 
         /**
+         * Construct a relative Address by providing another Address and a path relative to that
+         * Address, consisting of a single (!) element.
+         *
+         * @param startingAddress   Starting address.
+         * @param relativePath      The relative path starting from the starting address,
+         *                          represented by a it's only element.
+         */
+        Address(uaf::Address*                   startingAddress,
+                const uaf::RelativePathElement& relativePath);
+
+
+        /**
          * Construct an address by providing an ExpandedNodeId.
          *
          * This ExpandedNodeId can already be resolved, or not.
