@@ -42,14 +42,14 @@ void printResult(const ReadResult& readResult)
     data  = readResult.targets[0].data;
     double value0;
     if (status.isGood() && data.toDouble(value0).isGood())
-        cout << "The temperature is: " << value0 << "\n";
+        cout << "The double is: " << value0 << "\n";
 
     // target 1:
     status = readResult.targets[1].status;
     data   = readResult.targets[1].data;
     uint32_t value1;
     if (status.isGood() && data.toUInt32(value1).isGood())
-        cout << "The counter is: " << int(value1) << "\n";
+        cout << "The uint32 is: " << int(value1) << "\n";
 
     // target 2:
     status = readResult.targets[2].status;
@@ -83,24 +83,23 @@ int main(int argc, char* argv[])
     // always initialize the framework first!
     initializeUaf();
 
-    // define the namespace URI and server URI of the UaDemoServer
-    string demoNsUri("DemoNodeManager");
-    string dataNsUri("http://opcfoundation.org/UA/DI/");
-    string demoServerUri("urn:UnifiedAutomation:UaDemoserver");
+    // define the namespace URI and server URI of the UaServerCPP
+    string demoNsUri("http://www.unifiedautomation.com/DemoServer");
+    string demoServerUri("urn:UnifiedAutomation:UaServerCpp");
 
     // define some addresses of nodes of which we will read the Value attribute
     // (you could also define addresses as Relative Paths to other addresses,
     //  see the example that shows you how to define addresses)
-    Address someDoubleNode(        NodeId("MyDemoObject.Temperature"               , demoNsUri), demoServerUri );
-    Address someUInt32Node(        NodeId("MyDemoObject.Counter"                   , demoNsUri), demoServerUri );
-    Address someStringNode(        NodeId("AllDataTypesStatic/StaticString"        , demoNsUri), demoServerUri );
-    Address someLocalizedTextNode( NodeId("AllDataTypesStatic/StaticLocalizedText" , demoNsUri), demoServerUri );
-    Address someSByteArrayNode(    NodeId("AllDataTypesStatic/StaticSByteArray"    , demoNsUri), demoServerUri );
+    Address someDoubleNode(        NodeId("Demo.Static.Scalar.Double"        , demoNsUri), demoServerUri );
+    Address someUInt32Node(        NodeId("Demo.Static.Scalar.UInt32"        , demoNsUri), demoServerUri );
+    Address someStringNode(        NodeId("Demo.Static.Scalar.String"        , demoNsUri), demoServerUri );
+    Address someLocalizedTextNode( NodeId("Demo.Static.Scalar.LocalizedText" , demoNsUri), demoServerUri );
+    Address someSByteArrayNode(    NodeId("Demo.Static.Arrays.SByte"         , demoNsUri), demoServerUri );
 
     // define the ClientSettings:
     ClientSettings settings;
     settings.applicationName = "MyClient";
-    settings.discoveryUrls.push_back("opc.tcp://localhost:4841");
+    settings.discoveryUrls.push_back("opc.tcp://localhost:48010");
 
     // create the client
     Client myClient(settings);

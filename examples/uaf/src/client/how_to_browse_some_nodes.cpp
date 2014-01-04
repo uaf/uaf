@@ -37,9 +37,7 @@ int main(int argc, char* argv[])
     initializeUaf();
 
     // define the namespace URI and server URI of the UaDemoServer
-    string demoNsUri("DemoNodeManager");
-    string dataNsUri("http://opcfoundation.org/UA/DI/");
-    string demoServerUri("urn:UnifiedAutomation:UaDemoserver");
+    string demoServerUri("urn:UnifiedAutomation:UaServerCpp");
 
     // define the address of the Root node which we would like to start browsing
     Address rootNode( NodeId(OpcUaId_RootFolder, 0), demoServerUri );
@@ -47,7 +45,7 @@ int main(int argc, char* argv[])
     // define the ClientSettings:
     ClientSettings settings;
     settings.applicationName = "MyClient";
-    settings.discoveryUrls.push_back("opc.tcp://localhost:4841");
+    settings.discoveryUrls.push_back("opc.tcp://localhost:48010");
 
     // create the client
     Client myClient(settings);

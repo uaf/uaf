@@ -45,7 +45,7 @@ from pyuaf.util.errors      import UafError
 demoNsUri     = "http://www.unifiedautomation.com/DemoServer"
 demoServerUri = "urn:UnifiedAutomation:UaServerCpp"
 
-# also define the addresses of some useful nodes
+# define the addresses of some useful nodes
 # (demoAddress is an absolute address, all the others are relative ones) 
 demoAddress             = Address( NodeId("Demo", demoNsUri), demoServerUri )
 simulationActiveAddress = Address( demoAddress, [RelativePathElement(QualifiedName("SimulationActive", demoNsUri))] )
