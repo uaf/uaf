@@ -45,9 +45,6 @@
 // import some macros
 %import "pyuaf_macros.i"
 
-// %include the config
-%include "uastack/opcua_config.h"
-
 
 // typemap for time_t
 %typemap(in)  time_t { $1 = (time_t) PyLong_AsLong($input); }
