@@ -29,6 +29,10 @@ Informally:
   
 - The unit tests are now based on Python's 'unittest' builtin module.
 
+- By default, the UAF is now compiled *with* HTTPS support. However, if your Stack and SDK were 
+  built *without* HTTPS support, you must (!!!) also compile the UAF *without* HTTPS support.
+  See the install_linux.rst.txt and install_windows.rst.txt files for more info.
+
 - Address now also has a constructor to create an address based on a single RelativePathElement.
   This allows you to define relative addresses in one line, also in C++: 
     Address myMachine            ( NodeId("Demo", nsUri), serverUri );
