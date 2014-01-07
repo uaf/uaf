@@ -125,10 +125,13 @@ Installation procedure for Microsoft Windows
     No exceptions should be raised.
     
   - If you notice errors then:
+  
     - Verify if ``echo %PATH%`` and ``echo %PYTHONPATH%`` indeed point to the ``lib`` directory 
       of the UAF.
+      
     - Verify if the Stack and the UAF were both built *with* (or both built *without*) HTTPS 
       support (see point 3.).
+      
     - If you're still in trouble, send an e-mail or open an issue on the GitHub page! 
 
 
