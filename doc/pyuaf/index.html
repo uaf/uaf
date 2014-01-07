@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>PyUAF - Python bindings for the UAF (Unified Architecture Framework) &mdash; PyUAF 1.5 documentation</title>
+    <title>PyUAF - Python bindings for the UAF (Unified Architecture Framework) &mdash; PyUAF 1.6 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.5',
+        VERSION:     '1.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.5 documentation" href="#" />
+    <link rel="top" title="PyUAF 1.6 documentation" href="#" />
     <link rel="next" title="Client examples" href="client_examples.html" /> 
   </head>
   <body>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="client_examples.html" title="Client examples"
              accesskey="N">next</a> |</li>
-        <li><a href="#">PyUAF 1.5 documentation</a> &raquo;</li> 
+        <li><a href="#">PyUAF 1.6 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -60,24 +60,26 @@ is hosted at <a class="reference external" href="http://github.com/uaf">http://g
 an OPC UA variable can be read by a UAF client with just a few lines of Python code:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># examples/pyuaf/client/easiest_client_example.py</span>
 
-<span class="c"># Start the UaDemoserver of Unified Automation before running this script!</span>
+<span class="c"># Start the demo server ($SDK/bin/uaservercpp) of Unified Automation before running this script!</span>
 
 <span class="kn">import</span> <span class="nn">pyuaf</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client</span>           <span class="kn">import</span> <span class="n">Client</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span>
 
-<span class="c"># create a client named &quot;myClient&quot;, and provide the discovery URL of the UaDemoserver:</span>
-<span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">ClientSettings</span><span class="p">(</span><span class="s">&quot;myClient&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">]))</span>
+<span class="c"># create a client named &quot;myClient&quot;, and provide the discovery URL of the server (uaservercpp):</span>
+<span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">ClientSettings</span><span class="p">(</span><span class="s">&quot;myClient&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;opc.tcp://localhost:48010&quot;</span><span class="p">]))</span>
 
 <span class="c"># specify the address of the node of which we would like to read its Value attribute:</span>
 <span class="c"># (here we&#39;re using an absolute address, i.e. a NodeId(&lt;identifier&gt;, &lt;namespace URI&gt;) and a &lt;server URI&gt;)</span>
-<span class="n">someAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;MyDemoObject.Counter&quot;</span><span class="p">,</span> <span class="s">&quot;DemoNodeManager&quot;</span><span class="p">),</span> <span class="s">&quot;urn:UnifiedAutomation:UaDemoserver&quot;</span><span class="p">)</span>
+<span class="n">someAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;Demo.SimulationSpeed&quot;</span><span class="p">,</span>                         <span class="c"># NodeId identifier</span>
+                             <span class="s">&quot;http://www.unifiedautomation.com/DemoServer&quot;</span><span class="p">),</span> <span class="c"># NodeId namespace URI</span>
+                      <span class="s">&quot;urn:UnifiedAutomation:UaServerCpp&quot;</span><span class="p">)</span>                   <span class="c"># server URI</span>
 
 <span class="c"># read the Value attribute of the node that we just addressed:</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="p">[</span><span class="n">someAddress</span><span class="p">]</span> <span class="p">)</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;The counter value is </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;The value is </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>As you can see, all session management is done automatically for you!</p>
@@ -408,7 +410,7 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
         <li class="right" >
           <a href="client_examples.html" title="Client examples"
              >next</a> |</li>
-        <li><a href="#">PyUAF 1.5 documentation</a> &raquo;</li> 
+        <li><a href="#">PyUAF 1.6 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

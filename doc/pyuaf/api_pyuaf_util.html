@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util &mdash; PyUAF 1.5 documentation</title>
+    <title>pyuaf.util &mdash; PyUAF 1.6 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.5',
+        VERSION:     '1.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.5 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.6 documentation" href="index.html" />
     <link rel="next" title="pyuaf.util.attributeids" href="api_pyuaf_util_attributeids.html" />
     <link rel="prev" title="pyuaf.client.subscriptionstates" href="api_pyuaf_client_subscriptionstates.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.5 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.6 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -94,6 +94,10 @@ point.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">address1</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;someId&quot;</span><span class="p">,</span> <span class="s">&quot;someNsUri&quot;</span><span class="p">),</span> <span class="s">&quot;someServerUri&quot;</span> <span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">address2</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">address0</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;someName&quot;</span><span class="p">,</span> <span class="s">&quot;someNsUri&quot;</span><span class="p">))]</span> <span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">address3</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">address1</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;someOtherName&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">))]</span> <span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may also provide a single RelativePathElement in case the relative path contains just</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># one element:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address4</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">address1</span><span class="p">,</span> <span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;someOtherNameToo&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -3581,7 +3585,7 @@ will return True) if you want to specify the whole address space.</p>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="api_pyuaf_client_subscriptionstates.html"
-                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">pyuaf.client.subscriptionstates</span></tt></a></p>
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">pyuaf.client.subscriptionstates</span></tt></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="api_pyuaf_util_attributeids.html"
                         title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.util.attributeids</span></tt></a></p>
@@ -3622,7 +3626,7 @@ will return True) if you want to specify the whole address space.</p>
         <li class="right" >
           <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.5 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.6 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

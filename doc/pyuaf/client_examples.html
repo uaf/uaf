@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Client examples &mdash; PyUAF 1.5 documentation</title>
+    <title>Client examples &mdash; PyUAF 1.6 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.5',
+        VERSION:     '1.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.5 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.6 documentation" href="index.html" />
     <link rel="next" title="pyuaf" href="api_pyuaf.html" />
     <link rel="prev" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)" href="index.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="index.html" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.5 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.6 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -59,24 +59,26 @@
 <h2>Easiest client example<a class="headerlink" href="#easiest-client-example" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="c"># examples/pyuaf/client/easiest_client_example.py</span>
 
-<span class="c"># Start the UaDemoserver of Unified Automation before running this script!</span>
+<span class="c"># Start the demo server ($SDK/bin/uaservercpp) of Unified Automation before running this script!</span>
 
 <span class="kn">import</span> <span class="nn">pyuaf</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client</span>           <span class="kn">import</span> <span class="n">Client</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span>
 
-<span class="c"># create a client named &quot;myClient&quot;, and provide the discovery URL of the UaDemoserver:</span>
-<span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">ClientSettings</span><span class="p">(</span><span class="s">&quot;myClient&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">]))</span>
+<span class="c"># create a client named &quot;myClient&quot;, and provide the discovery URL of the server (uaservercpp):</span>
+<span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">ClientSettings</span><span class="p">(</span><span class="s">&quot;myClient&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;opc.tcp://localhost:48010&quot;</span><span class="p">]))</span>
 
 <span class="c"># specify the address of the node of which we would like to read its Value attribute:</span>
 <span class="c"># (here we&#39;re using an absolute address, i.e. a NodeId(&lt;identifier&gt;, &lt;namespace URI&gt;) and a &lt;server URI&gt;)</span>
-<span class="n">someAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;MyDemoObject.Counter&quot;</span><span class="p">,</span> <span class="s">&quot;DemoNodeManager&quot;</span><span class="p">),</span> <span class="s">&quot;urn:UnifiedAutomation:UaDemoserver&quot;</span><span class="p">)</span>
+<span class="n">someAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;Demo.SimulationSpeed&quot;</span><span class="p">,</span>                         <span class="c"># NodeId identifier</span>
+                             <span class="s">&quot;http://www.unifiedautomation.com/DemoServer&quot;</span><span class="p">),</span> <span class="c"># NodeId namespace URI</span>
+                      <span class="s">&quot;urn:UnifiedAutomation:UaServerCpp&quot;</span><span class="p">)</span>                   <span class="c"># server URI</span>
 
 <span class="c"># read the Value attribute of the node that we just addressed:</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="p">[</span><span class="n">someAddress</span><span class="p">]</span> <span class="p">)</span>
 
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;The counter value is </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;The value is </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -127,8 +129,8 @@
 <span class="kn">import</span> <span class="nn">pyuaf</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client</span>                   <span class="kn">import</span> <span class="n">Client</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>          <span class="kn">import</span> <span class="n">ClientSettings</span>
-<span class="kn">from</span> <span class="nn">pyuaf.util</span>                     <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">RelativePathElement</span><span class="p">,</span> <span class="n">QualifiedName</span><span class="p">,</span> <span class="n">LocalizedText</span>
-<span class="kn">from</span> <span class="nn">pyuaf.util.opcuaidentifiers</span>    <span class="kn">import</span> <span class="n">OpcUaId_RootFolder</span><span class="p">,</span> <span class="n">OpcUaId_ObjectsFolder</span><span class="p">,</span> <span class="n">OpcUaId_ObjectsFolder</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>                     <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">RelativePathElement</span><span class="p">,</span> <span class="n">QualifiedName</span><span class="p">,</span> <span class="n">LocalizedText</span><span class="p">,</span> <span class="n">NodeId</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util.opcuaidentifiers</span>    <span class="kn">import</span> <span class="n">OpcUaId_RootFolder</span><span class="p">,</span> <span class="n">OpcUaId_ObjectsFolder</span><span class="p">,</span> <span class="n">OpcUaId_ObjectsFolder</span><span class="p">,</span> <span class="n">OpcUaId_Server</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util.constants</span>           <span class="kn">import</span> <span class="n">OPCUA_NAMESPACE_URI</span><span class="p">,</span> <span class="n">OPCUA_NAMESPACE_ID</span>
 
 <span class="c">#========================================================#</span>
@@ -228,18 +230,17 @@
 
 
 <span class="c"># define the namespace URI and server URI of the UaDemoServer</span>
-<span class="n">demoNsUri</span>     <span class="o">=</span> <span class="s">&quot;DemoNodeManager&quot;</span>
-<span class="n">dataNsUri</span>     <span class="o">=</span> <span class="s">&quot;http://opcfoundation.org/UA/DI/&quot;</span>
-<span class="n">demoServerUri</span> <span class="o">=</span> <span class="s">&quot;urn:UnifiedAutomation:UaDemoserver&quot;</span>
+<span class="n">demoNsUri</span>     <span class="o">=</span> <span class="s">&quot;http://www.unifiedautomation.com/DemoServer&quot;</span>
+<span class="n">demoServerUri</span> <span class="o">=</span> <span class="s">&quot;urn:UnifiedAutomation:UaServerCpp&quot;</span>
 
 <span class="c"># define some addresses of nodes of which we will read the Value attribute</span>
 <span class="c"># (you could also define addresses as Relative Paths to other addresses, </span>
 <span class="c">#  see the example that shows you how to define addresses)</span>
-<span class="n">someDoubleNode</span>        <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;MyDemoObject.Temperature&quot;</span>               <span class="p">,</span> <span class="n">demoNsUri</span><span class="p">),</span> <span class="n">demoServerUri</span> <span class="p">)</span>
-<span class="n">someUInt32Node</span>        <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;MyDemoObject.Counter&quot;</span>                   <span class="p">,</span> <span class="n">demoNsUri</span><span class="p">),</span> <span class="n">demoServerUri</span> <span class="p">)</span>
-<span class="n">someStringNode</span>        <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;AllDataTypesStatic/StaticString&quot;</span>        <span class="p">,</span> <span class="n">demoNsUri</span><span class="p">),</span> <span class="n">demoServerUri</span> <span class="p">)</span>
-<span class="n">someLocalizedTextNode</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;AllDataTypesStatic/StaticLocalizedText&quot;</span> <span class="p">,</span> <span class="n">demoNsUri</span><span class="p">),</span> <span class="n">demoServerUri</span> <span class="p">)</span>
-<span class="n">someSByteArrayNode</span>    <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;AllDataTypesStatic/StaticSByteArray&quot;</span>    <span class="p">,</span> <span class="n">demoNsUri</span><span class="p">),</span> <span class="n">demoServerUri</span> <span class="p">)</span>
+<span class="n">someDoubleNode</span>        <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;Demo.Static.Scalar.Double&quot;</span>              <span class="p">,</span> <span class="n">demoNsUri</span><span class="p">),</span> <span class="n">demoServerUri</span> <span class="p">)</span>
+<span class="n">someUInt32Node</span>        <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;Demo.Static.Scalar.UInt32&quot;</span>              <span class="p">,</span> <span class="n">demoNsUri</span><span class="p">),</span> <span class="n">demoServerUri</span> <span class="p">)</span>
+<span class="n">someStringNode</span>        <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;Demo.Static.Scalar.String&quot;</span>              <span class="p">,</span> <span class="n">demoNsUri</span><span class="p">),</span> <span class="n">demoServerUri</span> <span class="p">)</span>
+<span class="n">someLocalizedTextNode</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;Demo.Static.Scalar.LocalizedText&quot;</span>       <span class="p">,</span> <span class="n">demoNsUri</span><span class="p">),</span> <span class="n">demoServerUri</span> <span class="p">)</span>
+<span class="n">someSByteArrayNode</span>    <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;Demo.Static.Arrays.SByte&quot;</span>               <span class="p">,</span> <span class="n">demoNsUri</span><span class="p">),</span> <span class="n">demoServerUri</span> <span class="p">)</span>
 
 <span class="c"># define a function to print the readResult (which is of type pyuaf.client.results.ReadResult)</span>
 <span class="k">def</span> <span class="nf">printResult</span><span class="p">(</span><span class="n">readResult</span><span class="p">):</span>
@@ -250,13 +251,13 @@
     <span class="n">status</span> <span class="o">=</span> <span class="n">readResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span>                         <span class="c"># &#39;status&#39; has type pyuaf.util.Status</span>
     <span class="n">data</span>   <span class="o">=</span> <span class="n">readResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>                           <span class="c"># &#39;data&#39; has type pyuaf.util.primitives.Double</span>
     <span class="k">if</span> <span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">primitives</span><span class="o">.</span><span class="n">Double</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The temperature is: </span><span class="si">%.3f</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The double is: </span><span class="si">%.3f</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
     
     <span class="c"># target 1:</span>
     <span class="n">status</span> <span class="o">=</span> <span class="n">readResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">status</span>                         <span class="c"># &#39;status&#39; has type pyuaf.util.Status</span>
     <span class="n">data</span>   <span class="o">=</span> <span class="n">readResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>                           <span class="c"># &#39;data&#39; has type pyuaf.util.primitives.UInt32</span>
     <span class="k">if</span> <span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">primitives</span><span class="o">.</span><span class="n">UInt32</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The counter is: </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The uint32 is: </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
     
     <span class="c"># target 2:</span>
     <span class="n">status</span> <span class="o">=</span> <span class="n">readResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">status</span>                         <span class="c"># &#39;status&#39; has type pyuaf.util.Status</span>
@@ -282,7 +283,7 @@
 <span class="c"># define the ClientSettings:</span>
 <span class="n">settings</span> <span class="o">=</span> <span class="n">ClientSettings</span><span class="p">()</span>
 <span class="n">settings</span><span class="o">.</span><span class="n">applicationName</span> <span class="o">=</span> <span class="s">&quot;MyClient&quot;</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">)</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://localhost:48010&quot;</span><span class="p">)</span>
 
 <span class="c"># create the client</span>
 <span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
@@ -523,7 +524,8 @@
 <span class="sd">As will be shown in this example, the UAF can automatically take care of BrowseNext calls,</span>
 <span class="sd">so as a user you don&#39;t have to worry about incomplete Browse results!</span>
 
-<span class="sd">To run the example, start the UaDemoServer of UnifiedAutomation first on the same machine. </span>
+<span class="sd">To run the example, start the UaServerCPP of UnifiedAutomation first on the same machine. </span>
+<span class="sd">($SDK/bin/uaservercpp, this executable is part of the SDK).</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
@@ -539,10 +541,8 @@
 <span class="kn">from</span> <span class="nn">pyuaf.util.errors</span>      <span class="kn">import</span> <span class="n">UafError</span>
 
 
-<span class="c"># define the namespace URI and server URI of the UaDemoServer</span>
-<span class="n">demoNsUri</span>     <span class="o">=</span> <span class="s">&quot;DemoNodeManager&quot;</span>
-<span class="n">dataNsUri</span>     <span class="o">=</span> <span class="s">&quot;http://opcfoundation.org/UA/DI/&quot;</span>
-<span class="n">demoServerUri</span> <span class="o">=</span> <span class="s">&quot;urn:UnifiedAutomation:UaDemoserver&quot;</span>
+<span class="c"># define the namespace URI and server URI of the UaServerCPP demo server</span>
+<span class="n">demoServerUri</span> <span class="o">=</span> <span class="s">&quot;urn:UnifiedAutomation:UaServerCpp&quot;</span>
 
 <span class="c"># define the address of the Root node which we would like to start browsing</span>
 <span class="n">rootNode</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="n">opcuaidentifiers</span><span class="o">.</span><span class="n">OpcUaId_RootFolder</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">demoServerUri</span> <span class="p">)</span>
@@ -550,7 +550,7 @@
 <span class="c"># define the ClientSettings:</span>
 <span class="n">settings</span> <span class="o">=</span> <span class="n">ClientSettings</span><span class="p">()</span>
 <span class="n">settings</span><span class="o">.</span><span class="n">applicationName</span> <span class="o">=</span> <span class="s">&quot;MyClient&quot;</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">)</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://localhost:48010&quot;</span><span class="p">)</span>
 
 <span class="c"># create the client</span>
 <span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
@@ -680,6 +680,8 @@
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">DateTime</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">DataValue</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Status</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">RelativePathElement</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">QualifiedName</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">primitives</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">opcuaidentifiers</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">opcuastatuscodes</span>
@@ -687,25 +689,56 @@
 
 
 <span class="c"># define the namespace URI and server URI of the UaDemoServer</span>
-<span class="n">demoNsUri</span>     <span class="o">=</span> <span class="s">&quot;DemoNodeManager&quot;</span>
-<span class="n">demoServerUri</span> <span class="o">=</span> <span class="s">&quot;urn:UnifiedAutomation:UaDemoserver&quot;</span>
+<span class="n">demoNsUri</span>     <span class="o">=</span> <span class="s">&quot;http://www.unifiedautomation.com/DemoServer&quot;</span>
+<span class="n">demoServerUri</span> <span class="o">=</span> <span class="s">&quot;urn:UnifiedAutomation:UaServerCpp&quot;</span>
 
-<span class="c"># define the address of the node that provides the historical data</span>
-<span class="n">counterAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;CounterWithHistory&quot;</span><span class="p">,</span> <span class="n">demoNsUri</span><span class="p">),</span> <span class="n">demoServerUri</span> <span class="p">)</span>
+<span class="c"># define the addresses of some useful nodes</span>
+<span class="c"># (demoAddress is an absolute address, all the others are relative ones) </span>
+<span class="n">demoAddress</span>             <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;Demo&quot;</span><span class="p">,</span> <span class="n">demoNsUri</span><span class="p">),</span> <span class="n">demoServerUri</span> <span class="p">)</span>
+<span class="n">simulationActiveAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">demoAddress</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;SimulationActive&quot;</span><span class="p">,</span> <span class="n">demoNsUri</span><span class="p">))]</span> <span class="p">)</span>
+<span class="n">startSimulationAddress</span>  <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">demoAddress</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;StartSimulation&quot;</span> <span class="p">,</span> <span class="n">demoNsUri</span><span class="p">))]</span> <span class="p">)</span>
+<span class="n">historyAddress</span>          <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">demoAddress</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;History&quot;</span><span class="p">,</span> <span class="n">demoNsUri</span><span class="p">))]</span> <span class="p">)</span>
+<span class="n">loggingActiveAddress</span>    <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">historyAddress</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;DataLoggerActive&quot;</span><span class="p">,</span> <span class="n">demoNsUri</span><span class="p">))]</span> <span class="p">)</span>
+<span class="n">startLoggingAddress</span>     <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">historyAddress</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;StartLogging&quot;</span><span class="p">,</span> <span class="n">demoNsUri</span><span class="p">))]</span> <span class="p">)</span>
+<span class="n">doubleAddress</span>           <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">historyAddress</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;DoubleWithHistory&quot;</span><span class="p">,</span> <span class="n">demoNsUri</span><span class="p">))]</span> <span class="p">)</span>
 
 <span class="c"># define the ClientSettings:</span>
 <span class="n">settings</span> <span class="o">=</span> <span class="n">ClientSettings</span><span class="p">()</span>
 <span class="n">settings</span><span class="o">.</span><span class="n">applicationName</span> <span class="o">=</span> <span class="s">&quot;MyClient&quot;</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">)</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://localhost:48010&quot;</span><span class="p">)</span>
 
 <span class="c"># create the client</span>
 <span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
 
+<span class="c"># first, we need to start the simulation (if it&#39;s not already started),</span>
+<span class="c"># and we need to start the logging (if it&#39;s not already started)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="p">[</span><span class="n">simulationActiveAddress</span><span class="p">,</span><span class="n">loggingActiveAddress</span><span class="p">]</span>  <span class="p">)</span>
 
-<span class="c"># apparently, the counter of the demo server starts only to keep history after we read it once</span>
-<span class="n">readResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">([</span><span class="n">counterAddress</span><span class="p">])</span>
-<span class="k">if</span> <span class="n">readResult</span><span class="o">.</span><span class="n">overallStatus</span><span class="o">.</span><span class="n">isGood</span><span class="p">():</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;The counter was read (value: </span><span class="si">%d</span><span class="s">)&quot;</span> <span class="o">%</span><span class="n">readResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">res</span><span class="o">.</span><span class="n">overallStatus</span><span class="o">.</span><span class="n">isGood</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t read some nodes of the server: is uaservercpp started and properly configured?&quot;</span><span class="p">)</span>
+
+<span class="n">isSimulationActive</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span>
+<span class="n">isLoggingActive</span>    <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;isSimulationActive : </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">isSimulationActive</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;isLoggingActive    : </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">isLoggingActive</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">isSimulationActive</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">demoAddress</span><span class="p">,</span> <span class="n">startSimulationAddress</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">overallStatus</span><span class="o">.</span><span class="n">isGood</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The simulation was started&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t start the simulation: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">res</span><span class="o">.</span><span class="n">overallStatus</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">isLoggingActive</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">historyAddress</span><span class="p">,</span> <span class="n">startLoggingAddress</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">overallStatus</span><span class="o">.</span><span class="n">isGood</span><span class="p">():</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The logging was started&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t start the logging: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">res</span><span class="o">.</span><span class="n">overallStatus</span><span class="p">)</span>
+    
 
 <span class="c"># now wait a bit more than a second, so that we have at least one second of historical data</span>
 <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
@@ -721,15 +754,15 @@
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;-------------&quot;</span><span class="p">)</span>
     
     <span class="c"># Read the raw historical data </span>
-    <span class="c">#   - that is provided by the counter node,</span>
+    <span class="c">#   - that is provided by the double node,</span>
     <span class="c">#   - that was recorded during the past second</span>
     <span class="c">#   - with a maximum of a 100 returned values </span>
     <span class="c">#     (we expect around 10 values, so 100 is a very safe margin) </span>
     <span class="c">#   - and let the UAF invoke at most 10 &quot;continuation calls&quot;</span>
     <span class="c">#     (we expect that all data can be returned by a single call, so a maximum of 10 </span>
     <span class="c">#      additional calls is again a very safe margin)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">historyReadRaw</span><span class="p">(</span><span class="n">addresses</span>          <span class="o">=</span> <span class="p">[</span><span class="n">counterAddress</span><span class="p">],</span>
-                                     <span class="n">startTime</span>          <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">historyReadRaw</span><span class="p">(</span><span class="n">addresses</span>          <span class="o">=</span> <span class="p">[</span><span class="n">doubleAddress</span><span class="p">],</span>
+                                     <span class="n">startTime</span>          <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="mf">1.5</span><span class="p">),</span>
                                      <span class="n">endTime</span>            <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span>
                                      <span class="n">numValuesPerNode</span>   <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> 
                                      <span class="n">maxAutoReadMore</span>    <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
@@ -739,7 +772,7 @@
     
     <span class="c"># do some processing on the result</span>
     <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isNotGood</span><span class="p">():</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Could not read historical data from the counter: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Could not read historical data from the double: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dataValues</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="c"># Strange, we didn&#39;t receive any historical data.</span>
@@ -748,13 +781,13 @@
                 <span class="k">print</span><span class="p">(</span><span class="s">&quot;OK, no data could be received because he server reports that there is &quot;</span>
                       <span class="s">&quot;no data that matches your request&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">allStatuses</span>    <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">allIntValues</span>   <span class="o">=</span> <span class="p">[]</span>
-            <span class="n">allSourceTimes</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">allStatuses</span>     <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">allDoubleValues</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">allSourceTimes</span>  <span class="o">=</span> <span class="p">[]</span>
             
             <span class="k">for</span> <span class="n">dataValue</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dataValues</span><span class="p">:</span>
                 <span class="c"># check the data type</span>
-                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">dataValue</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="n">primitives</span><span class="o">.</span><span class="n">UInt32</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">dataValue</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="n">primitives</span><span class="o">.</span><span class="n">Double</span><span class="p">:</span>
                     
                     <span class="c"># NOTE that dataValue is just a POINTER!</span>
                     <span class="c"># So if you want to copy any objects </span>
@@ -767,13 +800,13 @@
                     <span class="c"># invalid memory, and your software will crash when you try to use them!</span>
                     
                     <span class="n">allStatuses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">Status</span><span class="p">(</span><span class="n">dataValue</span><span class="o">.</span><span class="n">status</span><span class="p">)</span> <span class="p">)</span>               <span class="c"># notice the copy constructor!</span>
-                    <span class="n">allIntValues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">dataValue</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span> <span class="p">)</span>                  <span class="c"># an int, no copy constructor needed</span>
+                    <span class="n">allDoubleValues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">dataValue</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span> <span class="p">)</span>                  <span class="c"># an int, no copy constructor needed</span>
                     <span class="n">allSourceTimes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">dataValue</span><span class="o">.</span><span class="n">sourceTimestamp</span><span class="p">)</span> <span class="p">)</span> <span class="c"># notice the copy constructor!</span>
             
             <span class="c"># now print the lists </span>
             <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
             <span class="k">print</span><span class="p">(</span><span class="s">&quot;The results are:&quot;</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">allIntValues</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">allDoubleValues</span><span class="p">)):</span>
                 
                 <span class="n">timeFloat</span>  <span class="o">=</span> <span class="n">allSourceTimes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">ctime</span><span class="p">()</span>
                 <span class="n">timeTuple</span>  <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span> <span class="nb">long</span><span class="p">(</span><span class="n">timeFloat</span><span class="p">)</span> <span class="p">)</span>
@@ -781,14 +814,14 @@
                              <span class="o">+</span> <span class="s">&quot;.&quot;</span>                                  \
                              <span class="o">+</span> <span class="p">(</span><span class="s">&quot;</span><span class="si">%.3d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">allSourceTimes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">msec</span><span class="p">())</span>
                 
-                <span class="k">print</span><span class="p">(</span><span class="s">&quot;Code=</span><span class="si">%d</span><span class="s"> - Value=</span><span class="si">%d</span><span class="s"> - Time=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">allStatuses</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">statusCode</span><span class="p">(),</span> <span class="n">allIntValues</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">timeString</span><span class="p">))</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&quot;Code=</span><span class="si">%d</span><span class="s"> - Value=</span><span class="si">%s</span><span class="s"> - Time=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">allStatuses</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">statusCode</span><span class="p">(),</span> <span class="n">allDoubleValues</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">timeString</span><span class="p">))</span>
     
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;Second example:&quot;</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;--------------&quot;</span><span class="p">)</span>
     <span class="c"># Now do the same, but this time get the modifications of the data of the last second.</span>
     <span class="c"># Since we didn&#39;t do any modifications, none will be reported!</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">historyReadModified</span><span class="p">(</span><span class="n">addresses</span>          <span class="o">=</span> <span class="p">[</span><span class="n">counterAddress</span><span class="p">],</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">historyReadModified</span><span class="p">(</span><span class="n">addresses</span>          <span class="o">=</span> <span class="p">[</span><span class="n">doubleAddress</span><span class="p">],</span>
                                           <span class="n">startTime</span>          <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span>
                                           <span class="n">endTime</span>            <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()),</span>
                                           <span class="n">numValuesPerNode</span>   <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> 
@@ -811,7 +844,7 @@
     <span class="n">startTime</span> <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">endTime</span>   <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
     
-    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">historyReadRaw</span><span class="p">(</span><span class="n">addresses</span>          <span class="o">=</span> <span class="p">[</span><span class="n">counterAddress</span><span class="p">],</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">historyReadRaw</span><span class="p">(</span><span class="n">addresses</span>          <span class="o">=</span> <span class="p">[</span><span class="n">doubleAddress</span><span class="p">],</span>
                                      <span class="n">startTime</span>          <span class="o">=</span> <span class="n">startTime</span><span class="p">,</span>
                                      <span class="n">endTime</span>            <span class="o">=</span> <span class="n">endTime</span><span class="p">,</span>
                                      <span class="n">numValuesPerNode</span>   <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> 
@@ -826,7 +859,7 @@
     <span class="c"># as long as we get continuation points, we must continue to read the data</span>
     <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">continuationPoint</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
         
-        <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">historyReadRaw</span><span class="p">(</span><span class="n">addresses</span>          <span class="o">=</span> <span class="p">[</span><span class="n">counterAddress</span><span class="p">],</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">historyReadRaw</span><span class="p">(</span><span class="n">addresses</span>          <span class="o">=</span> <span class="p">[</span><span class="n">doubleAddress</span><span class="p">],</span>
                                          <span class="n">startTime</span>          <span class="o">=</span> <span class="n">startTime</span><span class="p">,</span>
                                          <span class="n">endTime</span>            <span class="o">=</span> <span class="n">endTime</span><span class="p">,</span>
                                          <span class="n">numValuesPerNode</span>   <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> 
@@ -852,7 +885,7 @@
     
     <span class="c"># create a request with 1 target</span>
     <span class="n">request</span> <span class="o">=</span> <span class="n">HistoryReadRawModifiedRequest</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">request</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">counterAddress</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">doubleAddress</span>
     
     <span class="c"># configure the request:</span>
     <span class="n">request</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">startTime</span>                <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
@@ -1103,7 +1136,7 @@
                         title="previous chapter">PyUAF - Python bindings for the UAF (Unified Architecture Framework)</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="api_pyuaf.html"
-                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">pyuaf</span></tt></a></p>
+                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf</span></tt></a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/client_examples.txt"
@@ -1141,7 +1174,7 @@
         <li class="right" >
           <a href="index.html" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.5 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.6 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
