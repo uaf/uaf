@@ -31,6 +31,7 @@ setUafLinkerRestrictions()
 # Make sure the necessary third-party packages are found
 handleUnifiedAutomationSdk()
 handleOpenSsl()
+handleLibXml2()
 
 # include the /src directory of the UAF
 include_directories("${UAF_DIR}/src")

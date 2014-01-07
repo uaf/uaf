@@ -35,13 +35,34 @@ Installation procedure for Linux
 
       cd build
       cmake ../src
+  
+  **WARNING**: since the SDK v1.4, the SDK (and therefore also the Stack) and the UAF 
+  can be built *with* or *without* HTTPS support. The SDK and the UAF must *always* agree 
+  on this (so they must both be compiled *with* HTTPS support, or both be compiled *without* 
+  HTTPS support). If the SDK and the UAF disagree, your applications may become unreliable.
+  
+  By default, the SDK that is shipped with the binary SDK versions (such as the free 
+  "evaluation" version of the SDK) is compiled *with* HTTPS support. Since the UAF is also 
+  compiled by default *with* HTTPS support, you can safely ignore this warning if you use a 
+  precompiled Stack/SDK.
+  
+  However, if you built the SDK yourself (e.g. because you bought the Source License of the
+  SDK), it is likely that the Stack will have been compiled *without* HTTPS support. 
+  To verify this, you can read the output in the console when you build the SDK: 
+  is ``UASTACK_WITH_HTTPS`` indeed OFF? If the SDK was indeed built *without* HTTPS support,
+  you must compile the UAF also *without* HTTPS support, like this::
+
+      cmake ..\src -DUASTACK_WITH_HTTPS=OFF
+  
+  Of course, you can also choose to compile both the SDK and the UAF *with* HTTPS support, 
+  by adding ``-DUASTACK_WITH_HTTPS=ON`` to the SDK build scripts.
 
 
 - If needed, you may also specify the path to the Unified Automation SDK explicitly, 
   for instance::
 
       cd build
-      cmake ../src -DUASDK=/path/to/sdk
+      cmake ../src -DUASDK=/path/to/sdk -DUASTACK_WITH_HTTPS=ON # or OFF
 
 
 - If needed, you may also use an easy (dirty!) hack to make sure CMake can find the SDK, 
@@ -49,7 +70,7 @@ Installation procedure for Linux
  
       cd build
       ln -s /some/path/to/the/SDK ~/.UaSdk
-      cmake ../src
+      cmake ../src -DUASTACK_WITH_HTTPS=ON # or OFF
 
 
 - If needed, you may also specify other paths by setting the ``CMAKE_PREFIX_PATH`` 
@@ -57,21 +78,22 @@ Installation procedure for Linux
 
       export CMAKE_PREFIX_PATH=/software/Python-2.5.1:/software/Python-2.5.1/include/python2.5
       cd build
-      cmake ../src -DUASDK=/path/to/sdk
+      cmake ../src -DUASDK=/path/to/sdk -DUASTACK_WITH_HTTPS=ON # or OFF
 
 
 - If needed, you could also specify paths explicitly for your "special" configuration, e.g.::
  
       cmake ../src/ -DUASDK=/software/unifiedautomation/sdk/ \
                     -DCMAKE_LIBRARY_PATH=/software/python/lib \
-                    -DCMAKE_INCLUDE_PATH=/software/python/include
+                    -DCMAKE_INCLUDE_PATH=/software/python/include \
+                    -DUASTACK_WITH_HTTPS=ON # or OFF
 
 
 - If you're building the UAF on a 64-bit platform but you're using the 32-bit 
   Unified Automation SDK libraries, you may want to use ``-DFORCE32`` to force the compiler 
   to create 32-bit libraries, and to force the linker to search for 32-bit OpenSSL libraries::
 
-      cmake ../src -DUASDK=/path/to/sdk -DFORCE32
+      cmake ../src -DUASDK=/path/to/sdk -DFORCE32 -DUASTACK_WITH_HTTPS=ON # or OFF
 
 
   In this case, also note that you need to install 32-bit Python and 32-bit Python libraries
@@ -95,7 +117,24 @@ Installation procedure for Linux
   find them, you may have to create some symbolic links, for instance::
        
       ln -s /usr/lib/libpython2.7.so.1.0 /usr/lib/libpython2.7.so
+
+
+- You can now start to develop your applications:
+
+  - Add the ``lib`` directory of the UAF to your ``$LD_LIBRARY_PATH`` and ``$PYTHONPATH``.
   
+  - You can now simply start the Python interpreter, and enter ``import pyuaf``.
+    No exceptions should be raised.
+  
+  - If you notice errors then:
+  
+    - Verify if ``echo $LD_LIBRARY_PATH`` and ``echo $PYTHONPATH`` indeed point to the ``lib`` 
+      directory of the UAF.
+      
+    - Verify if the Stack and the UAF were both built *with* (or both built *without*) HTTPS 
+      support (see point 3.).
+      
+    - If you're still in trouble, send an e-mail or open an issue on the GitHub page! 
 
 
 5. (OPTIONAL) Build and run the C++ examples
@@ -115,14 +154,14 @@ Installation procedure for Linux
        
       cd ../bin
       simplest_client_example
+  
+  
+- **Note** that some of the examples require that you start the Unified Automation 
+  demo server (uaservercpp) on the local machine. The UAServerCPP was already installed 
+  when you installed the SDK: you can find the ``uaservercpp`` executable in the ``bin`` 
+  directory of the SDK installation directory, e.g.::
        
-
-  **Note** that some of the examples require that you start the Unified Automation 
-  UA Demo Server on the local machine. The UA Demo Server was already installed 
-  when you installed the SDK: you can find the ``uademoserver`` executable in the ``bin`` 
-  directory of the SDK installation directory::
-       
-      /opt/unifiedautomation/sdk/bin/uademoserver
+      /opt/unifiedautomation/sdk/bin/uaservercpp
 
 
 

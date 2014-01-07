@@ -51,6 +51,10 @@
                 >>> address1 = Address( NodeId("someId", "someNsUri"), "someServerUri" )
                 >>> address2 = Address( address0, [RelativePathElement(QualifiedName("someName", "someNsUri"))] )
                 >>> address3 = Address( address1, [RelativePathElement(QualifiedName("someOtherName", 3))] )
+                
+                >>> # you may also provide a single RelativePathElement in case the relative path contains just
+                >>> # one element:
+                >>> address4 = Address( address1, RelativePathElement(QualifiedName("someOtherNameToo", 3)) )
             
             
             

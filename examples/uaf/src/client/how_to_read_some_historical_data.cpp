@@ -38,38 +38,98 @@ int main(int argc, char* argv[])
     // always initialize the framework first!
     initializeUaf();
 
-    // define the namespace URI and server URI of the UaDemoServer
-    string demoNsUri("DemoNodeManager");
-    string dataNsUri("http://opcfoundation.org/UA/DI/");
-    string demoServerUri("urn:UnifiedAutomation:UaDemoserver");
+    // define the namespace URI and server URI of the UaServerCPP
+    string demoNsUri("http://www.unifiedautomation.com/DemoServer");
+    string demoServerUri("urn:UnifiedAutomation:UaServerCpp");
 
-    // define the address of the node that provides the historical data
-    Address counterAddress( NodeId("CounterWithHistory", demoNsUri), demoServerUri );
-    vector<Address> allAddresses;
-    allAddresses.push_back(counterAddress);
+    // define the addresses of some useful nodes
+    // (demoAddress is an absolute address, all the others are relative ones)
+    Address demoAddress             ( NodeId("Demo", demoNsUri), demoServerUri );
+    Address simulationActiveAddress ( &demoAddress, RelativePathElement(QualifiedName("SimulationActive" , demoNsUri)) );
+    Address startSimulationAddress  ( &demoAddress, RelativePathElement(QualifiedName("StartSimulation"  , demoNsUri)) );
+    Address historyAddress          ( &demoAddress, RelativePathElement(QualifiedName("History"          , demoNsUri)) );
+    Address loggingActiveAddress    ( &historyAddress, RelativePathElement(QualifiedName("DataLoggerActive"  , demoNsUri)) );
+    Address startLoggingAddress     ( &historyAddress, RelativePathElement(QualifiedName("StartLogging"      , demoNsUri)) );
+    Address doubleAddress           ( &historyAddress, RelativePathElement(QualifiedName("DoubleWithHistory" , demoNsUri)) );
 
     // define the ClientSettings:
     ClientSettings settings;
     settings.applicationName = "MyClient";
-    settings.discoveryUrls.push_back("opc.tcp://localhost:4841");
+    settings.discoveryUrls.push_back("opc.tcp://localhost:48010");
 
     // create the client
     Client myClient(settings);
 
-    // apparently, the counter of the demo server starts only to keep history after we read it once
+    // first we'll read some nodes, to know if the simulation is active,
+    // and to know if the historical logging is already active
+
+    // define the addresses to read initially
+    vector<Address> initialReadAddresses;
+    initialReadAddresses.push_back(simulationActiveAddress);
+    initialReadAddresses.push_back(loggingActiveAddress);
+
+    // read the addresses
     ReadResult initialReadResult;
-    uint32_t uint32Value;
     Status status;
 
-    status = myClient.read(allAddresses,
-                           attributeids::Value,
-                           ReadConfig(),
-                           SessionConfig(),
-                           initialReadResult);
-    if (initialReadResult.overallStatus.isGood())
+    status = myClient.read(initialReadAddresses,    // the node addresses
+                           attributeids::Value,     // read the Value attribute of the node
+                           ReadConfig(),            // default service config
+                           SessionConfig(),         // default session config
+                           initialReadResult);      // the ReadResult
+
+    if (initialReadResult.overallStatus.isNotGood())
     {
-        initialReadResult.targets[0].data.toUInt32(uint32Value);
-        cout << "The counter was read (value: " << int(uint32Value) << ")\n";
+        cout << "ERROR: Could not read if the simulation and logging is active.\n";
+        cout << " - client-side status: " << status.toString().c_str() << "\n";
+        cout << " - server-side status: " << initialReadResult.overallStatus.toString().c_str() << "\n";
+        return 1;
+    }
+
+    bool isSimulationActive, isLoggingActive;
+    initialReadResult.targets[0].data.toBoolean(isSimulationActive);
+    initialReadResult.targets[1].data.toBoolean(isLoggingActive);
+    cout << "isSimulationActive : " << isSimulationActive << "\n";
+    cout << "isLoggingActive    : " << isLoggingActive << "\n";
+
+    // start the simulation if it's not already active
+    if (!isSimulationActive)
+    {
+        MethodCallResult result;
+        status = myClient.call( demoAddress,              // the context (i.e. in context.method())
+                                startSimulationAddress,   // the method itself
+                                vector<Variant>(),        // the input arguments
+                                MethodCallConfig(),       // default service config
+                                SessionConfig(),          // default session config
+                                result);                  // the MethodCallResult
+
+        if (result.overallStatus.isNotGood())
+        {
+            cout << "ERROR: Could not call Demo.StartSimulation\n";
+            cout << " - client-side status: " << status.toString().c_str() << "\n";
+            cout << " - server-side status: " << result.overallStatus.toString().c_str() << "\n";
+            return 1;
+        }
+    }
+
+    // start the logging if it's not already active
+    if (!isLoggingActive)
+    {
+        MethodCallResult result;
+        status = myClient.call( historyAddress,           // the context (i.e. in context.method())
+                                startLoggingAddress,      // the method itself
+                                vector<Variant>(),        // the input arguments
+                                MethodCallConfig(),       // default service config
+                                SessionConfig(),          // default session config
+                                result);                  // the MethodCallResult
+
+        if (result.overallStatus.isNotGood())
+        {
+            cout << "ERROR: Could not call History.StartLogging\n";
+            cout << " - client-side status: " << status.toString().c_str() << "\n";
+            cout << " - server-side status: " << result.overallStatus.toString().c_str() << "\n";
+            return 1;
+        }
     }
 
     // now wait a bit more than a second, so that we have at least one second of historical data
@@ -89,9 +149,10 @@ int main(int argc, char* argv[])
     //      additional calls is again a very safe margin)
     HistoryReadRawModifiedResult result;
     DateTime endTime   = DateTime::now();
-    DateTime startTime = DateTime(endTime.ctime() - 1.0);
+    DateTime startTime = DateTime(endTime.ctime() - 1.5);
+    vector<Address> addresses(1, doubleAddress);
 
-    status = myClient.historyReadRaw(allAddresses,                   // addresses
+    status = myClient.historyReadRaw(addresses,                      // addresses
                                      startTime,                      // startTime
                                      endTime,                        // endTime
                                      100,                            // numValuesPerNode
@@ -107,10 +168,10 @@ int main(int argc, char* argv[])
     cout << result.toString() << "\n";
 
     // do some processing on the result
-    if (result.targets[0].status.isNotGood())
+    if (result.overallStatus.isNotGood())
     {
-        cout << "Could not read historical data from the counter: ";
-        cout << result.targets[0].status.toString() << "\n";
+        cout << "Could not read the historical data due to an error (see result above)\n";
+        return -1;
     }
     else
     {
@@ -125,7 +186,7 @@ int main(int argc, char* argv[])
         else
         {
             vector<Status>   allStatuses;
-            vector<uint32_t> allIntValues;
+            vector<double>   allDoubleValues;
             vector<DateTime> allSourceTimes;
 
             for (vector<DataValue>::const_iterator it = result.targets[0].dataValues.begin();
@@ -133,12 +194,13 @@ int main(int argc, char* argv[])
                  ++it)
             {
                 // check the data type
-                if (it->data.type() == opcuatypes::UInt32)
+                if (it->data.type() == opcuatypes::Double)
                 {
+                    double doubleValue;
                     allStatuses.push_back(it->status);
                     allSourceTimes.push_back(it->sourceTimestamp);
-                    it->data.toUInt32(uint32Value);
-                    allIntValues.push_back(uint32Value);
+                    it->data.toDouble(doubleValue);
+                    allDoubleValues.push_back(doubleValue);
                 }
             }
 
@@ -149,12 +211,17 @@ int main(int argc, char* argv[])
             for (size_t i = 0; i < allStatuses.size(); i++)
             {
                 cout << "Code=" << int(allStatuses[i].statusCode());
-                cout << " Value=" << int(allIntValues[i]);
+                cout << " Value=" << int(allDoubleValues[i]);
                 cout << " Time=" << allSourceTimes[i].toTimeString();
                 cout << "\n";
             }
         }
     }
+
+
+    // Below, we won't bother anymore to check statuses for errors,
+    // because this is just example code. :-)
+
 
     cout << "\n";
     cout << "Second example:\n";
@@ -162,7 +229,7 @@ int main(int argc, char* argv[])
     // Now do the same, but this time get the modifications of the data of the last second.
     // Since we didn't do any modifications, none will be reported!
 
-    status = myClient.historyReadModified(allAddresses,                   // addresses
+    status = myClient.historyReadModified(addresses,                      // addresses
                                           startTime,                      // startTime
                                           endTime,                        // endTime
                                           100,                            // numValuesPerNode
@@ -186,7 +253,7 @@ int main(int argc, char* argv[])
     //   - numValuesPerNode to a very low value, so that not all results will be retrieved at once
     //   - maxAutoReadMore to 0, so that the UAF may not invoke "continuation request" automatically
 
-    status = myClient.historyReadRaw(allAddresses,                   // addresses
+    status = myClient.historyReadRaw(addresses,                      // addresses
                                      startTime,                      // startTime
                                      endTime,                        // endTime
                                      3,                              // numValuesPerNode
@@ -209,7 +276,7 @@ int main(int argc, char* argv[])
         vector<ByteString> continuationPoints;
         continuationPoints.push_back(result.targets[0].continuationPoint);
 
-        status = myClient.historyReadRaw(allAddresses,                   // addresses
+        status = myClient.historyReadRaw(addresses,                      // addresses
                                          startTime,                      // startTime
                                          endTime,                        // endTime
                                          3,                              // numValuesPerNode
@@ -243,7 +310,7 @@ int main(int argc, char* argv[])
 
     // create a request with 1 target
     HistoryReadRawModifiedRequest request(1);
-    request.targets[0].address = counterAddress;
+    request.targets[0].address = doubleAddress;
 
     // configure the request:
     request.serviceConfig.serviceSettings.startTime                = startTime;

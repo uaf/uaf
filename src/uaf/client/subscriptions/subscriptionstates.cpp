@@ -54,7 +54,7 @@ namespace uafc
                 case uafc::subscriptionstates::Deleted:
                     return UaStatus(OpcUa_Bad);
                 default:
-                    return UaClientSdk::UaClient::Disconnected;
+                    return UaStatus(OpcUa_Bad);
             }
         }
 

@@ -12,6 +12,24 @@ ENDMACRO(setBuildTypeToRelease)
 
 
 
+# ----------------------------------------------------------------------------
+# handleOptions()
+#    This macro handles some command line options.
+# ----------------------------------------------------------------------------
+MACRO(handleOptions)
+
+    OPTION( UASTACK_WITH_HTTPS   "Set to OFF if the Stack was built without HTTPS support." ON )
+    
+    IF ( UASTACK_WITH_HTTPS )
+        ADD_DEFINITIONS( -DOPCUA_HAVE_HTTPS=1 )
+    ELSE ( UASTACK_WITH_HTTPS )
+        ADD_DEFINITIONS( -DOPCUA_HAVE_HTTPS=0 )
+    ENDIF ( UASTACK_WITH_HTTPS )
+
+ENDMACRO(handleOptions)
+
+
+
 
 # ----------------------------------------------------------------------------
 # setUnifiedAutomationSdkCompilerDir(NEW_VAR)
@@ -116,6 +134,36 @@ MACRO(handleUnifiedAutomationSdk)
         find_package(UaSdk REQUIRED)
     
     endif (UASDK)
+    
+    # figure out if the source code version of the SDK is installed
+    if (EXISTS "${UASDK_DIR}/src")
+        # The source code version of the SDK compiles with option UASTACK_WITH_HTTPS=OFF by default!
+        # Check if the UAF is compiled with the same option    
+        IF ( UASTACK_WITH_HTTPS )
+            message(WARNING "\n!!!!!!!!\nIt appears that the SDK is a 'source code license' version, which probably means that you compiled the SDK yourself. The SDK compiles by default with -DUASTACK_WITH_HTTPS=OFF, while the UAF compiles by default (and will be compiled right now) with -DUASTACK_WITH_HTTPS=ON. You must make sure that both the UAF and the SDK are compiled with the same options. So either compile both the SDK and the UAF with -DUASTACK_WITH_HTTPS=ON, or both with -DUASTACK_WITH_HTTPS=OFF. If you're sure this is the case, you can safely ignore this warning.\n!!!!!!!!\n")
+        ENDIF ( UASTACK_WITH_HTTPS )
+    endif (EXISTS "${UASDK_DIR}/src")
+    
+    # figure out if the SDK version is at least 1.4 by checking if include/uabase/uafile.h exists
+    if (EXISTS "${UASDK_INCLUDE_DIR}/uabase/uafile.h")
+        message(STATUS "OK, the SDK has version 1.4 or higher")
+    else (EXISTS "${UASDK_INCLUDE_DIR}/uabase/uafile.h")
+        message(FATAL_ERROR "The Unified Automation SDK must be at least version 1.4.0")
+    endif (EXISTS "${UASDK_INCLUDE_DIR}/uabase/uafile.h")
+    
+    # store the path to the UaServerCPP executable, since it is required for the unit tests
+    if (WIN32)
+        set(DEMOSERVER_COMMAND "${UASDK_DIR}/bin/uaservercpp.exe")
+    else (WIN32)
+        set(DEMOSERVER_COMMAND "${UASDK_DIR}/bin/uaservercpp")
+    endif (WIN32)
+    
+    # display a warning if the UaServerCPP demoserver cannot be found
+    if (EXISTS ${DEMOSERVER_COMMAND})
+        message(STATUS "The UaServerCPP demo server was found, so the unit tests can be run.")
+    else (EXISTS ${DEMOSERVER_COMMAND})
+        message(WARNING "The demo server (UaServerCPP) cannot be found: ${DEMOSERVER_COMMAND} does not exist! This demo server is only needed to run the client unit tests, so you can safely ignore this warning if you do not intend to run unit tests.\n")
+    endif (EXISTS ${DEMOSERVER_COMMAND})
 
 ENDMACRO(handleUnifiedAutomationSdk)
 
@@ -157,7 +205,7 @@ ENDMACRO(handleLibXml2)
 
 # ----------------------------------------------------------------------------
 # handleOpenSsl()
-#    This macro will set the necessary LibXml2 variables 
+#    This macro will set the necessary OpenSSL variables 
 #    (OPENSSL_FOUND, OPENSSL_INCLUDE_DIR, OPENSSL_LIBRARIES)
 #    and install the dlls in case of Windows.
 # ----------------------------------------------------------------------------

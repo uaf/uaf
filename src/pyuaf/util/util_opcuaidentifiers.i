@@ -25,10 +25,19 @@
 #include "uastack/opcua_identifiers.h"
 %}
 
-
-// import the stack header file
-%import "uastack/opcua_platformdefs.h"
-
+// below we will %include (note the %!) opcua_statuscodes.h so that SWIG will create the
+// necessary wrapper code. However, opcua_statuscodes.h uses the OPCUA_BEGIN_EXTERN_C definition,
+// which is defined in opcua_platformdefs.h. The latter file isn't so easy to %include
+// (since it includes other headers, and %include is not recursive), so instead of including the
+// whole file, we will just define the only things we need: 
+// OPCUA_BEGIN_EXTERN_C and OPCUA_END_EXTERN_C.
+#ifdef __cplusplus
+# define OPCUA_BEGIN_EXTERN_C extern "C" {
+# define OPCUA_END_EXTERN_C }
+#else
+# define OPCUA_BEGIN_EXTERN_C
+# define OPCUA_END_EXTERN_C
+#endif
 
 // include common definitions
 %include "../pyuaf.i"

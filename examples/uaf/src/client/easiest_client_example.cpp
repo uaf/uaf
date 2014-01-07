@@ -1,6 +1,6 @@
 // examples/uaf/src/client/easiest_client_example.cpp
 
-// Start the UaDemoserver of Unified Automation before running this script!
+// Start the demo server ($SDK/bin/uaservercpp) of Unified Automation before running this script!
 
 #include "uaf/client/client.h"
 
@@ -15,10 +15,10 @@ int main(int argc, char* argv[])
     // always initialize the framework first!
     initializeUaf();
 
-    // set-up the client settings, and provide the discovery URL of the UaDemoserver:
+    // set-up the client settings, and provide the discovery URL of the demo server (uaservercpp):
     ClientSettings settings;
     settings.applicationName = "myClient";
-    settings.discoveryUrls.push_back("opc.tcp://localhost:4841");
+    settings.discoveryUrls.push_back("opc.tcp://localhost:48010");
     // settings.logToStdOutLevel = loglevels::Debug; // uncomment to see debugging output
 
     // create the OPC UA client:
@@ -27,8 +27,8 @@ int main(int argc, char* argv[])
     // specify the address of the node of which we would like to read its Value attribute:
     // --> here we're using an absolute address, i.e. an NodeId(<identifier>, <namespace URI>)
     //     and a <server URI>:
-    NodeId nodeId("MyDemoObject.Counter", "DemoNodeManager");
-    string serverUri("urn:UnifiedAutomation:UaDemoserver");
+    NodeId nodeId("Demo.SimulationSpeed", "http://www.unifiedautomation.com/DemoServer");
+    string serverUri("urn:UnifiedAutomation:UaServerCpp");
 
     vector<Address> nodesToBeRead;
     nodesToBeRead.push_back(Address(nodeId, serverUri));
@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
                                   result);
 
     if (status.isGood())
-        cout << "The counter value is " << result.targets[0].data.toString() << "\n";
+        cout << "The value is " << result.targets[0].data.toString() << "\n";
     else
         cout << "There was an error: " << status.toString() << "\n";
 

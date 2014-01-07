@@ -52,6 +52,18 @@ namespace uaf
 
     // Constructor
     // =============================================================================================
+    Address::Address(Address* startingAddress, const RelativePathElement& relativePath)
+    : isRelativePath_(true),
+      startingAddress_(startingAddress),
+      expandedNodeId_(0)
+    {
+        relativePath_ = new vector<RelativePathElement>();
+        relativePath_->push_back(relativePath);
+    }
+
+
+    // Constructor
+    // =============================================================================================
     Address::Address(const uaf::ExpandedNodeId& expandedNodeId)
     : isRelativePath_(false),
       relativePath_(0),

@@ -36,18 +36,17 @@ from pyuaf.util.errors      import UafError
 
 
 # define the namespace URI and server URI of the UaDemoServer
-demoNsUri     = "DemoNodeManager"
-dataNsUri     = "http://opcfoundation.org/UA/DI/"
-demoServerUri = "urn:UnifiedAutomation:UaDemoserver"
+demoNsUri     = "http://www.unifiedautomation.com/DemoServer"
+demoServerUri = "urn:UnifiedAutomation:UaServerCpp"
 
 # define some addresses of nodes of which we will read the Value attribute
 # (you could also define addresses as Relative Paths to other addresses, 
 #  see the example that shows you how to define addresses)
-someDoubleNode        = Address( NodeId("MyDemoObject.Temperature"               , demoNsUri), demoServerUri )
-someUInt32Node        = Address( NodeId("MyDemoObject.Counter"                   , demoNsUri), demoServerUri )
-someStringNode        = Address( NodeId("AllDataTypesStatic/StaticString"        , demoNsUri), demoServerUri )
-someLocalizedTextNode = Address( NodeId("AllDataTypesStatic/StaticLocalizedText" , demoNsUri), demoServerUri )
-someSByteArrayNode    = Address( NodeId("AllDataTypesStatic/StaticSByteArray"    , demoNsUri), demoServerUri )
+someDoubleNode        = Address( NodeId("Demo.Static.Scalar.Double"              , demoNsUri), demoServerUri )
+someUInt32Node        = Address( NodeId("Demo.Static.Scalar.UInt32"              , demoNsUri), demoServerUri )
+someStringNode        = Address( NodeId("Demo.Static.Scalar.String"              , demoNsUri), demoServerUri )
+someLocalizedTextNode = Address( NodeId("Demo.Static.Scalar.LocalizedText"       , demoNsUri), demoServerUri )
+someSByteArrayNode    = Address( NodeId("Demo.Static.Arrays.SByte"               , demoNsUri), demoServerUri )
 
 # define a function to print the readResult (which is of type pyuaf.client.results.ReadResult)
 def printResult(readResult):
@@ -58,13 +57,13 @@ def printResult(readResult):
     status = readResult.targets[0].status                         # 'status' has type pyuaf.util.Status
     data   = readResult.targets[0].data                           # 'data' has type pyuaf.util.primitives.Double
     if status.isGood() and isinstance(data, primitives.Double):
-        print("The temperature is: %.3f" %data.value)
+        print("The double is: %.3f" %data.value)
     
     # target 1:
     status = readResult.targets[1].status                         # 'status' has type pyuaf.util.Status
     data   = readResult.targets[1].data                           # 'data' has type pyuaf.util.primitives.UInt32
     if status.isGood() and isinstance(data, primitives.UInt32):
-        print("The counter is: %d" %data.value)
+        print("The uint32 is: %d" %data.value)
     
     # target 2:
     status = readResult.targets[2].status                         # 'status' has type pyuaf.util.Status
@@ -90,7 +89,7 @@ def printResult(readResult):
 # define the ClientSettings:
 settings = ClientSettings()
 settings.applicationName = "MyClient"
-settings.discoveryUrls.append("opc.tcp://localhost:4841")
+settings.discoveryUrls.append("opc.tcp://localhost:48010")
 
 # create the client
 myClient = Client(settings)

@@ -347,8 +347,7 @@ namespace uafc
         }
         else if (mask.setCount() == 0)
         {
-            ret.setStatus(statuscodes::UnexpectedError,
-                          "Mask does not mark any browse path to be translated!");
+            logger_->debug("Nothing to do, no browse paths are marked with the mask");
         }
         else
         {

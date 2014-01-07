@@ -10,7 +10,7 @@ Installation procedure for Microsoft Windows
 - Get the C++ SDK from Unified Automation (http://www.unified-automation.com)
   and install it, for instance, in its default directory:
   ``C:\Program Files\UnifiedAutomation\UaSdkCppBundleEval``
-
+  
 
 
 2. Install CMake
@@ -54,18 +54,44 @@ Installation procedure for Microsoft Windows
 - Enter the cmake command::
 
       "C:\Program Files\CMake 2.8\bin\cmake.exe" ..\src
+  
+  **WARNING**: since the SDK v1.4, the SDK (and therefore also the Stack) and the UAF 
+  can be built *with* or *without* HTTPS support. The SDK and the UAF must *always* agree 
+  on this (so they must both be compiled *with* HTTPS support, or both be compiled *without* 
+  HTTPS support). If the SDK and the UAF disagree, your applications may become unreliable.
+  
+  By default, the SDK that is shipped with the binary SDK versions (such as the free 
+  "evaluation" version of the SDK) is compiled *with* HTTPS support. Since the UAF is also 
+  compiled by default *with* HTTPS support, you can safely ignore this warning if you use a 
+  precompiled Stack/SDK.
+  
+  However, if you built the SDK yourself (e.g. because you bought the Source License of the
+  SDK), it is likely that the Stack will have been compiled *without* HTTPS support. 
+  To verify this, you can read the output in the console when you build the SDK: 
+  is ``UASTACK_WITH_HTTPS`` indeed OFF? If the SDK was indeed built *without* HTTPS support,
+  you must compile the UAF also *without* HTTPS support, like this::
 
-         
-  The installation procedure will try to find the SDK, Python and SWIG in their default directories
-  (in ``C:\`` or ``C:\Program Files\``).
-  If necessary, provide the SDK directory via the ``-DUASDK`` flag 
-  (e.g. ``-DUASDK="C:\Program Files\UnifiedAutomation\UaSdkCppBundleEval"``).
-  You can also specify the SWIG directory via the ``-DSWIG`` flag
-  (e.g. ``-DSWIG="C:\Program Files\swigwin-2.0.8"``).
-  More paths (e.g. for a specific Python installation) can be specified with 
-  the ``-DCMAKE_PREFIX_PATH`` flag.
-  More ``lib`` and ``include`` paths may also be specified explicitly using the 
-  ``-DCMAKE_LIBRARY_PATH`` and ``-DCMAKE_INCLUDE_PATH`` flags.
+      "C:\Program Files\CMake 2.8\bin\cmake.exe" ..\src -DUASTACK_WITH_HTTPS=OFF
+  
+  Of course, you can also choose to compile both the SDK and the UAF *with* HTTPS support, 
+  by adding ``-DUASTACK_WITH_HTTPS=ON`` to the SDK build scripts.
+
+
+- The installation procedure will try to find the SDK, Python and SWIG in their default directories
+  (in ``C:\`` or ``C:\Program Files\``). If needed, you may also specify the path to the 
+  Unified Automation SDK explicitly via the ``-DUASDK`` flag, for instance::
+    
+      -DUASDK="C:\Program Files\UnifiedAutomation\UaSdkCppBundleEval"
+
+
+- If needed, you can also specify the SWIG directory via the ``-DSWIG`` flag, for instance::
+
+      -DSWIG="C:\Program Files\swigwin-2.0.8"
+
+
+- If needed, more paths (e.g. for a specific Python installation) can be specified with 
+  the ``-DCMAKE_PREFIX_PATH`` flag.  More ``lib`` and ``include`` paths may also be specified 
+  explicitly using the ``-DCMAKE_LIBRARY_PATH`` and ``-DCMAKE_INCLUDE_PATH`` flags.
 
 
 - There should not be any errors. The final line should say::
@@ -79,11 +105,34 @@ Installation procedure for Microsoft Windows
 
 - In Windows explorer, navigate to ``C:\Users\john\uaf\build`` and double click **uaf.sln**.
 
+
 - Make sure the **Release** configuration in the Visual C++ toolbar is selected, 
   and build the solution.
 
+
 - If all goes well (it should!), you will find the UAF libraries after compilation 
   in ``C:\Users\john\uaf\lib``.
+
+
+- You can now start to develop your applications:
+
+  - Add the ``lib`` directory of the UAF to your ``%PATH%`` and ``%PYTHONPATH%``.
+  
+  - Add the ``bin`` directory of the SDK to your ``%PATH%`` 
+    (or copy the dlls from this directory to your working directory).
+  
+  - You can now simply start the Python interpreter, and enter ``import pyuaf``.
+    No exceptions should be raised.
+    
+  - If you notice errors then:
+  
+    - Verify if ``echo %PATH%`` and ``echo %PYTHONPATH%`` indeed point to the ``lib`` directory 
+      of the UAF.
+      
+    - Verify if the Stack and the UAF were both built *with* (or both built *without*) HTTPS 
+      support (see point 3.).
+      
+    - If you're still in trouble, send an e-mail or open an issue on the GitHub page! 
 
 
 
@@ -127,9 +176,10 @@ Installation procedure for Microsoft Windows
 
 
 - **Note** that some of the examples require that you start the Unified Automation 
-  UA Demo Server on the local machine. The UA Demo Server was already installed 
-  when you installed the SDK: you can find ``uademoserver.exe`` in the ``bin`` 
+  demo server (uaservercpp) on the local machine. The UAServerCPP demo server was already 
+  installed when you installed the SDK: you can find ``uaservercpp.exe`` in the ``bin`` 
   directory of the SDK installation directory.
+  
 
 
 8. (OPTIONAL) Run the Python examples
@@ -143,6 +193,6 @@ Installation procedure for Microsoft Windows
       uaf-commandprompt.bat
       cd pyuaf\client
       C:\Python27\python.exe simplest_client_example.py
+      
 
-
-
+.. This document is part of the Unified Architecture Framework : http://github.com/uaf
