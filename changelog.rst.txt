@@ -34,7 +34,8 @@ Informally:
   See the install_linux.rst.txt and install_windows.rst.txt files for more info.
 
 - Address now also has a constructor to create an address based on a single RelativePathElement.
-  This allows you to define relative addresses in one line, also in C++: 
+  This allows you to define relative addresses in one line, also in C++::
+  
     Address myMachine            ( NodeId("Demo", nsUri), serverUri );
     Address myMachineTemperature ( &myMachine, RelativePathElement(QualifiedName("Temperature" , nsUri)) );
     Address myMachinePressure    ( &myMachine, RelativePathElement(QualifiedName("Pressure"    , nsUri)) );
