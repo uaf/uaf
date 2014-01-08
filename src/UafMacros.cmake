@@ -263,12 +263,10 @@ MACRO(handleSwig)
                     SET(SWIG_VERSION ${SWIG_version_output} CACHE STRING "Swig version" FORCE)
                 ENDIF(SWIG_version_result)
                 
-            else (EXISTS "${UASDK}/include")
-                set(UASDK_FOUND FALSE)
+            else (EXISTS "${SWIG}/swig.exe")
+                set(SWIG_FOUND FALSE)
                 message("")
-                message(FATAL_ERROR
-                        "The Unified Automation SDK path was specified (${UASDK}) "
-                        "but doesn't exist!")
+                message(FATAL_ERROR "The SWIG path was specified (${SWIG}) but doesn't exist!")
             endif ()
             
         else(SWIG)
