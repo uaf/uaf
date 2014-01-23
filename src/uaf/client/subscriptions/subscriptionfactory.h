@@ -161,6 +161,10 @@ namespace uafc
              // check if the subscription was acquired
             if (ret.isGood())
             {
+                // copy the subscription information to the invocation
+                logger_->debug("Copying the subscription information to the invocation");
+                invocation.setSubscriptionInformation(subscription->subscriptionInformation());
+
                 if (subscription->isCreated())
                 {
                     logger_->debug("Forwarding the invocation to subscription %d",
