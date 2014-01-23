@@ -210,29 +210,39 @@ namespace uafc
         // lock the mutex to make sure the subscriptionMap_ is not being manipulated
         UaMutexLocker locker(&subscriptionMapMutex_);
 
-        // loop trough the subscriptions ...
-        for (SubscriptionMap::const_iterator it = subscriptionMap_.begin();
-             it != subscriptionMap_.end();
-             ++it)
+        // we'll try to find a similar subscription that can be re-used,
+        // unless we're creating an "exclusive" subscription
+        // (one that is only created for -and used by- the current request)
+        if (subscriptionSettings.exclusive)
         {
-            // ... until a suitable one is found
-            if (it->second->subscriptionSettings() == subscriptionSettings)
+            logger_->debug("The requested subscription is exclusive");
+        }
+        else
+        {
+            // loop trough the subscriptions ...
+            for (SubscriptionMap::const_iterator it = subscriptionMap_.begin();
+                 it != subscriptionMap_.end();
+                 ++it)
             {
-                subscription = it->second;
-                logger_->debug("A suitable subscription (ClientSubscriptionHandle=%d) already exists",
-                               subscription->clientSubscriptionHandle());
+                // ... until a suitable one is found
+                if (it->second->subscriptionSettings() == subscriptionSettings)
+                {
+                    subscription = it->second;
+                    logger_->debug("A suitable subscription (ClientSubscriptionHandle=%d) already exists",
+                                   subscription->clientSubscriptionHandle());
 
-                // get the ClientSubscriptionHandle of the subscription
-                ClientSubscriptionHandle handle = subscription->clientSubscriptionHandle();
+                    // get the ClientSubscriptionHandle of the subscription
+                    ClientSubscriptionHandle handle = subscription->clientSubscriptionHandle();
 
-                // now increment the activity count of the subscription
-                activityMapMutex_.lock();
-                activityMap_[handle] = activityMap_[handle] + 1;
-                activityMapMutex_.unlock();
+                    // now increment the activity count of the subscription
+                    activityMapMutex_.lock();
+                    activityMap_[handle] = activityMap_[handle] + 1;
+                    activityMapMutex_.unlock();
 
-                ret.setGood();
+                    ret.setGood();
 
-                break;
+                    break;
+                }
             }
         }
 
