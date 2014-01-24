@@ -28,7 +28,7 @@
 // UAF
 #include "uaf/util/viewdescription.h"
 #include "uaf/client/clientexport.h"
-#include "uaf/client/settings/baseservicesettings.h"
+#include "uaf/client/settings/servicesettings.h"
 
 
 
@@ -42,7 +42,7 @@ namespace uafc
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT BrowseSettings : public uafc::BaseServiceSettings
+    class UAFC_EXPORT BrowseSettings : public uafc::ServiceSettings
     {
     public:
 

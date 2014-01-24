@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_BASESERVICESETTINGS_H_
-#define UAFC_BASESERVICESETTINGS_H_
+#ifndef UAFC_SERVICESETTINGS_H_
+#define UAFC_SERVICESETTINGS_H_
 
 
 // STD
@@ -40,12 +40,12 @@ namespace uafc
 
 
     /*******************************************************************************************//**
-    * An uafc::BaseServiceSettings instance stores the settings of a service call
+    * An uafc::ServiceSettings instance stores the settings of a service call
     * (e.g. read/write/...).
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT BaseServiceSettings : public uaf::Stringifiable
+    class UAFC_EXPORT ServiceSettings : public uaf::Stringifiable
     {
     public:
 
@@ -53,7 +53,7 @@ namespace uafc
         /**
          * Construct default settings.
          */
-        BaseServiceSettings();
+        ServiceSettings();
 
         /**
          * The maximum time allowed for each service communication between client and server.
@@ -79,17 +79,17 @@ namespace uafc
 
         // comparison operators
         friend bool UAFC_EXPORT operator<(
-                const BaseServiceSettings& object1,
-                const BaseServiceSettings& object2);
+                const ServiceSettings& object1,
+                const ServiceSettings& object2);
         friend bool UAFC_EXPORT operator==(
-                const BaseServiceSettings& object1,
-                const BaseServiceSettings& object2);
+                const ServiceSettings& object1,
+                const ServiceSettings& object2);
         friend bool UAFC_EXPORT operator!=(
-                const BaseServiceSettings& object1,
-                const BaseServiceSettings& object2);
+                const ServiceSettings& object1,
+                const ServiceSettings& object2);
 
 
     };
 }
 
-#endif /* UAFC_BASESERVICESETTINGS_H_ */
+#endif /* UAFC_SERVICESETTINGS_H_ */

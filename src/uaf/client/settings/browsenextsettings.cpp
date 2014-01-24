@@ -36,7 +36,7 @@ namespace uafc
     // Constructor
     // =============================================================================================
     BrowseNextSettings::BrowseNextSettings()
-    : BaseServiceSettings(),
+    : ServiceSettings(),
       releaseContinuationPoints(false)
     {}
 
@@ -46,7 +46,7 @@ namespace uafc
     string BrowseNextSettings::toString(const string& indent, std::size_t colon) const
     {
         std::stringstream ss;
-        ss << BaseServiceSettings::toString(indent, colon) << "\n";
+        ss << ServiceSettings::toString(indent, colon) << "\n";
 
         ss << indent << " - releaseContinuationPoints";
         ss << fillToPos(ss, colon);

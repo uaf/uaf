@@ -17,6 +17,17 @@ Bugfixes (which do not have any implications on the API) can only be tracked
 via the GIT version control system.
 
 
+
+1.6 @ 2014/01/07
+----------------------------------------------------------------------------------------------------
+
+Informally:
+
+- BaseServiceSettings has been renamed to ServiceSettings (this -most likely- won't affect your 
+  existing code).
+
+
+
 1.6 @ 2014/01/07
 ----------------------------------------------------------------------------------------------------
 

@@ -27,7 +27,7 @@
 // SDK
 // UAF
 #include "uaf/client/clientexport.h"
-#include "uaf/client/settings/baseservicesettings.h"
+#include "uaf/client/settings/servicesettings.h"
 
 
 
@@ -41,14 +41,14 @@ namespace uafc
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT MethodCallSettings : public uafc::BaseServiceSettings
+    class UAFC_EXPORT MethodCallSettings : public uafc::ServiceSettings
     {
     public:
 
         /**
          * Create default MethodCall settings.
          */
-        MethodCallSettings() : uafc::BaseServiceSettings() {}
+        MethodCallSettings() : uafc::ServiceSettings() {}
     };
 }
 

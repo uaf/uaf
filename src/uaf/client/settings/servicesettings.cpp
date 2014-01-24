@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "uaf/client/settings/baseservicesettings.h"
+#include "uaf/client/settings/servicesettings.h"
 
 
 namespace uafc
@@ -31,7 +31,7 @@ namespace uafc
 
     // Constructor
     // =============================================================================================
-    BaseServiceSettings::BaseServiceSettings()
+    ServiceSettings::ServiceSettings()
     {
         callTimeoutSec = 1.0; // 1 sec
     }
@@ -39,7 +39,7 @@ namespace uafc
 
     // Get a string representation
     // =============================================================================================
-    string BaseServiceSettings::toString(const string& indent, std::size_t colon) const
+    string ServiceSettings::toString(const string& indent, std::size_t colon) const
     {
         stringstream ss;
 
@@ -53,7 +53,7 @@ namespace uafc
 
     // Copy the contents to the SDK variable
     // =============================================================================================
-    Status BaseServiceSettings::toSdk(UaClientSdk::ServiceSettings& uaServiceSettings) const
+    Status ServiceSettings::toSdk(UaClientSdk::ServiceSettings& uaServiceSettings) const
     {
         Status ret;
 
@@ -68,7 +68,7 @@ namespace uafc
 
     // operator<
     // =============================================================================================
-    bool operator<(const BaseServiceSettings& object1, const BaseServiceSettings& object2)
+    bool operator<(const ServiceSettings& object1, const ServiceSettings& object2)
     {
         return int(object1.callTimeoutSec*1000) < int(object2.callTimeoutSec*1000);
     }
@@ -76,7 +76,7 @@ namespace uafc
 
     // operator==
     // =============================================================================================
-    bool operator==(const BaseServiceSettings& object1, const BaseServiceSettings& object2)
+    bool operator==(const ServiceSettings& object1, const ServiceSettings& object2)
     {
         return (int(object1.callTimeoutSec*1000)  == int(object2.callTimeoutSec*1000));
     }
@@ -84,7 +84,7 @@ namespace uafc
 
     // operator!=
     // =============================================================================================
-    bool operator!=( const BaseServiceSettings& object1, const BaseServiceSettings& object2)
+    bool operator!=( const ServiceSettings& object1, const ServiceSettings& object2)
     {
         return !(object1 == object2);
     }
