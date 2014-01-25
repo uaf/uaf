@@ -211,11 +211,11 @@ namespace uafc
         UaMutexLocker locker(&subscriptionMapMutex_);
 
         // we'll try to find a similar subscription that can be re-used,
-        // unless we're creating an "exclusive" subscription
+        // unless we're creating an "unique" subscription
         // (one that is only created for -and used by- the current request)
-        if (subscriptionSettings.exclusive)
+        if (subscriptionSettings.unique)
         {
-            logger_->debug("The requested subscription is exclusive");
+            logger_->debug("The requested subscription must be unique");
         }
         else
         {
@@ -252,8 +252,7 @@ namespace uafc
             ClientSubscriptionHandle clientSubscriptionHandle;
             clientSubscriptionHandle = database_->createUniqueClientSubscriptionHandle();
 
-            logger_->debug("No suitable subscription exists yet, so we create a new one with "
-                           "clientSubscriptionHandle %d",
+            logger_->debug("We create a new subscription with clientSubscriptionHandle %d",
                            clientSubscriptionHandle);
 
             // create a new subscription instance

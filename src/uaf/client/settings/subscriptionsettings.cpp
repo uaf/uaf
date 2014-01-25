@@ -34,7 +34,7 @@ namespace uafc
     // =============================================================================================
     SubscriptionSettings::SubscriptionSettings()
     {
-        exclusive                  = false;
+        unique                     = false;
         publishingIntervalSec      = 1.0;
         lifeTimeCount              = 1200;
         maxKeepAliveCount          = 5;
@@ -50,9 +50,9 @@ namespace uafc
     {
         stringstream ss;
 
-        ss << indent << " - exclusive";
+        ss << indent << " - unique";
         ss << fillToPos(ss, colon);
-        ss << ": " << (exclusive ? string("true") : string("false")) << "\n";
+        ss << ": " << (unique ? string("true") : string("false")) << "\n";
 
         ss << indent << " - publishingIntervalSec";
         ss << fillToPos(ss, colon);
@@ -104,7 +104,7 @@ namespace uafc
     {
         return ( (int(object1.publishingIntervalSec*1000)
                   == int(object2.publishingIntervalSec*1000))
-              && (object1.exclusive == object2.exclusive)
+              && (object1.unique == object2.unique)
               && (object1.lifeTimeCount == object2.lifeTimeCount)
               && (object1.maxKeepAliveCount == object2.maxKeepAliveCount)
               && (object1.maxNotificationsPerPublish == object2.maxNotificationsPerPublish)
@@ -128,8 +128,8 @@ namespace uafc
             const SubscriptionSettings& object1,
             const SubscriptionSettings& object2)
     {
-        if (object1.exclusive != object2.exclusive)
-            return object1.exclusive < object2.exclusive;
+        if (object1.unique != object2.unique)
+            return object1.unique < object2.unique;
         else if (int(object1.publishingIntervalSec*1000) != int(object2.publishingIntervalSec*1000))
             return int(object1.publishingIntervalSec*1000) < int(object2.publishingIntervalSec*1000);
         else if (object1.lifeTimeCount != object2.lifeTimeCount)

@@ -26,6 +26,8 @@ Informally:
 - BaseServiceSettings has been renamed to ServiceSettings (this -most likely- won't affect your 
   existing code).
 
+- The 'exclusive' flag of subscription settings has been renamed to a more appropriate 'unique' 
+  flag (to force the UAF to create a new subscription instead of reusing an existing one). 
 
 
 1.6 @ 2014/01/07

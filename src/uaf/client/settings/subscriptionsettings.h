@@ -51,7 +51,7 @@ namespace uafc
          * Construct default settings.
          *
          * Default values are:
-         *   - exclusive                  = false
+         *   - unique                     = false
          *   - publishingIntervalSec      = 1.0
          *   - lifeTimeCount              = 1200
          *   - maxKeepAliveCount          = 5
@@ -61,9 +61,9 @@ namespace uafc
         SubscriptionSettings();
 
 
-        /** An exclusive subscription will never be used by requests other than the request
-         * that created the subscription. */
-        bool exclusive;
+        /** Set this flag to true in order to force the UAF to create a new unique subscription
+            (instead of allowing the UAF to re-use an existing one with the same settings). */
+        bool unique;
 
         /** The publishing interval in seconds. */
         double publishingIntervalSec;
