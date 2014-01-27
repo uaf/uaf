@@ -203,7 +203,7 @@ class Client(ClientBase):
     def __dispatch_dataChangesReceived__(self, dataNotifications):
         """
         Dispatch the DataNofications either to a virtual dataChangesReceived function,
-        or to a callback function (if one is found for the given notificationHandle).
+        or to a callback function (if one is found for the given client handle).
         """
         notificationsWithoutCallback = []
         
@@ -212,7 +212,7 @@ class Client(ClientBase):
             
             for notification in dataNotifications:
                 try:
-                    f = self.__dataNotificationCallbacks__[notification.notificationHandle]
+                    f = self.__dataNotificationCallbacks__[notification.clientHandle]
                     t = threading.Thread(target=f, args=[notification])
                     t.start()
                 except:
@@ -256,7 +256,7 @@ class Client(ClientBase):
     def __dispatch_eventsReceived__(self, eventNotifications):
         """
         Dispatch the EventNofications either to a virtual dataChangesReceived function,
-        or to a callback function (if one is found for the given notificationHandle).
+        or to a callback function (if one is found for the given client handle).
         """
         notificationsWithoutCallback = []
         
@@ -265,7 +265,7 @@ class Client(ClientBase):
             
             for notification in eventNotifications:
                 try:
-                    f = self.__eventNotificationCallbacks__[notification.notificationHandle]
+                    f = self.__eventNotificationCallbacks__[notification.clientHandle]
                     t = threading.Thread(target=f, args=[notification])
                     t.start()
                 except:
@@ -1502,7 +1502,7 @@ class Client(ClientBase):
              - via the exception that was raised in case createMonitoredData() was not successful. 
                This exception has a "status" attribute (of type :class:`~pyuaf.util.Status`),
                and this will provide you a diagnostics object (see :meth:`pyuaf.util.Status.additionalDiagnostics`),
-               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getNotificationHandles`).
+               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getClientHandles`).
         
         .. warning::
             
@@ -1583,7 +1583,7 @@ class Client(ClientBase):
             if len(notificationCallbacks) > 0:
                 if len(notificationCallbacks) == len(result.targets):
                     for i in xrange(len(notificationCallbacks)):
-                        self.__dataNotificationCallbacks__[result.targets[i].notificationHandle] \
+                        self.__dataNotificationCallbacks__[result.targets[i].clientHandle] \
                                 = notificationCallbacks[i]
                 else:
                     raise TypeError("The number of result targets does not correspond to the "
@@ -1629,7 +1629,7 @@ class Client(ClientBase):
              - via the exception that was raised in case createMonitoredEvents() was not successful. 
                This exception has a "status" attribute (of type :class:`~pyuaf.util.Status`),
                and this will provide you a diagnostics object (see :meth:`pyuaf.util.Status.additionalDiagnostics`),
-               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getNotificationHandles`).
+               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getClientHandles`).
         
         .. warning::
             
@@ -1722,7 +1722,7 @@ class Client(ClientBase):
             if len(notificationCallbacks) > 0:
                 if len(notificationCallbacks) == len(result.targets):
                     for i in xrange(len(notificationCallbacks)):
-                        self.__eventNotificationCallbacks__[result.targets[i].notificationHandle] \
+                        self.__eventNotificationCallbacks__[result.targets[i].clientHandle] \
                                 = notificationCallbacks[i]
                 else:
                     raise TypeError("The number of result targets does not correspond to the "
@@ -1773,7 +1773,7 @@ class Client(ClientBase):
              - via the exception that was raised in case processRequest() was not successful. 
                This exception has a "status" attribute (of type :class:`~pyuaf.util.Status`),
                and this will provide you a diagnostics object (see :meth:`pyuaf.util.Status.additionalDiagnostics`),
-               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getNotificationHandles`).
+               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getClientHandles`).
         
         .. warning::
             Asynchronous requests MUST be invoked on a single session. Meaning:
@@ -1865,7 +1865,7 @@ class Client(ClientBase):
                     if len(notificationCallbacks) == len(result.targets):
                         for i in xrange(len(notificationCallbacks)):
                             if type(request) == pyuaf.client.requests.CreateMonitoredDataRequest:
-                                self.__dataNotificationCallbacks__[result.targets[i].notificationHandle] = notificationCallbacks[i]
+                                self.__dataNotificationCallbacks__[result.targets[i].clientHandle] = notificationCallbacks[i]
                 
                 pyuaf.util.errors.evaluate(status)
                 
