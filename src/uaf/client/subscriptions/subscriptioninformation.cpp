@@ -41,8 +41,8 @@ namespace uafc
     // Constructor
     // =============================================================================================
     SubscriptionInformation::SubscriptionInformation(
-            uafc::ClientConnectionId                    clientConnectionId,
-            uafc::ClientSubscriptionHandle              clientSubscriptionHandle,
+            uaf::ClientConnectionId                     clientConnectionId,
+            uaf::ClientSubscriptionHandle               clientSubscriptionHandle,
             uafc::subscriptionstates::SubscriptionState subscriptionState)
     : clientConnectionId(clientConnectionId),
       clientSubscriptionHandle(clientSubscriptionHandle),
