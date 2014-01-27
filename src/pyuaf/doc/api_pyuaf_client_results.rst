@@ -601,7 +601,13 @@
     
         .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.clientConnectionId
 
-            The id of the session that wasThe id of the session that was used for this target, as an ``int``.. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.notificationHandle
+            The id of the session that was used for this target, as an ``int``
+    
+        .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.clientSubscriptionHandle
+
+            The handle of the subscription that owns this monitored item, as an ``int``
+            
+        .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.notificationHandle
 
             The notification handle that was assigned to the monitored item by the UAF 
             (unique per client).
@@ -754,6 +760,10 @@
             This is a 64-bit ``long`` value that remains unique for the whole lifetime of the client.
             So even if sessions/subscriptions/monitored items are re-created, this numerical
             value will always refer to the same monitored item.
+    
+        .. autoattribute:: pyuaf.client.results.CreateMonitoredEventsResultTarget.clientSubscriptionHandle
+
+            The handle of the subscription that owns this monitored item, as an ``int``
     
         .. autoattribute:: pyuaf.client.results.CreateMonitoredEventsResultTarget.monitoredItemId
     
