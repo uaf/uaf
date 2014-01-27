@@ -64,9 +64,9 @@ namespace uafc
 
         /** Status of the result (Good if the monitored item was created, Bad if not). */
         uaf::Status status;
-        /** Notification handle that was assigned by the UAF (unique per client). */
+        /** Notification handle that was assigned by the UAF -- DEPRECATED! */
         uaf::NotificationHandle notificationHandle;
-        /** ClientHandle that was assigned to the monitored item (unique per subscription). */
+        /** ClientHandle that was assigned to the monitored item. */
         uaf::ClientMonitoredItemHandle clientHandle;
         /** MonitoredItemId that was assigned to the monitored item by the server. */
         uaf::MonitoredItemId monitoredItemId;
