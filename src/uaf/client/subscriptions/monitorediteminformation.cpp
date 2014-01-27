@@ -34,7 +34,7 @@ namespace uafc
     MonitoredItemInformation::MonitoredItemInformation()
     : clientConnectionId(0),
       clientSubscriptionHandle(0),
-      clientMonitoredItemHandle(uaf::NOTIFICATIONHANDLE_NOT_ASSIGNED)
+      clientHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED)
     {}
 
 
@@ -43,11 +43,11 @@ namespace uafc
     MonitoredItemInformation::MonitoredItemInformation(
             uaf::ClientConnectionId             clientConnectionId,
             uaf::ClientSubscriptionHandle       clientSubscriptionHandle,
-            uaf::ClientMonitoredItemHandle      clientMonitoredItemHandle,
+            uaf::ClientHandle                   clientHandle,
             const MonitoredItemSettings&        settings)
     : clientConnectionId(clientConnectionId),
       clientSubscriptionHandle(clientSubscriptionHandle),
-      clientMonitoredItemHandle(clientMonitoredItemHandle),
+      clientHandle(clientHandle),
       settings(settings)
     {}
 
@@ -65,12 +65,12 @@ namespace uafc
         ss << fillToPos(ss, colon);
         ss << ": " << clientSubscriptionHandle << "\n";
 
-        ss << indent << " - notificationHandle";
+        ss << indent << " - clientHandle";
         ss << fillToPos(ss, colon) << ": ";
-        if (clientMonitoredItemHandle == uaf::NOTIFICATIONHANDLE_NOT_ASSIGNED)
+        if (clientHandle == uaf::CLIENTHANDLE_NOT_ASSIGNED)
             ss << "NOT ASSIGNED\n";
         else
-            ss << clientMonitoredItemHandle << "\n";
+            ss << clientHandle << "\n";
 
         ss << indent << " - settings";
         ss << fillToPos(ss, colon);
@@ -88,7 +88,7 @@ namespace uafc
     {
         return    object1.clientConnectionId == object2.clientConnectionId
                && object1.clientSubscriptionHandle == object2.clientSubscriptionHandle
-               && object1.clientMonitoredItemHandle == object2.clientMonitoredItemHandle
+               && object1.clientHandle == object2.clientHandle
                && object1.settings == object2.settings;
     }
 
@@ -113,8 +113,8 @@ namespace uafc
             return object1.clientConnectionId < object2.clientConnectionId;
         else if (object1.clientSubscriptionHandle != object2.clientSubscriptionHandle)
             return object1.clientSubscriptionHandle < object2.clientSubscriptionHandle;
-        else if (object1.clientMonitoredItemHandle != object2.clientMonitoredItemHandle)
-            return object1.clientMonitoredItemHandle < object2.clientMonitoredItemHandle;
+        else if (object1.clientHandle != object2.clientHandle)
+            return object1.clientHandle < object2.clientHandle;
         else
             return object1.settings < object2.settings;
     }

@@ -57,13 +57,13 @@ namespace uafc
          *
          * @param clientConnectionId        The id of the session that hosts the subscription.
          * @param clientSubscriptionHandle  The handle of the subscription.
-         * @param clientMonitoredItemHandle The handle of the monitored item.
+         * @param clientHandle              The handle of the monitored item.
          * @param settings                  The settings of the monitored item.
          */
         MonitoredItemInformation(
                 uaf::ClientConnectionId             clientConnectionId,
                 uaf::ClientSubscriptionHandle       clientSubscriptionHandle,
-                uaf::ClientMonitoredItemHandle      clientMonitoredItemHandle,
+                uaf::ClientHandle                   clientHandle,
                 const uafc::MonitoredItemSettings&  settings);
 
 
@@ -74,7 +74,7 @@ namespace uafc
         uaf::ClientSubscriptionHandle               clientSubscriptionHandle;
 
         /** The handle of the monitored item. */
-        uaf::ClientMonitoredItemHandle              clientMonitoredItemHandle;
+        uaf::ClientHandle                           clientHandle;
 
         /** The settings of the monitored item. */
         uafc::MonitoredItemSettings                 settings;
