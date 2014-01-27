@@ -48,14 +48,14 @@ namespace uafc
 
         ss << SubscriptionInformation::toString(indent, colon) << "\n";
 
-        ss << indent << " - notificationHandles";
+        ss << indent << " - clientHandles";
         ss << fillToPos(ss, colon);
         ss << ": [";
-        for(size_t i = 0; i < notificationHandles.size(); i++)
+        for(size_t i = 0; i < clientHandles.size(); i++)
         {
-            ss << notificationHandles[i];
+            ss << clientHandles[i];
             // add a comma unless we're printing the last handle
-            if (i != notificationHandles.size() - 1)
+            if (i != clientHandles.size() - 1)
                 ss << ",";
         }
         ss << "]";
