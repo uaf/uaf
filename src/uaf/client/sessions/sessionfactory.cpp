@@ -256,13 +256,13 @@ namespace uafc
     // Get information about the monitored item
     // =============================================================================================
     Status SessionFactory::monitoredItemInformation(
-            ClientMonitoredItemHandle   clientMonitoredItemHandle,
+            ClientHandle                clientHandle,
             MonitoredItemInformation&   monitoredItemInformation)
     {
         Status ret;
 
         ret.setStatus(statuscodes::InvalidRequestError,
-                      "clientMonitoredItemHandle %d was not found", clientMonitoredItemHandle);
+                      "clientHandle %d was not found", clientHandle);
 
         // lock the mutex to make sure the sessionMap_ is not being manipulated
         UaMutexLocker locker(&sessionMapMutex_);
@@ -275,7 +275,7 @@ namespace uafc
                 ++it)
         {
             monitoredItemFound = it->second->monitoredItemInformation(
-                    clientMonitoredItemHandle,
+                    clientHandle,
                     monitoredItemInformation);
 
             if (monitoredItemFound)
