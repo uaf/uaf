@@ -63,6 +63,7 @@
 #include "uaf/client/subscriptions/eventnotification.h"
 #include "uaf/client/subscriptions/keepalivenotification.h"
 #include "uaf/client/subscriptions/subscriptioninformation.h"
+#include "uaf/client/subscriptions/monitorediteminformation.h"
 #include "uaf/client/sessions/sessionstates.h"
 #include "uaf/client/sessions/sessioninformation.h"
 %}
@@ -137,6 +138,7 @@ import threading
 
 // now include all classes in a generic way
 UAF_WRAP_CLASS("uaf/client/subscriptions/subscriptioninformation.h"   , uafc , SubscriptionInformation   , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, SubscriptionInformationVector)
+UAF_WRAP_CLASS("uaf/client/subscriptions/monitorediteminformation.h"  , uafc , MonitoredItemInformation  , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, MonitoredItemInformationVector)
 UAF_WRAP_CLASS("uaf/client/subscriptions/monitoreditemnotification.h" , uafc , MonitoredItemNotification , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/subscriptions/datachangenotification.h"    , uafc , DataChangeNotification    , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client, DataChangeNotificationVector)
 UAF_WRAP_CLASS("uaf/client/subscriptions/eventnotification.h"         , uafc , EventNotification         , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client, EventNotificationVector)
