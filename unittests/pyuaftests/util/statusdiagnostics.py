@@ -28,10 +28,10 @@ class StatusDiagnosticsTest(unittest.TestCase):
         self.s0_.setDescription("test")
         self.s1.setDescription("somethingElse")    
         
-    def test_util_StatusDiagnostics_setNotificationHandles(self):
-        self.s0.setNotificationHandles([1,2,3])
-        self.s0_.setNotificationHandles([1,2,3])
-        self.s2.setNotificationHandles([4,5,6,7])
+    def test_util_StatusDiagnostics_setClientHandles(self):
+        self.s0.setClientHandles([1,2,3])
+        self.s0_.setClientHandles([1,2,3])
+        self.s2.setClientHandles([4,5,6,7])
     
     def test_util_StatusDiagnostics_getDescription(self):
         self.test_util_StatusDiagnostics_setDescription()
@@ -41,35 +41,35 @@ class StatusDiagnosticsTest(unittest.TestCase):
         self.test_util_StatusDiagnostics_setDescription()
         self.assertTrue( self.s0.hasDescription() )
     
-    def test_util_StatusDiagnostics_getNotificationHandles(self):
-        self.test_util_StatusDiagnostics_setNotificationHandles()
-        self.assertEqual( self.s0.getNotificationHandles() , (1,2,3) )
+    def test_util_StatusDiagnostics_getClientHandles(self):
+        self.test_util_StatusDiagnostics_setClientHandles()
+        self.assertEqual( self.s0.getClientHandles() , (1,2,3) )
     
-    def test_util_StatusDiagnostics_hasNotificationHandles(self):
-        self.test_util_StatusDiagnostics_setNotificationHandles()
-        self.assertTrue( self.s0.hasNotificationHandles() )
+    def test_util_StatusDiagnostics_hasClientHandles(self):
+        self.test_util_StatusDiagnostics_setClientHandles()
+        self.assertTrue( self.s0.hasClientHandles() )
     
     def test_util_StatusDiagnostics___eq__(self):
-        self.test_util_StatusDiagnostics_setNotificationHandles()
+        self.test_util_StatusDiagnostics_setClientHandles()
         self.test_util_StatusDiagnostics_setDescription()
         self.assertTrue( self.s0 == self.s0_ )
     
     def test_util_StatusDiagnostics___ne__(self):
-        self.test_util_StatusDiagnostics_setNotificationHandles()
+        self.test_util_StatusDiagnostics_setClientHandles()
         self.test_util_StatusDiagnostics_setDescription()
         self.assertTrue( self.s0 != self.s1 )
         self.assertTrue( self.s0 != self.s2 )
         self.assertTrue( self.s1 != self.s2 )
     
     def test_util_StatusDiagnostics___lt__(self):
-        self.test_util_StatusDiagnostics_setNotificationHandles()
+        self.test_util_StatusDiagnostics_setClientHandles()
         self.test_util_StatusDiagnostics_setDescription()
         self.assertTrue( self.s1 < self.s0 )
         self.assertTrue( self.s2 < self.s0 )
         self.assertTrue( self.s2 < self.s1 )
     
     def test_util_StatusDiagnostics___gt__(self):
-        self.test_util_StatusDiagnostics_setNotificationHandles()
+        self.test_util_StatusDiagnostics_setClientHandles()
         self.test_util_StatusDiagnostics_setDescription()
         self.assertTrue( self.s0 > self.s1 )
         self.assertTrue( self.s0 > self.s2 )
