@@ -839,13 +839,13 @@ namespace uafc
         /**
          * Get information about a particular subscription.
          *
-         * @param clientMonitoredItemHandle The handle identifying the monitored item.
+         * @param clientHandle              The handle identifying the monitored item.
          * @param monitoredItemInformation  Output parameter, giving you the information about the
          *                                  monitored item.
          * @return                          Good if the monitored item could be found, Bad if not.
          */
         uaf::Status monitoredItemInformation(
-                 uaf::ClientMonitoredItemHandle     clientMonitoredItemHandle,
+                 uaf::ClientHandle                  clientHandle,
                  uafc::MonitoredItemInformation&    monitoredItemInformation);
 
 
@@ -864,7 +864,7 @@ namespace uafc
          * monitored items. E.g. when you call createMonitoredData() or createMonitoredEvents(),
          * it can happen that the server that hosts the monitored items is not on-line yet.
          * In this case, the ClientSubscriptionHandle is *not* assigned yet, but
-         * ClientMonitoredItemHandles *are* assigned yet. Therefore it makes sense to first call
+         * ClientHandles *are* assigned yet. Therefore it makes sense to first call
          * uafc::Client::monitoredItemInformation() of your monitored item, and get the subscription
          * handle from there.
          *
