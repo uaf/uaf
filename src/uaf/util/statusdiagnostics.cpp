@@ -28,13 +28,13 @@ namespace uaf
     using std::stringstream;
     using std::vector;
     using std::size_t;
-    using uaf::NotificationHandle;
+    using uaf::ClientHandle;
 
 
     // Constructor
     // =============================================================================================
     StatusDiagnostics::StatusDiagnostics()
-    : notificationHandles_(0),
+    : clientHandles_(0),
       description_(0)
     {}
 
@@ -43,10 +43,10 @@ namespace uaf
     // =============================================================================================
     StatusDiagnostics::StatusDiagnostics(const StatusDiagnostics& other)
     {
-        if (other.hasNotificationHandles())
-            notificationHandles_ = new vector<NotificationHandle>(*other.notificationHandles_);
+        if (other.hasClientHandles())
+            clientHandles_ = new vector<ClientHandle>(*other.clientHandles_);
         else
-            notificationHandles_ = 0;
+            clientHandles_ = 0;
 
         if (other.hasDescription())
             description_ = new string(*other.description_);
@@ -64,8 +64,8 @@ namespace uaf
         {
             clear();
 
-            if (other.hasNotificationHandles())
-                notificationHandles_ = new vector<NotificationHandle>(*other.notificationHandles_);
+            if (other.hasClientHandles())
+                clientHandles_ = new vector<ClientHandle>(*other.clientHandles_);
 
             if (other.hasDescription())
                 description_ = new string(*other.description_);
@@ -88,10 +88,10 @@ namespace uaf
     // =============================================================================================
     void StatusDiagnostics::clear()
     {
-        if (hasNotificationHandles())
+        if (hasClientHandles())
         {
-            delete notificationHandles_;
-            notificationHandles_ = 0;
+            delete clientHandles_;
+            clientHandles_ = 0;
         }
 
         if (hasDescription())
@@ -106,27 +106,27 @@ namespace uaf
     // =============================================================================================
     bool StatusDiagnostics::isEmpty() const
     {
-        return !(   hasNotificationHandles()
+        return !(   hasClientHandles()
                  || hasDescription());
     }
 
 
-    // Get the notification handles
+    // Get the client handles
     // =============================================================================================
-    vector<NotificationHandle> StatusDiagnostics::getNotificationHandles() const
+    vector<ClientHandle> StatusDiagnostics::getClientHandles() const
     {
-        if (hasNotificationHandles())
-            return *notificationHandles_;
+        if (hasClientHandles())
+            return *clientHandles_;
         else
-            return vector<NotificationHandle>();
+            return vector<ClientHandle>();
     }
 
 
-    // Set notification handles
+    // Set client handles
     // =============================================================================================
-    void StatusDiagnostics::setNotificationHandles(const vector<NotificationHandle>& handles)
+    void StatusDiagnostics::setClientHandles(const vector<ClientHandle>& handles)
     {
-        notificationHandles_ = new vector<NotificationHandle>(handles);
+        clientHandles_ = new vector<ClientHandle>(handles);
     }
 
 
@@ -161,17 +161,17 @@ namespace uaf
             ss << getDescription();
             empty = false;
         }
-        if (hasNotificationHandles())
+        if (hasClientHandles())
         {
             // add a space if text has been added before
             if (!empty) ss << " ";
 
-            ss << "NotificationHandles=[";
-            for(size_t i = 0; i < notificationHandles_->size(); i++)
+            ss << "ClientHandles_=[";
+            for(size_t i = 0; i < clientHandles_->size(); i++)
             {
-                ss << notificationHandles_->operator [](i);
+                ss << clientHandles_->operator [](i);
                 // add a comma unless we're printing the last handle
-                if (i != notificationHandles_->size() - 1)
+                if (i != clientHandles_->size() - 1)
                     ss << ",";
             }
             ss << "]";
@@ -197,23 +197,23 @@ namespace uaf
 
             textAdded = true;
         }
-        if (hasNotificationHandles())
+        if (hasClientHandles())
         {
             if (textAdded) ss << "\n";
 
-            ss << indent << " - notificationHandles[]";
-            if (notificationHandles_->size() == 0)
+            ss << indent << " - clientHandles[]";
+            if (clientHandles_->size() == 0)
             {
                 ss << fillToPos(ss, colon);
                 ss << ": []";
             }
             else
             {
-                for (size_t i = 0; i < notificationHandles_->size(); i++)
+                for (size_t i = 0; i < clientHandles_->size(); i++)
                 {
                     ss << "\n";
-                    ss << indent << "    - notificationHandles[" << i << "] = ";
-                    ss << notificationHandles_->operator [](i);
+                    ss << indent << "    - clientHandles[" << i << "] = ";
+                    ss << clientHandles_->operator [](i);
                 }
             }
 
@@ -235,7 +235,7 @@ namespace uaf
             if (object1.getDescription() != object2.getDescription())
                 return false;
             else
-                return object1.getNotificationHandles() == object2.getNotificationHandles();
+                return object1.getClientHandles() == object2.getClientHandles();
         }
     }
 
@@ -259,7 +259,7 @@ namespace uaf
             if (object1.getDescription() != object2.getDescription())
                 return object1.getDescription() < object2.getDescription();
             else
-                return object1.getNotificationHandles() < object2.getNotificationHandles();
+                return object1.getClientHandles() < object2.getClientHandles();
         }
     }
 
