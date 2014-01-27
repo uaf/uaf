@@ -568,12 +568,10 @@ namespace uafc
     // Get information about the monitored item
     // =============================================================================================
     bool Session::monitoredItemInformation(
-            ClientMonitoredItemHandle   clientMonitoredItemHandle,
+            ClientHandle                clientHandle,
             MonitoredItemInformation&   monitoredItemInformation)
     {
-        return subscriptionFactory_->monitoredItemInformation(
-                clientMonitoredItemHandle,
-                monitoredItemInformation);
+        return subscriptionFactory_->monitoredItemInformation(clientHandle, monitoredItemInformation);
     }
 
 

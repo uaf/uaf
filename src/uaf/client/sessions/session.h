@@ -210,12 +210,12 @@ namespace uafc
         /**
         * Get some information about the specified monitored item.
         *
-        * @param clientMonitoredItemHandle     The handle identifying the monitored item.
-        * @param monitoredItemInformation      Output parameter: the requested information.
-        * @return                              True if the monitored item was found, False if not.
+        * @param clientHandle               The handle identifying the monitored item.
+        * @param monitoredItemInformation   Output parameter: the requested information.
+        * @return                           True if the monitored item was found, False if not.
         */
         bool monitoredItemInformation(
-                uaf::ClientMonitoredItemHandle  clientMonitoredItemHandle,
+                uaf::ClientHandle               clientHandle,
                 uafc::MonitoredItemInformation& monitoredItemInformation);
 
         /**
