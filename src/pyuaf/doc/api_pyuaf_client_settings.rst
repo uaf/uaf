@@ -902,7 +902,7 @@
     
             Construct a new SubscriptionSettings object with the following default values:
             
-              - exclusive                  = False
+              - unique                     = False
               - publishingIntervalSec      = 1.0
               - lifeTimeCount              = 1200
               - maxKeepAliveCount          = 5
@@ -917,10 +917,11 @@
     
     * Attributes
     
-        .. autoattribute:: pyuaf.client.settings.SubscriptionSettings.exclusive
+        .. autoattribute:: pyuaf.client.settings.SubscriptionSettings.unique
         
-            An exclusive subscription will never be used by requests other than the request
-            that created the subscription.
+            Set this flag to True, to force the UAF to create a *new* subscription. 
+            If you leave this flag False, the UAF may choose to re-use an existing subscription 
+            (if one is found that has the same properties).
             
             The type of this attribute is ``bool``.
     
