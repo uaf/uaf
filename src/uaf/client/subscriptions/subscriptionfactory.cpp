@@ -197,7 +197,7 @@ namespace uafc
     // Get information about the monitored item
     // =============================================================================================
     bool SubscriptionFactory::monitoredItemInformation(
-            ClientMonitoredItemHandle   clientMonitoredItemHandle,
+            ClientHandle                clientHandle,
             MonitoredItemInformation&   monitoredItemInformation)
     {
         // lock the mutex to make sure the subscriptionMap_ is not being manipulated
@@ -211,7 +211,7 @@ namespace uafc
                 ++it)
         {
             monitoredItemFound = it->second->monitoredItemInformation(
-                    clientMonitoredItemHandle,
+                    clientHandle,
                     monitoredItemInformation);
         }
 
