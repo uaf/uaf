@@ -235,6 +235,30 @@ namespace uafc
     }
 
 
+    // Get information about the monitored item
+    // =============================================================================================
+    bool Subscription::monitoredItemInformation(
+            ClientMonitoredItemHandle   clientMonitoredItemHandle,
+            MonitoredItemInformation&   monitoredItemInformation)
+    {
+        UaMutexLocker locker(&monitoredItemsMapMutex_); // unlocks when locker goes out of scope
+
+        MonitoredItemsMap::const_iterator it = monitoredItemsMap_.find(clientMonitoredItemHandle);
+
+        bool monitoredItemFound = (it != monitoredItemsMap_.end());
+
+        if (monitoredItemFound)
+        {
+            monitoredItemInformation.clientConnectionId = clientConnectionId_;
+            monitoredItemInformation.clientSubscriptionHandle = clientSubscriptionHandle_;
+            monitoredItemInformation.clientMonitoredItemHandle = it->first;
+            monitoredItemInformation.settings = it->second.settings;
+        }
+
+        return monitoredItemFound;
+    }
+
+
     // keep the subscription alive
     // =============================================================================================
     void Subscription::keepAlive()

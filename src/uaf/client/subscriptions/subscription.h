@@ -40,6 +40,7 @@
 #include "uaf/client/subscriptions/monitoreditem.h"
 #include "uaf/client/subscriptions/subscriptionstates.h"
 #include "uaf/client/subscriptions/subscriptioninformation.h"
+#include "uaf/client/subscriptions/monitorediteminformation.h"
 #include "uaf/client/subscriptions/keepalivenotification.h"
 #include "uaf/client/database/database.h"
 #include "uaf/client/invocations/invocations.h"
@@ -131,6 +132,18 @@ namespace uafc
 
 
         /**
+         * Get some information about the specified monitored item.
+         *
+         * @param clientMonitoredItemHandle     The handle identifying the monitored item.
+         * @param monitoredItemInformation      Output parameter: the requested information.
+         * @return                              True if the monitored item was found, False if not.
+         */
+         bool monitoredItemInformation(
+                uaf::ClientMonitoredItemHandle  clientMonitoredItemHandle,
+                uafc::MonitoredItemInformation& monitoredItemInformation);
+
+
+        /**
          * Called every time a monitored item has changed,
          * overridden from UaSubscriptionCallback.
          */
@@ -187,7 +200,8 @@ namespace uafc
 
                 // create a new client handle
                 uaf::ClientMonitoredItemHandle clientHandle;
-                clientHandle = database_->createUniqueClientMonitoredItemHandle();
+                clientHandle = notificationHandle; // notification handle is deprecated, since
+                                                   // both concepts have the same semantics!
 
                 // store the monitored item
                 monitoredItemsMap_[clientHandle].notificationHandle = notificationHandle;
@@ -244,7 +258,8 @@ namespace uafc
 
                 // create a new client handle
                 uaf::ClientMonitoredItemHandle clientHandle;
-                clientHandle = database_->createUniqueClientMonitoredItemHandle();
+                clientHandle = notificationHandle; // notification handle is deprecated, since
+                                                   // both concepts have the same semantics!
 
                 // store the monitored item
                 monitoredItemsMap_[clientHandle].notificationHandle = notificationHandle;
