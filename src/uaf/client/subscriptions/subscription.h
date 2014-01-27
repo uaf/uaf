@@ -146,6 +146,18 @@ namespace uafc
 
 
         /**
+         * Set the publishing mode of the subscription.
+         *
+         * @param publishingEnabled         True to enable the subscription, false if not.
+         * @param serviceSettings           The service settings to be used.
+         * @return                          Result of the service call.
+         */
+        uaf::Status setPublishingMode(
+                bool                           publishingEnabled,
+                const uafc::ServiceSettings&   serviceSettings);
+
+
+        /**
          * Execute a CreateMonitoredData service invocation.
          *
          * @param invocation        The service invocation to execute.

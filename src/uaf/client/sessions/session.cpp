@@ -594,5 +594,19 @@ namespace uafc
     }
 
 
+    // Set the publishing mode.
+    // =============================================================================================
+    Status Session::setPublishingMode(
+            ClientSubscriptionHandle    clientSubscriptionHandle,
+            bool                        publishingEnabled,
+            const ServiceSettings&      serviceSettings,
+            bool&                       subscriptionFound)
+    {
+        return subscriptionFactory_->setPublishingMode(clientSubscriptionHandle,
+                                                       publishingEnabled,
+                                                       serviceSettings,
+                                                       subscriptionFound);
+    }
+
 
 }

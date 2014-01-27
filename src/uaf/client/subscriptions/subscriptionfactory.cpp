@@ -194,6 +194,35 @@ namespace uafc
     }
 
 
+    // Set the publishing mode.
+    // =============================================================================================
+    Status SubscriptionFactory::setPublishingMode(
+            ClientSubscriptionHandle    clientSubscriptionHandle,
+            bool                        publishingEnabled,
+            const ServiceSettings&      serviceSettings,
+            bool&                       subscriptionFound)
+    {
+        // lock the mutex to make sure the sessionMap_ is not being manipulated
+        UaMutexLocker locker(&subscriptionMapMutex_);
+
+        // loop trough the sessions
+        for (SubscriptionMap::iterator it = subscriptionMap_.begin();
+                it != subscriptionMap_.end();
+                ++it)
+        {
+            subscriptionFound = clientSubscriptionHandle == it->second->clientSubscriptionHandle();
+
+            if (subscriptionFound)
+                return it->second->setPublishingMode(publishingEnabled, serviceSettings);
+        }
+
+        return Status(uaf::statuscodes::InvalidRequestError,
+                      "Could not set the publishing mode since clientSubscriptionHandle %d was " \
+                      "not found",
+                      clientSubscriptionHandle);
+    }
+
+
     // Construct a subscription if needed
     // =============================================================================================
     Status SubscriptionFactory::acquireSubscription(

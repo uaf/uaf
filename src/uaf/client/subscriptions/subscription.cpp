@@ -194,6 +194,22 @@ namespace uafc
     }
 
 
+    // Set the publishing mode
+    // =============================================================================================
+    Status Subscription::setPublishingMode(
+            bool                   publishingEnabled,
+            const ServiceSettings& serviceSettings)
+    {
+        OpcUa_Boolean uaPublishingEnabled = publishingEnabled ? OpcUa_True : OpcUa_False;
+        UaClientSdk::ServiceSettings uaServiceSettings;
+        serviceSettings.toSdk(uaServiceSettings);
+        UaStatus uaStatus = uaSubscription_->setPublishingMode(uaServiceSettings,
+                                                               uaPublishingEnabled);
+        Status ret;
+        ret.fromSdk(uaStatus.statusCode(), "Couldn't set the publishing mode");
+        return ret;
+    }
+
 
     // Change the subscription status
     // =============================================================================================

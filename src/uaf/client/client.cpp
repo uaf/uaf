@@ -616,6 +616,20 @@ namespace uafc
         return sessionFactory_->allSubscriptionInformations();
     }
 
+
+    // Set the publishing mode.
+    // =============================================================================================
+    Status Client::setPublishingMode(
+            ClientSubscriptionHandle  clientSubscriptionHandle,
+            bool                      publishingEnabled,
+            const ServiceSettings&    serviceSettings)
+    {
+        return sessionFactory_->setPublishingMode(clientSubscriptionHandle,
+                                                  publishingEnabled,
+                                                  serviceSettings);
+    }
+
+
     // Run the thread
     // =============================================================================================
     void Client::run()

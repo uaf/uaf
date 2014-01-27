@@ -202,6 +202,20 @@ namespace uafc
 
 
         /**
+         * Set the publishing mode.
+         *
+         * @param clientSubscriptionHandle  The handle identifying the subscription.
+         * @param publishingEnabled         True to enable the publishing mode, false to disable.
+         * @param serviceSettings           The service settings to be used.
+         * @return                          The result of the service call.
+         */
+        uaf::Status setPublishingMode(
+                 uaf::ClientSubscriptionHandle  clientSubscriptionHandle,
+                 bool                           publishingEnabled,
+                 const uafc::ServiceSettings&   serviceSettings);
+
+
+        /**
          * Invoke a request.
          *
          * @tparam _Service The service to be requested (such as uafc::ReadService,

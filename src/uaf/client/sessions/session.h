@@ -214,6 +214,23 @@ namespace uafc
         std::vector<uafc::SubscriptionInformation> allSubscriptionInformations();
 
 
+        /**
+         * Set the publishing mode of a particular subscription.
+         *
+         * @param clientSubscriptionHandle  The handle identifying the subscription.
+         * @param publishingEnabled         True to enable the subscription, false if not.
+         * @param serviceSettings           The service settings to be used.
+         * @param subscriptionFound         Output parameter, True if the subscription specified
+         *                                  by the clientSubscriptionHandle was found, False if not.
+         * @return                          Result of the service call.
+         */
+        uaf::Status setPublishingMode(
+                uaf::ClientSubscriptionHandle  clientSubscriptionHandle,
+                bool                           publishingEnabled,
+                const uafc::ServiceSettings&   serviceSettings,
+                bool&                          subscriptionFound);
+
+
 
         ///@} //////////////////////////////////////////////////////////////////////////////////////
         /**

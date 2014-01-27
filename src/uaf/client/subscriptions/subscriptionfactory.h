@@ -130,6 +130,23 @@ namespace uafc
 
 
         /**
+         * Set the publishing mode of a particular subscription.
+         *
+         * @param clientSubscriptionHandle  The handle identifying the subscription.
+         * @param publishingEnabled         True to enable the subscription, false if not.
+         * @param serviceSettings           The service settings to be used.
+         * @param subscriptionFound         Output parameter, True if the subscription specified
+         *                                  by the clientSubscriptionHandle was found, False if not.
+         * @return                          Result of the service call.
+         */
+        uaf::Status setPublishingMode(
+                uaf::ClientSubscriptionHandle  clientSubscriptionHandle,
+                bool                           publishingEnabled,
+                const uafc::ServiceSettings&   serviceSettings,
+                bool&                          subscriptionFound);
+
+
+        /**
          * Execute a service invocation in a generic way.
          *
          * @tparam _Service      The service to be invoked (such as uafc::ReadService,
