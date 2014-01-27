@@ -70,14 +70,6 @@ namespace uafc
 
 
         /**
-         * Get a unique notification handle.
-         *
-         * @return  A unique notification handle.
-         */
-        uaf::NotificationHandle createUniqueNotificationHandle();
-
-
-        /**
          * Get a unique connection id.
          *
          * @return  A unique client connection ID.
@@ -94,30 +86,26 @@ namespace uafc
 
 
         /**
-         * Get a unique ClientMonitoredItemHandle.
+         * Get a unique ClientHandle.
          *
          * @return  A new client handle for the monitored item.
          */
-        uaf::ClientMonitoredItemHandle createUniqueClientMonitoredItemHandle();
+        uaf::ClientHandle createUniqueClientHandle();
 
 
     private:
-
-
-        uaf::NotificationHandle         nofiticationHandle_;
-        UaMutex                         notificationHandleMutex_;
 
         // The current client connection ID.
         uaf::ClientConnectionId         clientConnectionId_;
         UaMutex                         clientConnectionIdMutex_;
 
-        // The current client connection ID.
+        // The current client subscription handle.
         uaf::ClientSubscriptionHandle   clientSubscriptionHandle_;
         UaMutex                         clientSubscriptionHandleMutex_;
 
-        // The current client connection ID.
-        uaf::ClientSubscriptionHandle   clientMonitoredItemHandle_;
-        UaMutex                         clientMonitoredItemHandleMutex_;
+        // The current client handle of the monitored items.
+        uaf::ClientHandle               clientHandle_;
+        UaMutex                         clientHandleMutex_;
 
         // no copying or assigning allowed
         DISALLOW_COPY_AND_ASSIGN(Database);
@@ -249,20 +237,20 @@ namespace uafc
 
 
     /**
-     * Template function to "catch" all results that don't need to have notification handles
+     * Template function to "catch" all results that don't need to have client handles
      * assigned.
      *
-     * Results that *do* need to have notification handles assigned, will have a specialized
-     * assignNotificationHandlesIfNeeded() function.
+     * Results that *do* need to have client handles assigned, will have a specialized
+     * assignClientHandlesIfNeeded() function.
      *
      * @param result    The result.
      * @param mask      Only assign the targets indicated by the mask.
      * @param database  The database.
-     * @param assigned  True if the function will (try to) assign notification handles (always false
-     *                  for this particular template function).
+     * @param assigned  True if the function will (try to) assign clientHandles
+     *                  (always false for this particular template function).
      */
     template <typename _Service>
-    uaf::Status UAFC_EXPORT assignNotificationHandlesIfNeeded(
+    uaf::Status UAFC_EXPORT assignClientHandlesIfNeeded(
             typename _Service::Result&  result,
             const uaf::Mask&            mask,
             uafc::Database*             database,
@@ -275,18 +263,18 @@ namespace uafc
 
 
     /**
-     * Specialized template function to assign notification handles to CreateMonitoredDataResults.
+     * Specialized template function to assign ClientHandles to CreateMonitoredDataResults.
      *
      * @param result    The result.
      * @param mask      Only assign the targets indicated by the mask.
      * @param database  The database.
-     * @param assigned  True if the function will (try to) assign notification handles (always true
+     * @param assigned  True if the function will (try to) assign client handles (always true
      *                  for this particular template function).
-     * @return          Good if notification handles could be assigned, or if they were already
+     * @return          Good if client handles could be assigned, or if they were already
      *                  assigned.
      */
     template <>
-    inline uaf::Status UAFC_EXPORT assignNotificationHandlesIfNeeded<uafc::CreateMonitoredDataService>(
+    inline uaf::Status UAFC_EXPORT assignClientHandlesIfNeeded<uafc::CreateMonitoredDataService>(
             uafc::CreateMonitoredDataResult&    result,
             const uaf::Mask&                    mask,
             uafc::Database*                     database,
@@ -301,31 +289,28 @@ namespace uafc
             {
                 if (mask.isSet(i))
                 {
-                    if (result.targets[i].notificationHandle
-                        == uaf::NOTIFICATIONHANDLE_NOT_ASSIGNED)
+                    if (result.targets[i].clientHandle == uaf::CLIENTHANDLE_NOT_ASSIGNED)
                     {
-                        uaf::NotificationHandle handle = database->createUniqueNotificationHandle();
-                        result.targets[i].notificationHandle = handle; // DEPRECATED!
-                        result.targets[i].clientHandle = handle;
+                        result.targets[i].clientHandle = database->createUniqueClientHandle();
                     }
                 }
             }
 
-            // add the notification handles to the status diagnostics object!
-            std::vector<uaf::NotificationHandle> notificationHandles;
-            notificationHandles.reserve(result.targets.size());
+            // add the client handles to the status diagnostics object!
+            std::vector<uaf::ClientHandle> clientHandles;
+            clientHandles.reserve(result.targets.size());
 
             for (std::size_t i = 0; i < result.targets.size(); i++)
-                notificationHandles.push_back(result.targets[i].notificationHandle);
+                clientHandles.push_back(result.targets[i].clientHandle);
 
-            ret.additionalDiagnostics().setNotificationHandles(notificationHandles);
+            ret.additionalDiagnostics().setClientHandles(clientHandles);
 
             ret.setGood();
         }
         else
         {
             ret.setStatus(uaf::statuscodes::UnexpectedError,
-                          "Could not assign notification handles (mask has wrong size!)");
+                          "Could not assign client handles (mask has wrong size!)");
         }
 
         return ret;
@@ -333,18 +318,18 @@ namespace uafc
 
 
     /**
-     * Specialized template function to assign notification handles to CreateMonitoredEventsResults.
+     * Specialized template function to assign ClientHandles to CreateMonitoredEventsResults.
      *
      * @param result    The result.
      * @param mask      Only assign the targets indicated by the mask.
      * @param database  The database.
-     * @param assigned  True if the function will (try to) assign notification handles (always true
+     * @param assigned  True if the function will (try to) assign client handles (always true
      *                  for this particular template function).
-     * @return          Good if notification handles could be assigned, or if they were already
+     * @return          Good if client handles could be assigned, or if they were already
      *                  assigned.
      */
     template <>
-    inline uaf::Status UAFC_EXPORT assignNotificationHandlesIfNeeded<uafc::CreateMonitoredEventsService>(
+    inline uaf::Status UAFC_EXPORT assignClientHandlesIfNeeded<uafc::CreateMonitoredEventsService>(
             uafc::CreateMonitoredEventsResult&  result,
             const uaf::Mask&                    mask,
             uafc::Database*                     database,
@@ -359,31 +344,28 @@ namespace uafc
             {
                 if (mask.isSet(i))
                 {
-                    if (result.targets[i].notificationHandle
-                        == uaf::NOTIFICATIONHANDLE_NOT_ASSIGNED)
+                    if (result.targets[i].clientHandle == uaf::CLIENTHANDLE_NOT_ASSIGNED)
                     {
-                        uaf::NotificationHandle handle = database->createUniqueNotificationHandle();
-                        result.targets[i].notificationHandle = handle; // DEPRECATED!
-                        result.targets[i].clientHandle = handle;
+                        result.targets[i].clientHandle = database->createUniqueClientHandle();
                     }
                 }
             }
 
-            // add the notification handles to the status diagnostics object!
-            std::vector<uaf::NotificationHandle> notificationHandles;
-            notificationHandles.reserve(result.targets.size());
+            // add the client monitored item handles to the status diagnostics object!
+            std::vector<uaf::ClientHandle> clientHandles;
+            clientHandles.reserve(result.targets.size());
 
             for (std::size_t i = 0; i < result.targets.size(); i++)
-                notificationHandles.push_back(result.targets[i].notificationHandle);
+                clientHandles.push_back(result.targets[i].clientHandle);
 
-            ret.additionalDiagnostics().setNotificationHandles(notificationHandles);
+            ret.additionalDiagnostics().setClientHandles(clientHandles);
 
             ret.setGood();
         }
         else
         {
             ret.setStatus(uaf::statuscodes::UnexpectedError,
-                          "Could not assign notification handles (mask has wrong size!)");
+                          "Could not assign ClientHandles (mask has wrong size!)");
         }
 
         return ret;
