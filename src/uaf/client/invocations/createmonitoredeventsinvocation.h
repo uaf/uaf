@@ -55,22 +55,17 @@ namespace uafc
 
 
         // some public typedefs of handles that are needed for the invocation.
-        typedef std::vector<uaf::ClientMonitoredItemHandle> ClientHandles;
-        typedef std::vector<uaf::NotificationHandle>        NotificationHandles;
+        typedef std::vector<uaf::ClientHandle> ClientHandles;
 
 
         /**
          * Set the handles that are needed for the invocation.
          *
          * @param clientHandles:        The client handles, as assigned by the UAF.
-         * @param notificationHandles:  The notification handles, as assigned by the UAF.
          */
-        void setHandles(
-                const ClientHandles&        clientHandles,
-                const NotificationHandles&  notificationHandles)
+        void setHandles(const ClientHandles&        clientHandles)
         {
             clientHandles_       = clientHandles;
-            notificationHandles_ = notificationHandles;
         }
 
 
@@ -124,7 +119,6 @@ namespace uafc
         // private data members used during the invocation
         OpcUa_TimestampsToReturn        uaTimeStamps_;
         ClientHandles                   clientHandles_;
-        NotificationHandles             notificationHandles_;
         UaClientSdk::ServiceSettings    uaServiceSettings_;
         UaMonitoredItemCreateRequests   uaCreateRequests_;
         UaMonitoredItemCreateResults    uaCreateResults_;

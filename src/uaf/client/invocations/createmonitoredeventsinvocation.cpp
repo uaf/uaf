@@ -216,16 +216,12 @@ namespace uafc
         {
             for (uint32_t i = 0; i < noOfResults; i++)
             {
-                //targets[i].clientConnectionId =
-                //targets[i].clientSubscriptionHandle =
-                targets[i].notificationHandle = notificationHandles_[i];
                 targets[i].clientHandle = clientHandles_[i];
                 targets[i].monitoredItemId = uaCreateResults_[i].MonitoredItemId;
                 targets[i].revisedQueueSize = uaCreateResults_[i].RevisedQueueSize;
                 targets[i].revisedSamplingIntervalSec
                     = uaCreateResults_[i].RevisedSamplingInterval / 1000.0;
-                targets[i].status.fromSdk(uaCreateResults_[i].StatusCode,
-                                                       "Error on the server side");
+                targets[i].status.fromSdk(uaCreateResults_[i].StatusCode, "Error on the server side");
             }
         }
 
