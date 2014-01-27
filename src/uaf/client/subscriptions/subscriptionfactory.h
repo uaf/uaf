@@ -130,6 +130,18 @@ namespace uafc
 
 
         /**
+         * Get some information about the specified monitored item.
+         *
+         * @param clientMonitoredItemHandle     The handle identifying the monitored item.
+         * @param monitoredItemInformation      Output parameter: the requested information.
+         * @return                              True if the monitored item was found, False if not.
+         */
+         bool monitoredItemInformation(
+                uaf::ClientMonitoredItemHandle  clientMonitoredItemHandle,
+                uafc::MonitoredItemInformation& monitoredItemInformation);
+
+
+        /**
          * Set the publishing mode of a particular subscription.
          *
          * @param clientSubscriptionHandle  The handle identifying the subscription.

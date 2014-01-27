@@ -179,7 +179,7 @@ namespace uafc
 
         vector<SubscriptionInformation> ret;
 
-        // lock the mutex to make sure the sessionMap_ is not being manipulated
+        // lock the mutex to make sure the subscriptionMap_ is not being manipulated
         UaMutexLocker locker(&subscriptionMapMutex_);
 
         // loop trough the sessions
@@ -191,6 +191,31 @@ namespace uafc
         }
 
         return ret;
+    }
+
+
+    // Get information about the monitored item
+    // =============================================================================================
+    bool SubscriptionFactory::monitoredItemInformation(
+            ClientMonitoredItemHandle   clientMonitoredItemHandle,
+            MonitoredItemInformation&   monitoredItemInformation)
+    {
+        // lock the mutex to make sure the subscriptionMap_ is not being manipulated
+        UaMutexLocker locker(&subscriptionMapMutex_);
+
+        bool monitoredItemFound = false;
+
+        // loop trough the sessions
+        for (SubscriptionMap::const_iterator it = subscriptionMap_.begin();
+                it != subscriptionMap_.end() && (!monitoredItemFound);
+                ++it)
+        {
+            monitoredItemFound = it->second->monitoredItemInformation(
+                    clientMonitoredItemHandle,
+                    monitoredItemInformation);
+        }
+
+        return monitoredItemFound;
     }
 
 
