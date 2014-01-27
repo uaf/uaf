@@ -194,6 +194,19 @@ namespace uafc
 
 
         /**
+         * Get some information about the specified monitored item.
+         *
+         * @param clientMonitoredItemHandle     The handle identifying the monitored item.
+         * @param monitoredItemInformation      Output parameter: the requested information.
+         * @return                              Good if the monitored item could be found,
+         *                                      Bad if not.
+         */
+         uaf::Status monitoredItemInformation(
+                uaf::ClientMonitoredItemHandle  clientMonitoredItemHandle,
+                uafc::MonitoredItemInformation& monitoredItemInformation);
+
+
+        /**
          * Get information about all subscriptions.
          *
          * @return  A vector of all available SubscriptionInformation.

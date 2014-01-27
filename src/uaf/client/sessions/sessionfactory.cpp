@@ -252,6 +252,40 @@ namespace uafc
                       clientSubscriptionHandle);
     }
 
+
+    // Get information about the monitored item
+    // =============================================================================================
+    Status SessionFactory::monitoredItemInformation(
+            ClientMonitoredItemHandle   clientMonitoredItemHandle,
+            MonitoredItemInformation&   monitoredItemInformation)
+    {
+        Status ret;
+
+        ret.setStatus(statuscodes::InvalidRequestError,
+                      "clientMonitoredItemHandle %d was not found", clientMonitoredItemHandle);
+
+        // lock the mutex to make sure the sessionMap_ is not being manipulated
+        UaMutexLocker locker(&sessionMapMutex_);
+
+        bool monitoredItemFound = false;
+
+        // loop trough the sessions
+        for (SessionMap::const_iterator it = sessionMap_.begin();
+                it != sessionMap_.end() && (!monitoredItemFound);
+                ++it)
+        {
+            monitoredItemFound = it->second->monitoredItemInformation(
+                    clientMonitoredItemHandle,
+                    monitoredItemInformation);
+
+            if (monitoredItemFound)
+                ret.setGood();
+        }
+
+        return ret;
+    }
+
+
     // Manual subscription
     //==============================================================================================
     Status SessionFactory::manuallySubscribe(
