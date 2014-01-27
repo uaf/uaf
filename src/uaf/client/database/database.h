@@ -305,7 +305,8 @@ namespace uafc
                         == uaf::NOTIFICATIONHANDLE_NOT_ASSIGNED)
                     {
                         uaf::NotificationHandle handle = database->createUniqueNotificationHandle();
-                        result.targets[i].notificationHandle = handle;
+                        result.targets[i].notificationHandle = handle; // DEPRECATED!
+                        result.targets[i].clientHandle = handle;
                     }
                 }
             }
@@ -362,7 +363,8 @@ namespace uafc
                         == uaf::NOTIFICATIONHANDLE_NOT_ASSIGNED)
                     {
                         uaf::NotificationHandle handle = database->createUniqueNotificationHandle();
-                        result.targets[i].notificationHandle = handle;
+                        result.targets[i].notificationHandle = handle; // DEPRECATED!
+                        result.targets[i].clientHandle = handle;
                     }
                 }
             }
