@@ -206,6 +206,18 @@ namespace uafc
                  uaf::ClientSubscriptionHandle      clientSubscriptionHandle,
                  uafc::SubscriptionInformation&     subscriptionInformation);
 
+
+        /**
+        * Get some information about the specified monitored item.
+        *
+        * @param clientMonitoredItemHandle     The handle identifying the monitored item.
+        * @param monitoredItemInformation      Output parameter: the requested information.
+        * @return                              True if the monitored item was found, False if not.
+        */
+        bool monitoredItemInformation(
+                uaf::ClientMonitoredItemHandle  clientMonitoredItemHandle,
+                uafc::MonitoredItemInformation& monitoredItemInformation);
+
         /**
          * Get information about all subscriptions.
          *

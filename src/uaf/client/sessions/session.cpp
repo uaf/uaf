@@ -565,6 +565,18 @@ namespace uafc
     }
 
 
+    // Get information about the monitored item
+    // =============================================================================================
+    bool Session::monitoredItemInformation(
+            ClientMonitoredItemHandle   clientMonitoredItemHandle,
+            MonitoredItemInformation&   monitoredItemInformation)
+    {
+        return subscriptionFactory_->monitoredItemInformation(
+                clientMonitoredItemHandle,
+                monitoredItemInformation);
+    }
+
+
     // Update the session status.
     // =============================================================================================
     void Session::setSessionState(uafc::sessionstates::SessionState sessionState)
