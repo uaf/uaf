@@ -41,8 +41,8 @@ namespace uafc
     * An uafc::CreateMonitoredEventsResultTarget is the "result target" of the corresponding
     * "request target" that specified the item to be monitored.
     *
-    * It tells you whether or not the item is now being monitored, the value of the handle of the
-    * monitored item, the value of the handle of the notifications that you can expect, ...
+    * It tells you whether or not the item is now being monitored, the value of the client handle
+    * of the monitored item, ...
     *
     * @ingroup ClientResults
     ***********************************************************************************************/
@@ -55,8 +55,7 @@ namespace uafc
          * Create a default result target.
          */
         CreateMonitoredEventsResultTarget()
-        : notificationHandle(uaf::NOTIFICATIONHANDLE_NOT_ASSIGNED),
-          clientHandle(0),
+        : clientHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
           monitoredItemId(0),
           revisedSamplingIntervalSec(0.0),
           revisedQueueSize(0)
@@ -64,10 +63,8 @@ namespace uafc
 
         /** Status of the result (Good if the monitored item was created, Bad if not). */
         uaf::Status status;
-        /** Notification handle that was assigned by the UAF -- DEPRECATED! */
-        uaf::NotificationHandle notificationHandle;
         /** ClientHandle that was assigned to the monitored item. */
-        uaf::ClientMonitoredItemHandle clientHandle;
+        uaf::ClientHandle clientHandle;
         /** MonitoredItemId that was assigned to the monitored item by the server. */
         uaf::MonitoredItemId monitoredItemId;
         /** The revised sampling interval of the monitored item, in seconds. */

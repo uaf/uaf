@@ -37,9 +37,6 @@ namespace uafc
     string CreateMonitoredEventsResultTarget::toString(const string& indent, size_t colon) const
     {
         stringstream ss;
-        ss << indent << " - notificationHandle";
-        ss << fillToPos(ss, colon);
-        ss << ": " << notificationHandle << " (DEPRECATED)\n";
 
         ss << indent <<  " - clientHandle";
         ss << fillToPos(ss, colon);
