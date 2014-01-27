@@ -609,11 +609,22 @@ namespace uafc
     }
 
 
-    // Get information about the session
+    // Get information about the subscriptions
     // =============================================================================================
     vector<SubscriptionInformation> Client::allSubscriptionInformations()
     {
         return sessionFactory_->allSubscriptionInformations();
+    }
+
+
+    // Get information about the monitored item
+    // =============================================================================================
+    Status Client::monitoredItemInformation(
+            NotificationHandle            clientMonitoredItemHandle,
+            MonitoredItemInformation&     monitoredItemInformation)
+    {
+        return sessionFactory_->monitoredItemInformation(
+                clientMonitoredItemHandle, monitoredItemInformation);
     }
 
 
