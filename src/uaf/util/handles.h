@@ -98,6 +98,12 @@ namespace uaf
      */
     typedef uint32_t ClientMonitoredItemHandle;
 
+    /** Client handle value when it was not assigned. */
+    static const uint32_t CLIENTHANDLE_NOT_ASSIGNED = OpcUa_UInt32_Max;
+
+    /** Maximum client handle value. */
+    static const uint32_t CLIENTHANDLE_MAX = OpcUa_UInt32_Max - 1;
+
     /**
      * NOTE: A NotificationHandle is a redundant concept of ClientMonitoredItemHandle
      * ... so it is deprecated!
