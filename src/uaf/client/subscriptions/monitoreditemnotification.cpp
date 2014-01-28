@@ -50,12 +50,10 @@ namespace uafc
         ss << indent << " - clientHandle";
         ss << fillToPos(ss, colon);
         if (clientHandle == CLIENTHANDLE_NOT_ASSIGNED)
-            ss << ": CLIENTHANDLE_NOT_ASSIGNED\n";
+            ss << ": 0xFFFFFFFF (CLIENTHANDLE_NOT_ASSIGNED)";
         else
-            ss << ": " << clientHandle << "\n";
-        ss << indent << " - clientHandle";
-        ss << fillToPos(ss, colon);
-        ss << ": " << clientHandle;
+            ss << ": " << clientHandle;
+
         return ss.str();
     }
 
