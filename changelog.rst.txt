@@ -68,6 +68,14 @@ Formally:
   - uafc::Client::monitoredItemInformation() 
     (pyuaf.client.Client.monitoredItemInformation())
 
+- The following classes were added:
+  
+  - uafc::MonitoredItemInformation (pyuaf.client.Client.MonitoredItemInformation)
+
+- The following namespaces (modules) were added:
+  
+  - uafc::monitoreditemstates (pyuaf.client.monitoreditemstates)
+
 - The following attributes have been renamed or removed due to the removal of the redundant 
   'notification handle' concept in favor of the 'client handle' concept:
   
@@ -77,7 +85,8 @@ Formally:
     - getNotificationHandles() -> renamed to getClientHandles()
     - setNotificationHandles() -> renamed to setClientHandles()
     
-  - uafc::MonitoredItemNotification (pyuaf.client.subscriptions.MonitoredItemNotification)
+  - | uafc::MonitoredItemNotification (pyuaf.client.subscriptions.MonitoredItemNotification),
+    | uafc::DataChangeNotification (pyuaf.client.subscriptions.DataChangeNotification)
   
     - notificationHandle -> removed (use clientHandle instead)
     
