@@ -195,6 +195,7 @@ Status?
    - create monitored events items (synchronous)
    - browse and browse next (synchronous)
    - read historical data (raw data + modifications) (synchronous)
+   - set publishing mode (synchronous)
  - Supported on the Server side:
    - nothing yet so far!
 
