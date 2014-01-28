@@ -31,6 +31,7 @@
 #include "uaf/util/handles.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/settings/monitoreditemsettings.h"
+#include "uaf/client/subscriptions/monitoreditemstates.h"
 
 namespace uafc
 {
@@ -55,17 +56,21 @@ namespace uafc
         /**
          * Create a SubscriptionInformation object with the given information.
          *
+         * @param monitoredItemState        The state of the monitored item.
          * @param clientConnectionId        The id of the session that hosts the subscription.
          * @param clientSubscriptionHandle  The handle of the subscription.
          * @param clientHandle              The handle of the monitored item.
          * @param settings                  The settings of the monitored item.
          */
         MonitoredItemInformation(
-                uaf::ClientConnectionId             clientConnectionId,
-                uaf::ClientSubscriptionHandle       clientSubscriptionHandle,
-                uaf::ClientHandle                   clientHandle,
-                const uafc::MonitoredItemSettings&  settings);
+                uafc::monitoreditemstates::MonitoredItemState   monitoredItemState,
+                uaf::ClientConnectionId                         clientConnectionId,
+                uaf::ClientSubscriptionHandle                   clientSubscriptionHandle,
+                uaf::ClientHandle                               clientHandle,
+                const uafc::MonitoredItemSettings&              settings);
 
+        /** The state of the monitored item. */
+        uafc::monitoreditemstates::MonitoredItemState monitoredItemState;
 
         /** The id of the session that hosts the subscription. */
         uaf::ClientConnectionId                     clientConnectionId;
@@ -82,7 +87,7 @@ namespace uafc
         /**
          * Get a string representation of the information.
          */
-        std::string toString(const std::string& indent="", std::size_t colon=23) const;
+        std::string toString(const std::string& indent="", std::size_t colon=29) const;
 
 
         // comparison operators
