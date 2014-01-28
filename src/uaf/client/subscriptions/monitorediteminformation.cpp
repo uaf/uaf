@@ -32,7 +32,8 @@ namespace uafc
     // Constructor
     // =============================================================================================
     MonitoredItemInformation::MonitoredItemInformation()
-    : clientConnectionId(0),
+    : monitoredItemState(uafc::monitoreditemstates::NotCreated),
+      clientConnectionId(0),
       clientSubscriptionHandle(0),
       clientHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED)
     {}
@@ -41,11 +42,13 @@ namespace uafc
     // Constructor
     // =============================================================================================
     MonitoredItemInformation::MonitoredItemInformation(
-            uaf::ClientConnectionId             clientConnectionId,
-            uaf::ClientSubscriptionHandle       clientSubscriptionHandle,
-            uaf::ClientHandle                   clientHandle,
-            const MonitoredItemSettings&        settings)
-    : clientConnectionId(clientConnectionId),
+            uafc::monitoreditemstates::MonitoredItemState   monitoredItemState,
+            uaf::ClientConnectionId                         clientConnectionId,
+            uaf::ClientSubscriptionHandle                   clientSubscriptionHandle,
+            uaf::ClientHandle                               clientHandle,
+            const MonitoredItemSettings&                    settings)
+    : monitoredItemState(monitoredItemState),
+      clientConnectionId(clientConnectionId),
       clientSubscriptionHandle(clientSubscriptionHandle),
       clientHandle(clientHandle),
       settings(settings)
@@ -56,6 +59,10 @@ namespace uafc
     string MonitoredItemInformation::toString(const string& indent, size_t colon) const
     {
         stringstream ss;
+
+        ss << indent << " - monitoredItemState";
+        ss << fillToPos(ss, colon);
+        ss << ": " << uafc::monitoreditemstates::toString(monitoredItemState) << "\n";
 
         ss << indent << " - clientConnectionId";
         ss << fillToPos(ss, colon);
@@ -68,13 +75,12 @@ namespace uafc
         ss << indent << " - clientHandle";
         ss << fillToPos(ss, colon) << ": ";
         if (clientHandle == uaf::CLIENTHANDLE_NOT_ASSIGNED)
-            ss << "NOT ASSIGNED\n";
+            ss << "0xFFFFFFFF (CLIENTHANDLE_NOT_ASSIGNED)\n";
         else
             ss << clientHandle << "\n";
 
-        ss << indent << " - settings";
-        ss << fillToPos(ss, colon);
-        ss << ": " << settings.toString();
+        ss << indent << " - settings\n";
+        ss << settings.toString(indent + "   ", colon);
 
         return ss.str();
     }
