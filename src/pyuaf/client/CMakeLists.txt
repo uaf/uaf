@@ -20,6 +20,7 @@ set(  PYUAF_CLIENT_TARGETS
       __init__
       sessionstates
       subscriptionstates
+      monitoreditemstates
       settings
       configs
       requests

@@ -63,6 +63,7 @@
 #include "uaf/client/subscriptions/eventnotification.h"
 #include "uaf/client/subscriptions/keepalivenotification.h"
 #include "uaf/client/subscriptions/subscriptioninformation.h"
+#include "uaf/client/subscriptions/monitoreditemstates.h"
 #include "uaf/client/subscriptions/monitorediteminformation.h"
 #include "uaf/client/sessions/sessionstates.h"
 #include "uaf/client/sessions/sessioninformation.h"
@@ -121,6 +122,7 @@ import threading
 // now import the submodules of pyuaf.client
 %import "pyuaf/client/client_sessionstates.i" 
 %import "pyuaf/client/client_subscriptionstates.i" 
+%import "pyuaf/client/client_monitoreditemstates.i" 
 %import "pyuaf/client/client_settings.i"
 %import "pyuaf/client/client_configs.i"
 %import "pyuaf/client/client_requests.i"
