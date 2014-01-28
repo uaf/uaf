@@ -249,6 +249,7 @@ namespace uafc
 
         if (monitoredItemFound)
         {
+            monitoredItemInformation.monitoredItemState = monitoreditemstates::Created;
             monitoredItemInformation.clientConnectionId = clientConnectionId_;
             monitoredItemInformation.clientSubscriptionHandle = clientSubscriptionHandle_;
             monitoredItemInformation.clientHandle = it->first;
