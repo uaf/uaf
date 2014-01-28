@@ -395,7 +395,7 @@ namespace uafc
                 return ret;
         }
 
-        return Status(statuscodes::InvalidRequestError,
+        return Status(statuscodes::UnknownHandleError,
                       "ClientSubscriptionHandle %d was not found",
                       clientSubscriptionHandle);
     }
