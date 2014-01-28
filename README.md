@@ -21,6 +21,8 @@ What?
    
  - OPC UA (OPC Unified Architecture) is the next generation standard for secure, reliable
    and scalable industrial communication.
+   
+ - In short, the UAF / pyUAF is **OPC UA made easy!**
 
 
 Why?
