@@ -86,23 +86,9 @@ Formally:
     - setNotificationHandles() -> renamed to setClientHandles()
     
   - | uafc::MonitoredItemNotification (pyuaf.client.subscriptions.MonitoredItemNotification),
-    | uafc::DataChangeNotification (pyuaf.client.subscriptions.DataChangeNotification)
-  
-    - notificationHandle -> removed (use clientHandle instead)
-    
-  - uafc::DataChangeNotification (pyuaf.client.subscriptions.DataChangeNotification)
-  
-    - notificationHandle -> removed (use clientHandle instead)
-  
-  - uafc::EventNotification (pyuaf.client.subscriptions.EventNotification)
-  
-    - notificationHandle -> removed (use clientHandle instead)
-  
-  - uafc::CreateMonitoredEventsResultTarget (pyuaf.client.results.CreateMonitoredEventsResultTarget)
-  
-    - notificationHandle -> removed (use clientHandle instead)
-  
-  - uafc::CreateMonitoredDataResultTarget (pyuaf.client.results.CreateMonitoredDataResultTarget)
+    | uafc::DataChangeNotification (pyuaf.client.subscriptions.DataChangeNotification),
+    | uafc::CreateMonitoredEventsResultTarget (pyuaf.client.results.CreateMonitoredEventsResultTarget),
+    | uafc::CreateMonitoredDataResultTarget (pyuaf.client.results.CreateMonitoredDataResultTarget)
   
     - notificationHandle -> removed (use clientHandle instead)
    
