@@ -623,7 +623,25 @@ namespace uafc
             ClientHandle                clientHandle,
             MonitoredItemInformation&   monitoredItemInformation)
     {
-        return sessionFactory_->monitoredItemInformation(clientHandle, monitoredItemInformation);
+        Status ret;
+
+        // first try to find the client handle in the session factory
+        ret = sessionFactory_->monitoredItemInformation(clientHandle, monitoredItemInformation);
+
+        // if the client handle was not found, we can check if it was assigned once
+        if (ret.isNotGood())
+        {
+            bool isFound = std::find(database_->allClientHandles.begin(),
+                                     database_->allClientHandles.end(),
+                                     clientHandle) != database_->allClientHandles.end();
+            if (isFound)
+            {
+                monitoredItemInformation.monitoredItemState = monitoreditemstates::NotCreated;
+                ret.setGood();
+            }
+        }
+
+        return ret;
     }
 
 

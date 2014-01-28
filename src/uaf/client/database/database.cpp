@@ -62,7 +62,9 @@ namespace uafc
     ClientHandle Database::createUniqueClientHandle()
     {
         UaMutexLocker locker(&clientHandleMutex_);
-        return clientHandle_++;
+        ClientHandle newHandle = clientHandle_++;
+        allClientHandles.push_back(newHandle);
+        return newHandle;
     }
 
 }

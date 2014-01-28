@@ -68,6 +68,9 @@ namespace uafc
         /** The cache used by the resolver. */
         uafc::AddressCache addressCache;
 
+        /** A vector storing all the client handles that were ever assigned. */
+        std::vector<uaf::ClientHandle> allClientHandles;
+
 
         /**
          * Get a unique connection id.
