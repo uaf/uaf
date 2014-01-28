@@ -31,6 +31,7 @@
 #include "uaf/util/util.h"
 #include "uaf/util/datachangefilter.h"
 #include "uaf/util/eventfilter.h"
+#include "uaf/util/stringifiable.h"
 #include "uaf/client/clientexport.h"
 
 
@@ -44,7 +45,7 @@ namespace uafc
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT MonitoredItemSettings
+    class UAFC_EXPORT MonitoredItemSettings : public uaf::Stringifiable
     {
     public:
 
@@ -150,7 +151,7 @@ namespace uafc
          *
          * @return  A string representation.
          */
-        const std::string toString() const;
+        std::string toString(const std::string& indent="", std::size_t colon=23) const;
 
 
         // comparison operators
