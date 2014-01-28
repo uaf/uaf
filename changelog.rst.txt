@@ -18,16 +18,82 @@ via the GIT version control system.
 
 
 
-1.6 @ 2014/01/07
+1.7 @ 2014/01/28
 ----------------------------------------------------------------------------------------------------
 
 Informally:
 
-- BaseServiceSettings has been renamed to ServiceSettings (this -most likely- won't affect your 
-  existing code).
+- The 'SetPublishingMode' service has been implemented.
+  With this service, you can enable or disable the publishing of notifications by a particular
+  subscription. It's useful e.g. when you want to receive datachange notifications *only* when
+  a particular widget of your User Interface is active. In this case, you can group the monitored
+  items of that widget in a single subscription (could be a "unique" subscription, by setting the
+  "unique" flag of the SubscriptionSettings), and then subsequently:
+  - enable the subscription, whenever the widget becomes active
+  - disable the subscription, whenever the widget becomes inactive.
 
-- The 'exclusive' flag of subscription settings has been renamed to a more appropriate 'unique' 
+- A method 'monitoredItemInformation(<ClientHandle>)' has been added to the Client class. 
+  The result of this method is a 'MonitoredItemInformation' instance, which provides you information
+  about the monitored item that you specified using the client handle. Among other things, it 
+  will tell you the handle of the subscription that owns the monitored item.
+
+- !!!Breaking change!!!
+
+  The concept of 'notification handles' was redundant with the concept of 'client handles' of 
+  monitored items. It has therefore been *removed* from the UAF. To make sure your code remains
+  compatible, do a (case insensitive) search-all for 'notificationHandle', and replace all 
+  occurrences with 'clientHandle'. Note that the term 'notificationhandle' may occur both in 
+  attribute names and in method names.
+
+- !!!Breaking change!!!
+
+  BaseServiceSettings has been renamed to ServiceSettings. This -most likely- won't affect your 
+  existing code. To be sure: do a search-all for 'BaseServiceSettings' and replace all occurrences
+  with 'ServiceSettings'.
+
+- !!!Breaking change!!!
+
+  The 'exclusive' flag of subscription settings has been renamed to a more appropriate 'unique' 
   flag (to force the UAF to create a new subscription instead of reusing an existing one). 
+  This -most likely- won't affect your existing code. To be sure: do a search-all for 
+  'exclusive' and replace all occurrences with 'unique'.
+
+Formally:
+
+- The following methods were added to existing classes:
+  
+  - uafc::Client::setPublishingMode() 
+    (pyuaf.client.Client.setPublishingMode())
+  - uafc::Client::monitoredItemInformation() 
+    (pyuaf.client.Client.monitoredItemInformation())
+
+- The following attributes have been renamed or removed due to the removal of the redundant 
+  'notification handle' concept in favor of the 'client handle' concept:
+  
+  - uafc::StatusDiagnostics (pyuaf.util.StatusDiagnostics):
+    - hasNotificationHandles() -> renamed to hasClientHandles()
+    - getNotificationHandles() -> renamed to getClientHandles()
+    - setNotificationHandles() -> renamed to setClientHandles()
+  - uafc::MonitoredItemNotification (pyuaf.client.subscriptions.MonitoredItemNotification)
+    - notificationHandle -> removed (use clientHandle instead)
+  - uafc::DataChangeNotification (pyuaf.client.subscriptions.DataChangeNotification)
+    - notificationHandle -> removed (use clientHandle instead)
+  - uafc::EventNotification (pyuaf.client.subscriptions.EventNotification)
+    - notificationHandle -> removed (use clientHandle instead)
+  - uafc::CreateMonitoredEventsResultTarget (pyuaf.client.results.CreateMonitoredEventsResultTarget)
+    - notificationHandle -> removed (use clientHandle instead)
+  - uafc::CreateMonitoredDataResultTarget (pyuaf.client.results.CreateMonitoredDataResultTarget)
+    - notificationHandle -> removed (use clientHandle instead)
+   
+- The following classes have been renamed:
+
+  - uafc::BaseServiceSettings (pyuaf.client.settings.BaseServiceSettings) 
+    has been renamed to uafc::ServiceSettings (pyuaf.client.settings.ServiceSettings) 
+   
+- The following attributes have been renamed:
+
+  - uafc::SubscriptionSettings::exclusive (pyuaf.client.settings.SubscriptionSettings.exclusive) 
+    has been renamed to uafc::ServiceSettings::unique (pyuaf.client.settings.ServiceSettings.unique) 
 
 
 1.6 @ 2014/01/07
