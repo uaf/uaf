@@ -29,6 +29,7 @@ Informally:
   a particular widget of your User Interface is active. In this case, you can group the monitored
   items of that widget in a single subscription (could be a "unique" subscription, by setting the
   "unique" flag of the SubscriptionSettings), and then subsequently:
+  
   - enable the subscription, whenever the widget becomes active
   - disable the subscription, whenever the widget becomes inactive.
 
