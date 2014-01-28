@@ -72,18 +72,29 @@ Formally:
   'notification handle' concept in favor of the 'client handle' concept:
   
   - uafc::StatusDiagnostics (pyuaf.util.StatusDiagnostics):
+  
     - hasNotificationHandles() -> renamed to hasClientHandles()
     - getNotificationHandles() -> renamed to getClientHandles()
     - setNotificationHandles() -> renamed to setClientHandles()
+    
   - uafc::MonitoredItemNotification (pyuaf.client.subscriptions.MonitoredItemNotification)
+  
     - notificationHandle -> removed (use clientHandle instead)
+    
   - uafc::DataChangeNotification (pyuaf.client.subscriptions.DataChangeNotification)
+  
     - notificationHandle -> removed (use clientHandle instead)
+  
   - uafc::EventNotification (pyuaf.client.subscriptions.EventNotification)
+  
     - notificationHandle -> removed (use clientHandle instead)
+  
   - uafc::CreateMonitoredEventsResultTarget (pyuaf.client.results.CreateMonitoredEventsResultTarget)
+  
     - notificationHandle -> removed (use clientHandle instead)
+  
   - uafc::CreateMonitoredDataResultTarget (pyuaf.client.results.CreateMonitoredDataResultTarget)
+  
     - notificationHandle -> removed (use clientHandle instead)
    
 - The following classes have been renamed:
