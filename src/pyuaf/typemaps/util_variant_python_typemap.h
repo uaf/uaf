@@ -413,6 +413,7 @@
 #define UAF_VARIANT_TO_PYOBJECT(VARIANT, PYOBJECT)                                                 \
     if (VARIANT.isNull())                                                                          \
     {                                                                                              \
+        Py_INCREF(Py_None);                                                                        \
         PYOBJECT = Py_None;                                                                        \
     }                                                                                              \
     else if (VARIANT.isArray())                                                                    \
