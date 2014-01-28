@@ -4,13 +4,13 @@
 .. automodule:: pyuaf.client.settings
 
 
-*class* BaseServiceSettings
+*class* ServiceSettings
 ----------------------------------------------------------------------------------------------------
 
 
-.. autoclass:: pyuaf.client.settings.BaseServiceSettings
+.. autoclass:: pyuaf.client.settings.ServiceSettings
 
-    A BaseServiceSettings object is the superclass of :class:`~pyuaf.client.settings.ReadSettings`,
+    A ServiceSettings object is the superclass of :class:`~pyuaf.client.settings.ReadSettings`,
     :class:`~pyuaf.client.settings.WriteSettings`, etc.
 
     
@@ -18,7 +18,7 @@
 
         .. method:: __init__()
     
-            Create a new BaseServiceSettings object.
+            Create a new ServiceSettings object.
             
             The default callTimeoutSec is 1 second.
             
@@ -30,7 +30,7 @@
 
     * Attributes
     
-        .. autoattribute:: pyuaf.client.settings.BaseServiceSettings.callTimeoutSec
+        .. autoattribute:: pyuaf.client.settings.ServiceSettings.callTimeoutSec
 
             The maximum time allowed for each service communication between client and server,
             in seconds, as a ``float``.
@@ -42,7 +42,7 @@
 
 .. autoclass:: pyuaf.client.settings.BrowseNextSettings
 
-    A BrowseNextSettings is a subclass of :class:`pyuaf.client.settings.BaseServiceSettings` and 
+    A BrowseNextSettings is a subclass of :class:`pyuaf.client.settings.ServiceSettings` and 
     defines some properties of an OPC UA BrowseNext service invocation.
 
     
@@ -58,9 +58,9 @@
             Get a formatted string representation of the settings.
 
 
-    * Attributes inherited from :class:`pyuaf.client.settings.BaseServiceSettings`:
+    * Attributes inherited from :class:`pyuaf.client.settings.ServiceSettings`:
     
-        .. autoattribute:: pyuaf.client.settings.BaseServiceSettings.callTimeoutSec
+        .. autoattribute:: pyuaf.client.settings.ServiceSettings.callTimeoutSec
 
             The maximum time allowed for each service communication between client and server,
             in seconds, as a ``float``.
@@ -83,7 +83,7 @@
 
 .. autoclass:: pyuaf.client.settings.BrowseSettings
 
-    A BrowseSettings is a subclass of :class:`pyuaf.client.settings.BaseServiceSettings` and 
+    A BrowseSettings is a subclass of :class:`pyuaf.client.settings.ServiceSettings` and 
     defines some properties of an OPC UA Browse service invocation.
 
     
@@ -99,9 +99,9 @@
             Get a formatted string representation of the settings.
 
 
-    * Attributes inherited from :class:`pyuaf.client.settings.BaseServiceSettings`:
+    * Attributes inherited from :class:`pyuaf.client.settings.ServiceSettings`:
     
-        .. autoattribute:: pyuaf.client.settings.BaseServiceSettings.callTimeoutSec
+        .. autoattribute:: pyuaf.client.settings.ServiceSettings.callTimeoutSec
 
             The maximum time allowed for each service communication between client and server,
             in seconds, as a ``float``.
@@ -285,7 +285,7 @@
 
 .. autoclass:: pyuaf.client.settings.CreateMonitoredDataSettings
 
-    A CreateMonitoredDataSettings is a subclass of :class:`pyuaf.client.settings.BaseServiceSettings` and 
+    A CreateMonitoredDataSettings is a subclass of :class:`pyuaf.client.settings.ServiceSettings` and 
     defines some properties of an OPC UA CreateMonitoredItems service invocation for data changes.
 
     
@@ -301,9 +301,9 @@
             Get a formatted string representation of the settings.
 
 
-    * Attributes inherited from :class:`pyuaf.client.settings.BaseServiceSettings`:
+    * Attributes inherited from :class:`pyuaf.client.settings.ServiceSettings`:
     
-        .. autoattribute:: pyuaf.client.settings.BaseServiceSettings.callTimeoutSec
+        .. autoattribute:: pyuaf.client.settings.ServiceSettings.callTimeoutSec
 
             The maximum time allowed for each service communication between client and server,
             in seconds, as a ``float``.
@@ -316,7 +316,7 @@
 
 .. autoclass:: pyuaf.client.settings.CreateMonitoredEventsSettings
 
-    A CreateMonitoredEventsSettings is a subclass of :class:`pyuaf.client.settings.BaseServiceSettings` and 
+    A CreateMonitoredEventsSettings is a subclass of :class:`pyuaf.client.settings.ServiceSettings` and 
     defines some properties of an OPC UA CreateMonitoredItems service invocation for events.
 
     
@@ -332,9 +332,9 @@
             Get a formatted string representation of the settings.
 
 
-    * Attributes inherited from :class:`pyuaf.client.settings.BaseServiceSettings`:
+    * Attributes inherited from :class:`pyuaf.client.settings.ServiceSettings`:
     
-        .. autoattribute:: pyuaf.client.settings.BaseServiceSettings.callTimeoutSec
+        .. autoattribute:: pyuaf.client.settings.ServiceSettings.callTimeoutSec
 
             The maximum time allowed for each service communication between client and server,
             in seconds, as a ``float``.
@@ -352,7 +352,7 @@
 .. autoclass:: pyuaf.client.settings.HistoryReadRawModifiedSettings
 
     A HistoryReadRawModifiedSettings is a subclass of 
-    :class:`pyuaf.client.settings.BaseServiceSettings` and 
+    :class:`pyuaf.client.settings.ServiceSettings` and 
     defines some properties of an OPC UA HistoryReadRawModified service invocation.
 
     
@@ -367,9 +367,9 @@
             Get a formatted string representation of the settings.
 
 
-    * Attributes inherited from :class:`pyuaf.client.settings.BaseServiceSettings`:
+    * Attributes inherited from :class:`pyuaf.client.settings.ServiceSettings`:
     
-        .. autoattribute:: pyuaf.client.settings.BaseServiceSettings.callTimeoutSec
+        .. autoattribute:: pyuaf.client.settings.ServiceSettings.callTimeoutSec
 
             The maximum time allowed for each service communication between client and server,
             in seconds, as a ``float``.
@@ -439,7 +439,7 @@
 
 .. autoclass:: pyuaf.client.settings.MethodCallSettings
 
-    A MethodCallSettings is a subclass of :class:`pyuaf.client.settings.BaseServiceSettings` and 
+    A MethodCallSettings is a subclass of :class:`pyuaf.client.settings.ServiceSettings` and 
     defines some properties of an OPC UA MethodCall service invocation.
 
     
@@ -455,9 +455,9 @@
             Get a formatted string representation of the settings.
 
 
-    * Attributes inherited from :class:`pyuaf.client.settings.BaseServiceSettings`:
+    * Attributes inherited from :class:`pyuaf.client.settings.ServiceSettings`:
     
-        .. autoattribute:: pyuaf.client.settings.BaseServiceSettings.callTimeoutSec
+        .. autoattribute:: pyuaf.client.settings.ServiceSettings.callTimeoutSec
 
             The maximum time allowed for each service communication between client and server,
             in seconds, as a ``float``.
@@ -570,7 +570,7 @@
 
 .. autoclass:: pyuaf.client.settings.ReadSettings
 
-    A ReadSettings is a subclass of :class:`pyuaf.client.settings.BaseServiceSettings` and 
+    A ReadSettings is a subclass of :class:`pyuaf.client.settings.ServiceSettings` and 
     defines some properties of an OPC UA Read service invocation.
 
     
@@ -586,9 +586,9 @@
             Get a formatted string representation of the settings.
 
 
-    * Attributes inherited from :class:`pyuaf.client.settings.BaseServiceSettings`:
+    * Attributes inherited from :class:`pyuaf.client.settings.ServiceSettings`:
     
-        .. autoattribute:: pyuaf.client.settings.BaseServiceSettings.callTimeoutSec
+        .. autoattribute:: pyuaf.client.settings.ServiceSettings.callTimeoutSec
 
             The maximum time allowed for each service communication between client and server,
             in seconds, as a ``float``.
@@ -902,7 +902,7 @@
     
             Construct a new SubscriptionSettings object with the following default values:
             
-              - exclusive                  = False
+              - unique                     = False
               - publishingIntervalSec      = 1.0
               - lifeTimeCount              = 1200
               - maxKeepAliveCount          = 5
@@ -917,10 +917,11 @@
     
     * Attributes
     
-        .. autoattribute:: pyuaf.client.settings.SubscriptionSettings.exclusive
+        .. autoattribute:: pyuaf.client.settings.SubscriptionSettings.unique
         
-            An exclusive subscription will never be used by requests other than the request
-            that created the subscription.
+            Set this flag to True, to force the UAF to create a *new* subscription. 
+            If you leave this flag False, the UAF may choose to re-use an existing subscription 
+            (if one is found that has the same properties).
             
             The type of this attribute is ``bool``.
     
@@ -954,7 +955,7 @@
 
 .. autoclass:: pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings
 
-    A TranslateBrowsePathsToNodeIdsSettings is a subclass of :class:`pyuaf.client.settings.BaseServiceSettings` and 
+    A TranslateBrowsePathsToNodeIdsSettings is a subclass of :class:`pyuaf.client.settings.ServiceSettings` and 
     defines some properties of an OPC UA TranslateBrowsePathsToNodeIds service invocation.
 
     
@@ -970,9 +971,9 @@
             Get a formatted string representation of the settings.
 
 
-    * Attributes inherited from :class:`pyuaf.client.settings.BaseServiceSettings`:
+    * Attributes inherited from :class:`pyuaf.client.settings.ServiceSettings`:
     
-        .. autoattribute:: pyuaf.client.settings.BaseServiceSettings.callTimeoutSec
+        .. autoattribute:: pyuaf.client.settings.ServiceSettings.callTimeoutSec
 
             The maximum time allowed for each service communication between client and server,
             in seconds, as a ``float``.
@@ -985,7 +986,7 @@
 
 .. autoclass:: pyuaf.client.settings.WriteSettings
 
-    A WriteSettings is a subclass of :class:`pyuaf.client.settings.BaseServiceSettings` and 
+    A WriteSettings is a subclass of :class:`pyuaf.client.settings.ServiceSettings` and 
     defines some properties of an OPC UA Write service invocation.
 
     
@@ -1001,9 +1002,9 @@
             Get a formatted string representation of the settings.
 
 
-    * Attributes inherited from :class:`pyuaf.client.settings.BaseServiceSettings`:
+    * Attributes inherited from :class:`pyuaf.client.settings.ServiceSettings`:
     
-        .. autoattribute:: pyuaf.client.settings.BaseServiceSettings.callTimeoutSec
+        .. autoattribute:: pyuaf.client.settings.ServiceSettings.callTimeoutSec
 
             The maximum time allowed for each service communication between client and server,
             in seconds, as a ``float``.

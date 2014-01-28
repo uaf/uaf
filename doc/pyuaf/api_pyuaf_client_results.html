@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client.results &mdash; PyUAF 1.6 documentation</title>
+    <title>pyuaf.client.results &mdash; PyUAF 1.7 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.6',
+        VERSION:     '1.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.6 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.7 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.settings" href="api_pyuaf_client_settings.html" />
     <link rel="prev" title="pyuaf.client.requests" href="api_pyuaf_client_requests.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_requests.html" title="pyuaf.client.requests"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.6 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.7 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -749,12 +749,53 @@ as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" 
 <dl class="attribute">
 <dt id="pyuaf.client.results.CreateMonitoredDataResultTarget.clientConnectionId">
 <tt class="descname">clientConnectionId</tt><a class="headerlink" href="#pyuaf.client.results.CreateMonitoredDataResultTarget.clientConnectionId" title="Permalink to this definition">¶</a></dt>
-<dd><p>The id of the session that wasThe id of the session that was used for this target, as an <tt class="docutils literal"><span class="pre">int</span></tt>.. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.notificationHandle</p>
-<p>The notification handle that was assigned to the monitored item by the UAF
-(unique per client).</p>
-<p>This is a 64-bit <tt class="docutils literal"><span class="pre">long</span></tt> value that remains unique for the whole lifetime of the client.
-So even if sessions/subscriptions/monitored items are re-created, this numerical
-value will always refer to the same monitored item.</p>
+<dd><p>The id of the session that was used for this target, as an <tt class="docutils literal"><span class="pre">int</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.CreateMonitoredDataResultTarget.clientSubscriptionHandle">
+<tt class="descname">clientSubscriptionHandle</tt><a class="headerlink" href="#pyuaf.client.results.CreateMonitoredDataResultTarget.clientSubscriptionHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The handle of the subscription that owns this monitored item, as an <tt class="docutils literal"><span class="pre">int</span></tt></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle">
+<tt class="descname">clientHandle</tt><a class="headerlink" href="#pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The client handle that was assigned to the monitored item by the UAF, at the time when
+the monitored item was requested.
+E.g. you can get client handles like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.errors</span> <span class="kn">import</span> <span class="n">UafError</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">myClient</span>     <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;myClient&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">])</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nameSpaceUri</span> <span class="o">=</span> <span class="s">&quot;http://mycompany.com/mymachine&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">serverUri</span>    <span class="o">=</span> <span class="s">&quot;http://mycompany.com/servers/plc1&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address0</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myMachine.myVariable0&quot;</span><span class="p">,</span> <span class="n">nameSpaceUri</span><span class="p">),</span> <span class="n">serverUri</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address1</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myMachine.myVariable1&quot;</span><span class="p">,</span> <span class="n">nameSpaceUri</span><span class="p">),</span> <span class="n">serverUri</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">myCallback0</span><span class="p">(</span><span class="n">notification</span><span class="p">):</span>
+<span class="gp">... </span>     <span class="k">print</span><span class="p">(</span><span class="s">&quot;Variable 0 was received: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">notification</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">myCallback1</span><span class="p">(</span><span class="n">notification</span><span class="p">):</span>
+<span class="gp">... </span>     <span class="k">print</span><span class="p">(</span><span class="s">&quot;Variable 1 was received: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">notification</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">createMonitoredData</span><span class="p">([</span><span class="n">address0</span><span class="p">,</span> <span class="n">address1</span><span class="p">],</span>
+<span class="gp">... </span>                                          <span class="n">notificationCallbacks</span> <span class="o">=</span> <span class="p">[</span><span class="n">myCallback0</span><span class="p">,</span> <span class="n">myCallback1</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="n">clientHandle0</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">clientHandle</span>
+<span class="gp">... </span>    <span class="n">clientHandle1</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">clientHandle</span>
+<span class="gp">... </span><span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="c"># The monitored items could not be created, because there was some failure</span>
+<span class="gp">... </span>    <span class="c">#  (maybe the server is off-line?).</span>
+<span class="gp">... </span>    <span class="c"># Nevertheless, the client handles were already assigned, and we can get them like this:</span>
+<span class="gp">... </span>    <span class="n">diagnostics</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">additionalDiagnostics</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">diagnostics</span><span class="o">.</span><span class="n">hasClientHandles</span><span class="p">():</span>
+<span class="gp">... </span>        <span class="n">clientHandle0</span><span class="p">,</span> <span class="n">clientHandle1</span> <span class="o">=</span> <span class="n">diagnostics</span><span class="o">.</span><span class="n">getClientHandles</span><span class="p">()</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="attribute">
@@ -800,8 +841,8 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c"># will be 5  (alternative: targets.size())</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">target0_isGood</span>             <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">target0_notificationHandle</span> <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">notificationHandle</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target0_isGood</span>       <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target0_clientHandle</span> <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">clientHandle</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># other methods of the vector:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
@@ -919,13 +960,17 @@ as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" 
 </dd></dl>
 
 <dl class="attribute">
-<dt id="pyuaf.client.results.CreateMonitoredEventsResultTarget.notificationHandle">
-<tt class="descname">notificationHandle</tt><a class="headerlink" href="#pyuaf.client.results.CreateMonitoredEventsResultTarget.notificationHandle" title="Permalink to this definition">¶</a></dt>
-<dd><p>The notification handle that was assigned to the monitored item by the UAF
-(unique per client).</p>
-<p>This is a 64-bit <tt class="docutils literal"><span class="pre">long</span></tt> value that remains unique for the whole lifetime of the client.
-So even if sessions/subscriptions/monitored items are re-created, this numerical
-value will always refer to the same monitored item.</p>
+<dt id="pyuaf.client.results.CreateMonitoredEventsResultTarget.clientHandle">
+<tt class="descname">clientHandle</tt><a class="headerlink" href="#pyuaf.client.results.CreateMonitoredEventsResultTarget.clientHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The client handle that was assigned to the monitored item by the UAF, at the time when
+the monitored item was requested.</p>
+<p>See a similar use case example at <a class="reference internal" href="#pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle" title="pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.results.CreateMonitoredEventsResultTarget.clientSubscriptionHandle">
+<tt class="descname">clientSubscriptionHandle</tt><a class="headerlink" href="#pyuaf.client.results.CreateMonitoredEventsResultTarget.clientSubscriptionHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The handle of the subscription that owns this monitored item, as an <tt class="docutils literal"><span class="pre">int</span></tt></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -971,8 +1016,8 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c"># will be 5  (alternative: targets.size())</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">target0_isGood</span>             <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">target0_notificationHandle</span> <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">notificationHandle</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target0_isGood</span>       <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target0_clientHandle</span> <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">clientHandle</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># other methods of the vector:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
@@ -1898,7 +1943,7 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
         <li class="right" >
           <a href="api_pyuaf_client_requests.html" title="pyuaf.client.requests"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.6 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.7 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client.settings &mdash; PyUAF 1.6 documentation</title>
+    <title>pyuaf.client.settings &mdash; PyUAF 1.7 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.6',
+        VERSION:     '1.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.6 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.7 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.sessionstates" href="api_pyuaf_client_sessionstates.html" />
     <link rel="prev" title="pyuaf.client.results" href="api_pyuaf_client_results.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_results.html" title="pyuaf.client.results"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.6 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.7 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -55,26 +55,26 @@
             
   <div class="section" id="module-pyuaf.client.settings">
 <span id="pyuaf-client-settings"></span><h1><tt class="docutils literal"><span class="pre">pyuaf.client.settings</span></tt><a class="headerlink" href="#module-pyuaf.client.settings" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="class-baseservicesettings">
-<h2><em>class</em> BaseServiceSettings<a class="headerlink" href="#class-baseservicesettings" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="class-servicesettings">
+<h2><em>class</em> ServiceSettings<a class="headerlink" href="#class-servicesettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="pyuaf.client.settings.BaseServiceSettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">BaseServiceSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.BaseServiceSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A BaseServiceSettings object is the superclass of <a class="reference internal" href="#pyuaf.client.settings.ReadSettings" title="pyuaf.client.settings.ReadSettings"><tt class="xref py py-class docutils literal"><span class="pre">ReadSettings</span></tt></a>,
+<dt id="pyuaf.client.settings.ServiceSettings">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">ServiceSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.ServiceSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A ServiceSettings object is the superclass of <a class="reference internal" href="#pyuaf.client.settings.ReadSettings" title="pyuaf.client.settings.ReadSettings"><tt class="xref py py-class docutils literal"><span class="pre">ReadSettings</span></tt></a>,
 <a class="reference internal" href="#pyuaf.client.settings.WriteSettings" title="pyuaf.client.settings.WriteSettings"><tt class="xref py py-class docutils literal"><span class="pre">WriteSettings</span></tt></a>, etc.</p>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
-<dt id="pyuaf.client.settings.BaseServiceSettings.__init__">
-<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.BaseServiceSettings.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new BaseServiceSettings object.</p>
+<dt id="pyuaf.client.settings.ServiceSettings.__init__">
+<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.ServiceSettings.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new ServiceSettings object.</p>
 <p>The default callTimeoutSec is 1 second.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyuaf.client.settings.BaseServiceSettings.__str__">
-<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.BaseServiceSettings.__str__" title="Permalink to this definition">¶</a></dt>
+<dt id="pyuaf.client.settings.ServiceSettings.__str__">
+<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.ServiceSettings.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the settings.</p>
 </dd></dl>
 
@@ -83,8 +83,8 @@
 <li><p class="first">Attributes</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.settings.BaseServiceSettings.callTimeoutSec">
-<tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.BaseServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<dt id="pyuaf.client.settings.ServiceSettings.callTimeoutSec">
+<tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
 in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
 </dd></dl>
@@ -100,7 +100,7 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
 <dl class="class">
 <dt id="pyuaf.client.settings.BrowseNextSettings">
 <em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">BrowseNextSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.BrowseNextSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A BrowseNextSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a> and
+<dd><p>A BrowseNextSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
 defines some properties of an OPC UA BrowseNext service invocation.</p>
 <ul>
 <li><p class="first">Methods:</p>
@@ -119,11 +119,11 @@ defines some properties of an OPC UA BrowseNext service invocation.</p>
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.settings.BrowseNextSettings.BaseServiceSettings.callTimeoutSec">
-<tt class="descclassname">BaseServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.BrowseNextSettings.BaseServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<dt id="pyuaf.client.settings.BrowseNextSettings.ServiceSettings.callTimeoutSec">
+<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.BrowseNextSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
 in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
 </dd></dl>
@@ -150,7 +150,7 @@ server should be released (<tt class="docutils literal"><span class="pre">True</
 <dl class="class">
 <dt id="pyuaf.client.settings.BrowseSettings">
 <em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">BrowseSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A BrowseSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a> and
+<dd><p>A BrowseSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
 defines some properties of an OPC UA Browse service invocation.</p>
 <ul>
 <li><p class="first">Methods:</p>
@@ -169,11 +169,11 @@ defines some properties of an OPC UA Browse service invocation.</p>
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.settings.BrowseSettings.BaseServiceSettings.callTimeoutSec">
-<tt class="descclassname">BaseServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings.BaseServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<dt id="pyuaf.client.settings.BrowseSettings.ServiceSettings.callTimeoutSec">
+<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
 in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
 </dd></dl>
@@ -392,7 +392,7 @@ forward slashes (<tt class="docutils literal"><span class="pre">/</span></tt>), 
 <dl class="class">
 <dt id="pyuaf.client.settings.CreateMonitoredDataSettings">
 <em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">CreateMonitoredDataSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredDataSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A CreateMonitoredDataSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a> and
+<dd><p>A CreateMonitoredDataSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
 defines some properties of an OPC UA CreateMonitoredItems service invocation for data changes.</p>
 <ul>
 <li><p class="first">Methods:</p>
@@ -411,11 +411,11 @@ defines some properties of an OPC UA CreateMonitoredItems service invocation for
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.settings.CreateMonitoredDataSettings.BaseServiceSettings.callTimeoutSec">
-<tt class="descclassname">BaseServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredDataSettings.BaseServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<dt id="pyuaf.client.settings.CreateMonitoredDataSettings.ServiceSettings.callTimeoutSec">
+<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredDataSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
 in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
 </dd></dl>
@@ -431,7 +431,7 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
 <dl class="class">
 <dt id="pyuaf.client.settings.CreateMonitoredEventsSettings">
 <em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">CreateMonitoredEventsSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredEventsSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A CreateMonitoredEventsSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a> and
+<dd><p>A CreateMonitoredEventsSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
 defines some properties of an OPC UA CreateMonitoredItems service invocation for events.</p>
 <ul>
 <li><p class="first">Methods:</p>
@@ -450,11 +450,11 @@ defines some properties of an OPC UA CreateMonitoredItems service invocation for
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.settings.CreateMonitoredEventsSettings.BaseServiceSettings.callTimeoutSec">
-<tt class="descclassname">BaseServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredEventsSettings.BaseServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<dt id="pyuaf.client.settings.CreateMonitoredEventsSettings.ServiceSettings.callTimeoutSec">
+<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredEventsSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
 in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
 </dd></dl>
@@ -471,7 +471,7 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
 <dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings">
 <em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">HistoryReadRawModifiedSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>A HistoryReadRawModifiedSettings is a subclass of
-<a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a> and
+<a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
 defines some properties of an OPC UA HistoryReadRawModified service invocation.</p>
 <ul>
 <li><p class="first">Methods:</p>
@@ -490,11 +490,11 @@ defines some properties of an OPC UA HistoryReadRawModified service invocation.<
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.BaseServiceSettings.callTimeoutSec">
-<tt class="descclassname">BaseServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.BaseServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.ServiceSettings.callTimeoutSec">
+<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
 in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
 </dd></dl>
@@ -582,7 +582,7 @@ Default is False.</p>
 <dl class="class">
 <dt id="pyuaf.client.settings.MethodCallSettings">
 <em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">MethodCallSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.MethodCallSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A MethodCallSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a> and
+<dd><p>A MethodCallSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
 defines some properties of an OPC UA MethodCall service invocation.</p>
 <ul>
 <li><p class="first">Methods:</p>
@@ -601,11 +601,11 @@ defines some properties of an OPC UA MethodCall service invocation.</p>
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.settings.MethodCallSettings.BaseServiceSettings.callTimeoutSec">
-<tt class="descclassname">BaseServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.MethodCallSettings.BaseServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<dt id="pyuaf.client.settings.MethodCallSettings.ServiceSettings.callTimeoutSec">
+<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.MethodCallSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
 in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
 </dd></dl>
@@ -746,7 +746,7 @@ is <a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSetti
 <dl class="class">
 <dt id="pyuaf.client.settings.ReadSettings">
 <em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">ReadSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.ReadSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A ReadSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a> and
+<dd><p>A ReadSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
 defines some properties of an OPC UA Read service invocation.</p>
 <ul>
 <li><p class="first">Methods:</p>
@@ -765,11 +765,11 @@ defines some properties of an OPC UA Read service invocation.</p>
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.settings.ReadSettings.BaseServiceSettings.callTimeoutSec">
-<tt class="descclassname">BaseServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.ReadSettings.BaseServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<dt id="pyuaf.client.settings.ReadSettings.ServiceSettings.callTimeoutSec">
+<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.ReadSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
 in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
 </dd></dl>
@@ -1126,7 +1126,7 @@ as a <tt class="docutils literal"><span class="pre">dict</span></tt> of <a class
 <dd><p>Construct a new SubscriptionSettings object with the following default values:</p>
 <blockquote>
 <div><ul class="simple">
-<li>exclusive                  = False</li>
+<li>unique                     = False</li>
 <li>publishingIntervalSec      = 1.0</li>
 <li>lifeTimeCount              = 1200</li>
 <li>maxKeepAliveCount          = 5</li>
@@ -1147,10 +1147,11 @@ as a <tt class="docutils literal"><span class="pre">dict</span></tt> of <a class
 <li><p class="first">Attributes</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.settings.SubscriptionSettings.exclusive">
-<tt class="descname">exclusive</tt><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.exclusive" title="Permalink to this definition">¶</a></dt>
-<dd><p>An exclusive subscription will never be used by requests other than the request
-that created the subscription.</p>
+<dt id="pyuaf.client.settings.SubscriptionSettings.unique">
+<tt class="descname">unique</tt><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set this flag to True, to force the UAF to create a <em>new</em> subscription.
+If you leave this flag False, the UAF may choose to re-use an existing subscription
+(if one is found that has the same properties).</p>
 <p>The type of this attribute is <tt class="docutils literal"><span class="pre">bool</span></tt>.</p>
 </dd></dl>
 
@@ -1196,7 +1197,7 @@ Since this value is only 8-bit, the maximum priority is 255.</p>
 <dl class="class">
 <dt id="pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings">
 <em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">TranslateBrowsePathsToNodeIdsSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A TranslateBrowsePathsToNodeIdsSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a> and
+<dd><p>A TranslateBrowsePathsToNodeIdsSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
 defines some properties of an OPC UA TranslateBrowsePathsToNodeIds service invocation.</p>
 <ul>
 <li><p class="first">Methods:</p>
@@ -1215,11 +1216,11 @@ defines some properties of an OPC UA TranslateBrowsePathsToNodeIds service invoc
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings.BaseServiceSettings.callTimeoutSec">
-<tt class="descclassname">BaseServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings.BaseServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<dt id="pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings.ServiceSettings.callTimeoutSec">
+<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
 in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
 </dd></dl>
@@ -1235,7 +1236,7 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
 <dl class="class">
 <dt id="pyuaf.client.settings.WriteSettings">
 <em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">WriteSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.WriteSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A WriteSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a> and
+<dd><p>A WriteSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
 defines some properties of an OPC UA Write service invocation.</p>
 <ul>
 <li><p class="first">Methods:</p>
@@ -1254,11 +1255,11 @@ defines some properties of an OPC UA Write service invocation.</p>
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.BaseServiceSettings" title="pyuaf.client.settings.BaseServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.BaseServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.settings.WriteSettings.BaseServiceSettings.callTimeoutSec">
-<tt class="descclassname">BaseServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.WriteSettings.BaseServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<dt id="pyuaf.client.settings.WriteSettings.ServiceSettings.callTimeoutSec">
+<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.WriteSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
 in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
 </dd></dl>
@@ -1283,7 +1284,7 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">pyuaf.client.settings</span></tt></a><ul>
-<li><a class="reference internal" href="#class-baseservicesettings"><em>class</em> BaseServiceSettings</a></li>
+<li><a class="reference internal" href="#class-servicesettings"><em>class</em> ServiceSettings</a></li>
 <li><a class="reference internal" href="#class-browsenextsettings"><em>class</em> BrowseNextSettings</a></li>
 <li><a class="reference internal" href="#class-browsesettings"><em>class</em> BrowseSettings</a></li>
 <li><a class="reference internal" href="#class-clientsettings"><em>class</em> ClientSettings</a></li>
@@ -1348,7 +1349,7 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
         <li class="right" >
           <a href="api_pyuaf_client_results.html" title="pyuaf.client.results"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.6 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.7 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

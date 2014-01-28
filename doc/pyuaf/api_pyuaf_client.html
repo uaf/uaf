@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client &mdash; PyUAF 1.6 documentation</title>
+    <title>pyuaf.client &mdash; PyUAF 1.7 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.6',
+        VERSION:     '1.7',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.6 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.7 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.configs" href="api_pyuaf_client_configs.html" />
     <link rel="prev" title="pyuaf" href="api_pyuaf.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.6 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.7 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -594,7 +594,7 @@ createMonitoredData() was successful and didn&#8217;t raise an exception</li>
 <li>via the exception that was raised in case createMonitoredData() was not successful. 
 This exception has a &#8220;status&#8221; attribute (of type <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>),
 and this will provide you a diagnostics object (see <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status.additionalDiagnostics" title="pyuaf.util.Status.additionalDiagnostics"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.Status.additionalDiagnostics()</span></tt></a>),
-which will finally provide you the handles (see <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.StatusDiagnostics.getNotificationHandles" title="pyuaf.util.StatusDiagnostics.getNotificationHandles"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.StatusDiagnostics.getNotificationHandles()</span></tt></a>).</li>
+which will finally provide you the handles (see <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.StatusDiagnostics.getClientHandles" title="pyuaf.util.StatusDiagnostics.getClientHandles"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.StatusDiagnostics.getClientHandles()</span></tt></a>).</li>
 </ul>
 </div></blockquote>
 </div>
@@ -667,7 +667,7 @@ createMonitoredEvents() was successful and didn&#8217;t raise an exception</li>
 <li>via the exception that was raised in case createMonitoredEvents() was not successful. 
 This exception has a &#8220;status&#8221; attribute (of type <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>),
 and this will provide you a diagnostics object (see <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status.additionalDiagnostics" title="pyuaf.util.Status.additionalDiagnostics"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.Status.additionalDiagnostics()</span></tt></a>),
-which will finally provide you the handles (see <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.StatusDiagnostics.getNotificationHandles" title="pyuaf.util.StatusDiagnostics.getNotificationHandles"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.StatusDiagnostics.getNotificationHandles()</span></tt></a>).</li>
+which will finally provide you the handles (see <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.StatusDiagnostics.getClientHandles" title="pyuaf.util.StatusDiagnostics.getClientHandles"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.StatusDiagnostics.getClientHandles()</span></tt></a>).</li>
 </ul>
 </div></blockquote>
 </div>
@@ -1140,6 +1140,43 @@ session (even if the properties of the new subscription are exactly the same as 
 </dd></dl>
 
 <dl class="method">
+<dt id="pyuaf.client.Client.monitoredItemInformation">
+<tt class="descname">monitoredItemInformation</tt><big>(</big><em>clientHandle</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.monitoredItemInformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get information about the specified monitored item.</p>
+<p>Check the <a class="reference internal" href="#pyuaf.client.MonitoredItemInformation.monitoredItemState" title="pyuaf.client.MonitoredItemInformation.monitoredItemState"><tt class="xref py py-attr docutils literal"><span class="pre">monitoredItemState</span></tt></a> before 
+interpreting the results of the <a class="reference internal" href="#pyuaf.client.MonitoredItemInformation" title="pyuaf.client.MonitoredItemInformation"><tt class="xref py py-class docutils literal"><span class="pre">MonitoredItemInformation</span></tt></a>!
+Because if the <a class="reference internal" href="#pyuaf.client.MonitoredItemInformation.monitoredItemState" title="pyuaf.client.MonitoredItemInformation.monitoredItemState"><tt class="xref py py-attr docutils literal"><span class="pre">monitoredItemState</span></tt></a> is 
+<a class="reference internal" href="api_pyuaf_client_monitoreditemstates.html#pyuaf.client.monitoreditemstates.NotCreated" title="pyuaf.client.monitoreditemstates.NotCreated"><tt class="xref py py-attr docutils literal"><span class="pre">NotCreated</span></tt></a>, then the monitored item not created on
+the server, but instead it&#8217;s cached by the client (which tries to re-create the monitored
+item periodically -as configurable by the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings" title="pyuaf.client.settings.ClientSettings"><tt class="xref py py-class docutils literal"><span class="pre">ClientSettings</span></tt></a>-).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>clientHandle</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The handle of the monitored item (always assigned by the UAF, not 
+by the user!). This clientHandle is assigned when the monitored item 
+is requested (e.g. by calling <a class="reference internal" href="#pyuaf.client.Client.createMonitoredData" title="pyuaf.client.Client.createMonitoredData"><tt class="xref py py-meth docutils literal"><span class="pre">createMonitoredData()</span></tt></a>),
+regardless of whether the monitored items were indeed created on the server,
+or not (e.g. in case of failures, or in case the server is not on-line yet).</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Information about the specified monitored item.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#pyuaf.client.MonitoredItemInformation" title="pyuaf.client.MonitoredItemInformation"><tt class="xref py py-class docutils literal"><span class="pre">MonitoredItemInformation</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UnknownHandleError" title="pyuaf.util.errors.UnknownHandleError"><strong>pyuaf.util.errors.UnknownHandleError</strong></a> &#8211; Raised in case no monitored item is known for the given client handle.</li>
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any other errors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyuaf.client.Client.processRequest">
 <tt class="descname">processRequest</tt><big>(</big><em>request</em>, <em>resultCallback=None</em>, <em>notificationCallbacks=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.client.Client.processRequest" title="Permalink to this definition">¶</a></dt>
 <dd><p>Process a generic request (as found in <a class="reference internal" href="api_pyuaf_client_requests.html#module-pyuaf.client.requests" title="pyuaf.client.requests"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.client.requests</span></tt></a>).</p>
@@ -1180,7 +1217,7 @@ processRequest() was successful and didn&#8217;t raise an exception</li>
 <li>via the exception that was raised in case processRequest() was not successful. 
 This exception has a &#8220;status&#8221; attribute (of type <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a>),
 and this will provide you a diagnostics object (see <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status.additionalDiagnostics" title="pyuaf.util.Status.additionalDiagnostics"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.Status.additionalDiagnostics()</span></tt></a>),
-which will finally provide you the handles (see <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.StatusDiagnostics.getNotificationHandles" title="pyuaf.util.StatusDiagnostics.getNotificationHandles"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.StatusDiagnostics.getNotificationHandles()</span></tt></a>).</li>
+which will finally provide you the handles (see <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.StatusDiagnostics.getClientHandles" title="pyuaf.util.StatusDiagnostics.getClientHandles"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.StatusDiagnostics.getClientHandles()</span></tt></a>).</li>
 </ul>
 </div></blockquote>
 </div>
@@ -1324,7 +1361,7 @@ via the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>clientConnectionId</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The client connection id 
-(always assigned by the client, not by the user!).</p>
+(always assigned by the UAF, not by the user!).</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Information about the specified session.</p>
@@ -1352,6 +1389,78 @@ via the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>settings</strong> (<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings" title="pyuaf.client.settings.ClientSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ClientSettings</span></tt></a>) &#8211; The new settings.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.setPublishingMode">
+<tt class="descname">setPublishingMode</tt><big>(</big><em>clientSubscriptionHandle</em>, <em>publishingEnabled</em>, <em>serviceSettings=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.setPublishingMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the publishing mode, by specifying a subscription handle.</p>
+<p>Note that a subscription handle may <em>not</em> be known at the time when you create the
+monitored items. E.g. when you call <a class="reference internal" href="#pyuaf.client.Client.createMonitoredData" title="pyuaf.client.Client.createMonitoredData"><tt class="xref py py-meth docutils literal"><span class="pre">createMonitoredData()</span></tt></a> or 
+<a class="reference internal" href="#pyuaf.client.Client.createMonitoredEvents" title="pyuaf.client.Client.createMonitoredEvents"><tt class="xref py py-meth docutils literal"><span class="pre">createMonitoredEvents()</span></tt></a>, it can happen that the server that 
+hosts the monitored items is not on-line yet. In this case, the ClientSubscriptionHandle 
+is <em>not</em> assigned yet, but ClientHandles <em>are</em> assigned yet. Therefore it makes sense to 
+first call <a class="reference internal" href="#pyuaf.client.Client.monitoredItemInformation" title="pyuaf.client.Client.monitoredItemInformation"><tt class="xref py py-meth docutils literal"><span class="pre">monitoredItemInformation()</span></tt></a> of your monitored item, 
+and get the subscription handle from there.</p>
+<p>E.g. like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.errors</span> <span class="kn">import</span> <span class="n">UafError</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">myClient</span>     <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;myClient&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">])</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nameSpaceUri</span> <span class="o">=</span> <span class="s">&quot;http://mycompany.com/mymachine&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">serverUri</span>    <span class="o">=</span> <span class="s">&quot;http://mycompany.com/servers/plc1&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myMachine.myVariable&quot;</span><span class="p">,</span> <span class="n">nameSpaceUri</span><span class="p">),</span> <span class="n">serverUri</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">myCallback</span><span class="p">(</span><span class="n">notification</span><span class="p">):</span>
+<span class="gp">... </span>     <span class="k">print</span><span class="p">(</span><span class="s">&quot;A data change was received: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">notification</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">createMonitoredData</span><span class="p">([</span><span class="n">address</span><span class="p">],</span> 
+<span class="gp">... </span>                                          <span class="n">notificationCallbacks</span> <span class="o">=</span> <span class="p">[</span><span class="n">myCallback</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="n">clientHandle</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">clientHandle</span>
+<span class="gp">... </span><span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="c"># The monitored items could not be created, because there was some failure</span>
+<span class="gp">... </span>    <span class="c">#  (maybe the server is off-line?).</span>
+<span class="gp">... </span>    <span class="c"># Nevertheless, the client handles were already assigned, and we can get them like this: </span>
+<span class="gp">... </span>    <span class="n">diagnostics</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">additionalDiagnostics</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">clientHandle</span> <span class="o">=</span> <span class="n">diagnostics</span><span class="o">.</span><span class="n">getClientHandles</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">info</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">monitoredItemInformation</span><span class="p">(</span><span class="n">clientHandle</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">monitoredItemState</span> <span class="o">==</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">monitoreditemstates</span><span class="o">.</span><span class="n">Created</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="c"># enable the subscription that hosts the monitored item:</span>
+<span class="gp">... </span>    <span class="n">myClient</span><span class="o">.</span><span class="n">setPublishingMode</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">clientSubscriptionHandle</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+<span class="gp">... </span>        
+<span class="gp">... </span>    <span class="c"># ... do some stuff ...</span>
+<span class="gp">... </span>        
+<span class="gp">... </span>    <span class="c"># disable the subscription that hosts the monitored item:</span>
+<span class="gp">... </span>    <span class="n">myClient</span><span class="o">.</span><span class="n">setPublishingMode</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">clientSubscriptionHandle</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>clientSubscriptionHandle</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The handle identifying the subscription.</li>
+<li><strong>publishingEnabled</strong> (<tt class="docutils literal"><span class="pre">bool</span></tt>) &#8211; True to enable the publishing mode, false to disable.</li>
+<li><strong>serviceSettings</strong> (<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>) &#8211; The service settings to be used (leave None for 
+default settings).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UnknownHandleError" title="pyuaf.util.errors.UnknownHandleError"><strong>pyuaf.util.errors.UnknownHandleError</strong></a> &#8211; The clientSubscriptionHandle is unknown!</li>
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any UAF errors.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1462,6 +1571,71 @@ callback function &#8211;&gt; then only the external callback function will be c
 </dd></dl>
 
 </div>
+<div class="section" id="class-monitorediteminformation">
+<h2><em>class</em> MonitoredItemInformation<a class="headerlink" href="#class-monitorediteminformation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.client.MonitoredItemInformation">
+<em class="property">class </em><tt class="descclassname">pyuaf.client.</tt><tt class="descname">MonitoredItemInformation</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.MonitoredItemInformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A MonitoredItemInformation object contains information about a monitored item.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.client.MonitoredItemInformation.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.MonitoredItemInformation.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new MonitoredItemInformation object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.MonitoredItemInformation.__str__">
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=29</em><big>)</big><a class="headerlink" href="#pyuaf.client.MonitoredItemInformation.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.MonitoredItemInformation.monitoredItemState">
+<tt class="descname">monitoredItemState</tt><a class="headerlink" href="#pyuaf.client.MonitoredItemInformation.monitoredItemState" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> representing the state of the monitored item
+(e.g. <a class="reference internal" href="api_pyuaf_client_monitoreditemstates.html#pyuaf.client.monitoreditemstates.Created" title="pyuaf.client.monitoreditemstates.Created"><tt class="xref py py-attr docutils literal"><span class="pre">Created</span></tt></a>).</p>
+<p>The possible states are defined in the <a class="reference internal" href="api_pyuaf_client_monitoreditemstates.html#module-pyuaf.client.monitoreditemstates" title="pyuaf.client.monitoreditemstates"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.client.monitoreditemstates</span></tt></a> module.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.MonitoredItemInformation.clientConnectionId">
+<tt class="descname">clientConnectionId</tt><a class="headerlink" href="#pyuaf.client.MonitoredItemInformation.clientConnectionId" title="Permalink to this definition">¶</a></dt>
+<dd><p>The id of the session that hosts the subscription (which in turn hosts the monitored
+item), as a <tt class="docutils literal"><span class="pre">long</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.MonitoredItemInformation.clientSubscriptionHandle">
+<tt class="descname">clientSubscriptionHandle</tt><a class="headerlink" href="#pyuaf.client.MonitoredItemInformation.clientSubscriptionHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The handle of the subscription that hosts the monitored item, as a <tt class="docutils literal"><span class="pre">long</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.MonitoredItemInformation.clientHandle">
+<tt class="descname">clientHandle</tt><a class="headerlink" href="#pyuaf.client.MonitoredItemInformation.clientHandle" title="Permalink to this definition">¶</a></dt>
+<dd><p>The handle of the monitored item, as a <tt class="docutils literal"><span class="pre">long</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.MonitoredItemInformation.settings">
+<tt class="descname">settings</tt><a class="headerlink" href="#pyuaf.client.MonitoredItemInformation.settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The settings of this particular monitored item, as an instance of type
+<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.MonitoredItemSettings" title="pyuaf.client.settings.MonitoredItemSettings"><tt class="xref py py-class docutils literal"><span class="pre">MonitoredItemSettings</span></tt></a>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
 <div class="section" id="class-monitoreditemnotification">
 <h2><em>class</em> MonitoredItemNotification<a class="headerlink" href="#class-monitoreditemnotification" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -1499,31 +1673,16 @@ superclass itself</li>
 <li><p class="first">Attributes:</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.MonitoredItemNotification.notificationHandle">
-<tt class="descname">notificationHandle</tt><a class="headerlink" href="#pyuaf.client.MonitoredItemNotification.notificationHandle" title="Permalink to this definition">¶</a></dt>
-<dd><p>Deprecated! A notification handle is essentially the same as a client monitored item
-handle, so soon these two handles will merge (notificationHandle will disappear,
-the client monitored item handle will stay).</p>
-<p>A NotificationHandle is a handle (an <tt class="docutils literal"><span class="pre">int</span></tt>) defined by the UAF (not by the OPC UA standard!) to
-associate monitored item notifications with the
-<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredDataRequestTarget" title="pyuaf.client.requests.CreateMonitoredDataRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredDataRequestTarget</span></tt></a> (or
-<a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.CreateMonitoredEventsRequestTarget" title="pyuaf.client.requests.CreateMonitoredEventsRequestTarget"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsRequestTarget</span></tt></a>) that originally
-created them. It is a 32-bit number
-that gets a unique value as soon as you create a monitored item. Even if the server of
-this monitored item would crash, and the UAF determines that the monitored item should be
-re-established on another server (e.g. because the browse path now points to a node in
-another redundant server), then this value will not change. So if you create monitored
-items once, you can be sure that the notification handle will always correctly identify
-the same item, for the whole lifetime of the client.</p>
-</dd></dl>
-
-<dl class="attribute">
 <dt id="pyuaf.client.MonitoredItemNotification.clientHandle">
 <tt class="descname">clientHandle</tt><a class="headerlink" href="#pyuaf.client.MonitoredItemNotification.clientHandle" title="Permalink to this definition">¶</a></dt>
 <dd><p>A clientHandle is a 32-bit number assigned by the UAF to newly created
-monitored items. The number will be incremented on each new item creation, so in
-theory it will take 2**32 items that have to be created before the number starts
-to count from 0 again. In practice, it will never happen.</p>
+monitored items. Essentially, it allows you to identify the monitored item of which
+you receive this notification.</p>
+<p>You can store the client handle when you created the monitored item, see for
+example the use case example at <a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle" title="pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle()</span></tt></a>.</p>
+<p>If you use &#8220;notification callbacks&#8221;, you don&#8217;t need to worry about client handles
+(because the notifications will be automatically mapped to your callback functions
+that implement behavior for a specific monitored item.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -1554,12 +1713,6 @@ produce them and provide them to you, so you can consume them.</p>
 <li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.MonitoredItemNotification" title="pyuaf.client.MonitoredItemNotification"><tt class="xref py py-class docutils literal"><span class="pre">MonitoredItemNotification</span></tt></a>:</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.DataChangeNotification.notificationHandle">
-<tt class="descname">notificationHandle</tt><a class="headerlink" href="#pyuaf.client.DataChangeNotification.notificationHandle" title="Permalink to this definition">¶</a></dt>
-<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.MonitoredItemNotification.notificationHandle" title="pyuaf.client.MonitoredItemNotification.notificationHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.MonitoredItemNotification.notificationHandle</span></tt></a>.</p>
-</dd></dl>
-
-<dl class="attribute">
 <dt id="pyuaf.client.DataChangeNotification.clientHandle">
 <tt class="descname">clientHandle</tt><a class="headerlink" href="#pyuaf.client.DataChangeNotification.clientHandle" title="Permalink to this definition">¶</a></dt>
 <dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.MonitoredItemNotification.clientHandle" title="pyuaf.client.MonitoredItemNotification.clientHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.MonitoredItemNotification.clientHandle</span></tt></a>.</p>
@@ -1615,12 +1768,6 @@ produce them and provide them to you, so you can consume them.</p>
 <li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.MonitoredItemNotification" title="pyuaf.client.MonitoredItemNotification"><tt class="xref py py-class docutils literal"><span class="pre">MonitoredItemNotification</span></tt></a>:</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.EventNotification.notificationHandle">
-<tt class="descname">notificationHandle</tt><a class="headerlink" href="#pyuaf.client.EventNotification.notificationHandle" title="Permalink to this definition">¶</a></dt>
-<dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.MonitoredItemNotification.notificationHandle" title="pyuaf.client.MonitoredItemNotification.notificationHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.MonitoredItemNotification.notificationHandle</span></tt></a>.</p>
-</dd></dl>
-
-<dl class="attribute">
 <dt id="pyuaf.client.EventNotification.clientHandle">
 <tt class="descname">clientHandle</tt><a class="headerlink" href="#pyuaf.client.EventNotification.clientHandle" title="Permalink to this definition">¶</a></dt>
 <dd><p>&#8211;&gt; See <a class="reference internal" href="#pyuaf.client.MonitoredItemNotification.clientHandle" title="pyuaf.client.MonitoredItemNotification.clientHandle"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.MonitoredItemNotification.clientHandle</span></tt></a>.</p>
@@ -1698,9 +1845,9 @@ produce them and provide them to you, so you can consume them.</p>
 <li><p class="first">Other attributes:</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.KeepAliveNotification.notificationHandles">
-<tt class="descname">notificationHandles</tt><a class="headerlink" href="#pyuaf.client.KeepAliveNotification.notificationHandles" title="Permalink to this definition">¶</a></dt>
-<dd><p>The notification handles assigned to the subscription that got a keep alive message,
+<dt id="pyuaf.client.KeepAliveNotification.clientHandles">
+<tt class="descname">clientHandles</tt><a class="headerlink" href="#pyuaf.client.KeepAliveNotification.clientHandles" title="Permalink to this definition">¶</a></dt>
+<dd><p>The client handles assigned to the subscription that got a keep alive message,
 as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.UInt32Vector" title="pyuaf.util.UInt32Vector"><tt class="xref py py-class docutils literal"><span class="pre">UInt32Vector</span></tt></a>.</p>
 <p>So if you receive a KeepAliveNotification, you know that the monitored items identified
 by these handles are OK.</p>
@@ -1831,6 +1978,7 @@ state of the subscription, the handle, etc.</p>
   <ul>
 <li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">pyuaf.client</span></tt></a><ul>
 <li><a class="reference internal" href="#class-client"><em>class</em> Client</a></li>
+<li><a class="reference internal" href="#class-monitorediteminformation"><em>class</em> MonitoredItemInformation</a></li>
 <li><a class="reference internal" href="#class-monitoreditemnotification"><em>class</em> MonitoredItemNotification</a></li>
 <li><a class="reference internal" href="#class-datachangenotification"><em>class</em> DataChangeNotification</a></li>
 <li><a class="reference internal" href="#class-eventnotification"><em>class</em> EventNotification</a></li>
@@ -1884,7 +2032,7 @@ state of the subscription, the handle, etc.</p>
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.6 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.7 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
