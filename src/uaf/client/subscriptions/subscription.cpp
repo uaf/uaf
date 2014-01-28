@@ -49,7 +49,7 @@ namespace uafc
       clientConnectionId_(clientConnectionId),
       database_(database),
       clientInterface_(clientInterface),
-      clientMonitoredItemHandle_(0)
+      clientHandle_(0)
     {
         // build the logger name:
         stringstream loggerName;
@@ -194,6 +194,22 @@ namespace uafc
     }
 
 
+    // Set the publishing mode
+    // =============================================================================================
+    Status Subscription::setPublishingMode(
+            bool                   publishingEnabled,
+            const ServiceSettings& serviceSettings)
+    {
+        OpcUa_Boolean uaPublishingEnabled = publishingEnabled ? OpcUa_True : OpcUa_False;
+        UaClientSdk::ServiceSettings uaServiceSettings;
+        serviceSettings.toSdk(uaServiceSettings);
+        UaStatus uaStatus = uaSubscription_->setPublishingMode(uaServiceSettings,
+                                                               uaPublishingEnabled);
+        Status ret;
+        ret.fromSdk(uaStatus.statusCode(), "Couldn't set the publishing mode");
+        return ret;
+    }
+
 
     // Change the subscription status
     // =============================================================================================
@@ -219,6 +235,31 @@ namespace uafc
     }
 
 
+    // Get information about the monitored item
+    // =============================================================================================
+    bool Subscription::monitoredItemInformation(
+            ClientHandle                clientHandle,
+            MonitoredItemInformation&   monitoredItemInformation)
+    {
+        UaMutexLocker locker(&monitoredItemsMapMutex_); // unlocks when locker goes out of scope
+
+        MonitoredItemsMap::const_iterator it = monitoredItemsMap_.find(clientHandle);
+
+        bool monitoredItemFound = (it != monitoredItemsMap_.end());
+
+        if (monitoredItemFound)
+        {
+            monitoredItemInformation.monitoredItemState = monitoreditemstates::Created;
+            monitoredItemInformation.clientConnectionId = clientConnectionId_;
+            monitoredItemInformation.clientSubscriptionHandle = clientSubscriptionHandle_;
+            monitoredItemInformation.clientHandle = it->first;
+            monitoredItemInformation.settings = it->second.settings;
+        }
+
+        return monitoredItemFound;
+    }
+
+
     // keep the subscription alive
     // =============================================================================================
     void Subscription::keepAlive()
@@ -238,7 +279,7 @@ namespace uafc
 
         for (MonitoredItemsMap::iterator it = monitoredItemsMap_.begin();
                 it != monitoredItemsMap_.end(); ++it)
-            notification.notificationHandles.push_back(it->second.notificationHandle);
+            notification.clientHandles.push_back(it->first);
 
         // call the callback interface
         clientInterface_->keepAliveReceived(notification);
@@ -262,16 +303,15 @@ namespace uafc
         // fill the notifications
         for (uint32_t i=0; i < noOfNotifications; i++)
         {
-            ClientMonitoredItemHandle clientHandle = dataNotifications[i].ClientHandle;
+            ClientHandle clientHandle = dataNotifications[i].ClientHandle;
 
             MonitoredItemsMap::const_iterator it = monitoredItemsMap_.find(clientHandle);
 
-            // update the notification handle
+            // update the contents of the notification
             if (it != monitoredItemsMap_.end())
             {
                 DataChangeNotification notification;
 
-                notification.notificationHandle = it->second.notificationHandle;
                 notification.clientHandle       = clientHandle;
                 notification.data               = dataNotifications[i].Value.Value;
                 notification.status.fromSdk(dataNotifications[i].Value.StatusCode, "Invalid value");
@@ -305,16 +345,15 @@ namespace uafc
         // fill the notifications
         for (uint32_t i=0; i < noOfNotifications; i++)
         {
-            ClientMonitoredItemHandle clientHandle = uaEventFieldList[i].ClientHandle;
+            ClientHandle clientHandle = uaEventFieldList[i].ClientHandle;
 
             MonitoredItemsMap::const_iterator it = monitoredItemsMap_.find(clientHandle);
 
-            // update the notification handle
+            // update the contents of the notification
             if (it != monitoredItemsMap_.end())
             {
                 EventNotification notification;
 
-                notification.notificationHandle = it->second.notificationHandle;
                 notification.clientHandle       = clientHandle;
 
                 // update the event fields

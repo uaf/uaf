@@ -35,13 +35,10 @@ namespace uafc
     string CreateMonitoredDataResultTarget::toString(const string& indent, size_t colon) const
     {
         stringstream ss;
-        ss << indent << " - notificationHandle";
-        ss << fillToPos(ss, colon);
-        ss << ": " << notificationHandle << "\n";
 
         ss << indent <<  " - clientHandle";
         ss << fillToPos(ss, colon);
-        ss << ": " << int(clientHandle) << "\n";
+        ss << ": " << clientHandle << "\n";
 
         ss << indent << " - status";
         ss << fillToPos(ss, colon);

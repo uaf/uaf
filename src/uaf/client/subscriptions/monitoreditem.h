@@ -63,10 +63,6 @@ namespace uafc
          * CreateMonitoredDataRequest (or CreateMonitoredEventsRequest) with handle 12 resulted in
          * the creation of this monitored item. */
         std::size_t                    targetRank;
-
-        /** The notification handle that identifies the notifications that are produced by this
-         *  monitored item. */
-        uaf::NotificationHandle        notificationHandle;
     };
 }
 

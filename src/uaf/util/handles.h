@@ -89,39 +89,20 @@ namespace uaf
     typedef uint32_t MonitoredItemId;
 
     /**
-     * A ClientMonitoredItemHandle is a 32-bit number assigned by the UAF to newly created
+     * A ClientHandle is a 32-bit number assigned by the UAF to newly created
      * monitored items. The number will be incremented on each new item creation, so in
      * theory it will take 2**32 items that have to be created before the number starts
      * to count from 0 again. In practice, it will never happen.
      *
      * @ingroup Util
      */
-    typedef uint32_t ClientMonitoredItemHandle;
+    typedef uint32_t ClientHandle;
 
-    /**
-     * NOTE: A NotificationHandle is a redundant concept of ClientMonitoredItemHandle
-     * ... so it is deprecated!
-     *
-     *
-     * A NotificationHandle is a handle defined by the UAF (not by the OPC UA standard!) to
-     * associate monitored item notifications with the CreateMonitoredDataRequestTarget (or
-     * CreateMonitoredEventsRequestTarget) that originally created them. It is a 32-bit number
-     * that gets a unique value as soon as you create a monitored item. Even if the server of this
-     * monitored item would crash, and the UAF determines that the monitored item should be
-     * re-established on another server (e.g. because the browse path now points to a node in
-     * another redundant server), then this value will not change. So if you create monitored
-     * items once, you can be sure that the notification handle will always correctly identify
-     * the same item, for the whole lifetime of the client.
-     *
-     * @ingroup Util
-     */
-    typedef uint32_t NotificationHandle;
+    /** Client handle value when it was not assigned. */
+    static const uint32_t CLIENTHANDLE_NOT_ASSIGNED = OpcUa_UInt32_Max;
 
-    /** NotificationHandle value when it was not assigned. */
-    static const uaf::NotificationHandle NOTIFICATIONHANDLE_NOT_ASSIGNED = OpcUa_UInt32_Max;
-
-    /** Maximum NotificationHandle value. */
-    static const uaf::NotificationHandle NOTIFICATIONHANDLE_MAX          = OpcUa_UInt32_Max - 1;
+    /** Maximum client handle value. */
+    static const uint32_t CLIENTHANDLE_MAX = OpcUa_UInt32_Max - 1;
 
 }
 

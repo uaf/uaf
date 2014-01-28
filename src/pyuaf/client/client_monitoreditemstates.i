@@ -18,40 +18,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_METHODCALLSETTINGS_H_
-#define UAFC_METHODCALLSETTINGS_H_
+%module monitoreditemstates
+%{
+#define SWIG_FILE_WITH_INIT
+#include "uaf/client/subscriptions/monitoreditemstates.h"
+%}
 
 
-
-// STD
-// SDK
-// UAF
-#include "uaf/client/clientexport.h"
-#include "uaf/client/settings/servicesettings.h"
+// include common definitions
+%include "../pyuaf.i"
 
 
-
-namespace uafc
-{
-
-
-    /*******************************************************************************************//**
-    * An uafc::MethodCallSettings object holds the service settings that are particular
-    * for the MethodCall service.
-    *
-    * @ingroup ClientSettings
-    ***********************************************************************************************/
-    class UAFC_EXPORT MethodCallSettings : public uafc::ServiceSettings
-    {
-    public:
-
-        /**
-         * Create default MethodCall settings.
-         */
-        MethodCallSettings() : uafc::ServiceSettings() {}
-    };
-}
+// import the EXPORT macro and some numeric typedefs
+%import "uaf/client/clientexport.h"
 
 
+// include the subscription states
+%include "uaf/client/subscriptions/monitoreditemstates.h"
 
-#endif /* UAFC_METHODCALLSETTINGS_H_ */
+

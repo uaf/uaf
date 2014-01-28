@@ -91,21 +91,21 @@ namespace uaf
 
 
         /**
-         * Does the diagnostic object has notification handles?
+         * Does the diagnostic object has clientHandles?
          */
-        bool hasNotificationHandles() const { return notificationHandles_ != 0; }
+        bool hasClientHandles() const { return clientHandles_ != 0; }
 
 
         /**
-         * Get the notification handles (only relevant if hasNotificationHandles() is true).
+         * Get the client handles (only relevant if hasClientHandles() is true).
          */
-        std::vector<uaf::NotificationHandle> getNotificationHandles() const;
+        std::vector<uaf::ClientHandle> getClientHandles() const;
 
 
         /**
-         * Set notification handles.
+         * Set client handles.
          */
-        void setNotificationHandles(const std::vector<uaf::NotificationHandle>& handles);
+        void setClientHandles(const std::vector<uaf::ClientHandle>& handles);
 
 
         /**
@@ -139,7 +139,7 @@ namespace uaf
          *
          * @return String representation.
          */
-        std::string toString(const std::string& indent="", std::size_t colon=20) const;
+        std::string toString(const std::string& indent="", std::size_t colon=19) const;
 
 
         // comparison operators
@@ -156,7 +156,7 @@ namespace uaf
 
     private:
         // the following objects can be stored by the diagnostic object:
-        std::vector<uaf::NotificationHandle>* notificationHandles_;
+        std::vector<uaf::ClientHandle>* clientHandles_;
         std::string* description_;
     };
 }

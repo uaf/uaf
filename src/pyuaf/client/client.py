@@ -203,7 +203,7 @@ class Client(ClientBase):
     def __dispatch_dataChangesReceived__(self, dataNotifications):
         """
         Dispatch the DataNofications either to a virtual dataChangesReceived function,
-        or to a callback function (if one is found for the given notificationHandle).
+        or to a callback function (if one is found for the given client handle).
         """
         notificationsWithoutCallback = []
         
@@ -212,7 +212,7 @@ class Client(ClientBase):
             
             for notification in dataNotifications:
                 try:
-                    f = self.__dataNotificationCallbacks__[notification.notificationHandle]
+                    f = self.__dataNotificationCallbacks__[notification.clientHandle]
                     t = threading.Thread(target=f, args=[notification])
                     t.start()
                 except:
@@ -256,7 +256,7 @@ class Client(ClientBase):
     def __dispatch_eventsReceived__(self, eventNotifications):
         """
         Dispatch the EventNofications either to a virtual dataChangesReceived function,
-        or to a callback function (if one is found for the given notificationHandle).
+        or to a callback function (if one is found for the given client handle).
         """
         notificationsWithoutCallback = []
         
@@ -265,7 +265,7 @@ class Client(ClientBase):
             
             for notification in eventNotifications:
                 try:
-                    f = self.__eventNotificationCallbacks__[notification.notificationHandle]
+                    f = self.__eventNotificationCallbacks__[notification.clientHandle]
                     t = threading.Thread(target=f, args=[notification])
                     t.start()
                 except:
@@ -555,7 +555,7 @@ class Client(ClientBase):
         Get information about the specified session.
        
         :param clientConnectionId: The client connection id 
-                                   (always assigned by the client, not by the user!).
+                                   (always assigned by the UAF, not by the user!).
         :type  clientConnectionId: ``int``
         :return: Information about the specified session.
         :rtype:  :class:`pyuaf.client.SessionInformation`
@@ -616,6 +616,36 @@ class Client(ClientBase):
         for i in xrange(len(vec)):
             l.append(vec[i])
         return l
+    
+    
+    def monitoredItemInformation(self, clientHandle):
+        """
+        Get information about the specified monitored item.
+        
+        Check the :attr:`~pyuaf.client.MonitoredItemInformation.monitoredItemState` before 
+        interpreting the results of the :class:`~pyuaf.client.MonitoredItemInformation`!
+        Because if the :attr:`~pyuaf.client.MonitoredItemInformation.monitoredItemState` is 
+        :attr:`~pyuaf.client.monitoreditemstates.NotCreated`, then the monitored item not created on
+        the server, but instead it's cached by the client (which tries to re-create the monitored
+        item periodically -as configurable by the :class:`~pyuaf.client.settings.ClientSettings`-).
+       
+        :param clientHandle: The handle of the monitored item (always assigned by the UAF, not 
+                             by the user!). This clientHandle is assigned when the monitored item 
+                             is requested (e.g. by calling :meth:`~pyuaf.client.Client.createMonitoredData`),
+                             regardless of whether the monitored items were indeed created on the server,
+                             or not (e.g. in case of failures, or in case the server is not on-line yet). 
+        :type  clientHandle: ``int``
+        :return: Information about the specified monitored item.
+        :rtype:  :class:`~pyuaf.client.MonitoredItemInformation`
+        :raise pyuaf.util.errors.UnknownHandleError:
+             Raised in case no monitored item is known for the given client handle.
+        :raise pyuaf.util.errors.UafError:
+             Base exception, catch this to handle any other errors.
+        """
+        info = pyuaf.client.MonitoredItemInformation()
+        status = ClientBase.monitoredItemInformation(self, clientHandle, info)
+        pyuaf.util.errors.evaluate(status)
+        return info
     
     
     def read(self, addresses, attributeId=pyuaf.util.attributeids.Value, serviceConfig=None, sessionConfig=None):
@@ -1502,7 +1532,7 @@ class Client(ClientBase):
              - via the exception that was raised in case createMonitoredData() was not successful. 
                This exception has a "status" attribute (of type :class:`~pyuaf.util.Status`),
                and this will provide you a diagnostics object (see :meth:`pyuaf.util.Status.additionalDiagnostics`),
-               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getNotificationHandles`).
+               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getClientHandles`).
         
         .. warning::
             
@@ -1583,7 +1613,7 @@ class Client(ClientBase):
             if len(notificationCallbacks) > 0:
                 if len(notificationCallbacks) == len(result.targets):
                     for i in xrange(len(notificationCallbacks)):
-                        self.__dataNotificationCallbacks__[result.targets[i].notificationHandle] \
+                        self.__dataNotificationCallbacks__[result.targets[i].clientHandle] \
                                 = notificationCallbacks[i]
                 else:
                     raise TypeError("The number of result targets does not correspond to the "
@@ -1629,7 +1659,7 @@ class Client(ClientBase):
              - via the exception that was raised in case createMonitoredEvents() was not successful. 
                This exception has a "status" attribute (of type :class:`~pyuaf.util.Status`),
                and this will provide you a diagnostics object (see :meth:`pyuaf.util.Status.additionalDiagnostics`),
-               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getNotificationHandles`).
+               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getClientHandles`).
         
         .. warning::
             
@@ -1722,7 +1752,7 @@ class Client(ClientBase):
             if len(notificationCallbacks) > 0:
                 if len(notificationCallbacks) == len(result.targets):
                     for i in xrange(len(notificationCallbacks)):
-                        self.__eventNotificationCallbacks__[result.targets[i].notificationHandle] \
+                        self.__eventNotificationCallbacks__[result.targets[i].clientHandle] \
                                 = notificationCallbacks[i]
                 else:
                     raise TypeError("The number of result targets does not correspond to the "
@@ -1735,7 +1765,81 @@ class Client(ClientBase):
         finally:
             self.__eventNotificationLock__.release()
 
-
+            
+    def setPublishingMode(self, clientSubscriptionHandle, publishingEnabled, serviceSettings=None):
+        """
+        Set the publishing mode, by specifying a subscription handle.
+        
+        Note that a subscription handle may *not* be known at the time when you create the
+        monitored items. E.g. when you call :meth:`~pyuaf.client.Client.createMonitoredData` or 
+        :meth:`~pyuaf.client.Client.createMonitoredEvents`, it can happen that the server that 
+        hosts the monitored items is not on-line yet. In this case, the ClientSubscriptionHandle 
+        is *not* assigned yet, but ClientHandles *are* assigned yet. Therefore it makes sense to 
+        first call :meth:`~pyuaf.client.Client.monitoredItemInformation` of your monitored item, 
+        and get the subscription handle from there.
+        
+        E.g. like this:
+        
+        .. doctest::
+        
+            >>> import pyuaf
+            >>> from pyuaf.util.errors import UafError
+            >>> from pyuaf.util import Address, NodeId
+            >>> from pyuaf.client import Client
+            >>> 
+            >>> myClient     = Client("myClient", ["opc.tcp://localhost:4841"])
+            >>>
+            >>> nameSpaceUri = "http://mycompany.com/mymachine"
+            >>> serverUri    = "http://mycompany.com/servers/plc1"
+            >>> address = Address( NodeId("myMachine.myVariable", nameSpaceUri), serverUri)
+            >>>
+            >>> def myCallback(notification):
+            ...      print("A data change was received: %s" %notification)
+            >>>
+            >>> try:
+            ...     result = myClient.createMonitoredData([address], 
+            ...                                           notificationCallbacks = [myCallback])
+            ...     clientHandle = result.targets[0].clientHandle
+            ... except UafError, e:
+            ...     # The monitored items could not be created, because there was some failure
+            ...     #  (maybe the server is off-line?).
+            ...     # Nevertheless, the client handles were already assigned, and we can get them like this: 
+            ...     diagnostics = e.status.additionalDiagnostics()
+            ...     clientHandle = diagnostics.getClientHandles()[0]
+            >>> 
+            >>> 
+            >>> info = myClient.monitoredItemInformation(clientHandle)
+            >>>
+            >>> if info.monitoredItemState == pyuaf.client.monitoreditemstates.Created:
+            ...     # enable the subscription that hosts the monitored item:
+            ...     myClient.setPublishingMode(info.clientSubscriptionHandle, True)
+            ...         
+            ...     # ... do some stuff ...
+            ...         
+            ...     # disable the subscription that hosts the monitored item:
+            ...     myClient.setPublishingMode(info.clientSubscriptionHandle, False)
+        
+        :param clientSubscriptionHandle:    The handle identifying the subscription.
+        :type  clientSubscriptionHandle:    ``int``
+        :param publishingEnabled:           True to enable the publishing mode, false to disable.
+        :type  publishingEnabled:          ``bool``
+        :param serviceSettings:             The service settings to be used (leave None for 
+                                            default settings).
+        :type  serviceSettings:             :class:`pyuaf.client.settings.ServiceSettings`
+        :raise pyuaf.util.errors.UnknownHandleError:
+             The clientSubscriptionHandle is unknown!
+        :raise pyuaf.util.errors.UafError:
+             Base exception, catch this to handle any UAF errors.
+        """
+        if serviceSettings is None:
+            serviceSettings = pyuaf.client.settings.ServiceSettings()
+        
+        status = ClientBase.setPublishingMode(self, 
+                                              clientSubscriptionHandle, 
+                                              publishingEnabled, 
+                                              serviceSettings)
+        pyuaf.util.errors.evaluate(status)
+    
 
     def processRequest(self, request, resultCallback=None, notificationCallbacks=[]):
         """
@@ -1773,7 +1877,7 @@ class Client(ClientBase):
              - via the exception that was raised in case processRequest() was not successful. 
                This exception has a "status" attribute (of type :class:`~pyuaf.util.Status`),
                and this will provide you a diagnostics object (see :meth:`pyuaf.util.Status.additionalDiagnostics`),
-               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getNotificationHandles`).
+               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getClientHandles`).
         
         .. warning::
             Asynchronous requests MUST be invoked on a single session. Meaning:
@@ -1865,7 +1969,7 @@ class Client(ClientBase):
                     if len(notificationCallbacks) == len(result.targets):
                         for i in xrange(len(notificationCallbacks)):
                             if type(request) == pyuaf.client.requests.CreateMonitoredDataRequest:
-                                self.__dataNotificationCallbacks__[result.targets[i].notificationHandle] = notificationCallbacks[i]
+                                self.__dataNotificationCallbacks__[result.targets[i].clientHandle] = notificationCallbacks[i]
                 
                 pyuaf.util.errors.evaluate(status)
                 

@@ -18,6 +18,7 @@ ALL_MODULES = [ "client_client",
                 "client_manualsubscription",
                 "client_monitordata",
                 "client_monitorevents",
+                "client_setpublishingmode",
                 "client_browse",
                 "client_browsenext",
                 "client_historyreadrawmodified" 

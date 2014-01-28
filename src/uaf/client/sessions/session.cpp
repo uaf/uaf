@@ -565,6 +565,16 @@ namespace uafc
     }
 
 
+    // Get information about the monitored item
+    // =============================================================================================
+    bool Session::monitoredItemInformation(
+            ClientHandle                clientHandle,
+            MonitoredItemInformation&   monitoredItemInformation)
+    {
+        return subscriptionFactory_->monitoredItemInformation(clientHandle, monitoredItemInformation);
+    }
+
+
     // Update the session status.
     // =============================================================================================
     void Session::setSessionState(uafc::sessionstates::SessionState sessionState)
@@ -593,6 +603,20 @@ namespace uafc
 
     }
 
+
+    // Set the publishing mode.
+    // =============================================================================================
+    Status Session::setPublishingMode(
+            ClientSubscriptionHandle    clientSubscriptionHandle,
+            bool                        publishingEnabled,
+            const ServiceSettings&      serviceSettings,
+            bool&                       subscriptionFound)
+    {
+        return subscriptionFactory_->setPublishingMode(clientSubscriptionHandle,
+                                                       publishingEnabled,
+                                                       serviceSettings,
+                                                       subscriptionFound);
+    }
 
 
 }

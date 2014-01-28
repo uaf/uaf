@@ -609,12 +609,54 @@ namespace uafc
     }
 
 
-    // Get information about the session
+    // Get information about the subscriptions
     // =============================================================================================
     vector<SubscriptionInformation> Client::allSubscriptionInformations()
     {
         return sessionFactory_->allSubscriptionInformations();
     }
+
+
+    // Get information about the monitored item
+    // =============================================================================================
+    Status Client::monitoredItemInformation(
+            ClientHandle                clientHandle,
+            MonitoredItemInformation&   monitoredItemInformation)
+    {
+        Status ret;
+
+        // first try to find the client handle in the session factory
+        ret = sessionFactory_->monitoredItemInformation(clientHandle, monitoredItemInformation);
+
+        // if the client handle was not found, we can check if it was assigned once
+        if (ret.isNotGood())
+        {
+            bool isFound = std::find(database_->allClientHandles.begin(),
+                                     database_->allClientHandles.end(),
+                                     clientHandle) != database_->allClientHandles.end();
+            if (isFound)
+            {
+                monitoredItemInformation.monitoredItemState = monitoreditemstates::NotCreated;
+                ret.setGood();
+            }
+        }
+
+        return ret;
+    }
+
+
+    // Set the publishing mode.
+    // =============================================================================================
+    Status Client::setPublishingMode(
+            ClientSubscriptionHandle  clientSubscriptionHandle,
+            bool                      publishingEnabled,
+            const ServiceSettings&    serviceSettings)
+    {
+        return sessionFactory_->setPublishingMode(clientSubscriptionHandle,
+                                                  publishingEnabled,
+                                                  serviceSettings);
+    }
+
 
     // Run the thread
     // =============================================================================================
@@ -865,15 +907,15 @@ namespace uafc
         else
             ret.setGood();
 
-        // assign notification handles if necessary
+        // assign client handles if necessary
         // (this is only needed for CreateMonitoredDataRequests and CreateMonitoredEventsRequests)
-        std::vector<uaf::NotificationHandle> assignedNotificationHandles;
+        std::vector<uaf::ClientHandle> assignedClientHandles;
         bool assigned;
         if (ret.isGood())
-            ret = uafc::assignNotificationHandlesIfNeeded<_Service>(
+            ret = uafc::assignClientHandlesIfNeeded<_Service>(
                     result, mask, database_, assigned);
             if (assigned)
-                assignedNotificationHandles = ret.additionalDiagnostics().getNotificationHandles();
+                assignedClientHandles = ret.additionalDiagnostics().getClientHandles();
 
         // if no error occurred, store the copied request if needed
         // (this is only needed for 'persistent' requests such as CreateMonitoredDataRequests)
@@ -911,9 +953,9 @@ namespace uafc
             logger_->debug(result.toString());
         }
 
-        // if notification handles were assigned, copy them to the diagnostics of the Status object
+        // if client handles were assigned, copy them to the diagnostics of the Status object
         if (assigned)
-            ret.additionalDiagnostics().setNotificationHandles(assignedNotificationHandles);
+            ret.additionalDiagnostics().setClientHandles(assignedClientHandles);
 
         return ret;
     }

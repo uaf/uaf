@@ -36,7 +36,7 @@ namespace uafc
     // Constructor
     // =============================================================================================
     BrowseSettings::BrowseSettings()
-    : BaseServiceSettings(),
+    : ServiceSettings(),
       maxReferencesToReturn(0),
       maxAutoBrowseNext(0)
     {}
@@ -47,7 +47,7 @@ namespace uafc
     string BrowseSettings::toString(const string& indent, std::size_t colon) const
     {
         std::stringstream ss;
-        ss << BaseServiceSettings::toString(indent, colon) << "\n";
+        ss << ServiceSettings::toString(indent, colon) << "\n";
 
         ss << indent << " - maxReferencesToReturn";
         ss << fillToPos(ss, colon);

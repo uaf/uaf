@@ -40,6 +40,7 @@
 #include "uaf/client/subscriptions/monitoreditem.h"
 #include "uaf/client/subscriptions/subscriptionstates.h"
 #include "uaf/client/subscriptions/subscriptioninformation.h"
+#include "uaf/client/subscriptions/monitorediteminformation.h"
 #include "uaf/client/subscriptions/keepalivenotification.h"
 #include "uaf/client/database/database.h"
 #include "uaf/client/invocations/invocations.h"
@@ -131,6 +132,18 @@ namespace uafc
 
 
         /**
+         * Get some information about the specified monitored item.
+         *
+         * @param clientHandle                  The handle identifying the monitored item.
+         * @param monitoredItemInformation      Output parameter: the requested information.
+         * @return                              True if the monitored item was found, False if not.
+         */
+         bool monitoredItemInformation(
+                uaf::ClientHandle               clientHandle,
+                uafc::MonitoredItemInformation& monitoredItemInformation);
+
+
+        /**
          * Called every time a monitored item has changed,
          * overridden from UaSubscriptionCallback.
          */
@@ -143,6 +156,18 @@ namespace uafc
          * Called every new events have been received, overridden from UaSubscriptionCallback.
          */
         virtual void newEvents(UaEventFieldLists &eventFieldList);
+
+
+        /**
+         * Set the publishing mode of the subscription.
+         *
+         * @param publishingEnabled         True to enable the subscription, false if not.
+         * @param serviceSettings           The service settings to be used.
+         * @return                          Result of the service call.
+         */
+        uaf::Status setPublishingMode(
+                bool                           publishingEnabled,
+                const uafc::ServiceSettings&   serviceSettings);
 
 
         /**
@@ -161,24 +186,18 @@ namespace uafc
             uaf::Status ret;
 
             // create a vector to store the ClientHandles
-            std::vector<uaf::ClientMonitoredItemHandle> clientHandles;
-            std::vector<uaf::NotificationHandle>        notificationHandles;
+            std::vector<uaf::ClientHandle> clientHandles;
 
             for (std::size_t i = 0; i < invocation.requestTargets().size(); i++)
             {
-                uaf::NotificationHandle notificationHandle;
-                notificationHandle = invocation.resultTargets()[i].notificationHandle;
+                uaf::ClientHandle clientHandle;
+                clientHandle = invocation.resultTargets()[i].clientHandle;
 
-                // create a new unique NotificationHandle if necessary
-                if (notificationHandle == uaf::NOTIFICATIONHANDLE_NOT_ASSIGNED)
-                    notificationHandle = database_->createUniqueNotificationHandle();
-
-                // create a new client handle
-                uaf::ClientMonitoredItemHandle clientHandle;
-                clientHandle = database_->createUniqueClientMonitoredItemHandle();
+                // create a new unique client handle if necessary
+                if (clientHandle == uaf::CLIENTHANDLE_NOT_ASSIGNED)
+                    clientHandle = database_->createUniqueClientHandle();
 
                 // store the monitored item
-                monitoredItemsMap_[clientHandle].notificationHandle = notificationHandle;
                 monitoredItemsMap_[clientHandle].settings = uafc::MonitoredItemSettings(
                         invocation.requestTargets()[i].samplingIntervalSec,
                         invocation.requestTargets()[i].queueSize,
@@ -189,11 +208,10 @@ namespace uafc
 
                 // store the new client handle
                 clientHandles.push_back(clientHandle);
-                notificationHandles.push_back(notificationHandle);
             }
 
-            // provide the clientHandles and notificationHandles to the invocation
-            invocation.setHandles(clientHandles, notificationHandles);
+            // provide the clientHandles to the invocation
+            invocation.setHandles(clientHandles);
 
             // create the monitored items on the server side, by invoking the service
             ret = invocation.invoke(uaSubscription_, nameSpaceArray, serverArray, logger_);
@@ -218,24 +236,18 @@ namespace uafc
             uaf::Status ret;
 
             // create a vector to store the ClientHandles
-            std::vector<uaf::ClientMonitoredItemHandle> clientHandles;
-            std::vector<uaf::NotificationHandle>        notificationHandles;
+            std::vector<uaf::ClientHandle> clientHandles;
 
             for (std::size_t i = 0; i < invocation.requestTargets().size(); i++)
             {
-                uaf::NotificationHandle notificationHandle;
-                notificationHandle = invocation.resultTargets()[i].notificationHandle;
+                uaf::ClientHandle clientHandle;
+                clientHandle = invocation.resultTargets()[i].clientHandle;
 
-                // create a new unique NotificationHandle if necessary
-                if (notificationHandle == uaf::NOTIFICATIONHANDLE_NOT_ASSIGNED)
-                    notificationHandle = database_->createUniqueNotificationHandle();
-
-                // create a new client handle
-                uaf::ClientMonitoredItemHandle clientHandle;
-                clientHandle = database_->createUniqueClientMonitoredItemHandle();
+                // create a new unique client handle if necessary
+                if (clientHandle == uaf::CLIENTHANDLE_NOT_ASSIGNED)
+                    clientHandle = database_->createUniqueClientHandle();
 
                 // store the monitored item
-                monitoredItemsMap_[clientHandle].notificationHandle = notificationHandle;
                 monitoredItemsMap_[clientHandle].settings = uafc::MonitoredItemSettings(
                         invocation.requestTargets()[i].samplingIntervalSec,
                         invocation.requestTargets()[i].queueSize,
@@ -246,11 +258,10 @@ namespace uafc
 
                 // store the new client handle
                 clientHandles.push_back(clientHandle);
-                notificationHandles.push_back(notificationHandle);
             }
 
-            // provide the clientHandles and notificationHandles to the invocation
-            invocation.setHandles(clientHandles, notificationHandles);
+            // provide the clientHandles to the invocation
+            invocation.setHandles(clientHandles);
 
             // create the monitored items on the server side, by invoking the service
             ret = invocation.invoke(uaSubscription_, nameSpaceArray, serverArray, logger_);
@@ -302,7 +313,7 @@ namespace uafc
 
 
         // a private typedef for the container that will hold the monitored items.
-        typedef std::map<uaf::ClientMonitoredItemHandle, uafc::MonitoredItem> MonitoredItemsMap;
+        typedef std::map<uaf::ClientHandle, uafc::MonitoredItem> MonitoredItemsMap;
 
 
         // logger of the subscription
@@ -328,8 +339,8 @@ namespace uafc
         uafc::ClientInterface*                      clientInterface_;
 
         // the current monitored item handle (gets incremented every time!) and its mutex.
-        uaf::ClientMonitoredItemHandle              clientMonitoredItemHandle_;
-        UaMutex                                     clientMonitoredItemHandleMutex_;
+        uaf::ClientHandle                           clientHandle_;
+        UaMutex                                     clientHandleMutex_;
 
         // the container that will hold the monitored items, and its mutex.
         MonitoredItemsMap                           monitoredItemsMap_;

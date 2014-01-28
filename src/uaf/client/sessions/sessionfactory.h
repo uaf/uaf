@@ -194,11 +194,38 @@ namespace uafc
 
 
         /**
+         * Get some information about the specified monitored item.
+         *
+         * @param clientHandle                  The handle identifying the monitored item.
+         * @param monitoredItemInformation      Output parameter: the requested information.
+         * @return                              Good if the monitored item could be found,
+         *                                      Bad if not.
+         */
+         uaf::Status monitoredItemInformation(
+                uaf::ClientHandle               clientHandle,
+                uafc::MonitoredItemInformation& monitoredItemInformation);
+
+
+        /**
          * Get information about all subscriptions.
          *
          * @return  A vector of all available SubscriptionInformation.
          */
         std::vector<uafc::SubscriptionInformation> allSubscriptionInformations();
+
+
+        /**
+         * Set the publishing mode.
+         *
+         * @param clientSubscriptionHandle  The handle identifying the subscription.
+         * @param publishingEnabled         True to enable the publishing mode, false to disable.
+         * @param serviceSettings           The service settings to be used.
+         * @return                          The result of the service call.
+         */
+        uaf::Status setPublishingMode(
+                 uaf::ClientSubscriptionHandle  clientSubscriptionHandle,
+                 bool                           publishingEnabled,
+                 const uafc::ServiceSettings&   serviceSettings);
 
 
         /**

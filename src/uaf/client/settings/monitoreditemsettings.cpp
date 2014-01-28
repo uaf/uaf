@@ -177,36 +177,39 @@ namespace uafc
 
     // Get a string representation
     // =============================================================================================
-    const string MonitoredItemSettings::toString() const
+    string MonitoredItemSettings::toString(const string& indent, size_t colon) const
     {
         stringstream ss;
 
-        if ( kind_ == MonitoredItemSettings::Data )
-        {
-            ss << "kind=data, ";
-        }
-        else if ( kind_ == MonitoredItemSettings::Event )
-        {
-            ss << "kind=event, ";
-        }
-
-        ss << "sampling=" << int(samplingIntervalSec*1000.0) << "ms, queueSize=" << queueSize;
-        if (discardOldest)
-        {
-            ss << ", discard oldest, ";
-        }
+        ss << indent << " - kind";
+        ss << fillToPos(ss, colon);
+        ss << ": ";
+        if (kind_ == MonitoredItemSettings::Data)
+            ss << "Data\n";
+        else if (kind_ == MonitoredItemSettings::Event)
+            ss << "Event\n";
         else
-        {
-            ss << ", discard newest, ";
-        }
+            ss << "!!!INVALID!!!\n";
+
+        ss << indent << " - samplingIntervalSec";
+        ss << fillToPos(ss, colon);
+        ss << ": " << samplingIntervalSec << " s\n";
+
+        ss << indent << " - queueSize";
+        ss << fillToPos(ss, colon);
+        ss << ": " <<  queueSize << "\n";
+
+        ss << indent << " - discardOldest";
+        ss << fillToPos(ss, colon);
+        ss << ": " << (discardOldest ? "true" : "false") << "\n";
 
         if ( kind_ == MonitoredItemSettings::Data )
         {
-            ss << dataChangeFilter->toString();
+            ss << dataChangeFilter->toString(indent, colon);
         }
         else if ( kind_ == MonitoredItemSettings::Event )
         {
-            ss << eventFilter->toString();
+            ss << eventFilter->toString(indent, colon);
         }
 
         return ss.str();

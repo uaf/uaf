@@ -36,7 +36,7 @@ namespace uafc
     // Constructor
     // =============================================================================================
     HistoryReadRawModifiedSettings::HistoryReadRawModifiedSettings()
-    : BaseServiceSettings(),
+    : ServiceSettings(),
       isReadModified(false),
       maxAutoReadMore(0),
       numValuesPerNode(0),
@@ -51,7 +51,7 @@ namespace uafc
     string HistoryReadRawModifiedSettings::toString(const string& indent, std::size_t colon) const
     {
         std::stringstream ss;
-        ss << BaseServiceSettings::toString(indent, colon) << "\n";
+        ss << ServiceSettings::toString(indent, colon) << "\n";
 
         ss << indent << " - startTime";
         ss << fillToPos(ss, colon);

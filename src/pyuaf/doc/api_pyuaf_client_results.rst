@@ -601,15 +601,51 @@
     
         .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.clientConnectionId
 
-            The id of the session that wasThe id of the session that was used for this target, as an ``int``.. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.notificationHandle
-
-            The notification handle that was assigned to the monitored item by the UAF 
-            (unique per client).
-            
-            This is a 64-bit ``long`` value that remains unique for the whole lifetime of the client.
-            So even if sessions/subscriptions/monitored items are re-created, this numerical
-            value will always refer to the same monitored item.
+            The id of the session that was used for this target, as an ``int``
     
+        .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.clientSubscriptionHandle
+
+            The handle of the subscription that owns this monitored item, as an ``int``
+            
+        .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle
+
+            The client handle that was assigned to the monitored item by the UAF, at the time when
+            the monitored item was requested.
+            E.g. you can get client handles like this:
+        
+            .. doctest::
+            
+                >>> import pyuaf
+                >>> from pyuaf.util.errors import UafError
+                >>> from pyuaf.util import Address, NodeId
+                >>> from pyuaf.client import Client
+                >>> 
+                >>> myClient     = Client("myClient", ["opc.tcp://localhost:4841"])
+                >>>
+                >>> nameSpaceUri = "http://mycompany.com/mymachine"
+                >>> serverUri    = "http://mycompany.com/servers/plc1"
+                >>> address0 = Address( NodeId("myMachine.myVariable0", nameSpaceUri), serverUri)
+                >>> address1 = Address( NodeId("myMachine.myVariable1", nameSpaceUri), serverUri)
+                >>>
+                >>> def myCallback0(notification):
+                ...      print("Variable 0 was received: %s" %notification)
+                >>>
+                >>> def myCallback1(notification):
+                ...      print("Variable 1 was received: %s" %notification)
+                >>>
+                >>> try:
+                ...     result = myClient.createMonitoredData([address0, address1], 
+                ...                                           notificationCallbacks = [myCallback0, myCallback1])
+                ...     clientHandle0 = result.targets[0].clientHandle 
+                ...     clientHandle1 = result.targets[1].clientHandle 
+                ... except UafError, e:
+                ...     # The monitored items could not be created, because there was some failure
+                ...     #  (maybe the server is off-line?).
+                ...     # Nevertheless, the client handles were already assigned, and we can get them like this: 
+                ...     diagnostics = e.status.additionalDiagnostics()
+                ...     if diagnostics.hasClientHandles():
+                ...         clientHandle0, clientHandle1 = diagnostics.getClientHandles()
+        
         .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.monitoredItemId
     
             An id (an ``int``) that was assigned to the monitored item by the server (!).
@@ -647,8 +683,8 @@
         
         >>> noOfElements = len(targets) # will be 5  (alternative: targets.size())
         
-        >>> target0_isGood             = targets[0].status.isGood()
-        >>> target0_notificationHandle = targets[0].notificationHandle
+        >>> target0_isGood       = targets[0].status.isGood()
+        >>> target0_clientHandle = targets[0].clientHandle
         
         >>> # other methods of the vector:
         >>> targets.resize(6)
@@ -746,14 +782,17 @@
 
             The id of the session that was used for this target, as an ``int``.
     
-        .. autoattribute:: pyuaf.client.results.CreateMonitoredEventsResultTarget.notificationHandle
+        .. autoattribute:: pyuaf.client.results.CreateMonitoredEventsResultTarget.clientHandle
 
-            The notification handle that was assigned to the monitored item by the UAF 
-            (unique per client).
+            The client handle that was assigned to the monitored item by the UAF, at the time when
+            the monitored item was requested.
             
-            This is a 64-bit ``long`` value that remains unique for the whole lifetime of the client.
-            So even if sessions/subscriptions/monitored items are re-created, this numerical
-            value will always refer to the same monitored item.
+            See a similar use case example at :meth:`pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle`.
+            
+    
+        .. autoattribute:: pyuaf.client.results.CreateMonitoredEventsResultTarget.clientSubscriptionHandle
+
+            The handle of the subscription that owns this monitored item, as an ``int``
     
         .. autoattribute:: pyuaf.client.results.CreateMonitoredEventsResultTarget.monitoredItemId
     
@@ -792,8 +831,8 @@
         
         >>> noOfElements = len(targets) # will be 5  (alternative: targets.size())
         
-        >>> target0_isGood             = targets[0].status.isGood()
-        >>> target0_notificationHandle = targets[0].notificationHandle
+        >>> target0_isGood       = targets[0].status.isGood()
+        >>> target0_clientHandle = targets[0].clientHandle
         
         >>> # other methods of the vector:
         >>> targets.resize(6)

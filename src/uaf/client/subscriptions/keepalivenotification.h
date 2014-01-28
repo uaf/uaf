@@ -50,7 +50,7 @@ namespace uafc
     {
     public:
 
-        typedef std::vector<uaf::NotificationHandle> NotificationHandles;
+        typedef std::vector<uaf::ClientHandle> ClientHandles;
 
 
         /**
@@ -59,14 +59,15 @@ namespace uafc
         KeepAliveNotification();
 
 
-        /** The notification handles assigned to the subscription that got a keep alive message. */
-        NotificationHandles notificationHandles;
+        /** The clientMonitoredItem handles of the monitored items that are owned by the
+         * subscription that got a keep alive message. */
+        ClientHandles clientHandles;
 
 
         /**
          * Get a string representation of the notification.
          */
-        std::string toString(const std::string& indent="", std::size_t colon=24) const;
+        std::string toString(const std::string& indent="", std::size_t colon=18) const;
     };
 
 

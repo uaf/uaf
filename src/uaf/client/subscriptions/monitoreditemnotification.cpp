@@ -38,8 +38,7 @@ namespace uafc
     // Constructor
     // =============================================================================================
     MonitoredItemNotification::MonitoredItemNotification()
-    : notificationHandle(NOTIFICATIONHANDLE_NOT_ASSIGNED),
-      clientHandle(0)
+    : clientHandle(CLIENTHANDLE_NOT_ASSIGNED)
     {}
 
 
@@ -48,15 +47,13 @@ namespace uafc
     string MonitoredItemNotification::toString(const string& indent, size_t colon) const
     {
         stringstream ss;
-        ss << indent << " - notificationHandle";
-        ss << fillToPos(ss, colon);
-        if (notificationHandle == NOTIFICATIONHANDLE_NOT_ASSIGNED)
-            ss << ": NOTIFICATIONHANDLE_NOT_ASSIGNED\n";
-        else
-            ss << ": " << notificationHandle << "\n";
         ss << indent << " - clientHandle";
         ss << fillToPos(ss, colon);
-        ss << ": " << clientHandle;
+        if (clientHandle == CLIENTHANDLE_NOT_ASSIGNED)
+            ss << ": 0xFFFFFFFF (CLIENTHANDLE_NOT_ASSIGNED)";
+        else
+            ss << ": " << clientHandle;
+
         return ss.str();
     }
 

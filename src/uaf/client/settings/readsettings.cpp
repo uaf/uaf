@@ -36,7 +36,7 @@ namespace uafc
     // Constructor
     // =============================================================================================
     ReadSettings::ReadSettings()
-    : BaseServiceSettings(),
+    : ServiceSettings(),
       maxAgeSec(0)
     {}
 
@@ -46,7 +46,7 @@ namespace uafc
     string ReadSettings::toString(const string& indent, std::size_t colon) const
     {
         std::stringstream ss;
-        ss << BaseServiceSettings::toString(indent, colon) << "\n";
+        ss << ServiceSettings::toString(indent, colon) << "\n";
 
         ss << indent << " - maxAgeSec";
         ss << fillToPos(ss, colon);

@@ -182,7 +182,6 @@ namespace uafc
 
             for (uint32_t i = 0; i < noOfResults; i++)
             {
-                targets[i].notificationHandle = notificationHandles_[i];
                 targets[i].clientHandle = clientHandles_[i];
                 targets[i].monitoredItemId = uaCreateResults_[i].MonitoredItemId;
                 targets[i].revisedQueueSize = uaCreateResults_[i].RevisedQueueSize;

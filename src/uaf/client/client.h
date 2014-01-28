@@ -828,6 +828,57 @@ namespace uafc
         std::vector<uafc::SubscriptionInformation> allSubscriptionInformations();
 
 
+        ///@} //////////////////////////////////////////////////////////////////////////////////////
+        /**
+         *  @name SubscriptionInformation
+         *  Get information about the available subscription(s).
+         */
+        ///@{
+
+
+        /**
+         * Get information about a particular subscription.
+         *
+         * @param clientHandle              The handle identifying the monitored item.
+         * @param monitoredItemInformation  Output parameter, giving you the information about the
+         *                                  monitored item.
+         * @return                          Good if the monitored item could be found, Bad if not.
+         */
+        uaf::Status monitoredItemInformation(
+                 uaf::ClientHandle                  clientHandle,
+                 uafc::MonitoredItemInformation&    monitoredItemInformation);
+
+
+        ///@} //////////////////////////////////////////////////////////////////////////////////////
+        /**
+         *  @name ChangeSubscriptions
+         *  Change properties of the subscription(s).
+         */
+        ///@{
+
+
+        /**
+         * Set the publishing mode, by specifying a subscription handle.
+         *
+         * Note that a subscription handle may *not* be known at the time when you create the
+         * monitored items. E.g. when you call createMonitoredData() or createMonitoredEvents(),
+         * it can happen that the server that hosts the monitored items is not on-line yet.
+         * In this case, the ClientSubscriptionHandle is *not* assigned yet, but
+         * ClientHandles *are* assigned yet. Therefore it makes sense to first call
+         * uafc::Client::monitoredItemInformation() of your monitored item, and get the subscription
+         * handle from there.
+         *
+         * @param clientSubscriptionHandle  The handle identifying the subscription.
+         * @param publishingEnabled         True to enable the publishing mode, false to disable.
+         * @param serviceSettings           The service settings to be used.
+         * @return                          The result of the service call.
+         */
+        uaf::Status setPublishingMode(
+                 uaf::ClientSubscriptionHandle  clientSubscriptionHandle,
+                 bool                           publishingEnabled,
+                 const uafc::ServiceSettings&   serviceSettings);
+
+
     private:
 
         DISALLOW_COPY_AND_ASSIGN(Client);

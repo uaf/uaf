@@ -27,7 +27,7 @@
 // SDK
 // UAF
 #include "uaf/client/clientexport.h"
-#include "uaf/client/settings/baseservicesettings.h"
+#include "uaf/client/settings/servicesettings.h"
 
 
 
@@ -40,14 +40,14 @@ namespace uafc
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT CreateMonitoredDataSettings : public uafc::BaseServiceSettings
+    class UAFC_EXPORT CreateMonitoredDataSettings : public uafc::ServiceSettings
     {
     public:
 
         /**
          * Create default CreateMonitoredData settings.
          */
-        CreateMonitoredDataSettings() : uafc::BaseServiceSettings() {}
+        CreateMonitoredDataSettings() : uafc::ServiceSettings() {}
 
         // ToDo add timestampstoreturn
     };

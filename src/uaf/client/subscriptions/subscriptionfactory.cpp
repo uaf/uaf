@@ -179,7 +179,7 @@ namespace uafc
 
         vector<SubscriptionInformation> ret;
 
-        // lock the mutex to make sure the sessionMap_ is not being manipulated
+        // lock the mutex to make sure the subscriptionMap_ is not being manipulated
         UaMutexLocker locker(&subscriptionMapMutex_);
 
         // loop trough the sessions
@@ -191,6 +191,60 @@ namespace uafc
         }
 
         return ret;
+    }
+
+
+    // Get information about the monitored item
+    // =============================================================================================
+    bool SubscriptionFactory::monitoredItemInformation(
+            ClientHandle                clientHandle,
+            MonitoredItemInformation&   monitoredItemInformation)
+    {
+        // lock the mutex to make sure the subscriptionMap_ is not being manipulated
+        UaMutexLocker locker(&subscriptionMapMutex_);
+
+        bool monitoredItemFound = false;
+
+        // loop trough the sessions
+        for (SubscriptionMap::const_iterator it = subscriptionMap_.begin();
+                it != subscriptionMap_.end() && (!monitoredItemFound);
+                ++it)
+        {
+            monitoredItemFound = it->second->monitoredItemInformation(
+                    clientHandle,
+                    monitoredItemInformation);
+        }
+
+        return monitoredItemFound;
+    }
+
+
+    // Set the publishing mode.
+    // =============================================================================================
+    Status SubscriptionFactory::setPublishingMode(
+            ClientSubscriptionHandle    clientSubscriptionHandle,
+            bool                        publishingEnabled,
+            const ServiceSettings&      serviceSettings,
+            bool&                       subscriptionFound)
+    {
+        // lock the mutex to make sure the sessionMap_ is not being manipulated
+        UaMutexLocker locker(&subscriptionMapMutex_);
+
+        // loop trough the sessions
+        for (SubscriptionMap::iterator it = subscriptionMap_.begin();
+                it != subscriptionMap_.end();
+                ++it)
+        {
+            subscriptionFound = clientSubscriptionHandle == it->second->clientSubscriptionHandle();
+
+            if (subscriptionFound)
+                return it->second->setPublishingMode(publishingEnabled, serviceSettings);
+        }
+
+        return Status(uaf::statuscodes::InvalidRequestError,
+                      "Could not set the publishing mode since clientSubscriptionHandle %d was " \
+                      "not found",
+                      clientSubscriptionHandle);
     }
 
 
@@ -210,29 +264,39 @@ namespace uafc
         // lock the mutex to make sure the subscriptionMap_ is not being manipulated
         UaMutexLocker locker(&subscriptionMapMutex_);
 
-        // loop trough the subscriptions ...
-        for (SubscriptionMap::const_iterator it = subscriptionMap_.begin();
-             it != subscriptionMap_.end();
-             ++it)
+        // we'll try to find a similar subscription that can be re-used,
+        // unless we're creating an "unique" subscription
+        // (one that is only created for -and used by- the current request)
+        if (subscriptionSettings.unique)
         {
-            // ... until a suitable one is found
-            if (it->second->subscriptionSettings() == subscriptionSettings)
+            logger_->debug("The requested subscription must be unique");
+        }
+        else
+        {
+            // loop trough the subscriptions ...
+            for (SubscriptionMap::const_iterator it = subscriptionMap_.begin();
+                 it != subscriptionMap_.end();
+                 ++it)
             {
-                subscription = it->second;
-                logger_->debug("A suitable subscription (ClientSubscriptionHandle=%d) already exists",
-                               subscription->clientSubscriptionHandle());
+                // ... until a suitable one is found
+                if (it->second->subscriptionSettings() == subscriptionSettings)
+                {
+                    subscription = it->second;
+                    logger_->debug("A suitable subscription (ClientSubscriptionHandle=%d) already exists",
+                                   subscription->clientSubscriptionHandle());
 
-                // get the ClientSubscriptionHandle of the subscription
-                ClientSubscriptionHandle handle = subscription->clientSubscriptionHandle();
+                    // get the ClientSubscriptionHandle of the subscription
+                    ClientSubscriptionHandle handle = subscription->clientSubscriptionHandle();
 
-                // now increment the activity count of the subscription
-                activityMapMutex_.lock();
-                activityMap_[handle] = activityMap_[handle] + 1;
-                activityMapMutex_.unlock();
+                    // now increment the activity count of the subscription
+                    activityMapMutex_.lock();
+                    activityMap_[handle] = activityMap_[handle] + 1;
+                    activityMapMutex_.unlock();
 
-                ret.setGood();
+                    ret.setGood();
 
-                break;
+                    break;
+                }
             }
         }
 
@@ -242,8 +306,7 @@ namespace uafc
             ClientSubscriptionHandle clientSubscriptionHandle;
             clientSubscriptionHandle = database_->createUniqueClientSubscriptionHandle();
 
-            logger_->debug("No suitable subscription exists yet, so we create a new one with "
-                           "clientSubscriptionHandle %d",
+            logger_->debug("We create a new subscription with clientSubscriptionHandle %d",
                            clientSubscriptionHandle);
 
             // create a new subscription instance

@@ -18,42 +18,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_TRANSLATEBROWSEPATHSTONODEIDSSETTINGS_H_
-#define UAFC_TRANSLATEBROWSEPATHSTONODEIDSSETTINGS_H_
-
-
+#ifndef UAFC_MONITOREDITEMSTATES_H_
+#define UAFC_MONITOREDITEMSTATES_H_
 
 // STD
+#include <string>
+#include <stdint.h>
 // SDK
+#include "uaclient/uaclientsdk.h"
 // UAF
 #include "uaf/client/clientexport.h"
-#include "uaf/client/settings/servicesettings.h"
-
-
 
 namespace uafc
 {
 
 
-    /*******************************************************************************************//**
-    * An uafc::TranslateBrowsePathsToNodeIdsSettings object holds the service settings that are
-    * particular for the TranslateBrowsePathsToNodeIds service.
-    *
-    * @ingroup ClientSettings
-    ***********************************************************************************************/
-    class UAFC_EXPORT TranslateBrowsePathsToNodeIdsSettings : public uafc::ServiceSettings
+    namespace monitoreditemstates
     {
-    public:
 
         /**
-         * Create default TranslateBrowsePathsToNodeIds settings.
+         * The state of the monitored item.
+         *
+         * @ingroup ClientSubscriptions
          */
-        TranslateBrowsePathsToNodeIdsSettings() {}
+        enum MonitoredItemState
+        {
+            Created    = 0, /**< The monitored item is created on the server. */
+            NotCreated = 1, /**< The monitored item is NOT created on the server. */
+        };
 
-    };
+
+        /**
+         * Get a string representation of the monitored item state.
+         *
+         * @param state The monitored item state (as an enum).
+         * @return      The corresponding name of the monitored item state.
+         *
+         * @ingroup ClientSubscriptions
+         */
+        std::string UAFC_EXPORT toString(uafc::monitoreditemstates::MonitoredItemState state);
+    }
 
 }
 
 
-
-#endif /* UAFC_TRANSLATEBROWSEPATHSTONODEIDSSETTINGS_H_ */
+#endif /* UAFC_MONITOREDITEMSTATES_H_ */

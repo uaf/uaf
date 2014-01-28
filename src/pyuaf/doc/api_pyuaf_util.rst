@@ -2246,11 +2246,12 @@
             :rtype:  ``bool``
         
         
-        .. automethod:: pyuaf.util.StatusDiagnostics.hasNotificationHandles
+        .. automethod:: pyuaf.util.StatusDiagnostics.hasClientHandles
         
-            Does the diagnostic object has notification handles?
+            Does the diagnostic object has client handles?
+            See a use case example at :meth:`pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle`.
             
-            :return: True if the object holds some notification handles, False if not.
+            :return: True if the object holds some client handles, False if not.
             :rtype:  ``bool``
 
 
@@ -2263,12 +2264,14 @@
             :rtype:  ``str``
 
 
-        .. automethod:: pyuaf.util.StatusDiagnostics.getNotificationHandles
+        .. automethod:: pyuaf.util.StatusDiagnostics.getClientHandles
         
-            Get the notification handles (only makes sense in case 
-            :meth:`~pyuaf.util.StatusDiagnostics.hasNotificationHandles` is True).
+            Get the client handles (only makes sense in case 
+            :meth:`~pyuaf.util.StatusDiagnostics.hasClientHandles` is True).
             
-            :return: A tuple of notification handles (=integers), e.g. (1,2,3).
+            See a use case example at :meth:`pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle`.
+            
+            :return: A tuple of client handles (=integers), e.g. (1,2,3).
             :rtype:  ``tuple`` of ``int``
 
 
@@ -2281,12 +2284,14 @@
             :type desc: ``str``
 
 
-        .. automethod:: pyuaf.util.StatusDiagnostics.setNotificationHandles
+        .. automethod:: pyuaf.util.StatusDiagnostics.setClientHandles
         
-            Set the notification handles. As a result of this, 
-            :meth:`~pyuaf.util.StatusDiagnostics.hasNotificationHandles` will return True.
+            Set the client handles. As a result of this, 
+            :meth:`~pyuaf.util.StatusDiagnostics.hasClientHandles` will return True.
             
-            :param handles: A tuple of notification handles (=integers), e.g. (1,2,3).
+            See a use case example at :meth:`pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle`.
+            
+            :param handles: A tuple of client handles (=integers), e.g. (1,2,3).
             :type handles: ``tuple`` of ``int``
             
 

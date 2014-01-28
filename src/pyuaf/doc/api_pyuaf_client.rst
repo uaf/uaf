@@ -14,6 +14,56 @@
 
 
 
+
+*class* MonitoredItemInformation
+----------------------------------------------------------------------------------------------------
+
+.. autoclass:: pyuaf.client.MonitoredItemInformation
+
+    A MonitoredItemInformation object contains information about a monitored item.
+
+
+    * Methods:
+
+        .. automethod:: pyuaf.client.MonitoredItemInformation.__init__
+    
+            Construct a new MonitoredItemInformation object. 
+        
+        
+        .. automethod:: pyuaf.client.MonitoredItemInformation.__str__
+        
+            Get a string representation.
+    
+    
+    * Attributes:
+  
+        .. autoattribute:: pyuaf.client.MonitoredItemInformation.monitoredItemState
+        
+            An ``int`` representing the state of the monitored item 
+            (e.g. :attr:`~pyuaf.client.monitoreditemstates.Created`).
+            
+            The possible states are defined in the :mod:`pyuaf.client.monitoreditemstates` module.
+        
+        .. autoattribute:: pyuaf.client.MonitoredItemInformation.clientConnectionId
+            
+            The id of the session that hosts the subscription (which in turn hosts the monitored 
+            item), as a ``long``. 
+        
+        .. autoattribute:: pyuaf.client.MonitoredItemInformation.clientSubscriptionHandle
+            
+            The handle of the subscription that hosts the monitored item, as a ``long``.
+        
+        .. autoattribute:: pyuaf.client.MonitoredItemInformation.clientHandle
+            
+            The handle of the monitored item, as a ``long``.
+  
+        .. autoattribute:: pyuaf.client.MonitoredItemInformation.settings
+        
+            The settings of this particular monitored item, as an instance of type 
+            :class:`~pyuaf.client.settings.MonitoredItemSettings`.
+
+
+
 *class* MonitoredItemNotification
 ----------------------------------------------------------------------------------------------------
 
@@ -42,33 +92,20 @@
     
     
     * Attributes:
-  
-  
-        .. autoattribute:: pyuaf.client.MonitoredItemNotification.notificationHandle
-            
-            Deprecated! A notification handle is essentially the same as a client monitored item 
-            handle, so soon these two handles will merge (notificationHandle will disappear, 
-            the client monitored item handle will stay).
-            
-            A NotificationHandle is a handle (an ``int``) defined by the UAF (not by the OPC UA standard!) to
-            associate monitored item notifications with the 
-            :class:`~pyuaf.client.requests.CreateMonitoredDataRequestTarget` (or
-            :class:`~pyuaf.client.requests.CreateMonitoredEventsRequestTarget`) that originally 
-            created them. It is a 32-bit number
-            that gets a unique value as soon as you create a monitored item. Even if the server of
-            this monitored item would crash, and the UAF determines that the monitored item should be
-            re-established on another server (e.g. because the browse path now points to a node in
-            another redundant server), then this value will not change. So if you create monitored
-            items once, you can be sure that the notification handle will always correctly identify
-            the same item, for the whole lifetime of the client.
         
         .. autoattribute:: pyuaf.client.MonitoredItemNotification.clientHandle
         
             A clientHandle is a 32-bit number assigned by the UAF to newly created
-            monitored items. The number will be incremented on each new item creation, so in
-            theory it will take 2**32 items that have to be created before the number starts
-            to count from 0 again. In practice, it will never happen.
-         
+            monitored items. Essentially, it allows you to identify the monitored item of which
+            you receive this notification.
+            
+            You can store the client handle when you created the monitored item, see for 
+            example the use case example at :meth:`pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle`.
+            
+            If you use "notification callbacks", you don't need to worry about client handles
+            (because the notifications will be automatically mapped to your callback functions
+            that implement behavior for a specific monitored item. 
+
 
 
 *class* DataChangeNotification
@@ -92,11 +129,6 @@
         
 
     * Attributes inherited from :class:`~pyuaf.client.MonitoredItemNotification`:
-    
-    
-        .. autoattribute:: pyuaf.client.DataChangeNotification.notificationHandle
-
-            --> See :attr:`pyuaf.client.MonitoredItemNotification.notificationHandle`.
         
     
         .. autoattribute:: pyuaf.client.DataChangeNotification.clientHandle
@@ -144,11 +176,6 @@
         
 
     * Attributes inherited from :class:`~pyuaf.client.MonitoredItemNotification`:
-    
-    
-        .. autoattribute:: pyuaf.client.EventNotification.notificationHandle
-
-            --> See :attr:`pyuaf.client.MonitoredItemNotification.notificationHandle`.
         
     
         .. autoattribute:: pyuaf.client.EventNotification.clientHandle
@@ -219,9 +246,9 @@
 
     * Other attributes:
 
-        .. autoattribute:: pyuaf.client.KeepAliveNotification.notificationHandles
+        .. autoattribute:: pyuaf.client.KeepAliveNotification.clientHandles
 
-            The notification handles assigned to the subscription that got a keep alive message,
+            The client handles assigned to the subscription that got a keep alive message,
             as a :class:`~pyuaf.util.UInt32Vector`.
             
             So if you receive a KeepAliveNotification, you know that the monitored items identified
@@ -295,7 +322,7 @@
         
         .. autoattribute:: pyuaf.client.SubscriptionInformation.clientSubscriptionHandle
             
-            The handle of the subscription, as a ``long``.    
+            The handle of the subscription, as a ``long``.
   
         .. autoattribute:: pyuaf.client.SubscriptionInformation.subscriptionState
         

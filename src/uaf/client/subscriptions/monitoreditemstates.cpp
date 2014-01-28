@@ -18,42 +18,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "uaf/client/settings/browsenextsettings.h"
-
-
-
+#include "uaf/client/subscriptions/monitoreditemstates.h"
 
 namespace uafc
 {
-    using namespace uaf;
     using namespace uafc;
-    using std::string;
-    using std::stringstream;
-    using std::vector;
 
-
-
-    // Constructor
-    // =============================================================================================
-    BrowseNextSettings::BrowseNextSettings()
-    : ServiceSettings(),
-      releaseContinuationPoints(false)
-    {}
-
-
-    // Get a string representation
-    // =============================================================================================
-    string BrowseNextSettings::toString(const string& indent, std::size_t colon) const
+    namespace monitoreditemstates
     {
-        std::stringstream ss;
-        ss << ServiceSettings::toString(indent, colon) << "\n";
 
-        ss << indent << " - releaseContinuationPoints";
-        ss << fillToPos(ss, colon);
-        ss << ": " << (releaseContinuationPoints ? "True" : "False");
+        // Get a string representation
+        // =============================================================================================
+        std::string toString(uafc::monitoreditemstates::MonitoredItemState state)
+        {
+            switch (state)
+            {
+                case uafc::monitoreditemstates::Created:
+                    return "Created";
+                case uafc::monitoreditemstates::NotCreated:
+                    return "NotCreated";
+                default:
+                    return "UNKNOWN";
+            }
+        }
 
-        return ss.str();
+
     }
-
-
 }

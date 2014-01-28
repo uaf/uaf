@@ -22,7 +22,7 @@
 %{
 #define SWIG_FILE_WITH_INIT
 #include "uaf/client/settings/clientsettings.h"
-#include "uaf/client/settings/baseservicesettings.h"
+#include "uaf/client/settings/servicesettings.h"
 #include "uaf/client/settings/browsesettings.h"
 #include "uaf/client/settings/browsenextsettings.h"
 #include "uaf/client/settings/createmonitoreddatasettings.h"
@@ -89,7 +89,7 @@
 
 // wrap the classes:
 UAF_WRAP_CLASS("uaf/client/settings/clientsettings.h"                        , uafc , ClientSettings                        , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/settings/baseservicesettings.h"                   , uafc , BaseServiceSettings                   , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/servicesettings.h"                       , uafc , ServiceSettings                       , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/settings/sessionsecuritysettings.h"               , uafc , SessionSecuritySettings               , COPY_YES, TOSTRING_YES, COMP_NO,   pyuaf.client.settings, SessionSecuritySettingsVector)
 UAF_WRAP_CLASS("uaf/client/settings/sessionsettings.h"                       , uafc , SessionSettings                       , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/settings/subscriptionsettings.h"                  , uafc , SubscriptionSettings                  , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)

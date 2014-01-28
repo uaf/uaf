@@ -34,6 +34,7 @@
 #include "uaf/util/serverarray.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/sessions/sessioninformation.h"
+#include "uaf/client/subscriptions/subscriptioninformation.h"
 #include "uaf/client/requests/requests.h"
 #include "uaf/client/results/results.h"
 #include "uaf/client/configs/configs.h"
@@ -181,6 +182,13 @@ namespace uafc
         void setSessionInformation(const uafc::SessionInformation& sessionInformation)
         {
             sessionInformation_ = sessionInformation;
+        }
+
+
+        /** Provide the information about the subscription. */
+        void setSubscriptionInformation(const uafc::SubscriptionInformation& subscriptionInformation)
+        {
+            subscriptionInformation_ = subscriptionInformation;
         }
 
 
@@ -426,6 +434,8 @@ namespace uafc
                     result.targets[rank] = resultTargets_[i];
                     result.targets[rank].clientConnectionId
                         = sessionInformation_.clientConnectionId;
+                    result.targets[rank].clientSubscriptionHandle
+                        = subscriptionInformation_.clientSubscriptionHandle;
                 }
                 else
                 {
@@ -737,6 +747,8 @@ namespace uafc
         uaf::RequestHandle          requestHandle_;
         // some details about the session
         uafc::SessionInformation    sessionInformation_;
+        // some details about the subscription
+        uafc::SubscriptionInformation subscriptionInformation_;
         // the level at which the service should be invoked
         uafc::InvocationLevel       invocationLevel_;
         // the settings of the subscription that will be used for the service invocation

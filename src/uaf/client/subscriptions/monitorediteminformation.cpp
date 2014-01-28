@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "uaf/client/subscriptions/subscriptioninformation.h"
+#include "uaf/client/subscriptions/monitorediteminformation.h"
 
 namespace uafc
 {
@@ -31,29 +31,38 @@ namespace uafc
 
     // Constructor
     // =============================================================================================
-    SubscriptionInformation::SubscriptionInformation()
-    : clientConnectionId(0),
+    MonitoredItemInformation::MonitoredItemInformation()
+    : monitoredItemState(uafc::monitoreditemstates::NotCreated),
+      clientConnectionId(0),
       clientSubscriptionHandle(0),
-      subscriptionState(uafc::subscriptionstates::Deleted)
+      clientHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED)
     {}
 
 
     // Constructor
     // =============================================================================================
-    SubscriptionInformation::SubscriptionInformation(
-            uaf::ClientConnectionId                     clientConnectionId,
-            uaf::ClientSubscriptionHandle               clientSubscriptionHandle,
-            uafc::subscriptionstates::SubscriptionState subscriptionState)
-    : clientConnectionId(clientConnectionId),
+    MonitoredItemInformation::MonitoredItemInformation(
+            uafc::monitoreditemstates::MonitoredItemState   monitoredItemState,
+            uaf::ClientConnectionId                         clientConnectionId,
+            uaf::ClientSubscriptionHandle                   clientSubscriptionHandle,
+            uaf::ClientHandle                               clientHandle,
+            const MonitoredItemSettings&                    settings)
+    : monitoredItemState(monitoredItemState),
+      clientConnectionId(clientConnectionId),
       clientSubscriptionHandle(clientSubscriptionHandle),
-      subscriptionState(subscriptionState)
+      clientHandle(clientHandle),
+      settings(settings)
     {}
 
     // Get a new client connection id
     // =============================================================================================
-    string SubscriptionInformation::toString(const string& indent, size_t colon) const
+    string MonitoredItemInformation::toString(const string& indent, size_t colon) const
     {
         stringstream ss;
+
+        ss << indent << " - monitoredItemState";
+        ss << fillToPos(ss, colon);
+        ss << ": " << uafc::monitoreditemstates::toString(monitoredItemState) << "\n";
 
         ss << indent << " - clientConnectionId";
         ss << fillToPos(ss, colon);
@@ -63,11 +72,15 @@ namespace uafc
         ss << fillToPos(ss, colon);
         ss << ": " << clientSubscriptionHandle << "\n";
 
-        ss << indent << " - subscriptionState";
-        ss << fillToPos(ss, colon);
-        ss << ": " << subscriptionState
-                << " (" << uafc::subscriptionstates::toString(subscriptionState) << ")";
+        ss << indent << " - clientHandle";
+        ss << fillToPos(ss, colon) << ": ";
+        if (clientHandle == uaf::CLIENTHANDLE_NOT_ASSIGNED)
+            ss << "0xFFFFFFFF (CLIENTHANDLE_NOT_ASSIGNED)\n";
+        else
+            ss << clientHandle << "\n";
 
+        ss << indent << " - settings\n";
+        ss << settings.toString(indent + "   ", colon);
 
         return ss.str();
     }
@@ -75,17 +88,22 @@ namespace uafc
 
     // operator==
     // =============================================================================================
-    bool operator==(const SubscriptionInformation& object1, const SubscriptionInformation& object2)
+    bool operator==(
+            const MonitoredItemInformation& object1,
+            const MonitoredItemInformation& object2)
     {
         return    object1.clientConnectionId == object2.clientConnectionId
                && object1.clientSubscriptionHandle == object2.clientSubscriptionHandle
-               && object1.subscriptionState == object2.subscriptionState;
+               && object1.clientHandle == object2.clientHandle
+               && object1.settings == object2.settings;
     }
 
 
     // operator!=
     // =============================================================================================
-    bool operator!=(const SubscriptionInformation& object1, const SubscriptionInformation& object2)
+    bool operator!=(
+            const MonitoredItemInformation& object1,
+            const MonitoredItemInformation& object2)
     {
         return !(object1 == object2);
     }
@@ -93,13 +111,17 @@ namespace uafc
 
     // operator<
     // =============================================================================================
-    bool operator<(const SubscriptionInformation& object1, const SubscriptionInformation& object2)
+    bool operator<(
+            const MonitoredItemInformation& object1,
+            const MonitoredItemInformation& object2)
     {
         if (object1.clientConnectionId != object2.clientConnectionId)
             return object1.clientConnectionId < object2.clientConnectionId;
         else if (object1.clientSubscriptionHandle != object2.clientSubscriptionHandle)
             return object1.clientSubscriptionHandle < object2.clientSubscriptionHandle;
+        else if (object1.clientHandle != object2.clientHandle)
+            return object1.clientHandle < object2.clientHandle;
         else
-            return object1.subscriptionState < object2.subscriptionState;
+            return object1.settings < object2.settings;
     }
 }

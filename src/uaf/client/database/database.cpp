@@ -33,20 +33,10 @@ namespace uafc
     : createMonitoredDataRequestStore   (loggerFactory, "MonDataReqStore"),
       createMonitoredEventsRequestStore (loggerFactory, "MonEvtsReqStore"),
       addressCache                      (loggerFactory),
-      nofiticationHandle_(0),
       clientConnectionId_(0),
       clientSubscriptionHandle_(0),
-      clientMonitoredItemHandle_(0)
+      clientHandle_(0)
     {}
-
-
-    // Create a unique NotificationHandle
-    // =============================================================================================
-    uafc::NotificationHandle Database::createUniqueNotificationHandle()
-    {
-        UaMutexLocker locker(&notificationHandleMutex_);
-        return nofiticationHandle_++;
-    }
 
 
     // Create a unique clientConnectionId
@@ -69,10 +59,12 @@ namespace uafc
 
     // Create a unique client monitored item handle
     // =============================================================================================
-    ClientMonitoredItemHandle Database::createUniqueClientMonitoredItemHandle()
+    ClientHandle Database::createUniqueClientHandle()
     {
-        UaMutexLocker locker(&clientMonitoredItemHandleMutex_);
-        return clientMonitoredItemHandle_++;
+        UaMutexLocker locker(&clientHandleMutex_);
+        ClientHandle newHandle = clientHandle_++;
+        allClientHandles.push_back(newHandle);
+        return newHandle;
     }
 
 }

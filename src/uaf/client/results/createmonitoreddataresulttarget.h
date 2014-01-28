@@ -56,8 +56,7 @@ namespace uafc
          * Create a default result target.
          */
         CreateMonitoredDataResultTarget()
-        : notificationHandle(uaf::NOTIFICATIONHANDLE_NOT_ASSIGNED),
-          clientHandle(0),
+        : clientHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
           monitoredItemId(0),
           revisedSamplingIntervalSec(0.0),
           revisedQueueSize(0)
@@ -67,11 +66,8 @@ namespace uafc
         /** Status of the result (Good if the monitored item was created, Bad if not). */
         uaf::Status status;
 
-        /** Notification handle that was assigned by the UAF (unique per client). */
-        uaf::NotificationHandle notificationHandle;
-
         /** Client handle that was assigned to the monitored item by the client. */
-        uaf::ClientMonitoredItemHandle clientHandle;
+        uaf::ClientHandle clientHandle;
 
         /** MonitoredItemId that was assigned to the monitored item by the server. */
         uaf::MonitoredItemId monitoredItemId;
