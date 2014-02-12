@@ -52,6 +52,12 @@ namespace uafc
 
 
         /**
+         * Virtual destructor.
+         */
+        virtual ~Resolvable() {}
+
+
+        /**
          * Get all resolvable items.
          *
          * @return  The addresses that can be resolved by the resolver.
