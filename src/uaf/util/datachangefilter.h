@@ -43,7 +43,7 @@ namespace uaf
     *
     * @ingroup Util
     ***********************************************************************************************/
-    class UAF_EXPORT DataChangeFilter : public uaf::Stringifiable
+    class UAF_EXPORT DataChangeFilter
     {
     public:
 

@@ -57,6 +57,7 @@ namespace uafc
          */
         ReadResultTarget();
 
+
         /**
          * Get a string representation of the target.
          */

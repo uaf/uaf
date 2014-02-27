@@ -78,6 +78,12 @@ namespace uafc
                 const uaf::ByteString&  continuationPoint);
 
 
+        /**
+         * Virtual destructor.
+         */
+        virtual ~HistoryReadRawModifiedRequestTarget() {}
+
+
         /** The address of the node from which the historical data should be read. */
         uaf::Address address;
 

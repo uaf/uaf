@@ -43,7 +43,7 @@ namespace uafc
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT SessionSettings : public uaf::Stringifiable
+    class UAFC_EXPORT SessionSettings
     {
     public:
 

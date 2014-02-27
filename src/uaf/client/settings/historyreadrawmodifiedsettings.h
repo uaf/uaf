@@ -61,6 +61,12 @@ namespace uafc
         HistoryReadRawModifiedSettings();
 
 
+        /**
+         * Virtual destructor.
+         */
+        virtual ~HistoryReadRawModifiedSettings() {}
+
+
         /** Begin of the time interval to read. */
         uaf::DateTime startTime;
 

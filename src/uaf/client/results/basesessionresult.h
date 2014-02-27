@@ -53,7 +53,7 @@ namespace uafc
     * @ingroup ClientResults
     ***********************************************************************************************/
     template<class _Target, bool _Async>
-    class UAFC_EXPORT BaseSessionResult : public uaf::Stringifiable
+    class UAFC_EXPORT BaseSessionResult
     {
     public:
 
@@ -100,7 +100,7 @@ namespace uafc
          *
          * @return  String representation.
          */
-        virtual std::string toString(const std::string& indent="", std::size_t colon=32) const;
+        std::string toString(const std::string& indent="", std::size_t colon=32) const;
 
 
         // comparison operators

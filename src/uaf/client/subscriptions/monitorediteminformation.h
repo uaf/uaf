@@ -42,7 +42,7 @@ namespace uafc
     *
     * @ingroup ClientSubscriptions
     ***********************************************************************************************/
-    class UAFC_EXPORT MonitoredItemInformation : public uaf::Stringifiable
+    class UAFC_EXPORT MonitoredItemInformation
     {
     public:
 

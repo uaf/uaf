@@ -55,7 +55,7 @@ namespace uaf
     *
     * @ingroup Util
     ***********************************************************************************************/
-    class UAF_EXPORT Address : public uaf::Stringifiable
+    class UAF_EXPORT Address
     {
     public:
 

@@ -47,7 +47,7 @@ namespace uafc
     *
     * @ingroup ClientSubscriptions
     ***********************************************************************************************/
-    class UAFC_EXPORT MonitoredItemNotification : public uaf::Stringifiable
+    class UAFC_EXPORT MonitoredItemNotification
     {
     public:
 
@@ -65,7 +65,7 @@ namespace uafc
         /**
          * Get a string representation of the notification.
          */
-        virtual std::string toString(const std::string& indent="", std::size_t colon=20) const;
+        std::string toString(const std::string& indent="", std::size_t colon=20) const;
     };
 
 

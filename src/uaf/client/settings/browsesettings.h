@@ -55,6 +55,12 @@ namespace uafc
         BrowseSettings();
 
 
+        /**
+         * Virtual destructor.
+         */
+        virtual ~BrowseSettings() {}
+
+
         /** The maximum number of references to return. Default is 0, which means that the client
          *  is not imposing a limitation. */
         uint32_t maxReferencesToReturn;

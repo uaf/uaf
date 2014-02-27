@@ -51,6 +51,7 @@ namespace uafc
     {
     public:
 
+
         /**
          * The resulting status of the method call.
          */
@@ -74,7 +75,7 @@ namespace uafc
          *
          * @return  String representation.
          */
-        virtual std::string toString(const std::string& indent="", std::size_t colon=22) const;
+        std::string toString(const std::string& indent="", std::size_t colon=22) const;
     };
 
 

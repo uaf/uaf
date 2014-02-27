@@ -45,7 +45,7 @@ namespace uafc
     *
     * @ingroup ClientConfigs
     ***********************************************************************************************/
-    class UAFC_EXPORT SubscriptionConfig : public uaf::Stringifiable
+    class UAFC_EXPORT SubscriptionConfig
     {
     public:
 

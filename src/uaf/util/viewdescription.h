@@ -44,7 +44,7 @@ namespace uaf
     *
     * @ingroup Util
     ***********************************************************************************************/
-    class UAF_EXPORT ViewDescription : public uaf::Stringifiable
+    class UAF_EXPORT ViewDescription
     {
     public:
 
