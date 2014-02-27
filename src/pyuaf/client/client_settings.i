@@ -90,7 +90,7 @@
 // wrap the classes:
 UAF_WRAP_CLASS("uaf/client/settings/clientsettings.h"                        , uafc , ClientSettings                        , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/settings/servicesettings.h"                       , uafc , ServiceSettings                       , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/settings/sessionsecuritysettings.h"               , uafc , SessionSecuritySettings               , COPY_YES, TOSTRING_YES, COMP_NO,   pyuaf.client.settings, SessionSecuritySettingsVector)
+UAF_WRAP_CLASS("uaf/client/settings/sessionsecuritysettings.h"               , uafc , SessionSecuritySettings               , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, SessionSecuritySettingsVector)
 UAF_WRAP_CLASS("uaf/client/settings/sessionsettings.h"                       , uafc , SessionSettings                       , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/settings/subscriptionsettings.h"                  , uafc , SubscriptionSettings                  , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/settings/monitoreditemsettings.h"                 , uafc , MonitoredItemSettings                 , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
