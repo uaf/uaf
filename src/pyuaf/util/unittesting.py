@@ -91,7 +91,7 @@ class TestResults:
     def getIntValue(self, name):
         try:
             self.__lock.acquire()
-            return __extraInts[name]
+            return self.__extraInts[name]
         finally:
             self.__lock.release()
     
@@ -117,6 +117,53 @@ class TestResults:
 
     def failed(self):
         return self.__failed
+
+
+
+
+def testVector(testCase, vectorClass, testItems=[]):
+    
+    # create and fill a vector using append
+    vec0 = vectorClass()
+    for item in testItems:
+        vec0.append(item)
+    
+    # create a vector using resize/assignments
+    vec1 = vectorClass()
+    vec1.resize( len(testItems) )
+    for i in xrange(len(testItems)):
+        vec1[i] = testItems[i]
+    
+    for vec in [vec0, vec1]:
+        
+        # test __len__
+        testCase.assertEqual( len(vec), len(testItems) )
+        
+        # test __getitem__
+        for i in xrange(len(testItems)):
+            testCase.assertEqual( vec[i], testItems[i] )
+        
+        # test iterator
+        i = 0
+        for item in vec:
+            testCase.assertEqual( item, testItems[i] )
+            i += 1
+        
+        # test slicing
+        vecShortened = vec[1:]
+        testCase.assertEqual( len(vecShortened), len(vec) - 1 )
+        testCase.assertEqual( vec[1], vecShortened[0] )
+        
+        # test more slicing
+        vecShortened = vec[:-1]
+        testCase.assertEqual( len(vecShortened), len(vec) - 1 )
+        testCase.assertEqual( vec[-2], vecShortened[-1] )
+        
+        # test insert
+        vec.insert(vec.begin() + 1, testItems[-1])
+        testCase.assertEqual( vec[1], testItems[-1] )
+        
+
 
 
 def parseArgs():

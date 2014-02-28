@@ -17,6 +17,35 @@ Bugfixes (which do not have any implications on the API) can only be tracked
 via the GIT version control system.
 
 
+1.8 @ 2014/
+----------------------------------------------------------------------------------------------------
+
+- Bugfix: iterators of vectors are now properly wrapped. So you can do "for item in vec: ..." 
+  for all vectors. This functionality is now also tested by the unittests.
+
+- Completely removed the abstract class uaf::Stringifiable (pyuaf.util.Stringifiable).
+  This most likely won't affect your code (do a search for "Stringifiable" if in doubt).
+
+  - Rationale:
+    The reason for removing it is that SWIG had difficulties with vectors of classes that derive 
+    from uaf::Stringifiable. More specifically: SWIG didn't wrap the iterators correctly of 
+    std::vectors of classes of the uafc:: namespace that implement uaf::Stringifiable.  
+    For example, you couldn't do::
+  
+      vec = pyuaf.client.settings.SessionSecuritySettingsVector()
+      vec.resize(2)
+      for item in vec:
+          print(item)
+    
+      because 'item' doesn't point to a properly wrapped SessionSecuritySettings instance. 
+      Instead, 'item' is an opaque SWIG value, i.e. a SWIG artificact that you cannot use directly.
+      Now that SessionSecuritySettings doesn't implement Stringifiable anymore, this bug is avoided.
+      Of course it comes at the cost of losing uaf::Stringifiable, but this class wasn't very useful 
+      so the advantage of fixing the bug was considered more important.
+
+- Added comparison operators (==, != and <) for uaf::ApplicationDescription, uaf::UserTokenPolicy,
+  uaf::EndpointDescription and uafc::SessionSecuritySettings.
+
 
 
 1.8 @ 2014/03/10

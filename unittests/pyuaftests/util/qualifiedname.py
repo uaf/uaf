@@ -1,6 +1,6 @@
 import pyuaf
 import unittest
-from pyuaf.util.unittesting import parseArgs
+from pyuaf.util.unittesting import parseArgs, testVector
 
 
 ARGS = parseArgs()
@@ -85,6 +85,9 @@ class QualifiedNameTest(unittest.TestCase):
         self.assertTrue( self.q1 > self.q2 )
         self.assertTrue( self.q3 > self.q2 )
         self.assertTrue( self.q3 > self.q0 )
+    
+    def test_util_QualifiedNameVector(self):
+        testVector(self, pyuaf.util.QualifiedNameVector, [self.q0, self.q1, self.q2, self.q3])
 
 
 if __name__ == '__main__':

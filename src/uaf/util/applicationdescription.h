@@ -116,6 +116,18 @@ namespace uaf
         std::string toString(const std::string& indent="", std::size_t colon=11) const;
 
 
+        // comparison operators
+        friend UAF_EXPORT bool operator==(
+                const ApplicationDescription& object1,
+                const ApplicationDescription& object2);
+        friend UAF_EXPORT bool operator!=(
+                const ApplicationDescription& object1,
+                const ApplicationDescription& object2);
+        friend UAF_EXPORT bool operator<(
+                const ApplicationDescription& object1,
+                const ApplicationDescription& object2);
+
+
     };
 
 

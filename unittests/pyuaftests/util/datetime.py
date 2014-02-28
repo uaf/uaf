@@ -1,7 +1,7 @@
 import pyuaf
 from pyuaf.util import DateTime
 import unittest
-from pyuaf.util.unittesting import parseArgs
+from pyuaf.util.unittesting import parseArgs, testVector
 import time
 
 
@@ -81,6 +81,9 @@ class DateTimeTest(unittest.TestCase):
     
     def test_util_DateTime___gt__(self):
         self.assertTrue( self.dt3 > self.dt2 )
+    
+    def test_util_DateTimeVector(self):
+        testVector(self, pyuaf.util.DateTimeVector, [self.dt0, self.dt1, self.dt2, self.dt3])
 
 
 if __name__ == '__main__':

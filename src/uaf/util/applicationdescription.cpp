@@ -140,4 +140,47 @@ namespace uaf
         return ss.str();
     }
 
+
+    // operator==
+    // =============================================================================================
+    bool operator==(const ApplicationDescription& object1, const ApplicationDescription& object2)
+    {
+        return    object1.applicationType == object2.applicationType
+               && object1.applicationName == object2.applicationName
+               && object1.applicationUri == object2.applicationUri
+               && object1.productUri == object2.productUri
+               && object1.discoveryUrls == object2.discoveryUrls
+               && object1.discoveryProfileUri == object2.discoveryProfileUri
+               && object1.gatewayServerUri == object2.gatewayServerUri;
+    }
+
+
+    // operator!=
+    // =============================================================================================
+    bool operator!=(const ApplicationDescription& object1, const ApplicationDescription& object2)
+    {
+        return !(object1 == object2);
+    }
+
+
+    // operator<
+    // =============================================================================================
+    bool operator<(const ApplicationDescription& object1, const ApplicationDescription& object2)
+    {
+        if (object1.applicationType != object2.applicationType)
+            return object1.applicationType < object2.applicationType;
+        else if (object1.applicationName != object2.applicationName)
+            return object1.applicationName < object2.applicationName;
+        else if (object1.applicationUri != object2.applicationUri)
+            return object1.applicationUri < object2.applicationUri;
+        else if (object1.productUri != object2.productUri)
+            return object1.productUri < object2.productUri;
+        else if (object1.discoveryUrls != object2.discoveryUrls)
+            return object1.discoveryUrls < object2.discoveryUrls;
+        else if (object1.discoveryProfileUri != object2.discoveryProfileUri)
+            return object1.discoveryProfileUri < object2.discoveryProfileUri;
+        else
+            return object1.gatewayServerUri < object2.gatewayServerUri;
+    }
+
 }

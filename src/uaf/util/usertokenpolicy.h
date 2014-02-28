@@ -93,6 +93,18 @@ namespace uaf
         std::string toString(const std::string& indentation="", std::size_t colon=21) const;
 
 
+        // comparison operators
+        friend bool UAF_EXPORT operator<(
+                const UserTokenPolicy& object1,
+                const UserTokenPolicy& object2);
+        friend bool UAF_EXPORT operator==(
+                const UserTokenPolicy& object1,
+                const UserTokenPolicy& object2);
+        friend bool UAF_EXPORT operator!=(
+                const UserTokenPolicy& object1,
+                const UserTokenPolicy& object2);
+
+
     };
 }
 #endif /* UAF_USERTOKENPOLICY_H_ */

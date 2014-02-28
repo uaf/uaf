@@ -152,6 +152,52 @@ namespace uaf
     }
 
 
+    // operator==
+    // =============================================================================================
+    bool operator==( const EndpointDescription& object1, const EndpointDescription& object2)
+    {
+        return    (object1.endpointUrl == object2.endpointUrl)
+               && (object1.server == object2.server)
+               && (object1.serverCertificate == object2.serverCertificate)
+               && (object1.securityMode == object2.securityMode)
+               && (object1.securityPolicyUri == object2.securityPolicyUri)
+               && (object1.userIdentityTokens == object2.userIdentityTokens)
+               && (object1.transportProfileUri == object2.transportProfileUri)
+               && (object1.securityLevel == object2.securityLevel);
+    }
+
+
+    // operator!=
+    // =============================================================================================
+    bool operator!=(const EndpointDescription& object1, const EndpointDescription& object2)
+    {
+        return !(object1 == object2);
+    }
+
+
+    // operator<
+    // =============================================================================================
+    bool operator<(const EndpointDescription& object1, const EndpointDescription& object2)
+    {
+        if (object1.endpointUrl != object2.endpointUrl)
+            return object1.endpointUrl < object2.endpointUrl;
+        else if (object1.server != object2.server)
+            return object1.server < object2.server;
+        else if (object1.serverCertificate != object2.serverCertificate)
+            return object1.serverCertificate < object2.serverCertificate;
+        else if (object1.securityMode != object2.securityMode)
+            return object1.securityMode < object2.securityMode;
+        else if (object1.securityPolicyUri != object2.securityPolicyUri)
+            return object1.securityPolicyUri < object2.securityPolicyUri;
+        else if (object1.userIdentityTokens != object2.userIdentityTokens)
+            return object1.userIdentityTokens < object2.userIdentityTokens;
+        else if (object1.transportProfileUri != object2.transportProfileUri)
+            return object1.transportProfileUri < object2.transportProfileUri;
+        else
+            return object1.securityLevel < object2.securityLevel;
+    }
+
+
 
 
 

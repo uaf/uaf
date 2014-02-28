@@ -113,7 +113,7 @@
 
 // now include all classes in a generic way
 UAF_WRAP_CLASS("uaf/util/localizedtext.h"          , uaf , LocalizedText           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/util/applicationdescription.h" , uaf , ApplicationDescription  , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, ApplicationDescriptionVector)
+UAF_WRAP_CLASS("uaf/util/applicationdescription.h" , uaf , ApplicationDescription  , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ApplicationDescriptionVector)
 UAF_WRAP_CLASS("uaf/util/guid.h"                   , uaf , Guid                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/datetime.h"               , uaf , DateTime                , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, DateTimeVector)
 UAF_WRAP_CLASS("uaf/util/mask.h"                   , uaf , Mask                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
@@ -133,8 +133,8 @@ UAF_WRAP_CLASS("uaf/util/simpleattributeoperand.h" , uaf , SimpleAttributeOperan
 UAF_WRAP_CLASS("uaf/util/datachangefilter.h"       , uaf , DataChangeFilter        , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/eventfilter.h"            , uaf , EventFilter             , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/address.h"                , uaf , Address                 , COPY_NO,  TOSTRING_YES, COMP_YES, pyuaf.util, AddressVector)
-UAF_WRAP_CLASS("uaf/util/usertokenpolicy.h"        , uaf , UserTokenPolicy         , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, UserTokenPolicyVector)
-UAF_WRAP_CLASS("uaf/util/endpointdescription.h"    , uaf , EndpointDescription     , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, EndpointDescriptionVector)
+UAF_WRAP_CLASS("uaf/util/usertokenpolicy.h"        , uaf , UserTokenPolicy         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, UserTokenPolicyVector)
+UAF_WRAP_CLASS("uaf/util/endpointdescription.h"    , uaf , EndpointDescription     , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, EndpointDescriptionVector)
 UAF_WRAP_CLASS("uaf/util/viewdescription.h"        , uaf , ViewDescription         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/referencedescription.h"   , uaf , ReferenceDescription    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ReferenceDescriptionVector)
 UAF_WRAP_CLASS("uaf/util/statusdiagnostics.h"      , uaf , StatusDiagnostics       , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)

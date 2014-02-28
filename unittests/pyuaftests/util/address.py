@@ -1,6 +1,6 @@
 import pyuaf
 import unittest
-from pyuaf.util.unittesting import parseArgs
+from pyuaf.util.unittesting import parseArgs, testVector
 
 
 ARGS = parseArgs()
@@ -75,6 +75,9 @@ class AddressTest(unittest.TestCase):
         self.assertTrue( self.a1 > self.a2 )
         self.assertTrue( self.a2 > self.a3 )
         self.assertTrue( self.a0 > self.a3 )
+    
+    def test_util_AddressVector(self):
+        testVector(self, pyuaf.util.AddressVector, [self.a0, self.a1, self.a2, self.a3])
 
 
 if __name__ == '__main__':
