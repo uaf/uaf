@@ -29,7 +29,7 @@ via the GIT version control system.
   - Rationale:
     The reason for removing it is that SWIG had difficulties with vectors of classes that derive 
     from uaf::Stringifiable. More specifically: SWIG didn't wrap the iterators correctly of 
-    std::vectors of classes of the uafc:: namespace that implement uaf::Stringifiable.  
+    std::vectors of classes in the uafc:: namespace that implement uaf::Stringifiable.  
     For example, you couldn't do::
   
       vec = pyuaf.client.settings.SessionSecuritySettingsVector()
@@ -37,11 +37,11 @@ via the GIT version control system.
       for item in vec:
           print(item)
     
-      because 'item' doesn't point to a properly wrapped SessionSecuritySettings instance. 
-      Instead, 'item' is an opaque SWIG value, i.e. a SWIG artificact that you cannot use directly.
-      Now that SessionSecuritySettings doesn't implement Stringifiable anymore, this bug is avoided.
-      Of course it comes at the cost of losing uaf::Stringifiable, but this class wasn't very useful 
-      so the advantage of fixing the bug was considered more important.
+    because 'item' didn't point to a properly wrapped SessionSecuritySettings instance. 
+    Instead, 'item' was an opaque SWIG value, i.e. a SWIG artificact that you couldn't use directly.
+    Now that SessionSecuritySettings doesn't implement Stringifiable anymore, this bug is avoided.
+    Of course it comes at the cost of losing uaf::Stringifiable, but this class wasn't very useful 
+    so the advantage of fixing the bug was considered more important.
 
 - Added comparison operators (==, != and <) for uaf::ApplicationDescription, uaf::UserTokenPolicy,
   uaf::EndpointDescription and uafc::SessionSecuritySettings.
