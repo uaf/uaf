@@ -37,6 +37,10 @@ Why?
  
     - in Python:   [easiest_client_example.py](http://github.com/uaf/uaf/blob/master/examples/pyuaf/client/easiest_client_example.py)
     - in C++:      [easiest_client_example.cpp](http://github.com/uaf/uaf/blob/master/examples/uaf/src/client/easiest_client_example.cpp)
+    
+ - A lengthier tutorial can be found here:
+ 
+    - in Python:   [easiest_client_tutorial.py](http://github.com/uaf/uaf/blob/master/examples/pyuaf/client/easiest_client_tutorial.py)
 
  - The following example (a single example, split up into several pieces) shows you some advantages 
    of the UAF, in Python. In C++, the equivalent code would be a bit more verbose, but the C++ API 
