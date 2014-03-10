@@ -30,7 +30,7 @@ Informally:
   The user therefore doesn't have to worry about connecting, disconnecting, session management, etc.
   However, in certain cases you may want to connect manually to a specific endpoint, without using
   the discovery process (i.e. without relying on the discovery endpoint of the server). 
-  In these cases, you can now use the Client::manuallyConnectToEndpoint(). 
+  In these cases, you can now use Client::manuallyConnectToEndpoint(). 
 
 Formally:
 
