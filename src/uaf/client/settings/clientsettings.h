@@ -160,6 +160,20 @@ namespace uafc
         std::string clientPrivateKeyAbsoluteFileName;
 
 
+        /** The certificate of the server, as a full path (i.e. absolute filename).
+         *
+         *  Note that this file will **only** be used in case you manually connect to a specific
+         *  endpoint (thereby avoiding discovery!!!).
+         *  In normal circumstances, the server certificate will be fetched through the discovery
+         *  process!!!
+         *
+         *  [ApplicationPath] may be used as placeholder, and the directories must be separated by
+         *  forward slashes (/), also on Windows.
+         *
+         *  Example: "[ApplicationPath]/PKI/CA/certs/my_server_certificate.der". */
+        std::string serverCertificateAbsoluteFileName;
+
+
         /**
          * Get a nice string representation of the settings.
          *
