@@ -18,6 +18,29 @@ via the GIT version control system.
 
 
 
+
+1.8 @ 2014/03/10
+----------------------------------------------------------------------------------------------------
+
+Informally:
+
+- The client can now manually connect to an endpoint, without using the discovery services.
+
+  A UAF client normally uses the discovery process to identify a server and connect to it.
+  The user therefore doesn't have to worry about connecting, disconnecting, session management, etc.
+  However, in certain cases you may want to connect manually to a specific endpoint, without using
+  the discovery process (i.e. without relying on the discovery endpoint of the server). 
+  In these cases, you can now use the Client::manuallyConnectToEndpoint(). 
+
+Formally:
+
+- The following methods were added to existing classes:
+
+  - uafc::Client::manuallyConnectToEndpoint() 
+    (pyuaf.client.Client.manuallyConnectToEndpoint())
+
+
+
 1.7 @ 2014/01/28
 ----------------------------------------------------------------------------------------------------
 
