@@ -106,6 +106,24 @@ namespace uafc
 
 
         /**
+         * Manually connect to a specific endpoint *without* any discovery involved.
+         *
+         * See uafc::Client::manuallyConnectToEndpoint for more info.
+         *
+         * @param endpointUrl   The endpoint URL to which you want to connect
+         *                      (e.g. opc.tcp://localhost:48010)
+         * @param settings      The session settings that you want your session to have.
+         * @param clientConnectionId A return parameter, giving you the id of the session if it
+         *                           was created.
+         * @return              Good if the session was created, Bad if not.
+         */
+        uaf::Status manuallyConnectToEndpoint(
+                const std::string&              endpointUrl,
+                const uafc::SessionSettings&    settings,
+                uaf::ClientConnectionId&        clientConnectionId);
+
+
+        /**
          * Disconnect a session that was created manually.
          *
          * Only use this for sessions that were created via the manuallyConnect method!

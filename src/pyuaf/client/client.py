@@ -441,7 +441,7 @@ class Client(ClientBase):
         return l
     
     
-    def manuallyConnect(self, serverUri, sessionSettings):
+    def manuallyConnect(self, serverUri, sessionSettings=None):
        """
        Create a session manually (instead of having the UAF do it behind the scenes).
        
@@ -467,7 +467,7 @@ class Client(ClientBase):
        
        :param serverUri: The server URI to manually connect to.
        :type  serverUri: ``str``
-       :param sessionSettings: The settings for the session.
+       :param sessionSettings: The settings for the session (leave None for a default instance).
        :type  sessionSettings: :class:`~pyuaf.client.settings.SessionSettings`
        :return: The client connection id: a number identifying the session.
        :rtype: ``int``
@@ -478,9 +478,70 @@ class Client(ClientBase):
        :raise pyuaf.util.errors.UafError:
             Base exception, catch this to handle any other errors.
        """
+       if sessionSettings is None:
+           sessionSettings = pyuaf.client.settings.SessionSettings()
+            
        status, clientConnectionId = ClientBase.manuallyConnect(self, serverUri, sessionSettings)
        pyuaf.util.errors.evaluate(status)
        return clientConnectionId
+    
+    
+    def manuallyConnectToEndpoint(self, endpointUrl, sessionSettings=None):
+        """
+        Manually connect to a specific endpoint, without using the discovery services.
+        
+        A UAF client normally uses the discovery process to identify a server and connect to it.
+        The user therefore doesn't have to worry about connecting, disconnecting, session management, etc.
+        
+        However, in certain cases you may want to connect manually to a specific endpoint, without using
+        the discovery process (i.e. without relying on the discovery endpoint of the server).
+        In these cases you can use this method.
+        
+        You should probably only use this method if you have a good reason not to rely on
+        the discovery services provided by the server. A server should be identified by
+        a serverURI, not by an endpointURL! 
+        
+        The :attr:`~pyuaf.client.settings.SessionSettings.securitySettingsList` attribute of the 
+        sessionSettings argument (in other words: sessionSettings.securitySettingsList) defines 
+        how you want to connect to the server. It is a list of 
+        :class:`~pyuaf.client.settings.SessionSecuritySettings` instances. 
+        The first item of the list will be attempted first, if that fails then the second item 
+        will be attempted, and so on. By default, this list has one item:
+        a default :class:`~pyuaf.client.settings.SessionSecuritySettings` instance.
+        
+        This default instance has 
+         - no security policy (:attr:`pyuaf.util.securitypolicies.UA_None`)
+         - no security mode (:attr:`pyuaf.util.messagesecuritymodes.Mode_None`)
+         - no authentication (:attr:`pyuaf.util.usertokentypes.Anonymous`)
+        
+        .. warning::
+        
+           If this method fails (in other words, when an Error is raised), then no
+           Session has been created! This is different behavior from 
+           :meth:`~pyuaf.client.Client.manuallyConnect`, which will have created a Session that
+           automatically retries to connect.
+        
+        .. seealso:: Check out example :ref:`manual-connection-to-endpoint` for more information.
+        
+       
+        :param endpointUrl: The endpoint URL to manually connect to.
+        :type  serverUri: ``str``
+        :param sessionSettings: The settings for the session (leave None for a default instance).
+        :type  sessionSettings: :class:`~pyuaf.client.settings.SessionSettings`
+        :return: The client connection id: a number identifying the session.
+        :rtype: ``int``
+       
+        :raise pyuaf.util.errors.ConnectionError:
+             Raised in case the connection fails.
+        :raise pyuaf.util.errors.UafError:
+             Base exception, catch this to handle any other errors.
+        """
+        if sessionSettings is None:
+            sessionSettings = pyuaf.client.settings.SessionSettings()
+        
+        status, clientConnectionId = ClientBase.manuallyConnectToEndpoint(self, endpointUrl, sessionSettings)
+        pyuaf.util.errors.evaluate(status)
+        return clientConnectionId
     
     
     def manuallyDisconnect(self, clientConnectionId):

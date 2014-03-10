@@ -706,6 +706,37 @@ namespace uafc
 
 
         /**
+         * Manually connect to a specific endpoint *without* any discovery involved.
+         *
+         * You should probably only use this method if you have a good reason not to rely on
+         * the discovery services provided by the server. A server should be identified with
+         * a serverURI, not with an endpointURL!
+         *
+         * The settings.securitySettingsList defines how you want to connect to the server.
+         * settings.securitySettingsList[0] will be attempted first,
+         * if that fails then settings.securitySettingsList[1] will be attempted, and so on.
+         *
+         * By default, a SessionSettings instance has one item in its securitySettingsList:
+         * no authentication (anonymous) and no security (None).
+         *
+         * If this method fails (in other words, when the returned Status is bad), then no
+         * Session will be created! This is different behavior from manuallyConnect, which will
+         * retry to connect until there's no failure anymore.
+         *
+         * @param endpointUrl   The endpoint URL to which you want to connect
+         *                      (e.g. opc.tcp://localhost:48010)
+         * @param settings      The session settings that you want your session to have.
+         * @param clientConnectionId A return parameter, giving you the id of the session if it
+         *                           was created.
+         * @return              Good if the session was created, Bad if not.
+         */
+        uaf::Status manuallyConnectToEndpoint(
+                const std::string&              endpointUrl,
+                const uafc::SessionSettings&    settings,
+                uaf::ClientConnectionId&        clientConnectionId);
+
+
+        /**
          * Disconnect a session that was created manually.
          *
          * A session which has been disconnected manually is "garbage collected" on the client side.

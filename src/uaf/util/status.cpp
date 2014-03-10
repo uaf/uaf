@@ -74,7 +74,7 @@ namespace uaf
 
         if (additionalDiagnostics_.hasDescription())
             additionalDiagnostics_.setDescription(
-                    std::string(buffer) + "(" + additionalDiagnostics_.getDescription() + ")");
+                    std::string(buffer) + " (" + additionalDiagnostics_.getDescription() + ")");
         else
             additionalDiagnostics_.setDescription(std::string(buffer));
     }

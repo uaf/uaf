@@ -538,8 +538,6 @@ namespace uafc
     }
 
 
-
-
     // Manual connection
     //==============================================================================================
     Status Client::manuallyConnect(
@@ -548,6 +546,17 @@ namespace uafc
             ClientConnectionId&     clientConnectionId)
     {
         return sessionFactory_->manuallyConnect(serverUri, settings, clientConnectionId);
+    }
+
+
+    // Manual connection to a specific endpoint
+    //==============================================================================================
+    Status Client::manuallyConnectToEndpoint(
+            const string&           endpointUrl,
+            const SessionSettings&  settings,
+            ClientConnectionId&     clientConnectionId)
+    {
+        return sessionFactory_->manuallyConnectToEndpoint(endpointUrl, settings, clientConnectionId);
     }
 
 
