@@ -55,3 +55,13 @@ How to change the default subscription_behavior?
 ====================================================================================================
 
 .. literalinclude:: ../../../examples/pyuaf/client/how_to_change_the_default_subscription_behavior.py
+
+
+.. _manual-connection-to-endpoint: 
+
+How to manually connect to an endpoint without discovery?
+====================================================================================================
+
+.. literalinclude:: ../../../examples/pyuaf/client/how_to_manually_connect_to_an_endpoint_without_discovery.py
+
+
