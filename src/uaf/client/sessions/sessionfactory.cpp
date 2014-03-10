@@ -137,6 +137,63 @@ namespace uafc
     }
 
 
+    // Manually connect a session to a specific endpoint url
+    // =============================================================================================
+    Status SessionFactory::manuallyConnectToEndpoint(
+            const string&           endpointUrl,
+            const SessionSettings&  settings,
+            ClientConnectionId&     clientConnectionId)
+    {
+        Status ret;
+
+        logger_->debug("Manually connecting to endpoint %s", endpointUrl.c_str());
+
+        // lock the mutex to make sure the sessionMap_ is not being manipulated
+        UaMutexLocker locker(&sessionMapMutex_);
+
+        clientConnectionId = database_->createUniqueClientConnectionId();
+        logger_->debug("ClientConnectionId %d was assigned to the session", clientConnectionId);
+
+        // create a new session instance
+        Session* session = new Session(
+                logger_->loggerFactory(),
+                settings,
+                string(), // empty string as we don't know the serverUri at this point yet!
+                clientConnectionId,
+                this,
+                clientInterface_,
+                discoverer_,
+                database_);
+
+        // store the new session instance in the sessionMap
+        sessionMap_[clientConnectionId] = session;
+
+        // connect to the session to the specific endpoint
+        ret = session->connectToSpecificEndpoint(endpointUrl);
+
+        // add some diagnostics
+        if (ret.isGood())
+        {
+            // create an activity count for the session
+            activityMapMutex_.lock();
+            activityMap_[clientConnectionId] = 1;
+            logger_->debug("The requested session is created (#activities: %d)",
+                           activityMap_[clientConnectionId]);
+            activityMapMutex_.unlock();
+        }
+        else
+        {
+            delete session;
+            session = 0;
+            sessionMap_.erase(clientConnectionId);
+            logger_->error("The requested session could not be created");
+            ret.addDiagnostic("The requested session could not be created");
+        }
+
+        return ret;
+    }
+
+
     // Manually disconnect a session
     // =============================================================================================
     Status SessionFactory::manuallyDisconnect(ClientConnectionId clientConnectionId)

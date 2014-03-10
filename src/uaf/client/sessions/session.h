@@ -101,10 +101,17 @@ namespace uafc
          */
         ///@{
 
+
         /**
          * Connect the session.
          */
         uaf::Status connect();
+
+
+        /**
+         * Connect the session to a specific endpoint.
+         */
+        uaf::Status connectToSpecificEndpoint(const std::string& endpointUrl);
 
 
         /**
@@ -332,7 +339,50 @@ namespace uafc
         /**
          * Update the connection info.
          */
-        void updateConnectionInfo(uaf::ClientConnectionId clientConnectionId);
+        void updateConnectionInfo(
+                UaClientSdk::SessionConnectInfo& info,
+                uaf::ClientConnectionId clientConnectionId,
+                bool retryInitialConnect);
+
+
+        /**
+         * Initialize the PKI store
+         */
+        uaf::Status initializePkiStore(UaClientSdk::SessionSecurityInfo& uaSecurity);
+
+
+        /**
+         * Load the client certificate from the file specified in the ClientSettings.
+         */
+        uaf::Status loadClientCertificateFromFile(UaClientSdk::SessionSecurityInfo& uaSecurity);
+
+
+        /**
+         * Load the server certificate from the file specified in the ClientSettings.
+         *
+         * Note that this file will **only** be used in case you manually connect to a specific
+         * endpoint (thereby avoiding discovery!!!).
+         * In normal circumstances, the server certificate will be fetched through the discovery
+         * process!!!
+         */
+        uaf::Status loadServerCertificateFromFile(UaClientSdk::SessionSecurityInfo& uaSecurity);
+
+
+        /**
+         * Load the server certificate from an endpoint description (which was fetched by the
+         * discovery process).
+         */
+        uaf::Status loadServerCertificateFromEndpoint(
+                UaClientSdk::SessionSecurityInfo& uaSecurity,
+                const uaf::EndpointDescription& endpoint);
+
+
+        /**
+         * Set the user security info based on the given security settings.
+         */
+        uaf::Status setUserIdentity(
+                UaClientSdk::SessionSecurityInfo& uaSecurity,
+                const uafc::SessionSecuritySettings& securitySettings);
 
 
         // Wrapped SDK session instance and callback instance
@@ -359,6 +409,7 @@ namespace uafc
         uafc::SubscriptionFactory*          subscriptionFactory_;
         // the SessionConnectInfo
         UaClientSdk::SessionConnectInfo     uaSessionConnectInfo_;
+        UaClientSdk::SessionConnectInfo     uaSessionConnectInfoNoInitialRetry_;
         // mutex for critical sections
         UaMutex                             sessionMutex_;
         // the RequesterInterface to call when asynchronous messages are received
