@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Client examples &mdash; PyUAF 1.7 documentation</title>
+    <title>Client examples &mdash; PyUAF 1.8 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.7',
+        VERSION:     '1.8',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.7 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.8 documentation" href="index.html" />
     <link rel="next" title="pyuaf" href="api_pyuaf.html" />
     <link rel="prev" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)" href="index.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="index.html" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.7 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.8 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -1106,6 +1106,112 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="how-to-manually-connect-to-an-endpoint-without-discovery">
+<span id="manual-connection-to-endpoint"></span><h2>How to manually connect to an endpoint without discovery?<a class="headerlink" href="#how-to-manually-connect-to-an-endpoint-without-discovery" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># examples/pyuaf/client/how_to_manually_connect_to_an_endpoint_without_discovery.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">EXAMPLE: how to browse some nodes</span>
+<span class="sd">====================================================================================================</span>
+
+<span class="sd">A UAF client normally uses the discovery process to identify a server and connect to it.</span>
+<span class="sd">The user therefore doesn&#39;t have to worry about connecting, disconnecting, session management, etc.</span>
+
+<span class="sd">However, in certain cases you may want to connect manually to a specific endpoint, without using</span>
+<span class="sd">the discovery process (i.e. without relying on the discovery endpoint of the server). </span>
+
+<span class="sd">This example will show you how to manually connect to the UaServerCPP demo server of Untified </span>
+<span class="sd">Automation, without any discovery involved. </span>
+
+<span class="sd">To run the example, start the UaServerCPP of UnifiedAutomation first on the same machine. </span>
+<span class="sd">($SDK/bin/uaservercpp, this executable is part of the SDK).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client</span>           <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util.errors</span>      <span class="kn">import</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">ConnectionError</span>
+
+
+<span class="c"># define the ClientSettings (note that we do NOT provide a discoveryUrl!!!):</span>
+<span class="n">settings</span> <span class="o">=</span> <span class="n">ClientSettings</span><span class="p">()</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">applicationName</span> <span class="o">=</span> <span class="s">&quot;MyClient&quot;</span>
+<span class="c"># settings.logToStdOutLevel = pyuaf.util.loglevels.Debug # uncomment to see the full UAF logging</span>
+
+<span class="c"># create the client</span>
+<span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+
+<span class="c"># Now manually connect to an endpoint of the demo server using &#39;manuallyConnectToEndpoint()&#39;.</span>
+<span class="c">#  - The first argument (endpointUrl) is the URL of the endpoint you want to connect to </span>
+<span class="c">#  - The optional (!) second argument (sessionSettings) a SessionSettings instance.</span>
+<span class="c">#    If you don&#39;t provide one, then a default SessionSettings instance will be used.</span>
+<span class="c">#    A default SessionSettings instance has:</span>
+<span class="c">#     - no security policy (pyuaf.util.securitypolicies.UA_None)</span>
+<span class="c">#     - no security mode (pyuaf.util.messagesecuritymodes.Mode_None)</span>
+<span class="c">#     - no authentication (pyuaf.util.usertokentypes.Anonymous)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Now connecting&quot;</span><span class="p">)</span>
+    <span class="n">clientConnectionId</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">manuallyConnectToEndpoint</span><span class="p">(</span><span class="s">&quot;opc.tcp://localhost:48010&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">ConnectionError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="c"># if an error was raised, then no Session has been created! </span>
+    <span class="c"># In other words, the client is back in it&#39;s original state, there is no </span>
+    <span class="c"># session that tries to reconnect in the background.</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;ConnectionError -&gt; sys.exit()&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+<span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;UafError -&gt; sys.exit()&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+
+<span class="c"># The clientConnectionId is a number that identifies the session.</span>
+<span class="c"># You can use it to request some information about the Session that you just created:</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Now getting the session information&quot;</span><span class="p">)</span>
+    
+    <span class="n">info</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">sessionInformation</span><span class="p">(</span><span class="n">clientConnectionId</span><span class="p">)</span>
+    
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;SessionInformation:&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+    
+<span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t read the session information: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Exiting...&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+
+<span class="c"># now use the server URI to read some variables</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Now reading some variables&quot;</span><span class="p">)</span>
+    
+    <span class="c"># define the namespace URI of the UaDemoServer:</span>
+    <span class="n">demoNsUri</span> <span class="o">=</span> <span class="s">&quot;http://www.unifiedautomation.com/DemoServer&quot;</span>
+    
+    <span class="c"># define some addresses:</span>
+    <span class="n">someDoubleNode</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;Demo.Static.Scalar.Double&quot;</span><span class="p">,</span> <span class="n">demoNsUri</span><span class="p">),</span> <span class="n">info</span><span class="o">.</span><span class="n">serverUri</span> <span class="p">)</span>
+    <span class="n">someUInt32Node</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;Demo.Static.Scalar.UInt32&quot;</span><span class="p">,</span> <span class="n">demoNsUri</span><span class="p">),</span> <span class="n">info</span><span class="o">.</span><span class="n">serverUri</span> <span class="p">)</span>
+    
+    <span class="c"># read the nodes of the addresses:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">([</span><span class="n">someDoubleNode</span><span class="p">,</span> <span class="n">someUInt32Node</span><span class="p">])</span>
+    
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;ReadResult:&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+    
+<span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t read some variables: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Exiting...&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -1127,6 +1233,7 @@
 <li><a class="reference internal" href="#how-to-read-some-historical-data">How to read some historical data?</a></li>
 <li><a class="reference internal" href="#how-to-change-the-default-session-behavior">How to change the default session behavior?</a></li>
 <li><a class="reference internal" href="#how-to-change-the-default-subscription-behavior">How to change the default subscription_behavior?</a></li>
+<li><a class="reference internal" href="#how-to-manually-connect-to-an-endpoint-without-discovery">How to manually connect to an endpoint without discovery?</a></li>
 </ul>
 </li>
 </ul>
@@ -1174,7 +1281,7 @@
         <li class="right" >
           <a href="index.html" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.7 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.8 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

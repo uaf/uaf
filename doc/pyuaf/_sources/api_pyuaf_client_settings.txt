@@ -621,6 +621,7 @@
               - connectTimeoutSec  = 2.0
               - watchdogTimeoutSec = 2.0
               - watchdogTimeSec    = 5.0
+              - securitySettingsList = a list of 1 instance: a default :class:`~pyuaf.client.settings.SessionSecuritySettings` instance.
             
     
         .. method:: __str__()
@@ -679,7 +680,12 @@
 
         .. method:: __init__()
     
-            Create a new SessionSecuritySettings object.
+            Create a default SessionSecuritySettings object.
+            
+            A default instance has 
+             - no security policy (:attr:`pyuaf.util.securitypolicies.UA_None`)
+             - no security mode (:attr:`pyuaf.util.messagesecuritymodes.Mode_None`)
+             - no authentication (:attr:`pyuaf.util.usertokentypes.Anonymous`)
             
     
         .. method:: __str__()

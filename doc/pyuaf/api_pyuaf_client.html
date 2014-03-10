@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client &mdash; PyUAF 1.7 documentation</title>
+    <title>pyuaf.client &mdash; PyUAF 1.8 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.7',
+        VERSION:     '1.8',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.7 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.8 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.configs" href="api_pyuaf_client_configs.html" />
     <link rel="prev" title="pyuaf" href="api_pyuaf.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.7 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.8 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -1009,7 +1009,7 @@ Leave None for defaults.</li>
 
 <dl class="method">
 <dt id="pyuaf.client.Client.manuallyConnect">
-<tt class="descname">manuallyConnect</tt><big>(</big><em>serverUri</em>, <em>sessionSettings</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.manuallyConnect" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">manuallyConnect</tt><big>(</big><em>serverUri</em>, <em>sessionSettings=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.manuallyConnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a session manually (instead of having the UAF do it behind the scenes).</p>
 <p>One of the advantages of the UAF is that you can just define the addresses of some nodes, and 
 then read/write/monitor/... them without worrying about the technical concerns such as
@@ -1034,7 +1034,7 @@ via the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>serverUri</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The server URI to manually connect to.</li>
-<li><strong>sessionSettings</strong> (<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.SessionSettings" title="pyuaf.client.settings.SessionSettings"><tt class="xref py py-class docutils literal"><span class="pre">SessionSettings</span></tt></a>) &#8211; The settings for the session.</li>
+<li><strong>sessionSettings</strong> (<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.SessionSettings" title="pyuaf.client.settings.SessionSettings"><tt class="xref py py-class docutils literal"><span class="pre">SessionSettings</span></tt></a>) &#8211; The settings for the session (leave None for a default instance).</li>
 </ul>
 </td>
 </tr>
@@ -1047,6 +1047,71 @@ via the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
 <li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.DiscoveryError" title="pyuaf.util.errors.DiscoveryError"><strong>pyuaf.util.errors.DiscoveryError</strong></a> &#8211; Raised in case the FindServers service failed to discover a server that matches the 
 given server URI.</li>
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any other errors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.manuallyConnectToEndpoint">
+<tt class="descname">manuallyConnectToEndpoint</tt><big>(</big><em>endpointUrl</em>, <em>sessionSettings=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.manuallyConnectToEndpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manually connect to a specific endpoint, without using the discovery services.</p>
+<p>A UAF client normally uses the discovery process to identify a server and connect to it.
+The user therefore doesn&#8217;t have to worry about connecting, disconnecting, session management, etc.</p>
+<p>However, in certain cases you may want to connect manually to a specific endpoint, without using
+the discovery process (i.e. without relying on the discovery endpoint of the server).
+In these cases you can use this method.</p>
+<p>You should probably only use this method if you have a good reason not to rely on
+the discovery services provided by the server. A server should be identified by
+a serverURI, not by an endpointURL!</p>
+<p>The <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.SessionSettings.securitySettingsList" title="pyuaf.client.settings.SessionSettings.securitySettingsList"><tt class="xref py py-attr docutils literal"><span class="pre">securitySettingsList</span></tt></a> attribute of the 
+sessionSettings argument (in other words: sessionSettings.securitySettingsList) defines 
+how you want to connect to the server. It is a list of 
+<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.SessionSecuritySettings" title="pyuaf.client.settings.SessionSecuritySettings"><tt class="xref py py-class docutils literal"><span class="pre">SessionSecuritySettings</span></tt></a> instances. 
+The first item of the list will be attempted first, if that fails then the second item 
+will be attempted, and so on. By default, this list has one item:
+a default <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.SessionSecuritySettings" title="pyuaf.client.settings.SessionSecuritySettings"><tt class="xref py py-class docutils literal"><span class="pre">SessionSecuritySettings</span></tt></a> instance.</p>
+<dl class="docutils">
+<dt>This default instance has </dt>
+<dd><ul class="first last simple">
+<li>no security policy (<a class="reference internal" href="api_pyuaf_util_securitypolicies.html#pyuaf.util.securitypolicies.UA_None" title="pyuaf.util.securitypolicies.UA_None"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.securitypolicies.UA_None</span></tt></a>)</li>
+<li>no security mode (<a class="reference internal" href="api_pyuaf_util_messagesecuritymodes.html#pyuaf.util.messagesecuritymodes.Mode_None" title="pyuaf.util.messagesecuritymodes.Mode_None"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.messagesecuritymodes.Mode_None</span></tt></a>)</li>
+<li>no authentication (<a class="reference internal" href="api_pyuaf_util_usertokentypes.html#pyuaf.util.usertokentypes.Anonymous" title="pyuaf.util.usertokentypes.Anonymous"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.usertokentypes.Anonymous</span></tt></a>)</li>
+</ul>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If this method fails (in other words, when an Error is raised), then no
+Session has been created! This is different behavior from 
+<a class="reference internal" href="#pyuaf.client.Client.manuallyConnect" title="pyuaf.client.Client.manuallyConnect"><tt class="xref py py-meth docutils literal"><span class="pre">manuallyConnect()</span></tt></a>, which will have created a Session that
+automatically retries to connect.</p>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">Check out example <a class="reference internal" href="client_examples.html#manual-connection-to-endpoint"><em>How to manually connect to an endpoint without discovery?</em></a> for more information.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>endpointUrl</strong> &#8211; The endpoint URL to manually connect to.</li>
+<li><strong>sessionSettings</strong> (<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.SessionSettings" title="pyuaf.client.settings.SessionSettings"><tt class="xref py py-class docutils literal"><span class="pre">SessionSettings</span></tt></a>) &#8211; The settings for the session (leave None for a default instance).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The client connection id: a number identifying the session.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><tt class="docutils literal"><span class="pre">int</span></tt></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.ConnectionError" title="pyuaf.util.errors.ConnectionError"><strong>pyuaf.util.errors.ConnectionError</strong></a> &#8211; Raised in case the connection fails.</li>
 <li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any other errors.</li>
 </ul>
 </td>
@@ -2032,7 +2097,7 @@ state of the subscription, the handle, etc.</p>
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.7 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.8 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
