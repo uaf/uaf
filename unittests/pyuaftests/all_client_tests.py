@@ -22,7 +22,12 @@ ALL_MODULES = [ "client_client",
                 "client_setpublishingmode",
                 "client_browse",
                 "client_browsenext",
-                "client_historyreadrawmodified" 
+                "client_historyreadrawmodified",
+                "subscriptioninformation",
+                "sessioninformation",
+                "monitorediteminformation",
+                "datachangenotification",
+                "eventnotification"
               ]
 
 
