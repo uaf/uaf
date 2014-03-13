@@ -11,18 +11,19 @@ def suite(args=None):
         global ARGS
         ARGS = args
     
-    return unittest.TestLoader().loadTestsFromTestCase(BrowseRequestTargetTest)
+    return unittest.TestLoader().loadTestsFromTestCase(BrowseNextRequestTargetTest)
 
 
 
-class BrowseRequestTargetTest(unittest.TestCase):
+class BrowseNextRequestTargetTest(unittest.TestCase):
     
     def setUp(self):
-        self.target0 = pyuaf.client.requests.BrowseRequestTarget()
+        self.target0 = pyuaf.client.requests.BrowseNextRequestTarget()
         
-        self.target1 = pyuaf.client.requests.BrowseRequestTarget()
+        self.target1 = pyuaf.client.requests.BrowseNextRequestTarget()
         self.target1.address = pyuaf.util.Address( pyuaf.util.NodeId("id", "ns"), "svr" )
         self.target1.browseDirection = pyuaf.util.browsedirections.Inverse
+        self.target1.continuationPoint = bytearray("\x00\x01\x02")
         self.target1.includeSubtypes = True
         self.target1.nodeClassMask = 4
         self.target1.referenceTypeId = pyuaf.util.NodeId("id", "ns")
@@ -33,6 +34,9 @@ class BrowseRequestTargetTest(unittest.TestCase):
     
     def test_client_BrowseRequestTarget_browseDirection(self):
         self.assertEqual( self.target1.browseDirection , pyuaf.util.browsedirections.Inverse )
+    
+    def test_client_BrowseRequestTarget_continuationPoint(self):
+        self.assertEqual( self.target1.continuationPoint , bytearray("\x00\x01\x02") )
     
     def test_client_BrowseRequestTarget_includeSubtypes(self):
         self.assertEqual( self.target1.includeSubtypes , True )
@@ -47,7 +51,7 @@ class BrowseRequestTargetTest(unittest.TestCase):
         self.assertEqual( self.target1.resultMask , 5 )
     
     def test_client_BrowseRequestTargetVector(self):
-        testVector(self, pyuaf.client.requests.BrowseRequestTargetVector, [self.target0, self.target1])
+        testVector(self, pyuaf.client.requests.BrowseNextRequestTargetVector, [self.target0, self.target1])
     
 
 

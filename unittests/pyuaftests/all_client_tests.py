@@ -27,7 +27,15 @@ ALL_MODULES = [ "client_client",
                 "sessioninformation",
                 "monitorediteminformation",
                 "datachangenotification",
-                "eventnotification"
+                "eventnotification",
+                "requests.browserequesttarget",
+                "requests.browsenextrequesttarget",
+                "requests.createmonitoreddatarequesttarget",
+                "requests.createmonitoredeventsrequesttarget",
+                "requests.methodcallrequesttarget",
+                "requests.readrequesttarget",
+                "requests.translatebrowsepathsnodeidsrequesttarget",
+                "requests.writerequesttarget"
               ]
 
 
