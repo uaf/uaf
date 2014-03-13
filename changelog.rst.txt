@@ -17,7 +17,7 @@ Bugfixes (which do not have any implications on the API) can only be tracked
 via the GIT version control system.
 
 
-1.8 @ 2014/
+1.9 @ 2014/
 ----------------------------------------------------------------------------------------------------
 
 - Bugfix: iterators of vectors are now properly wrapped. So you can do "for item in vec: ..." 
@@ -44,7 +44,8 @@ via the GIT version control system.
     so the advantage of fixing the bug was considered more important.
 
 - Added comparison operators (==, != and <) for uaf::ApplicationDescription, uaf::UserTokenPolicy,
-  uaf::EndpointDescription and uafc::SessionSecuritySettings.
+  uaf::EndpointDescription, uafc::SessionSecuritySettings, uafc::MonitoredItemNotification,
+  uafc::DataChangeNotification, uafc::EventNotification.
 
 
 
