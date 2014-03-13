@@ -174,7 +174,7 @@ Installation procedure for Linux
       cd examples/pyuaf
       source uaf.rc
       cd client
-      python simplest_client_example.py
+      python easiest_client_example.py
       
 
 .. This document is part of the Unified Architecture Framework : http://github.com/uaf
