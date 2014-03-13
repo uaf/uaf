@@ -68,6 +68,18 @@ namespace uafc
          * Get a string representation of the event notification.
          */
         std::string toString(const std::string& indent="", std::size_t colon=22) const;
+
+
+        // comparison operators
+        friend UAFC_EXPORT bool operator==(
+                const EventNotification& object1,
+                const EventNotification& object2);
+        friend UAFC_EXPORT bool operator!=(
+                const EventNotification& object1,
+                const EventNotification& object2);
+        friend UAFC_EXPORT bool operator<(
+                const EventNotification& object1,
+                const EventNotification& object2);
     };
 
 

@@ -58,6 +58,37 @@ namespace uafc
     }
 
 
+    // operator==
+    // =============================================================================================
+    bool operator==(
+            const MonitoredItemNotification& object1,
+            const MonitoredItemNotification& object2)
+    {
+        return object1.clientHandle == object2.clientHandle;
+    }
+
+
+    // operator!=
+    // =============================================================================================
+    bool operator!=(
+            const MonitoredItemNotification& object1,
+            const MonitoredItemNotification& object2)
+    {
+        return !(object1 == object2);
+    }
+
+
+    // operator<
+    // =============================================================================================
+    bool operator<(
+            const MonitoredItemNotification& object1,
+            const MonitoredItemNotification& object2)
+    {
+        return object1.clientHandle < object2.clientHandle;
+    }
+
+
+
 }
 
 
