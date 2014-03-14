@@ -36,6 +36,7 @@ ALL_MODULES = [ "client_client",
                 "requests.readrequesttarget",
                 "requests.translatebrowsepathsnodeidsrequesttarget",
                 "requests.writerequesttarget"
+                "requests.historyreadrawmodifiedrequesttarget"
               ]
 
 
