@@ -68,6 +68,18 @@ namespace uafc
          * @return  String representation.
          */
         std::string toString(const std::string& indent="", std::size_t colon=10) const;
+
+
+        // comparison operators
+        friend bool UAFC_EXPORT operator==(
+                const AsyncResultTarget& object1,
+                const AsyncResultTarget& object2);
+        friend bool UAFC_EXPORT operator!=(
+                const AsyncResultTarget& object1,
+                const AsyncResultTarget& object2);
+        friend bool UAFC_EXPORT operator<(
+                const AsyncResultTarget& object1,
+                const AsyncResultTarget& object2);
     };
 
 

@@ -32,13 +32,15 @@ namespace uafc
 
 
 
-
-
     // Get a string representation
     // =============================================================================================
     string MethodCallResultTarget::toString(const string& indent, size_t colon) const
     {
         stringstream ss;
+
+        ss << indent << " - clientConnectionId";
+        ss << fillToPos(ss, colon);
+        ss << ": " << int(clientConnectionId) << "\n";
 
         ss << indent << " - status";
         ss << fillToPos(ss, colon);
@@ -58,6 +60,43 @@ namespace uafc
         ss << "]";
 
         return ss.str();
+    }
+
+
+    // operator==
+    // =============================================================================================
+    bool operator==(
+            const MethodCallResultTarget& object1,
+            const MethodCallResultTarget& object2)
+    {
+        return    object1.clientConnectionId == object2.clientConnectionId
+               && object1.status             == object2.status
+               && object1.outputArguments    == object2.outputArguments;
+    }
+
+
+    // operator!=
+    // =============================================================================================
+    bool operator!=(
+            const MethodCallResultTarget& object1,
+            const MethodCallResultTarget& object2)
+    {
+        return !(object1 == object2);
+    }
+
+
+    // operator<
+    // =============================================================================================
+    bool operator<(
+            const MethodCallResultTarget& object1,
+            const MethodCallResultTarget& object2)
+    {
+        if (object1.clientConnectionId != object2.clientConnectionId)
+            return object1.clientConnectionId < object2.clientConnectionId;
+        else if (object1.status != object2.status)
+            return object1.status < object2.status;
+        else
+            return object1.outputArguments < object2.outputArguments;
     }
 
 

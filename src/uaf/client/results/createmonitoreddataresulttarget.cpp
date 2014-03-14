@@ -36,6 +36,14 @@ namespace uafc
     {
         stringstream ss;
 
+        ss << indent <<  " - clientConnectionId";
+        ss << fillToPos(ss, colon);
+        ss << ": " << clientConnectionId << "\n";
+
+        ss << indent <<  " - clientSubscriptionHandle";
+        ss << fillToPos(ss, colon);
+        ss << ": " << clientSubscriptionHandle << "\n";
+
         ss << indent <<  " - clientHandle";
         ss << fillToPos(ss, colon);
         ss << ": " << clientHandle << "\n";
@@ -56,6 +64,55 @@ namespace uafc
         ss << fillToPos(ss, colon);
         ss << ": "<< int(revisedQueueSize);
         return ss.str();
+    }
+
+
+    // operator==
+    // =============================================================================================
+    bool operator==(
+            const CreateMonitoredDataResultTarget& object1,
+            const CreateMonitoredDataResultTarget& object2)
+    {
+        return    object1.clientConnectionId == object2.clientConnectionId
+               && object1.clientSubscriptionHandle == object2.clientSubscriptionHandle
+               && object1.clientHandle == object2.clientHandle
+               && object1.status == object2.status
+               && object1.monitoredItemId == object2.monitoredItemId
+               && object1.revisedSamplingIntervalSec == object2.revisedSamplingIntervalSec
+               && object1.revisedQueueSize == object2.revisedQueueSize;
+    }
+
+
+    // operator!=
+    // =============================================================================================
+    bool operator!=(
+            const CreateMonitoredDataResultTarget& object1,
+            const CreateMonitoredDataResultTarget& object2)
+    {
+        return !(object1 == object2);
+    }
+
+
+    // operator<
+    // =============================================================================================
+    bool operator<(
+            const CreateMonitoredDataResultTarget& object1,
+            const CreateMonitoredDataResultTarget& object2)
+    {
+        if (object1.clientConnectionId != object2.clientConnectionId)
+            return object1.clientConnectionId < object2.clientConnectionId;
+        else if (object1.clientSubscriptionHandle != object2.clientSubscriptionHandle)
+            return object1.clientSubscriptionHandle < object2.clientSubscriptionHandle;
+        else if (object1.clientHandle != object2.clientHandle)
+            return object1.clientHandle < object2.clientHandle;
+        else if (object1.status != object2.status)
+            return object1.status < object2.status;
+        else if (object1.monitoredItemId != object2.monitoredItemId)
+            return object1.monitoredItemId < object2.monitoredItemId;
+        else if (object1.revisedSamplingIntervalSec != object2.revisedSamplingIntervalSec)
+            return object1.revisedSamplingIntervalSec < object2.revisedSamplingIntervalSec;
+        else
+            return object1.revisedQueueSize < object2.revisedQueueSize;
     }
 
 

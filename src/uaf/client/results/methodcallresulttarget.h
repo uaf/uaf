@@ -75,7 +75,19 @@ namespace uafc
          *
          * @return  String representation.
          */
-        std::string toString(const std::string& indent="", std::size_t colon=22) const;
+        std::string toString(const std::string& indent="", std::size_t colon=23) const;
+
+
+        // comparison operators
+        friend bool UAFC_EXPORT operator==(
+                const MethodCallResultTarget& object1,
+                const MethodCallResultTarget& object2);
+        friend bool UAFC_EXPORT operator!=(
+                const MethodCallResultTarget& object1,
+                const MethodCallResultTarget& object2);
+        friend bool UAFC_EXPORT operator<(
+                const MethodCallResultTarget& object1,
+                const MethodCallResultTarget& object2);
     };
 
 

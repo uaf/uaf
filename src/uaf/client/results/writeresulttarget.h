@@ -67,6 +67,18 @@ namespace uafc
         std::string toString(const std::string& indent="", std::size_t colon=10) const;
 
 
+        // comparison operators
+        friend bool UAFC_EXPORT operator==(
+                const WriteResultTarget& object1,
+                const WriteResultTarget& object2);
+        friend bool UAFC_EXPORT operator!=(
+                const WriteResultTarget& object1,
+                const WriteResultTarget& object2);
+        friend bool UAFC_EXPORT operator<(
+                const WriteResultTarget& object1,
+                const WriteResultTarget& object2);
+
+
     };
 
 }
