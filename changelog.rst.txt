@@ -24,7 +24,8 @@ via the GIT version control system.
   for all vectors. This functionality is now also tested by the unittests.
 
 - Completely removed the abstract class uaf::Stringifiable (pyuaf.util.Stringifiable).
-  This most likely won't affect your code (do a search for "Stringifiable" if in doubt).
+  This most likely won't affect your code (do a search for "Stringifiable" if in doubt: 
+  if you don't find any occurrence, then you're safe).
 
   - Rationale:
     The reason for removing it is that SWIG had difficulties with vectors of classes that derive 
@@ -37,15 +38,21 @@ via the GIT version control system.
       for item in vec:
           print(item)
     
-    because 'item' didn't point to a properly wrapped SessionSecuritySettings instance. 
-    Instead, 'item' was an opaque SWIG value, i.e. a SWIG artificact that you couldn't use directly.
+    Instead, you could only do "for i in xrange(len(vec)): ...". The problem was that the iterator
+    ('item' in the code above) didn't point to a properly wrapped SessionSecuritySettings instance. 
+    Instead, 'item' was an opaque SWIG value, i.e. a SWIG artifact that you couldn't use directly.
     Now that SessionSecuritySettings doesn't implement Stringifiable anymore, this bug is avoided.
     Of course it comes at the cost of losing uaf::Stringifiable, but this class wasn't very useful 
     so the advantage of fixing the bug was considered more important.
 
 - Added comparison operators (==, != and <) for uaf::ApplicationDescription, uaf::UserTokenPolicy,
   uaf::EndpointDescription, uafc::SessionSecuritySettings, uafc::MonitoredItemNotification,
-  uafc::DataChangeNotification, uafc::EventNotification.
+  uafc::DataChangeNotification, uafc::EventNotification, uafc::AsyncResultTarget, 
+  uafc::BrowseResultTarget, uafc::CreateMonitoredDataResultTarget, 
+  uafc::CreateMonitoredEventsResultTarget, uafc::HistoryReadRawModifiedResultTarget,
+  uafc::MethodCallResultTarget, uafc::ReadResultTarget, 
+  uafc::TranslateBrowsePathsToNodeIdsResultTarget,
+  uafc::WriteResultTarget
 
 
 
