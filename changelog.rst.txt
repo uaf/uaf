@@ -45,15 +45,34 @@ via the GIT version control system.
     Of course it comes at the cost of losing uaf::Stringifiable, but this class wasn't very useful 
     so the advantage of fixing the bug was considered more important.
 
-- Added comparison operators (==, != and <) for uaf::ApplicationDescription, uaf::UserTokenPolicy,
-  uaf::EndpointDescription, uafc::SessionSecuritySettings, uafc::MonitoredItemNotification,
-  uafc::DataChangeNotification, uafc::EventNotification, uafc::AsyncResultTarget, 
-  uafc::BrowseResultTarget, uafc::CreateMonitoredDataResultTarget, 
-  uafc::CreateMonitoredEventsResultTarget, uafc::HistoryReadRawModifiedResultTarget,
-  uafc::MethodCallResultTarget, uafc::ReadResultTarget, 
-  uafc::TranslateBrowsePathsToNodeIdsResultTarget,
-  uafc::WriteResultTarget
+- Added comparison operators for several classes.
 
+
+Formally:
+
+- The following classes have been removed:
+
+  - uaf::Stringifiable (pyuaf.util.Stringifiable)
+
+- Comparison operators (==, != and < in C++; __eq__, __ne__, __lt__, __gt__, __ge__ and __le__ in
+  Python) have been added to the following existing classes:
+  
+  - uaf::ApplicationDescription                     (pyuaf.util.ApplicationDescription)
+  - uaf::UserTokenPolicy                            (pyuaf.util.UserTokenPolicy)
+  - uaf::EndpointDescription                        (pyuaf.util.EndpointDescription)
+  - uafc::SessionSecuritySettings                   (pyuaf.client.settings.SessionSecuritySettings)
+  - uafc::MonitoredItemNotification                 (pyuaf.client.MonitoredItemNotification)
+  - uafc::DataChangeNotification                    (pyuaf.client.DataChangeNotification)
+  - uafc::EventNotification                         (pyuaf.client.EventNotification)
+  - uafc::AsyncResultTarget                         (pyuaf.client.results.AsyncResultTarget)
+  - uafc::BrowseResultTarget                        (pyuaf.client.results.BrowseResultTarget)
+  - uafc::CreateMonitoredDataResultTarget           (pyuaf.client.results.CreateMonitoredDataResultTarget)
+  - uafc::CreateMonitoredEventsResultTarget         (pyuaf.client.results.CreateMonitoredEventsResultTarget)
+  - uafc::HistoryReadRawModifiedResultTarget        (pyuaf.client.results.HistoryReadRawModifiedResultTarget)
+  - uafc::MethodCallResultTarget                    (pyuaf.client.results.MethodCallResultTarget)
+  - uafc::ReadResultTarget                          (pyuaf.client.results.ReadResultTarget)
+  - uafc::TranslateBrowsePathsToNodeIdsResultTarget (pyuaf.client.results.TranslateBrowsePathsToNodeIdsResultTarget)
+  - uafc::WriteResultTarget                         (pyuaf.client.results.WriteResultTarget)
 
 
 1.8 @ 2014/03/10
