@@ -34,9 +34,18 @@ ALL_MODULES = [ "client_client",
                 "requests.createmonitoredeventsrequesttarget",
                 "requests.methodcallrequesttarget",
                 "requests.readrequesttarget",
-                "requests.translatebrowsepathsnodeidsrequesttarget",
-                "requests.writerequesttarget"
-                "requests.historyreadrawmodifiedrequesttarget"
+                "requests.translatebrowsepathstonodeidsrequesttarget",
+                "requests.writerequesttarget",
+                "requests.historyreadrawmodifiedrequesttarget",
+                "results.asyncresulttarget",
+                "results.browseresulttarget",
+                "results.createmonitoreddataresulttarget",
+                "results.createmonitoredeventsresulttarget",
+                "results.methodcallresulttarget",
+                "results.readresulttarget",
+                "results.translatebrowsepathstonodeidsresulttarget",
+                "results.writeresulttarget",
+                "results.historyreadrawmodifiedresulttarget"
               ]
 
 
