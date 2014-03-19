@@ -59,6 +59,7 @@
 %import(module="pyuaf.util")                    "uaf/util/browsepath.h"
 %import(module="pyuaf.util")                    "uaf/util/datavalue.h"
 %import(module="pyuaf.util")                    "uaf/util/modificationinfo.h"
+%import(module="pyuaf.util")                    "uaf/util/status.h"
 
 
 // also include the typemaps
