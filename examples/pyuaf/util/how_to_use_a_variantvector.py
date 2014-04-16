@@ -61,4 +61,7 @@ print("Vector contents:")
 for i in xrange(noOfElements):
     print(" - vec[%d] = %s" %(i, repr(vec[i])))
 
+print("Vector contents, using iterators:")
+for element in vec:
+    print(" - %s" %repr(element))
 
