@@ -137,6 +137,19 @@ namespace uaf
 
 
         /**
+         * Fill an OpcUa_ExpandedNodeId (which is fully resolved!) from a uaf::ExpandedNodeId
+         * (which may not be resolved!).
+         *
+         * @param nodeId        The uaf::NodeId for which we must create a UaNodeId.
+         * @param opcUaNodeId   The OpcUa_NodeId to be updated.
+         * @return              Good if the OpcUa_NodeId could be updated, false if not.
+         */
+        uaf::Status fillOpcUaExpandedNodeId(
+                const uaf::ExpandedNodeId&  nodeId,
+                OpcUa_ExpandedNodeId&       opcUaNodeId) const;
+
+
+        /**
          * Fill an OpcUa_QualifiedName (which is fully resolved!) from a uaf::QualifiedName
          * (which may not be resolved!).
          *
@@ -168,7 +181,7 @@ namespace uaf
          *
          * @param opcUaNodeId   The OpcUa_NodeId of which we want to extract the information.
          * @param nodeId        The uaf::NodeId which we want to update.
-         * @return              True if the uaf::NodeId could be updated without problems
+         * @return              Good if the uaf::NodeId could be updated without problems
          *                      (i.e. if the namespace URI could be set).
          */
         uaf::Status fillNodeId(
@@ -183,7 +196,7 @@ namespace uaf
          * @param opcUaExpandedNodeId   The OpcUa_ExpandedNodeId of which we want to extract
          *                              the information.
          * @param expandedNodeId        The uaf::ExpandedNodeId which we want to update.
-         * @return                      True if the uaf::ExpandedNodeId could be updated without
+         * @return                      Good if the uaf::ExpandedNodeId could be updated without
          *                              problems (i.e. if the namespace URI could be set).
          */
         uaf::Status fillExpandedNodeId(
@@ -198,12 +211,23 @@ namespace uaf
          * @param opcUaQualifiedName    The OpcUa_QualifiedName of which we want to extract
          *                              the information.
          * @param qualifiedName         The uaf::QualifiedName which we want to update.
-         * @return                      True if the uaf::QualifiedName could be updated without
+         * @return                      Good if the uaf::QualifiedName could be updated without
          *                              problems (i.e. if the namespace URI could be set).
          */
         uaf::Status fillQualifiedName(
                 const OpcUa_QualifiedName& opcUaQualifiedName,
                 uaf::QualifiedName&        qualifiedName) const;
+
+
+        /**
+         * Fill a Variant, which *may* include filling out the namespace URI, if the variant
+         * represents a NodeId or ExpandedNodeId or QualifiedName.
+         *
+         * @param variant         The uaf::Variant which we want to update.
+         * @return                Good if the uaf::Variant could be updated without
+         *                        problems (i.e. if the namespace URI could be set).
+         */
+        uaf::Status fillVariant(uaf::Variant& variant) const;
 
 
 

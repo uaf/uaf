@@ -151,7 +151,11 @@ namespace uafc
         if (noOfTargets == uaReadValueIds_.length())
         {
             for (uint32_t i=0; i<noOfTargets ; i++)
+            {
                 targets[i].fromSdk(UaDataValue(uaDataValues_[i]));
+                nameSpaceArray.fillVariant(targets[i].data);
+                serverArray.fillVariant(targets[i].data);
+            }
 
             ret.setGood();
         }

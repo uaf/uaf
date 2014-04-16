@@ -26,6 +26,7 @@ namespace uaf
     using namespace uaf;
     using std::string;
     using std::stringstream;
+    using std::vector;
 
 
     // Constructor
@@ -253,6 +254,30 @@ namespace uaf
     }
 
 
+    // Convert a uaf::ExpandedNodeId to a OpcUa_ExpandedNodeId
+    // =============================================================================================
+    Status NamespaceArray::fillOpcUaExpandedNodeId(
+            const ExpandedNodeId& expandedNodeId,
+            OpcUa_ExpandedNodeId& opcUaExpandedNodeId) const
+    {
+        Status ret;
+
+        // first copy all known information
+        expandedNodeId.toSdk(&opcUaExpandedNodeId);
+
+        // now create a OpcUa_NodeId and fill it
+        OpcUa_NodeId opcUaNodeId;
+        ret = fillOpcUaNodeId(expandedNodeId.nodeId(), opcUaNodeId);
+
+        if (ret.isGood())
+        {
+            // now also copy the new NodeId contents
+            UaNodeId uaNodeId(opcUaNodeId);
+            uaNodeId.copyTo(&opcUaExpandedNodeId.NodeId);
+        }
+
+        return ret;
+    }
 
 
 
@@ -415,7 +440,66 @@ namespace uaf
     }
 
 
+#define FILL_OPCUA_VARIANT_NSURI(TYPE)                                                              \
+        if (variant.isArray())                                                                      \
+        {                                                                                           \
+            vector<TYPE> vec;                                                                       \
+            variant.to##TYPE##Array(vec);                                                           \
+                                                                                                    \
+            if (vec.size() == 0) ret.setGood();                                                     \
+                                                                                                    \
+            for (std::size_t i = 0; i < vec.size() && ret.isNotBad(); i++)                          \
+            {                                                                                       \
+                OpcUa_##TYPE opcUaObject;                                                           \
+                vec[i].toSdk(&opcUaObject);                                                         \
+                ret = fill##TYPE(opcUaObject, vec[i]);                                              \
+            }                                                                                       \
+                                                                                                    \
+            if (ret.isGood()) variant.set##TYPE##Array(vec);                                        \
+        }                                                                                           \
+        else                                                                                        \
+        {                                                                                           \
+            TYPE value;                                                                             \
+            variant.to##TYPE(value);                                                                \
+                                                                                                    \
+            OpcUa_##TYPE opcUaObject;                                                               \
+            value.toSdk(&opcUaObject);                                                              \
+            ret = fill##TYPE(opcUaObject, value);                                                   \
+                                                                                                    \
+            if (ret.isGood()) variant.set##TYPE(value);                                             \
+        }
+
+    // Fill out a Variant
+    // =============================================================================================
+    Status NamespaceArray::fillVariant(Variant& variant) const
+    {
+        Status ret;
+
+        // only types with a namespace URI/index need to be filled:
+
+        if (variant.type() == uaf::opcuatypes::NodeId)
+        {
+            FILL_OPCUA_VARIANT_NSURI(NodeId)
+        }
+        else if (variant.type() == uaf::opcuatypes::ExpandedNodeId)
+        {
+            FILL_OPCUA_VARIANT_NSURI(ExpandedNodeId)
+        }
+        else if (variant.type() == uaf::opcuatypes::QualifiedName)
+        {
+            FILL_OPCUA_VARIANT_NSURI(QualifiedName)
+        }
+        else
+        {
+            ret.setGood();
+        }
+
+        return ret;
+    }
 
 }
+
+
+
 
 

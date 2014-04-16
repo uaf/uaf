@@ -357,7 +357,7 @@ namespace uafc
                     if (targets[i].status.isGood() && resolutionStatus.isNotGood())
                         targets[i].status = resolutionStatus;
 
-                    resolutionStatus = serverArray.updateServerUri(
+                    resolutionStatus = serverArray.fillExpandedNodeId(
                             uaBrowseResults_[i].References[j].NodeId,
                             targets[i].references[j].nodeId);
 
@@ -371,7 +371,7 @@ namespace uafc
                     if (targets[i].status.isGood() && resolutionStatus.isNotGood())
                         targets[i].status = resolutionStatus;
 
-                    resolutionStatus = serverArray.updateServerUri(
+                    resolutionStatus = serverArray.fillExpandedNodeId(
                             uaBrowseResults_[i].References[j].TypeDefinition,
                             targets[i].references[j].typeDefinition);
 
