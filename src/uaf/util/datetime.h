@@ -235,7 +235,7 @@ namespace uaf
          *
          * @param uaDateTime  SDK uaDateTime instance.
          */
-        void toSdk(OpcUa_DateTime& uaDateTime) const;
+        void toSdk(OpcUa_DateTime* uaDateTime) const;
 
 
         /**
