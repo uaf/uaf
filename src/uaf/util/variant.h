@@ -88,7 +88,7 @@ namespace uaf
          *
          * @return  True if empty.
          */
-        bool isNull() const { return (!isNativeUaf_) && (uaVariant_.isEmpty() == OpcUa_True); }
+        bool isNull() const { return (!isNativeUaf_) && ((bool)(uaVariant_.isEmpty())); }
 
 
         /**
