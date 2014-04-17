@@ -17,12 +17,27 @@ Bugfixes (which do not have any implications on the API) can only be tracked
 via the GIT version control system.
 
 
-1.9 @ 2014/
+1.9 @ 2014/04/17
 ----------------------------------------------------------------------------------------------------
 
 - Bugfix: iterators of vectors are now properly wrapped. So you can do "for item in vec: ..." 
   for all vectors. This functionality is now also tested by the unittests.
-
+  
+- Improved the reading/writing/historical reading/... of NodeIds, ExpandedNodeIds and 
+  QualifiedNames. Whenever you are reading/writing/... these particular datatypes, they will 
+  automatically be resolved by the UAF. For instance: when you read a QualifiedName, only the 
+  namespace index of the QualifiedName will be sent over the wire. As of now, the UAF will 
+  automatically insert the correct namespace URI into the result (according to the NamespaceArray 
+  of the server), so that the result is fully resolved. Another example: you can now simply do::
+  
+    currentOrderAddress = Address(NodeId("currentOrder", "my_company_namespace_uri"), "my_server_uri")
+    myClient.write(addresses = [ currentOrderAddress ]
+                   data      = [ NodeId("orders.order5", "my_company_namespace_uri") ])
+  
+  In the above example, the UAF will automatically resolve the 'data' argument (meaning: it will
+  find out the namespace index of "my_company_namespace_uri" and insert it into the data argument,
+  before sending the request to the server).
+  
 - Completely removed the abstract class uaf::Stringifiable (pyuaf.util.Stringifiable).
   This most likely won't affect your code (do a search for "Stringifiable" if in doubt: 
   if you don't find any occurrence, then you're safe).
