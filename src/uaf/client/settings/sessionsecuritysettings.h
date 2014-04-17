@@ -89,13 +89,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator<(
+        friend UAFC_EXPORT bool operator<(
                 const SessionSecuritySettings& object1,
                 const SessionSecuritySettings& object2);
-        friend bool UAFC_EXPORT operator==(
+        friend UAFC_EXPORT bool operator==(
                 const SessionSecuritySettings& object1,
                 const SessionSecuritySettings& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend UAFC_EXPORT bool operator!=(
                 const SessionSecuritySettings& object1,
                 const SessionSecuritySettings& object2);
 
