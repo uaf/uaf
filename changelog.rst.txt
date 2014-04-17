@@ -20,6 +20,11 @@ via the GIT version control system.
 1.9 @ 2014/04/17
 ----------------------------------------------------------------------------------------------------
 
+Informally:
+
+- This version doesn't really add more features to the UAF. It mostly fixes some not-so-critical 
+  problems that have been known for a long while, but were cumbersome to solve.
+
 - Bugfix: iterators of vectors are now properly wrapped. So you can do "for item in vec: ..." 
   for all vectors. This functionality is now also tested by the unittests.
   
