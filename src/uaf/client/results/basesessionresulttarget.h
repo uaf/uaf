@@ -48,7 +48,7 @@ namespace uafc
     *
     * @ingroup ClientResults
     ***********************************************************************************************/
-    class UAFC_EXPORT BaseSessionResultTarget : public uaf::Stringifiable
+    class UAFC_EXPORT BaseSessionResultTarget
     {
     public:
 

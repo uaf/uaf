@@ -34,6 +34,7 @@
 #include "uaf/util/stringifiable.h"
 #include "uaf/util/messagesecuritymodes.h"
 #include "uaf/util/endpointdescription.h"
+#include "uaf/client/clientexport.h"
 
 namespace uafc
 {
@@ -44,7 +45,7 @@ namespace uafc
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAF_EXPORT SessionSecuritySettings : public uaf::Stringifiable
+    class UAFC_EXPORT SessionSecuritySettings
     {
     public:
 
@@ -87,6 +88,18 @@ namespace uafc
         std::string toString(const std::string& indent="", std::size_t colon=28) const;
 
 
+        // comparison operators
+        friend UAFC_EXPORT bool operator<(
+                const SessionSecuritySettings& object1,
+                const SessionSecuritySettings& object2);
+        friend UAFC_EXPORT bool operator==(
+                const SessionSecuritySettings& object1,
+                const SessionSecuritySettings& object2);
+        friend UAFC_EXPORT bool operator!=(
+                const SessionSecuritySettings& object1,
+                const SessionSecuritySettings& object2);
+
+
 
     };
 
@@ -100,7 +113,7 @@ namespace uafc
      * @param endpoint  The endpoint description, e.g. as discovered by the UAF client.
      * @return          Good if the settings and the endpoint match, bad if not.
      */
-    uaf::Status UAF_EXPORT match(
+    uaf::Status UAFC_EXPORT match(
             const uafc::SessionSecuritySettings&    settings,
             const uaf::EndpointDescription&         endpoint);
 
@@ -117,7 +130,7 @@ namespace uafc
      * @return                  Good if one of the settings and one of the endpoints match, bad if
      *                          not.
      */
-    uaf::Status UAF_EXPORT match(
+    uaf::Status UAFC_EXPORT match(
             const std::vector<uafc::SessionSecuritySettings>&   settings,
             const std::vector<uaf::EndpointDescription>&        endpoints,
             uafc::SessionSecuritySettings&                      suitableSettings,

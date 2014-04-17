@@ -78,7 +78,19 @@ namespace uafc
          *
          * @return  String representation.
          */
-        virtual std::string toString(const std::string& indent="", std::size_t colon=32) const;
+        std::string toString(const std::string& indent="", std::size_t colon=32) const;
+
+
+        // comparison operators
+        friend bool UAFC_EXPORT operator==(
+                const CreateMonitoredEventsResultTarget& object1,
+                const CreateMonitoredEventsResultTarget& object2);
+        friend bool UAFC_EXPORT operator!=(
+                const CreateMonitoredEventsResultTarget& object1,
+                const CreateMonitoredEventsResultTarget& object2);
+        friend bool UAFC_EXPORT operator<(
+                const CreateMonitoredEventsResultTarget& object1,
+                const CreateMonitoredEventsResultTarget& object2);
 
     };
 

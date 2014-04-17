@@ -59,6 +59,7 @@
 %import(module="pyuaf.util")                    "uaf/util/browsepath.h"
 %import(module="pyuaf.util")                    "uaf/util/datavalue.h"
 %import(module="pyuaf.util")                    "uaf/util/modificationinfo.h"
+%import(module="pyuaf.util")                    "uaf/util/status.h"
 
 
 // also include the typemaps
@@ -81,15 +82,15 @@
 // wrap some classes that are not defined by macros:
 UAF_WRAP_CLASS("uaf/client/results/basesessionresulttarget.h"                   , uafc , BaseSessionResultTarget                   , COPY_NO , TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/results/basesubscriptionresulttarget.h"              , uafc , BaseSubscriptionResultTarget              , COPY_NO , TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/results/asyncresulttarget.h"                         , uafc , AsyncResultTarget                         , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, AsyncResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/browseresulttarget.h"                        , uafc , BrowseResultTarget                        , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, BrowseResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/createmonitoreddataresulttarget.h"           , uafc , CreateMonitoredDataResultTarget           , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, CreateMonitoredDataResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/createmonitoredeventsresulttarget.h"         , uafc , CreateMonitoredEventsResultTarget         , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, CreateMonitoredEventsResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/methodcallresulttarget.h"                    , uafc , MethodCallResultTarget                    , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, MethodCallResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/readresulttarget.h"                          , uafc , ReadResultTarget                          , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, ReadResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/translatebrowsepathstonodeidsresulttarget.h" , uafc , TranslateBrowsePathsToNodeIdsResultTarget , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, TranslateBrowsePathsToNodeIdsResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/writeresulttarget.h"                         , uafc , WriteResultTarget                         , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, WriteResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/historyreadrawmodifiedresulttarget.h"        , uafc , HistoryReadRawModifiedResultTarget        , COPY_NO , TOSTRING_YES, COMP_NO,  pyuaf.client.results, HistoryReadRawModifiedResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/asyncresulttarget.h"                         , uafc , AsyncResultTarget                         , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, AsyncResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/browseresulttarget.h"                        , uafc , BrowseResultTarget                        , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, BrowseResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/createmonitoreddataresulttarget.h"           , uafc , CreateMonitoredDataResultTarget           , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, CreateMonitoredDataResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/createmonitoredeventsresulttarget.h"         , uafc , CreateMonitoredEventsResultTarget         , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, CreateMonitoredEventsResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/methodcallresulttarget.h"                    , uafc , MethodCallResultTarget                    , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, MethodCallResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/readresulttarget.h"                          , uafc , ReadResultTarget                          , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, ReadResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/translatebrowsepathstonodeidsresulttarget.h" , uafc , TranslateBrowsePathsToNodeIdsResultTarget , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, TranslateBrowsePathsToNodeIdsResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/writeresulttarget.h"                         , uafc , WriteResultTarget                         , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, WriteResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/historyreadrawmodifiedresulttarget.h"        , uafc , HistoryReadRawModifiedResultTarget        , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, HistoryReadRawModifiedResultTargetVector)
 UAF_WRAP_CLASS("uaf/client/results/basesessionresult.h"                         , uafc , BaseSessionResult                         , COPY_YES, TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/results/basesubscriptionresult.h"                    , uafc , BaseSubscriptionResult                    , COPY_YES, TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
 

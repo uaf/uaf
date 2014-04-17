@@ -43,14 +43,47 @@ namespace uafc
     {
         stringstream ss;
 
-        ss << DataValue::toString(indent, colon);
-
-        ss << "\n";
         ss << indent << " - clientConnectionId";
         ss << fillToPos(ss, colon);
-        ss << ": " << int(clientConnectionId);
+        ss << ": " << int(clientConnectionId) << "\n";
+
+        ss << DataValue::toString(indent, colon);
 
         return ss.str();
+    }
+
+
+    // operator==
+    // =============================================================================================
+    bool operator==(
+            const ReadResultTarget& object1,
+            const ReadResultTarget& object2)
+    {
+        return    object1.clientConnectionId == object2.clientConnectionId
+               && (DataValue)object1         == (DataValue)object2;
+    }
+
+
+    // operator!=
+    // =============================================================================================
+    bool operator!=(
+            const ReadResultTarget& object1,
+            const ReadResultTarget& object2)
+    {
+        return !(object1 == object2);
+    }
+
+
+    // operator<
+    // =============================================================================================
+    bool operator<(
+            const ReadResultTarget& object1,
+            const ReadResultTarget& object2)
+    {
+        if (object1.clientConnectionId != object2.clientConnectionId)
+            return object1.clientConnectionId < object2.clientConnectionId;
+        else
+            return (DataValue)object1 < (DataValue)object2;
     }
 
 

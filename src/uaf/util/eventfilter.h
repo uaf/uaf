@@ -42,7 +42,7 @@ namespace uaf
     *
     * @ingroup Util
     ***********************************************************************************************/
-    class UAF_EXPORT EventFilter : public uaf::Stringifiable
+    class UAF_EXPORT EventFilter
     {
     public:
 

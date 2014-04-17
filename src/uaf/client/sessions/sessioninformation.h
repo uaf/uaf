@@ -41,7 +41,7 @@ namespace uafc
     *
     * @ingroup ClientSessions
     ***********************************************************************************************/
-    class UAFC_EXPORT SessionInformation : public uaf::Stringifiable
+    class UAFC_EXPORT SessionInformation
     {
     public:
 

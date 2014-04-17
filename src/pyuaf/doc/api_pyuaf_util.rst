@@ -2334,30 +2334,6 @@
 
 
 
-*class* Stringifiable
-----------------------------------------------------------------------------------------------------
-
-
-.. autoclass:: pyuaf.util.Stringifiable
-
-
-     Stringifiable is an abstract class, subclassed by classes that must be able to be represented
-     as a string.
-    
-
-    * Methods:
-        
-        .. automethod:: pyuaf.util.Stringifiable.__str__(indent, colon)
-        
-            Get a string representation.
-            
-            :param indent: Indentation to add in front of each new line.
-            :type  indent: ``str``
-            :param colon: Position from the beginning of the line, where a colon (double point) 
-                          should be placed in case of key : value pairs.
-            :type  colon: ``int``.
-            
-
 *class* StringVector
 ----------------------------------------------------------------------------------------------------
 

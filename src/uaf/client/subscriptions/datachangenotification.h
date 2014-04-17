@@ -70,6 +70,18 @@ namespace uafc
          * Get a string representation of the data notification.
          */
         std::string toString(const std::string& indent="", std::size_t colon=22) const;
+
+
+        // comparison operators
+        friend UAFC_EXPORT bool operator==(
+                const DataChangeNotification& object1,
+                const DataChangeNotification& object2);
+        friend UAFC_EXPORT bool operator!=(
+                const DataChangeNotification& object1,
+                const DataChangeNotification& object2);
+        friend UAFC_EXPORT bool operator<(
+                const DataChangeNotification& object1,
+                const DataChangeNotification& object2);
     };
 
 

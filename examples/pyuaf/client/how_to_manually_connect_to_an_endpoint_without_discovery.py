@@ -1,6 +1,6 @@
 # examples/pyuaf/client/how_to_manually_connect_to_an_endpoint_without_discovery.py
 """
-EXAMPLE: how to browse some nodes
+EXAMPLE: how to manually connect to an endpoint without discovery
 ====================================================================================================
 
 A UAF client normally uses the discovery process to identify a server and connect to it.

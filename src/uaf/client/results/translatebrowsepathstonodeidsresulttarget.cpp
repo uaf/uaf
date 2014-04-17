@@ -86,4 +86,47 @@ namespace uafc
         }
         return ss.str();
     }
+
+
+
+    // operator==
+    // =============================================================================================
+    bool operator==(
+            const TranslateBrowsePathsToNodeIdsResultTarget& object1,
+            const TranslateBrowsePathsToNodeIdsResultTarget& object2)
+    {
+        return    object1.clientConnectionId   == object2.clientConnectionId
+               && object1.status               == object2.status
+               && object1.expandedNodeIds      == object2.expandedNodeIds
+               && object1.remainingPathIndexes == object2.remainingPathIndexes;
+    }
+
+
+    // operator!=
+    // =============================================================================================
+    bool operator!=(
+            const TranslateBrowsePathsToNodeIdsResultTarget& object1,
+            const TranslateBrowsePathsToNodeIdsResultTarget& object2)
+    {
+        return !(object1 == object2);
+    }
+
+
+    // operator<
+    // =============================================================================================
+    bool operator<(
+            const TranslateBrowsePathsToNodeIdsResultTarget& object1,
+            const TranslateBrowsePathsToNodeIdsResultTarget& object2)
+    {
+        if (object1.clientConnectionId != object2.clientConnectionId)
+            return object1.clientConnectionId < object2.clientConnectionId;
+        else if (object1.status != object2.status)
+            return object1.status < object2.status;
+        else if (object1.expandedNodeIds != object2.expandedNodeIds)
+            return object1.expandedNodeIds < object2.expandedNodeIds;
+        else
+            return object1.remainingPathIndexes < object2.remainingPathIndexes;
+    }
+
+
 }

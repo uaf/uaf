@@ -63,6 +63,12 @@ namespace uafc
         BrowseRequestTarget(const uaf::Address& address);
 
 
+        /**
+         * Virtual destructor.
+         */
+        virtual ~BrowseRequestTarget() {}
+
+
         /** The address of the node to be browsed. */
         uaf::Address address;
 

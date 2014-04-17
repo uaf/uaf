@@ -45,6 +45,14 @@ namespace uafc
     ***********************************************************************************************/
     class UAFC_EXPORT Resolvable
     {
+    public:
+
+        /**
+         * Virtual destructor.
+         */
+        virtual ~Resolvable() {}
+
+
     private:
 
         // make sure a Resolver has access to all members

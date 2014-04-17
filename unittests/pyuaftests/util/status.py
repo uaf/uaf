@@ -1,6 +1,6 @@
 import pyuaf
 import unittest
-from pyuaf.util.unittesting import parseArgs
+from pyuaf.util.unittesting import parseArgs, testVector
 
 
 ARGS = parseArgs()
@@ -81,6 +81,9 @@ class StatusTest(unittest.TestCase):
     def test_util_Status___gt__(self):
         self.assertTrue( self.s4 > self.s3 )
         self.assertTrue( self.s5 > self.s3 )
+    
+    def test_util_StatusVector(self):
+        testVector(self, pyuaf.util.StatusVector, [self.s0, self.s1, self.s2, self.s3, self.s4, self.s5])
         
 
 

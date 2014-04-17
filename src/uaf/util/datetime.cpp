@@ -94,11 +94,11 @@ namespace uaf
 
     // Conver to OpcUa_DateTime
     // =============================================================================================
-    void DateTime::toSdk(OpcUa_DateTime& uaDateTime) const
+    void DateTime::toSdk(OpcUa_DateTime* uaDateTime) const
     {
         uint64_t t = toFileTime();
-        uaDateTime.dwLowDateTime = (OpcUa_UInt32)(t & 0xFFFFFFFF);
-        uaDateTime.dwHighDateTime = (OpcUa_UInt32)(t >> 32);
+        uaDateTime->dwLowDateTime = (OpcUa_UInt32)(t & 0xFFFFFFFF);
+        uaDateTime->dwHighDateTime = (OpcUa_UInt32)(t >> 32);
     }
 
 

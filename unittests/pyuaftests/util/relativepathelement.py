@@ -1,6 +1,6 @@
 import pyuaf
 import unittest
-from pyuaf.util.unittesting import parseArgs
+from pyuaf.util.unittesting import parseArgs, testVector
 
 
 ARGS = parseArgs()
@@ -72,6 +72,9 @@ class RelativePathElementTest(unittest.TestCase):
         self.assertTrue( self.r1 > self.r0 )
         self.assertTrue( self.r2 > self.r1 )
         self.assertTrue( self.r2 > self.r0 )
+    
+    def test_util_RelativePathElementVector(self):
+        testVector(self, pyuaf.util.RelativePath, [self.r0, self.r1, self.r2])
         
 
 

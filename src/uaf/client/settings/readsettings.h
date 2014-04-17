@@ -54,6 +54,12 @@ namespace uafc
         ReadSettings();
 
 
+        /**
+         * Virtual destructor.
+         */
+        virtual ~ReadSettings() {}
+
+
         /** The maximum age (in seconds) that the attribute that is read, should have.
           * When maxAgeSec = 0.0, the server is forced to fetch the most recent value from its
           * data source. */

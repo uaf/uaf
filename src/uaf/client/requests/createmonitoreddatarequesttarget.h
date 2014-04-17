@@ -85,6 +85,12 @@ namespace uafc
                 const uaf::DataChangeFilter&            dataChangeFilter);
 
 
+        /**
+         * Virtual destructor.
+         */
+        virtual ~CreateMonitoredDataRequestTarget() {}
+
+
         /** The address of the node of which the attribute should be monitored. */
         uaf::Address address;
 

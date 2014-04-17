@@ -45,7 +45,7 @@ namespace uafc
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT MonitoredItemSettings : public uaf::Stringifiable
+    class UAFC_EXPORT MonitoredItemSettings
     {
     public:
 

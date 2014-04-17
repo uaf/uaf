@@ -63,6 +63,12 @@ namespace uafc
         TranslateBrowsePathsToNodeIdsRequestTarget(const uaf::BrowsePath& browsePath);
 
 
+        /**
+         * Virtual destructor.
+         */
+        virtual ~TranslateBrowsePathsToNodeIdsRequestTarget() {}
+
+
         /** Browse path to be translated. */
         uaf::BrowsePath browsePath;
 

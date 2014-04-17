@@ -628,8 +628,7 @@ result = myClient.processRequest(request)
 # So we could do:
 print("Result overall status: %s" %result.overallStatus)
 print("Number of ReadResultTargets: %d" %len(result.targets))
-for i in xrange(len(result.targets)):
-    target = result.targets[i]
+for target in result.targets:
     if target.status.isGood():
         print(" - result target is good: data is %s (of type %s)" %(target.data, type(target.data)))
     else:

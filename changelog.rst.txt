@@ -17,6 +17,82 @@ Bugfixes (which do not have any implications on the API) can only be tracked
 via the GIT version control system.
 
 
+1.9 @ 2014/04/17
+----------------------------------------------------------------------------------------------------
+
+Informally:
+
+- This version doesn't really add more features to the UAF. It mostly fixes some not-so-critical 
+  problems that have been known for a long while, but were cumbersome to solve.
+
+- Bugfix: iterators of vectors are now properly wrapped. So you can do "for item in vec: ..." 
+  for all vectors. This functionality is now also tested by the unittests.
+  
+- Improved the reading/writing/historical reading/... of NodeIds, ExpandedNodeIds and 
+  QualifiedNames. Whenever you are reading/writing/... these particular datatypes, they will 
+  automatically be resolved by the UAF. For instance: when you read a QualifiedName, only the 
+  namespace index of the QualifiedName will be sent over the wire. As of now, the UAF will 
+  automatically insert the correct namespace URI into the result (according to the NamespaceArray 
+  of the server), so that the result is fully resolved. Another example: you can now simply do::
+  
+    currentOrderAddress = Address(NodeId("currentOrder", "my_company_namespace_uri"), "my_server_uri")
+    myClient.write(addresses = [ currentOrderAddress ]
+                   data      = [ NodeId("orders.order5", "my_company_namespace_uri") ])
+  
+  In the above example, the UAF will automatically resolve the 'data' argument (meaning: it will
+  find out the namespace index of "my_company_namespace_uri" and insert it into the data argument,
+  before sending the request to the server).
+  
+- Completely removed the abstract class uaf::Stringifiable (pyuaf.util.Stringifiable).
+  This most likely won't affect your code (do a search for "Stringifiable" if in doubt: 
+  if you don't find any occurrence, then you're safe).
+
+  - Rationale:
+    The reason for removing it is that SWIG had difficulties with vectors of classes that derive 
+    from uaf::Stringifiable. More specifically: SWIG didn't wrap the iterators correctly of 
+    std::vectors of classes in the uafc:: namespace that implement uaf::Stringifiable.  
+    For example, you couldn't do::
+  
+      vec = pyuaf.client.settings.SessionSecuritySettingsVector()
+      vec.resize(2)
+      for item in vec:
+          print(item)
+    
+    Instead, you could only do "for i in xrange(len(vec)): ...". The problem was that the iterator
+    ('item' in the code above) didn't point to a properly wrapped SessionSecuritySettings instance. 
+    Instead, 'item' was an opaque SWIG value, i.e. a SWIG artifact that you couldn't use directly.
+    Now that SessionSecuritySettings doesn't implement Stringifiable anymore, this bug is avoided.
+    Of course it comes at the cost of losing uaf::Stringifiable, but this class wasn't very useful 
+    so the advantage of fixing the bug was considered more important.
+
+- Added comparison operators for several classes.
+
+
+Formally:
+
+- The following classes have been removed:
+
+  - uaf::Stringifiable (pyuaf.util.Stringifiable)
+
+- Comparison operators (==, != and < in C++; __eq__, __ne__, __lt__, __gt__, __ge__ and __le__ in
+  Python) have been added to the following existing classes:
+  
+  - uaf::ApplicationDescription                     (pyuaf.util.ApplicationDescription)
+  - uaf::UserTokenPolicy                            (pyuaf.util.UserTokenPolicy)
+  - uaf::EndpointDescription                        (pyuaf.util.EndpointDescription)
+  - uafc::SessionSecuritySettings                   (pyuaf.client.settings.SessionSecuritySettings)
+  - uafc::MonitoredItemNotification                 (pyuaf.client.MonitoredItemNotification)
+  - uafc::DataChangeNotification                    (pyuaf.client.DataChangeNotification)
+  - uafc::EventNotification                         (pyuaf.client.EventNotification)
+  - uafc::AsyncResultTarget                         (pyuaf.client.results.AsyncResultTarget)
+  - uafc::BrowseResultTarget                        (pyuaf.client.results.BrowseResultTarget)
+  - uafc::CreateMonitoredDataResultTarget           (pyuaf.client.results.CreateMonitoredDataResultTarget)
+  - uafc::CreateMonitoredEventsResultTarget         (pyuaf.client.results.CreateMonitoredEventsResultTarget)
+  - uafc::HistoryReadRawModifiedResultTarget        (pyuaf.client.results.HistoryReadRawModifiedResultTarget)
+  - uafc::MethodCallResultTarget                    (pyuaf.client.results.MethodCallResultTarget)
+  - uafc::ReadResultTarget                          (pyuaf.client.results.ReadResultTarget)
+  - uafc::TranslateBrowsePathsToNodeIdsResultTarget (pyuaf.client.results.TranslateBrowsePathsToNodeIdsResultTarget)
+  - uafc::WriteResultTarget                         (pyuaf.client.results.WriteResultTarget)
 
 
 1.8 @ 2014/03/10

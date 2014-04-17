@@ -42,5 +42,39 @@ namespace uafc
     }
 
 
+    // operator==
+    // =============================================================================================
+    bool operator==(
+            const AsyncResultTarget& object1,
+            const AsyncResultTarget& object2)
+    {
+        return    object1.clientConnectionId == object2.clientConnectionId
+               && object1.status             == object2.status;
+    }
+
+
+    // operator!=
+    // =============================================================================================
+    bool operator!=(
+            const AsyncResultTarget& object1,
+            const AsyncResultTarget& object2)
+    {
+        return !(object1 == object2);
+    }
+
+
+    // operator<
+    // =============================================================================================
+    bool operator<(
+            const AsyncResultTarget& object1,
+            const AsyncResultTarget& object2)
+    {
+        if (object1.clientConnectionId != object2.clientConnectionId)
+            return object1.clientConnectionId < object2.clientConnectionId;
+        else
+            return object1.status < object2.status;
+    }
+
+
 
 }

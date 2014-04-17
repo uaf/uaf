@@ -50,7 +50,7 @@ namespace uafc
     * @ingroup ClientRequests
     ***********************************************************************************************/
     template<typename _ServiceConfig, typename _Target, bool _Async>
-    class UAFC_EXPORT BaseSessionRequest : public uaf::Stringifiable
+    class UAFC_EXPORT BaseSessionRequest
     {
     public:
 
@@ -150,7 +150,7 @@ namespace uafc
          *
          * @return  String representation.
          */
-        virtual std::string toString(const std::string& indent="", std::size_t colon=36) const
+        std::string toString(const std::string& indent="", std::size_t colon=36) const
         {
             std::stringstream ss;
 

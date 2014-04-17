@@ -55,6 +55,12 @@ namespace uafc
 
 
         /**
+         * Virtual destructor.
+         */
+        virtual ~BrowseNextSettings() {}
+
+
+        /**
          * A flag indicating if the memory associated with the continuation point in the server
          * should be released. */
         bool releaseContinuationPoints;

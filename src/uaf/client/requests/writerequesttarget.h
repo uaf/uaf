@@ -71,6 +71,12 @@ namespace uafc
                 uaf::attributeids::AttributeId  attributeId = uaf::attributeids::Value);
 
 
+        /**
+         * Virtual destructor.
+         */
+        virtual ~WriteRequestTarget() {}
+
+
         /** Address of the node of which the attribute should be written. */
         uaf::Address address;
 

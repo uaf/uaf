@@ -30,11 +30,10 @@
 // SDK
 #include "uabase/uaarraytemplates.h"
 #include "uabase/uastring.h"
-#include "uabase/uavariant.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/status.h"
-#include "uaf/util/expandednodeid.h"
+#include "uaf/util/variant.h"
 
 
 namespace uaf
@@ -116,9 +115,20 @@ namespace uaf
          * @return                      True if the uaf::ExpandedNodeId could be updated without
          *                              problems (i.e. if the namespace URI could be set).
          */
-        uaf::Status updateServerUri(
+        uaf::Status fillExpandedNodeId(
                 const OpcUa_ExpandedNodeId& opcUaExpandedNodeId,
                 uaf::ExpandedNodeId&        expandedNodeId) const;
+
+
+        /**
+         * Fill a Variant, which *may* include filling out the server URI, if the variant
+         * represents an ExpandedNodeId.
+         *
+         * @param variant         The uaf::Variant which we want to update.
+         * @return                Good if the uaf::Variant could be updated without
+         *                        problems (i.e. if the namespace URI could be set).
+         */
+        uaf::Status fillVariant(uaf::Variant& variant) const;
 
 
     private:

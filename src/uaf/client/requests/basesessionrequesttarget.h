@@ -41,11 +41,18 @@ namespace uafc
     *
     * @ingroup ClientRequests
     ***********************************************************************************************/
-    class UAFC_EXPORT BaseSessionRequestTarget :  private uafc::Resolvable,
-                                                  public uaf::Stringifiable
+    class UAFC_EXPORT BaseSessionRequestTarget :  public uafc::Resolvable
     {
     public:
 
+
+        /**
+         * Virtual destructor.
+         */
+        virtual ~BaseSessionRequestTarget() {}
+
+
+    private:
 
         /**
          * A friend function to get the server URI (via the private getServerUri method) from a

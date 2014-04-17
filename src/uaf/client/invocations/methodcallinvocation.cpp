@@ -73,8 +73,14 @@ namespace uafc
                 uaCallMethodRequests_[i].NoOfInputArguments = noOfInputArguments;
                 uaCallMethodRequests_[i].InputArguments = new OpcUa_Variant[noOfInputArguments];
                 for (size_t j = 0; j < noOfInputArguments; j++)
-                    targets[i].inputArguments[j].toSdk(
-                            &uaCallMethodRequests_[i].InputArguments[j]);
+                {
+                    // create a copy of the input argument, fill it, and copy the contents to
+                    // the SDK object.
+                    Variant v(targets[i].inputArguments[j]);
+                    nameSpaceArray.fillVariant(v);
+                    serverArray.fillVariant(v);
+                    v.toSdk(&uaCallMethodRequests_[i].InputArguments[j]);
+                }
             }
         }
 
@@ -130,8 +136,14 @@ namespace uafc
                 // fill the SDK input arguments
                 uaCallIn_.inputArguments.create(noOfInputArguments);
                 for (size_t j = 0; j < noOfInputArguments; j++)
-                    targets[i].inputArguments[j].toSdk(
-                            &uaCallIn_.inputArguments[j]);
+                {
+                    // create a copy of the input argument, fill it, and copy the contents to
+                    // the SDK object.
+                    Variant v(targets[i].inputArguments[j]);
+                    nameSpaceArray.fillVariant(v);
+                    serverArray.fillVariant(v);
+                    v.toSdk(&uaCallIn_.inputArguments[j]);
+                }
             }
         }
 
@@ -209,8 +221,11 @@ namespace uafc
 
                 // fill the outputArguments
                 for (int32_t j = 0; j < noOfOutputArguments; j++)
-                    targets[i].outputArguments[j] \
-                                                 = uaCallMethodResults_[i].OutputArguments[j];
+                {
+                    targets[i].outputArguments[j] = uaCallMethodResults_[i].OutputArguments[j];
+                    nameSpaceArray.fillVariant(targets[i].outputArguments[j]);
+                    serverArray.fillVariant(targets[i].outputArguments[j]);
+                }
 
             }
 

@@ -45,7 +45,7 @@ namespace uaf
     *
     * @ingroup Util
     ***********************************************************************************************/
-    class UAF_EXPORT ApplicationDescription : public uaf::Stringifiable
+    class UAF_EXPORT ApplicationDescription
     {
     public:
 
@@ -114,6 +114,18 @@ namespace uaf
          * @return       A string representation (multiple lines, separated by newline-characters).
          */
         std::string toString(const std::string& indent="", std::size_t colon=11) const;
+
+
+        // comparison operators
+        friend UAF_EXPORT bool operator==(
+                const ApplicationDescription& object1,
+                const ApplicationDescription& object2);
+        friend UAF_EXPORT bool operator!=(
+                const ApplicationDescription& object1,
+                const ApplicationDescription& object2);
+        friend UAF_EXPORT bool operator<(
+                const ApplicationDescription& object1,
+                const ApplicationDescription& object2);
 
 
     };

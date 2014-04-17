@@ -61,8 +61,11 @@ namespace uafc
                 uaWriteValues_[i].AttributeId = targets[i].attributeId;
                 UaString(targets[i].indexRange.c_str()).copyTo(&uaWriteValues_[i].IndexRange);
 
+                DataValue dv(targets[i]);
+                nameSpaceArray.fillVariant(dv.data);
+                serverArray.fillVariant(dv.data);
                 // copy the data value
-                targets[i].toSdk(&uaWriteValues_[i].Value);
+                dv.toSdk(&uaWriteValues_[i].Value);
             }
         }
 

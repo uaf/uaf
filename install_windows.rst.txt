@@ -192,7 +192,7 @@ Installation procedure for Microsoft Windows
       cd "C:\Users\john\uaf\examples\"
       uaf-commandprompt.bat
       cd pyuaf\client
-      C:\Python27\python.exe simplest_client_example.py
+      C:\Python27\python.exe easiest_client_example.py
       
 
 .. This document is part of the Unified Architecture Framework : http://github.com/uaf

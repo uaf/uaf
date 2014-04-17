@@ -1,6 +1,6 @@
 import pyuaf
 import unittest
-from pyuaf.util.unittesting import parseArgs
+from pyuaf.util.unittesting import parseArgs, testVector
 
 
 ARGS = parseArgs()
@@ -111,6 +111,11 @@ class ExpandedNodeIdTest(unittest.TestCase):
     def test_util_ExpandedNodeId___gt__(self):
         self.assertTrue( self.n1 > self.n0 )
         self.assertTrue( self.n2 > self.n0 )
+    
+    def test_util_ExpandedNodeIdVector(self):
+        testVector(self, 
+                   pyuaf.util.ExpandedNodeIdVector, 
+                   [self.n0, self.n1, self.n2, self.n3, self.n4, self.n5, self.n6, self.n7, self.n8, self.n9, self.n10])
 
 
 

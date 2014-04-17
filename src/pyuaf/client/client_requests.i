@@ -24,6 +24,7 @@
 #include "uaf/util/primitives.h"
 #include "uaf/util/referencedescription.h"
 #include "uaf/util/modificationinfo.h"
+#include "uaf/client/resolution/resolvable.h"
 #include "uaf/client/settings/clientsettings.h"
 #include "uaf/client/requests/basesessionrequesttarget.h"
 #include "uaf/client/requests/basesubscriptionrequesttarget.h"
@@ -75,6 +76,8 @@
 
 // before including any classes in a generic way, specify the "special treatments" of certain classes:
 %ignore getServerUriFromTarget(const BaseSessionRequestTarget& target, std::string& serverUri);
+%ignore uafc::Resolvable;
+%import "uaf/client/resolution/resolvable.h"
 MAKE_NON_DYNAMIC(uafc::CreateMonitoredDataRequestTarget)
 MAKE_NON_DYNAMIC(uafc::CreateMonitoredEventsRequestTarget)
 MAKE_NON_DYNAMIC(uafc::MethodCallRequestTarget)

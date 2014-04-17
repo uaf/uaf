@@ -148,7 +148,7 @@ namespace uaf
         if (!sourceTimestamp.isNull())
         {
             OpcUa_DateTime uaSourceTimestamp;
-            sourceTimestamp.toSdk(uaSourceTimestamp);
+            sourceTimestamp.toSdk(&uaSourceTimestamp);
             uaDataValue.setSourceTimestamp(uaSourceTimestamp);
             uaDataValue.setSourcePicoseconds(sourcePicoseconds);
         }
@@ -156,7 +156,7 @@ namespace uaf
         if (!serverTimestamp.isNull())
         {
             OpcUa_DateTime uaServerTimestamp;
-            serverTimestamp.toSdk(uaServerTimestamp);
+            serverTimestamp.toSdk(&uaServerTimestamp);
             uaDataValue.setServerTimestamp(uaServerTimestamp);
             uaDataValue.setServerPicoseconds(serverPicoseconds);
         }

@@ -18,6 +18,13 @@ ALL_MODULES = [ "expandednodeid",
                 "statusdiagnostics",
                 "status",
                 "variant",
+                "datavalue",
+                "applicationdescription",
+                "modificationinfo",
+                "simpleattributeoperand",
+                "usertokenpolicy",
+                "endpointdescription",
+                "referencedescription"
               ]
 
 

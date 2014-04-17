@@ -142,7 +142,7 @@ namespace uafc
          *
          * @return  String representation.
          */
-        virtual std::string toString(const std::string& indent="", std::size_t colon=36) const
+        std::string toString(const std::string& indent="", std::size_t colon=36) const
         {
             std::stringstream ss;
 

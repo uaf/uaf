@@ -54,27 +54,6 @@ namespace uaf
     std::string UAF_EXPORT fillToPos(const std::stringstream& ss, std::size_t pos);
 
 
-    /*******************************************************************************************//**
-    * An Stringifiable interface provides a function to get a string representation of the object.
-    *
-    * @ingroup Util
-    ***********************************************************************************************/
-    class UAF_EXPORT Stringifiable
-    {
-    public:
-        /**
-         * Get a string representation.
-         *
-         * @param indent    The indentation to include in front of each line (often just an empty
-         *                  string, but it may also be for example "   ").
-         * @param colon     In case of key : value pairs, the colon will be put at this position.
-         */
-        virtual std::string toString(const std::string& indent="", std::size_t colon=0) const = 0;
-
-        virtual ~Stringifiable() {}
-    };
-
-
 }
 
 

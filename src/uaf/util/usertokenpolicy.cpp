@@ -96,6 +96,40 @@ namespace uaf
     }
 
 
+    // operator==
+    // =============================================================================================
+    bool operator==( const UserTokenPolicy& object1, const UserTokenPolicy& object2)
+    {
+        return    (object1.tokenType == object2.tokenType)
+               && (object1.issuedTokenType == object2.issuedTokenType)
+               && (object1.issuerEndpointUrl == object2.issuerEndpointUrl)
+               && (object1.securityPolicyUri == object2.securityPolicyUri);
+    }
+
+
+    // operator!=
+    // =============================================================================================
+    bool operator!=(const UserTokenPolicy& object1, const UserTokenPolicy& object2)
+    {
+        return !(object1 == object2);
+    }
+
+
+    // operator<
+    // =============================================================================================
+    bool operator<(const UserTokenPolicy& object1, const UserTokenPolicy& object2)
+    {
+        if (object1.tokenType != object2.tokenType)
+            return object1.tokenType < object2.tokenType;
+        else if (object1.issuedTokenType != object2.issuedTokenType)
+            return object1.issuedTokenType < object2.issuedTokenType;
+        else if (object1.issuerEndpointUrl != object2.issuerEndpointUrl)
+            return object1.issuerEndpointUrl < object2.issuerEndpointUrl;
+        else
+            return object1.securityPolicyUri < object2.securityPolicyUri;
+    }
+
+
 
 
 

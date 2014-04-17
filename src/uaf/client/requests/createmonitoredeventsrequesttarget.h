@@ -95,6 +95,12 @@ namespace uafc
                 const uaf::EventFilter&              eventFilter);
 
 
+        /**
+         * Virtual destructor.
+         */
+        virtual ~CreateMonitoredEventsRequestTarget() {}
+
+
         /** The address of the node to be monitored for events. */
         uaf::Address address;
 

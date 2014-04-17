@@ -48,7 +48,7 @@ namespace uafc
     * @ingroup ClientConfigs
     ***********************************************************************************************/
     template<typename _ServiceSettings>
-    class UAFC_EXPORT BaseServiceConfig : public uaf::Stringifiable
+    class UAFC_EXPORT BaseServiceConfig
     {
     public:
 
@@ -65,7 +65,7 @@ namespace uafc
         /**
          * Get a string representation of the config.
          */
-        virtual std::string toString(const std::string& indent="", std::size_t colon=40) const
+        std::string toString(const std::string& indent="", std::size_t colon=40) const
         {
             std::stringstream ss;
             ss << indent << " - serviceSettings\n";

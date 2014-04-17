@@ -62,6 +62,37 @@ namespace uafc
     }
 
 
+    // operator==
+    // =============================================================================================
+    bool operator==(const DataChangeNotification& object1, const DataChangeNotification& object2)
+    {
+        return    object1.clientHandle == object2.clientHandle
+               && object1.status == object2.status
+               && object1.data == object2.data;
+    }
+
+
+    // operator!=
+    // =============================================================================================
+    bool operator!=(const DataChangeNotification& object1, const DataChangeNotification& object2)
+    {
+        return !(object1 == object2);
+    }
+
+
+    // operator<
+    // =============================================================================================
+    bool operator<(const DataChangeNotification& object1, const DataChangeNotification& object2)
+    {
+        if (object1.clientHandle != object2.clientHandle)
+            return object1.clientHandle < object2.clientHandle;
+        else if (object1.status != object2.status)
+            return object1.status < object2.status;
+        else
+            return object1.data < object2.data;
+    }
+
+
 }
 
 

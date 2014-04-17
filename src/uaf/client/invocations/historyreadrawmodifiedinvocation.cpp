@@ -320,7 +320,11 @@ namespace uafc
                 uint32_t noOfDataValues = uaResults_[i].m_dataValues.length();
                 targets[i].dataValues.resize(noOfDataValues);
                 for (uint32_t j = 0; j < noOfDataValues; j++)
+                {
                     targets[i].dataValues[j].fromSdk(UaDataValue(uaResults_[i].m_dataValues[j]));
+                    nameSpaceArray.fillVariant(targets[i].dataValues[j].data);
+                    serverArray.fillVariant(targets[i].dataValues[j].data);
+                }
 
                 // update the modification information
                 uint32_t noOfModificationInfos = uaResults_[i].m_modificationInformation.length();

@@ -66,6 +66,12 @@ namespace uafc
                 uaf::attributeids::AttributeId attributeId = uaf::attributeids::Value);
 
 
+        /**
+         * Virtual destructor.
+         */
+        virtual ~ReadRequestTarget() {}
+
+
         /** The address of the node of which the attribute will be read. */
         uaf::Address address;
 

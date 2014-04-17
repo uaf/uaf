@@ -42,7 +42,7 @@ namespace uafc
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT ClientSettings : public uaf::Stringifiable
+    class UAFC_EXPORT ClientSettings
     {
     public:
 
@@ -185,13 +185,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator< (
+        friend UAFC_EXPORT bool operator< (
                 const ClientSettings& object1,
                 const ClientSettings& object2);
-        friend bool UAFC_EXPORT operator==(
+        friend UAFC_EXPORT bool operator==(
                 const ClientSettings& object1,
                 const ClientSettings& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend UAFC_EXPORT bool operator!=(
                 const ClientSettings& object1,
                 const ClientSettings& object2);
 

@@ -27,6 +27,7 @@ namespace uaf
     using std::string;
     using std::stringstream;
     using std::map;
+    using std::vector;
 
 
     // Constructor
@@ -124,7 +125,7 @@ namespace uaf
 
     // Update the server URI of an uaf::ExpandedNodeId
     // =============================================================================================
-    Status ServerArray::updateServerUri(
+    Status ServerArray::fillExpandedNodeId(
             const OpcUa_ExpandedNodeId& opcUaExpandedNodeId,
             ExpandedNodeId&             expandedNodeId) const
     {
@@ -163,6 +164,57 @@ namespace uaf
         }
 
         return ss.str();
+    }
+
+
+#define FILL_OPCUA_VARIANT_SERVERURI(TYPE)                                                          \
+        if (variant.isArray())                                                                      \
+        {                                                                                           \
+            vector<TYPE> vec;                                                                       \
+            variant.to##TYPE##Array(vec);                                                           \
+                                                                                                    \
+            if (vec.size() == 0) ret.setGood();                                                     \
+                                                                                                    \
+            for (std::size_t i = 0; i < vec.size() && ret.isNotBad(); i++)                          \
+            {                                                                                       \
+                OpcUa_##TYPE opcUaObject;                                                           \
+                vec[i].toSdk(&opcUaObject);                                                         \
+                ret = fill##TYPE(opcUaObject, vec[i]);                                              \
+            }                                                                                       \
+                                                                                                    \
+            if (ret.isGood()) variant.set##TYPE##Array(vec);                                        \
+        }                                                                                           \
+        else                                                                                        \
+        {                                                                                           \
+            TYPE value;                                                                             \
+            variant.to##TYPE(value);                                                                \
+                                                                                                    \
+            OpcUa_##TYPE opcUaObject;                                                               \
+            value.toSdk(&opcUaObject);                                                              \
+            ret = fill##TYPE(opcUaObject, value);                                                   \
+                                                                                                    \
+            if (ret.isGood()) variant.set##TYPE(value);                                             \
+        }
+
+    // Fill out a Variant
+    // =============================================================================================
+    Status ServerArray::fillVariant(Variant& variant) const
+    {
+        Status ret;
+
+        // only types with a namespace URI/index need to be filled:
+
+        if (variant.type() == uaf::opcuatypes::ExpandedNodeId)
+        {
+            FILL_OPCUA_VARIANT_SERVERURI(ExpandedNodeId)
+        }
+
+        else
+        {
+            ret.setGood();
+        }
+
+        return ret;
     }
 
 

@@ -44,6 +44,10 @@ namespace uafc
     {
         stringstream ss;
 
+        ss << indent << " - clientConnectionId";
+        ss << fillToPos(ss, colon);
+        ss << ": " << int(clientConnectionId) << "\n";
+
         ss << indent << " - status";
         ss << fillToPos(ss, colon);
         ss << ": " << status.toString() << "\n";
@@ -55,10 +59,6 @@ namespace uafc
         ss << indent << " - autoBrowsedNext";
         ss << fillToPos(ss, colon);
         ss << ": " << int(autoBrowsedNext) << "\n";
-
-        ss << indent << " - clientConnectionId";
-        ss << fillToPos(ss, colon);
-        ss << ": " << int(clientConnectionId) << "\n";
 
         // don't fully log all references because the resulting string could be huge!
         ss << indent << " - references[]";
@@ -78,6 +78,43 @@ namespace uafc
         }
 
         return ss.str();
+    }
+
+
+    // operator==
+    // =============================================================================================
+    bool operator==(const BrowseResultTarget& object1, const BrowseResultTarget& object2)
+    {
+        return    object1.clientConnectionId == object2.clientConnectionId
+               && object1.status             == object2.status
+               && object1.continuationPoint  == object2.continuationPoint
+               && object1.autoBrowsedNext    == object2.autoBrowsedNext
+               && object1.references         == object2.references;
+    }
+
+
+    // operator!=
+    // =============================================================================================
+    bool operator!=(const BrowseResultTarget& object1, const BrowseResultTarget& object2)
+    {
+        return !(object1 == object2);
+    }
+
+
+    // operator<
+    // =============================================================================================
+    bool operator<(const BrowseResultTarget& object1, const BrowseResultTarget& object2)
+    {
+        if (object1.status != object2.status)
+            return object1.status < object2.status;
+        else if (object1.continuationPoint != object2.continuationPoint)
+            return object1.continuationPoint < object2.continuationPoint;
+        else if (object1.autoBrowsedNext != object2.autoBrowsedNext)
+            return object1.autoBrowsedNext < object2.autoBrowsedNext;
+        else if (object1.clientConnectionId != object2.clientConnectionId)
+            return object1.clientConnectionId < object2.clientConnectionId;
+        else
+            return object1.references < object2.references;
     }
 
 

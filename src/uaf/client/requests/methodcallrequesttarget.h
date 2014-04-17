@@ -57,6 +57,12 @@ namespace uafc
 
 
         /**
+         * Virtual destructor.
+         */
+        virtual ~MethodCallRequestTarget() {}
+
+
+        /**
          * Construct a method call target for a given object address, method address and
          * input arguments.
          *

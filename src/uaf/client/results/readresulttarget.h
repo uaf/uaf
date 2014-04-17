@@ -57,10 +57,23 @@ namespace uafc
          */
         ReadResultTarget();
 
+
         /**
          * Get a string representation of the target.
          */
         std::string toString(const std::string& indent="", std::size_t colon=22) const;
+
+
+        // comparison operators
+        friend bool UAFC_EXPORT operator==(
+                const ReadResultTarget& object1,
+                const ReadResultTarget& object2);
+        friend bool UAFC_EXPORT operator!=(
+                const ReadResultTarget& object1,
+                const ReadResultTarget& object2);
+        friend bool UAFC_EXPORT operator<(
+                const ReadResultTarget& object1,
+                const ReadResultTarget& object2);
 
     };
 

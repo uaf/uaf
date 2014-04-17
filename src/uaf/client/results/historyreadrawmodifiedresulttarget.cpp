@@ -44,6 +44,10 @@ namespace uafc
     {
         stringstream ss;
 
+        ss << indent << " - clientConnectionId";
+        ss << fillToPos(ss, colon);
+        ss << ": " << int(clientConnectionId) << "\n";
+
         ss << indent << " - status";
         ss << fillToPos(ss, colon);
         ss << ": " << status.toString() << "\n";
@@ -55,10 +59,6 @@ namespace uafc
         ss << indent << " - autoReadMore";
         ss << fillToPos(ss, colon);
         ss << ": " << int(autoReadMore) << "\n";
-
-        ss << indent << " - clientConnectionId";
-        ss << fillToPos(ss, colon);
-        ss << ": " << int(clientConnectionId) << "\n";
 
         ss << indent << " - dataValues";
         if (dataValues.size() == 0)
@@ -95,6 +95,52 @@ namespace uafc
         }
 
         return ss.str();
+    }
+
+
+    // operator==
+    // =============================================================================================
+    bool operator==(
+            const HistoryReadRawModifiedResultTarget& object1,
+            const HistoryReadRawModifiedResultTarget& object2)
+    {
+        return    object1.clientConnectionId == object2.clientConnectionId
+               && object1.status             == object2.status
+               && object1.continuationPoint  == object2.continuationPoint
+               && object1.autoReadMore       == object2.autoReadMore
+               && object1.dataValues         == object2.dataValues
+               && object1.modificationInfos  == object2.modificationInfos;
+    }
+
+
+    // operator!=
+    // =============================================================================================
+    bool operator!=(
+            const HistoryReadRawModifiedResultTarget& object1,
+            const HistoryReadRawModifiedResultTarget& object2)
+    {
+        return !(object1 == object2);
+    }
+
+
+    // operator<
+    // =============================================================================================
+    bool operator<(
+            const HistoryReadRawModifiedResultTarget& object1,
+            const HistoryReadRawModifiedResultTarget& object2)
+    {
+        if (object1.clientConnectionId != object2.clientConnectionId)
+            return object1.clientConnectionId < object2.clientConnectionId;
+        else if (object1.status != object2.status)
+            return object1.status < object2.status;
+        else if (object1.continuationPoint != object2.continuationPoint)
+            return object1.continuationPoint < object2.continuationPoint;
+        else if (object1.autoReadMore != object2.autoReadMore)
+            return object1.autoReadMore < object2.autoReadMore;
+        else if (object1.dataValues != object2.dataValues)
+            return object1.dataValues < object2.dataValues;
+        else
+            return object1.modificationInfos < object2.modificationInfos;
     }
 
 

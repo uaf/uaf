@@ -52,10 +52,16 @@
         
         uint8_t* someBytes;
         
-        uaf::NodeId someNodeId;
-        uaf::ExpandedNodeId someExpandedNodeId;
+        uaf::NodeId someNodeId0;
+        uaf::NodeId someNodeId1;
+        uaf::NodeId someNodeId2;
+        uaf::ExpandedNodeId someExpandedNodeId0;
+        uaf::ExpandedNodeId someExpandedNodeId1;
+        uaf::ExpandedNodeId someExpandedNodeId2;
+        uaf::QualifiedName someQualifiedName0;
+        uaf::QualifiedName someQualifiedName1;
+        uaf::QualifiedName someQualifiedName2;
         uaf::LocalizedText someLocalizedText;
-        uaf::QualifiedName someQualifiedName;
         uaf::DateTime someDateTime;
         
         UnitTestHelper() 
@@ -68,10 +74,16 @@
             // create a NodeId but don't include a NameSpaceURI because the OPC UA NodeId type
             // only contains a NameSpaceIndex (in contrast to the UAF NodeId, which can contain 
             // both)
-            someNodeId = uaf::NodeId("SomeIdentifier", 42);
-            someExpandedNodeId = uaf::ExpandedNodeId("SomeIdentifier", 42, 21);
+            someNodeId0 = uaf::NodeId("SomeIdentifier", 42);
+            someNodeId1 = uaf::NodeId("SomeIdentifier", "nsUri");
+            someNodeId2 = uaf::NodeId("SomeIdentifier", "nsUri", 42);
+            someExpandedNodeId0 = uaf::ExpandedNodeId("SomeIdentifier", 42, 21);
+            someExpandedNodeId1 = uaf::ExpandedNodeId("SomeIdentifier", "nsUri", 21);
+            someExpandedNodeId2 = uaf::ExpandedNodeId("SomeIdentifier", "nsUri", "svrUri");
+            someQualifiedName0 = uaf::QualifiedName("SomeName", 42);
+            someQualifiedName1 = uaf::QualifiedName("SomeName", "nsUri");
+            someQualifiedName2 = uaf::QualifiedName("SomeName", "nsUri", 42);
             someLocalizedText = uaf::LocalizedText("en", "SomeText");
-            someQualifiedName = uaf::QualifiedName("SomeName", 42);
             someDateTime = uaf::DateTime::fromString("2013-05-21T12:34:56.789Z");
         }
 
@@ -202,18 +214,18 @@
                     case uaf::opcuatypes::NodeId:
                     {
                         std::vector<uaf::NodeId> array;
-                        array.push_back(someNodeId);
-                        array.push_back(someNodeId);
-                        array.push_back(someNodeId);
+                        array.push_back(someNodeId0);
+                        array.push_back(someNodeId1);
+                        array.push_back(someNodeId2);
                         v.setNodeIdArray(array);
                         break;
                     }
                     case uaf::opcuatypes::ExpandedNodeId:
                     {
                         std::vector<uaf::ExpandedNodeId> array;
-                        array.push_back(someExpandedNodeId);
-                        array.push_back(someExpandedNodeId);
-                        array.push_back(someExpandedNodeId);
+                        array.push_back(someExpandedNodeId0);
+                        array.push_back(someExpandedNodeId1);
+                        array.push_back(someExpandedNodeId2);
                         v.setExpandedNodeIdArray(array);
                         break;
                     }
@@ -229,9 +241,9 @@
                     case uaf::opcuatypes::QualifiedName:
                     {
                         std::vector<uaf::QualifiedName> array;
-                        array.push_back(someQualifiedName);
-                        array.push_back(someQualifiedName);
-                        array.push_back(someQualifiedName);
+                        array.push_back(someQualifiedName0);
+                        array.push_back(someQualifiedName1);
+                        array.push_back(someQualifiedName2);
                         v.setQualifiedNameArray(array);
                         break;
                     }
@@ -255,25 +267,25 @@
             {
                 switch (type)
                 {
-                    case uaf::opcuatypes::Boolean:        { v.setBoolean(true);                      break; }
-                    case uaf::opcuatypes::Byte:           { v.setByte(3);                            break; }
-                    case uaf::opcuatypes::SByte:          { v.setSByte(-3);                          break; }
-                    case uaf::opcuatypes::UInt16:         { v.setUInt16(3);                          break; }
-                    case uaf::opcuatypes::Int16:          { v.setInt16(-3);                          break; }
-                    case uaf::opcuatypes::UInt32:         { v.setUInt32(3);                          break; }
-                    case uaf::opcuatypes::Int32:          { v.setInt32(-3);                          break; }
-                    case uaf::opcuatypes::UInt64:         { v.setUInt64(3);                          break; }
-                    case uaf::opcuatypes::Int64:          { v.setInt64(-3);                          break; }
-                    case uaf::opcuatypes::Float:          { v.setFloat(3.14);                        break; }
-                    case uaf::opcuatypes::Double:         { v.setDouble(3.14);                       break; }
-                    case uaf::opcuatypes::String:         { v.setString("test \xc2\xb0");            break; } // \u00B0 only works for GCC
-                    case uaf::opcuatypes::ByteString:     { v.setByteString(someBytes, 3);           break; }
-                    case uaf::opcuatypes::NodeId:         { v.setNodeId(someNodeId);                 break; }
-                    case uaf::opcuatypes::ExpandedNodeId: { v.setExpandedNodeId(someExpandedNodeId); break; }
-                    case uaf::opcuatypes::LocalizedText:  { v.setLocalizedText(someLocalizedText);   break; }
-                    case uaf::opcuatypes::QualifiedName:  { v.setQualifiedName(someQualifiedName);   break; }
-                    case uaf::opcuatypes::DateTime:       { v.setDateTime(someDateTime);             break; }
-                    default:                              { v.clear();                               break; }
+                    case uaf::opcuatypes::Boolean:        { v.setBoolean(true);                       break; }
+                    case uaf::opcuatypes::Byte:           { v.setByte(3);                             break; }
+                    case uaf::opcuatypes::SByte:          { v.setSByte(-3);                           break; }
+                    case uaf::opcuatypes::UInt16:         { v.setUInt16(3);                           break; }
+                    case uaf::opcuatypes::Int16:          { v.setInt16(-3);                           break; }
+                    case uaf::opcuatypes::UInt32:         { v.setUInt32(3);                           break; }
+                    case uaf::opcuatypes::Int32:          { v.setInt32(-3);                           break; }
+                    case uaf::opcuatypes::UInt64:         { v.setUInt64(3);                           break; }
+                    case uaf::opcuatypes::Int64:          { v.setInt64(-3);                           break; }
+                    case uaf::opcuatypes::Float:          { v.setFloat(3.14);                         break; }
+                    case uaf::opcuatypes::Double:         { v.setDouble(3.14);                        break; }
+                    case uaf::opcuatypes::String:         { v.setString("test \xc2\xb0");             break; } // \u00B0 only works for GCC
+                    case uaf::opcuatypes::ByteString:     { v.setByteString(someBytes, 3);            break; }
+                    case uaf::opcuatypes::NodeId:         { v.setNodeId(someNodeId2);                 break; }
+                    case uaf::opcuatypes::ExpandedNodeId: { v.setExpandedNodeId(someExpandedNodeId2); break; }
+                    case uaf::opcuatypes::LocalizedText:  { v.setLocalizedText(someLocalizedText);    break; }
+                    case uaf::opcuatypes::QualifiedName:  { v.setQualifiedName(someQualifiedName2);   break; }
+                    case uaf::opcuatypes::DateTime:       { v.setDateTime(someDateTime);              break; }
+                    default:                              { v.clear();                                break; }
                 }
             }
     

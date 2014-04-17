@@ -112,9 +112,8 @@
 
 
 // now include all classes in a generic way
-UAF_WRAP_CLASS("uaf/util/stringifiable.h"          , uaf , Stringifiable           , COPY_NO,  TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/localizedtext.h"          , uaf , LocalizedText           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/util/applicationdescription.h" , uaf , ApplicationDescription  , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, ApplicationDescriptionVector)
+UAF_WRAP_CLASS("uaf/util/applicationdescription.h" , uaf , ApplicationDescription  , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ApplicationDescriptionVector)
 UAF_WRAP_CLASS("uaf/util/guid.h"                   , uaf , Guid                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/datetime.h"               , uaf , DateTime                , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, DateTimeVector)
 UAF_WRAP_CLASS("uaf/util/mask.h"                   , uaf , Mask                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
@@ -134,8 +133,8 @@ UAF_WRAP_CLASS("uaf/util/simpleattributeoperand.h" , uaf , SimpleAttributeOperan
 UAF_WRAP_CLASS("uaf/util/datachangefilter.h"       , uaf , DataChangeFilter        , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/eventfilter.h"            , uaf , EventFilter             , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/address.h"                , uaf , Address                 , COPY_NO,  TOSTRING_YES, COMP_YES, pyuaf.util, AddressVector)
-UAF_WRAP_CLASS("uaf/util/usertokenpolicy.h"        , uaf , UserTokenPolicy         , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, UserTokenPolicyVector)
-UAF_WRAP_CLASS("uaf/util/endpointdescription.h"    , uaf , EndpointDescription     , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, EndpointDescriptionVector)
+UAF_WRAP_CLASS("uaf/util/usertokenpolicy.h"        , uaf , UserTokenPolicy         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, UserTokenPolicyVector)
+UAF_WRAP_CLASS("uaf/util/endpointdescription.h"    , uaf , EndpointDescription     , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, EndpointDescriptionVector)
 UAF_WRAP_CLASS("uaf/util/viewdescription.h"        , uaf , ViewDescription         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/referencedescription.h"   , uaf , ReferenceDescription    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ReferenceDescriptionVector)
 UAF_WRAP_CLASS("uaf/util/statusdiagnostics.h"      , uaf , StatusDiagnostics       , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
@@ -146,8 +145,40 @@ UAF_WRAP_CLASS("uaf/util/statusdiagnostics.h"      , uaf , StatusDiagnostics    
     %include "pyuaf/util/util_variant_python.i"
 #endif
 
+
+%pythoncode %{
+class VectorIterator(object):
+   
+    def __init__(self, pointerToVector):
+        self.pointerToVector = pointerToVector
+        self.index = -1
+    
+    def next(self):
+        self.index += 1
+        if self.index < len(self.pointerToVector):
+            return self.pointerToVector[self.index]
+        else:
+            raise StopIteration
+%}
+
+%rename(__cpp_iterator) std::vector<uaf::Variant>::iterator;
+%rename(__cpp_insert) std::vector<uaf::Variant>::insert;
+
+%extend std::vector<uaf::Variant> {
+%pythoncode {
+    def iterator(self):
+        return VectorIterator(self)
+    def insert(self, i, x):
+        if isinstance(i, int): # "insert" is used as if the vector is a Python list
+            ___init__.VariantVector___cpp_insert(self, self.begin() + i, x)
+        else: # "insert" is used as if the vector is a native C++ container
+            return ___init__.VariantVector___cpp_insert(self, i, x)
+   }
+}
+
 // create a Vector that holds these variants!
 %template(VariantVector) std::vector<uaf::Variant>;
+
 
 // import the UnitTestHelper in case of Python
 #if defined(SWIGPYTHON)
