@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util &mdash; PyUAF 1.8 documentation</title>
+    <title>pyuaf.util &mdash; PyUAF 1.9 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.8',
+        VERSION:     '1.9',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.8 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.9 documentation" href="index.html" />
     <link rel="next" title="pyuaf.util.attributeids" href="api_pyuaf_util_attributeids.html" />
     <link rel="prev" title="pyuaf.client.subscriptionstates" href="api_pyuaf_client_subscriptionstates.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.8 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.9 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -3166,42 +3166,6 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 </dd></dl>
 
 </div>
-<div class="section" id="class-stringifiable">
-<h2><em>class</em> Stringifiable<a class="headerlink" href="#class-stringifiable" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="pyuaf.util.Stringifiable">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">Stringifiable</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#pyuaf.util.Stringifiable" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
-<div>Stringifiable is an abstract class, subclassed by classes that must be able to be represented
-as a string.</div></blockquote>
-<ul>
-<li><p class="first">Methods:</p>
-<blockquote>
-<div><dl class="method">
-<dt id="pyuaf.util.Stringifiable.__str__">
-<tt class="descname">__str__</tt><big>(</big><em>indent</em>, <em>colon</em><big>)</big><a class="headerlink" href="#pyuaf.util.Stringifiable.__str__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a string representation.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>indent</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; Indentation to add in front of each new line.</li>
-<li><strong>colon</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>.) &#8211; Position from the beginning of the line, where a colon (double point)
-should be placed in case of key : value pairs.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</div></blockquote>
-</li>
-</ul>
-</dd></dl>
-
-</div>
 <div class="section" id="class-stringvector">
 <h2><em>class</em> StringVector<a class="headerlink" href="#class-stringvector" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -3488,6 +3452,10 @@ of this list should have the same type!!!</p>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;Vector contents:&quot;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">noOfElements</span><span class="p">):</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot; - vec[</span><span class="si">%d</span><span class="s">] = </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">vec</span><span class="p">[</span><span class="n">i</span><span class="p">])))</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Vector contents, using iterators:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">vec</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot; - </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="nb">repr</span><span class="p">(</span><span class="n">element</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -3575,7 +3543,6 @@ will return True) if you want to specify the whole address space.</p>
 <li><a class="reference internal" href="#class-status"><em>class</em> Status</a></li>
 <li><a class="reference internal" href="#class-statusdiagnostics"><em>class</em> StatusDiagnostics</a></li>
 <li><a class="reference internal" href="#class-statusvector"><em>class</em> StatusVector</a></li>
-<li><a class="reference internal" href="#class-stringifiable"><em>class</em> Stringifiable</a></li>
 <li><a class="reference internal" href="#class-stringvector"><em>class</em> StringVector</a></li>
 <li><a class="reference internal" href="#class-uint32vector"><em>class</em> UInt32Vector</a></li>
 <li><a class="reference internal" href="#class-usertokenpolicy"><em>class</em> UserTokenPolicy</a></li>
@@ -3629,7 +3596,7 @@ will return True) if you want to specify the whole address space.</p>
         <li class="right" >
           <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.8 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.9 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
