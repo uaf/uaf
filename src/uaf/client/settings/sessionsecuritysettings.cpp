@@ -103,12 +103,12 @@ namespace uafc
     bool operator==(const SessionSecuritySettings& object1, const SessionSecuritySettings& object2)
     {
         return (object1.securityPolicy == object2.securityPolicy)
-                and (object1.messageSecurityMode == object2.messageSecurityMode)
-                and (object1.userTokenType == object2.userTokenType)
-                and (object1.userName == object2.userName)
-                and (object1.userPassword == object2.userPassword)
-                and (object1.userCertificateFileName == object2.userCertificateFileName)
-                and (object1.userPrivateKeyFileName == object2.userPrivateKeyFileName);
+                && (object1.messageSecurityMode == object2.messageSecurityMode)
+                && (object1.userTokenType == object2.userTokenType)
+                && (object1.userName == object2.userName)
+                && (object1.userPassword == object2.userPassword)
+                && (object1.userCertificateFileName == object2.userCertificateFileName)
+                && (object1.userPrivateKeyFileName == object2.userPrivateKeyFileName);
     }
 
 
