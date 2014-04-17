@@ -241,6 +241,12 @@ License?
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+Statistics?
+-------------------------------------------------------------------------------
+
+[![Project Stats](http://www.ohloh.net/p/unified-architecture-framework/widgets/project_thin_badge.gif)](http:///www.ohloh.net/p/unified-architecture-framework)
+
+
 [documentation]: http://uaf.github.io/uaf/doc/pyuaf
 [examples]: http://uaf.github.io/uaf/doc/pyuaf/client_examples.html
 [Doxygen]: http://www.doxygen.org
