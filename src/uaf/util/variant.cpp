@@ -249,7 +249,7 @@ namespace uaf
     {
         OpcUa_Boolean opcUaVal;
         Status ret = evaluate(uaVariant_.toBool(opcUaVal), uaVariant_.type(), OpcUaType_Boolean);
-        val = (opcUaVal == OpcUa_True);
+        val = (bool)(opcUaVal);
         return ret;
     }
 
@@ -655,7 +655,7 @@ namespace uaf
         if (isNativeUaf_)
             return arrayTypeIfNativeUaf_ == OpcUa_VariantArrayType_Array;
         else
-            return uaVariant_.isArray() == OpcUa_True;
+            return (bool)(uaVariant_.isArray());
     }
 
 
