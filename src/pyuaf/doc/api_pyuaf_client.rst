@@ -292,7 +292,15 @@
         .. autoattribute:: pyuaf.client.SessionInformation.serverUri
             
             The URI of the server to which the session should be connected, as a ``str``.
-      
+         
+        .. autoattribute:: pyuaf.client.SessionInformation.lastConnectionAttemptTime
+            
+            The time of the last connection attempt, as a :class:`~pyuaf.util.DateTime` instance.
+         
+        .. autoattribute:: pyuaf.client.SessionInformation.lastConnectionAttemptStatus
+            
+            The status of the last connection attempt, as a :class:`~pyuaf.util.Status` instance.
+
 
 *class* SubscriptionInformation
 ----------------------------------------------------------------------------------------------------
