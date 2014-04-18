@@ -29,6 +29,8 @@
 // UAF
 #include "uaf/util/stringifiable.h"
 #include "uaf/util/handles.h"
+#include "uaf/util/datetime.h"
+#include "uaf/util/status.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/sessions/sessionstates.h"
 
@@ -59,11 +61,15 @@ namespace uafc
          * @param sessionState          The state of the session.
          * @param serverUri             The URI of the server to which the session should be
          *                              connected.
+         * @param sessionState          The time of the last connection attempt.
+         * @param sessionState          The status of the last connection attempt.
          */
         SessionInformation(
                 uaf::ClientConnectionId             clientConnectionId,
                 uafc::sessionstates::SessionState   sessionState,
-                const std::string&                  serverUri);
+                const std::string&                  serverUri,
+                const uaf::DateTime&                lastConnectionAttemptTime,
+                const uaf::Status&                  lastConnectionAttemptStatus);
 
 
         /** The state of the session. */
@@ -75,11 +81,16 @@ namespace uafc
         /** The URI of the server to which the session should be connected. */
         std::string                         serverUri;
 
+        /** The time of the last connection attempt. */
+        uaf::DateTime                       lastConnectionAttemptTime;
+
+        /** The status of the last connection attempt. */
+        uaf::Status                         lastConnectionAttemptStatus;
 
         /**
          * Get a string representation of the information.
          */
-        std::string toString(const std::string& indent="", std::size_t colon=22) const;
+        std::string toString(const std::string& indent="", std::size_t colon=31) const;
 
 
         // comparison operators

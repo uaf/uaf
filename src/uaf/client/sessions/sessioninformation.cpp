@@ -42,10 +42,14 @@ namespace uafc
     SessionInformation::SessionInformation(
             ClientConnectionId                  clientConnectionId,
             uafc::sessionstates::SessionState   sessionState,
-            const string&                       serverUri)
+            const string&                       serverUri,
+            const DateTime&                     lastConnectionAttemptTime,
+            const Status&                       lastConnectionAttemptStatus)
       : sessionState(sessionState),
         clientConnectionId(clientConnectionId),
-        serverUri(serverUri)
+        serverUri(serverUri),
+        lastConnectionAttemptTime(lastConnectionAttemptTime),
+        lastConnectionAttemptStatus(lastConnectionAttemptStatus)
     {}
 
 
@@ -65,7 +69,15 @@ namespace uafc
 
         ss << indent << " - serverUri";
         ss << fillToPos(ss, colon);
-        ss << ": " << serverUri;
+        ss << ": " << serverUri << "\n";
+
+        ss << indent << " - lastConnectionAttemptTime";
+        ss << fillToPos(ss, colon);
+        ss << ": " << lastConnectionAttemptTime.toString() << "\n";
+
+        ss << indent << " - lastConnectionAttemptStatus";
+        ss << fillToPos(ss, colon);
+        ss << ": " << lastConnectionAttemptStatus.toString();
 
         return ss.str();
     }
@@ -77,7 +89,9 @@ namespace uafc
     {
         return    object1.clientConnectionId == object2.clientConnectionId
                && object1.serverUri == object2.serverUri
-               && object1.sessionState == object2.sessionState;
+               && object1.sessionState == object2.sessionState
+               && object1.lastConnectionAttemptTime == object2.lastConnectionAttemptTime
+               && object1.lastConnectionAttemptStatus == object2.lastConnectionAttemptStatus;
     }
 
 
@@ -97,6 +111,10 @@ namespace uafc
             return object1.clientConnectionId < object2.clientConnectionId;
         else if (object1.serverUri != object2.serverUri)
             return object1.serverUri < object2.serverUri;
+        else if (object1.lastConnectionAttemptTime != object2.lastConnectionAttemptTime)
+            return object1.lastConnectionAttemptTime < object2.lastConnectionAttemptTime;
+        else if (object1.lastConnectionAttemptStatus != object2.lastConnectionAttemptStatus)
+            return object1.lastConnectionAttemptStatus < object2.lastConnectionAttemptStatus;
         else
             return object1.sessionState < object2.sessionState;
     }
