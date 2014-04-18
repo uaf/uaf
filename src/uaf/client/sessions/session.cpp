@@ -300,6 +300,9 @@ namespace uafc
 
         logger_->debug("Connecting the session");
 
+        // update the lastConnectionAttemptTime_  (needed for the SessionInformation)
+        lastConnectionAttemptTime_ = DateTime::now();
+
         // declare an empty list of discovery URLs and endpoint descriptions
         vector<string>              discoveryUrls;
         vector<EndpointDescription> discoveredEndpoints;
@@ -397,6 +400,9 @@ namespace uafc
             ret.addDiagnostic("Connection failed");
             logger_->error(ret);
         }
+
+        // update the lastConnectionAttemptStatus_ (needed for the SessionInformation)
+        lastConnectionAttemptStatus_ = ret;
 
         return ret;
     }
@@ -545,7 +551,12 @@ namespace uafc
     // =============================================================================================
     uafc::SessionInformation Session::sessionInformation() const
     {
-        uafc::SessionInformation info(clientConnectionId_, sessionState_, serverUri_);
+        uafc::SessionInformation info(
+                clientConnectionId_,
+                sessionState_,
+                serverUri_,
+                lastConnectionAttemptTime_,
+                lastConnectionAttemptStatus_);
         logger_->debug("Fetching session information:");
         logger_->debug(info.toString());
         return info;

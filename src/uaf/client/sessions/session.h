@@ -412,6 +412,10 @@ namespace uafc
         // the current session state:
         uafc::sessionstates::SessionState   sessionState_;
 
+        // the last connection attempt information:
+        uaf::DateTime                       lastConnectionAttemptTime_;
+        uaf::Status                         lastConnectionAttemptStatus_;
+
         // fixed session properties:
         uaf::ClientConnectionId             clientConnectionId_;
         std::string                         serverUri_;
