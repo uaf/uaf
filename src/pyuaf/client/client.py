@@ -464,6 +464,22 @@ class Client(ClientBase):
        via the :class:`~pyuaf.client.settings.ClientSettings` (which you can set via 
        :meth:`~pyuaf.client.Client` and via :meth:`~pyuaf.client.Client.setClientSettings`).
        
+        .. warning::
+        
+           If the connection fails (e.g. because you specified a wrong server URI, or because
+           the security settings were incorrect), this methd will *not* raise an Exception! 
+           It will simply return the ClientConnectionId assigned to the internal Session object, 
+           which the UAF will try to reconnect in the background! So if you want to make sure
+           this method call resulted in a connected session, you should do something like this::
+           
+               clientConnectionId = myClient.manuallyConnect(SERVER_URI)
+               sessionInformation = myClient.sessionInformation(clientConnectionId)
+               if sessionInformation.sessionState == pyuaf.client.sessionstates.Disconnected:
+                   pass # OK, we can proceed
+               else:
+                   print("Oops, something went wrong:")
+                   print(sessionInformation.lastConnectionAttemptStatus)
+           
        
        :param serverUri: The server URI to manually connect to.
        :type  serverUri: ``str``
