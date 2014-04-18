@@ -18,8 +18,6 @@ via the GIT version control system.
 
 
 
-
-
 2.0.0 @ 2014/
 ----------------------------------------------------------------------------------------------------
 
@@ -49,7 +47,6 @@ Formally:
     (pyuaf.client.Client.SessionInformation.lastConnectionAttemptTime)
   - uafc::Client::SessionInformation::lastConnectionAttemptStatus
     (pyuaf.client.Client.SessionInformation.lastConnectionAttemptStatus)
-
 
 
 
@@ -185,6 +182,8 @@ Formally:
 
 
 
+=======
+>>>>>>> Documented the changes the SessionInformation
 1.9 @ 2014/04/17
 ----------------------------------------------------------------------------------------------------
 
