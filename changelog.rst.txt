@@ -17,6 +17,33 @@ Bugfixes (which do not have any implications on the API) can only be tracked
 via the GIT version control system.
 
 
+
+
+
+2.0.0 @ 2014/
+----------------------------------------------------------------------------------------------------
+
+Informally:
+
+
+
+- SessionInformation contains more diagnostic info.
+
+
+Formally:
+
+- The following attributes were added to existing classes:
+
+  - uafc::Client::SessionInformation::lastConnectionAttemptTime
+    (pyuaf.client.Client.SessionInformation.lastConnectionAttemptTime)
+  - uafc::Client::SessionInformation::lastConnectionAttemptStatus
+    (pyuaf.client.Client.SessionInformation.lastConnectionAttemptStatus)
+
+
+
+
+
+
 1.10 @ 2014/07/30
 ----------------------------------------------------------------------------------------------------
 
