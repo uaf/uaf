@@ -441,6 +441,30 @@ class Client(ClientBase):
         return l
     
     
+    def getEndpoints(self, discoveryUrl):
+        """
+        Get a list of endpoint descriptions supported by the server.
+        
+        :param discoveryUrl:  The URL of a Discovery Server (e.g. opc.tcp://mymachine:4840).
+        :type  discoveryUrl: ``str``
+        :return: A list of the endpoint descriptions that were found.
+        :rtype: ``list`` of :class:`pyuaf.util.EndpointDescription`
+        :raise pyuaf.util.errors.DiscoveryError:
+            Raised in case no endpoints could be retrieved.
+        :raise pyuaf.util.errors.UafError:
+            Base exception, catch this to handle any other errors.
+        """
+        vec = pyuaf.util.EndpointDescriptionVector()
+        status = ClientBase.getEndpoints(self, discoveryUrl, vec)
+        pyuaf.util.errors.evaluate(status)
+        
+        # put the elements in a normal python list
+        l = []
+        for desc in vec:
+            l.append(desc)
+        return l
+    
+    
     def manuallyConnect(self, serverUri, sessionSettings=None):
        """
        Create a session manually (instead of having the UAF do it behind the scenes).

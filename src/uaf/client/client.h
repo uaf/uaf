@@ -136,6 +136,19 @@ namespace uafc
         const std::vector<uaf::ApplicationDescription>& serversFound() const;
 
 
+        /**
+         * Get the endpoint descriptions for a given server by calling the OPC UA
+         * GetEndpoints service on the given URL.
+         *
+         * @param discoveryUrl          URL of the server to discover.
+         * @param endpointDescriptions  Endpoint descriptions that will be fetched.
+         * @return                      Status of the service call.
+         */
+        uaf::Status getEndpoints(
+                const std::string&                      discoveryUrl,
+                std::vector<uaf::EndpointDescription>&  endpointDescriptions);
+
+
         ///@} //////////////////////////////////////////////////////////////////////////////////////
         /**
          *  @name Convenience
