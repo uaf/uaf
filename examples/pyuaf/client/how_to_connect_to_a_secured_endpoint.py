@@ -26,11 +26,9 @@ myClient = Client(settings)
 sess = SessionSettings()
 
 secu = SessionSecuritySettings()
-
-#secu.securityPolicy      = pyuaf.util.securitypolicies.UA_Basic128Rsa15
+secu.securityPolicy      = pyuaf.util.securitypolicies.UA_Basic128Rsa15
 secu.messageSecurityMode = pyuaf.util.messagesecuritymodes.Mode_Sign
 
-#secu.securityPolicy = pyuaf.util.securitypolicies.UA_Basic128
 
 sess.securitySettingsList[0] = secu
 
