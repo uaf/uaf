@@ -175,6 +175,16 @@ namespace uafc
     }
 
 
+    // Get the endpoints that were found
+    // =============================================================================================
+    Status Client::getEndpoints(
+            const string&                   discoveryUrl,
+            vector<EndpointDescription>&    endpointDescriptions)
+    {
+        return discoverer_->getEndpoints(discoveryUrl, endpointDescriptions);
+    }
+
+
     // Read a number of node attributes
     //==============================================================================================
     uaf::Status Client::read(

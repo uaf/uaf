@@ -25,12 +25,18 @@ via the GIT version control system.
 
 Informally:
 
-
+- The endpoint descriptions of the discovered servers can now be accessed 
+  via Client::getEndpoints().
 
 - SessionInformation contains more diagnostic info.
 
 
 Formally:
+
+- The following methods were added to existing classes:
+
+  - uafc::Client::getEndpoints
+    (pyuaf.client.Client.getEndpoints)
 
 - The following attributes were added to existing classes:
 
