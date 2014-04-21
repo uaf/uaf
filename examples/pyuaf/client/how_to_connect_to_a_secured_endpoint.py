@@ -25,14 +25,20 @@ myClient = Client(settings)
 sess = SessionSettings()
 
 secu = SessionSecuritySettings()
-secu.securityPolicy = pyuaf.util.securitypolicies.UA_Basic128
+secu.securityPolicy      = pyuaf.util.securitypolicies.UA_Basic128Rsa15
+secu.messageSecurityMode = pyuaf.util.messagesecuritymodes.Mode_Sign
 
 
 sess.securitySettingsList[0] = secu
 
 
 id = myClient.manuallyConnect(SERVER_URI, sess)
-print myClient.sessionInformation(id).sessionState == pyuaf.client.sessionstates.Disconnected
+info = myClient.sessionInformation(id)
+print myClient.sessionInformation(id)
+
+print myClient.serversFound()
+
+assert info.sessionState == pyuaf.client.sessionstates.Connected
 
 #someAddress = Address(NodeId("Demo.SimulationSpeed",                         # NodeId identifier
 #                             "http://www.unifiedautomation.com/DemoServer"), # NodeId namespace URI
