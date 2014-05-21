@@ -30,6 +30,7 @@ secu.securityPolicy      = pyuaf.util.securitypolicies.UA_Basic128Rsa15
 secu.messageSecurityMode = pyuaf.util.messagesecuritymodes.Mode_Sign
 
 
+
 sess.securitySettingsList[0] = secu
 
 
