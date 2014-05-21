@@ -30,6 +30,11 @@ Informally:
 
 Formally:
 
+- The following classes were added:
+
+  - uaf::PkiIdentity
+    (pyuaf.util.PkiIdentity)
+
 - The following methods were added to existing classes:
 
   - uafc::Client::getEndpoints
