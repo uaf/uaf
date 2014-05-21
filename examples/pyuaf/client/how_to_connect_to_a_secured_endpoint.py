@@ -17,6 +17,7 @@ settings.applicationName = "MyClient"
 settings.logToStdOutLevel = pyuaf.util.loglevels.Debug
 settings.discoveryUrls.append(DISCOVERY_URL)
 
+settings.clientCertificateAbsoluteFileName = "dsds"
 
 # create the client
 myClient = Client(settings)
@@ -27,6 +28,7 @@ sess = SessionSettings()
 secu = SessionSecuritySettings()
 secu.securityPolicy      = pyuaf.util.securitypolicies.UA_Basic128Rsa15
 secu.messageSecurityMode = pyuaf.util.messagesecuritymodes.Mode_Sign
+
 
 
 sess.securitySettingsList[0] = secu
