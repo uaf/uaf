@@ -1650,6 +1650,63 @@
 
 
 
+
+*class* PkiIdentity
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.PkiIdentity
+
+     PkiIdentity holds the identity of the subject and issuer of a certificate.
+
+
+    * Methods:
+
+        .. automethod:: pyuaf.util.PkiIdentity.__init__
+    
+            Construct a new PkiIdentity.
+    
+        .. automethod:: pyuaf.util.PkiIdentity.isEmpty
+    
+            Is the PKI identity filled out, or empty?
+            
+            :rtype: ``bool``
+
+
+    * Attributes:
+  
+  
+        .. autoattribute:: pyuaf.util.PkiIdentity.organization
+        
+            The organization as a string (type ``str``).
+    
+        .. autoattribute:: pyuaf.util.PkiIdentity.organizationUnit
+        
+            The organization unit as a string (type ``str``).
+    
+        .. autoattribute:: pyuaf.util.PkiIdentity.locality
+        
+            The locality as a string (type ``str``).
+    
+        .. autoattribute:: pyuaf.util.PkiIdentity.state
+        
+            The state as a string (type ``str``).
+    
+        .. autoattribute:: pyuaf.util.PkiIdentity.country
+        
+            The country as a string (type ``str``).
+    
+        .. autoattribute:: pyuaf.util.PkiIdentity.commonName
+        
+            The common name as a string (type ``str``).
+    
+        .. autoattribute:: pyuaf.util.PkiIdentity.domainComponent
+        
+            The domain component as a string (type ``str``).
+    
+
+
+
 *class* QualifiedName
 ----------------------------------------------------------------------------------------------------
 
