@@ -155,7 +155,6 @@ UAF_WRAP_CLASS("uaf/util/statusdiagnostics.h"      , uaf , StatusDiagnostics    
 UAF_WRAP_CLASS("uaf/util/pkiidentity.h"            , uaf , PkiIdentity             , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 
 
-
 // also include the Variant typemap(s)
 #if defined(SWIGPYTHON)
     %include "pyuaf/util/util_variant_python.i"
