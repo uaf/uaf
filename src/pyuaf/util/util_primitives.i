@@ -40,71 +40,24 @@
 #endif
 
 
-// =================================================================================================
-// SETUP_INT_OR_LONG_PRIMITIVE(TYPE)
-// =================================================================================================
-// 
-// Set-up an int or a long primitive type from uaf::primitives.
-//
-//   - argument TYPE : the type of the class, e.g. UInt32
-//
-%define SETUP_INT_OR_LONG_PRIMITIVE(TYPE)
-    %feature("pythonprepend") uaf::primitives::TYPE::TYPE %{
-        """
-        Construct a primitive.
-        """
-        if len(args) == 1:
-            if not isinstance(args[0], (bool, int, long)):
-                raise TypeError("'int' or 'long' expected instead of %s instance" %type(args[0]))
-        elif len(args) > 0:
-            raise TypeError("Only one value can be provided")
-    %}
-    HANDLE_COMPARISON_OPERATORS(uaf::primitives, TYPE)
-    HANDLE_TOSTRING(uaf::primitives, TYPE, pyuaf.util.primitives)
-%enddef
-
-
 
 // =================================================================================================
-// SETUP_FLOAT_PRIMITIVE(TYPE)
-// =================================================================================================
-// 
-// Set-up a float primitive type from uaf::primitives.
-//
-//   - argument TYPE : the type of the class, e.g. Double
-//
-%define SETUP_FLOAT_PRIMITIVE(TYPE)
-    %feature("pythonprepend") uaf::primitives::TYPE::TYPE %{
-        """
-        Construct a primitive.
-        """
-        if len(args) == 1:
-            if not isinstance(args[0], (bool, int, long, float)):
-                raise TypeError("'float' expected instead of %s instance" %type(args[0]))
-        elif len(args) > 0:
-            raise TypeError("Only one value can be provided")
-    %}
-    HANDLE_COMPARISON_OPERATORS(uaf::primitives, TYPE)
-    HANDLE_TOSTRING(uaf::primitives, TYPE, pyuaf.util.primitives)
-%enddef
-
-
-
-// =================================================================================================
-// SETUP_OTHER_PRIMITIVE(TYPE, PYTHONTYPE)
+// SETUP_PRIMITIVE(TYPE, PYTHONTYPE)
 // =================================================================================================
 // 
 // Set-up a string primitive type from uaf::primitives.
 //
 //   - argument TYPE : the type of the class, e.g. String
 //
-%define SETUP_OTHER_PRIMITIVE(TYPE, PYTHONTYPE)
+%define SETUP_PRIMITIVE(TYPE, PYTHONTYPE)
     %feature("pythonprepend") uaf::primitives::TYPE::TYPE %{
         """
         Construct a primitive.
         """
         if len(args) == 1:
-            if not isinstance(args[0], PYTHONTYPE):
+            try:
+                args = (PYTHONTYPE(args[0]),)
+            except:
                 raise TypeError("'PYTHONTYPE' expected instead of %s instance" %type(args[0]))
         elif len(args) > 0:
             raise TypeError("Only one value can be provided")
@@ -115,19 +68,19 @@
 
 
 // setup the primitives
-SETUP_INT_OR_LONG_PRIMITIVE(Boolean)
-SETUP_INT_OR_LONG_PRIMITIVE(SByte)
-SETUP_INT_OR_LONG_PRIMITIVE(Byte)
-SETUP_INT_OR_LONG_PRIMITIVE(Int16)
-SETUP_INT_OR_LONG_PRIMITIVE(UInt16)
-SETUP_INT_OR_LONG_PRIMITIVE(Int32)
-SETUP_INT_OR_LONG_PRIMITIVE(UInt32)
-SETUP_INT_OR_LONG_PRIMITIVE(Int64)
-SETUP_INT_OR_LONG_PRIMITIVE(UInt64)
-SETUP_FLOAT_PRIMITIVE(Float)
-SETUP_FLOAT_PRIMITIVE(Double)
-SETUP_OTHER_PRIMITIVE(String, str)
-SETUP_OTHER_PRIMITIVE(ByteString, bytearray)
+SETUP_PRIMITIVE(Boolean    , bool)
+SETUP_PRIMITIVE(SByte      , int)
+SETUP_PRIMITIVE(Byte       , int)
+SETUP_PRIMITIVE(Int16      , int)
+SETUP_PRIMITIVE(UInt16     , int)
+SETUP_PRIMITIVE(Int32      , int)
+SETUP_PRIMITIVE(UInt32     , int)
+SETUP_PRIMITIVE(Int64      , long)
+SETUP_PRIMITIVE(UInt64     , long)
+SETUP_PRIMITIVE(Float      , float)
+SETUP_PRIMITIVE(Double     , float)
+SETUP_PRIMITIVE(String     , str)
+SETUP_PRIMITIVE(ByteString , bytearray)
 
 
 %include "uaf/util/primitives.h"
