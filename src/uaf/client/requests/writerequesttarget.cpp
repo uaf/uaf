@@ -63,7 +63,11 @@ namespace uafc
 
         ss << indent << " - attributeId";
         ss << fillToPos(ss, colon);
-        ss << ": " << attributeId << " (" << attributeids::toString(attributeId) << ")\n";
+        ss << ": " << attributeId << " (" << attributeids::toString(attributeId) << ")";
+
+        ss << indent << " - indexRange";
+        ss << fillToPos(ss, colon);
+        ss << ": " << indexRange << "\n";
 
         ss << DataValue::toString(indent, colon);
 
