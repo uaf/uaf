@@ -116,7 +116,9 @@ namespace uaf
         while (std::getline(ss, line, '\n'))
         {
             line += "\n";
-            std::printf(line.c_str());
+            // BUGFIX: never do std::printf(line), because it will try to parse embedded
+            // '%' characters as formatting characters, which leads to memory violations!!
+            std::printf("%s", line.c_str());
         }
     }
 

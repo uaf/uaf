@@ -5,7 +5,8 @@ import importlib
 
 ARGS = parseArgs()
 
-ALL_MODULES = [ "expandednodeid",
+ALL_MODULES = [ "primitives",
+                "expandednodeid",
                 "localizedtext",
                 "mask",
                 "address",

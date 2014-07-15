@@ -59,7 +59,13 @@ namespace uafc
             {
                 // update the attribute id, index range, data and status code of the target
                 uaWriteValues_[i].AttributeId = targets[i].attributeId;
-                UaString(targets[i].indexRange.c_str()).copyTo(&uaWriteValues_[i].IndexRange);
+
+                // update the index range of the target
+                // BUGFIX: only do this if needed!
+                // Otherwise the OpcUa_String will be initialized and some servers
+                // may return BadIndexRangeInvalid errors
+                if (!targets[i].indexRange.empty())
+                    UaString(targets[i].indexRange.c_str()).copyTo(&uaWriteValues_[i].IndexRange);
 
                 DataValue dv(targets[i]);
                 nameSpaceArray.fillVariant(dv.data);

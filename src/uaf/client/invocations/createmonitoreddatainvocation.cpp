@@ -72,7 +72,6 @@ namespace uafc
                 OpcUa_MonitoringMode mode     = fromUafToSdk(targets[i].monitoringMode);
                 OpcUa_Double samplingInterval = targets[i].samplingIntervalSec * 1000;
                 OpcUa_Boolean discardOldest   = targets[i].discardOldest;
-                UaString indexRange(targets[i].indexRange.c_str());
 
                 // set the other properties
                 uaCreateRequests_[i].ItemToMonitor.AttributeId = targets[i].attributeId;
@@ -81,7 +80,16 @@ namespace uafc
                 uaCreateRequests_[i].RequestedParameters.SamplingInterval = samplingInterval;
                 uaCreateRequests_[i].RequestedParameters.DiscardOldest = discardOldest;
                 uaCreateRequests_[i].RequestedParameters.QueueSize = targets[i].queueSize;
-                indexRange.copyTo(&(uaCreateRequests_[i].ItemToMonitor.IndexRange));
+
+                // update the index range of the target
+                // BUGFIX: only do this if needed!
+                // Otherwise the OpcUa_String will be initialized and some servers
+                // may return BadIndexRangeInvalid errors
+                if (!targets[i].indexRange.empty())
+                {
+                    UaString indexRange(targets[i].indexRange.c_str());
+                    indexRange.copyTo(&(uaCreateRequests_[i].ItemToMonitor.IndexRange));
+                }
 
                 OpcUa_DataChangeFilter* pDataChangeFilter = (OpcUa_DataChangeFilter*)OpcUa_Null;
 

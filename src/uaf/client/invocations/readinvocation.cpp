@@ -70,8 +70,12 @@ namespace uafc
                 uaReadValueIds_[i].AttributeId = targets[i].attributeId;
 
                 // update the index range of the target
-                UaString(targets[i].indexRange.c_str()).copyTo(
-                        &(uaReadValueIds_[i].IndexRange));
+                // BUGFIX: only do this if needed!
+                // Otherwise the OpcUa_String will be initialized and some servers
+                // may return BadIndexRangeInvalid errors
+                if (!targets[i].indexRange.empty())
+                    UaString(targets[i].indexRange.c_str()).copyTo(
+                            &(uaReadValueIds_[i].IndexRange));
             }
         }
 
