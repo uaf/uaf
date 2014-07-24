@@ -518,9 +518,11 @@ namespace uafc
         template<typename _Request>
         void setSessionRequestSettings(const std::string serverUri, const _Request& request)
         {
-            if (request.sessionConfig.specificSessionSettings.find(serverUri)
-                    != request.sessionConfig.specificSessionSettings.end())
-                sessionSettings_ = request.sessionConfig.specificSessionSettings.at(serverUri);
+            std::map<std::string, uafc::SessionSettings>::const_iterator it;
+            it = request.sessionConfig.specificSessionSettings.find(serverUri);
+
+            if (it != request.sessionConfig.specificSessionSettings.end())
+                sessionSettings_ = it->second;
             else
                 sessionSettings_ = request.sessionConfig.defaultSessionSettings;
 
@@ -540,10 +542,11 @@ namespace uafc
         template<typename _Request>
         void setSubscriptionRequestSettings(const std::string serverUri, const _Request& request)
         {
-            if (request.subscriptionConfig.specificSubscriptionSettings.find(serverUri)
-                    != request.subscriptionConfig.specificSubscriptionSettings.end())
-                subscriptionSettings_ = request.subscriptionConfig.specificSubscriptionSettings.at(
-                        serverUri);
+            std::map<std::string, uafc::SubscriptionSettings>::const_iterator it;
+            it = request.subscriptionConfig.specificSubscriptionSettings.find(serverUri);
+
+            if (it != request.subscriptionConfig.specificSubscriptionSettings.end())
+                subscriptionSettings_ = it->second;
             else
                 subscriptionSettings_ = request.subscriptionConfig.defaultSubscriptionSettings;
 
