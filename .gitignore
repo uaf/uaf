@@ -1,3 +1,6 @@
+# Ignore everything below build/
+build/*
+
 # Ignore project files
 .project
 .cproject
