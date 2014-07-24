@@ -111,6 +111,19 @@
 %ignore uaf::StatusDiagnostics::operator=;
 
 
+// The default SWIG output returned by uaf::Status::opcUaStatusCode() is a signed representation (Long) of an unsigned 32-bit integer.
+// The returned value (a Long which can only be positive) does not correspond bit-to-bit to the original OPC UA status codes, e.g. as found in
+// pyuaf.util.opcuastatuscodes (which may appear to be negative ints because Python interprets the unsigned value as a signed value).
+// We therefore manually convert the output of the opcUaStatusCode() method, so that the result can be compared to pyuaf.util.opcuastatuscodes.
+// (Note that the convert_uint32_to_int32() function is defined in src/pyuaf/util/init_extras.py)
+%rename(opcUaStatusCodeUnsigned) uaf::Status::opcUaStatusCode;
+%extend uaf::Status {
+  %pythoncode {
+    def opcUaStatusCode(self):
+        return convert_uint32_to_int32(self.opcUaStatusCodeUnsigned())
+  }
+}
+
 // now include all classes in a generic way
 UAF_WRAP_CLASS("uaf/util/localizedtext.h"          , uaf , LocalizedText           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/applicationdescription.h" , uaf , ApplicationDescription  , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ApplicationDescriptionVector)
@@ -140,12 +153,15 @@ UAF_WRAP_CLASS("uaf/util/referencedescription.h"   , uaf , ReferenceDescription 
 UAF_WRAP_CLASS("uaf/util/statusdiagnostics.h"      , uaf , StatusDiagnostics       , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 
 
+
 // also include the Variant typemap(s)
 #if defined(SWIGPYTHON)
     %include "pyuaf/util/util_variant_python.i"
 #endif
 
 
+// SWIG iterators don't work well for our vectors (probably SWIG bug),
+// so therefore we create our own iterators:
 %pythoncode %{
 class VectorIterator(object):
    
