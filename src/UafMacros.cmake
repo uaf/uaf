@@ -25,6 +25,8 @@ MACRO(handleOptions)
     ELSE ( UASTACK_WITH_HTTPS )
         ADD_DEFINITIONS( -DOPCUA_HAVE_HTTPS=0 )
     ENDIF ( UASTACK_WITH_HTTPS )
+    
+    OPTION( NO_THIRD_PARTY_MSINTTYPES "Set to ON if you want to avoid msinttypes to be included for certain compilers" OFF)
 
 ENDMACRO(handleOptions)
 
@@ -100,6 +102,29 @@ MACRO(setUafLinkerRestrictions)
     endif (FORCE32)
 
 ENDMACRO(setUafLinkerRestrictions)
+
+
+
+
+
+# ----------------------------------------------------------------------------
+# includeThirdPartyCodeIfNeeded()
+#    This macro will include third party code (if needed)
+# ----------------------------------------------------------------------------
+MACRO(includeThirdPartyCodeIfNeeded)
+    if (MSVC90)
+        message(STATUS "Compiling for VS2008")
+        message(STATUS "The third-party project 'msinttypes' needs to be included for this compiler")
+        if (NO_THIRD_PARTY_MSINTTYPES)
+            message(WARNING "However, msinttypes will NOT be included since NO_THIRD_PARTY_MSINTTYPES=ON" )
+        else (NO_THIRD_PARTY_MSINTTYPES)
+            message(STATUS "If you don't want msinttypes to be included, set NO_THIRD_PARTY_MSINTTYPES=ON" )
+            message(STATUS "Now including ${PROJECT_SOURCE_DIR}/third-party/msinttypes" )
+            include_directories("${PROJECT_SOURCE_DIR}/third-party/msinttypes")
+        endif (NO_THIRD_PARTY_MSINTTYPES)
+    endif (MSVC90)
+
+ENDMACRO(includeThirdPartyCodeIfNeeded)
 
 
 
