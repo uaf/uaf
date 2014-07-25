@@ -42,6 +42,10 @@
     
     All codes start with an ``OpcUa_`` prefix.
     
+    All pyuaf.util.opcuastatuscodes correspond *bitwise* to the 32-bit unsigned numbers as defined
+    by the OPC UA standard. This means that some statuscodes may appear to be negative, since 
+    python interprets the 32-bit data as signed integers.  
+    
     Here are some examples:
 
         .. autoattribute:: pyuaf.util.opcuastatuscodes.OpcUa_Good
