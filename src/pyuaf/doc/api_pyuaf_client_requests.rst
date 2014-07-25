@@ -495,8 +495,8 @@
               - attributeId is :attr:`~pyuaf.util.attributeids.Value`
               - monitoringMode is :attr:`~pyuaf.util.monitoringmodes.Reporting`
               - samplingIntervalSec is 0.0
-              - queueSize is 0
-              - discardOldest is False.
+              - queueSize is 1
+              - discardOldest is True.
             
     
         .. method:: __str__()
@@ -659,9 +659,8 @@
             The default 
               - monitoringMode is :attr:`~pyuaf.util.monitoringmodes.Reporting`
               - samplingIntervalSec is 0.0
-              - queueSize is 0
-              - discardOldest is False.
-            
+              - queueSize is 1
+              - discardOldest is True.
     
         .. method:: __str__()
     
