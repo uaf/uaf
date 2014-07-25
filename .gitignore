@@ -5,6 +5,7 @@ build/*
 .project
 .cproject
 .pydevproject
+.settings/
 
 # Ignore python bytecode
 *.py[cod]
