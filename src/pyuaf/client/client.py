@@ -11,11 +11,11 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 
@@ -46,6 +46,12 @@ class Client(ClientBase):
         """
         # define the logging callback
         self.__loggingCallback__ = loggingCallback
+        
+        # define some more callbacks to receive status changes
+        self.__connectionCallbacks__ = []
+        self.__subscriptionCallbacks__ = []
+        self.__notificationsMissingCallbacks__ = []
+        self.__keepAliveCallbacks__ = []
         
         # initialize the base class
         if settings is None:
@@ -247,8 +253,8 @@ class Client(ClientBase):
            via the 'notificationCallbacks' argument
            --> then only the external callback functions will be called.
         
-        :param result: The asynchronously received notifications.
-        :type  result: ``list`` of :class:`~pyuaf.client.DataChangeNotification`
+        :param dataNotifications: The asynchronously received notifications.
+        :type  dataNotifications: ``list`` of :class:`~pyuaf.client.DataChangeNotification`
         """
         pass
     
@@ -301,8 +307,8 @@ class Client(ClientBase):
            via the 'notificationCallbacks' argument
            --> then only the external callback functions will be called.
         
-        :param result: The asynchronously received notifications.
-        :type  result: ``list`` of :class:`~pyuaf.client.EventNotification`
+        :param eventNotifications: The asynchronously received notifications.
+        :type  eventNotifications: ``list`` of :class:`~pyuaf.client.EventNotification`
         """
         pass
     
@@ -318,7 +324,7 @@ class Client(ClientBase):
     
     def logMessageReceived(self, message):
         """
-        You should override this method if you want to process logging output from the UAF. 
+        Override this method if you want to process logging output from the UAF. 
         
         This method is called by the UAF if:
           - :attr:`pyuaf.client.settings.ClientSettings.logToCallbackLevel` is not set to :attr:`pyuaf.util.loglevels.Disabled`
@@ -329,7 +335,7 @@ class Client(ClientBase):
         :type  message: :class:`pyuaf.util.LogMessage`
         """
         pass
-    
+        
     
     def registerLoggingCallback(self, callback):
         """
@@ -346,14 +352,321 @@ class Client(ClientBase):
         self.__loggingCallback__ = callback
     
     
+    def __dispatch_connectionStatusChanged__(self, info):
+        """
+        Hidden method to dispatch the changed connection status information to the correct callback
+        method.
+        """
+        # create a copy using the C++ copy constructor, 
+        # so that the instance may be stored on the python level:
+        info = pyuaf.client.SessionInformation(info)
+        
+        for dic in self.__connectionCallbacks__:
+            
+            callback               = dic["callback"]
+            onlyServerUri          = dic["onlyServerUri"]
+            onlyClientConnectionId = dic["onlyClientConnectionId"]
+            
+            doCall = True
+            
+            if onlyServerUri is not None:
+                if onlyServerUri != info.serverUri:
+                    doCall = False
+            
+            if onlyClientConnectionId is not None:
+                if onlyClientConnectionId != info.clientConnectionId:
+                    doCall = False    
+            
+            if doCall:
+                t = threading.Thread(target=callback, args=[info])
+                t.start()
+        
+        # also call the Client.connectionStatusChanged method, which may be overridden by the user:
+        try:
+            self.connectionStatusChanged(info)
+        except:
+            pass # exception raised by the user, nothing we can do!
+    
+    
+    def __dispatch_subscriptionStatusChanged__(self, info):
+        """
+        Hidden method to dispatch the changed subscription status information to the correct 
+        callback method.
+        """
+        # create a copy using the C++ copy constructor, 
+        # so that the instance may be stored on the python level:
+        info = pyuaf.client.SubscriptionInformation(info)
+        
+        for dic in self.__subscriptionCallbacks__:
+            
+            callback                     = dic["callback"]
+            onlyClientSubscriptionHandle = dic["onlyClientSubscriptionHandle"]
+            
+            doCall = True
+            
+            if onlyClientSubscriptionHandle is not None:
+                if onlyClientSubscriptionHandle != info.clientConnectionId:
+                    doCall = False
+            
+            if doCall:
+                t = threading.Thread(target=callback, args=[info])
+                t.start()
+        
+        # also call the Client.subscriptionStatusChanged method, which may be overridden by the user:
+        try:
+            self.subscriptionStatusChanged(info)
+        except:
+            pass # exception raised by the user, nothing we can do!
+    
+    
+    def connectionStatusChanged(self, info):
+        """
+        Override this method to receive connection status changes.
+        
+        Alternatively, you can also register callback functions which you defined yourself, by
+        registering them using :meth:`pyuaf.client.Client.registerConnectionStatusCallback`.
+        
+        :param info: Updated session information.
+        :type info: :class:`~pyuaf.client.SessionInformation`
+        """
+        pass
+    
+    
+    
+    def registerConnectionStatusCallback(self, callback, onlyServerUri=None, onlyClientConnectionId=None):
+        """
+        Register a callback to receive connection status changes.
+        
+        You can register multiple callbacks: all of them will be called.
+        The :meth:`pyuaf.client.Client.connectionStatusChanged` method (which you may override) 
+        will also always be called, regardless of the callbacks you register.
+        
+        There's no need to provide more than one optional argument (it doesn't make much sense in fact,
+        since onlyClientConnectionId is more restrictive than onlyServerUri), but it's not forbidden
+        either. In case you provide multiple optional arguments, all of the conditions need to 
+        be satisfied for the callback function to be called.
+        
+        :param callback:                A callback function. This function should have one input 
+                                        argument, to which the changed :class:`~pyuaf.client.SessionInformation` 
+                                        instance will be passed.
+        :param onlyServerUri:           Optional argument: provide this argument if you don't want 
+                                        to listen to the status changes of *all* sessions to *any* server, 
+                                        but only listen to the connection changes for all sessions 
+                                        to the server identified by the given serverUri.
+        :type onlyServerUri:            ``str``
+        :param onlyClientConnectionId:  Optional argument: provide this argument if you don't want 
+                                        to listen to the status changes of *all* sessions to *any* server, 
+                                        but only listen to the connection changes for the single session 
+                                        identified by the given unique clientConnectionId.
+        :type onlyClientConnectionId:   ``int``
+        """
+        dic = { "callback" : callback,
+                "onlyServerUri" : onlyServerUri,
+                "onlyClientConnectionId" : onlyClientConnectionId }
+        
+        self.__connectionCallbacks__.append(dic)
+    
+    
+    def __dispatch_subscriptionStatusChanged__(self, info):
+        """
+        Hidden method to dispatch the changed subscription status information to the correct 
+        callback method.
+        """
+        # create a copy using the C++ copy constructor, 
+        # so that the instance may be stored on the python level:
+        info = pyuaf.client.SubscriptionInformation(info)
+        
+        for dic in self.__subscriptionCallbacks__:
+            
+            callback                     = dic["callback"]
+            onlyClientSubscriptionHandle = dic["onlyClientSubscriptionHandle"]
+            
+            doCall = True
+            
+            if onlyClientSubscriptionHandle is not None:
+                if onlyClientSubscriptionHandle != info.clientSubscriptionHandle:
+                    doCall = False
+            
+            if doCall:
+                t = threading.Thread(target=callback, args=[info])
+                t.start()
+        
+        # also call the Client.subscriptionStatusChanged method, which may be overridden by the user:
+        try:
+            self.subscriptionStatusChanged(info)
+        except:
+            pass # exception raised by the user, nothing we can do!
+    
+    
+    def subscriptionStatusChanged(self, info):
+        """
+        Override this method to receive subscription status changes.
+        
+        Alternatively, you can also register callback functions which you defined yourself, by
+        registering them using :meth:`pyuaf.client.Client.registerSubscriptionStatusCallback`.
+        
+        :param info: Updated subscription information.
+        :type info: :class:`~pyuaf.client.SubscriptionInformation`
+        """
+        pass
+    
+    
+    def registerSubscriptionStatusCallback(self, callback, onlyClientSubscriptionHandle=None):
+        """
+        Register a callback to receive connection status changes.
+        
+        You can register multiple callbacks: all of them will be called.
+        The :meth:`pyuaf.client.Client.subscriptionStatusChanged` method (which you may override) 
+        will also always be called, regardless of the callbacks you register.
+        
+        :param callback:                A callback function. This function should have one input 
+                                        argument, to which the changed :class:`~pyuaf.client.SessionInformation` 
+                                        instance will be passed.
+        :param onlyClientSubscriptionHandle:  Optional argument: provide this argument if you don't 
+                                        want to listen to the status changes of *all* subscriptions,
+                                        but only listen to the subscription changes for the single 
+                                        subscription identified by the given unique 
+                                        clientSubscriptionHandle.
+        :type onlyClientSubscriptionHandle: ``int``
+        """
+        dic = { "callback" : callback,
+                "onlyClientSubscriptionHandle" : onlyClientSubscriptionHandle }
+        
+        self.__subscriptionCallbacks__.append(dic)
+    
+    
+    def __dispatch_notificationsMissing__(self, info, previousSequenceNumber, newSequenceNumber):
+        """
+        Hidden method to be called by the UAF when notifications are missing.
+        """
+        # create a copy using the C++ copy constructor, 
+        # so that the instance may be stored on the python level:
+        info = pyuaf.client.SubscriptionInformation(info)
+        
+        for dic in self.__notificationsMissingCallbacks__:
+            
+            callback                     = dic["callback"]
+            onlyClientSubscriptionHandle = dic["onlyClientSubscriptionHandle"]
+            
+            doCall = True
+            
+            if onlyClientSubscriptionHandle is not None:
+                if onlyClientSubscriptionHandle != info.clientSubscriptionHandle:
+                    doCall = False
+            
+            if doCall:
+                t = threading.Thread(target=callback, args=[info, previousSequenceNumber, newSequenceNumber])
+                t.start()
+        
+        # also call the Client.notificationsMissing method, which may be overridden by the user:
+        try:
+            self.notificationsMissing(info, previousSequenceNumber, newSequenceNumber)
+        except:
+            pass # exception raised by the user, nothing we can do!
+    
+    
+    def notificationsMissing(self, info, previousSequenceNumber, newSequenceNumber):
+        """
+        Override this method to handle missing notifications.
+        
+        Alternatively, you can also register callback functions which you defined yourself, by
+        registering them using :meth:`pyuaf.client.Client.registerNotificationsMissingCallback`.
+        
+        :param info: Subscription information about the subscription which has missing notifications.
+        :type info: :class:`~pyuaf.client.SubscriptionInformation`
+        :param previousSequenceNumber:  Sequence number of the last notification just before 
+                                        notifications went missing.
+        :type previousSequenceNumber: ``int``
+        :param newSequenceNumber: Sequence number of the first notification just after notifications
+                                  went missing.
+        :type newSequenceNumber: ``int``
+        """
+        pass
+    
+    
+    def registerNotificationsMissingCallback(self, callback, onlyClientSubscriptionHandle=None):
+        """
+        Register a callback to handle missing notifications.
+        
+        You can register multiple callbacks: all of them will be called.
+        The :meth:`pyuaf.client.Client.notificationsMissing` method (which you may override) 
+        will also always be called, regardless of the callbacks you register.
+        
+        :param callback:                A callback function. This function should have three input 
+                                        arguments:
+                                         - first argument will be a :class:`~pyuaf.client.SessionInformation` 
+                                           instance, describing the subscription that has missing 
+                                           notifications.
+                                         - second argument will be an ``int'' representing the 
+                                           sequence number of the last notification just before 
+                                           notifications went missing.
+                                         - third argument will be an ``int'' representing the 
+                                           sequence number of the first notification just after 
+                                           notifications went missing.
+        :param onlyClientSubscriptionHandle:  Optional argument: provide this argument if you don't 
+                                        want to listen to the missing notifications of *all* 
+                                        subscriptions, but only listen to the missing notifications
+                                        for the single subscription identified by the given unique 
+                                        clientSubscriptionHandle.
+        :type onlyClientSubscriptionHandle: ``int``
+        """
+        dic = { "callback" : callback,
+                "onlyClientSubscriptionHandle" : onlyClientSubscriptionHandle }
+        
+        self.__notificationsMissingCallbacks__.append(dic)
+    
+    
     def __dispatch_keepAliveReceived__(self, notification):
         """
-        Dispatch the KeepAliveNofications to the keepAliveReceived function.
+        Hidden method to be called by the UAF when KeepAlive notifications are received.
         """
+        # create a copy using the C++ copy constructor, 
+        # so that the instance may be stored on the python level:
+        notification = pyuaf.client.KeepAliveNotification(notification)
+        
+        for dic in self.__keepAliveCallbacks__:
+            
+            callback                     = dic["callback"]
+            onlyClientSubscriptionHandle = dic["onlyClientSubscriptionHandle"]
+            
+            doCall = True
+            
+            if onlyClientSubscriptionHandle is not None:
+                if onlyClientSubscriptionHandle != notification.clientSubscriptionHandle:
+                    doCall = False
+            
+            if doCall:
+                t = threading.Thread(target=callback, args=[notification])
+                t.start()
+        
+        # also call the Client.keepAliveReceived method, which may be overridden by the user:
         try:
             self.keepAliveReceived(notification)
         except:
-            pass # nothing we can do at this point!
+            pass # exception raised by the user, nothing we can do!
+    
+    
+    def registerKeepAliveCallback(self, callback, onlyClientSubscriptionHandle=None):
+        """
+        Register a callback to handle KeepAlive notifications.
+        
+        You can register multiple callbacks: all of them will be called.
+        The :meth:`pyuaf.client.Client.keepAliveReceived` method (which you may override) 
+        will also always be called, regardless of the callbacks you register.
+        
+        :param callback:                A callback function. This function should have one input
+                                        argument of type :class:`pyuaf.client.KeepAliveNotification`.
+        :param onlyClientSubscriptionHandle:  Optional argument: provide this argument if you don't 
+                                        want to listen to the KeepAlive notifications of *all* 
+                                        subscriptions, but only listen to the KeepAlive notifications
+                                        for the single subscription identified by the given unique 
+                                        clientSubscriptionHandle.
+        :type onlyClientSubscriptionHandle: ``int``
+        """
+        dic = { "callback" : callback,
+                "onlyClientSubscriptionHandle" : onlyClientSubscriptionHandle }
+        
+        self.__keepAliveCallbacks__.append(dic)
     
     
     def keepAliveReceived(self, notification):
@@ -566,7 +879,7 @@ class Client(ClientBase):
        pyuaf.util.errors.evaluate(status)
     
     
-    def manuallySubscribe(self, clientConnectionId, subscriptionSettings):
+    def manuallySubscribe(self, clientConnectionId, subscriptionSettings=None):
        """
        Create a subscription manually.
        
@@ -584,6 +897,9 @@ class Client(ClientBase):
        :raise pyuaf.util.errors.UafError:
             Base exception, catch this to handle any other errors.
        """
+       if subscriptionSettings is None:
+           subscriptionSettings = pyuaf.client.settings.SubscriptionSettings()
+       
        status, clientSubscriptionHandle = ClientBase.manuallySubscribe(self, clientConnectionId, subscriptionSettings)
        pyuaf.util.errors.evaluate(status)
        return clientSubscriptionHandle

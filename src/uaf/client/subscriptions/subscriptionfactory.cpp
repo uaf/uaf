@@ -528,6 +528,27 @@ namespace uafc
                 clientSubscriptionHandle,
                 previousSequenceNumber,
                 newSequenceNumber);
+
+        // acquire the subscription:
+        Subscription* subscription = 0;
+        Status acquireStatus = acquireExistingSubscription(clientSubscriptionHandle, subscription);
+        SubscriptionInformation info;
+
+        if (acquireStatus.isGood())
+        {
+            // get the updated subscription info
+            info = subscription->subscriptionInformation();
+
+            // release the acquired session
+            releaseSubscription(subscription);
+        }
+        else
+        {
+            logger_->warning("Unknown ClientSubscriptionHandle, discarding notification!");
+        }
+
+        // call the callback interface
+        clientInterface_->notificationsMissing(info, previousSequenceNumber, newSequenceNumber);
     }
 
 

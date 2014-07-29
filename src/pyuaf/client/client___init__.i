@@ -130,12 +130,15 @@ import threading
 
 
 // before including any classes in a generic way, specify the "special treatments" of certain classes:
-%rename(__dispatch_readComplete__)          uafc::ClientInterface::readComplete;
-%rename(__dispatch_writeComplete__)         uafc::ClientInterface::writeComplete;
-%rename(__dispatch_callComplete__)          uafc::ClientInterface::callComplete;
-%rename(__dispatch_dataChangesReceived__)   uafc::ClientInterface::dataChangesReceived;
-%rename(__dispatch_eventsReceived__)        uafc::ClientInterface::eventsReceived;
-%rename(__dispatch_keepAliveReceived__)     uafc::ClientInterface::keepAliveReceived;
+%rename(__dispatch_readComplete__)              uafc::ClientInterface::readComplete;
+%rename(__dispatch_writeComplete__)             uafc::ClientInterface::writeComplete;
+%rename(__dispatch_callComplete__)              uafc::ClientInterface::callComplete;
+%rename(__dispatch_dataChangesReceived__)       uafc::ClientInterface::dataChangesReceived;
+%rename(__dispatch_eventsReceived__)            uafc::ClientInterface::eventsReceived;
+%rename(__dispatch_keepAliveReceived__)         uafc::ClientInterface::keepAliveReceived;
+%rename(__dispatch_connectionStatusChanged__)   uafc::ClientInterface::connectionStatusChanged;
+%rename(__dispatch_subscriptionStatusChanged__) uafc::ClientInterface::subscriptionStatusChanged;
+%rename(__dispatch_notificationsMissing__)      uafc::ClientInterface::notificationsMissing;
 
 
 // now include all classes in a generic way
@@ -161,4 +164,3 @@ UAF_WRAP_CLASS("uaf/client/clientinterface.h"                         , uafc , C
 %clear uafc::ClientConnectionId & clientSubscriptionHandle;
 // finally, include the client code:
 %include "pyuaf/client/client.py"
-

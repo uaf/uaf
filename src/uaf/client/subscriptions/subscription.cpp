@@ -108,15 +108,16 @@ namespace uafc
 
         if (ret.isGood())
         {
-            subscriptionState_ = uafc::subscriptionstates::Created;
+            setSubscriptionState(uafc::subscriptionstates::Created);
             logger_->debug("The subscription has been successfully created to the server");
         }
         else
         {
-            subscriptionState_ = uafc::subscriptionstates::Deleted;
+            setSubscriptionState(uafc::subscriptionstates::Deleted);
             ret.addDiagnostic("Subscription creation to the server failed");
             logger_->error(ret);
         }
+
 
         return ret;
     }
@@ -220,6 +221,8 @@ namespace uafc
                        uafc::subscriptionstates::toString(subscriptionState).c_str());
         Subscription::subscriptionState_ = subscriptionState;
 
+        // call the callback interface
+        clientInterface_->subscriptionStatusChanged(subscriptionInformation());
     }
 
 

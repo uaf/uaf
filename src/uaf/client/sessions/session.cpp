@@ -787,6 +787,8 @@ namespace uafc
                  || (sessionState == uafc::sessionstates::ServerShutdown))
             database_->addressCache.clear(serverUri_);
 
+        // call the callback interface
+        clientInterface_->connectionStatusChanged(sessionInformation());
     }
 
 
