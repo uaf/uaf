@@ -28,6 +28,9 @@ class CallbackClass:
     
     def callback(self, info):
         self.infoList.append(info)
+    
+    def isCallbackCalled(self):
+        return len(self.infoList) > 0
 
 
 class MyClient(pyuaf.client.Client):
@@ -38,6 +41,9 @@ class MyClient(pyuaf.client.Client):
     
     def subscriptionStatusChanged(self, info):
         self.infoList.append(info)
+    
+    def isCallbackCalled(self):
+        return len(self.infoList) > 0
 
 
 class ClientSubscriptionStatusTest(unittest.TestCase):
@@ -71,10 +77,17 @@ class ClientSubscriptionStatusTest(unittest.TestCase):
         result = self.client.createMonitoredData(self.address)
         
         self.assertTrue( result.targets[0].status.isGood() )
-        # the callbacks should have been called once:
+        
+        # the callbacks may be dispatched in a separate Python thread, which may not be completed 
+        # yet, so we must wait for them!
+        t_end = time.time() + 1.0 # 1 sec timeout
+        while time.time() < t_end and not (self.client.isCallbackCalled() and cbc.isCallbackCalled()):
+            time.sleep(0.001) # do nothing, just wait
+        
         for source in [self.client, cbc]:
-            self.assertEqual( len(source.infoList), 1 )
+            self.assertTrue( source.isCallbackCalled() )
             self.assertEqual( source.infoList[0].subscriptionState, pyuaf.client.subscriptionstates.Created )
+
 
     def test_client_Client_register_all_subscriptionstatuses_and_manually_subscribe(self):
         cbc = CallbackClass()
@@ -82,15 +95,15 @@ class ClientSubscriptionStatusTest(unittest.TestCase):
          
         clientConnectionId = self.client.manuallyConnect(self.serverUri)
         clientSubscriptionHandle = self.client.manuallySubscribe(clientConnectionId)
-         
-        # the callback will only be called after the session gets connected, so wait for this to happen!
-        t_end = time.time() + 1.0 # 1 second timeout
-        while time.time() < t_end and len(cbc.infoList) == 0:
-            pass # do nothing, just wait
-         
-        # the callbacks should have been called once:
+        
+        # the callbacks may be dispatched in a separate Python thread, which may not be completed 
+        # yet, so we must wait for them!
+        t_end = time.time() + 1.0 # 1 sec timeout
+        while time.time() < t_end and not (self.client.isCallbackCalled() and cbc.isCallbackCalled()):
+            time.sleep(0.001) # do nothing, just wait
+        
         for source in [self.client, cbc]:
-            self.assertEqual( len(source.infoList), 1 )
+            self.assertTrue( source.isCallbackCalled() )
             self.assertEqual( source.infoList[0].subscriptionState, pyuaf.client.subscriptionstates.Created )
          
  
@@ -102,9 +115,15 @@ class ClientSubscriptionStatusTest(unittest.TestCase):
          
         result = self.client.createMonitoredData(self.address)
         self.assertTrue( result.targets[0].status.isGood() )
-        # the callbacks should have been called once:
+        
+        # the callbacks may be dispatched in a separate Python thread, which may not be completed 
+        # yet, so we must wait for them!
+        t_end = time.time() + 1.0 # 1 sec timeout
+        while time.time() < t_end and not (self.client.isCallbackCalled() and cbc.isCallbackCalled()):
+            time.sleep(0.001) # do nothing, just wait
+        
         for source in [self.client, cbc]:
-            self.assertEqual( len(source.infoList), 1 )
+            self.assertTrue( source.isCallbackCalled() )
             self.assertEqual( source.infoList[0].clientSubscriptionHandle, clientSubscriptionHandle)
             self.assertEqual( source.infoList[0].subscriptionState, pyuaf.client.subscriptionstates.Created )
      
