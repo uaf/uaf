@@ -30,15 +30,15 @@ So there will be two main branches:
 
 - long-term: 
 
-   - based on version 1.10 (this one)
-   - tested and production-ready at any time 
-   - API and feature set are frozen, but bugfixes are applied.
+  - based on version 1.10 (this one)
+  - tested and production-ready at any time 
+  - API and feature set are frozen, but bugfixes are applied.
 
 - master:
 
-   - will start with version 2.0.0, and will then adhere to [semantic versioning](http://semver.org)
-   - tested and production-ready at any time
-   - contains latest API and latest features, is actively developed.
+  - will start with version 2.0.0, and will then adhere to [semantic versioning](http://semver.org)
+  - tested and production-ready at any time
+  - contains latest API and latest features, is actively developed.
 
 
 Plans for version 2.0.0:
