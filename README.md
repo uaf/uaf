@@ -12,6 +12,10 @@ Project website?
 
  - **Main code repository: http://github.com/uaf/uaf**
 
+ - Git Branches:
+ 
+     - `master`: tested and production-ready, has the latest API and the latest tested features.
+     - `long-term`: tested and production-ready, but API and feature set are frozen. Only bugfixes are applied.
 
 What?
 -------------------------------------------------------------------------------
@@ -27,11 +31,24 @@ What?
 
 Why?
 -------------------------------------------------------------------------------
+   
+ - The intent of (Py)UAF is to facilitate a web-browser-like experience for the plant floor. 
+   The idea is that you can browse the machinery of a whole facility (or even multiple facilities)
+   by following the links ("references") between the data points ("nodes") of a plant-wide live 
+   model ("address space"). Similar to a web-browsing experience, it shouldn't matter to the client
+   whether these data points are hosted by a single server, or spread over multiple servers. Also
+   similar to a web-browser, none of the servers have to be known *a priori* by the client. New 
+   servers (e.g. new machines, redundant servers that come online, ...) can be discovered 
+   automatically by the UAF, and their data points can be browsed/read/written/monitored/... just
+   like any other server to that was already known to the client.
 
- - The UAF is a framework (or "toolkit") that helps you to create advanced OPC UA applications with 
-   minimal effort. Essentially, it takes care of some *technical* aspects (such as Session and 
-   Subscription management, server discovery, address resolution, ...) so that you can concentrate on 
-   the *functional* aspects of your software application.
+ - In practice, the UAF is a framework (or "toolkit") that helps you to create advanced OPC UA 
+   applications with minimal effort. Essentially, it takes care of some *technical* aspects 
+   (such as Session and Subscription management, server discovery, address resolution, ...) so 
+   that you can concentrate on the *functional* aspects of your software application. 
+   Of course, some technical aspects (such as Session and Subscription management) are also exposed 
+   by the API, so that you can keep full control over them if you don't want the UAF to take 
+   care of them.
    
  - Some very concise and easy to understand examples can be found here:
  
@@ -70,7 +87,8 @@ Why?
         settings.applicationName = "myClient"
         settings.discoveryUrls.append("opc.tcp://localhost:4841")
         
-        # create the client with the given settings
+        # Create the client with the given settings, and it will start to discover
+        # the servers in your network:
         myClient = Client(settings)
         ```
     
@@ -153,10 +171,32 @@ Why?
     
     - **More stuff**
         
-      For instance, UAF clients have also a generic `processRequest` method that can process fully
-      configurable `ReadRequest`s, `WriteRequest`s, `MethodCallRequest`s, ...
+       - The UAF client-side encourages you to define your node addresses in terms of Namespace 
+         URIs and Server URIs instead of the corresponding IDs. URIs are well-defined and static, 
+         while IDs may change between server restarts or server failovers. Since the UAF
+         takes care of the mapping between URIs and IDs for you, you never have to deal with IDs,
+         which means that your code remains stable, and your applications are robust to server 
+         restarts or failovers.
         
-      Dive into the [documentation] or the [examples] to find out more!
+       - The UAF client-side keeps track of the mapping between temporary client-assigned handles
+         and temporary server-assigned IDs. Since server-assigned IDs may change during the 
+         lifetime of your client application (in contrast to client-assigned handles, which are 
+         assigned just once by the UAF), client applications based on the UAF are robust to server
+         restarts or failovers without effort.
+         
+       - The UAF client-side can automatically perform follow-up requests if a single request 
+         wasn't sufficient to get all data, and join the partial results into one complete result. 
+         This can happen in case of browsing large address spaces, or fetching a large amount 
+         of historical data. So you can browse a whole server or fetch a long list of 
+         historical data values with a single line of code, without having to worry about the
+         need for possible follow-up requests.
+         
+       - The UAF Client class has a number of convenience methods (read/write/startMonitoringData/...) 
+         but also a generic `processRequest` method that can process fully configurable 
+         `ReadRequest`s, `WriteRequest`s, `MethodCallRequest`s, ... It means that all 
+         configurable service parameters from the OPC UA SDK are exposed by (Py)UAF as well.
+      
+       - Dive into the [documentation] or the [examples] to find out more!
 
 
 
@@ -165,6 +205,8 @@ Dependencies?
 
  - The UAF is based on the commercial C++ OPC UA Software Developers Kit from Unified Automation. A demo 
    version of this SDK can be downloaded from their website for free: http://www.unified-automation.com
+   For the client-side of the UAF (the only side currently implemented), only the Unified Automation 
+   Client SDK is needed. The same will apply for the server-side of the UAF, once it is implemented.
 
  - More info about the dependencies: see [dependencies.rst.txt](http://github.com/uaf/uaf/blob/master/dependencies.rst.txt)
 
@@ -190,7 +232,11 @@ Documentation?
 Status?
 -------------------------------------------------------------------------------
 
- - Supported on the Client side:
+Currently only the OPC UA client-side is implemented. Many services are fully implemented
+(see list below) but some less-frequently used services are still pending. 
+Support for security is already partly implemented but not functional yet.  
+
+ - Supported services on the Client side:
    - read (synchronous + asynchronous)
    - write (synchronous + asynchronous)
    - method call (synchronous + asynchronous)
@@ -201,8 +247,9 @@ Status?
    - read historical data (raw data + modifications) (synchronous)
    - set publishing mode (synchronous)
    - set monitoring mode (synchronous)
- - Supported on the Server side:
+ - Supported services on the Server side:
    - nothing yet so far!
+
 
 
 Installation?
