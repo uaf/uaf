@@ -28,6 +28,9 @@ class ConnectionStatusCallbackClass:
     
     def callback(self, info):
         self.infoList.append(info)
+    
+    def isCallbackCalled(self):
+        return len(self.infoList) > 0
 
 
 class MyClient(pyuaf.client.Client):
@@ -38,6 +41,9 @@ class MyClient(pyuaf.client.Client):
     
     def connectionStatusChanged(self, info):
         self.infoList.append(info)
+    
+    def isCallbackCalled(self):
+        return len(self.infoList) > 0
 
 
 class ClientConnectionStatusTest(unittest.TestCase):
@@ -83,14 +89,14 @@ class ClientConnectionStatusTest(unittest.TestCase):
         
         clientConnectionId = self.client.manuallyConnect(self.serverUri)
         
-        # the callback will only be called after the session gets connected, so wait for this to happen!
-        t_end = time.time() + 1.0 # 1 second timeout
-        while time.time() < t_end and len(cbc.infoList) == 0:
-            pass # do nothing, just wait
+        # the callbacks may be dispatched in a separate Python thread, which may not be completed 
+        # yet, so we must wait for them!
+        t_end = time.time() + 1.0 # 1 sec timeout
+        while time.time() < t_end and not (self.client.isCallbackCalled() and cbc.isCallbackCalled()):
+            time.sleep(0.001) # do nothing, just wait
         
-        # the callbacks should have been called once:
         for source in [self.client, cbc]:
-            self.assertEqual( len(source.infoList), 1 )
+            self.assertTrue( source.isCallbackCalled() )
             self.assertEqual( source.infoList[0].serverUri, self.serverUri)
             self.assertEqual( source.infoList[0].sessionState, pyuaf.client.sessionstates.Connected )
         
@@ -102,9 +108,14 @@ class ClientConnectionStatusTest(unittest.TestCase):
         result = self.client.read(self.address)
         self.assertTrue( result.targets[0].status.isGood() )
         
-        # the callbacks should have been called once:
+        # the callbacks may be dispatched in a separate Python thread, which may not be completed 
+        # yet, so we must wait for them!
+        t_end = time.time() + 1.0 # 1 sec timeout
+        while time.time() < t_end and not (self.client.isCallbackCalled() and cbc.isCallbackCalled()):
+            time.sleep(0.001) # do nothing, just wait
+        
         for source in [self.client, cbc]:
-            self.assertEqual( len(source.infoList), 1 )
+            self.assertTrue( source.isCallbackCalled() )
             self.assertEqual( source.infoList[0].serverUri, self.serverUri)
             self.assertEqual( source.infoList[0].sessionState, pyuaf.client.sessionstates.Connected )
         
@@ -117,8 +128,15 @@ class ClientConnectionStatusTest(unittest.TestCase):
         
         result = self.client.read(self.address)
         self.assertTrue( result.targets[0].status.isGood() )
-        # the callbacks should have been called once:
+        
+        # the callbacks may be dispatched in a separate Python thread, which may not be completed 
+        # yet, so we must wait for them!
+        t_end = time.time() + 1.0 # 1 sec timeout
+        while time.time() < t_end and not (self.client.isCallbackCalled() and cbc.isCallbackCalled()):
+            time.sleep(0.001) # do nothing, just wait
+        
         for source in [self.client, cbc]:
+            self.assertTrue( source.isCallbackCalled() )
             self.assertEqual( len(source.infoList), 1 )
             self.assertEqual( cbc.infoList[0].clientConnectionId, clientConnectionId)
             self.assertEqual( source.infoList[0].serverUri, self.serverUri)
@@ -137,9 +155,19 @@ class ClientConnectionStatusTest(unittest.TestCase):
         
         result = self.client.read(self.address)
         self.assertTrue( result.targets[0].status.isGood() )
+        
+        # the callbacks may be dispatched in a separate Python thread, which may not be completed 
+        # yet, so we must wait for them!
+        t_end = time.time() + 1.0 # 1 sec timeout
+        while time.time() < t_end and not (self.client.isCallbackCalled() 
+                                           and cbc0.isCallbackCalled() 
+                                           and cbc1.isCallbackCalled() 
+                                           and cbc2.isCallbackCalled()):
+            time.sleep(0.001) # do nothing, just wait
+        
         # the callbacks should have been called once:
         for source in [self.client, cbc0, cbc1, cbc2 ]:
-            self.assertEqual( len(source.infoList), 1 )
+            self.assertTrue( source.isCallbackCalled() )
             self.assertEqual( source.infoList[0].clientConnectionId, clientConnectionId)
             self.assertEqual( source.infoList[0].serverUri, self.serverUri)
             self.assertEqual( source.infoList[0].sessionState, pyuaf.client.sessionstates.Connected )
