@@ -807,4 +807,17 @@ namespace uafc
     }
 
 
+    // Set the monitoring mode
+    // =============================================================================================
+    Status Session::setMonitoringModeIfNeeded(
+            vector<ClientHandle>            clientHandles,
+            monitoringmodes::MonitoringMode monitoringMode,
+            const ServiceSettings&          serviceSettings,
+            vector<Status>&                 results)
+    {
+        return subscriptionFactory_->setMonitoringModeIfNeeded(clientHandles,
+                                                               monitoringMode,
+                                                               serviceSettings,
+                                                               results);
+    }
 }

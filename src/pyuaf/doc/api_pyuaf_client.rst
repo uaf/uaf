@@ -46,6 +46,7 @@
                 Client.historyReadModified
                 Client.historyReadRaw
                 Client.read
+                Client.setMonitoringMode
                 Client.setPublishingMode
                 Client.write
     
@@ -61,11 +62,21 @@
                 Client.readComplete
                 Client.writeComplete
     
-    *Callback functions for subscriptions and monitored items:*
+    *Callback functions for sessions, subscriptions and monitored items:*
         .. autosummary:: 
                 Client.dataChangesReceived
                 Client.eventsReceived
+                Client.connectionStatusChanged
+                Client.subscriptionStatusChanged
                 Client.keepAliveReceived
+                Client.notificationsMissing
+    
+    *Register your own callback functions for sessions, subscriptions and monitored items:*
+        .. autosummary:: 
+                Client.registerConnectionStatusCallback
+                Client.registerSubscriptionStatusCallback
+                Client.registerKeepAliveCallback
+                Client.registerNotificationsMissingCallback
     
     *Information about the current sessions, subscriptions and monitored items:*
         .. autosummary:: 

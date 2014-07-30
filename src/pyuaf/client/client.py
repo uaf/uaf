@@ -594,13 +594,14 @@ class Client(ClientBase):
         
         :param callback:                A callback function. This function should have three input 
                                         arguments:
+                                        
                                          - first argument will be a :class:`~pyuaf.client.SessionInformation` 
                                            instance, describing the subscription that has missing 
                                            notifications.
-                                         - second argument will be an ``int'' representing the 
+                                         - second argument will be an ``int`` representing the 
                                            sequence number of the last notification just before 
                                            notifications went missing.
-                                         - third argument will be an ``int'' representing the 
+                                         - third argument will be an ``int`` representing the 
                                            sequence number of the first notification just after 
                                            notifications went missing.
         :param onlyClientSubscriptionHandle:  Optional argument: provide this argument if you don't 
@@ -2217,7 +2218,96 @@ class Client(ClientBase):
                                               serviceSettings)
         pyuaf.util.errors.evaluate(status)
     
-
+            
+    def setMonitoringMode(self, clientHandles, monitoringMode, serviceSettings=None):
+        """
+        Set the monitoring mode for the specified monitored items.
+        
+        This is the preferred way to temporarily stop receiving notifications for certain monitored
+        items (e.g. because a tab in a User Interface is not visible). See the example below. 
+        
+        Note that clientHandles instead of MonitoredItemIds are used to identify a monitored item. 
+        ClientHandles are assigned by the client and are therefore *static*, while MonitoredItemIds
+        are assigned by the server, so they may change over time (e.g. after restarting the server,
+        of after failover to a redundant server). The UAF will keep track of the mapping between 
+        both. This means that your monitored items are always identified in the same way (by their
+        clientHandles), no matter what happens on the server-side. The UAF takes care of the 
+        conversion automatically, so you don't have to worry about it.
+        
+        Example:
+        
+        .. doctest::
+        
+            >>> import pyuaf
+            >>> from pyuaf.util.errors import UafError
+            >>> from pyuaf.util import Address, NodeId
+            >>> from pyuaf.client import Client
+            >>> from pyuaf.util import monitoringmodes 
+            >>> 
+            >>> myClient     = Client("myClient", ["opc.tcp://localhost:4841"])
+            >>>
+            >>> nameSpaceUri = "http://mycompany.com/mymachine"
+            >>> serverUri    = "http://mycompany.com/servers/plc1"
+            >>> temperature  = Address( NodeId("myMachine.temperature", nameSpaceUri), serverUri)
+            >>> pressure     = Address( NodeId("myMachine.pressure", nameSpaceUri), serverUri)
+            >>>
+            >>> def updateTemperatureWidget(notification):
+            ...      temperatureIndicator.display("%.1f K" %notification.data.value)
+            >>>
+            >>> def updatePressureWidget(notification):
+            ...      pressureIndicator.display("%.1f Bar" %notification.data.value)
+            >>>
+            >>> try:
+            ...     result = myClient.createMonitoredData(
+            ...                 addresses = [temperature, pressure], 
+            ...                 notificationCallbacks = [updateTemperatureWidget, updatePressureWidget])
+            ...     # store the clientHandles:
+            ...     clientHandles = [ target.clientHandle for target in result.targets ]
+            ... except UafError, e:
+            ...     # The monitored items could not be created, because there was some failure
+            ...     #  (maybe the server is off-line?).
+            ...     # Nevertheless, the client handles were already assigned, and we can get them like this: 
+            ...     diagnostics = e.status.additionalDiagnostics()
+            ...     clientHandles = diagnostics.getClientHandles()[0]
+            >>> 
+            >>> def uiTabChangedState(visible):
+            ...     if visible:
+            ...          monitoringMode = monitoringmodes.Sampling
+            ...     else:
+            ...          monitoringMode = monitoringmodes.Reporting
+            ...     try:
+            ...         statuses = myClient.setMonitoringMode(clientHandles, monitoringMode)
+            ...         for i in xrange(len(statuses)):
+            ...             if not statuses[i].isGood():
+            ...                 print("Could not set monitoring mode of widget %d: %s" %(i, statuses[i])) 
+            ...     except UafError, e:
+            ...         print("Couldn't set the new monitoring mode: %s" %e)
+            
+        
+        :param clientHandles:    List of client handles of the monitored items you want to change.
+        :type  clientHandles:    ``list`` of ``int``
+        :param monitoringMode:   New monitoring mode, as defined in :mod:`pyuaf.util.monitoringmodes`.
+        :type  monitoringMode:   ``int``
+        :param serviceSettings:  The service settings to be used (leave None for default settings).
+        :type  serviceSettings:  :class:`pyuaf.client.settings.ServiceSettings`
+        :return:                 A list of statuses, one for each client handle.
+        :rtype:                  :class:`~pyuaf.util.StatusVector`.
+        :raise pyuaf.util.errors.UafError:
+             Base exception, catch this to handle any UAF errors.
+        """
+        if serviceSettings is None:
+            serviceSettings = pyuaf.client.settings.ServiceSettings()
+        
+        results = pyuaf.util.StatusVector()
+        status = ClientBase.setMonitoringMode(self, 
+                                              clientHandles, 
+                                              monitoringMode, 
+                                              serviceSettings, 
+                                              results)
+        pyuaf.util.errors.evaluate(status)
+        return results
+        
+        
     def processRequest(self, request, resultCallback=None, notificationCallbacks=[]):
         """
         Process a generic request (as found in :mod:`pyuaf.client.requests`).

@@ -667,6 +667,21 @@ namespace uafc
     }
 
 
+    // Set the monitoring mode
+    // =============================================================================================
+    Status Client::setMonitoringMode(
+            vector<ClientHandle>            clientHandles,
+            monitoringmodes::MonitoringMode monitoringMode,
+            const ServiceSettings&          serviceSettings,
+            vector<Status>&                 results)
+    {
+        return sessionFactory_->setMonitoringMode(clientHandles,
+                                                  monitoringMode,
+                                                  serviceSettings,
+                                                  results);
+    }
+
+
     // Run the thread
     // =============================================================================================
     void Client::run()

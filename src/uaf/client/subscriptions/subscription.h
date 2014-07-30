@@ -170,6 +170,23 @@ namespace uafc
                 const uafc::ServiceSettings&   serviceSettings);
 
 
+       /**
+        * Set the monitoring mode for the given ClientHandles, if they are owned by the
+        * subscription.
+        *
+        * @param clientHandles     The ClientHandles of the monitored items to be affected.
+        * @param monitoringMode    The new monitoring mode.
+        * @param serviceSettings   The service settings to be used.
+        * @param results           A vector of statuses (one result for each ClientHandle).
+        * @return                  The immediate result of the service call.
+        */
+        uaf::Status setMonitoringModeIfNeeded(
+               std::vector<uaf::ClientHandle>          clientHandles,
+               uaf::monitoringmodes::MonitoringMode    monitoringMode,
+               const uafc::ServiceSettings&            serviceSettings,
+               std::vector<uaf::Status>&               results);
+
+
         /**
          * Execute a CreateMonitoredData service invocation.
          *
@@ -190,8 +207,7 @@ namespace uafc
 
             for (std::size_t i = 0; i < invocation.requestTargets().size(); i++)
             {
-                uaf::ClientHandle clientHandle;
-                clientHandle = invocation.resultTargets()[i].clientHandle;
+                uaf::ClientHandle clientHandle = invocation.resultTargets()[i].clientHandle;
 
                 // create a new unique client handle if necessary
                 if (clientHandle == uaf::CLIENTHANDLE_NOT_ASSIGNED)
@@ -215,6 +231,20 @@ namespace uafc
 
             // create the monitored items on the server side, by invoking the service
             ret = invocation.invoke(uaSubscription_, nameSpaceArray, serverArray, logger_);
+
+            // store the MonitoredItemId, revised sampling interval etc.
+            for (std::size_t i = 0; i < invocation.resultTargets().size(); i++)
+            {
+                uaf::ClientHandle clientHandle = invocation.resultTargets()[i].clientHandle;
+
+                monitoredItemsMap_[clientHandle].revisedQueueSize \
+                    = invocation.resultTargets()[i].revisedQueueSize;
+                monitoredItemsMap_[clientHandle].revisedSamplingIntervalSec \
+                    = invocation.resultTargets()[i].revisedSamplingIntervalSec;
+                monitoredItemsMap_[clientHandle].monitoredItemId \
+                    = invocation.resultTargets()[i].monitoredItemId;
+            }
+
 
             return ret;
         }
@@ -240,8 +270,7 @@ namespace uafc
 
             for (std::size_t i = 0; i < invocation.requestTargets().size(); i++)
             {
-                uaf::ClientHandle clientHandle;
-                clientHandle = invocation.resultTargets()[i].clientHandle;
+                uaf::ClientHandle clientHandle = invocation.resultTargets()[i].clientHandle;
 
                 // create a new unique client handle if necessary
                 if (clientHandle == uaf::CLIENTHANDLE_NOT_ASSIGNED)
@@ -265,6 +294,19 @@ namespace uafc
 
             // create the monitored items on the server side, by invoking the service
             ret = invocation.invoke(uaSubscription_, nameSpaceArray, serverArray, logger_);
+
+            // store the MonitoredItemId, revised sampling interval etc.
+            for (std::size_t i = 0; i < invocation.resultTargets().size(); i++)
+            {
+                uaf::ClientHandle clientHandle = invocation.resultTargets()[i].clientHandle;
+
+                monitoredItemsMap_[clientHandle].revisedQueueSize \
+                    = invocation.resultTargets()[i].revisedQueueSize;
+                monitoredItemsMap_[clientHandle].revisedSamplingIntervalSec \
+                    = invocation.resultTargets()[i].revisedSamplingIntervalSec;
+                monitoredItemsMap_[clientHandle].monitoredItemId \
+                    = invocation.resultTargets()[i].monitoredItemId;
+            }
 
             return ret;
         }

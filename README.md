@@ -200,6 +200,7 @@ Status?
    - browse and browse next (synchronous)
    - read historical data (raw data + modifications) (synchronous)
    - set publishing mode (synchronous)
+   - set monitoring mode (synchronous)
  - Supported on the Server side:
    - nothing yet so far!
 

@@ -250,6 +250,22 @@ namespace uafc
                 bool&                          subscriptionFound);
 
 
+        /**
+        * Set the monitoring mode for the specified monitored items.
+        *
+        * @param clientHandles     The ClientHandles of the monitored items to be affected.
+        * @param monitoringMode    The new monitoring mode.
+        * @param serviceSettings   The service settings to be used.
+        * @param results           A vector of statuses (one result for each ClientHandle).
+        * @return                  The immediate result of the service call.
+        */
+        uaf::Status setMonitoringModeIfNeeded(
+               std::vector<uaf::ClientHandle>          clientHandles,
+               uaf::monitoringmodes::MonitoringMode    monitoringMode,
+               const uafc::ServiceSettings&            serviceSettings,
+               std::vector<uaf::Status>&               results);
+
+
 
         ///@} //////////////////////////////////////////////////////////////////////////////////////
         /**

@@ -63,6 +63,15 @@ namespace uafc
          * CreateMonitoredDataRequest (or CreateMonitoredEventsRequest) with handle 12 resulted in
          * the creation of this monitored item. */
         std::size_t                    targetRank;
+
+        /** MonitoredItemId that was assigned to the monitored item by the server. */
+        uaf::MonitoredItemId monitoredItemId;
+
+        /** The revised sampling interval of the monitored item, in seconds. */
+        double revisedSamplingIntervalSec;
+
+        /** The revised queue size on the server side. */
+        uint32_t revisedQueueSize;
     };
 }
 

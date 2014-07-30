@@ -230,7 +230,7 @@ namespace uafc
         // lock the mutex to make sure the sessionMap_ is not being manipulated
         UaMutexLocker locker(&subscriptionMapMutex_);
 
-        // loop trough the sessions
+        // loop trough the subscriptions
         for (SubscriptionMap::iterator it = subscriptionMap_.begin();
                 it != subscriptionMap_.end();
                 ++it)
@@ -245,6 +245,36 @@ namespace uafc
                       "Could not set the publishing mode since clientSubscriptionHandle %d was " \
                       "not found",
                       clientSubscriptionHandle);
+    }
+
+
+
+    // Set the monitoring mode for the given client handles.
+    // =============================================================================================
+    Status SubscriptionFactory::setMonitoringModeIfNeeded(
+            vector<ClientHandle>            clientHandles,
+            monitoringmodes::MonitoringMode monitoringMode,
+            const ServiceSettings&          serviceSettings,
+            vector<Status>&                 results)
+    {
+        Status ret;
+
+        // lock the mutex to make sure the sessionMap_ is not being manipulated
+        UaMutexLocker locker(&subscriptionMapMutex_);
+
+        // loop trough the subscriptions
+        for (SubscriptionMap::iterator it = subscriptionMap_.begin();
+                it != subscriptionMap_.end() && ret.isNotBad();
+                ++it)
+        {
+            ret = it->second->setMonitoringModeIfNeeded(
+                    clientHandles,
+                    monitoringMode,
+                    serviceSettings,
+                    results);
+        }
+
+        return ret;
     }
 
 
