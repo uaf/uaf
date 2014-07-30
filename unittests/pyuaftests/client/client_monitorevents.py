@@ -104,8 +104,12 @@ class ClientMonitorEventsTest(unittest.TestCase):
         self.eventFilter.selectClauses[2].typeId = NodeId(opcuaidentifiers.OpcUaId_BaseEventType, 0)
         
         # make sure the trigger has a default value
-        self.client.write([self.address_Trigger], [Double(50.0)])
-    
+        result = self.client.write([self.address_Trigger], [Double(50.0)])
+        # Check if the write failed due to a BadUserAccessDenied failure
+        # This appears to be the case for the UaServerCpp shipped with the Windows MSVS2008 demo SDK,
+        # probably a bug in the UaServerCpp.
+        if result.targets[0].status.opcUaStatusCode() == pyuaf.util.opcuastatuscodes.OpcUa_BadUserAccessDenied:
+            self.skipTest("Some old versions of the UaServerCpp have non-writeable triggers (bug in UaServerCpp?)")
     
     def test_client_Client_createMonitoredEvents(self):
         

@@ -40,8 +40,8 @@ namespace uafc
     : attributeId(uaf::attributeids::Value),
       monitoringMode(uaf::monitoringmodes::Reporting),
       samplingIntervalSec(0.0),
-      queueSize(0),
-      discardOldest(false)
+      queueSize(1),
+      discardOldest(true)
     {}
 
 
@@ -52,8 +52,8 @@ namespace uafc
       attributeId(uaf::attributeids::Value),
       monitoringMode(uaf::monitoringmodes::Reporting),
       samplingIntervalSec(0.0),
-      queueSize(0),
-      discardOldest(false)
+      queueSize(1),
+      discardOldest(true)
     {}
 
 

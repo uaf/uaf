@@ -1,7 +1,11 @@
+# Ignore everything below build/
+build/*
+
 # Ignore project files
 .project
 .cproject
 .pydevproject
+.settings/
 
 # Ignore python bytecode
 *.py[cod]

@@ -5,10 +5,113 @@
 
 .. automodule:: pyuaf.client
 
+**SUMMARY of submodules:**
+
+.. autosummary:: 
+    
+        configs
+        monitoreditemstates
+        requests
+        results
+        sessionstates
+        settings
+        subscriptionstates
+        
+**SUMMARY of classes:**
+        
+        See sidebar.
+
 
 *class* Client
 ----------------------------------------------------------------------------------------------------
 
+**SUMMARY**:
+    
+    *Constructor:*
+        .. autosummary:: 
+                Client
+    
+    *Client settings:*
+        .. autosummary:: 
+                Client.clientSettings
+                Client.setClientSettings
+    
+    *Synchronous service calls:*
+        .. autosummary:: 
+                Client.browse
+                Client.browseNext
+                Client.call
+                Client.createMonitoredData
+                Client.createMonitoredEvents
+                Client.historyReadModified
+                Client.historyReadRaw
+                Client.read
+                Client.setMonitoringMode
+                Client.setPublishingMode
+                Client.write
+    
+    *Asynchronous service calls:*
+        .. autosummary:: 
+                Client.beginCall
+                Client.beginRead
+                Client.beginWrite
+    
+    *Callback functions for asynchronous service calls:*
+        .. autosummary:: 
+                Client.callComplete
+                Client.readComplete
+                Client.writeComplete
+    
+    *Callback functions for sessions, subscriptions and monitored items:*
+        .. autosummary:: 
+                Client.dataChangesReceived
+                Client.eventsReceived
+                Client.connectionStatusChanged
+                Client.subscriptionStatusChanged
+                Client.keepAliveReceived
+                Client.notificationsMissing
+    
+    *Register your own callback functions for sessions, subscriptions and monitored items:*
+        .. autosummary:: 
+                Client.registerConnectionStatusCallback
+                Client.registerSubscriptionStatusCallback
+                Client.registerKeepAliveCallback
+                Client.registerNotificationsMissingCallback
+    
+    *Information about the current sessions, subscriptions and monitored items:*
+        .. autosummary:: 
+                Client.allSessionInformations
+                Client.allSubscriptionInformations
+                Client.monitoredItemInformation
+                Client.sessionInformation
+                Client.subscriptionInformation
+                
+    *Fully configurable generic service calls:*
+        .. autosummary:: 
+                Client.processRequest
+    
+    *Manually created sessions and subscriptions:*
+        .. autosummary:: 
+                Client.manuallyConnect
+                Client.manuallyConnectToEndpoint
+                Client.manuallyDisconnect
+                Client.manuallySubscribe
+                Client.manuallyUnsubscribe
+    
+    *Catch the logging of the UAF:*
+        .. autosummary:: 
+                Client.logMessageReceived
+                Client.registerLoggingCallback
+                Client.unregisterLoggingCallback
+    
+    *Discovery:*
+        .. autosummary:: 
+                Client.serversFound
+                Client.findServersNow
+
+
+**DETAILED DESCRIPTION:**:
+    
 .. autoclass:: pyuaf.client.Client
     :members:
 

@@ -93,6 +93,12 @@ Installation procedure for Microsoft Windows
   the ``-DCMAKE_PREFIX_PATH`` flag.  More ``lib`` and ``include`` paths may also be specified 
   explicitly using the ``-DCMAKE_LIBRARY_PATH`` and ``-DCMAKE_INCLUDE_PATH`` flags.
 
+- VS2008 ONLY: In case you're compiling with Microsoft VS2008, the UAF requires the third-party
+  C++ headers of the 'msinttypes' project, which is shipped with the UAF. By default, the build
+  script detects VS2008 and will automatically include the required headers. If you don't want
+  this to happen (because you want to try other headers and you know what you're doing), you 
+  can disable this from happening by adding ``-DNO_THIRD_PARTY_MSINTTYPES=ON``.
+
 
 - There should not be any errors. The final line should say::
 

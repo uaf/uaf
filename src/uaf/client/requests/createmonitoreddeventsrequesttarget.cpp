@@ -39,8 +39,8 @@ namespace uafc
     CreateMonitoredEventsRequestTarget::CreateMonitoredEventsRequestTarget()
     : monitoringMode(uaf::monitoringmodes::Reporting),
       samplingIntervalSec(0.0),
-      queueSize(0),
-      discardOldest(false)
+      queueSize(1),
+      discardOldest(true)
     {}
 
 
@@ -50,8 +50,8 @@ namespace uafc
     : address(address),
       monitoringMode(uaf::monitoringmodes::Reporting),
       samplingIntervalSec(0.0),
-      queueSize(0),
-      discardOldest(false)
+      queueSize(1),
+      discardOldest(true)
     {}
 
 
@@ -63,8 +63,8 @@ namespace uafc
     : address(address),
       monitoringMode(uaf::monitoringmodes::Reporting),
       samplingIntervalSec(0.0),
-      queueSize(0),
-      discardOldest(false),
+      queueSize(1),
+      discardOldest(true),
       eventFilter(eventFilter)
     {}
 

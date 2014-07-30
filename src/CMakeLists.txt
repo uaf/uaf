@@ -34,6 +34,8 @@ handleLibXml2()
 handleSwig()
 handlePythonLibs()
 
+# Include any required third-party code
+includeThirdPartyCodeIfNeeded()
 
 # Include the common SDK headers
 include_directories("${UASDK_INCLUDE_DIR}")
@@ -68,6 +70,13 @@ endif (SWIG_FOUND)
 
 # set the output directories
 setUafOutputDirectories()
+
+# Print the include dirs
+message(STATUS "The following directories are included:")
+get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+foreach(dir ${dirs})
+  message(STATUS " * ${dir}")
+endforeach()
 
 # Print a summary
 message(STATUS "")

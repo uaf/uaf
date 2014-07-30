@@ -108,15 +108,16 @@ namespace uafc
 
         if (ret.isGood())
         {
-            subscriptionState_ = uafc::subscriptionstates::Created;
+            setSubscriptionState(uafc::subscriptionstates::Created);
             logger_->debug("The subscription has been successfully created to the server");
         }
         else
         {
-            subscriptionState_ = uafc::subscriptionstates::Deleted;
+            setSubscriptionState(uafc::subscriptionstates::Deleted);
             ret.addDiagnostic("Subscription creation to the server failed");
             logger_->error(ret);
         }
+
 
         return ret;
     }
@@ -194,7 +195,7 @@ namespace uafc
     }
 
 
-    // Set the publishing mode
+    // Set the monitoring mode
     // =============================================================================================
     Status Subscription::setPublishingMode(
             bool                   publishingEnabled,
@@ -211,6 +212,79 @@ namespace uafc
     }
 
 
+    // Set the publishing mode for the given client handles.
+    // =============================================================================================
+    Status Subscription::setMonitoringModeIfNeeded(
+            vector<ClientHandle>            clientHandles,
+            monitoringmodes::MonitoringMode monitoringMode,
+            const ServiceSettings&          serviceSettings,
+            vector<Status>&                 results)
+    {
+        logger_->debug("Setting the monitored item mode to %s",
+                       uaf::monitoringmodes::toString(monitoringMode).c_str());
+
+        Status ret;
+
+        UaMutexLocker locker(&monitoredItemsMapMutex_); // unlocks when locker goes out of scope
+
+        // Create an array of affected MonitoredItemIds, and their rank number.
+        // To increase efficiency, we first make these arrays the same size as the ClientHandles,
+        // then fill the arrays from the front towards the end, and finally we resize them again
+        // to the correct size.
+        uint32_t maxSize = clientHandles.size();
+        uint32_t realSize = 0; // to be updated
+        UaUInt32Array ranks;
+        UaUInt32Array ids;
+        ranks.resize(maxSize);
+        ids.resize(maxSize);
+        MonitoredItemsMap::const_iterator it;
+        for (uint32_t i = 0; i < maxSize; i++)
+        {
+            it = monitoredItemsMap_.find(clientHandles[i]);
+
+            if (it != monitoredItemsMap_.end())
+            {
+                realSize++;
+
+                ranks[realSize-1] = i;
+                ids[realSize-1]   = it->second.monitoredItemId;
+            }
+        }
+
+        // don't forget to resize the ranks and ids now to their real size:
+        ranks.resize(realSize);
+        ids.resize(realSize);
+
+        // now invoke the service
+        OpcUa_MonitoringMode opcUaMonitoringMode = fromUafToSdk(monitoringMode);
+        UaClientSdk::ServiceSettings uaServiceSettings;
+        serviceSettings.toSdk(uaServiceSettings);
+        UaStatusCodeArray uaStatusCodes;
+
+        UaStatus uaStatus = uaSubscription_->setMonitoringMode(
+                uaServiceSettings,
+                opcUaMonitoringMode,
+                ids,
+                uaStatusCodes);
+
+        ret.fromSdk(uaStatus.statusCode(), "Couldn't set the publishing mode");
+
+        logger_->debug("Result of OPC UA service call: %s", ret.toString().c_str());
+
+        if (ret.isGood())
+        {
+            for (uint32_t i = 0; i < realSize; i++)
+            {
+                results[ranks[i]].fromSdk(uaStatusCodes[i],
+                                          "Status of client handle %d", clientHandles[ranks[i]]);
+            }
+        }
+
+        return ret;
+    }
+
+
+
     // Change the subscription status
     // =============================================================================================
     void Subscription::setSubscriptionState(
@@ -220,6 +294,8 @@ namespace uafc
                        uafc::subscriptionstates::toString(subscriptionState).c_str());
         Subscription::subscriptionState_ = subscriptionState;
 
+        // call the callback interface
+        clientInterface_->subscriptionStatusChanged(subscriptionInformation());
     }
 
 

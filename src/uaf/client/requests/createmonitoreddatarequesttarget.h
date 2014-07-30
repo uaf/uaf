@@ -106,10 +106,10 @@ namespace uafc
         /** The sampling interval of the monitored item, in seconds. */
         double samplingIntervalSec;
 
-        /** The queue size on the server side. */
+        /** The queue size on the server side (1 by default!). */
         uint32_t queueSize;
 
-        /** True to discard the oldest item in the queue. */
+        /** True to discard the oldest item in the queue (true by default!). */
         bool discardOldest;
 
         /** The data change filter. */

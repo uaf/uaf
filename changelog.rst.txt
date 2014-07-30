@@ -17,6 +17,136 @@ Bugfixes (which do not have any implications on the API) can only be tracked
 via the GIT version control system.
 
 
+1.10 @ 2014/07/30
+----------------------------------------------------------------------------------------------------
+
+**Important notice**
+This version will be the last version before version 2.0.0, which will contain a few rather drastic
+API changes, affecting poorly designed parts of the UAF (see the plans for version 2.0.0 below).
+The goal is to turn this version (1.10) into a "long-term" supported one, by maintaining it in a
+different branch from version 2.0.0, which will receive an updated API and new features.
+
+So there will be two main branches:
+
+- long-term: 
+
+  - based on version 1.10 (this one)
+  - tested and production-ready at any time 
+  - API and feature set are frozen, but bugfixes are applied.
+
+- master:
+
+  - will start with version 2.0.0, and will then adhere to [semantic versioning](http://semver.org)
+  - tested and production-ready at any time
+  - contains latest API and latest features, is actively developed.
+
+
+Plans for version 2.0.0:
+
+- simplify the API related to session/subscription management. Get rid of concepts like 
+  "SessionConfig", "SubscriptionConfig", "manuallyConnect", ... and simply provide functions 
+  like "createSession", "createSubscription", etc. 
+  Session and subscription management remains optional for the user (as it's easier to let the
+  UAF handle that), but those users that want to keep full control over their sessions and 
+  subscriptions will have a much easier API to work with.
+- support security
+- fix some small API inconsistencies so that the remaining missing OPC UA services 
+  (such as ModifyMonitoredItems) can be implemented easily, and so that the API can remain
+  more stable while the first attempts to implement the server-side are carried out... 
+ 
+
+New in this version:
+
+Informally:
+
+- Updated the README.md to explain the intent and the added value of (Py)UAF a bit better 
+  (section "Why?").
+
+- The monitoring mode (Disabled/Sampling/Reported) can now be set for monitored items via 
+  the SetMonitoringMode service. This is the preferred way to temporarily disable monitored items
+  from being reported, e.g. when the tab of a graphical user interface is not visible.
+  The newly added method "setMonitoringMode" will find out to which sessions and subscriptions
+  your specified monitored items belong to: you only have to provide their client handles. 
+  This means that you can code your application against the specification of some nodes,
+  without worrying about questions like "which node is currently hosted by which server?" or 
+  "which monitored item currently belongs to which subscription?". 
+
+- Connections and subscriptions can now be monitored much better because the following events 
+  are now exposed to the user (via callback functions):
+
+  - ConnectionStatusChanged
+  - SubscriptionStatusChanged
+  - NotificationsMissing
+
+- !!! breaking change !!!
+
+  By default, when you create monitored items, the queue size is now 1 and the discard policy 
+  is set to "discard oldest". The default queue size used to be 0, which meant that servers 
+  always had to revise this number and correct it to 1. The default discard policy used to be 
+  "discard newest", which meant that the most recent data got lost in case a variable changed 
+  too rapidly. With the new defaults, clients are now always notified of the most recent data 
+  changes and events. For most applications, this makes a lot more sense.
+
+- Bugfix: the value returned by pyuaf.util.Status.opcUaStatusCode() was sometimes wrong: SWIG 
+  converted the value into a signed 'long' which numerically (but not always bitwise!) corresponds
+  to the 32-bit code defined by the OPC UA standard. Since pyuaf.util.opcuastatuscodes contains 
+  'int's that correspond bitwise (but not always numerically!) to the status codes defined by the 
+  OPC UA standard, there was a mismatch between the output of pyuaf.util.Status.opcUaStatusCode() 
+  and the contents of pyuaf.util.opcuastatuscodes. This is now fixed: both correspond now 
+  bitwise to the OPC UA status codes, so they can be compared with each other.
+   
+- Fixed a bug that caused the UAF to crash when providing Namespace URIs and Server URIs that 
+  contain percentage (%) signs. The bug occurred when trying to connect to the 
+  Ignition OPC UA server by Inductive Automation.
+  See http://github.com/uaf/uaf/issues/30
+   
+- Microsoft VS2008 is now supported (credits to robi-wan @ GitHub).
+  The VS2008 compiler requires the third-party "msinttypes" C++ headers, which are shipped with 
+  the UAF. If you don't want these headers to be included automatically by the CMake build script,
+  set the NO_THIRD_PARTY_MSINTTYPES option to ON (see install_windows.rst.txt).
+  See http://github.com/uaf/uaf/issues/29
+   
+- Python primitives such as pyuaf.util.primitives.Bool, UInt32 etc. now also accept strings, which
+  they automatically cast to the correct datatype. 
+  For example, besides IUnt64(42) you can now also write UInt64("42"). 
+  See http://github.com/uaf/uaf/issues/27
+   
+Formally:
+
+- The following methods were added:
+   - uafc::Client::setMonitoringMode (pyuaf.client.Client.setMonitoringMode)
+
+- On the C++ side, the following methods were added to uafc::ClientInterface:
+   - connectionStatusChanged
+   - subscriptionStatusChanged
+   - notificationsMissing
+    
+- On the Python side, the following methods were added to pyuaf.client.Client:
+   - connectionStatusChanged() and registerConnectionStatusCallback()
+   - subscriptionStatusChanged() and registerSubscriptionStatusCallback()
+   - notificationsMissing() and registerNotificationsMissingCallback()
+   - registerKeepAliveCallback() (note: keepAliveReceived() existed already)
+
+- The following method may produce a different output in some cases (Python only):
+   - pyuaf.util.Status.opcUaStatusCode()
+     (the output now always corresponds to the numbers defined in pyuaf.util.opcuastatuscodes)
+     
+- The following attributes have different default value:
+   - uafc::CreateMonitoredDataRequest::queueSize 
+     (pyuaf.client.requests.CreateMonitoredDataRequest.queueSize)
+     --> now 1 instead of 0
+   - uafc::CreateMonitoredDataRequest::discardOldest
+     (pyuaf.client.requests.CreateMonitoredDataRequest.discardOldest)
+     --> now true instead of false
+   - uafc::CreateMonitoredEventsRequest::queueSize 
+     (pyuaf.client.requests.CreateMonitoredEventsRequest.queueSize)
+     --> now 1 instead of 0
+   - uafc::CreateMonitoredEventsRequest::discardOldest
+     (pyuaf.client.requests.CreateMonitoredEventsRequest.discardOldest)
+     --> now true instead of false
+
+
+
 1.9 @ 2014/04/17
 ----------------------------------------------------------------------------------------------------
 

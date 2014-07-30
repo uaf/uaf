@@ -787,6 +787,8 @@ namespace uafc
                  || (sessionState == uafc::sessionstates::ServerShutdown))
             database_->addressCache.clear(serverUri_);
 
+        // call the callback interface
+        clientInterface_->connectionStatusChanged(sessionInformation());
     }
 
 
@@ -805,4 +807,17 @@ namespace uafc
     }
 
 
+    // Set the monitoring mode
+    // =============================================================================================
+    Status Session::setMonitoringModeIfNeeded(
+            vector<ClientHandle>            clientHandles,
+            monitoringmodes::MonitoringMode monitoringMode,
+            const ServiceSettings&          serviceSettings,
+            vector<Status>&                 results)
+    {
+        return subscriptionFactory_->setMonitoringModeIfNeeded(clientHandles,
+                                                               monitoringMode,
+                                                               serviceSettings,
+                                                               results);
+    }
 }

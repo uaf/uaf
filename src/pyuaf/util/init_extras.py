@@ -18,6 +18,11 @@ def __get__repr__(fullname, description):
             ret += '\n' + indent + line
         return ret + ")"
 
+def convert_uint32_to_int32(uint32):
+    return int(uint32) if uint32 < 2**31 else int(uint32 - 2**32)
+
+def convert_int32_to_uint32(int32):
+    return int(int32 & 0xffffffff)
 
 ################################### END OF INCLUDED PYTHON FILE ####################################
 %}

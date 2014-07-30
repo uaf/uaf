@@ -458,6 +458,42 @@ namespace uafc
     }
 
 
+
+    // Set the monitoring mode for the given ClientHandles.
+    // =============================================================================================
+    Status SessionFactory::setMonitoringMode(
+            vector<ClientHandle>            clientHandles,
+            monitoringmodes::MonitoringMode monitoringMode,
+            const ServiceSettings&          serviceSettings,
+            vector<Status>&                 results)
+    {
+        Status ret;
+
+        // set the correct size for the results output parameter
+        results.resize(clientHandles.size());
+
+        // fill all statuses with an "UnknownHandleError" status.
+        // The statuses for which a handle will be found, will be updated further on.
+        for (vector<Status>::iterator it = results.begin(); it != results.end(); ++it)
+            it->setStatus(uaf::statuscodes::UnknownHandleError, "Unknown client handle!");
+
+        // lock the mutex to make sure the sessionMap_ is not being manipulated
+        UaMutexLocker locker(&sessionMapMutex_);
+
+        // loop trough the sessions and let SetMonitoringMode be called (if needed!) on each of them
+        for (SessionMap::const_iterator it = sessionMap_.begin();
+                it != sessionMap_.end() && ret.isNotBad();
+                ++it)
+        {
+            ret = it->second->setMonitoringModeIfNeeded(clientHandles, monitoringMode, serviceSettings, results);
+        }
+
+        return ret;
+    }
+
+
+
+
     // Construct a session if needed, without connecting
     // =============================================================================================
     Status SessionFactory::acquireSession(

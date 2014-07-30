@@ -27,9 +27,11 @@
 // SDK
 // UAF
 #include "uaf/client/results/results.h"
+#include "uaf/client/sessions/sessioninformation.h"
 #include "uaf/client/subscriptions/datachangenotification.h"
 #include "uaf/client/subscriptions/eventnotification.h"
 #include "uaf/client/subscriptions/keepalivenotification.h"
+#include "uaf/client/subscriptions/subscriptioninformation.h"
 
 
 namespace uafc
@@ -50,6 +52,36 @@ namespace uafc
          * Virtual destructor.
          */
         virtual ~ClientInterface() {}
+
+
+        /**
+         * Override this method to handle changes in the connection status of sessions.
+         *
+         * @param info      The new session information.
+         */
+        virtual void connectionStatusChanged(const uafc::SessionInformation& info) {}
+
+
+        /**
+         * Override this method to handle changes in the status of subscriptions.
+         *
+         * @param info      The new subscription information.
+         */
+        virtual void subscriptionStatusChanged(const uafc::SubscriptionInformation& info) {}
+
+
+        /**
+         * Override this method to handle missing notifications.
+         *
+         * @param info                      Information about the subscription that has missing
+         *                                  notifications.
+         * @param previousSequenceNumber    The sequence number before the notifications were lost.
+         * @param newSequenceNumber         The sequence number after the notifications were lost.
+         */
+        virtual void notificationsMissing(
+                const uafc::SubscriptionInformation& info,
+                uint32_t previousSequenceNumber,
+                uint32_t newSequenceNumber) {}
 
 
         /**
