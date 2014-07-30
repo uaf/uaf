@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util &mdash; PyUAF 1.9 documentation</title>
+    <title>pyuaf.util &mdash; PyUAF 1.10 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.9',
+        VERSION:     '1.10',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.9 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.10 documentation" href="index.html" />
     <link rel="next" title="pyuaf.util.attributeids" href="api_pyuaf_util_attributeids.html" />
     <link rel="prev" title="pyuaf.client.subscriptionstates" href="api_pyuaf_client_subscriptionstates.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.9 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.10 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -55,6 +55,72 @@
             
   <div class="section" id="module-pyuaf.util">
 <span id="pyuaf-util"></span><h1><tt class="docutils literal"><span class="pre">pyuaf.util</span></tt><a class="headerlink" href="#module-pyuaf.util" title="Permalink to this headline">¶</a></h1>
+<p><strong>SUMMARY of submodules:</strong></p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api_pyuaf_util_applicationtypes.html#module-pyuaf.util.applicationtypes" title="pyuaf.util.applicationtypes"><tt class="xref py py-obj docutils literal"><span class="pre">applicationtypes</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api_pyuaf_util_attributeids.html#module-pyuaf.util.attributeids" title="pyuaf.util.attributeids"><tt class="xref py py-obj docutils literal"><span class="pre">attributeids</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api_pyuaf_util_browsedirections.html#module-pyuaf.util.browsedirections" title="pyuaf.util.browsedirections"><tt class="xref py py-obj docutils literal"><span class="pre">browsedirections</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api_pyuaf_util_constants.html#module-pyuaf.util.constants" title="pyuaf.util.constants"><tt class="xref py py-obj docutils literal"><span class="pre">constants</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api_pyuaf_util_errors.html#module-pyuaf.util.errors" title="pyuaf.util.errors"><tt class="xref py py-obj docutils literal"><span class="pre">errors</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api_pyuaf_util_loglevels.html#module-pyuaf.util.loglevels" title="pyuaf.util.loglevels"><tt class="xref py py-obj docutils literal"><span class="pre">loglevels</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api_pyuaf_util_messagesecuritymodes.html#module-pyuaf.util.messagesecuritymodes" title="pyuaf.util.messagesecuritymodes"><tt class="xref py py-obj docutils literal"><span class="pre">messagesecuritymodes</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api_pyuaf_util_monitoringmodes.html#module-pyuaf.util.monitoringmodes" title="pyuaf.util.monitoringmodes"><tt class="xref py py-obj docutils literal"><span class="pre">monitoringmodes</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api_pyuaf_util_nodeclasses.html#module-pyuaf.util.nodeclasses" title="pyuaf.util.nodeclasses"><tt class="xref py py-obj docutils literal"><span class="pre">nodeclasses</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api_pyuaf_util_nodeididentifiertypes.html#module-pyuaf.util.nodeididentifiertypes" title="pyuaf.util.nodeididentifiertypes"><tt class="xref py py-obj docutils literal"><span class="pre">nodeididentifiertypes</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api_pyuaf_util_opcuaidentifiers.html#module-pyuaf.util.opcuaidentifiers" title="pyuaf.util.opcuaidentifiers"><tt class="xref py py-obj docutils literal"><span class="pre">opcuaidentifiers</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-obj docutils literal"><span class="pre">opcuastatuscodes</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api_pyuaf_util_opcuatypes.html#module-pyuaf.util.opcuatypes" title="pyuaf.util.opcuatypes"><tt class="xref py py-obj docutils literal"><span class="pre">opcuatypes</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api_pyuaf_util_primitives.html#module-pyuaf.util.primitives" title="pyuaf.util.primitives"><tt class="xref py py-obj docutils literal"><span class="pre">primitives</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api_pyuaf_util_securitypolicies.html#module-pyuaf.util.securitypolicies" title="pyuaf.util.securitypolicies"><tt class="xref py py-obj docutils literal"><span class="pre">securitypolicies</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-obj docutils literal"><span class="pre">statuscodes</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api_pyuaf_util_timestampstoreturn.html#module-pyuaf.util.timestampstoreturn" title="pyuaf.util.timestampstoreturn"><tt class="xref py py-obj docutils literal"><span class="pre">timestampstoreturn</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api_pyuaf_util_usertokentypes.html#module-pyuaf.util.usertokentypes" title="pyuaf.util.usertokentypes"><tt class="xref py py-obj docutils literal"><span class="pre">usertokentypes</span></tt></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>SUMMARY of classes:</strong></p>
+<blockquote>
+<div>See sidebar.</div></blockquote>
 <div class="section" id="class-address">
 <h2><em>class</em> Address<a class="headerlink" href="#class-address" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -2789,14 +2855,40 @@ for more info!</p>
 <dt id="pyuaf.util.Status.opcUaStatusCode">
 <tt class="descname">opcUaStatusCode</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.opcUaStatusCode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the OPC UA status code.</p>
-<p>UAF status codes are not the same as OPC UA status codes!
+<p><em>UAF status codes</em> are not the same as <em>OPC UA status codes</em>!
 See the <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> and <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> modules
 for more info!</p>
+<p>All <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> correspond <em>bitwise</em> to the 32-bit unsigned numbers as defined
+by the OPC UA standard. This means that some statuscodes may appear to be negative, since
+python interprets the 32-bit data as signed integers.
+If you want to see only positive numbers (which will be numerically equivalent but not
+bitwise equivalent to the numbers defined by the OPC UA standard),
+then use the <a class="reference internal" href="#pyuaf.util.Status.opcUaStatusCodeUnsigned" title="pyuaf.util.Status.opcUaStatusCodeUnsigned"><tt class="xref py py-meth docutils literal"><span class="pre">opcUaStatusCodeUnsigned()</span></tt></a> method.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The OPC UA status code, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Status.opcUaStatusCodeUnsigned">
+<tt class="descname">opcUaStatusCodeUnsigned</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.opcUaStatusCodeUnsigned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a number which is numerically equivalent (but not bitwise equivalent) to the OPC UA
+status code as defined by the OPC UA specs.</p>
+<p>You may <em>not</em> compare the output of this method with the integers defined by
+<a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a>, since the latter are bitwise equivalent (but not
+numerically equivalent!) to the numbers defined by the OPC UA standard.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A positive number, representing the OPC UA status code.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
 </tr>
@@ -3596,7 +3688,7 @@ will return True) if you want to specify the whole address space.</p>
         <li class="right" >
           <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.9 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.10 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

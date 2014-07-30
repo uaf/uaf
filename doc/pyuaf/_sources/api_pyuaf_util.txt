@@ -2,8 +2,38 @@
 ====================================================================================================
 
 
+.. currentmodule:: pyuaf.util
+
+
 .. automodule:: pyuaf.util
 
+
+**SUMMARY of submodules:**
+
+.. autosummary:: 
+    
+        applicationtypes
+        attributeids
+        browsedirections
+        constants
+        errors
+        loglevels
+        messagesecuritymodes
+        monitoringmodes
+        nodeclasses
+        nodeididentifiertypes
+        opcuaidentifiers
+        opcuastatuscodes
+        opcuatypes
+        primitives
+        securitypolicies
+        statuscodes
+        timestampstoreturn
+        usertokentypes
+        
+**SUMMARY of classes:**
+        
+        See sidebar.
 
 
 *class* Address
@@ -11,7 +41,6 @@
 
 
 .. autoclass:: pyuaf.util.Address
-
 
     An Address points to a node within an server address space by means of an
     absolute address (an ExpandedNodeId) or by means of a relative address (a path relative to
@@ -2095,13 +2124,34 @@
         
             Get the OPC UA status code.
             
-            UAF status codes are not the same as OPC UA status codes! 
+            *UAF status codes* are not the same as *OPC UA status codes*! 
             See the :mod:`pyuaf.util.statuscodes` and :mod:`pyuaf.util.opcuastatuscodes` modules
             for more info!
+            
+            All :mod:`pyuaf.util.opcuastatuscodes` correspond *bitwise* to the 32-bit unsigned numbers as defined
+            by the OPC UA standard. This means that some statuscodes may appear to be negative, since 
+            python interprets the 32-bit data as signed integers.
+            If you want to see only positive numbers (which will be numerically equivalent but not 
+            bitwise equivalent to the numbers defined by the OPC UA standard), 
+            then use the :meth:`~pyuaf.util.Status.opcUaStatusCodeUnsigned` method.
             
             :return: The OPC UA status code, as defined by :mod:`pyuaf.util.opcuastatuscodes`.
             :rtype:  ``int``
 
+
+        .. automethod:: pyuaf.util.Status.opcUaStatusCodeUnsigned
+        
+            Get a number which is numerically equivalent (but not bitwise equivalent) to the OPC UA
+            status code as defined by the OPC UA specs.
+            
+            You may *not* compare the output of this method with the integers defined by 
+            :mod:`pyuaf.util.opcuastatuscodes`, since the latter are bitwise equivalent (but not
+            numerically equivalent!) to the numbers defined by the OPC UA standard.
+            
+            :return: A positive number, representing the OPC UA status code.
+            :rtype:  ``int``
+
+            
         
         .. automethod:: pyuaf.util.Status.setGood([message])
         

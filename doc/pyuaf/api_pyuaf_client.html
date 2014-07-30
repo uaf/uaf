@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client &mdash; PyUAF 1.9 documentation</title>
+    <title>pyuaf.client &mdash; PyUAF 1.10 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.9',
+        VERSION:     '1.10',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.9 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 1.10 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.configs" href="api_pyuaf_client_configs.html" />
     <link rel="prev" title="pyuaf" href="api_pyuaf.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.9 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.10 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -55,8 +55,305 @@
             
   <div class="section" id="module-pyuaf.client">
 <span id="pyuaf-client"></span><h1><tt class="docutils literal"><span class="pre">pyuaf.client</span></tt><a class="headerlink" href="#module-pyuaf.client" title="Permalink to this headline">¶</a></h1>
+<p><strong>SUMMARY of submodules:</strong></p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api_pyuaf_client_configs.html#module-pyuaf.client.configs" title="pyuaf.client.configs"><tt class="xref py py-obj docutils literal"><span class="pre">configs</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api_pyuaf_client_monitoreditemstates.html#module-pyuaf.client.monitoreditemstates" title="pyuaf.client.monitoreditemstates"><tt class="xref py py-obj docutils literal"><span class="pre">monitoreditemstates</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api_pyuaf_client_requests.html#module-pyuaf.client.requests" title="pyuaf.client.requests"><tt class="xref py py-obj docutils literal"><span class="pre">requests</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api_pyuaf_client_results.html#module-pyuaf.client.results" title="pyuaf.client.results"><tt class="xref py py-obj docutils literal"><span class="pre">results</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api_pyuaf_client_sessionstates.html#module-pyuaf.client.sessionstates" title="pyuaf.client.sessionstates"><tt class="xref py py-obj docutils literal"><span class="pre">sessionstates</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api_pyuaf_client_settings.html#module-pyuaf.client.settings" title="pyuaf.client.settings"><tt class="xref py py-obj docutils literal"><span class="pre">settings</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api_pyuaf_client_subscriptionstates.html#module-pyuaf.client.subscriptionstates" title="pyuaf.client.subscriptionstates"><tt class="xref py py-obj docutils literal"><span class="pre">subscriptionstates</span></tt></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>SUMMARY of classes:</strong></p>
+<blockquote>
+<div>See sidebar.</div></blockquote>
 <div class="section" id="class-client">
 <h2><em>class</em> Client<a class="headerlink" href="#class-client" title="Permalink to this headline">¶</a></h2>
+<p><strong>SUMMARY</strong>:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><em>Constructor:</em></dt>
+<dd><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client" title="pyuaf.client.Client"><tt class="xref py py-obj docutils literal"><span class="pre">Client</span></tt></a>([settings,&nbsp;loggingCallback])</td>
+<td>Construct a UAF client.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><em>Client settings:</em></dt>
+<dd><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.clientSettings" title="pyuaf.client.Client.clientSettings"><tt class="xref py py-obj docutils literal"><span class="pre">Client.clientSettings</span></tt></a>()</td>
+<td>Get a copy of the current client settings.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.setClientSettings" title="pyuaf.client.Client.setClientSettings"><tt class="xref py py-obj docutils literal"><span class="pre">Client.setClientSettings</span></tt></a>(settings)</td>
+<td>Change the client settings.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><em>Synchronous service calls:</em></dt>
+<dd><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.browse" title="pyuaf.client.Client.browse"><tt class="xref py py-obj docutils literal"><span class="pre">Client.browse</span></tt></a>(addresses[,&nbsp;...])</td>
+<td>Browse a number of nodes synchronously.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.browseNext" title="pyuaf.client.Client.browseNext"><tt class="xref py py-obj docutils literal"><span class="pre">Client.browseNext</span></tt></a>(addresses,&nbsp;continuationPoints)</td>
+<td>Continue a previous synchronous Browse request, in case you didn&#8217;t use the automatic</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.call" title="pyuaf.client.Client.call"><tt class="xref py py-obj docutils literal"><span class="pre">Client.call</span></tt></a>(objectAddress,&nbsp;methodAddress[,&nbsp;...])</td>
+<td>Invoke a remote method call.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.createMonitoredData" title="pyuaf.client.Client.createMonitoredData"><tt class="xref py py-obj docutils literal"><span class="pre">Client.createMonitoredData</span></tt></a>(addresses[,&nbsp;...])</td>
+<td>Create one or more monitored data items.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.createMonitoredEvents" title="pyuaf.client.Client.createMonitoredEvents"><tt class="xref py py-obj docutils literal"><span class="pre">Client.createMonitoredEvents</span></tt></a>(addresses[,&nbsp;...])</td>
+<td>Create one or more monitored event items.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.historyReadModified" title="pyuaf.client.Client.historyReadModified"><tt class="xref py py-obj docutils literal"><span class="pre">Client.historyReadModified</span></tt></a>(addresses,&nbsp;...[,&nbsp;...])</td>
+<td>Read the modification information of the historical data from one or more nodes synchronously.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.historyReadRaw" title="pyuaf.client.Client.historyReadRaw"><tt class="xref py py-obj docutils literal"><span class="pre">Client.historyReadRaw</span></tt></a>(addresses,&nbsp;startTime,&nbsp;...)</td>
+<td>Read the raw historical data from one or more nodes synchronously.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.read" title="pyuaf.client.Client.read"><tt class="xref py py-obj docutils literal"><span class="pre">Client.read</span></tt></a>(addresses[,&nbsp;attributeId,&nbsp;...])</td>
+<td>Read a number of node attributes synchronously.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.setMonitoringMode" title="pyuaf.client.Client.setMonitoringMode"><tt class="xref py py-obj docutils literal"><span class="pre">Client.setMonitoringMode</span></tt></a>(clientHandles,&nbsp;...)</td>
+<td>Set the monitoring mode for the specified monitored items.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.setPublishingMode" title="pyuaf.client.Client.setPublishingMode"><tt class="xref py py-obj docutils literal"><span class="pre">Client.setPublishingMode</span></tt></a>(...[,&nbsp;serviceSettings])</td>
+<td>Set the publishing mode, by specifying a subscription handle.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.write" title="pyuaf.client.Client.write"><tt class="xref py py-obj docutils literal"><span class="pre">Client.write</span></tt></a>(addresses,&nbsp;data[,&nbsp;attributeId,&nbsp;...])</td>
+<td>Write a number of node attributes synchronously.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><em>Asynchronous service calls:</em></dt>
+<dd><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.beginCall" title="pyuaf.client.Client.beginCall"><tt class="xref py py-obj docutils literal"><span class="pre">Client.beginCall</span></tt></a>(objectAddress,&nbsp;methodAddress)</td>
+<td>Invoke a remote method call asynchronously.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.beginRead" title="pyuaf.client.Client.beginRead"><tt class="xref py py-obj docutils literal"><span class="pre">Client.beginRead</span></tt></a>(addresses[,&nbsp;attributeId,&nbsp;...])</td>
+<td>Read a number of node attributes asynchronously.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.beginWrite" title="pyuaf.client.Client.beginWrite"><tt class="xref py py-obj docutils literal"><span class="pre">Client.beginWrite</span></tt></a>(addresses,&nbsp;data[,&nbsp;...])</td>
+<td>Write a number of node attributes asynchronously.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><em>Callback functions for asynchronous service calls:</em></dt>
+<dd><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.callComplete" title="pyuaf.client.Client.callComplete"><tt class="xref py py-obj docutils literal"><span class="pre">Client.callComplete</span></tt></a>(result)</td>
+<td>Override this method to catch the result of asynchronous method call requests.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.readComplete" title="pyuaf.client.Client.readComplete"><tt class="xref py py-obj docutils literal"><span class="pre">Client.readComplete</span></tt></a>(result)</td>
+<td>Override this method to catch the result of asynchronous read requests.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.writeComplete" title="pyuaf.client.Client.writeComplete"><tt class="xref py py-obj docutils literal"><span class="pre">Client.writeComplete</span></tt></a>(result)</td>
+<td>Override this method to catch the result of asynchronous write requests.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><em>Callback functions for sessions, subscriptions and monitored items:</em></dt>
+<dd><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.dataChangesReceived" title="pyuaf.client.Client.dataChangesReceived"><tt class="xref py py-obj docutils literal"><span class="pre">Client.dataChangesReceived</span></tt></a>(dataNotifications)</td>
+<td>Override this method to catch the &#8220;data change&#8221; notifications of MonitoredItems.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.eventsReceived" title="pyuaf.client.Client.eventsReceived"><tt class="xref py py-obj docutils literal"><span class="pre">Client.eventsReceived</span></tt></a>(eventNotifications)</td>
+<td>Override this method to catch the &#8220;event&#8221; notifications of MonitoredItems.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.connectionStatusChanged" title="pyuaf.client.Client.connectionStatusChanged"><tt class="xref py py-obj docutils literal"><span class="pre">Client.connectionStatusChanged</span></tt></a>(info)</td>
+<td>Override this method to receive connection status changes.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.subscriptionStatusChanged" title="pyuaf.client.Client.subscriptionStatusChanged"><tt class="xref py py-obj docutils literal"><span class="pre">Client.subscriptionStatusChanged</span></tt></a>(info)</td>
+<td>Override this method to receive subscription status changes.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.keepAliveReceived" title="pyuaf.client.Client.keepAliveReceived"><tt class="xref py py-obj docutils literal"><span class="pre">Client.keepAliveReceived</span></tt></a>(notification)</td>
+<td>You should override this method if you want to process keep alive messages from the UAF.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.notificationsMissing" title="pyuaf.client.Client.notificationsMissing"><tt class="xref py py-obj docutils literal"><span class="pre">Client.notificationsMissing</span></tt></a>(info,&nbsp;...)</td>
+<td>Override this method to handle missing notifications.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><em>Register your own callback functions for sessions, subscriptions and monitored items:</em></dt>
+<dd><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.registerConnectionStatusCallback" title="pyuaf.client.Client.registerConnectionStatusCallback"><tt class="xref py py-obj docutils literal"><span class="pre">Client.registerConnectionStatusCallback</span></tt></a>(callback)</td>
+<td>Register a callback to receive connection status changes.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.registerSubscriptionStatusCallback" title="pyuaf.client.Client.registerSubscriptionStatusCallback"><tt class="xref py py-obj docutils literal"><span class="pre">Client.registerSubscriptionStatusCallback</span></tt></a>(...)</td>
+<td>Register a callback to receive connection status changes.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.registerKeepAliveCallback" title="pyuaf.client.Client.registerKeepAliveCallback"><tt class="xref py py-obj docutils literal"><span class="pre">Client.registerKeepAliveCallback</span></tt></a>(callback[,&nbsp;...])</td>
+<td>Register a callback to handle KeepAlive notifications.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.registerNotificationsMissingCallback" title="pyuaf.client.Client.registerNotificationsMissingCallback"><tt class="xref py py-obj docutils literal"><span class="pre">Client.registerNotificationsMissingCallback</span></tt></a>(...)</td>
+<td>Register a callback to handle missing notifications.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><em>Information about the current sessions, subscriptions and monitored items:</em></dt>
+<dd><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.allSessionInformations" title="pyuaf.client.Client.allSessionInformations"><tt class="xref py py-obj docutils literal"><span class="pre">Client.allSessionInformations</span></tt></a>()</td>
+<td>Get information about all sessions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.allSubscriptionInformations" title="pyuaf.client.Client.allSubscriptionInformations"><tt class="xref py py-obj docutils literal"><span class="pre">Client.allSubscriptionInformations</span></tt></a>()</td>
+<td>Get information about all subscriptions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.monitoredItemInformation" title="pyuaf.client.Client.monitoredItemInformation"><tt class="xref py py-obj docutils literal"><span class="pre">Client.monitoredItemInformation</span></tt></a>(clientHandle)</td>
+<td>Get information about the specified monitored item.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.sessionInformation" title="pyuaf.client.Client.sessionInformation"><tt class="xref py py-obj docutils literal"><span class="pre">Client.sessionInformation</span></tt></a>(clientConnectionId)</td>
+<td>Get information about the specified session.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.subscriptionInformation" title="pyuaf.client.Client.subscriptionInformation"><tt class="xref py py-obj docutils literal"><span class="pre">Client.subscriptionInformation</span></tt></a>(...)</td>
+<td>Get information about the specified subscription.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><em>Fully configurable generic service calls:</em></dt>
+<dd><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.processRequest" title="pyuaf.client.Client.processRequest"><tt class="xref py py-obj docutils literal"><span class="pre">Client.processRequest</span></tt></a>(request[,&nbsp;...])</td>
+<td>Process a generic request (as found in <a class="reference internal" href="api_pyuaf_client_requests.html#module-pyuaf.client.requests" title="pyuaf.client.requests"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.client.requests</span></tt></a>).</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><em>Manually created sessions and subscriptions:</em></dt>
+<dd><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.manuallyConnect" title="pyuaf.client.Client.manuallyConnect"><tt class="xref py py-obj docutils literal"><span class="pre">Client.manuallyConnect</span></tt></a>(serverUri[,&nbsp;...])</td>
+<td>Create a session manually (instead of having the UAF do it behind the scenes).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.manuallyConnectToEndpoint" title="pyuaf.client.Client.manuallyConnectToEndpoint"><tt class="xref py py-obj docutils literal"><span class="pre">Client.manuallyConnectToEndpoint</span></tt></a>(endpointUrl)</td>
+<td>Manually connect to a specific endpoint, without using the discovery services.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.manuallyDisconnect" title="pyuaf.client.Client.manuallyDisconnect"><tt class="xref py py-obj docutils literal"><span class="pre">Client.manuallyDisconnect</span></tt></a>(clientConnectionId)</td>
+<td>Disconnect the session manually.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.manuallySubscribe" title="pyuaf.client.Client.manuallySubscribe"><tt class="xref py py-obj docutils literal"><span class="pre">Client.manuallySubscribe</span></tt></a>(clientConnectionId)</td>
+<td>Create a subscription manually.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.manuallyUnsubscribe" title="pyuaf.client.Client.manuallyUnsubscribe"><tt class="xref py py-obj docutils literal"><span class="pre">Client.manuallyUnsubscribe</span></tt></a>(...)</td>
+<td>Delete the subscription manually.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><em>Catch the logging of the UAF:</em></dt>
+<dd><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.logMessageReceived" title="pyuaf.client.Client.logMessageReceived"><tt class="xref py py-obj docutils literal"><span class="pre">Client.logMessageReceived</span></tt></a>(message)</td>
+<td>Override this method if you want to process logging output from the UAF.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.registerLoggingCallback" title="pyuaf.client.Client.registerLoggingCallback"><tt class="xref py py-obj docutils literal"><span class="pre">Client.registerLoggingCallback</span></tt></a>(callback)</td>
+<td>Register a callback function to receive all log messages.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.unregisterLoggingCallback" title="pyuaf.client.Client.unregisterLoggingCallback"><tt class="xref py py-obj docutils literal"><span class="pre">Client.unregisterLoggingCallback</span></tt></a>()</td>
+<td>Unregister a callback function to stop receiving all log messages.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+<dt><em>Discovery:</em></dt>
+<dd><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.serversFound" title="pyuaf.client.Client.serversFound"><tt class="xref py py-obj docutils literal"><span class="pre">Client.serversFound</span></tt></a>()</td>
+<td>Get a list of the application descriptions of the servers found in the discovery process.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.findServersNow" title="pyuaf.client.Client.findServersNow"><tt class="xref py py-obj docutils literal"><span class="pre">Client.findServersNow</span></tt></a>()</td>
+<td>Discover the servers immediately (instead of waiting for the background thread) by</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</div></blockquote>
+<p><strong>DETAILED DESCRIPTION:</strong>:</p>
 <dl class="class">
 <dt id="pyuaf.client.Client">
 <em class="property">class </em><tt class="descclassname">pyuaf.client.</tt><tt class="descname">Client</tt><big>(</big><em>settings=None</em>, <em>loggingCallback=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client" title="Permalink to this definition">¶</a></dt>
@@ -567,6 +864,22 @@ via the &#8216;resultCallback&#8217; argument &#8211;&gt; then only the external
 </dd></dl>
 
 <dl class="method">
+<dt id="pyuaf.client.Client.connectionStatusChanged">
+<tt class="descname">connectionStatusChanged</tt><big>(</big><em>info</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.connectionStatusChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to receive connection status changes.</p>
+<p>Alternatively, you can also register callback functions which you defined yourself, by
+registering them using <a class="reference internal" href="#pyuaf.client.Client.registerConnectionStatusCallback" title="pyuaf.client.Client.registerConnectionStatusCallback"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.client.Client.registerConnectionStatusCallback()</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="#pyuaf.client.SessionInformation" title="pyuaf.client.SessionInformation"><tt class="xref py py-class docutils literal"><span class="pre">SessionInformation</span></tt></a>) &#8211; Updated session information.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyuaf.client.Client.createMonitoredData">
 <tt class="descname">createMonitoredData</tt><big>(</big><em>addresses</em>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em>, <em>subscriptionConfig=None</em>, <em>notificationCallbacks=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.client.Client.createMonitoredData" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create one or more monitored data items.</p>
@@ -743,7 +1056,7 @@ via the &#8216;notificationCallbacks&#8217; argument
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>result</strong> (<tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.client.DataChangeNotification" title="pyuaf.client.DataChangeNotification"><tt class="xref py py-class docutils literal"><span class="pre">DataChangeNotification</span></tt></a>) &#8211; The asynchronously received notifications.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dataNotifications</strong> (<tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.client.DataChangeNotification" title="pyuaf.client.DataChangeNotification"><tt class="xref py py-class docutils literal"><span class="pre">DataChangeNotification</span></tt></a>) &#8211; The asynchronously received notifications.</td>
 </tr>
 </tbody>
 </table>
@@ -775,7 +1088,7 @@ via the &#8216;notificationCallbacks&#8217; argument
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>result</strong> (<tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.client.EventNotification" title="pyuaf.client.EventNotification"><tt class="xref py py-class docutils literal"><span class="pre">EventNotification</span></tt></a>) &#8211; The asynchronously received notifications.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>eventNotifications</strong> (<tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.client.EventNotification" title="pyuaf.client.EventNotification"><tt class="xref py py-class docutils literal"><span class="pre">EventNotification</span></tt></a>) &#8211; The asynchronously received notifications.</td>
 </tr>
 </tbody>
 </table>
@@ -987,7 +1300,7 @@ Leave None for defaults.</li>
 <dl class="method">
 <dt id="pyuaf.client.Client.logMessageReceived">
 <tt class="descname">logMessageReceived</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.logMessageReceived" title="Permalink to this definition">¶</a></dt>
-<dd><p>You should override this method if you want to process logging output from the UAF.</p>
+<dd><p>Override this method if you want to process logging output from the UAF.</p>
 <dl class="docutils">
 <dt>This method is called by the UAF if:</dt>
 <dd><ul class="first last simple">
@@ -1148,7 +1461,7 @@ the <a class="reference internal" href="#pyuaf.client.Client.manuallyConnect" ti
 
 <dl class="method">
 <dt id="pyuaf.client.Client.manuallySubscribe">
-<tt class="descname">manuallySubscribe</tt><big>(</big><em>clientConnectionId</em>, <em>subscriptionSettings</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.manuallySubscribe" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">manuallySubscribe</tt><big>(</big><em>clientConnectionId</em>, <em>subscriptionSettings=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.manuallySubscribe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a subscription manually.</p>
 <p>For more info about &#8220;manual&#8221; methods, see the documentation on the
 <a class="reference internal" href="#pyuaf.client.Client.manuallyConnect" title="pyuaf.client.Client.manuallyConnect"><tt class="xref py py-meth docutils literal"><span class="pre">manuallyConnect()</span></tt></a> method.</p>
@@ -1234,6 +1547,29 @@ or not (e.g. in case of failures, or in case the server is not on-line yet).</p>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
 <li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UnknownHandleError" title="pyuaf.util.errors.UnknownHandleError"><strong>pyuaf.util.errors.UnknownHandleError</strong></a> &#8211; Raised in case no monitored item is known for the given client handle.</li>
 <li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any other errors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.notificationsMissing">
+<tt class="descname">notificationsMissing</tt><big>(</big><em>info</em>, <em>previousSequenceNumber</em>, <em>newSequenceNumber</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.notificationsMissing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to handle missing notifications.</p>
+<p>Alternatively, you can also register callback functions which you defined yourself, by
+registering them using <a class="reference internal" href="#pyuaf.client.Client.registerNotificationsMissingCallback" title="pyuaf.client.Client.registerNotificationsMissingCallback"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.client.Client.registerNotificationsMissingCallback()</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>info</strong> (<a class="reference internal" href="#pyuaf.client.SubscriptionInformation" title="pyuaf.client.SubscriptionInformation"><tt class="xref py py-class docutils literal"><span class="pre">SubscriptionInformation</span></tt></a>) &#8211; Subscription information about the subscription which has missing notifications.</li>
+<li><strong>previousSequenceNumber</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; Sequence number of the last notification just before 
+notifications went missing.</li>
+<li><strong>newSequenceNumber</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; Sequence number of the first notification just after notifications
+went missing.</li>
 </ul>
 </td>
 </tr>
@@ -1380,6 +1716,66 @@ callback function &#8211;&gt; then only the external callback function will be c
 </dd></dl>
 
 <dl class="method">
+<dt id="pyuaf.client.Client.registerConnectionStatusCallback">
+<tt class="descname">registerConnectionStatusCallback</tt><big>(</big><em>callback</em>, <em>onlyServerUri=None</em>, <em>onlyClientConnectionId=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.registerConnectionStatusCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a callback to receive connection status changes.</p>
+<p>You can register multiple callbacks: all of them will be called.
+The <a class="reference internal" href="#pyuaf.client.Client.connectionStatusChanged" title="pyuaf.client.Client.connectionStatusChanged"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.client.Client.connectionStatusChanged()</span></tt></a> method (which you may override) 
+will also always be called, regardless of the callbacks you register.</p>
+<p>There&#8217;s no need to provide more than one optional argument (it doesn&#8217;t make much sense in fact,
+since onlyClientConnectionId is more restrictive than onlyServerUri), but it&#8217;s not forbidden
+either. In case you provide multiple optional arguments, all of the conditions need to 
+be satisfied for the callback function to be called.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>callback</strong> &#8211; A callback function. This function should have one input 
+argument, to which the changed <a class="reference internal" href="#pyuaf.client.SessionInformation" title="pyuaf.client.SessionInformation"><tt class="xref py py-class docutils literal"><span class="pre">SessionInformation</span></tt></a> 
+instance will be passed.</li>
+<li><strong>onlyServerUri</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; Optional argument: provide this argument if you don&#8217;t want 
+to listen to the status changes of <em>all</em> sessions to <em>any</em> server, 
+but only listen to the connection changes for all sessions 
+to the server identified by the given serverUri.</li>
+<li><strong>onlyClientConnectionId</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; Optional argument: provide this argument if you don&#8217;t want 
+to listen to the status changes of <em>all</em> sessions to <em>any</em> server, 
+but only listen to the connection changes for the single session 
+identified by the given unique clientConnectionId.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.registerKeepAliveCallback">
+<tt class="descname">registerKeepAliveCallback</tt><big>(</big><em>callback</em>, <em>onlyClientSubscriptionHandle=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.registerKeepAliveCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a callback to handle KeepAlive notifications.</p>
+<p>You can register multiple callbacks: all of them will be called.
+The <a class="reference internal" href="#pyuaf.client.Client.keepAliveReceived" title="pyuaf.client.Client.keepAliveReceived"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.client.Client.keepAliveReceived()</span></tt></a> method (which you may override) 
+will also always be called, regardless of the callbacks you register.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>callback</strong> &#8211; A callback function. This function should have one input
+argument of type <a class="reference internal" href="#pyuaf.client.KeepAliveNotification" title="pyuaf.client.KeepAliveNotification"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.KeepAliveNotification</span></tt></a>.</li>
+<li><strong>onlyClientSubscriptionHandle</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; Optional argument: provide this argument if you don&#8217;t 
+want to listen to the KeepAlive notifications of <em>all</em> 
+subscriptions, but only listen to the KeepAlive notifications
+for the single subscription identified by the given unique 
+clientSubscriptionHandle.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyuaf.client.Client.registerLoggingCallback">
 <tt class="descname">registerLoggingCallback</tt><big>(</big><em>callback</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.registerLoggingCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a callback function to receive all log messages.</p>
@@ -1393,6 +1789,73 @@ NOT be called anymore!).</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>callback</strong> &#8211; A callback function for the logging. This function should have one 
 input argument, which you should call &#8220;msg&#8221; or so,
 because this argument is of type <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.LogMessage" title="pyuaf.util.LogMessage"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.LogMessage</span></tt></a>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.registerNotificationsMissingCallback">
+<tt class="descname">registerNotificationsMissingCallback</tt><big>(</big><em>callback</em>, <em>onlyClientSubscriptionHandle=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.registerNotificationsMissingCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a callback to handle missing notifications.</p>
+<p>You can register multiple callbacks: all of them will be called.
+The <a class="reference internal" href="#pyuaf.client.Client.notificationsMissing" title="pyuaf.client.Client.notificationsMissing"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.client.Client.notificationsMissing()</span></tt></a> method (which you may override) 
+will also always be called, regardless of the callbacks you register.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>callback</strong> &#8211; <p>A callback function. This function should have three input 
+arguments:</p>
+<blockquote>
+<div><ul>
+<li>first argument will be a <a class="reference internal" href="#pyuaf.client.SessionInformation" title="pyuaf.client.SessionInformation"><tt class="xref py py-class docutils literal"><span class="pre">SessionInformation</span></tt></a> 
+instance, describing the subscription that has missing 
+notifications.</li>
+<li>second argument will be an <tt class="docutils literal"><span class="pre">int</span></tt> representing the 
+sequence number of the last notification just before 
+notifications went missing.</li>
+<li>third argument will be an <tt class="docutils literal"><span class="pre">int</span></tt> representing the 
+sequence number of the first notification just after 
+notifications went missing.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><strong>onlyClientSubscriptionHandle</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; Optional argument: provide this argument if you don&#8217;t 
+want to listen to the missing notifications of <em>all</em> 
+subscriptions, but only listen to the missing notifications
+for the single subscription identified by the given unique 
+clientSubscriptionHandle.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.registerSubscriptionStatusCallback">
+<tt class="descname">registerSubscriptionStatusCallback</tt><big>(</big><em>callback</em>, <em>onlyClientSubscriptionHandle=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.registerSubscriptionStatusCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a callback to receive connection status changes.</p>
+<p>You can register multiple callbacks: all of them will be called.
+The <a class="reference internal" href="#pyuaf.client.Client.subscriptionStatusChanged" title="pyuaf.client.Client.subscriptionStatusChanged"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.client.Client.subscriptionStatusChanged()</span></tt></a> method (which you may override) 
+will also always be called, regardless of the callbacks you register.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>callback</strong> &#8211; A callback function. This function should have one input 
+argument, to which the changed <a class="reference internal" href="#pyuaf.client.SessionInformation" title="pyuaf.client.SessionInformation"><tt class="xref py py-class docutils literal"><span class="pre">SessionInformation</span></tt></a> 
+instance will be passed.</li>
+<li><strong>onlyClientSubscriptionHandle</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; Optional argument: provide this argument if you don&#8217;t 
+want to listen to the status changes of <em>all</em> subscriptions,
+but only listen to the subscription changes for the single 
+subscription identified by the given unique 
+clientSubscriptionHandle.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1454,6 +1917,91 @@ via the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>settings</strong> (<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings" title="pyuaf.client.settings.ClientSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ClientSettings</span></tt></a>) &#8211; The new settings.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.setMonitoringMode">
+<tt class="descname">setMonitoringMode</tt><big>(</big><em>clientHandles</em>, <em>monitoringMode</em>, <em>serviceSettings=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.setMonitoringMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the monitoring mode for the specified monitored items.</p>
+<p>This is the preferred way to temporarily stop receiving notifications for certain monitored
+items (e.g. because a tab in a User Interface is not visible). See the example below.</p>
+<p>Note that clientHandles instead of MonitoredItemIds are used to identify a monitored item. 
+ClientHandles are assigned by the client and are therefore <em>static</em>, while MonitoredItemIds
+are assigned by the server, so they may change over time (e.g. after restarting the server,
+of after failover to a redundant server). The UAF will keep track of the mapping between 
+both. This means that your monitored items are always identified in the same way (by their
+clientHandles), no matter what happens on the server-side. The UAF takes care of the 
+conversion automatically, so you don&#8217;t have to worry about it.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.errors</span> <span class="kn">import</span> <span class="n">UafError</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client</span> <span class="kn">import</span> <span class="n">Client</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">monitoringmodes</span> 
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">myClient</span>     <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;myClient&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">])</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nameSpaceUri</span> <span class="o">=</span> <span class="s">&quot;http://mycompany.com/mymachine&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">serverUri</span>    <span class="o">=</span> <span class="s">&quot;http://mycompany.com/servers/plc1&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">temperature</span>  <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myMachine.temperature&quot;</span><span class="p">,</span> <span class="n">nameSpaceUri</span><span class="p">),</span> <span class="n">serverUri</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pressure</span>     <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myMachine.pressure&quot;</span><span class="p">,</span> <span class="n">nameSpaceUri</span><span class="p">),</span> <span class="n">serverUri</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">updateTemperatureWidget</span><span class="p">(</span><span class="n">notification</span><span class="p">):</span>
+<span class="gp">... </span>     <span class="n">temperatureIndicator</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%.1f</span><span class="s"> K&quot;</span> <span class="o">%</span><span class="n">notification</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">updatePressureWidget</span><span class="p">(</span><span class="n">notification</span><span class="p">):</span>
+<span class="gp">... </span>     <span class="n">pressureIndicator</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%.1f</span><span class="s"> Bar&quot;</span> <span class="o">%</span><span class="n">notification</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">createMonitoredData</span><span class="p">(</span>
+<span class="gp">... </span>                <span class="n">addresses</span> <span class="o">=</span> <span class="p">[</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">],</span> 
+<span class="gp">... </span>                <span class="n">notificationCallbacks</span> <span class="o">=</span> <span class="p">[</span><span class="n">updateTemperatureWidget</span><span class="p">,</span> <span class="n">updatePressureWidget</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="c"># store the clientHandles:</span>
+<span class="gp">... </span>    <span class="n">clientHandles</span> <span class="o">=</span> <span class="p">[</span> <span class="n">target</span><span class="o">.</span><span class="n">clientHandle</span> <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span> <span class="p">]</span>
+<span class="gp">... </span><span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="c"># The monitored items could not be created, because there was some failure</span>
+<span class="gp">... </span>    <span class="c">#  (maybe the server is off-line?).</span>
+<span class="gp">... </span>    <span class="c"># Nevertheless, the client handles were already assigned, and we can get them like this: </span>
+<span class="gp">... </span>    <span class="n">diagnostics</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">additionalDiagnostics</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">clientHandles</span> <span class="o">=</span> <span class="n">diagnostics</span><span class="o">.</span><span class="n">getClientHandles</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">uiTabChangedState</span><span class="p">(</span><span class="n">visible</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">visible</span><span class="p">:</span>
+<span class="gp">... </span>         <span class="n">monitoringMode</span> <span class="o">=</span> <span class="n">monitoringmodes</span><span class="o">.</span><span class="n">Sampling</span>
+<span class="gp">... </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>         <span class="n">monitoringMode</span> <span class="o">=</span> <span class="n">monitoringmodes</span><span class="o">.</span><span class="n">Reporting</span>
+<span class="gp">... </span>    <span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">statuses</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">setMonitoringMode</span><span class="p">(</span><span class="n">clientHandles</span><span class="p">,</span> <span class="n">monitoringMode</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">statuses</span><span class="p">)):</span>
+<span class="gp">... </span>            <span class="k">if</span> <span class="ow">not</span> <span class="n">statuses</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isGood</span><span class="p">():</span>
+<span class="gp">... </span>                <span class="k">print</span><span class="p">(</span><span class="s">&quot;Could not set monitoring mode of widget </span><span class="si">%d</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">statuses</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> 
+<span class="gp">... </span>    <span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t set the new monitoring mode: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>clientHandles</strong> (<tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; List of client handles of the monitored items you want to change.</li>
+<li><strong>monitoringMode</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; New monitoring mode, as defined in <a class="reference internal" href="api_pyuaf_util_monitoringmodes.html#module-pyuaf.util.monitoringmodes" title="pyuaf.util.monitoringmodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.monitoringmodes</span></tt></a>.</li>
+<li><strong>serviceSettings</strong> (<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>) &#8211; The service settings to be used (leave None for default settings).</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of statuses, one for each client handle.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.StatusVector" title="pyuaf.util.StatusVector"><tt class="xref py py-class docutils literal"><span class="pre">StatusVector</span></tt></a>.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Raises <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError">pyuaf.util.errors.UafError</a>:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><p class="first last">Base exception, catch this to handle any UAF errors.</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1554,6 +2102,22 @@ default settings).</li>
 <li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any other errors.</li>
 </ul>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.subscriptionStatusChanged">
+<tt class="descname">subscriptionStatusChanged</tt><big>(</big><em>info</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.subscriptionStatusChanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to receive subscription status changes.</p>
+<p>Alternatively, you can also register callback functions which you defined yourself, by
+registering them using <a class="reference internal" href="#pyuaf.client.Client.registerSubscriptionStatusCallback" title="pyuaf.client.Client.registerSubscriptionStatusCallback"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.client.Client.registerSubscriptionStatusCallback()</span></tt></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>info</strong> (<a class="reference internal" href="#pyuaf.client.SubscriptionInformation" title="pyuaf.client.SubscriptionInformation"><tt class="xref py py-class docutils literal"><span class="pre">SubscriptionInformation</span></tt></a>) &#8211; Updated subscription information.</td>
 </tr>
 </tbody>
 </table>
@@ -2097,7 +2661,7 @@ state of the subscription, the handle, etc.</p>
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.9 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 1.10 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
