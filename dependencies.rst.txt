@@ -3,8 +3,13 @@ Dependencies
 
 To build the UAF C++ libraries, you'll need:
 
- * the [OPC UA C++ SDK of Unified Automation](http://www.unified-automation.com) 
-   (any version will do: the binary version, the source code version, and the free demo version)
+ * The [OPC UA C++ SDK of Unified Automation](http://www.unified-automation.com) 
+   (any version will do: the binary version, the source code version, and the free demo version).
+   Currently only the Client SDK is needed, as only the client-side of the UAF is implemented.
+   The goal is to also develop the server-side of the UAF, which will obviously require
+   the Server SDK. Only if you need both (UAF client-side + UAF server-side), you will need to 
+   obtain the full SDK (client + server). If just need one side, you will be able to only compile
+   that side of the UAF, thereby only requiring the corresponding SDK.
  * OpenSSL 
    (will most likely be installed already when you installed the Unified Automation SDK)
  * CMake, the cross-platform build system
