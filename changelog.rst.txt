@@ -28,7 +28,6 @@ Informally:
 
 - SessionInformation contains more diagnostic info.
 
-
 Formally:
 
 - The following classes were added:
@@ -47,7 +46,6 @@ Formally:
     (pyuaf.client.Client.SessionInformation.lastConnectionAttemptTime)
   - uafc::Client::SessionInformation::lastConnectionAttemptStatus
     (pyuaf.client.Client.SessionInformation.lastConnectionAttemptStatus)
-
 
 
 
@@ -184,6 +182,8 @@ Formally:
 
 =======
 >>>>>>> Documented the changes the SessionInformation
+=======
+>>>>>>> c885b270db1cbefb1314019602cad6bb6961b664
 1.9 @ 2014/04/17
 ----------------------------------------------------------------------------------------------------
 

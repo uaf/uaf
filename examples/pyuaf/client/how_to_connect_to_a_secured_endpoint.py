@@ -18,9 +18,10 @@ settings.logToStdOutLevel = pyuaf.util.loglevels.Debug
 settings.discoveryUrls.append(DISCOVERY_URL)
 
 settings.certificateTrustAbsoluteDirectory = "/opt/unifiedautomation/sdk/bin/pkiserver/trusted"
-settings.certificateRevocationListAbsoluteFileName = ""
 settings.clientCertificateAbsoluteFileName = "/opt/unifiedautomation/sdk/bin/pkiserver/own/certs/uaservercpp.der"
 settings.clientPrivateKeyAbsoluteFileName = "/opt/unifiedautomation/sdk/bin/pkiserver/own/private/uaservercpp.pem"
+
+settings.clientCertificateAbsoluteFileName = "dsds"
 
 # create the client
 myClient = Client(settings)
@@ -35,6 +36,9 @@ secu.messageSecurityMode = pyuaf.util.messagesecuritymodes.Mode_Sign
 sess.securitySettingsList[0] = secu
 
 
+
+
+sess.securitySettingsList[0] = secu
 
 id = myClient.manuallyConnect(SERVER_URI, sess)
 info = myClient.sessionInformation(id)

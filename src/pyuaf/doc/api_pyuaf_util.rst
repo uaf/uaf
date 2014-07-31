@@ -1650,7 +1650,6 @@
 
 
 
-
 *class* PkiIdentity
 ----------------------------------------------------------------------------------------------------
 
@@ -1704,7 +1703,6 @@
         
             The domain component as a string (type ``str``).
     
-
 
 
 *class* QualifiedName
