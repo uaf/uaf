@@ -38,7 +38,13 @@ namespace uafc
       logToCallbackLevel(uaf::loglevels::Disabled),
       discoveryFindServersTimeoutSec(2.0),
       discoveryGetEndpointsTimeoutSec(1.0),
-      discoveryIntervalSec(30.0)
+      discoveryIntervalSec(30.0),
+      certificateTrustListLocation("PKI/trusted/certs/"),
+      certificateRevocationListLocation("PKI/trusted/crl/"),
+      issuersCertificatesLocation("PKI/issuers/certs/"),
+      issuersRevocationListLocation("PKI/issuers/crl/"),
+      clientPrivateKey("PKI/client/private/client.pem"),
+      clientCertificate("PKI/client/certs/client.der")
     {}
 
     // Constructor
@@ -49,7 +55,13 @@ namespace uafc
       logToCallbackLevel(uaf::loglevels::Disabled),
       discoveryFindServersTimeoutSec(2.0),
       discoveryGetEndpointsTimeoutSec(1.0),
-      discoveryIntervalSec(30.0)
+      discoveryIntervalSec(30.0),
+      certificateTrustListLocation("PKI/trusted/certs/"),
+      certificateRevocationListLocation("PKI/trusted/crl/"),
+      issuersCertificatesLocation("PKI/issuers/certs/"),
+      issuersRevocationListLocation("PKI/issuers/crl/"),
+      clientPrivateKey("PKI/client/private/client.pem"),
+      clientCertificate("PKI/client/certs/client.der")
     {}
 
     // Constructor
@@ -63,7 +75,13 @@ namespace uafc
       discoveryUrls(discoveryUrls),
       discoveryFindServersTimeoutSec(2.0),
       discoveryGetEndpointsTimeoutSec(1.0),
-      discoveryIntervalSec(30.0)
+      discoveryIntervalSec(30.0),
+      certificateTrustListLocation("PKI/trusted/certs/"),
+      certificateRevocationListLocation("PKI/trusted/crl/"),
+      issuersCertificatesLocation("PKI/issuers/certs/"),
+      issuersRevocationListLocation("PKI/issuers/crl/"),
+      clientPrivateKey("PKI/client/private/client.pem"),
+      clientCertificate("PKI/client/certs/client.der")
     {}
 
 
@@ -130,21 +148,29 @@ namespace uafc
         ss << fillToPos(ss, colon);
         ss << ": " << discoveryGetEndpointsTimeoutSec << "\n";
 
-        ss << indent << " - certificateRevocationListAbsoluteFileName";
+        ss << indent << " - certificateTrustListLocation";
         ss << fillToPos(ss, colon);
-        ss << ": " << certificateRevocationListAbsoluteFileName << "\n";
+        ss << ": " << certificateTrustListLocation << "\n";
 
-        ss << indent << " - certificateTrustAbsoluteDirectory";
+        ss << indent << " - certificateRevocationListLocation";
         ss << fillToPos(ss, colon);
-        ss << ": " << certificateTrustAbsoluteDirectory << "\n";
+        ss << ": " << certificateRevocationListLocation << "\n";
 
-        ss << indent << " - clientCertificateAbsoluteFileName";
+        ss << indent << " - issuersCertificatesLocation";
         ss << fillToPos(ss, colon);
-        ss << ": " << clientCertificateAbsoluteFileName << "\n";
+        ss << ": " << issuersCertificatesLocation << "\n";
 
-        ss << indent << " - clientPrivateKeyAbsoluteFileName";
+        ss << indent << " - issuersRevocationListLocation";
         ss << fillToPos(ss, colon);
-        ss << ": " << clientPrivateKeyAbsoluteFileName << "\n";
+        ss << ": " << issuersRevocationListLocation << "\n";
+
+        ss << indent << " - clientPrivateKey";
+        ss << fillToPos(ss, colon);
+        ss << ": " << clientPrivateKey << "\n";
+
+        ss << indent << " - clientCertificate";
+        ss << fillToPos(ss, colon);
+        ss << ": " << clientCertificate << "\n";
 
         return ss.str();
     }
@@ -163,10 +189,12 @@ namespace uafc
                && object1.logToCallbackLevel == object2.logToCallbackLevel
                && object1.discoveryFindServersTimeoutSec == object2.discoveryFindServersTimeoutSec
                && object1.discoveryGetEndpointsTimeoutSec == object2.discoveryGetEndpointsTimeoutSec
-               && object1.certificateRevocationListAbsoluteFileName == object2.certificateRevocationListAbsoluteFileName
-               && object1.certificateTrustAbsoluteDirectory == object2.certificateTrustAbsoluteDirectory
-               && object1.clientCertificateAbsoluteFileName == object2.clientCertificateAbsoluteFileName
-               && object1.clientPrivateKeyAbsoluteFileName == object2.clientPrivateKeyAbsoluteFileName;
+               && object1.certificateTrustListLocation == object2.certificateTrustListLocation
+               && object1.certificateRevocationListLocation == object2.certificateRevocationListLocation
+               && object1.issuersCertificatesLocation == object2.issuersCertificatesLocation
+               && object1.issuersRevocationListLocation == object2.issuersRevocationListLocation
+               && object1.clientPrivateKey == object2.clientPrivateKey
+               && object1.clientCertificate == object2.clientCertificate;
     }
 
 
@@ -200,14 +228,18 @@ namespace uafc
             return object1.discoveryFindServersTimeoutSec < object2.discoveryFindServersTimeoutSec;
         else if (object1.discoveryGetEndpointsTimeoutSec != object2.discoveryGetEndpointsTimeoutSec)
             return object1.discoveryGetEndpointsTimeoutSec < object2.discoveryGetEndpointsTimeoutSec;
-        else if (object1.certificateRevocationListAbsoluteFileName != object2.certificateRevocationListAbsoluteFileName)
-            return object1.certificateRevocationListAbsoluteFileName < object2.certificateRevocationListAbsoluteFileName;
-        else if (object1.certificateTrustAbsoluteDirectory != object2.certificateTrustAbsoluteDirectory)
-            return object1.certificateTrustAbsoluteDirectory < object2.certificateTrustAbsoluteDirectory;
-        else if (object1.clientCertificateAbsoluteFileName != object2.clientCertificateAbsoluteFileName)
-            return object1.clientCertificateAbsoluteFileName < object2.clientCertificateAbsoluteFileName;
+        else if (object1.certificateTrustListLocation != object2.certificateTrustListLocation)
+            return object1.certificateTrustListLocation < object2.certificateTrustListLocation;
+        else if (object1.certificateRevocationListLocation != object2.certificateRevocationListLocation)
+            return object1.certificateRevocationListLocation < object2.certificateRevocationListLocation;
+        else if (object1.issuersCertificatesLocation != object2.issuersCertificatesLocation)
+            return object1.issuersCertificatesLocation < object2.issuersCertificatesLocation;
+        else if (object1.issuersRevocationListLocation != object2.issuersRevocationListLocation)
+            return object1.issuersRevocationListLocation < object2.issuersRevocationListLocation;
+        else if (object1.clientPrivateKey != object2.clientPrivateKey)
+            return object1.clientPrivateKey < object2.clientPrivateKey;
         else
-            return object1.clientPrivateKeyAbsoluteFileName < object2.clientPrivateKeyAbsoluteFileName;
+            return object1.clientCertificate < object2.clientCertificate;
     }
 
 }

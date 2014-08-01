@@ -29,6 +29,7 @@
 #include "uaclient/uaclientsdk.h"
 #include "uaclient/uasession.h"
 #include "uabase/uastring.h"
+#include "uabase/uadir.h"
 #include "uapki/uapkicertificate.h"
 // UAF
 #include "uaf/util/status.h"
@@ -370,18 +371,18 @@ namespace uafc
         /**
          * Load the client certificate from the file specified in the ClientSettings.
          */
-        uaf::Status loadClientCertificateFromFile(UaClientSdk::SessionSecurityInfo& uaSecurity);
+        uaf::Status loadClientCertificate(UaClientSdk::SessionSecurityInfo& uaSecurity);
 
 
-        /**
-         * Load the server certificate from the file specified in the ClientSettings.
-         *
-         * Note that this file will **only** be used in case you manually connect to a specific
-         * endpoint (thereby avoiding discovery!!!).
-         * In normal circumstances, the server certificate will be fetched through the discovery
-         * process!!!
-         */
-        uaf::Status loadServerCertificateFromFile(UaClientSdk::SessionSecurityInfo& uaSecurity);
+//        /**
+//         * Load the server certificate from the file specified in the ClientSettings.
+//         *
+//         * Note that this file will **only** be used in case you manually connect to a specific
+//         * endpoint (thereby avoiding discovery!!!).
+//         * In normal circumstances, the server certificate will be fetched through the discovery
+//         * process!!!
+//         */
+//        uaf::Status loadServerCertificateFromFile(UaClientSdk::SessionSecurityInfo& uaSecurity);
 
 
         /**

@@ -133,18 +133,29 @@ namespace uafc
         Status ret;
         logger_->debug("Initializing the PKI store");
 
-        string revocationList = replacePathSeparators(replaceVariables(
-                database_->clientSettings.certificateRevocationListAbsoluteFileName));
+        string certificateRevocationListLocation = \
+                database_->clientSettings.certificateRevocationListLocation;
+        string certificateTrustListLocation = \
+                database_->clientSettings.certificateTrustListLocation;
+        string issuersRevocationListLocation = \
+                database_->clientSettings.issuersRevocationListLocation;
+        string issuersCertificatesLocation = \
+                database_->clientSettings.issuersCertificatesLocation;
 
-        string trustDirectory = replacePathSeparators(replaceVariables(
-                database_->clientSettings.certificateTrustAbsoluteDirectory));
-
-        logger_->debug(" - Revocation list : %s", revocationList.c_str());
-        logger_->debug(" - Trust directory : %s", trustDirectory.c_str());
+        logger_->debug(" - Certificate revocation list location : %s",
+                       certificateRevocationListLocation.c_str());
+        logger_->debug(" - Certificate trust list location      : %s",
+                       certificateTrustListLocation.c_str());
+        logger_->debug(" - Issuers revocation list location     : %s",
+                       issuersRevocationListLocation.c_str());
+        logger_->debug(" - Issuers certificates location        : %s",
+                       issuersCertificatesLocation.c_str());
 
         UaStatus uaStatus = uaSecurity.initializePkiProviderOpenSSL(
-                UaString(revocationList.c_str()),
-                UaString(trustDirectory.c_str()));
+                UaString(certificateRevocationListLocation.c_str()),
+                UaString(certificateTrustListLocation.c_str()),
+                UaString(issuersRevocationListLocation.c_str()),
+                UaString(issuersCertificatesLocation.c_str()));
 
         ret.fromSdk(uaStatus.statusCode(), "Could not initialize the PKI store");
         return ret;
@@ -153,46 +164,43 @@ namespace uafc
 
     // Load the client certificate from a file
     // =============================================================================================
-    Status Session::loadClientCertificateFromFile(UaClientSdk::SessionSecurityInfo& uaSecurity)
+    Status Session::loadClientCertificate(UaClientSdk::SessionSecurityInfo& uaSecurity)
     {
         Status ret;
-        logger_->debug("Loading the client certificate from file");
+        logger_->debug("Loading the client certificate and private key");
 
-        string certificate = replacePathSeparators(replaceVariables(
-                database_->clientSettings.clientCertificateAbsoluteFileName));
+        string clientCertificate = database_->clientSettings.clientCertificate;
+        string clientPrivateKey = database_->clientSettings.clientPrivateKey;
 
-        string privateKey = replacePathSeparators(replaceVariables(
-                database_->clientSettings.clientPrivateKeyAbsoluteFileName));
-
-        logger_->debug(" - Client certificate : %s", certificate.c_str());
-        logger_->debug(" - Client private key : %s", privateKey.c_str());
+        logger_->debug(" - Client certificate : %s", clientCertificate.c_str());
+        logger_->debug(" - Client private key : %s", clientPrivateKey.c_str());
 
         UaStatus uaStatus = uaSecurity.loadClientCertificateOpenSSL(
-                UaString(certificate.c_str()),
-                UaString(privateKey.c_str()));
+                UaString(clientCertificate.c_str()),
+                UaString(clientPrivateKey.c_str()));
 
         ret.fromSdk(uaStatus.statusCode(), "Could not load the client certificate");
         return ret;
     }
 
 
-    // Load the server certificate from a file
-    // =============================================================================================
-    Status Session::loadServerCertificateFromFile(UaClientSdk::SessionSecurityInfo& uaSecurity)
-    {
-        Status ret;
-        logger_->debug("Loading the server certificate from file");
-
-        string certificate = replacePathSeparators(replaceVariables(
-                database_->clientSettings.serverCertificateAbsoluteFileName));
-
-        logger_->debug("Server certificate: %s", certificate.c_str());
-
-        UaStatus uaStatus = uaSecurity.loadServerCertificateOpenSSL(UaString(certificate.c_str()));
-
-        ret.fromSdk(uaStatus.statusCode(), "Could not load the server certificate");
-        return ret;
-    }
+//    // Load the server certificate from a file
+//    // =============================================================================================
+//    Status Session::loadServerCertificateFromFile(UaClientSdk::SessionSecurityInfo& uaSecurity)
+//    {
+//        Status ret;
+//        logger_->debug("Loading the server certificate from file");
+//
+//        string certificate = replacePathSeparators(replaceVariables(
+//                database_->clientSettings.serverCertificateAbsoluteFileName));
+//
+//        logger_->debug("Server certificate: %s", certificate.c_str());
+//
+//        UaStatus uaStatus = uaSecurity.loadServerCertificateOpenSSL(UaString(certificate.c_str()));
+//
+//        ret.fromSdk(uaStatus.statusCode(), "Could not load the server certificate");
+//        return ret;
+//    }
 
 
     // Load the server certificate from an endpoint
@@ -354,7 +362,7 @@ namespace uafc
             ret = initializePkiStore(uaSecurity);
 
             if (ret.isGood())
-                ret = loadClientCertificateFromFile(uaSecurity);
+                ret = loadClientCertificate(uaSecurity);
 
             if (ret.isGood())
                 ret = loadServerCertificateFromEndpoint(uaSecurity, suitableEndpoint);
@@ -450,10 +458,10 @@ namespace uafc
                 connectionAttemptStatus = initializePkiStore(uaSecurity);
 
                 if (connectionAttemptStatus.isGood())
-                    connectionAttemptStatus = loadClientCertificateFromFile(uaSecurity);
+                    connectionAttemptStatus = loadClientCertificate(uaSecurity);
 
-                if (connectionAttemptStatus.isGood())
-                    connectionAttemptStatus = loadServerCertificateFromFile(uaSecurity);
+                //if (connectionAttemptStatus.isGood())
+                //    connectionAttemptStatus = loadServerCertificateFromFile(uaSecurity); !!!!!!!!!!!!!!!!!!!!!!!!!!
             }
 
             // try to set the user identity
