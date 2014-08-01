@@ -157,20 +157,19 @@ namespace uaf
     {
         string ret;
 
-        if (description_.empty())
-            ret = statuscodes::toString(statusCode_);
-        else
-            ret = description_;
+        if (!additionalDiagnostics_.isEmpty())
+            ret += additionalDiagnostics_.toCompactString() + string(": ");
+
+        ret += string("[UAF:") + statuscodes::toString(statusCode_);
 
         if (hasSpecificOpcUaStatusCode())
-        {
-            ret += string(" [OPC-UA:")
-                   + UaStatusCode(opcUaStatusCode_).toString().toUtf8()
-                   + std::string("]");
-        }
+            ret += string("|OPCUA:") + UaStatusCode(opcUaStatusCode_).toString().toUtf8();
 
-        if (!additionalDiagnostics_.isEmpty())
-            ret += std::string(" - ") + additionalDiagnostics_.toCompactString();
+        ret += string("]");
+
+        if (!description_.empty())
+            ret += string(" (") + description_ + ")";
+
 
         return ret;
     }
