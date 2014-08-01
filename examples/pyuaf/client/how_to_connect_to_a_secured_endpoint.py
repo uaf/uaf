@@ -8,7 +8,9 @@ from pyuaf.util.errors      import UafError, ConnectionError
 DISCOVERY_URL = "opc.tcp://localhost:48010"
 SERVER_URI   = "urn:UnifiedAutomation:UaServerCpp"
 
-
+import os
+from os.path import dirname, abspath, join
+scriptDir = dirname(os.path.abspath(__file__))
 
 
 # define the ClientSettings (note that we do NOT provide a discoveryUrl!!!):
@@ -17,11 +19,6 @@ settings.applicationName = "MyClient"
 settings.logToStdOutLevel = pyuaf.util.loglevels.Debug
 settings.discoveryUrls.append(DISCOVERY_URL)
 
-settings.certificateTrustAbsoluteDirectory = "/opt/unifiedautomation/sdk/bin/pkiserver/trusted"
-settings.clientCertificateAbsoluteFileName = "/opt/unifiedautomation/sdk/bin/pkiserver/own/certs/uaservercpp.der"
-settings.clientPrivateKeyAbsoluteFileName = "/opt/unifiedautomation/sdk/bin/pkiserver/own/private/uaservercpp.pem"
-
-settings.clientCertificateAbsoluteFileName = "dsds"
 
 # create the client
 myClient = Client(settings)
