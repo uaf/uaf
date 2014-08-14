@@ -870,6 +870,76 @@
 
 
 
+*class* EnumValue
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.EnumValue
+
+    An EnumValue represents a child of an enumerated value definition.
+
+
+    * Methods:
+
+        .. automethod:: pyuaf.util.EnumValue.__init__
+    
+            Construct a new EnumValue, in one of the following ways:
+        
+            .. doctest::
+    
+                >>> import pyuaf
+                >>> from pyuaf.util import EnumValue, LocalizedText
+                >>> e0 = EnumValue()
+                >>> e1 = EnumValue(1)
+                >>> e2 = EnumValue(1, "manual")
+                >>> e3 = EnumValue(1, "manual", LocalizedText("en", "Manual operation mode") )
+    
+
+        .. automethod:: pyuaf.util.EnumValue.value
+    
+            Get the numeric value of the EnumValue.
+            
+            :return: The numeric value.
+            :rtype: ``int``
+
+        .. automethod:: pyuaf.util.EnumValue.setValue
+    
+            Set the numeric value of the EnumValue.
+            
+            :param i: The new numeric value.
+            :type i: ``int``
+      
+
+        .. automethod:: pyuaf.util.EnumValue.name
+    
+            Get the name of the EnumValue.
+            
+            :return: The name.
+            :rtype: ``str``
+
+        .. automethod:: pyuaf.util.EnumValue.setName
+    
+            Set the name of the EnumValue.
+            
+            :param name: The new name.
+            :type name: ``str``    
+      
+        .. automethod:: pyuaf.util.EnumValue.documentation
+    
+            Get the documentation of the EnumValue.
+            
+            :return: Documentation about the value.
+            :rtype: :class:`~pyuaf.util.LocalizedText`
+
+        .. automethod:: pyuaf.util.EnumValue.setDocumentation
+    
+            Set the documentation of the EnumValue.
+            
+            :param documentation: The new documentation.
+            :type documentation: :class:`~pyuaf.util.LocalizedText`    
+
+
+
 *class* EventFilter
 ----------------------------------------------------------------------------------------------------
 
