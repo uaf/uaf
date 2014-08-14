@@ -79,7 +79,7 @@ namespace uaf
         if (!uaLocalizedText_.isNull())
             return string(uaLocalizedText_.toString().toUtf8());
         else
-            return string("''");
+            return string("");
     }
 
 
