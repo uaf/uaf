@@ -26,7 +26,8 @@ ALL_MODULES = [ "primitives",
                 "usertokenpolicy",
                 "endpointdescription",
                 "referencedescription",
-                "pkiidentity"
+                "pkiidentity",
+                "enumvalue"
               ]
 
 
