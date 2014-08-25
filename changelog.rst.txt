@@ -18,8 +18,10 @@ via the GIT version control system.
 
 
 
-2.0.0 @ 2014/
+Version under development (will become 2.0.0)
 ----------------------------------------------------------------------------------------------------
+
+Version still under development.
 
 Informally:
 
@@ -39,6 +41,9 @@ Formally:
 
   - uafc::Client::getEndpoints
     (pyuaf.client.Client.getEndpoints)
+  - uaf::Guid::fromString
+    (pyuaf.util.Guid.fromString)
+  - pyuaf.util.NodeId: various missing constructors
 
 - The following attributes were added to existing classes:
 
