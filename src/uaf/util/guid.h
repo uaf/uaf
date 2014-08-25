@@ -61,6 +61,14 @@ namespace uaf
 
 
         /**
+         * Change the value of the GUID.
+         *
+         * @param s The UTF-8 string that will be converted to a binary representation.
+         */
+        void fromString(const std::string& s);
+
+
+        /**
          * Get a string representation.
          */
         std::string toString() const { return std::string(uaGuid_.toString().toUtf8()); }
