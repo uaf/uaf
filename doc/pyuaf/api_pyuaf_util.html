@@ -1235,6 +1235,125 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 </dd></dl>
 
 </div>
+<div class="section" id="class-enumvalue">
+<h2><em>class</em> EnumValue<a class="headerlink" href="#class-enumvalue" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.EnumValue">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">EnumValue</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.EnumValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>An EnumValue represents a child of an enumerated value definition.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.EnumValue.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.EnumValue.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new EnumValue, in one of the following ways:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">EnumValue</span><span class="p">,</span> <span class="n">LocalizedText</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e0</span> <span class="o">=</span> <span class="n">EnumValue</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e1</span> <span class="o">=</span> <span class="n">EnumValue</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e2</span> <span class="o">=</span> <span class="n">EnumValue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;manual&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e3</span> <span class="o">=</span> <span class="n">EnumValue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;manual&quot;</span><span class="p">,</span> <span class="n">LocalizedText</span><span class="p">(</span><span class="s">&quot;en&quot;</span><span class="p">,</span> <span class="s">&quot;Manual operation mode&quot;</span><span class="p">)</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.EnumValue.value">
+<tt class="descname">value</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.EnumValue.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the numeric value of the EnumValue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The numeric value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.EnumValue.setValue">
+<tt class="descname">setValue</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.EnumValue.setValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the numeric value of the EnumValue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>i</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The new numeric value.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.EnumValue.name">
+<tt class="descname">name</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.EnumValue.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the EnumValue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The name.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.EnumValue.setName">
+<tt class="descname">setName</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.EnumValue.setName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of the EnumValue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The new name.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.EnumValue.documentation">
+<tt class="descname">documentation</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.EnumValue.documentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the documentation of the EnumValue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Documentation about the value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><tt class="xref py py-class docutils literal"><span class="pre">LocalizedText</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.EnumValue.setDocumentation">
+<tt class="descname">setDocumentation</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.EnumValue.setDocumentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the documentation of the EnumValue.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>documentation</strong> (<a class="reference internal" href="#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><tt class="xref py py-class docutils literal"><span class="pre">LocalizedText</span></tt></a>) &#8211; The new documentation.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
 <div class="section" id="class-eventfilter">
 <h2><em>class</em> EventFilter<a class="headerlink" href="#class-eventfilter" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -1457,19 +1576,42 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 <dt id="pyuaf.util.Guid">
 <em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">Guid</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Guid" title="Permalink to this definition">¶</a></dt>
 <dd><p>A Guid represents a Globally unique identifier.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">Guid</span><span class="p">,</span> <span class="n">NodeId</span><span class="p">,</span> <span class="n">Address</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># create a NodeId for a known node:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">namespaceUri</span> <span class="o">=</span> <span class="s">&quot;http://www.vendorXYZ.com/products/temperaturecontrollers&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">guid</span>         <span class="o">=</span> <span class="n">Guid</span><span class="p">(</span><span class="s">&quot;{00000000-0000-0000-0000-000000000001}&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId</span>       <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="n">guid</span><span class="p">,</span> <span class="n">namespaceUri</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># create an address which points to that NodeId hosted by a specific server:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">serverUri</span> <span class="o">=</span> <span class="s">&quot;/ourcompany/plantfloor/temperaturecontrollers/3&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address</span>   <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">nodeId</span><span class="p">,</span> <span class="n">serverUri</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># now we can create a Client and read/write/monitor/... the addressed node</span>
+</pre></div>
+</div>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.util.Guid.__init__">
 <tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Guid.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a Guid instance, without arguments or with a UTF-8 <tt class="docutils literal"><span class="pre">str</span></tt> argument.</p>
+<dd><p>Create a Guid instance, without arguments or with a UTF-8 <tt class="docutils literal"><span class="pre">str</span></tt> argument (e.g.
+&#8220;{00000000-0000-0000-0000-000000000001}&#8221;).</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyuaf.util.Guid.__str__">
 <tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Guid.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a UTF-8 string representation.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Guid.fromString">
+<tt class="descname">fromString</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Guid.fromString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the value of the GUID by providing a UTF-8 string (of type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
 </dd></dl>
 
 </div></blockquote>
@@ -1980,15 +2122,25 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 some information about the namespace (a namespace URI and/or a namespace index).</p>
 <p>Usage example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">NodeId</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId0</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">()</span>                                          <span class="c"># contains no information</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId1</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myStringIdentifier&quot;</span><span class="p">,</span> <span class="s">&quot;myNameSpaceUri&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId2</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myStringIdentifier&quot;</span><span class="p">,</span> <span class="s">&quot;myNameSpaceUri&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c"># 3 = namespace index</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId3</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myStringIdentifier&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>                   <span class="c"># 3 = namespace index</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId4</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="mi">2345</span><span class="p">,</span> <span class="s">&quot;myNameSpaceUri&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId5</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="mi">2345</span><span class="p">,</span> <span class="s">&quot;myNameSpaceUri&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>                 <span class="c"># 2345 = numeric id, 3 = namespace index</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId6</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="mi">2345</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>                                   <span class="c"># 2345 = numeric id, 3 = namespace index</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">NodeId</span><span class="p">,</span> <span class="n">Guid</span><span class="p">,</span> <span class="n">NodeIdIdentifier</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nsUri</span> <span class="o">=</span> <span class="s">&quot;myNameSpaceUri&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nsIndex</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId0</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">()</span> <span class="c"># contains no information</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId1</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myStringIdentifier&quot;</span><span class="p">,</span> <span class="n">nsUri</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId2</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myStringIdentifier&quot;</span><span class="p">,</span> <span class="n">nsUri</span><span class="p">,</span> <span class="n">nsIndex</span><span class="p">)</span>  <span class="c"># nsIndex is redundant information, avoid!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId3</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myStringIdentifier&quot;</span><span class="p">,</span> <span class="n">nsIndex</span><span class="p">)</span>         <span class="c"># namespace indexes may change, better use namespace uris!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId4</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="mi">2345</span><span class="p">,</span> <span class="n">nsUri</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId5</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="mi">2345</span><span class="p">,</span> <span class="n">nsUri</span><span class="p">,</span> <span class="n">nsIndex</span><span class="p">)</span>   <span class="c"># nsIndex is redundant information, avoid!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId6</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="mi">2345</span><span class="p">,</span> <span class="n">nsIndex</span><span class="p">)</span>          <span class="c"># namespace indexes may change, better use namespace uris!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">guid</span> <span class="o">=</span> <span class="n">Guid</span><span class="p">(</span><span class="s">&quot;{00000000-0000-0000-0000-000000000001}&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId7</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="n">guid</span><span class="p">,</span> <span class="n">nsUri</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId8</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="n">guid</span><span class="p">,</span> <span class="n">nsUri</span><span class="p">,</span> <span class="n">nsIndex</span><span class="p">)</span> <span class="c"># nsIndex is redundant information here, avoid!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId9</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="n">guid</span><span class="p">,</span> <span class="n">nsIndex</span><span class="p">)</span>        <span class="c"># namespace indexes may change, better use namespace uris!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">identifier</span> <span class="o">=</span> <span class="n">NodeIdIdentifier</span><span class="p">(</span><span class="s">&quot;myStringIdentifier&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId10</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">nsUri</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId11</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">nsUri</span><span class="p">,</span> <span class="n">nsIndex</span><span class="p">)</span> <span class="c"># nsIndex is redundant information here, avoid!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nodeId12</span> <span class="o">=</span> <span class="n">NodeId</span><span class="p">(</span><span class="n">identifier</span><span class="p">,</span> <span class="n">nsIndex</span><span class="p">)</span>        <span class="c"># namespace indexes may change, better use namespace uris!</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2206,6 +2358,88 @@ as defined within <a class="reference internal" href="api_pyuaf_util_nodeidident
 <dd><p>The <tt class="docutils literal"><span class="pre">bytearray</span></tt> (a built-in Python type) value in case
 <a class="reference internal" href="#pyuaf.util.NodeIdIdentifier.type" title="pyuaf.util.NodeIdIdentifier.type"><tt class="xref py py-attr docutils literal"><span class="pre">type</span></tt></a> equals
 <a class="reference internal" href="api_pyuaf_util_nodeididentifiertypes.html#pyuaf.util.nodeididentifiertypes.Identifier_Opaque" title="pyuaf.util.nodeididentifiertypes.Identifier_Opaque"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.nodeididentifiertypes.Identifier_Opaque</span></tt></a>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-pkiidentity">
+<h2><em>class</em> PkiIdentity<a class="headerlink" href="#class-pkiidentity" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.PkiIdentity">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">PkiIdentity</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiIdentity" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>PkiIdentity holds the identity of the subject and issuer of a certificate.</div></blockquote>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.PkiIdentity.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiIdentity.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new PkiIdentity.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiIdentity.isEmpty">
+<tt class="descname">isEmpty</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiIdentity.isEmpty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the PKI identity filled out, or empty?</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.PkiIdentity.organization">
+<tt class="descname">organization</tt><a class="headerlink" href="#pyuaf.util.PkiIdentity.organization" title="Permalink to this definition">¶</a></dt>
+<dd><p>The organization as a string (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiIdentity.organizationUnit">
+<tt class="descname">organizationUnit</tt><a class="headerlink" href="#pyuaf.util.PkiIdentity.organizationUnit" title="Permalink to this definition">¶</a></dt>
+<dd><p>The organization unit as a string (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiIdentity.locality">
+<tt class="descname">locality</tt><a class="headerlink" href="#pyuaf.util.PkiIdentity.locality" title="Permalink to this definition">¶</a></dt>
+<dd><p>The locality as a string (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiIdentity.state">
+<tt class="descname">state</tt><a class="headerlink" href="#pyuaf.util.PkiIdentity.state" title="Permalink to this definition">¶</a></dt>
+<dd><p>The state as a string (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiIdentity.country">
+<tt class="descname">country</tt><a class="headerlink" href="#pyuaf.util.PkiIdentity.country" title="Permalink to this definition">¶</a></dt>
+<dd><p>The country as a string (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiIdentity.commonName">
+<tt class="descname">commonName</tt><a class="headerlink" href="#pyuaf.util.PkiIdentity.commonName" title="Permalink to this definition">¶</a></dt>
+<dd><p>The common name as a string (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiIdentity.domainComponent">
+<tt class="descname">domainComponent</tt><a class="headerlink" href="#pyuaf.util.PkiIdentity.domainComponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>The domain component as a string (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
 </dd></dl>
 
 </div></blockquote>
@@ -3612,6 +3846,7 @@ will return True) if you want to specify the whole address space.</p>
 <li><a class="reference internal" href="#class-datetimevector"><em>class</em> DateTimeVector</a></li>
 <li><a class="reference internal" href="#class-endpointdescription"><em>class</em> EndpointDescription</a></li>
 <li><a class="reference internal" href="#class-endpointdescriptionvector"><em>class</em> EndpointDescriptionVector</a></li>
+<li><a class="reference internal" href="#class-enumvalue"><em>class</em> EnumValue</a></li>
 <li><a class="reference internal" href="#class-eventfilter"><em>class</em> EventFilter</a></li>
 <li><a class="reference internal" href="#class-expandednodeid"><em>class</em> ExpandedNodeId</a></li>
 <li><a class="reference internal" href="#class-expandednodeidvector"><em>class</em> ExpandedNodeIdVector</a></li>
@@ -3624,6 +3859,7 @@ will return True) if you want to specify the whole address space.</p>
 <li><a class="reference internal" href="#class-modificationinfovector"><em>class</em> ModificationInfoVector</a></li>
 <li><a class="reference internal" href="#class-nodeid"><em>class</em> NodeId</a></li>
 <li><a class="reference internal" href="#class-nodeididentifier"><em>class</em> NodeIdIdentifier</a></li>
+<li><a class="reference internal" href="#class-pkiidentity"><em>class</em> PkiIdentity</a></li>
 <li><a class="reference internal" href="#class-qualifiedname"><em>class</em> QualifiedName</a></li>
 <li><a class="reference internal" href="#class-qualifiednamevector"><em>class</em> QualifiedNameVector</a></li>
 <li><a class="reference internal" href="#class-referencedescription"><em>class</em> ReferenceDescription</a></li>

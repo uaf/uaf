@@ -1123,6 +1123,33 @@ instance) try to use the FindServers service at the same time.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyuaf.client.Client.getEndpoints">
+<tt class="descname">getEndpoints</tt><big>(</big><em>discoveryUrl</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.getEndpoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of endpoint descriptions supported by the server.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>discoveryUrl</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The URL of a Discovery Server (e.g. opc.tcp://mymachine:4840).</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of the endpoint descriptions that were found.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.EndpointDescription" title="pyuaf.util.EndpointDescription"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.EndpointDescription</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.DiscoveryError" title="pyuaf.util.errors.DiscoveryError"><strong>pyuaf.util.errors.DiscoveryError</strong></a> &#8211; Raised in case no endpoints could be retrieved.</li>
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any other errors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyuaf.client.Client.historyReadModified">
 <tt class="descname">historyReadModified</tt><big>(</big><em>addresses</em>, <em>startTime</em>, <em>endTime</em>, <em>numValuesPerNode=0</em>, <em>maxAutoReadMore=0</em>, <em>continuationPoints=</em><span class="optional">[</span><span class="optional">]</span>, <em>serviceConfig=None</em>, <em>sessionConfig=None</em><big>)</big><a class="headerlink" href="#pyuaf.client.Client.historyReadModified" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read the modification information of the historical data from one or more nodes
@@ -1341,6 +1368,25 @@ creation and deletion of sessions, subscriptions, and monitored items.</p>
 <p>The URL(s) needed to discover the server with the given server URI, can be specified 
 via the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings" title="pyuaf.client.settings.ClientSettings"><tt class="xref py py-class docutils literal"><span class="pre">ClientSettings</span></tt></a> (which you can set via 
 <a class="reference internal" href="#pyuaf.client.Client" title="pyuaf.client.Client"><tt class="xref py py-meth docutils literal"><span class="pre">Client()</span></tt></a> and via <a class="reference internal" href="#pyuaf.client.Client.setClientSettings" title="pyuaf.client.Client.setClientSettings"><tt class="xref py py-meth docutils literal"><span class="pre">setClientSettings()</span></tt></a>).</p>
+<blockquote>
+<div><div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>If the connection fails (e.g. because you specified a wrong server URI, or because
+the security settings were incorrect), this methd will <em>not</em> raise an Exception! 
+It will simply return the ClientConnectionId assigned to the internal Session object, 
+which the UAF will try to reconnect in the background! So if you want to make sure
+this method call resulted in a connected session, you should do something like this:</p>
+<div class="last highlight-python"><div class="highlight"><pre><span class="n">clientConnectionId</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">manuallyConnect</span><span class="p">(</span><span class="n">SERVER_URI</span><span class="p">)</span>
+<span class="n">sessionInformation</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">sessionInformation</span><span class="p">(</span><span class="n">clientConnectionId</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">sessionInformation</span><span class="o">.</span><span class="n">sessionState</span> <span class="o">==</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">sessionstates</span><span class="o">.</span><span class="n">Disconnected</span><span class="p">:</span>
+    <span class="k">pass</span> <span class="c"># OK, we can proceed</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Oops, something went wrong:&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">sessionInformation</span><span class="o">.</span><span class="n">lastConnectionAttemptStatus</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2506,7 +2552,7 @@ session, the server URI of the server to which it is connected, etc.</p>
 
 <dl class="method">
 <dt id="pyuaf.client.SessionInformation.__str__">
-<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=22</em><big>)</big><a class="headerlink" href="#pyuaf.client.SessionInformation.__str__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__str__</tt><big>(</big><em>indent=''</em>, <em>colon=31</em><big>)</big><a class="headerlink" href="#pyuaf.client.SessionInformation.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a string representation.</p>
 </dd></dl>
 
@@ -2532,6 +2578,18 @@ session, the server URI of the server to which it is connected, etc.</p>
 <dt id="pyuaf.client.SessionInformation.serverUri">
 <tt class="descname">serverUri</tt><a class="headerlink" href="#pyuaf.client.SessionInformation.serverUri" title="Permalink to this definition">¶</a></dt>
 <dd><p>The URI of the server to which the session should be connected, as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.SessionInformation.lastConnectionAttemptTime">
+<tt class="descname">lastConnectionAttemptTime</tt><a class="headerlink" href="#pyuaf.client.SessionInformation.lastConnectionAttemptTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>The time of the last connection attempt, as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">DateTime</span></tt></a> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.SessionInformation.lastConnectionAttemptStatus">
+<tt class="descname">lastConnectionAttemptStatus</tt><a class="headerlink" href="#pyuaf.client.SessionInformation.lastConnectionAttemptStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>The status of the last connection attempt, as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> instance.</p>
 </dd></dl>
 
 </div></blockquote>

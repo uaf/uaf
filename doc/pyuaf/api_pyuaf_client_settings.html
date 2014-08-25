@@ -341,41 +341,57 @@ background, in seconds, as a <tt class="docutils literal"><span class="pre">floa
 <li><p class="first">Attributes related to security</p>
 <blockquote>
 <div><dl class="attribute">
-<dt id="pyuaf.client.settings.ClientSettings.certificateRevocationListAbsoluteFileName">
-<tt class="descname">certificateRevocationListAbsoluteFileName</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.certificateRevocationListAbsoluteFileName" title="Permalink to this definition">¶</a></dt>
-<dd><p>The revocation list (i.e. file that holds all revoked certificates), as a full path, of type <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
-<p><tt class="docutils literal"><span class="pre">[ApplicationPath]</span></tt> may be used as placeholder, and the directories must be separated by
-forward slashes (<tt class="docutils literal"><span class="pre">/</span></tt>), also on Windows.</p>
-<p>Example: <tt class="docutils literal"><span class="pre">&quot;[ApplicationPath]/PKI/CA/crl/uaclientcpp.crl&quot;</span></tt>.</p>
+<dt id="pyuaf.client.settings.ClientSettings.certificateTrustListLocation">
+<tt class="descname">certificateTrustListLocation</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.certificateTrustListLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The trust list location as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+<p>This directory can be specified either as an absolute path, or as a path relative to
+the application path.</p>
+<p>Default: &#8220;PKI/trusted/certs/&#8221;.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="pyuaf.client.settings.ClientSettings.certificateTrustAbsoluteDirectory">
-<tt class="descname">certificateTrustAbsoluteDirectory</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.certificateTrustAbsoluteDirectory" title="Permalink to this definition">¶</a></dt>
-<dd><p>The directory holding the trusted certificates, as a full path, of type <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
-<p><tt class="docutils literal"><span class="pre">[ApplicationPath]</span></tt> may be used as placeholder, and the directories must be separated by
-forward slashes (<tt class="docutils literal"><span class="pre">/</span></tt>), also on Windows.</p>
-<p>Example: <tt class="docutils literal"><span class="pre">&quot;[ApplicationPath]/PKI/CA/certs&quot;</span></tt>.</p>
+<dt id="pyuaf.client.settings.ClientSettings.certificateRevocationListLocation">
+<tt class="descname">certificateRevocationListLocation</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.certificateRevocationListLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The revocation list location as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+<p>This directory can be specified either as an absolute path, or as a path relative to
+the application path.</p>
+<p>Default: &#8220;PKI/trusted/crl/&#8221;.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="pyuaf.client.settings.ClientSettings.clientCertificateAbsoluteFileName">
-<tt class="descname">clientCertificateAbsoluteFileName</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.clientCertificateAbsoluteFileName" title="Permalink to this definition">¶</a></dt>
-<dd><p>The certificate of the client, as a full path (i.e. absolute filename), of type <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
-<p><tt class="docutils literal"><span class="pre">[ApplicationPath]</span></tt> may be used as placeholder, and the directories must be separated by
-forward slashes (<tt class="docutils literal"><span class="pre">/</span></tt>), also on Windows.</p>
-<p>Example: <tt class="docutils literal"><span class="pre">&quot;[ApplicationPath]/PKI/CA/certs/my_client_certificate.der&quot;</span></tt>.</p>
+<dt id="pyuaf.client.settings.ClientSettings.issuersCertificatesLocation">
+<tt class="descname">issuersCertificatesLocation</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.issuersCertificatesLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The issuers certificates location as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+<p>This directory can be specified either as an absolute path, or as a path relative to
+the application path.</p>
+<p>Default: &#8220;PKI/issuers/certs/&#8221;.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="pyuaf.client.settings.ClientSettings.clientPrivateKeyAbsoluteFileName">
-<tt class="descname">clientPrivateKeyAbsoluteFileName</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.clientPrivateKeyAbsoluteFileName" title="Permalink to this definition">¶</a></dt>
-<dd><p>The private key of the client, as a full path (i.e. absolute filename), of type <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
-<p><tt class="docutils literal"><span class="pre">[ApplicationPath]</span></tt> may be used as placeholder, and the directories must be separated by
-forward slashes (<tt class="docutils literal"><span class="pre">/</span></tt>), also on Windows.</p>
-<blockquote>
-<div><p>Example: <tt class="docutils literal"><span class="pre">&quot;[ApplicationPath]/PKI/CA/private/my_client_private_key.pem&quot;</span></tt>.</p>
-</div></blockquote>
+<dt id="pyuaf.client.settings.ClientSettings.issuersRevocationListLocation">
+<tt class="descname">issuersRevocationListLocation</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.issuersRevocationListLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The issuers revocation list location as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+<p>This directory can be specified either as an absolute path, or as a path relative to
+the application path.</p>
+<p>Default: &#8220;PKI/issuers/crl/&#8221;.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.settings.ClientSettings.clientPrivateKey">
+<tt class="descname">clientPrivateKey</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.clientPrivateKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>The private key of this client application as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+<p>This file can be specified either as an absolute path, or as a path relative to
+the application path.</p>
+<p>Default: &#8220;PKI/client/private/client.pem&#8221;.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.settings.ClientSettings.clientCertificate">
+<tt class="descname">clientCertificate</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.clientCertificate" title="Permalink to this definition">¶</a></dt>
+<dd><p>The certificate of this client application as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+<p>This file can be specified either as an absolute path, or as a path relative to
+the application path.</p>
+<p>Default: &#8220;PKI/client/certs/client.der&#8221;.</p>
 </dd></dl>
 
 </div></blockquote>
