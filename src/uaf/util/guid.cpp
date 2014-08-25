@@ -41,6 +41,13 @@ namespace uaf
     }
 
 
+    // Change the value
+    // =============================================================================================
+    void Guid::fromString(const string& s)
+    {
+        uaGuid_.fromString(UaString(s.c_str()));
+    }
+
 
     // Comparison operator ==
     // =============================================================================================

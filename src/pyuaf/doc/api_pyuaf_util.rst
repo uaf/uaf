@@ -1120,16 +1120,38 @@
 
     A Guid represents a Globally unique identifier.
     
+    Usage example:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> from pyuaf.util import Guid, NodeId, Address
+        >>>
+        >>> # create a NodeId for a known node:
+        >>> namespaceUri = "http://www.vendorXYZ.com/products/temperaturecontrollers"
+        >>> guid         = Guid("{00000000-0000-0000-0000-000000000001}")
+        >>> nodeId       = NodeId(guid, namespaceUri)
+        >>>
+        >>> # create an address which points to that NodeId hosted by a specific server:
+        >>> serverUri = "/ourcompany/plantfloor/temperaturecontrollers/3"
+        >>> address   = Address(nodeId, serverUri)
+        >>>
+        >>> # now we can create a Client and read/write/monitor/... the addressed node
     
     * Methods:
 
         .. automethod:: pyuaf.util.Guid.__init__
             
-            Create a Guid instance, without arguments or with a UTF-8 ``str`` argument.
-
+            Create a Guid instance, without arguments or with a UTF-8 ``str`` argument (e.g. 
+            "{00000000-0000-0000-0000-000000000001}").
+        
         .. automethod:: pyuaf.util.Guid.__str__
             
             Get a UTF-8 string representation.
+
+        .. automethod:: pyuaf.util.Guid.fromString
+            
+            Change the value of the GUID by providing a UTF-8 string (of type ``str``).
 
 
 
@@ -1517,15 +1539,25 @@
             .. doctest::
             
                 >>> import pyuaf
-                >>> from pyuaf.util import NodeId
-                
-                >>> nodeId0 = NodeId()                                          # contains no information
-                >>> nodeId1 = NodeId("myStringIdentifier", "myNameSpaceUri")    
-                >>> nodeId2 = NodeId("myStringIdentifier", "myNameSpaceUri", 3) # 3 = namespace index
-                >>> nodeId3 = NodeId("myStringIdentifier", 3)                   # 3 = namespace index
-                >>> nodeId4 = NodeId(2345, "myNameSpaceUri")    
-                >>> nodeId5 = NodeId(2345, "myNameSpaceUri", 3)                 # 2345 = numeric id, 3 = namespace index
-                >>> nodeId6 = NodeId(2345, 3)                                   # 2345 = numeric id, 3 = namespace index
+                >>> from pyuaf.util import NodeId, Guid, NodeIdIdentifier
+                >>>
+                >>> nsUri = "myNameSpaceUri"
+                >>> nsIndex = 3
+                >>> nodeId0 = NodeId() # contains no information
+                >>> nodeId1 = NodeId("myStringIdentifier", nsUri)
+                >>> nodeId2 = NodeId("myStringIdentifier", nsUri, nsIndex)  # nsIndex is redundant information, avoid!
+                >>> nodeId3 = NodeId("myStringIdentifier", nsIndex)         # namespace indexes may change, better use namespace uris!
+                >>> nodeId4 = NodeId(2345, nsUri)    
+                >>> nodeId5 = NodeId(2345, nsUri, nsIndex)   # nsIndex is redundant information, avoid!
+                >>> nodeId6 = NodeId(2345, nsIndex)          # namespace indexes may change, better use namespace uris!
+                >>> guid = Guid("{00000000-0000-0000-0000-000000000001}")
+                >>> nodeId7 = NodeId(guid, nsUri)
+                >>> nodeId8 = NodeId(guid, nsUri, nsIndex) # nsIndex is redundant information here, avoid!
+                >>> nodeId9 = NodeId(guid, nsIndex)        # namespace indexes may change, better use namespace uris!
+                >>> identifier = NodeIdIdentifier("myStringIdentifier")
+                >>> nodeId10 = NodeId(identifier, nsUri)
+                >>> nodeId11 = NodeId(identifier, nsUri, nsIndex) # nsIndex is redundant information here, avoid!
+                >>> nodeId12 = NodeId(identifier, nsIndex)        # namespace indexes may change, better use namespace uris!
                 
 
     
