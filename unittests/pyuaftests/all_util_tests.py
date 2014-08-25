@@ -25,7 +25,8 @@ ALL_MODULES = [ "primitives",
                 "simpleattributeoperand",
                 "usertokenpolicy",
                 "endpointdescription",
-                "referencedescription"
+                "referencedescription",
+                "enumvalue"
               ]
 
 

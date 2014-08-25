@@ -104,6 +104,70 @@ namespace uaf
     {}
 
 
+    // Constructor
+    // =============================================================================================
+    NodeId::NodeId(const Guid& idGuid, const string& nameSpaceUri)
+    : nameSpaceIndex_(0),
+      nameSpaceUri_(nameSpaceUri),
+      identifier_(idGuid),
+      nameSpaceIndexGiven_(false),
+      nameSpaceUriGiven_(true)
+    {}
+
+
+    // Constructor
+    // =============================================================================================
+    NodeId::NodeId(const Guid& idGuid, const string& nameSpaceUri, NameSpaceIndex nameSpaceIndex)
+    : nameSpaceIndex_(nameSpaceIndex),
+      nameSpaceUri_(nameSpaceUri),
+      identifier_(idGuid),
+      nameSpaceIndexGiven_(true),
+      nameSpaceUriGiven_(true)
+    {}
+
+
+    // Constructor
+    // =============================================================================================
+    NodeId::NodeId(const Guid& idGuid, NameSpaceIndex nameSpaceIndex)
+    : nameSpaceIndex_(nameSpaceIndex),
+      identifier_(idGuid),
+      nameSpaceIndexGiven_(true),
+      nameSpaceUriGiven_(false)
+    {}
+
+
+    // Constructor
+    // =============================================================================================
+    NodeId::NodeId(const NodeIdIdentifier& identifier, const string& nameSpaceUri)
+    : nameSpaceIndex_(0),
+      nameSpaceUri_(nameSpaceUri),
+      identifier_(identifier),
+      nameSpaceIndexGiven_(false),
+      nameSpaceUriGiven_(true)
+    {}
+
+
+    // Constructor
+    // =============================================================================================
+    NodeId::NodeId(const NodeIdIdentifier& identifier, const string& nameSpaceUri, NameSpaceIndex nameSpaceIndex)
+    : nameSpaceIndex_(nameSpaceIndex),
+      nameSpaceUri_(nameSpaceUri),
+      identifier_(identifier),
+      nameSpaceIndexGiven_(true),
+      nameSpaceUriGiven_(true)
+    {}
+
+
+    // Constructor
+    // =============================================================================================
+    NodeId::NodeId(const NodeIdIdentifier& identifier, NameSpaceIndex nameSpaceIndex)
+    : nameSpaceIndex_(nameSpaceIndex),
+      identifier_(identifier),
+      nameSpaceIndexGiven_(true),
+      nameSpaceUriGiven_(false)
+    {}
+
+
     // Is the NodeId NULL?
     // =============================================================================================
     bool NodeId::isNull() const
