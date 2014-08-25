@@ -35,6 +35,18 @@ class NodeIdTest(unittest.TestCase):
         self.n5_ = pyuaf.util.NodeId(21, "SomeNameSpaceUri", 42)
         self.n6  = pyuaf.util.NodeId(21, 42)
         self.n6_ = pyuaf.util.NodeId(21, 42)
+        self.n7  = pyuaf.util.NodeId(pyuaf.util.Guid("{00000000-0000-0000-0000-000000000001}"), "SomeNameSpaceUri")
+        self.n7_ = pyuaf.util.NodeId(pyuaf.util.Guid("{00000000-0000-0000-0000-000000000001}"), "SomeNameSpaceUri")
+        self.n8  = pyuaf.util.NodeId(pyuaf.util.Guid("{00000000-0000-0000-0000-000000000001}"), "SomeNameSpaceUri", 42)
+        self.n8_ = pyuaf.util.NodeId(pyuaf.util.Guid("{00000000-0000-0000-0000-000000000001}"), "SomeNameSpaceUri", 42)
+        self.n9  = pyuaf.util.NodeId(pyuaf.util.Guid("{00000000-0000-0000-0000-000000000001}"), 42)
+        self.n9_ = pyuaf.util.NodeId(pyuaf.util.Guid("{00000000-0000-0000-0000-000000000001}"), 42)
+        self.n10  = pyuaf.util.NodeId(pyuaf.util.NodeIdIdentifier("SomeStringIdentifier"), "SomeNameSpaceUri")
+        self.n10_ = pyuaf.util.NodeId(pyuaf.util.NodeIdIdentifier("SomeStringIdentifier"), "SomeNameSpaceUri")
+        self.n11  = pyuaf.util.NodeId(pyuaf.util.NodeIdIdentifier("SomeStringIdentifier"), "SomeNameSpaceUri", 42)
+        self.n11_ = pyuaf.util.NodeId(pyuaf.util.NodeIdIdentifier("SomeStringIdentifier"), "SomeNameSpaceUri", 42)
+        self.n12  = pyuaf.util.NodeId(pyuaf.util.NodeIdIdentifier("SomeStringIdentifier"), 42)
+        self.n12_ = pyuaf.util.NodeId(pyuaf.util.NodeIdIdentifier("SomeStringIdentifier"), 42)
     
     def test_util_NodeId_hasNameSpaceIndex(self):
         self.assertEquals( self.n0.hasNameSpaceIndex() , False )
@@ -44,6 +56,15 @@ class NodeIdTest(unittest.TestCase):
         self.assertEquals( self.n4.hasNameSpaceIndex() , False )
         self.assertEquals( self.n5.hasNameSpaceIndex() , True  )
         self.assertEquals( self.n6.hasNameSpaceIndex() , True  )
+        self.assertEquals( self.n7.hasNameSpaceIndex() , False )
+        self.assertEquals( self.n8.hasNameSpaceIndex() , True  )
+        self.assertEquals( self.n9.hasNameSpaceIndex() , True  )
+        self.assertEquals( self.n7.hasNameSpaceIndex() , False )
+        self.assertEquals( self.n8.hasNameSpaceIndex() , True  )
+        self.assertEquals( self.n9.hasNameSpaceIndex() , True  )
+        self.assertEquals( self.n10.hasNameSpaceIndex() , False )
+        self.assertEquals( self.n11.hasNameSpaceIndex() , True  )
+        self.assertEquals( self.n12.hasNameSpaceIndex() , True  )
     
     def test_util_NodeId_hasNameSpaceUri(self):
         self.assertEquals( self.n0.hasNameSpaceUri() , False )
@@ -53,6 +74,12 @@ class NodeIdTest(unittest.TestCase):
         self.assertEquals( self.n4.hasNameSpaceUri() , True  )
         self.assertEquals( self.n5.hasNameSpaceUri() , True  )
         self.assertEquals( self.n6.hasNameSpaceUri() , False )
+        self.assertEquals( self.n7.hasNameSpaceUri() , True  )
+        self.assertEquals( self.n8.hasNameSpaceUri() , True  )
+        self.assertEquals( self.n9.hasNameSpaceUri() , False )
+        self.assertEquals( self.n10.hasNameSpaceUri() , True  )
+        self.assertEquals( self.n11.hasNameSpaceUri() , True  )
+        self.assertEquals( self.n12.hasNameSpaceUri() , False )
         
     def test_util_NodeId_nameSpaceIndex(self):
         self.assertEquals( self.n2.nameSpaceIndex() , 42 )
@@ -82,6 +109,15 @@ class NodeIdTest(unittest.TestCase):
         self.assertTrue( self.n4 == self.n4_ )
         self.assertTrue( self.n5 == self.n5_ )
         self.assertTrue( self.n6 == self.n6_ )
+        self.assertTrue( self.n7 == self.n7_ )
+        self.assertTrue( self.n8 == self.n8_ )
+        self.assertTrue( self.n9 == self.n9_ )
+        self.assertTrue( self.n10 == self.n10_ )
+        self.assertTrue( self.n11 == self.n11_ )
+        self.assertTrue( self.n12 == self.n12_ )
+        self.assertTrue( self.n10 == self.n1 )
+        self.assertTrue( self.n11 == self.n2 )
+        self.assertTrue( self.n12 == self.n3 )
         
     def test_util_NodeId___ne__(self):
         self.assertTrue( self.n0 != self.n1  )
@@ -92,14 +128,22 @@ class NodeIdTest(unittest.TestCase):
         self.assertTrue( self.n2 != self.n3  )
         self.assertTrue( self.n3 != self.n4  )
         self.assertTrue( self.n5 != self.n6  )
+        self.assertTrue( self.n6 != self.n7  )
+        self.assertTrue( self.n7 != self.n8  )
+        self.assertTrue( self.n8 != self.n9  )
+        self.assertTrue( self.n9 != self.n10  )
+        self.assertTrue( self.n10 != self.n11  )
+        self.assertTrue( self.n11 != self.n12  )
         
     def test_util_NodeId___lt__(self):
         self.assertTrue( self.n4 < self.n3 )
         self.assertTrue( self.n6 < self.n5 )
+        self.assertTrue( self.n7 < self.n8 )
         
     def test_util_NodeId___gt__(self):
         self.assertTrue( self.n1 > self.n0 )
         self.assertTrue( self.n2 > self.n0 )
+        self.assertTrue( self.n8 > self.n9 )
 
 
 if __name__ == '__main__':
