@@ -126,6 +126,72 @@ namespace uaf
 
 
         /**
+         * Construct a NodeId based on a GUID identifier and a namespace URI.
+         *
+         * @param idGuid            GUID identifier of the NodeId.
+         * @param nameSpaceUri      Namespace URI of the NodeId.
+         */
+        NodeId(const uaf::Guid&     idGuid,
+               const std::string&   nameSpaceUri);
+
+
+        /**
+         * Construct a NodeId based on a GUID identifier and a namespace URI and a namespace
+         * index.
+         *
+         * @param idGuid            GUID identifier of the NodeId.
+         * @param nameSpaceUri      Namespace URI of the NodeId.
+         * @param nameSpaceIndex    Namespace index of the NodeId.
+         */
+        NodeId(const uaf::Guid&     idGuid,
+               const std::string&   nameSpaceUri,
+               uaf::NameSpaceIndex  nameSpaceIndex);
+
+
+        /**
+         * Construct a NodeId based on a GUID identifier and a namespace index.
+         *
+         * @param idGuid            GUID identifier of the NodeId.
+         * @param nameSpaceIndex    Namespace index of the NodeId.
+         */
+        NodeId(const uaf::Guid&     idGuid,
+               uaf::NameSpaceIndex  nameSpaceIndex);
+
+
+        /**
+         * Construct a NodeId based on an identifier and a namespace URI.
+         *
+         * @param identifier        Identifier of the NodeId.
+         * @param nameSpaceUri      Namespace URI of the NodeId.
+         */
+        NodeId(const uaf::NodeIdIdentifier& identifier,
+               const std::string&           nameSpaceUri);
+
+
+        /**
+         * Construct a NodeId based on a GUID identifier and a namespace URI and a namespace
+         * index.
+         *
+         * @param identifier        Identifier of the NodeId.
+         * @param nameSpaceUri      Namespace URI of the NodeId.
+         * @param nameSpaceIndex    Namespace index of the NodeId.
+         */
+        NodeId(const uaf::NodeIdIdentifier& identifier,
+               const std::string&           nameSpaceUri,
+               uaf::NameSpaceIndex          nameSpaceIndex);
+
+
+        /**
+         * Construct a NodeId based on a GUID identifier and a namespace index.
+         *
+         * @param identifier        Identifier of the NodeId.
+         * @param nameSpaceIndex    Namespace index of the NodeId.
+         */
+        NodeId(const uaf::NodeIdIdentifier& identifier,
+               uaf::NameSpaceIndex          nameSpaceIndex);
+
+
+        /**
          * Is a namespace index provided?
          *
          * @return  True if the NodeId has a namespace index.
