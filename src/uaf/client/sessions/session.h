@@ -402,6 +402,14 @@ namespace uafc
                 const uafc::SessionSecuritySettings& securitySettings);
 
 
+        /**
+         * Helper function to check if a file exists.
+         */
+        uaf::Status checkIfPathExists(
+                const std::string& path,
+                const std::string& description) const;
+
+
         // Wrapped SDK session instance and callback instance
         UaClientSdk::UaSession*             uaSession_;
         UaClientSdk::UaSessionCallback*     uaSessionCallback_;

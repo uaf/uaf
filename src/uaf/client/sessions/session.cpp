@@ -142,6 +142,7 @@ namespace uafc
         string issuersCertificatesLocation = \
                 database_->clientSettings.issuersCertificatesLocation;
 
+
         logger_->debug(" - Certificate revocation list location : %s",
                        certificateRevocationListLocation.c_str());
         logger_->debug(" - Certificate trust list location      : %s",
@@ -166,20 +167,29 @@ namespace uafc
     // =============================================================================================
     Status Session::loadClientCertificate(UaClientSdk::SessionSecurityInfo& uaSecurity)
     {
-        Status ret;
         logger_->debug("Loading the client certificate and private key");
 
         string clientCertificate = database_->clientSettings.clientCertificate;
         string clientPrivateKey = database_->clientSettings.clientPrivateKey;
 
-        logger_->debug(" - Client certificate : %s", clientCertificate.c_str());
-        logger_->debug(" - Client private key : %s", clientPrivateKey.c_str());
+        Status ret = checkIfPathExists(clientCertificate, "client certificate");
 
-        UaStatus uaStatus = uaSecurity.loadClientCertificateOpenSSL(
-                UaString(clientCertificate.c_str()),
-                UaString(clientPrivateKey.c_str()));
+        if (ret.isGood())
+            ret = checkIfPathExists(clientPrivateKey, "client private key");
 
-        ret.fromSdk(uaStatus.statusCode(), "Could not load the client certificate");
+        if (ret.isGood())
+        {
+            UaStatus uaStatus = uaSecurity.loadClientCertificateOpenSSL(
+                    UaString(clientCertificate.c_str()),
+                    UaString(clientPrivateKey.c_str()));
+            ret.fromSdk(uaStatus.statusCode(), "Could not load the client certificate");
+        }
+
+        if (ret.isGood())
+            logger_->debug("The client certificate and private key are loaded");
+        else
+            logger_->error(ret);
+
         return ret;
     }
 
@@ -838,5 +848,27 @@ namespace uafc
                                                                monitoringMode,
                                                                serviceSettings,
                                                                results);
+    }
+
+
+    // Set the publishing mode.
+    // =============================================================================================
+    Status Session::checkIfPathExists(const string& path, const string& description) const
+    {
+        Status ret;
+        logger_->debug("Checking %s: %s", description.c_str(), path.c_str());
+        UaDir helperDir(UaUniString(""));
+        if (helperDir.exists(UaUniString(path.c_str())))
+        {
+            ret.setGood();
+            logger_->debug("OK, the %s exists", description.c_str());
+        }
+        else
+        {
+            ret.setStatus(uaf::statuscodes::ConfigurationError,
+                          "The %s '%s' does not exist", description.c_str(), path.c_str());
+            logger_->error(ret);
+        }
+        return ret;
     }
 }
