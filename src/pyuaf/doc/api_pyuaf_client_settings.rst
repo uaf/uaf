@@ -277,6 +277,25 @@
                Default: "PKI/issuers/crl/".
            
            
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.createSecurityLocationsIfNeeded
+           
+               A ``bool`` to automatically create the security-related directories if they don't 
+               exist yet, or not.
+               
+               The following directories will be created *if* this boolean is ``True`` and *if* 
+               the UAF needs to connect to a secured endpoint and *if* these directories don't 
+               exist already:
+               - certificateTrustListLocation
+               - certificateRevocationListLocation
+               - issuersCertificatesLocation
+               - issuersRevocationListLocation
+               
+               If this boolean is ``False`` and the UAF needs to connect to a secured endpoint,
+               the UAF will simply check if the above directories exist. If they don't exist,
+               the connection will fail and you'll get an exception.
+          
+               Default: True
+           
            .. autoattribute:: pyuaf.client.settings.ClientSettings.clientPrivateKey
            
                The private key of this client application as a ``str``.

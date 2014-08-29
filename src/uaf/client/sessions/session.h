@@ -401,11 +401,11 @@ namespace uafc
                 UaClientSdk::SessionSecurityInfo& uaSecurity,
                 const uafc::SessionSecuritySettings& securitySettings);
 
-
         /**
-         * Helper function to check if a file exists.
+         * Helper function to check if a path exists, or create the path if needed.
          */
-        uaf::Status checkIfPathExists(
+        uaf::Status checkOrCreatePath(
+                bool checkOnly,
                 const std::string& path,
                 const std::string& description) const;
 

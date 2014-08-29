@@ -43,8 +43,10 @@ namespace uafc
       certificateRevocationListLocation("PKI/trusted/crl/"),
       issuersCertificatesLocation("PKI/issuers/certs/"),
       issuersRevocationListLocation("PKI/issuers/crl/"),
+      createSecurityLocationsIfNeeded(true),
       clientPrivateKey("PKI/client/private/client.pem"),
       clientCertificate("PKI/client/certs/client.der")
+
     {}
 
     // Constructor
@@ -60,6 +62,7 @@ namespace uafc
       certificateRevocationListLocation("PKI/trusted/crl/"),
       issuersCertificatesLocation("PKI/issuers/certs/"),
       issuersRevocationListLocation("PKI/issuers/crl/"),
+      createSecurityLocationsIfNeeded(true),
       clientPrivateKey("PKI/client/private/client.pem"),
       clientCertificate("PKI/client/certs/client.der")
     {}
@@ -80,6 +83,7 @@ namespace uafc
       certificateRevocationListLocation("PKI/trusted/crl/"),
       issuersCertificatesLocation("PKI/issuers/certs/"),
       issuersRevocationListLocation("PKI/issuers/crl/"),
+      createSecurityLocationsIfNeeded(true),
       clientPrivateKey("PKI/client/private/client.pem"),
       clientCertificate("PKI/client/certs/client.der")
     {}
@@ -164,6 +168,10 @@ namespace uafc
         ss << fillToPos(ss, colon);
         ss << ": " << issuersRevocationListLocation << "\n";
 
+        ss << indent << " - createSecurityLocationsIfNeeded";
+        ss << fillToPos(ss, colon);
+        ss << ": " << (createSecurityLocationsIfNeeded ? "true" : "false") << "\n";
+
         ss << indent << " - clientPrivateKey";
         ss << fillToPos(ss, colon);
         ss << ": " << clientPrivateKey << "\n";
@@ -193,6 +201,7 @@ namespace uafc
                && object1.certificateRevocationListLocation == object2.certificateRevocationListLocation
                && object1.issuersCertificatesLocation == object2.issuersCertificatesLocation
                && object1.issuersRevocationListLocation == object2.issuersRevocationListLocation
+               && object1.createSecurityLocationsIfNeeded == object2.createSecurityLocationsIfNeeded
                && object1.clientPrivateKey == object2.clientPrivateKey
                && object1.clientCertificate == object2.clientCertificate;
     }
@@ -236,6 +245,8 @@ namespace uafc
             return object1.issuersCertificatesLocation < object2.issuersCertificatesLocation;
         else if (object1.issuersRevocationListLocation != object2.issuersRevocationListLocation)
             return object1.issuersRevocationListLocation < object2.issuersRevocationListLocation;
+        else if (object1.createSecurityLocationsIfNeeded != object2.createSecurityLocationsIfNeeded)
+            return object1.createSecurityLocationsIfNeeded < object2.createSecurityLocationsIfNeeded;
         else if (object1.clientPrivateKey != object2.clientPrivateKey)
             return object1.clientPrivateKey < object2.clientPrivateKey;
         else

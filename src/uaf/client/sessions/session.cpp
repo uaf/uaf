@@ -142,23 +142,46 @@ namespace uafc
         string issuersCertificatesLocation = \
                 database_->clientSettings.issuersCertificatesLocation;
 
+        bool checkOnly = !(database_->clientSettings.createSecurityLocationsIfNeeded);
 
-        logger_->debug(" - Certificate revocation list location : %s",
-                       certificateRevocationListLocation.c_str());
-        logger_->debug(" - Certificate trust list location      : %s",
-                       certificateTrustListLocation.c_str());
-        logger_->debug(" - Issuers revocation list location     : %s",
-                       issuersRevocationListLocation.c_str());
-        logger_->debug(" - Issuers certificates location        : %s",
-                       issuersCertificatesLocation.c_str());
+        ret = checkOrCreatePath(
+                checkOnly,
+                certificateRevocationListLocation,
+                "certificate revocation list location");
 
-        UaStatus uaStatus = uaSecurity.initializePkiProviderOpenSSL(
-                UaString(certificateRevocationListLocation.c_str()),
-                UaString(certificateTrustListLocation.c_str()),
-                UaString(issuersRevocationListLocation.c_str()),
-                UaString(issuersCertificatesLocation.c_str()));
+        if (ret.isGood())
+            Status ret = checkOrCreatePath(
+                    checkOnly,
+                    certificateTrustListLocation,
+                    "certificate trust list location");
 
-        ret.fromSdk(uaStatus.statusCode(), "Could not initialize the PKI store");
+        if (ret.isGood())
+            Status ret = checkOrCreatePath(
+                    checkOnly,
+                    issuersRevocationListLocation,
+                    "issuers revocation trust list location");
+
+        if (ret.isGood())
+            Status ret = checkOrCreatePath(
+                    checkOnly,
+                    issuersCertificatesLocation,
+                    "issuers certificates location");
+
+        if (ret.isGood())
+        {
+            UaStatus uaStatus = uaSecurity.initializePkiProviderOpenSSL(
+                    UaString(certificateRevocationListLocation.c_str()),
+                    UaString(certificateTrustListLocation.c_str()),
+                    UaString(issuersRevocationListLocation.c_str()),
+                    UaString(issuersCertificatesLocation.c_str()));
+            ret.fromSdk(uaStatus.statusCode(), "Could not initialize the PKI store");
+        }
+
+        if (ret.isGood())
+            logger_->debug("The PKI store has been initialized");
+        else
+            logger_->error(ret);
+
         return ret;
     }
 
@@ -172,10 +195,12 @@ namespace uafc
         string clientCertificate = database_->clientSettings.clientCertificate;
         string clientPrivateKey = database_->clientSettings.clientPrivateKey;
 
-        Status ret = checkIfPathExists(clientCertificate, "client certificate");
+        const bool checkOnly = true;
+
+        Status ret = checkOrCreatePath(checkOnly, clientCertificate, "client certificate");
 
         if (ret.isGood())
-            ret = checkIfPathExists(clientPrivateKey, "client private key");
+            ret = checkOrCreatePath(checkOnly, clientPrivateKey, "client private key");
 
         if (ret.isGood())
         {
@@ -853,9 +878,11 @@ namespace uafc
 
     // Set the publishing mode.
     // =============================================================================================
-    Status Session::checkIfPathExists(const string& path, const string& description) const
+    Status Session::checkOrCreatePath(
+            bool checkOnly, const string& path, const string& description) const
     {
         Status ret;
+
         logger_->debug("Checking %s: %s", description.c_str(), path.c_str());
         UaDir helperDir(UaUniString(""));
         if (helperDir.exists(UaUniString(path.c_str())))
@@ -865,10 +892,30 @@ namespace uafc
         }
         else
         {
-            ret.setStatus(uaf::statuscodes::ConfigurationError,
-                          "The %s '%s' does not exist", description.c_str(), path.c_str());
-            logger_->error(ret);
+            if (checkOnly)
+            {
+                ret.setStatus(uaf::statuscodes::ConfigurationError,
+                              "The %s '%s' does not exist", description.c_str(), path.c_str());
+                logger_->error(ret);
+            }
+            else
+            {
+                logger_->debug("The path does not exist so we try to create it");
+                if (helperDir.mkpath(UaUniString(path.c_str())))
+                {
+                    ret.setGood();
+                    logger_->debug("%s has been created", path.c_str());
+                }
+                else
+                {
+                    ret.setStatus(uaf::statuscodes::ConfigurationError,
+                                  "Failed to create the %s location (%s)",
+                                  description.c_str(), path.c_str());
+                    logger_->error(ret);
+                }
+            }
         }
+
         return ret;
     }
 }

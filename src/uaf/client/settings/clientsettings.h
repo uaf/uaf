@@ -64,6 +64,7 @@ namespace uafc
          *  - certificateRevocationListLocation : "PKI/trusted/crl/"
          *  - issuersCertificatesLocation : "PKI/issuers/certs/"
          *  - issuersRevocationListLocation : "PKI/issuers/crl/"
+         *  - createSecurityLocationsIfNeeded : true
          *  - clientPrivateKey : "PKI/client/private/client.pem"
          *  - clientCertificate : "PKI/client/certs/client.der"
          */
@@ -159,6 +160,20 @@ namespace uafc
          *
          *  Default: "PKI/issuers/crl/". */
         std::string issuersRevocationListLocation;
+
+
+        /** Automatically create the security-related directories if they don't exist yet.
+         *
+         *  The following directories will be created *if* the UAF needs to connect to a secured
+         *  endpoint:
+         *   - certificateTrustListLocation
+         *   - certificateRevocationListLocation
+         *   - issuersCertificatesLocation
+         *   - issuersRevocationListLocation
+         *
+         *  Default: True
+         */
+        bool createSecurityLocationsIfNeeded;
 
 
         /** The private key of this client application.
