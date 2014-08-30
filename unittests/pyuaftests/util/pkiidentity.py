@@ -34,25 +34,25 @@ class PkiIdentityTest(unittest.TestCase):
         self.assertTrue( self.id0.isEmpty() )
         self.assertFalse( self.id1.isEmpty() )
     
-    def test_util_ApplicationDescription_organization(self):
+    def test_util_PkiIdentity_organization(self):
         self.assertEqual( self.id1.organization , "organization" )
     
-    def test_util_ApplicationDescription_organizationUnit(self):
+    def test_util_PkiIdentity_organizationUnit(self):
         self.assertEqual( self.id1.organizationUnit , "organizationUnit" )
     
-    def test_util_ApplicationDescription_locality(self):
+    def test_util_PkiIdentity_locality(self):
         self.assertEqual( self.id1.locality , "locality" )
     
-    def test_util_ApplicationDescription_state(self):
+    def test_util_PkiIdentity_state(self):
         self.assertEqual( self.id1.state , "state" )
     
-    def test_util_ApplicationDescription_country(self):
+    def test_util_PkiIdentity_country(self):
         self.assertEqual( self.id1.country , "country" )
     
-    def test_util_ApplicationDescription_commonName(self):
+    def test_util_PkiIdentity_commonName(self):
         self.assertEqual( self.id1.commonName , "commonName" )
     
-    def test_util_ApplicationDescription_domainComponent(self):
+    def test_util_PkiIdentity_domainComponent(self):
         self.assertEqual( self.id1.domainComponent , "domainComponent" )
 
     
