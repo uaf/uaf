@@ -52,6 +52,7 @@
 #include "uaf/util/viewdescription.h"
 #include "uaf/util/referencedescription.h"
 #include "uaf/util/enumvalue.h"
+#include "uaf/util/pkicertificateinfo.h"
 %}
 
 
@@ -155,6 +156,7 @@ UAF_WRAP_CLASS("uaf/util/referencedescription.h"   , uaf , ReferenceDescription 
 UAF_WRAP_CLASS("uaf/util/statusdiagnostics.h"      , uaf , StatusDiagnostics       , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/pkiidentity.h"            , uaf , PkiIdentity             , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/enumvalue.h"              , uaf , EnumValue               , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/pkicertificateinfo.h"     , uaf , PkiCertificateInfo      , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 
 
 // also include the Variant typemap(s)

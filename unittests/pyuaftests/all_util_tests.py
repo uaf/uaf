@@ -27,7 +27,8 @@ ALL_MODULES = [ "primitives",
                 "endpointdescription",
                 "referencedescription",
                 "pkiidentity",
-                "enumvalue"
+                "enumvalue",
+                "pkicertificateinfo"
               ]
 
 
