@@ -1695,6 +1695,48 @@
 
 
 
+*class* PkiCertificateInfo
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.PkiCertificateInfo
+
+     A PkiCertificateInfo holds some information about a PkiCertificate.
+
+
+    * Methods:
+
+        .. automethod:: pyuaf.util.PkiCertificateInfo.__init__
+    
+            Construct a new PkiCertificateInfo.
+    
+    * Attributes:
+  
+  
+        .. autoattribute:: pyuaf.util.PkiCertificateInfo.uri
+        
+            The URI of the application certificate, as a string (type ``str``).
+  
+        .. autoattribute:: pyuaf.util.PkiCertificateInfo.ipAddresses
+        
+            The IP addresses of the application certificate, as a :class:`~pyuaf.util.StringVector`.
+            Optional if no DNS is available.
+            
+        .. autoattribute:: pyuaf.util.PkiCertificateInfo.dnsNames
+        
+            The DNS names of the application certificate, as a :class:`~pyuaf.util.StringVector`.
+            
+        .. autoattribute:: pyuaf.util.PkiCertificateInfo.eMail
+        
+            The e-mail address of the application certificate, as a string (type ``str``).
+            
+        .. autoattribute:: pyuaf.util.PkiCertificateInfo.validTime
+        
+            The valid time of the application certificate, in seconds, as a ``long``.
+            
+            
+            
+
 *class* PkiIdentity
 ----------------------------------------------------------------------------------------------------
 
