@@ -1735,7 +1735,22 @@
             The valid time of the application certificate, in seconds, as a ``long``.
             
             
-            
+         
+
+*class* PkiPrivateKey
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.PkiPrivateKey
+
+     A PkiPrivateKey is just a container for a private key.
+
+    * Methods:
+
+        .. automethod:: pyuaf.util.PkiPrivateKey.__init__
+    
+            Construct a new PkiPrivateKey.
+       
 
 
 *class* PkiPublicKey

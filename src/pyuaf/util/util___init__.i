@@ -54,6 +54,7 @@
 #include "uaf/util/enumvalue.h"
 #include "uaf/util/pkicertificateinfo.h"
 #include "uaf/util/pkipublickey.h"
+#include "uaf/util/pkiprivatekey.h"
 %}
 
 
@@ -158,6 +159,7 @@ UAF_WRAP_CLASS("uaf/util/statusdiagnostics.h"      , uaf , StatusDiagnostics    
 UAF_WRAP_CLASS("uaf/util/pkiidentity.h"            , uaf , PkiIdentity             , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/enumvalue.h"              , uaf , EnumValue               , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/pkipublickey.h"           , uaf , PkiPublicKey            , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/pkiprivatekey.h"          , uaf , PkiPrivateKey           , COPY_YES, TOSTRING_NO,  COMP_NO,  pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/pkicertificateinfo.h"     , uaf , PkiCertificateInfo      , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 
 
