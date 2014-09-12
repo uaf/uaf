@@ -53,6 +53,7 @@
 #include "uaf/util/referencedescription.h"
 #include "uaf/util/enumvalue.h"
 #include "uaf/util/pkicertificateinfo.h"
+#include "uaf/util/pkipublickey.h"
 %}
 
 
@@ -112,7 +113,7 @@
 %ignore operator>(const DateTime&, const DateTime&);
 %ignore uaf::DateTime::DateTime(const FILETIME& t);
 %ignore uaf::StatusDiagnostics::operator=;
-
+%ignore uaf::PkiPublicKey::operator=;
 
 // The default SWIG output returned by uaf::Status::opcUaStatusCode() is a signed representation (Long) of an unsigned 32-bit integer.
 // The returned value (a Long which can only be positive) does not correspond bit-to-bit to the original OPC UA status codes, e.g. as found in
@@ -156,6 +157,7 @@ UAF_WRAP_CLASS("uaf/util/referencedescription.h"   , uaf , ReferenceDescription 
 UAF_WRAP_CLASS("uaf/util/statusdiagnostics.h"      , uaf , StatusDiagnostics       , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/pkiidentity.h"            , uaf , PkiIdentity             , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/enumvalue.h"              , uaf , EnumValue               , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/pkipublickey.h"           , uaf , PkiPublicKey            , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/pkicertificateinfo.h"     , uaf , PkiCertificateInfo      , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 
 

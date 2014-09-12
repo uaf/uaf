@@ -1737,6 +1737,70 @@
             
             
 
+
+*class* PkiPublicKey
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.PkiPublicKey
+
+     A PkiPublicKey can hold an RSA or DSA encrypted public key.
+
+    * Class attributes:
+  
+        .. autoattribute:: pyuaf.util.PkiPublicKey.RSA
+        .. autoattribute:: pyuaf.util.PkiPublicKey.DSA
+        .. autoattribute:: pyuaf.util.PkiPublicKey.Unknown
+    
+
+    * Methods:
+
+        .. automethod:: pyuaf.util.PkiPublicKey.__init__
+    
+            Construct a new PkiPublicKey.
+    
+    * Attributes:
+            
+        .. automethod:: pyuaf.util.PkiPublicKey.keyType
+        
+            Get the type of the key.
+            
+            :return: Either :attr:`~pyuaf.util.PkiPublicKey.RSA` 
+                     or :attr:`~pyuaf.util.PkiPublicKey.DSA`
+                     or :attr:`~pyuaf.util.PkiPublicKey.Unknown`.
+            :rtype:  ``int``
+            
+        .. automethod:: pyuaf.util.PkiPublicKey.keySize
+        
+            Get the size of the key.
+            
+            :return: The size of the key.
+            :rtype:  ``int``
+  
+        .. automethod:: pyuaf.util.PkiPublicKey.toDER
+        
+            Write the public key to a DER encoded ``bytearray``. 
+            
+            :return: The DER encoded bytearray.
+            :rtype:  ``bytearray``
+  
+        .. automethod:: pyuaf.util.PkiPublicKey.fromDER(data)
+        
+            Read the public key from a DER encoded ``bytearray``.
+            
+            :param data: The DER encoded data.
+            :type  data:  ``bytearray``
+            
+        .. automethod:: pyuaf.util.PkiPublicKey.getErrors
+        
+            Get a list of errors.
+            
+            :return: A list of error descriptions.
+            :rtype:  ``list`` of ``str``
+            
+            
+            
+
 *class* PkiIdentity
 ----------------------------------------------------------------------------------------------------
 
