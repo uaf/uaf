@@ -1766,9 +1766,20 @@
         .. autoattribute:: pyuaf.util.PkiPublicKey.RSA
         .. autoattribute:: pyuaf.util.PkiPublicKey.DSA
         .. autoattribute:: pyuaf.util.PkiPublicKey.Unknown
+  
+    * Class methods:
+    
+        .. automethod:: pyuaf.util.PkiPublicKey.fromDER(data)
+        
+            Read the public key from a DER encoded ``bytearray``.
+            
+            :param data: The DER encoded data.
+            :type  data:  ``bytearray``
+            :return: A new PkiPublicKey instance.
+            :rtype: :class:`~pyuaf.util.PkiPublicKey`
     
 
-    * Methods:
+    * Instance Methods:
 
         .. automethod:: pyuaf.util.PkiPublicKey.__init__
     
@@ -1798,13 +1809,6 @@
             
             :return: The DER encoded bytearray.
             :rtype:  ``bytearray``
-  
-        .. automethod:: pyuaf.util.PkiPublicKey.fromDER(data)
-        
-            Read the public key from a DER encoded ``bytearray``.
-            
-            :param data: The DER encoded data.
-            :type  data:  ``bytearray``
             
         .. automethod:: pyuaf.util.PkiPublicKey.getErrors
         
@@ -1814,6 +1818,113 @@
             :rtype:  ``list`` of ``str``
             
             
+
+*class* PkiRsaKeyPair
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.PkiRsaKeyPair
+
+    A PkiRsaKeyPair holds a private and a public key pair.
+  
+    * Class methods:
+    
+        .. automethod:: pyuaf.util.PkiRsaKeyPair.fromPEMFile(args*)
+        
+            Read the key pair from a PEM file.
+            
+            If the file is not protected by a password, then just provide one argument 
+            (the file name).
+            If the file is protected by a password, then provide 2 arguments (the file name 
+            must be the first argument, the password must be the second argument).
+            
+            :param fileName: The filename, e.g. "keypair.pem" or "somefolder/keypair.pem" or 
+                             an absolute path.
+            :type  fileName: ``str``
+            :param password: The password of the file.
+            :type  password: ``str``
+            :return: A new PkiRsaKeyPair instance.
+            :rtype: :class:`~pyuaf.util.PkiRsaKeyPair`
+    
+        .. automethod:: pyuaf.util.PkiRsaKeyPair.checkKeyPair(args*)
+        
+            Check if a public and private key pair matches.
+            
+            :param publicKey:  The public key.
+            :type publicKey:   :class:`~pyuaf.util.PkiPublicKey`
+            :param privateKey: The private key.
+            :type privateKey:  :class:`~pyuaf.util.PkiPrivateKey`
+            :return:           True if the keys match, False if not.
+            :rtype:            ``bool``
+            
+            .. warning::
+            
+                This method may **crash** when empty keys are checked, due to a bug in the SDK!!! 
+                Bug present in SDK v1.4.2. 
+            
+
+    * Instance Methods:
+
+        .. automethod:: pyuaf.util.PkiRsaKeyPair.__init__(bits = 1024)
+    
+            Construct a new PkiRsaKeyPair.
+            
+            :param bits: The encryption bitsize.
+            :type  bits: ``int``
+        
+        .. automethod:: pyuaf.util.PkiRsaKeyPair.privateKey
+    
+            Get the private key of this pair.
+            
+            :return: The private key.
+            :rtype:  :class:`~pyuaf.util.PkiPrivateKey`
+        
+        .. automethod:: pyuaf.util.PkiRsaKeyPair.publicKey
+    
+            Get the public key of this pair.
+            
+            :return: The public key.
+            :rtype:  :class:`~pyuaf.util.PkiPublicKey`
+        
+        .. automethod:: pyuaf.util.PkiRsaKeyPair.toPEMFile(args*)
+        
+            Write the key pair to an unprotected PEM file.
+            
+            If the file is not protected by a password, then just provide one argument 
+            (the file name).
+            If the file is protected by a password, then provide 2 arguments (the file name 
+            must be the first argument, the password must be the second argument).
+            
+            :param fileName: The filename, e.g. "keypair.pem" or "somefolder/keypair.pem" or 
+                             an absolute path.
+            :type  fileName: ``str``
+            :param password: The password of the file.
+            :type  password: ``str``
+            :return: exit code (0 on success).
+            :rtype: ``int``
+  
+        .. automethod:: pyuaf.util.PkiRsaKeyPair.toDER
+        
+            Write the key pair to a DER encoded ``bytearray``. 
+            
+            :return: The DER encoded bytearray.
+            :rtype:  ``bytearray``
+  
+        .. automethod:: pyuaf.util.PkiRsaKeyPair.isValid
+        
+            Check if the key pair is valid.
+            
+            :return: True if the key pair is valid, False if not.
+            :rtype:  ``bool``
+            
+        .. automethod:: pyuaf.util.PkiRsaKeyPair.getErrors
+        
+            Get a list of errors.
+            
+            :return: A list of error descriptions.
+            :rtype:  ``list`` of ``str``
+            
+    
             
 
 *class* PkiIdentity

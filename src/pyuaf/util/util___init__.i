@@ -55,6 +55,7 @@
 #include "uaf/util/pkicertificateinfo.h"
 #include "uaf/util/pkipublickey.h"
 #include "uaf/util/pkiprivatekey.h"
+#include "uaf/util/pkirsakeypair.h"
 %}
 
 
@@ -161,6 +162,7 @@ UAF_WRAP_CLASS("uaf/util/enumvalue.h"              , uaf , EnumValue            
 UAF_WRAP_CLASS("uaf/util/pkipublickey.h"           , uaf , PkiPublicKey            , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/pkiprivatekey.h"          , uaf , PkiPrivateKey           , COPY_YES, TOSTRING_NO,  COMP_NO,  pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/pkicertificateinfo.h"     , uaf , PkiCertificateInfo      , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/pkirsakeypair.h"          , uaf , PkiRsaKeyPair           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 
 
 // also include the Variant typemap(s)
