@@ -82,6 +82,12 @@ namespace uaf
 
 
         /**
+         * Construct a UAF instance from an SDK instance.
+         */
+        PkiPublicKey(const UaPkiPublicKey& uaKey);
+
+
+        /**
          * Assignment operator (to avoid bug in SDK!)
          * Copying and assignment of UaPkiPublicKey in SDKv1.4.2 segfaults! Bug reported.
          */
@@ -113,11 +119,7 @@ namespace uaf
 
 
         /**
-         * Get a string representation of the PKI certificate information.
-         *
-         * @param indent Indentation to add to each line (e.g. "  " to indent with 2 spaces).
-         * @param colon  The position to put the colon (double point).
-         * @return       A string representation (multiple lines, separated by newline-characters).
+         * Get a string representation of the public key.
          */
         std::string toString() const;
 
@@ -128,6 +130,9 @@ namespace uaf
         friend bool UAF_EXPORT operator<(const PkiPublicKey& object1, const PkiPublicKey& object2);
 
     private:
+        // make it a friend of PkiRsaKeyPair so the latter can access the stack key directly
+        friend class PkiRsaKeyPair;
+
         UaPkiPublicKey uaPkiPublicKey_;
     };
 

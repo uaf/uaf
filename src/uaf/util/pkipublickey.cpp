@@ -48,6 +48,12 @@ namespace uaf
     : uaPkiPublicKey_(UaPkiPublicKey::fromDER(uaByteArray))
     {} // copying and assignment of UaPkiPublicKey in SDKv1.4.2 segfaults! Bug reported.
 
+    // Constructor
+    // =============================================================================================
+    PkiPublicKey::PkiPublicKey(const UaPkiPublicKey& uaKey)
+    : uaPkiPublicKey_(uaKey)
+    {}
+
 
     // operator=
     // =============================================================================================
@@ -59,6 +65,8 @@ namespace uaf
 
 
     // Get a DER encoded bytestring
+
+
     // =============================================================================================
     ByteString PkiPublicKey::toDER() const
     {
