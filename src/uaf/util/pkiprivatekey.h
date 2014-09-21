@@ -50,8 +50,16 @@ namespace uaf
          */
         PkiPrivateKey() {}
 
+        /**
+         * Create a key based on an SDK instance.
+         */
+        PkiPrivateKey(const UaPkiPrivateKey& uaKey) : uaPkiPrivateKey_(uaKey) {}
+
 
     private:
+        // make it a friend of PkiRsaKeyPair so the latter can access the stack key directly
+        friend class PkiRsaKeyPair;
+
         UaPkiPrivateKey uaPkiPrivateKey_;
     };
 
