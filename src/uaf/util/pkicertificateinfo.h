@@ -75,7 +75,8 @@ namespace uaf
         friend bool UAF_EXPORT operator!=(const PkiCertificateInfo& object1, const PkiCertificateInfo& object2);
         friend bool UAF_EXPORT operator<(const PkiCertificateInfo& object1, const PkiCertificateInfo& object2);
 
-
+        // create a PkiCertificateInfo from an SDK instance
+        static PkiCertificateInfo fromSdk(const UaPkiCertificateInfo& uaInfo);
     };
 
 

@@ -129,4 +129,24 @@ namespace uaf
             return object1.validTime < object2.validTime;
     }
 
+    // fromSdk
+    // =============================================================================================
+    PkiCertificateInfo PkiCertificateInfo::fromSdk(const UaPkiCertificateInfo& uaInfo) {
+        PkiCertificateInfo info;
+
+        if (!uaInfo.URI.isNull()) info.uri = uaInfo.URI.toUtf8();
+
+        for (OpcUa_UInt32 i = 0; i < uaInfo.IPAddresses.length(); i++)
+            info.ipAddresses.push_back(UaString(uaInfo.IPAddresses[i]).toUtf8());
+
+        for (OpcUa_UInt32 i = 0; i < uaInfo.DNSNames.length(); i++)
+            info.dnsNames.push_back(UaString(uaInfo.DNSNames[i]).toUtf8());
+
+        if (!uaInfo.eMail.isNull()) info.eMail = uaInfo.eMail.toUtf8();
+
+        info.validTime = uaInfo.validTime;
+
+        return info;
+    }
+
 }
