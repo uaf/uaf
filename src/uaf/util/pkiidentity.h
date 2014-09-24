@@ -82,6 +82,9 @@ namespace uaf
         friend bool UAF_EXPORT operator!=(const PkiIdentity& object1, const PkiIdentity& object2);
         friend bool UAF_EXPORT operator<(const PkiIdentity& object1, const PkiIdentity& object2);
 
+        // create a PkiIdentity from an SDK instance
+        static PkiIdentity fromSdk(const UaPkiIdentity& uaId);
+
 
     };
 

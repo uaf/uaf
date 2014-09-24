@@ -126,7 +126,21 @@ namespace uaf
         else if (object1.commonName != object2.commonName)
             return object1.commonName < object2.commonName;
         else
-            return object1.commonName < object2.commonName;
+            return object1.domainComponent < object2.domainComponent;
+    }
+
+    // fromSdk
+    // =============================================================================================
+    PkiIdentity PkiIdentity::fromSdk(const UaPkiIdentity& uaId) {
+        PkiIdentity id;
+        if (!uaId.organization.isNull()) id.organization = uaId.organization.toUtf8();
+        if (!uaId.organizationUnit.isNull()) id.organizationUnit = uaId.organizationUnit.toUtf8();
+        if (!uaId.locality.isNull()) id.locality = uaId.locality.toUtf8();
+        if (!uaId.state.isNull()) id.state = uaId.state.toUtf8();
+        if (!uaId.country.isNull()) id.country = uaId.country.toUtf8();
+        if (!uaId.commonName.isNull()) id.commonName = uaId.commonName.toUtf8();
+        if (!uaId.domainComponent.isNull()) id.domainComponent = uaId.domainComponent.toUtf8();
+        return id;
     }
 
 }
