@@ -65,8 +65,6 @@ namespace uaf
 
 
     // Get a DER encoded bytestring
-
-
     // =============================================================================================
     ByteString PkiPublicKey::toDER() const
     {
