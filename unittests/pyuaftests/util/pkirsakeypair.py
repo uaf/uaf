@@ -33,10 +33,8 @@ class PkiRsaKeyPairTest(unittest.TestCase):
         self.assertTrue( type(self.pair0.toDER()) == bytearray )
         self.assertTrue( len(self.pair0.toDER()) > 0 )
     
-    @unittest.skip("skipping pyuaf.util.PkiRsaKeyPair.checkKeyPair() due to bug in SDK 1.4.2")
     def test_util_PkiRsaKeyPair_checkKeyPair(self):
-        self.assertTrue( pyuaf.util.PkiRsaKeyPair.checkKeyPair(self.pair0.publicKey(), self.pair1.privateKey()) )
-    
+        self.assertTrue( pyuaf.util.PkiRsaKeyPair.checkKeyPair(self.pair0.publicKey(), self.pair0.privateKey()))
     
     def test_util_PkiRsaKeyPair_toPEMFile_without_password(self):
         path = "test_util_PkiRsaKeyPair_toPEMFile_without_password"
