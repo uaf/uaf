@@ -18,24 +18,28 @@ def suite(args=None):
 class PkiPublicKeyTest(unittest.TestCase):
     
     def setUp(self):
-        self.key = pyuaf.util.PkiPublicKey()
-        self.defaultDER = bytearray(b'0\x080\x03\x06\x01\x00\x03\x01\x00')
+        #self.key = pyuaf.util.PkiPublicKey()
+        
+        self.pair = pyuaf.util.PkiRsaKeyPair(1024)
+        self.key = self.pair.publicKey()
     
     def test_util_PkiPublicKey_keyType(self):
-        self.assertEqual( self.key.keyType(), pyuaf.util.PkiPublicKey.Unknown )
+        self.assertEqual( self.key.keyType(), pyuaf.util.PkiPublicKey.RSA )
     
     def test_util_PkiPublicKey_keySize(self):
-        self.assertEqual( self.key.keySize(), -1 )
+        self.assertEqual( self.key.keySize(), 1024 )
         
     def test_util_PkiPublicKey_toDER(self):
-        self.assertEqual( self.key.toDER(), self.defaultDER )
+        self.assertTrue( type(self.key.toDER()) == bytearray )
+        self.assertTrue( len(self.key.toDER()) > 0 )
     
     def test_util_PkiPublicKey_fromDER(self):
-        self.assertEqual( pyuaf.util.PkiPublicKey.fromDER(self.defaultDER), self.key )
+        self.assertEqual( pyuaf.util.PkiPublicKey.fromDER(self.key.toDER()), self.key )
     
     def test_util_PkiPublicKey_getErrors(self):
-        self.key.keySize() # generates errors
-        errors = self.key.getErrors()
+        key = pyuaf.util.PkiPublicKey()
+        key.keySize() # generates errors
+        errors = key.getErrors()
         self.assertTrue( len(errors) > 0 )
         for s in errors:
             self.assertEqual( type(s), str )
