@@ -35,33 +35,18 @@ namespace uaf
     {}
 
 
-    // Copy constructor
-    // =============================================================================================
-    PkiPublicKey::PkiPublicKey(const PkiPublicKey& copy)
-    : uaPkiPublicKey_(UaPkiPublicKey::fromDER(copy.uaPkiPublicKey_.toDER()))
-    {} // copying and assignment of UaPkiPublicKey in SDKv1.4.2 segfaults! Bug reported.
-
-
     // Constructor
     // =============================================================================================
     PkiPublicKey::PkiPublicKey(const UaByteArray& uaByteArray)
     : uaPkiPublicKey_(UaPkiPublicKey::fromDER(uaByteArray))
-    {} // copying and assignment of UaPkiPublicKey in SDKv1.4.2 segfaults! Bug reported.
+    {}
+
 
     // Constructor
     // =============================================================================================
     PkiPublicKey::PkiPublicKey(const UaPkiPublicKey& uaKey)
     : uaPkiPublicKey_(uaKey)
     {}
-
-
-    // operator=
-    // =============================================================================================
-    PkiPublicKey PkiPublicKey::operator=( const PkiPublicKey &copy )
-    {
-        // copying and assignment of UaPkiPublicKey in SDKv1.4.2 segfaults! Bug reported.
-        return PkiPublicKey(copy.uaPkiPublicKey_.toDER());
-    }
 
 
     // Get a DER encoded bytestring
