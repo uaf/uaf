@@ -1694,6 +1694,274 @@
             :attr:`pyuaf.util.nodeididentifiertypes.Identifier_Opaque`.
 
 
+*class* PkiCertificate
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.PkiCertificate
+
+    A PkiCertificate holds a X509 certificate.
+
+    Here's some example code to set up a certificate:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> from pyuaf.util import PkiRsaKeyPair, PkiIdentity, PkiCertificateInfo, PkiCertificate
+        
+        >>> # we'll need the hostname of the computer later on:
+        >>> import socket
+        >>> hostName = socket.gethostname()
+        
+        >>> # we will create a self-signed certificate, which means that the subject and issuer are the same!
+        
+        >>> keyPair = PkiRsaKeyPair(1024)
+        >>> issuerPrivateKey = keyPair.privateKey()
+        >>> subjectPublicKey = keyPair.publicKey()
+        
+        >>> identity = PkiIdentity()
+        >>> identity.commonName         = "Wim Pessemier"
+        >>> identity.organization       = "KU Leuven"
+        >>> identity.organizationUnit   = "Institute of Astronomy"
+        >>> identity.locality           = "Leuven"
+        >>> identity.country            = "BE"
+        
+        >>> info = PkiCertificateInfo()
+        >>> info.uri        = "urn:%s:InstituteOfAstronomy::MyExampleCode" %hostName # must be unique!
+        >>> info.dns        = hostName
+        >>> info.eMail      = "Wxx.Pxxxxxxxx@ster.kuleuven.be"
+        >>> info.validTime  = 60*60*24*365*5 # 5 years
+        
+        >>> certificate = PkiCertificate(info, identity, subjectPublicKey,  identity, issuerPrivateKey)
+
+    * Class attributes:
+    
+        .. autoattribute:: pyuaf.util.PkiCertificate.Extension_SubjectAltName
+        .. autoattribute:: pyuaf.util.PkiCertificate.Extension_BasicConstraints
+        .. autoattribute:: pyuaf.util.PkiCertificate.Extension_NetscapeComment
+        .. autoattribute:: pyuaf.util.PkiCertificate.Extension_SubjectKeyIdentifier
+        .. autoattribute:: pyuaf.util.PkiCertificate.Extension_AuthorityKeyIdentifier
+        .. autoattribute:: pyuaf.util.PkiCertificate.Extension_KeyUsage
+        .. autoattribute:: pyuaf.util.PkiCertificate.Extension_ExtendedKeyUsage
+        
+        
+    * Methods:
+
+        .. automethod:: pyuaf.util.PkiCertificate.__init__(*args)
+        
+            Construct a new PkiCertificate with the following arguments:
+            
+            :param info:                The certificate info.
+            :type  info:                :class:`~pyuaf.util.PkiCertificateInfo`
+            :param subject:             The subject identity.
+            :type  subject:             :class:`~pyuaf.util.PkiIdentity`
+            :param subjectPublicKey:    The subject public key.
+            :type  subjectPublicKey:    :class:`~pyuaf.util.PkiPublicKey`
+            :param issuer:              The issuer identity.
+            :type  issuer:              :class:`~pyuaf.util.PkiIdentity`
+            :param issuerPrivateKey:    The issuer private key.
+            :type  issuerPrivateKey:    :class:`~pyuaf.util.PkiPrivateKey`
+            
+        .. automethod:: pyuaf.util.PkiCertificate.isNull
+            
+            Check if the certificate has data.
+            
+            :return: True if the certificate has data, False if not.
+            :rtype:  ``bool``
+            
+        .. automethod:: pyuaf.util.PkiCertificate.isValid
+            
+            Check if the signature is not expired.
+            
+            :return: True if the certificate is valid, False if not.
+            :rtype:  ``bool``
+            
+        .. automethod:: pyuaf.util.PkiCertificate.isSelfSigned
+            
+            Check if the certificate is self-signed (i.e. if the subject and issuer are the same).
+            
+            :return: True if the certificate is self-signed, False if not.
+            :rtype:  ``bool``
+
+        .. automethod:: pyuaf.util.PkiCertificate.publicKey
+        
+            Get the public key of the certificate.
+            
+            :return: The public key of the certificate.
+            :rtype:  :class:`~pyuaf.util.PkiPublicKey`
+
+        .. automethod:: pyuaf.util.PkiCertificate.commonName
+        
+            Convenience method to get the common name of the subject.
+            (equals ``myPkiCertificate.subject().commonName``).
+            
+            :return: The common name of the subject.
+            :rtype: ``str``
+            
+        .. automethod:: pyuaf.util.PkiCertificate.subject
+            
+            Get the identity of the subject of the certificate.
+            
+            :return: The subject.
+            :rtype:  :class:`~pyuaf.util.PkiIdentity`
+            
+        .. automethod:: pyuaf.util.PkiCertificate.issuer
+            
+            Get the identity of the issuer of the certificate.
+            
+            :return: The issuer.
+            :rtype:  :class:`~pyuaf.util.PkiIdentity`
+            
+        .. automethod:: pyuaf.util.PkiCertificate.subjectNameHash
+            
+            Get the hash of the subject name.
+            
+            :return: The hash of the subject name (e.g. 1877523877).
+            :rtype:  ``long``
+            
+        .. automethod:: pyuaf.util.PkiCertificate.info
+            
+            Get information from the X509v3 extension "subjectAltName" (SAN). It allows various
+            values to be associated with a security certificate.
+            
+            .. warning:: 
+                    
+                    :attr:`~pyuaf.util.PkiCertificateInfo.validTime` will not be filled, 
+                    use :meth:`~pyuaf.util.PkiCertificate.validFrom` and 
+                    :meth:`~pyuaf.util.PkiCertificate.validTo` instead!
+            
+            :return: The certificate info **without** validTime.
+            :rtype:  :class:`~pyuaf.util.PkiCertificateInfo`
+            
+        .. automethod:: pyuaf.util.PkiCertificate.validFrom
+            
+            Get the start date from when the certificate is valid.
+            
+            :return: The start date from when the certificate is valid.
+            :rtype:  :class:`~pyuaf.util.DateTime`
+            
+        .. automethod:: pyuaf.util.PkiCertificate.validTo
+            
+            Get the end date until when the certificate is valid. 
+            
+            :return: The end date until when the certificate is valid. 
+            :rtype:  :class:`~pyuaf.util.DateTime`
+            
+        .. automethod:: pyuaf.util.PkiCertificate.serialNumber
+            
+            Get the X.509 serial number (a unique number issued by the certificate issuer),
+            as a hexadecimal string.
+            
+            :return: The serial number (e.g. "542BA97B").
+            :rtype:  ``str``
+            
+        .. automethod:: pyuaf.util.PkiCertificate.signatureTypeNID
+            
+            Get the numerical ID (NID) of the signature algorithm type.
+            
+            :return: The signature algorithm type NID (e.g. 65).
+            :rtype:  ``int``
+            
+        .. automethod:: pyuaf.util.PkiCertificate.signatureTypeString
+            
+            Get a string representation of the numerical ID (NID) of the signature algorithm type.
+            
+            :return: The signature algorithm type as a string (e.g. "RSA-SHA1").
+            :rtype:  ``str``
+            
+        .. automethod:: pyuaf.util.PkiCertificate.hasExtension
+            
+            Check if the certificate has the given extension. 
+            
+            :param extension: Extension ID, e.g. :attr:`pyuaf.util.PkiCertificate.Extension_SubjectAltName`.
+            :type extension: ``int``
+            :return: True if the extension is present, False if not.
+            :rtype:  ``bool``
+            
+        .. automethod:: pyuaf.util.PkiCertificate.extensionValue
+            
+            Get the value of the given extension if the extension is present.
+            
+            :param extension: Extension ID, e.g. :attr:`pyuaf.util.PkiCertificate.Extension_SubjectAltName`.
+            :type extension: ``int``
+            :return: The value as a string.
+            :rtype:  ``str``
+            
+            
+        .. automethod:: pyuaf.util.PkiCertificate.toDER
+            
+            Get a DER encoded bytearray of the certificate.
+            
+            :return: DER encoded data.
+            :rtype:  ``bytearray``
+            
+        .. automethod:: pyuaf.util.PkiCertificate.toDERFile
+            
+            Write the certificate to a DER-encoded file with the given filename.
+            An error code is returned (0 if success).
+            
+            :param fileName: The filename (may be relative or absolute).
+            :type fileName: ``str``
+            :return: Error code (0 if success).
+            :rtype:  ``int``
+            
+        .. automethod:: pyuaf.util.PkiCertificate.toPEMFile
+            
+            Write the certificate to a PEM-encoded file with the given filename.
+            An error code is returned (0 if success).
+            
+            :param fileName: The filename (may be relative or absolute).
+            :type fileName: ``str``
+            :return: Error code (0 if success).
+            :rtype:  ``int``
+            
+        .. automethod:: pyuaf.util.PkiCertificate.thumbPrint
+            
+            Get a SHA1 thumb print (finger print) of the certficate. It is a short sequence of
+            bytes used to identify a certificate efficiently.
+            
+            :return: Thumb print data.
+            :rtype:  ``bytearray``
+            
+        .. automethod:: pyuaf.util.PkiPublicKey.getErrors
+        
+            Get a list of errors.
+            
+            :return: A list of error descriptions.
+            :rtype:  ``list`` of ``str``
+            
+        
+    * Class methods:
+
+        .. automethod:: pyuaf.util.PkiCertificate.fromDER
+        
+            Static method to get a certificate from a DER encoded bytearray.
+            
+            :param data: DER data.
+            :type data: ``bytearray``
+            :return: A new certificate instance.
+            :rtype: :class:`~pyuaf.util.PkiCertificate`
+
+        .. automethod:: pyuaf.util.PkiCertificate.fromDERFile
+        
+            Static method to get a certificate from a DER encoded file.
+            
+            :param fileName: File name of the DER file.
+            :type fileName: ``str``
+            :return: A new certificate instance.
+            :rtype: :class:`~pyuaf.util.PkiCertificate`
+
+        .. automethod:: pyuaf.util.PkiCertificate.fromPEMFile
+        
+            Static method to get a certificate from a PEM encoded file.
+            
+            :param fileName: File name of the PEM file.
+            :type fileName: ``str``
+            :return: A new certificate instance.
+            :rtype: :class:`~pyuaf.util.PkiCertificate`
+            
+            
+
 
 *class* PkiCertificateInfo
 ----------------------------------------------------------------------------------------------------

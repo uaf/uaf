@@ -30,7 +30,8 @@ ALL_MODULES = [ "primitives",
                 "enumvalue",
                 "pkicertificateinfo",
                 "pkipublickey",
-                "pkirsakeypair"
+                "pkirsakeypair",
+                "pkicertificate"
               ]
 
 
