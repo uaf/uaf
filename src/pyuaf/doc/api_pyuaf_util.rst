@@ -1744,12 +1744,23 @@
 .. autoclass:: pyuaf.util.PkiPrivateKey
 
      A PkiPrivateKey is just a container for a private key.
+      
+    .. note::
+    
+        A private key only makes sense in combination with a public key. Therefore you should never
+        create a PkiPrivateKey instance using the constructor of PkiPrivateKey. Instead, always 
+        create a :class:`~pyuaf.util.PkiRsaKeyPair` and get the private key from there (i.e. via its
+        :meth:`~pyuaf.util.PkiRsaKeyPair.privateKey` method). See the documentation of 
+        :class:`~pyuaf.util.PkiRsaKeyPair` to see example code of how to create a private key
+        via a key pair.
 
     * Methods:
 
         .. automethod:: pyuaf.util.PkiPrivateKey.__init__
     
-            Construct a new PkiPrivateKey.
+            Construct a new PkiPrivateKey... in a **bad** way! 
+            **See the note above to understand why you should avoid calling this constructor 
+            directly!**
        
 
 
@@ -1760,6 +1771,21 @@
 .. autoclass:: pyuaf.util.PkiPublicKey
 
      A PkiPublicKey can hold an RSA or DSA encrypted public key.
+      
+    .. note::
+    
+        A public key only makes sense in combination with a private key. Therefore you should never
+        create a PkiPublicKey instance using the constructor of PkiPublicKey. Instead, always 
+        create a :class:`~pyuaf.util.PkiRsaKeyPair` and get the public key from there (i.e. via its
+        :meth:`~pyuaf.util.PkiRsaKeyPair.publicKey` method). See the documentation of 
+        :class:`~pyuaf.util.PkiRsaKeyPair` to see example code of how to create a public key
+        via a key pair.
+        
+    .. warning::
+       
+       The SDK (up to 1.4.2) contains a bug so that your application may crash (segmentation fault)
+       if the data of the PkiPublicKey make no sense. To avoid this, always create a public key from
+       a key pair (which should also contain sensible data).
 
     * Class attributes:
   
@@ -1783,7 +1809,10 @@
 
         .. automethod:: pyuaf.util.PkiPublicKey.__init__
     
-            Construct a new PkiPublicKey.
+            Construct a new PkiPublicKey... in a **bad** way! 
+            **See the note above to understand why you should avoid calling this constructor 
+            directly!**
+            
     
     * Attributes:
             
@@ -1826,6 +1855,23 @@
 .. autoclass:: pyuaf.util.PkiRsaKeyPair
 
     A PkiRsaKeyPair holds a private and a public key pair.
+    
+    Creating a PkiRsaKeyPair is the only sensible way to create a :class:`~pyuaf.util.PkiPublicKey`
+    and :class:`~pyuaf.util.PkiPrivateKey`:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> pair = pyuaf.util.PkiRsaKeyPair(1024)
+        >>> publicKey = pair.publicKey()
+        >>> privateKey = pair.privateKey()
+        
+    .. warning::
+       
+       The SDK (up to 1.4.2) contains a bug so that your application may crash (segmentation fault)
+       if the data of the key pair make no sense. To avoid this, always make sure your key pair
+       has sensible data (e.g. don't use :meth:`pyuaf.util.PkiRsaKeyPair.fromPEMFile` with gibberish
+       data).
   
     * Class methods:
     
