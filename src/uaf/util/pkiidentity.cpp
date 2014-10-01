@@ -131,7 +131,8 @@ namespace uaf
 
     // fromSdk
     // =============================================================================================
-    PkiIdentity PkiIdentity::fromSdk(const UaPkiIdentity& uaId) {
+    PkiIdentity PkiIdentity::fromSdk(const UaPkiIdentity& uaId)
+    {
         PkiIdentity id;
         if (!uaId.organization.isNull()) id.organization = uaId.organization.toUtf8();
         if (!uaId.organizationUnit.isNull()) id.organizationUnit = uaId.organizationUnit.toUtf8();
@@ -141,6 +142,24 @@ namespace uaf
         if (!uaId.commonName.isNull()) id.commonName = uaId.commonName.toUtf8();
         if (!uaId.domainComponent.isNull()) id.domainComponent = uaId.domainComponent.toUtf8();
         return id;
+    }
+
+
+    // toSdk
+    // =============================================================================================
+    UaPkiIdentity PkiIdentity::toSdk() const
+    {
+        UaPkiIdentity ret;
+
+        ret.organization = organization.c_str();
+        ret.organizationUnit = organizationUnit.c_str();
+        ret.locality = locality.c_str();
+        ret.state = state.c_str();
+        ret.country = country.c_str();
+        ret.commonName = commonName.c_str();
+        ret.domainComponent = domainComponent.c_str();
+
+        return ret;
     }
 
 }
