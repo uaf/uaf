@@ -50,7 +50,7 @@ namespace uaf
         ss << indentation << " - ipAddresses[]";
         if (ipAddresses.size() == 0)
         {
-            fillToPos(ss, colon);
+            ss << fillToPos(ss, colon);
             ss << ": []\n";
         }
         else
@@ -59,7 +59,7 @@ namespace uaf
             for (size_t i = 0; i<ipAddresses.size(); i++)
             {
                 ss << indentation << "    - " << "ipAddresses[" << i << "]";
-                fillToPos(ss, colon);
+                ss << fillToPos(ss, colon);
                 ss << ": " << ipAddresses[i] << "\n";
             }
         }
@@ -67,7 +67,7 @@ namespace uaf
         ss << indentation << " - dnsNames[]";
         if (dnsNames.size() == 0)
         {
-            fillToPos(ss, colon);
+            ss << fillToPos(ss, colon);
             ss << ": []\n";
         }
         else
@@ -76,7 +76,7 @@ namespace uaf
             for (size_t i = 0; i<dnsNames.size(); i++)
             {
                 ss << indentation << "    - " << "dnsNames[" << i << "]";
-                fillToPos(ss, colon);
+                ss << fillToPos(ss, colon);
                 ss << ": " << dnsNames[i] << "\n";
             }
         }
@@ -131,7 +131,8 @@ namespace uaf
 
     // fromSdk
     // =============================================================================================
-    PkiCertificateInfo PkiCertificateInfo::fromSdk(const UaPkiCertificateInfo& uaInfo) {
+    PkiCertificateInfo PkiCertificateInfo::fromSdk(const UaPkiCertificateInfo& uaInfo)
+    {
         PkiCertificateInfo info;
 
         if (!uaInfo.URI.isNull()) info.uri = uaInfo.URI.toUtf8();
@@ -149,4 +150,39 @@ namespace uaf
         return info;
     }
 
+    // toSdk
+    // =============================================================================================
+    UaPkiCertificateInfo PkiCertificateInfo::toSdk() const
+    {
+        UaPkiCertificateInfo ret;
+
+        ret.URI = uri.c_str();
+
+        ret.IPAddresses.resize(ipAddresses.size());
+        for (OpcUa_UInt32 i = 0; i < ipAddresses.size(); i++)
+        {
+            UaString s(ipAddresses[i].c_str());
+            s.copyTo(&ret.IPAddresses[i]);
+        }
+
+        ret.IPAddresses.resize(ipAddresses.size());
+        for (OpcUa_UInt32 i = 0; i < ipAddresses.size(); i++)
+        {
+            UaString s(ipAddresses[i].c_str());
+            s.copyTo(&ret.IPAddresses[i]);
+        }
+
+        ret.DNSNames.resize(dnsNames.size());
+        for (OpcUa_UInt32 i = 0; i < dnsNames.size(); i++)
+        {
+            UaString s(dnsNames[i].c_str());
+            s.copyTo(&ret.DNSNames[i]);
+        }
+
+        ret.eMail = eMail.c_str();
+
+        ret.validTime = validTime;
+
+        return ret;
+    }
 }
