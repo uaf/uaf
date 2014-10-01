@@ -67,7 +67,7 @@ namespace uaf
          * @param colon  The position to put the colon (double point).
          * @return       A string representation (multiple lines, separated by newline-characters).
          */
-        std::string toString(const std::string& indent="", std::size_t colon=15) const;
+        std::string toString(const std::string& indent="", std::size_t colon=17) const;
 
 
         // comparison operators
@@ -77,6 +77,9 @@ namespace uaf
 
         // create a PkiCertificateInfo from an SDK instance
         static PkiCertificateInfo fromSdk(const UaPkiCertificateInfo& uaInfo);
+
+        // create a SDK instance from a UAF instance
+        UaPkiCertificateInfo toSdk() const;
     };
 
 
