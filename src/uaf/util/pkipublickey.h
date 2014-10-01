@@ -30,6 +30,7 @@
 #include <iostream>
 // SDK
 #include "uapki/uapkipublickey.h"
+#include "uapki/uapkirsakeypair.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/bytestring.h"
@@ -68,13 +69,6 @@ namespace uaf
 
 
         /**
-         * Copy constructor (to avoid bug in SDK!)
-         * Copying and assignment of UaPkiPublicKey in SDKv1.4.2 segfaults! Bug reported.
-         */
-        PkiPublicKey(const uaf::PkiPublicKey& copy);
-
-
-        /**
          * Constructor (to avoid bug in SDK!)
          * Copying and assignment of UaPkiPublicKey in SDKv1.4.2 segfaults! Bug reported.
          */
@@ -87,11 +81,11 @@ namespace uaf
         PkiPublicKey(const UaPkiPublicKey& uaKey);
 
 
-        /**
-         * Assignment operator (to avoid bug in SDK!)
-         * Copying and assignment of UaPkiPublicKey in SDKv1.4.2 segfaults! Bug reported.
-         */
-        PkiPublicKey operator=(const PkiPublicKey& copy);
+//        /**
+//         * Assignment operator (to avoid bug in SDK!)
+//         * Copying and assignment of UaPkiPublicKey in SDKv1.4.2 segfaults! Bug reported.
+//         */
+//        PkiPublicKey operator=(const PkiPublicKey& copy);
 
 
         /**
@@ -130,8 +124,10 @@ namespace uaf
         friend bool UAF_EXPORT operator<(const PkiPublicKey& object1, const PkiPublicKey& object2);
 
     private:
-        // make it a friend of PkiRsaKeyPair so the latter can access the stack key directly
+        // make it a friend of PkiRsaKeyPair and PkiCertificate so they can access the SDK
+        // object directly
         friend class PkiRsaKeyPair;
+        friend class PkiCertificate;
 
         UaPkiPublicKey uaPkiPublicKey_;
     };
