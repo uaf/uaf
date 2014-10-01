@@ -57,8 +57,10 @@ namespace uaf
 
 
     private:
-        // make it a friend of PkiRsaKeyPair so the latter can access the stack key directly
+        // make it a friend of PkiRsaKeyPair and PkiCertificate so these can access the stack
+        // key directly
         friend class PkiRsaKeyPair;
+        friend class PkiCertificate;
 
         UaPkiPrivateKey uaPkiPrivateKey_;
     };
