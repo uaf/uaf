@@ -1970,7 +1970,10 @@
     
         .. autoattribute:: pyuaf.util.PkiIdentity.country
         
-            The country as a string (type ``str``).
+            The country code as a string (type ``str``).
+            
+            Note that invalid data (e.g. "Belgium" instead of the correct "BE") will be stored by 
+            the PkiIdentity, but this data may get lost when it is converted to a X509 certificate. 
     
         .. autoattribute:: pyuaf.util.PkiIdentity.commonName
         
