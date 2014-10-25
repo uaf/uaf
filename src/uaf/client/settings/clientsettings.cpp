@@ -89,6 +89,99 @@ namespace uafc
     {}
 
 
+    // Create the security locations
+    // =============================================================================================
+    Status ClientSettings::createSecurityLocations() const
+    {
+        Status ret;
+        UaDir helperDir(UaUniString(""));
+
+        UaUniString location;
+
+        location = certificateTrustListLocation.c_str();
+        if (helperDir.exists(location))
+            ret.setGood();
+        else
+            if (helperDir.mkpath(location))
+                ret.setGood();
+            else
+                ret.setStatus(uaf::statuscodes::ConfigurationError,
+                              "Failed to create the certificate trust list location");
+
+        if (ret.isGood())
+        {
+            location = certificateRevocationListLocation.c_str();
+
+            if (helperDir.exists(location))
+                ret.setGood();
+            else
+                if (helperDir.mkpath(location))
+                    ret.setGood();
+                else
+                    ret.setStatus(uaf::statuscodes::ConfigurationError,
+                                  "Failed to create the certificate revocation list location");
+        }
+
+        if (ret.isGood())
+        {
+            location = issuersCertificatesLocation.c_str();
+
+            if (helperDir.exists(location))
+                ret.setGood();
+            else
+                if (helperDir.mkpath(location))
+                    ret.setGood();
+                else
+                    ret.setStatus(uaf::statuscodes::ConfigurationError,
+                                  "Failed to create the issuers certificates location");
+        }
+
+        if (ret.isGood())
+        {
+            location = issuersRevocationListLocation.c_str();
+
+            if (helperDir.exists(location))
+                ret.setGood();
+            else
+                if (helperDir.mkpath(location))
+                    ret.setGood();
+                else
+                    ret.setStatus(uaf::statuscodes::ConfigurationError,
+                                  "Failed to create the issuers revocation list location");
+        }
+
+        if (ret.isGood())
+        {
+            location = helperDir.filePath(UaUniString(clientPrivateKey.c_str()));
+
+            if (helperDir.exists(location))
+                ret.setGood();
+            else
+                if (helperDir.mkpath(location))
+                    ret.setGood();
+                else
+                    ret.setStatus(uaf::statuscodes::ConfigurationError,
+                                  "Failed to create the client private key location");
+        }
+
+        if (ret.isGood())
+        {
+            location = helperDir.filePath(UaUniString(clientCertificate.c_str()));
+
+            if (helperDir.exists(location))
+                ret.setGood();
+            else
+                if (helperDir.mkpath(location))
+                    ret.setGood();
+                else
+                    ret.setStatus(uaf::statuscodes::ConfigurationError,
+                                  "Failed to create the client certificate location");
+        }
+
+        return ret;
+    }
+
+
     // Get a string representation
     // =============================================================================================
     string ClientSettings::toString(const string& indent, size_t colon) const

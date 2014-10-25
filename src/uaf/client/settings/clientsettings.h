@@ -26,9 +26,11 @@
 #include <sstream>
 #include <vector>
 // SDK
+#include "uabase/uadir.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/loglevels.h"
+#include "uaf/util/status.h"
 #include "uaf/util/stringifiable.h"
 #include "uaf/client/clientexport.h"
 
@@ -192,6 +194,22 @@ namespace uafc
          *
          *  Default: "PKI/client/certs/client.der". */
         std::string clientCertificate;
+
+
+        /**
+         * Create the security locations (directories).
+         *
+         * These locations will be created (if they don't exist already):
+         *   - certificateTrustListLocation
+         *   - certificateRevocationListLocation
+         *   - issuersCertificatesLocation
+         *   - issuersRevocationListLocation
+         *   - base path of clientPrivateKey
+         *   - base path of clientCertificate
+         *
+         * @return: True if the locations were created (or if they existed already)
+         */
+        uaf::Status createSecurityLocations() const;
 
 
         /**
