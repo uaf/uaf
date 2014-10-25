@@ -720,6 +720,46 @@ namespace uafc
         return 0;
     }
 
+    // implemented from the callback interface
+    // =============================================================================================
+    bool SessionFactory::connectError(
+        OpcUa_UInt32                                clientConnectionId,
+        UaClientSdk::UaClient::ConnectServiceType   serviceType,
+        const UaStatus&                             error,
+        bool                                        clientSideError)
+    {
+
+        // convert the SDK value to a corresponding UAF value
+        connectionsteps::ConnectionStep step = connectionsteps::fromSdk(serviceType);
+
+        logger_->debug("Received a connectError event:");
+        logger_->debug(" - clientConnectionId : %d", clientConnectionId);
+        logger_->debug(" - serviceType        : %s", connectionsteps::toString(step).c_str());
+        logger_->debug(" - error              : %s", error.toString().toUtf8());
+        logger_->debug(" - clientSideError    : %s", (clientSideError ? "true" : "false") );
+
+        // acquire the session for which the event was meant:
+        Session* session = 0;
+        Status acquireStatus = acquireExistingSession(clientConnectionId, session);
+
+        if (acquireStatus.isGood())
+        {
+            Status status;
+            status.fromSdk(error.statusCode(), "Connection error");
+
+            // update the session state
+            session->setConnectionStatus(
+                    connectionsteps::fromSdk(serviceType),
+                    status,
+                    clientSideError);
+
+            // release the acquired session
+            releaseSession(session, false);
+        }
+
+        // always return false, because the client side error doesn't need to be overridden
+        return false;
+    }
 
     // implemented from the callback interface
     // =============================================================================================

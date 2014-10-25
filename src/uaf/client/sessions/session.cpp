@@ -44,6 +44,7 @@ namespace uafc
             Database*                       database)
     : uaSessionCallback_(uaSessionCallback),
       sessionState_(uafc::sessionstates::Disconnected),
+      lastConnectionAttemptStep_(connectionsteps::NoAttemptYet),
       clientConnectionId_(clientConnectionId),
       serverUri_(serverUri),
       sessionSettings_(sessionSettings),
@@ -247,11 +248,9 @@ namespace uafc
         Status ret;
         logger_->debug("Loading the server certificate from the endpoint");
 
-        if (endpoint.serverCertificate.first > 0)
+        if (!endpoint.serverCertificate.isNull())
         {
-            uaSecurity.serverCertificate = UaByteString(
-                    endpoint.serverCertificate.first,
-                    endpoint.serverCertificate.second);
+            endpoint.serverCertificate.toSdk(uaSecurity.serverCertificate);
             ret.setGood();
         }
         else
@@ -340,11 +339,11 @@ namespace uafc
     Status Session::connect()
     {
         Status ret;
-
         logger_->debug("Connecting the session");
 
-        // update the lastConnectionAttemptTime_  (needed for the SessionInformation)
-        lastConnectionAttemptTime_ = DateTime::now();
+        // reset the last connection attempt step and status
+        lastConnectionAttemptStep_ = connectionsteps::NoAttemptYet;
+        lastConnectionAttemptStatus_.setUncertain();
 
         // declare an empty list of discovery URLs and endpoint descriptions
         vector<string>              discoveryUrls;
@@ -384,6 +383,14 @@ namespace uafc
                   suitableSettings,
                   suitableEndpoint);
 
+        if (ret.isGood())
+        {
+            logger_->debug("The following SessionSecuritySettings were found suitable:");
+            logger_->debug(suitableSettings.toString());
+            logger_->debug("The following endpoint was found suitable:");
+            logger_->debug(suitableEndpoint.toString());
+        }
+
         // check if we need to use certificates
         bool certificatesNeeded = \
                 suitableSettings.messageSecurityMode == messagesecuritymodes::Mode_Sign
@@ -394,6 +401,8 @@ namespace uafc
         // try to load the certificates if needed
         if (certificatesNeeded && ret.isGood())
         {
+            logger_->debug("We need the PKI store, so we try to initialize it");
+
             ret = initializePkiStore(uaSecurity);
 
             if (ret.isGood())
@@ -402,19 +411,79 @@ namespace uafc
             if (ret.isGood())
                 ret = loadServerCertificateFromEndpoint(uaSecurity, suitableEndpoint);
         }
+        else
+            logger_->debug("Security is not needed so we don't need to initialize the PKI store");
 
-        // try to set the user identity
-        if (ret.isGood())
-            setUserIdentity(uaSecurity, suitableSettings);
-
-        // set the remaining security parameters
+        // try to set the user identity, security policy and message security mode
         if (ret.isGood())
         {
+            setUserIdentity(uaSecurity, suitableSettings);
             uaSecurity.sSecurityPolicy     = UaString(suitableSettings.securityPolicy.c_str());
             uaSecurity.messageSecurityMode = messagesecuritymodes::fromUafToSdk(
                                                         suitableSettings.messageSecurityMode);
+        }
 
-            // we let the SDK verify the server certificate
+        // set the remaining security parameters
+        if (certificatesNeeded && ret.isGood())
+        {
+            UaStatus trustStatus(uaSecurity.verifyServerCertificate());
+
+            if (trustStatus.isGood())
+            {
+                logger_->debug("The server certificate is trusted");
+            }
+            else
+            {
+                logger_->debug("The server certificate is NOT trusted");
+                logger_->debug("Therefore we call the untrustedServerCertificateReceived(...) callback:");
+
+                ByteString bs;
+                bs.fromSdk(uaSecurity.serverCertificate);
+                PkiCertificate cert = PkiCertificate::fromDER(bs);
+
+                Status verificationStatus;
+                verificationStatus.fromSdk(trustStatus.statusCode(), "The certificated was not trusted");
+
+                PkiCertificate::Action action;
+                action = clientInterface_->untrustedServerCertificateReceived(cert, verificationStatus);
+
+                if (action == PkiCertificate::Action_Reject)
+                {
+                    logger_->debug("The server certificate was rejected by the user");
+                    ret.setStatus(statuscodes::SecurityError,
+                                  "The server certificate was rejected by the user");
+                }
+                else if (action == PkiCertificate::Action_AcceptTemporarily)
+                {
+                    logger_->debug("The server certificate was accepted temporarily by the user");
+                    uaSecurity.doServerCertificateVerify = false;
+                }
+                else if (action == PkiCertificate::Action_AcceptPermanently)
+                {
+                    logger_->debug("The server certificate was accepted permanently by the user");
+                    logger_->debug("We therefore try to store the certificate first");
+                    UaPkiCertificate uaCert = UaPkiCertificate::fromDER(uaSecurity.serverCertificate);
+                    UaString uaThumbprint = uaCert.thumbPrint().toHex();
+
+                    logger_->debug("Name of the certificate (thumbprint): %s", uaThumbprint.toUtf8());
+
+                    UaStatus savingStatus = uaSecurity.saveServerCertificate(uaThumbprint);
+
+                    if (savingStatus.isGood())
+                    {
+                        logger_->debug("Certificate %s was stored", uaThumbprint.toUtf8());
+                    }
+                    else
+                    {
+                        ret.fromSdk(savingStatus.statusCode(), "Could not save the certificate");
+                    }
+                    uaSecurity.doServerCertificateVerify = true;
+                }
+            }
+        }
+        else
+        {
+            // let the SDK do its checks - even if we think certificates aren't required
             uaSecurity.doServerCertificateVerify = true;
         }
 
@@ -425,7 +494,7 @@ namespace uafc
 
             UaStatus uaStatus = uaSession_->connect(
                     suitableEndpoint.endpointUrl.c_str(),
-                    uaSessionConnectInfo_,
+                    uaSessionConnectInfo_,//uaSessionConnectInfo_, uaSessionConnectInfoNoInitialRetry_
                     uaSecurity,
                     uaSessionCallback_);
 
@@ -436,7 +505,7 @@ namespace uafc
 
         // log the result
         if (ret.isGood())
-            logger_->debug("The session has been connected successfully");
+            logger_->debug("The connection was finished (%s)", ret.toString().c_str());
         else
         {
             // add some info
@@ -444,8 +513,13 @@ namespace uafc
             logger_->error(ret);
         }
 
-        // update the lastConnectionAttemptStatus_ (needed for the SessionInformation)
-        lastConnectionAttemptStatus_ = ret;
+        // update the lastConnectionAttemptStatus_ and lastConnectionAttemptStep_ if they
+        // weren't updated yet by a connectError event:
+        if (lastConnectionAttemptStep_ == connectionsteps::NoAttemptYet)
+        {
+            lastConnectionAttemptStep_ = connectionsteps::ActivateSession;
+            lastConnectionAttemptStatus_ = ret;
+        }
 
         return ret;
     }
@@ -598,7 +672,7 @@ namespace uafc
                 clientConnectionId_,
                 sessionState_,
                 serverUri_,
-                lastConnectionAttemptTime_,
+                lastConnectionAttemptStep_,
                 lastConnectionAttemptStatus_);
         logger_->debug("Fetching session information:");
         logger_->debug(info.toString());
@@ -843,6 +917,18 @@ namespace uafc
 
         // call the callback interface
         clientInterface_->connectionStatusChanged(sessionInformation());
+    }
+
+
+    // Set the connection status.
+    // =============================================================================================
+    void Session::setConnectionStatus(
+            uafc::connectionsteps::ConnectionStep   step,
+            uaf::Status                             error,
+            bool                                    clientSideError)
+    {
+        lastConnectionAttemptStep_   = step;
+        lastConnectionAttemptStatus_ = error;
     }
 
 

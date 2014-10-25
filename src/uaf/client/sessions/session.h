@@ -337,6 +337,17 @@ namespace uafc
         void setSessionState(uafc::sessionstates::SessionState sessionState);
 
 
+        /**
+         * Change the last connection attempt status.
+         *
+         * @param status The new status.
+         */
+        void setConnectionStatus(
+                uafc::connectionsteps::ConnectionStep   step,
+                uaf::Status                             error,
+                bool                                    clientSideError);
+
+
         ///@}
 
     private:
@@ -422,8 +433,8 @@ namespace uafc
         uafc::sessionstates::SessionState   sessionState_;
 
         // the last connection attempt information:
-        uaf::DateTime                       lastConnectionAttemptTime_;
-        uaf::Status                         lastConnectionAttemptStatus_;
+        uafc::connectionsteps::ConnectionStep lastConnectionAttemptStep_;
+        uaf::Status                           lastConnectionAttemptStatus_;
 
         // fixed session properties:
         uaf::ClientConnectionId             clientConnectionId_;

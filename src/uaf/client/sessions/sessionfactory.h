@@ -463,6 +463,21 @@ namespace uafc
 
 
         /**
+         * Receive connection errors caused by automatic retries
+         *
+         * @param clientConnectionId    Connection id (as assigned by the client).
+         * @param serviceType           Which step of the connection process is failing?
+         * @param error                 Status of the error.
+         * @param clientSideError       True if the status was caused by the SDK.
+         */
+        virtual bool connectError(
+            OpcUa_UInt32                                clientConnectionId,
+            UaClientSdk::UaClient::ConnectServiceType   serviceType,
+            const UaStatus&                             error,
+            bool                                        clientSideError);
+
+
+        /**
          * Called every time the connection status has changed,
          * overridden from UaSessionCallback.
          */
