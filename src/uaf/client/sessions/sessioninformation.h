@@ -33,6 +33,7 @@
 #include "uaf/util/status.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/sessions/sessionstates.h"
+#include "uaf/client/sessions/connectionsteps.h"
 
 namespace uafc
 {
@@ -65,11 +66,11 @@ namespace uafc
          * @param sessionState          The status of the last connection attempt.
          */
         SessionInformation(
-                uaf::ClientConnectionId             clientConnectionId,
-                uafc::sessionstates::SessionState   sessionState,
-                const std::string&                  serverUri,
-                const uaf::DateTime&                lastConnectionAttemptTime,
-                const uaf::Status&                  lastConnectionAttemptStatus);
+                uaf::ClientConnectionId                         clientConnectionId,
+                uafc::sessionstates::SessionState               sessionState,
+                const std::string&                              serverUri,
+                const uafc::connectionsteps::ConnectionStep&    lastConnectionAttemptStep,
+                const uaf::Status&                              lastConnectionAttemptStatus);
 
 
         /** The state of the session. */
@@ -81,11 +82,11 @@ namespace uafc
         /** The URI of the server to which the session should be connected. */
         std::string                         serverUri;
 
-        /** The time of the last connection attempt. */
-        uaf::DateTime                       lastConnectionAttemptTime;
-
         /** The status of the last connection attempt. */
         uaf::Status                         lastConnectionAttemptStatus;
+
+        /** The step of the last connection attempt. */
+        uafc::connectionsteps::ConnectionStep lastConnectionAttemptStep;
 
         /**
          * Get a string representation of the information.

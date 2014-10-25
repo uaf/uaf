@@ -33,23 +33,24 @@ namespace uafc
     // =============================================================================================
     SessionInformation::SessionInformation()
     : sessionState(uafc::sessionstates::Disconnected),
-      clientConnectionId(0)
+      clientConnectionId(0),
+      lastConnectionAttemptStep(uafc::connectionsteps::ActivateSession)
     {}
 
 
     // Constructor
     // =============================================================================================
     SessionInformation::SessionInformation(
-            ClientConnectionId                  clientConnectionId,
-            uafc::sessionstates::SessionState   sessionState,
-            const string&                       serverUri,
-            const DateTime&                     lastConnectionAttemptTime,
-            const Status&                       lastConnectionAttemptStatus)
+            ClientConnectionId                      clientConnectionId,
+            uafc::sessionstates::SessionState       sessionState,
+            const string&                           serverUri,
+            const connectionsteps::ConnectionStep&  lastConnectionAttemptStep,
+            const Status&                           lastConnectionAttemptStatus)
       : sessionState(sessionState),
         clientConnectionId(clientConnectionId),
         serverUri(serverUri),
-        lastConnectionAttemptTime(lastConnectionAttemptTime),
-        lastConnectionAttemptStatus(lastConnectionAttemptStatus)
+        lastConnectionAttemptStatus(lastConnectionAttemptStatus),
+        lastConnectionAttemptStep(lastConnectionAttemptStep)
     {}
 
 
@@ -71,9 +72,9 @@ namespace uafc
         ss << fillToPos(ss, colon);
         ss << ": " << serverUri << "\n";
 
-        ss << indent << " - lastConnectionAttemptTime";
+        ss << indent << " - lastConnectionAttemptStep";
         ss << fillToPos(ss, colon);
-        ss << ": " << lastConnectionAttemptTime.toString() << "\n";
+        ss << ": " << uafc::connectionsteps::toString(lastConnectionAttemptStep) << "\n";
 
         ss << indent << " - lastConnectionAttemptStatus";
         ss << fillToPos(ss, colon);
@@ -90,7 +91,7 @@ namespace uafc
         return    object1.clientConnectionId == object2.clientConnectionId
                && object1.serverUri == object2.serverUri
                && object1.sessionState == object2.sessionState
-               && object1.lastConnectionAttemptTime == object2.lastConnectionAttemptTime
+               && object1.lastConnectionAttemptStep == object2.lastConnectionAttemptStep
                && object1.lastConnectionAttemptStatus == object2.lastConnectionAttemptStatus;
     }
 
@@ -111,8 +112,8 @@ namespace uafc
             return object1.clientConnectionId < object2.clientConnectionId;
         else if (object1.serverUri != object2.serverUri)
             return object1.serverUri < object2.serverUri;
-        else if (object1.lastConnectionAttemptTime != object2.lastConnectionAttemptTime)
-            return object1.lastConnectionAttemptTime < object2.lastConnectionAttemptTime;
+        else if (object1.lastConnectionAttemptStep != object2.lastConnectionAttemptStep)
+            return object1.lastConnectionAttemptStep < object2.lastConnectionAttemptStep;
         else if (object1.lastConnectionAttemptStatus != object2.lastConnectionAttemptStatus)
             return object1.lastConnectionAttemptStatus < object2.lastConnectionAttemptStatus;
         else
