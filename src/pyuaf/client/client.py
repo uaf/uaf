@@ -44,8 +44,9 @@ class Client(ClientBase):
                          input argument, which you should call "msg" or so,
                          because this argument is of type :class:`pyuaf.util.LogMessage`.
         """
-        # define the logging callback
+        # define the logging and untrustedCertificate callbacks
         self.__loggingCallback__ = loggingCallback
+        self.__untrustedCertificateCallback__ = None
         
         # define some more callbacks to receive status changes
         self.__connectionCallbacks__ = []
@@ -311,6 +312,46 @@ class Client(ClientBase):
         :type  eventNotifications: ``list`` of :class:`~pyuaf.client.EventNotification`
         """
         pass
+    
+    def __dispatch_logMessageReceived__(self, message):
+        try:
+            if self.__loggingCallback__ is None:
+                self.logMessageReceived(message)
+            else:
+                self.__loggingCallback__(message)
+        except:
+            pass # nothing we can do at this point!
+    
+    
+    def logMessageReceived(self, message):
+        """
+        Override this method if you want to process logging output from the UAF. 
+        
+        This method is called by the UAF if:
+          - :attr:`pyuaf.client.settings.ClientSettings.logToCallbackLevel` is not set to :attr:`pyuaf.util.loglevels.Disabled`
+          - no external logging callback function is registered 
+            (via :meth:`~pyuaf.client.Client` or via :meth:`~pyuaf.client.Client.registerLoggingCallback`).
+        
+        :param message: The received LogMessage.
+        :type  message: :class:`pyuaf.util.LogMessage`
+        """
+        pass
+        
+    
+    def registerLoggingCallback(self, callback):
+        """
+        Register a callback function to receive all log messages.
+        
+        If you register a callback function, this callback function will be called instead of 
+        the :meth:`~pyuaf.client.Client.logMessageReceived` function (so the latter function will 
+        NOT be called anymore!).
+        
+        :param callback: A callback function for the logging. This function should have one 
+                         input argument, which you should call "msg" or so,
+                         because this argument is of type :class:`pyuaf.util.LogMessage`.
+        """
+        self.__loggingCallback__ = callback
+    
     
     def __dispatch_logMessageReceived__(self, message):
         try:
@@ -689,6 +730,118 @@ class Client(ClientBase):
         (so you can virtually override this method to receive the log messages).
         """
         self.__loggingCallback__ = None
+    
+    
+    def __dispatch_untrustedServerCertificateReceived__(self, certificate, cause):
+        try:
+            if self.__untrustedCertificateCallback__ is None:
+                return self.untrustedServerCertificateReceived(certificate, cause)
+            else:
+                return self.__untrustedCertificateCallback__(certificate, cause)
+        except:
+            pass # nothing we can do at this point!
+    
+    
+    def untrustedServerCertificateReceived(self, certificate, cause):
+        """
+        Override this method if you want to handle an untrusted certificate.
+        
+        This method is called by the UAF whenever a server certificate must be checked, and it was
+        not found in the trust list.
+        
+        It will *not* be called however when you registered a callback function via 
+        :meth:`~pyuaf.client.Client.registerUntrustedServerCertificateCallback`.
+        So you must choose how to handle untrusted server certificates:
+        - either by overriding :meth:`~pyuaf.client.Client.untrustedServerCertificateReceived`
+        - or by registering a callback via  :meth:`~pyuaf.client.Client.registerUntrustedServerCertificateCallback`.
+        
+        This method will be called by the UAF, so you must override it. It is called by
+        the UAF whenever it thinks that it should verify the certificate of the server 
+        (i.e. during (re)connection).
+        
+        Typically, during the first connection to a server, the certificate of the server is 
+        not known to the client yet. By overriding this method, you can therefore show the 
+        certificate to the user of your software, and ask him/her whether or not
+        he/she thinks the certificate can be trusted. 
+        
+        Three options are available:
+        
+        - :attr:`~pyuaf.util.PkiCertificate.Action_Reject`: don't trust the certificate, and 
+          therefore don't try to connect.
+        - :attr:`~pyuaf.util.PkiCertificate.Action_AcceptTemporarily`: trust the certificate
+          temporarily, i.e. don't store it in the trust list but just -for now- allow connection
+          to the server. If the UAF must reconnect at some point to the server and the server 
+          certificate must be checked again, the user shall again have to confirm the certificate.
+        - :attr:`~pyuaf.util.PkiCertificate.Action_AcceptPermanently`: store the certificate 
+          in the trust list (as defined by the 
+          :attr:`~pyuaf.client.settings.ClientSettings.certificateTrustListLocation`: setting) and 
+          accept the connection. Since the certificate is stored on disk in the trust list,
+          the client application will automatically trust the certificate in the future (until
+          the certificate expires, of course).
+        
+        .. seealso:: Check out example "how_to_connect_to_a_secured_endpoint.py" for more information.
+        
+        .. warning::
+        
+            You must **always** return one of the following integers:
+            
+            - :attr:`pyuaf.util.PkiCertificate.Action_Reject`
+            - :attr:`pyuaf.util.PkiCertificate.Action_AcceptTemporarily`
+            - :attr:`pyuaf.util.PkiCertificate.Action_AcceptPermanently`
+            
+            By default, :attr:`~pyuaf.util.PkiCertificate.Action_Reject` is returned, which means
+            that all untrusted certificates will be rejected ... unless you override this method
+            or register a callback of course!
+        
+        :param certificate: The untrusted certificate.
+        :type  certificate: :class:`pyuaf.util.PkiCertificate`
+        :param cause: The reason why it was untrusted 
+                      (mostly because it is simply not found in the trust list, but it may also
+                      be that it's not trusted because e.g. the trust list could not be opened).
+        :type  cause: :class:`pyuaf.util.Status`
+        :return: either 
+                 :attr:`~pyuaf.util.PkiCertificate.Action_Reject` or 
+                 :attr:`~pyuaf.util.PkiCertificate.Action_AcceptTemporarily` or 
+                 :attr:`~pyuaf.util.PkiCertificate.Action_AcceptPermanently`.
+        :rtype: int
+        """
+        return pyuaf.util.PkiCertificate.Action_Reject
+        
+    
+    def registerUntrustedServerCertificateCallback(self, callback):
+        """
+        Register a callback function to handle untrusted certificates during the connection process.
+        
+        If you register a callback function, this callback function will be called instead of 
+        the :meth:`~pyuaf.client.Client.untrustedServerCertificateReceived` function 
+        (so the latter function will NOT be called anymore!).
+        
+        The callback function should have:
+        
+        - 2 input arguments: 'certificate' and 'cause'
+        - 1 returned value: either :attr:`~pyuaf.util.PkiCertificate.Action_Reject` 
+          or :attr:`~pyuaf.util.PkiCertificate.Action_AcceptTemporarily` 
+          or :attr:`~pyuaf.util.PkiCertificate.Action_AcceptPermanently`.
+        
+        The signature of this method (and the meaning of these input arguments and returned value)
+        is exactly the same as :meth:`~pyuaf.client.Client.untrustedServerCertificateReceived`.
+        
+        :param callback: A callback function for handling untrusted certificates.
+        """
+        self.__untrustedCertificateCallback__ = callback
+    
+    
+    def unregisterUntrustedServerCertificateCallback(self):
+        """
+        Unregister a callback function to stop handling untrusted certificates.
+        
+        If you unregister a callback function, the untrusted certificates will be send to 
+        :meth:`~pyuaf.client.Client.untrustedServerCertificateReceived` instead
+        (so you can override this method to receive the certificates).
+        """
+        self.__untrustedCertificateCallback__ = None
+    
+    
     
     
     def clientSettings(self):
