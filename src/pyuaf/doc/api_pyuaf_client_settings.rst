@@ -172,6 +172,26 @@
         .. method:: __str__()
     
             Get a formatted string representation of the settings.
+            
+    
+        .. automethod:: pyuaf.client.settings.ClientSettings.createSecurityLocations()
+    
+            Create the security locations (directories).
+            
+            These locations will be created (if they don't exist already):
+            
+            - certificateTrustListLocation
+            - certificateRevocationListLocation
+            - issuersCertificatesLocation
+            - issuersRevocationListLocation
+            - base path of clientPrivateKey
+            - base path of clientCertificate
+            
+            :return: A Good status if the locations were created (or if they already existed).
+                     A Bad status if some location could not be created (e.g. due to wrong 
+                     permissions).
+            :rtype: :class:`~pyuaf.util.Status`
+            
     
     
     * Attributes

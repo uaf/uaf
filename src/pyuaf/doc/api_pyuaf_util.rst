@@ -802,7 +802,7 @@
     
         .. autoattribute:: pyuaf.util.EndpointDescription.serverCertificate
         
-            The server certificate (as a byte string).
+            The server certificate data (type ``bytearray``).
     
         .. autoattribute:: pyuaf.util.EndpointDescription.securityMode
         
@@ -1734,8 +1734,13 @@
         
         >>> certificate = PkiCertificate(info, identity, subjectPublicKey,  identity, issuerPrivateKey)
 
+        
     * Class attributes:
     
+        .. autoattribute:: pyuaf.util.PkiCertificate.Action_Reject
+        .. autoattribute:: pyuaf.util.PkiCertificate.Action_AcceptTemporarily
+        .. autoattribute:: pyuaf.util.PkiCertificate.Action_AcceptPermanently
+        
         .. autoattribute:: pyuaf.util.PkiCertificate.Extension_SubjectAltName
         .. autoattribute:: pyuaf.util.PkiCertificate.Extension_BasicConstraints
         .. autoattribute:: pyuaf.util.PkiCertificate.Extension_NetscapeComment
@@ -1900,6 +1905,9 @@
             Write the certificate to a DER-encoded file with the given filename.
             An error code is returned (0 if success).
             
+            Note that the directories in which the file should reside, must already exist! This
+            function will only create a file, no directories!
+            
             :param fileName: The filename (may be relative or absolute).
             :type fileName: ``str``
             :return: Error code (0 if success).
@@ -1909,6 +1917,9 @@
             
             Write the certificate to a PEM-encoded file with the given filename.
             An error code is returned (0 if success).
+            
+            Note that the directories in which the file should reside, must already exist! This
+            function will only create a file, no directories!
             
             :param fileName: The filename (may be relative or absolute).
             :type fileName: ``str``
@@ -2208,6 +2219,9 @@
             (the file name).
             If the file is protected by a password, then provide 2 arguments (the file name 
             must be the first argument, the password must be the second argument).
+            
+            Note that the directories in which the file should reside, must already exist! This
+            function will only create a file, no directories!
             
             :param fileName: The filename, e.g. "keypair.pem" or "somefolder/keypair.pem" or 
                              an absolute path.

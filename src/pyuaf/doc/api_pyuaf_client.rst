@@ -9,6 +9,7 @@
 
 .. autosummary:: 
     
+        connectionsteps
         configs
         monitoreditemstates
         requests
@@ -97,6 +98,12 @@
                 Client.manuallyDisconnect
                 Client.manuallySubscribe
                 Client.manuallyUnsubscribe
+    
+    *Handle untrusted server certificates:*
+        .. autosummary:: 
+                Client.untrustedServerCertificateReceived
+                Client.registerUntrustedServerCertificateCallback
+                Client.unregisterUntrustedServerCertificateCallback
     
     *Catch the logging of the UAF:*
         .. autosummary:: 
@@ -396,10 +403,13 @@
             
             The URI of the server to which the session should be connected, as a ``str``.
          
-        .. autoattribute:: pyuaf.client.SessionInformation.lastConnectionAttemptTime
+        .. autoattribute:: pyuaf.client.SessionInformation.lastConnectionAttemptStep
             
-            The time of the last connection attempt, as a :class:`~pyuaf.util.DateTime` instance.
-         
+            The step of the connection process (corresponding to the 
+            :attr:`~pyuaf.client.SessionInformation.lastConnectionAttemptStatus`), as an ``int``.
+            
+            The possible steps are defined in the :mod:`pyuaf.client.connectionsteps` module.
+            
         .. autoattribute:: pyuaf.client.SessionInformation.lastConnectionAttemptStatus
             
             The status of the last connection attempt, as a :class:`~pyuaf.util.Status` instance.
