@@ -29,6 +29,7 @@
 #include "uaclient/uadiscovery.h"
 // UAF
 #include "uaf/util/util.h"
+#include "uaf/util/bytestring.h"
 #include "uaf/util/applicationdescription.h"
 #include "uaf/util/stringifiable.h"
 #include "uaf/util/usertokenpolicy.h"
@@ -77,7 +78,7 @@ namespace uaf
         EndpointDescription(
                 std::string                                     endpointUrl,
                 uaf::ApplicationDescription                     server,
-                std::pair<int32_t, uint8_t*>                    serverCertificate,
+                uaf::ByteString                                 serverCertificate,
                 uaf::messagesecuritymodes::MessageSecurityMode  securityMode,
                 std::string                                     securityPolicyUri,
                 std::vector<UserTokenPolicy>                    userIdentityTokens,
@@ -98,7 +99,7 @@ namespace uaf
         uaf::ApplicationDescription server;
 
         /** The server certificate. */
-        std::pair<int32_t, uint8_t*> serverCertificate;
+        uaf::ByteString serverCertificate;
 
         /** The message security mode (e.g. None or SignAndEncrypt). */
         uaf::messagesecuritymodes::MessageSecurityMode securityMode;
@@ -123,7 +124,7 @@ namespace uaf
          * @param colon  Put the colon (double point) at this position.
          * @return       A string representation (multiple lines, separated by newline-characters).
          */
-        std::string toString(const std::string& indent="",  std::size_t colon=23) const;
+        std::string toString(const std::string& indent="",  std::size_t colon=28) const;
 
 
         // comparison operators
