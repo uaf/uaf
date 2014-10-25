@@ -37,20 +37,20 @@ class PkiRsaKeyPairTest(unittest.TestCase):
         self.assertTrue( pyuaf.util.PkiRsaKeyPair.checkKeyPair(self.pair0.publicKey(), self.pair0.privateKey()))
     
     def test_util_PkiRsaKeyPair_toPEMFile_without_password(self):
-        path = "test_util_PkiRsaKeyPair_toPEMFile_without_password"
+        path = "test_util_PkiRsaKeyPair_toPEMFile_without_password.pem"
         self.pair0.toPEMFile(path)
         self.assertTrue( os.path.exists(path) )
         os.remove(path)
         
     def test_util_PkiRsaKeyPair_toPEMFile_with_password(self):
-        path = "test_util_PkiRsaKeyPair_toPEMFile_with_password"
+        path = "test_util_PkiRsaKeyPair_toPEMFile_with_password.pem"
         self.pair0.toPEMFile(path, "password")
         self.assertTrue( os.path.exists(path) )
         os.remove(path)
         
     
     def test_util_PkiRsaKeyPair_fromPEMFile_without_password(self):
-        path = "test_util_PkiRsaKeyPair_fromPEMFile_without_password"
+        path = "test_util_PkiRsaKeyPair_fromPEMFile_without_password.pem"
         self.pair0.toPEMFile(path)
         self.assertTrue(os.path.exists(path))
         pair = pyuaf.util.PkiRsaKeyPair.fromPEMFile(path)
@@ -59,7 +59,7 @@ class PkiRsaKeyPairTest(unittest.TestCase):
         
     
     def test_util_PkiRsaKeyPair_fromPEMFile_with_valid_password(self):
-        path = "test_util_PkiRsaKeyPair_fromPEMFile_without_password"
+        path = "test_util_PkiRsaKeyPair_fromPEMFile_without_password.pem"
         self.pair0.toPEMFile(path, "password")
         self.assertTrue(os.path.exists(path))
         pair = pyuaf.util.PkiRsaKeyPair.fromPEMFile(path, "password")
@@ -67,7 +67,7 @@ class PkiRsaKeyPairTest(unittest.TestCase):
         os.remove(path)
     
     def test_util_PkiRsaKeyPair_fromPEMFile_with_invalid_password(self):
-        path = "test_util_PkiRsaKeyPair_fromPEMFile_with_invalid_password"
+        path = "test_util_PkiRsaKeyPair_fromPEMFile_with_invalid_password.pem"
         self.pair0.toPEMFile(path, "password")
         self.assertTrue(os.path.exists(path))
         pair = pyuaf.util.PkiRsaKeyPair.fromPEMFile(path, "wrong_password")
