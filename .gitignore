@@ -19,4 +19,4 @@
 
 # Ignore the PKI folder that may be created when running the examples 
 examples/pyuaf/client/PKI/*
-
+examples/pyuaf/client/securityexample/*
