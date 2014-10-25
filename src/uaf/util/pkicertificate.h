@@ -49,6 +49,12 @@ namespace uaf
     {
     public:
 
+        enum Action
+        {
+            Action_Reject            = 0,
+            Action_AcceptTemporarily = 1,
+            Action_AcceptPermanently = 2
+        };
 
         enum Extension
         {
