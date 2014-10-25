@@ -26,6 +26,7 @@
 #include <vector>
 // SDK
 // UAF
+#include "uaf/util/pkicertificate.h"
 #include "uaf/client/results/results.h"
 #include "uaf/client/sessions/sessioninformation.h"
 #include "uaf/client/subscriptions/datachangenotification.h"
@@ -130,6 +131,29 @@ namespace uafc
          * @param notifications Received Keep Alive notifications.
          */
         virtual void keepAliveReceived(uafc::KeepAliveNotification notification) {}
+
+
+        /**
+         * Override this method to trust or reject or the server certificate during connection.
+         *
+         * By default, uaf::PkiCertificate::Action_Reject will be returned. It means that all
+         * untrusted server certificates will be rejected if you do not override this method.
+         *
+         * If you override this method and return uaf::PkiCertificate::Action_AcceptTemporarily
+         * instead, the connection will be accepted but the certificate will *not* be stored by the
+         * client (in the trust list, as configured by the uafc::ClientSettings).
+         *
+         * If you override this method and return uaf::PkiCertificate::Action_AcceptPermanently
+         * instead, the connection will be accepted and the certificate will be stored by the
+         * client (in the trust list, as configrued by the uafc::ClientSettings).
+         *
+         * @param certificate   The server certificate.
+         * @param cause         The reason why the server certificate was untrusted.
+         */
+        virtual uaf::PkiCertificate::Action untrustedServerCertificateReceived(
+                uaf::PkiCertificate&    certificate,
+                const uaf::Status&      cause)
+        { return uaf::PkiCertificate::Action_Reject; }
     };
 }
 
