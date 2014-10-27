@@ -19,6 +19,17 @@ PKI_FOLDER = "./securityexample/PKI"
 
 
 print("")
+print("To run this example, start the UaServerCpp demo server first.")
+print("If you use the evaluation SDK, you can find the executable here:")
+print("   C:/Program Files/UnifiedAutomation/UaSdkCppBundleEval/bin/uaservercpp.exe")
+print("")
+print("Note that all paths below must ALWAYS be specified using '/' separators, also on Windows!")
+print("This means you cannot use e.g. os.path.join or similar, since those functions may")
+print("introduce platform-dependent path separators.")
+
+
+
+print("")
 print("===========================================================================================")
 print(" STEP 0: Cleanup and files and directories in the securityexample/ folder, if you want")
 print("===========================================================================================")
@@ -75,13 +86,15 @@ settings.applicationUri   = info.uri # Certificate info URI and application URI 
 #settings.logToStdOutLevel = pyuaf.util.loglevels.Debug # uncomment if needed
 settings.discoveryUrls.append(DISCOVERY_URL)
 
-# We configure the PKI folder structure (set the PKI_FOLDER to 'PKI' and you get the defaults):
-settings.clientCertificate                 = os.path.join(PKI_FOLDER, 'client/certs/client.der')
-settings.clientPrivateKey                  = os.path.join(PKI_FOLDER, 'client/private/client.pem')
-settings.certificateTrustListLocation      = os.path.join(PKI_FOLDER, 'trusted/certs/')
-settings.certificateRevocationListLocation = os.path.join(PKI_FOLDER, 'trusted/crl/')
-settings.issuersCertificatesLocation       = os.path.join(PKI_FOLDER, 'issuers/certs/')
-settings.issuersRevocationListLocation     = os.path.join(PKI_FOLDER, 'issuers/crl/')
+# We configure the PKI folder structure (set the PKI_FOLDER to 'PKI' and you get the defaults).
+# Note that paths must ALWAYS be specified using '/', also on Windows! 
+# You cannot use os.path.join or similar, since these will introduce platform-dependent separators!
+settings.clientCertificate                 = PKI_FOLDER + '/client/certs/client.der'
+settings.clientPrivateKey                  = PKI_FOLDER + '/client/private/client.pem'
+settings.certificateTrustListLocation      = PKI_FOLDER + '/trusted/certs/'
+settings.certificateRevocationListLocation = PKI_FOLDER + '/trusted/crl/'
+settings.issuersCertificatesLocation       = PKI_FOLDER + '/issuers/certs/'
+settings.issuersRevocationListLocation     = PKI_FOLDER + '/issuers/crl/'
 
 # make sure the above directories are created
 settings.createSecurityLocations()
@@ -122,7 +135,7 @@ if os.name == "posix":
                                    stdout=subprocess.PIPE).stdout.read().split('\n')[0]
     suggestion = os.path.dirname(uaservercpp) + "/pkiserver/trusted/certs/pyuafexample.der"
 elif os.name == "nt":
-    suggestion = "C:\\Program Files\\UnifiedAutomation\\sdk\\bin\\pkiserver\\trusted\\certs\\pyuafexample.der"
+    suggestion = "C:/Documents and Settings/All Users/Application Data/UnifiedAutomation/UaSdkCppBundleEval/pkiserver/trusted/certs/pyuafexample.der"
 else:
     suggestion = ""
 
