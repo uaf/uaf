@@ -357,7 +357,7 @@ namespace uaf
     // =============================================================================================
     bool operator==(const PkiCertificate& object1, const PkiCertificate& object2)
     {
-        return object1.uaCert_ == object2.uaCert_;
+        return object1.thumbPrint() == object2.thumbPrint();
     }
 
 
