@@ -106,7 +106,8 @@ namespace uafc
                 ret.setGood();
             else
                 ret.setStatus(uaf::statuscodes::ConfigurationError,
-                              "Failed to create the certificate trust list location");
+                              "Failed to create the certificate trust list location '%s'",
+                              certificateTrustListLocation.c_str());
 
         if (ret.isGood())
         {
@@ -119,7 +120,8 @@ namespace uafc
                     ret.setGood();
                 else
                     ret.setStatus(uaf::statuscodes::ConfigurationError,
-                                  "Failed to create the certificate revocation list location");
+                                  "Failed to create the certificate revocation list location '%s'",
+                                  certificateRevocationListLocation.c_str());
         }
 
         if (ret.isGood())
@@ -133,7 +135,8 @@ namespace uafc
                     ret.setGood();
                 else
                     ret.setStatus(uaf::statuscodes::ConfigurationError,
-                                  "Failed to create the issuers certificates location");
+                                  "Failed to create the issuers certificates location '%s'",
+                                  issuersCertificatesLocation.c_str());
         }
 
         if (ret.isGood())
@@ -147,7 +150,8 @@ namespace uafc
                     ret.setGood();
                 else
                     ret.setStatus(uaf::statuscodes::ConfigurationError,
-                                  "Failed to create the issuers revocation list location");
+                                  "Failed to create the issuers revocation list location '%s'",
+                                  issuersRevocationListLocation.c_str());
         }
 
         if (ret.isGood())
@@ -161,7 +165,8 @@ namespace uafc
                     ret.setGood();
                 else
                     ret.setStatus(uaf::statuscodes::ConfigurationError,
-                                  "Failed to create the client private key location");
+                                  "Failed to create the client private key location for '%s'",
+                                  clientPrivateKey.c_str());
         }
 
         if (ret.isGood())
@@ -175,7 +180,8 @@ namespace uafc
                     ret.setGood();
                 else
                     ret.setStatus(uaf::statuscodes::ConfigurationError,
-                                  "Failed to create the client certificate location");
+                                  "Failed to create the client certificate location for '%s'",
+                                  clientCertificate.c_str());
         }
 
         return ret;
