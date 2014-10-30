@@ -153,7 +153,7 @@ namespace uafc
         virtual uaf::PkiCertificate::Action untrustedServerCertificateReceived(
                 uaf::PkiCertificate&    certificate,
                 const uaf::Status&      cause)
-        { return uaf::PkiCertificate::Action_Reject; }
+        { return uaf::PkiCertificate::Action_AcceptTemporarily; }
     };
 }
 
