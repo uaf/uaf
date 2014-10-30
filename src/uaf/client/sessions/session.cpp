@@ -334,6 +334,78 @@ namespace uafc
     }
 
 
+
+
+    // Connect the session
+    // =============================================================================================
+    Status Session::verifyServerCertificate(UaClientSdk::SessionSecurityInfo& uaSecurity)
+    {
+        Status ret;
+
+        logger_->debug("Now verifying the server certificate");
+
+        UaStatus uaTrustStatus(uaSecurity.verifyServerCertificate());
+
+        if (uaTrustStatus.isGood())
+        {
+            logger_->debug("The server certificate is trusted");
+            ret.setGood();
+        }
+        else
+        {
+            logger_->debug("The server certificate is NOT trusted");
+            logger_->debug("Therefore we call the untrustedServerCertificateReceived(...) callback:");
+
+            ByteString bs;
+            bs.fromSdk(uaSecurity.serverCertificate);
+            PkiCertificate cert = PkiCertificate::fromDER(bs);
+
+            Status verificationStatus;
+            verificationStatus.fromSdk(uaTrustStatus.statusCode(), "The certificated was not trusted");
+
+            PkiCertificate::Action action;
+            action = clientInterface_->untrustedServerCertificateReceived(cert, verificationStatus);
+
+            if (action == PkiCertificate::Action_Reject)
+            {
+                logger_->debug("The server certificate was rejected by the user");
+                ret.setStatus(statuscodes::SecurityError,
+                              "The server certificate was rejected by the user");
+            }
+            else if (action == PkiCertificate::Action_AcceptTemporarily)
+            {
+                logger_->debug("The server certificate was accepted temporarily by the user");
+                uaSecurity.doServerCertificateVerify = false;
+                ret.setGood();
+            }
+            else if (action == PkiCertificate::Action_AcceptPermanently)
+            {
+                logger_->debug("The server certificate was accepted permanently by the user");
+                logger_->debug("We therefore try to store the certificate first");
+                UaPkiCertificate uaCert = UaPkiCertificate::fromDER(uaSecurity.serverCertificate);
+                UaString uaThumbprint = uaCert.thumbPrint().toHex();
+
+                logger_->debug("Name of the certificate (thumbprint): %s", uaThumbprint.toUtf8());
+
+                UaStatus savingStatus = uaSecurity.saveServerCertificate(uaThumbprint);
+
+                if (savingStatus.isGood())
+                {
+                    logger_->debug("Certificate %s was stored", uaThumbprint.toUtf8());
+                    ret.setGood();
+                }
+                else
+                {
+                    ret.fromSdk(savingStatus.statusCode(), "Could not save the certificate");
+                }
+                uaSecurity.doServerCertificateVerify = true;
+            }
+        }
+
+        return ret;
+    }
+
+
     // Connect the session
     // =============================================================================================
     Status Session::connect()
@@ -391,28 +463,27 @@ namespace uafc
             logger_->debug(suitableEndpoint.toString());
         }
 
-        // check if we need to use certificates
-        bool certificatesNeeded = \
-                suitableSettings.messageSecurityMode == messagesecuritymodes::Mode_Sign
-             || suitableSettings.messageSecurityMode == messagesecuritymodes::Mode_SignAndEncrypt
-             || suitableSettings.userTokenType == usertokentypes::Certificate
-             || suitableSettings.userTokenType == usertokentypes::IssuedToken;
-
-        // try to load the certificates if needed
-        if (certificatesNeeded && ret.isGood())
-        {
-            logger_->debug("We need the PKI store, so we try to initialize it");
-
+        // initialize the PKI store so that we can verify the server certificate
+        if (ret.isGood())
             ret = initializePkiStore(uaSecurity);
 
-            if (ret.isGood())
-                ret = loadClientCertificate(uaSecurity);
+        // load the server certificate from the endpoint description
+        if (ret.isGood())
+            ret = loadServerCertificateFromEndpoint(uaSecurity, suitableEndpoint);
 
-            if (ret.isGood())
-                ret = loadServerCertificateFromEndpoint(uaSecurity, suitableEndpoint);
+        // always verify the server certificate
+        if (ret.isGood())
+            ret = verifyServerCertificate(uaSecurity);
+
+        // only load the client certificate if we need to sign or encrypt the data!
+        if (ret.isGood())
+        {
+            if (   suitableSettings.messageSecurityMode == messagesecuritymodes::Mode_Sign
+                || suitableSettings.messageSecurityMode == messagesecuritymodes::Mode_SignAndEncrypt)
+                ret = loadClientCertificate(uaSecurity);
+            else
+                logger_->debug("Security is not needed so we don't need to initialize the PKI store");
         }
-        else
-            logger_->debug("Security is not needed so we don't need to initialize the PKI store");
 
         // try to set the user identity, security policy and message security mode
         if (ret.isGood())
@@ -421,70 +492,6 @@ namespace uafc
             uaSecurity.sSecurityPolicy     = UaString(suitableSettings.securityPolicy.c_str());
             uaSecurity.messageSecurityMode = messagesecuritymodes::fromUafToSdk(
                                                         suitableSettings.messageSecurityMode);
-        }
-
-        // set the remaining security parameters
-        if (certificatesNeeded && ret.isGood())
-        {
-            UaStatus trustStatus(uaSecurity.verifyServerCertificate());
-
-            if (trustStatus.isGood())
-            {
-                logger_->debug("The server certificate is trusted");
-            }
-            else
-            {
-                logger_->debug("The server certificate is NOT trusted");
-                logger_->debug("Therefore we call the untrustedServerCertificateReceived(...) callback:");
-
-                ByteString bs;
-                bs.fromSdk(uaSecurity.serverCertificate);
-                PkiCertificate cert = PkiCertificate::fromDER(bs);
-
-                Status verificationStatus;
-                verificationStatus.fromSdk(trustStatus.statusCode(), "The certificated was not trusted");
-
-                PkiCertificate::Action action;
-                action = clientInterface_->untrustedServerCertificateReceived(cert, verificationStatus);
-
-                if (action == PkiCertificate::Action_Reject)
-                {
-                    logger_->debug("The server certificate was rejected by the user");
-                    ret.setStatus(statuscodes::SecurityError,
-                                  "The server certificate was rejected by the user");
-                }
-                else if (action == PkiCertificate::Action_AcceptTemporarily)
-                {
-                    logger_->debug("The server certificate was accepted temporarily by the user");
-                    uaSecurity.doServerCertificateVerify = false;
-                }
-                else if (action == PkiCertificate::Action_AcceptPermanently)
-                {
-                    logger_->debug("The server certificate was accepted permanently by the user");
-                    logger_->debug("We therefore try to store the certificate first");
-                    UaPkiCertificate uaCert = UaPkiCertificate::fromDER(uaSecurity.serverCertificate);
-                    UaString uaThumbprint = uaCert.thumbPrint().toHex();
-
-                    logger_->debug("Name of the certificate (thumbprint): %s", uaThumbprint.toUtf8());
-
-                    UaStatus savingStatus = uaSecurity.saveServerCertificate(uaThumbprint);
-
-                    if (savingStatus.isGood())
-                    {
-                        logger_->debug("Certificate %s was stored", uaThumbprint.toUtf8());
-                    }
-                    else
-                    {
-                        ret.fromSdk(savingStatus.statusCode(), "Could not save the certificate");
-                    }
-                    uaSecurity.doServerCertificateVerify = true;
-                }
-            }
-        }
-        else
-        {
-            // let the SDK do its checks - even if we think certificates aren't required
-            uaSecurity.doServerCertificateVerify = true;
         }
 
         // if everything is OK, we can try to connect!
@@ -508,7 +515,6 @@ namespace uafc
             logger_->debug("The connection was finished (%s)", ret.toString().c_str());
         else
         {
-            // add some info
             ret.addDiagnostic("Connection failed");
             logger_->error(ret);
         }
@@ -527,7 +533,9 @@ namespace uafc
 
     // Connect to a specific endpoint
     // =============================================================================================
-    Status Session::connectToSpecificEndpoint(const string& endpointUrl)
+    Status Session::connectToSpecificEndpoint(
+            const string&           endpointUrl,
+            const PkiCertificate&   serverCertificate)
     {
         Status ret;
 
@@ -554,38 +562,37 @@ namespace uafc
             // declare the SDK SessionSecurityInfo
             UaClientSdk::SessionSecurityInfo uaSecurity;
 
-            // check if we need to use certificates
-            bool certificatesNeeded = \
-                    securitySettings->messageSecurityMode == messagesecuritymodes::Mode_Sign
-                 || securitySettings->messageSecurityMode == messagesecuritymodes::Mode_SignAndEncrypt
-                 || securitySettings->userTokenType == usertokentypes::Certificate
-                 || securitySettings->userTokenType == usertokentypes::IssuedToken;
+            // ============
 
-            // try to load the certificates if needed
-            if (certificatesNeeded && connectionAttemptStatus.isGood())
+            // initialize the PKI store so that we can verify the server certificate
+            if (ret.isGood())
+                ret = initializePkiStore(uaSecurity);
+
+            // load the server certificate
+            if (ret.isGood())
+                serverCertificate.toDER().toSdk(uaSecurity.serverCertificate);
+
+            // always verify the server certificate
+            if (ret.isGood())
+                ret = verifyServerCertificate(uaSecurity);
+
+            // only load the client certificate if we need to sign or encrypt the data!
+            if (ret.isGood())
             {
-                connectionAttemptStatus = initializePkiStore(uaSecurity);
-
-                if (connectionAttemptStatus.isGood())
-                    connectionAttemptStatus = loadClientCertificate(uaSecurity);
-
-                //if (connectionAttemptStatus.isGood())
-                //    connectionAttemptStatus = loadServerCertificateFromFile(uaSecurity); !!!!!!!!!!!!!!!!!!!!!!!!!!
+                if (   securitySettings->messageSecurityMode == messagesecuritymodes::Mode_Sign
+                    || securitySettings->messageSecurityMode == messagesecuritymodes::Mode_SignAndEncrypt)
+                    ret = loadClientCertificate(uaSecurity);
+                else
+                    logger_->debug("Security is not needed so we don't need to initialize the PKI store");
             }
 
-            // try to set the user identity
-            if (connectionAttemptStatus.isGood())
-                setUserIdentity(uaSecurity, *securitySettings);
-
-            // set the remaining security parameters
-            if (connectionAttemptStatus.isGood())
+            // try to set the user identity, security policy and message security mode
+            if (ret.isGood())
             {
+                setUserIdentity(uaSecurity, *securitySettings);
                 uaSecurity.sSecurityPolicy     = UaString(securitySettings->securityPolicy.c_str());
                 uaSecurity.messageSecurityMode = messagesecuritymodes::fromUafToSdk(
                         securitySettings->messageSecurityMode);
-
-                // we let the SDK verify the server certificate
-                uaSecurity.doServerCertificateVerify = true;
             }
 
             // if everything is OK, we can try to connect!

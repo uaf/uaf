@@ -112,7 +112,9 @@ namespace uafc
         /**
          * Connect the session to a specific endpoint.
          */
-        uaf::Status connectToSpecificEndpoint(const std::string& endpointUrl);
+        uaf::Status connectToSpecificEndpoint(
+                const std::string&          endpointUrl,
+                const uaf::PkiCertificate&  serverCertificate);
 
 
         /**
@@ -385,15 +387,10 @@ namespace uafc
         uaf::Status loadClientCertificate(UaClientSdk::SessionSecurityInfo& uaSecurity);
 
 
-//        /**
-//         * Load the server certificate from the file specified in the ClientSettings.
-//         *
-//         * Note that this file will **only** be used in case you manually connect to a specific
-//         * endpoint (thereby avoiding discovery!!!).
-//         * In normal circumstances, the server certificate will be fetched through the discovery
-//         * process!!!
-//         */
-//        uaf::Status loadServerCertificateFromFile(UaClientSdk::SessionSecurityInfo& uaSecurity);
+        /**
+         * Verify the server certificate.
+         */
+        uaf::Status verifyServerCertificate(UaClientSdk::SessionSecurityInfo& uaSecurity);
 
 
         /**
