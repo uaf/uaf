@@ -564,9 +564,11 @@ namespace uafc
     Status Client::manuallyConnectToEndpoint(
             const string&           endpointUrl,
             const SessionSettings&  settings,
+            const PkiCertificate&   serverCertificate,
             ClientConnectionId&     clientConnectionId)
     {
-        return sessionFactory_->manuallyConnectToEndpoint(endpointUrl, settings, clientConnectionId);
+        return sessionFactory_->manuallyConnectToEndpoint(
+                endpointUrl, settings, serverCertificate, clientConnectionId);
     }
 
 

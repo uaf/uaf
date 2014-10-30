@@ -113,6 +113,7 @@ namespace uafc
          * @param endpointUrl   The endpoint URL to which you want to connect
          *                      (e.g. opc.tcp://localhost:48010)
          * @param settings      The session settings that you want your session to have.
+         * @param serverCertificate  The server certificate -- will be verified!
          * @param clientConnectionId A return parameter, giving you the id of the session if it
          *                           was created.
          * @return              Good if the session was created, Bad if not.
@@ -120,6 +121,7 @@ namespace uafc
         uaf::Status manuallyConnectToEndpoint(
                 const std::string&              endpointUrl,
                 const uafc::SessionSettings&    settings,
+                const uaf::PkiCertificate&      serverCertificate,
                 uaf::ClientConnectionId&        clientConnectionId);
 
 

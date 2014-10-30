@@ -142,6 +142,7 @@ namespace uafc
     Status SessionFactory::manuallyConnectToEndpoint(
             const string&           endpointUrl,
             const SessionSettings&  settings,
+            const PkiCertificate&   serverCertificate,
             ClientConnectionId&     clientConnectionId)
     {
         Status ret;
@@ -169,7 +170,7 @@ namespace uafc
         sessionMap_[clientConnectionId] = session;
 
         // connect to the session to the specific endpoint
-        ret = session->connectToSpecificEndpoint(endpointUrl);
+        ret = session->connectToSpecificEndpoint(endpointUrl, serverCertificate);
 
         // add some diagnostics
         if (ret.isGood())

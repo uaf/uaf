@@ -736,16 +736,30 @@ namespace uafc
          * Session will be created! This is different behavior from manuallyConnect, which will
          * retry to connect until there's no failure anymore.
          *
+         * Compliant to OPC UA specs, the serverCertificate will:
+         * - first be checked at the application level. If it's not valid or not found in the trust
+         *   list, then the untrustedServerCertificateReceived() callback function will be called.
+         *   Override this method if you want to handle those cases.
+         * - then it may be used for encryption and/or signing (if a secure connection is needed,
+         *   of course).
+         *
+         * You can provide an (invalid, null) default PkiCertificate instance for the
+         * serverCertificate if you trust the server (i.e. if you make sure
+         * untrustedServerCertificateReceived returns PkiCertificate::Action_AcceptTemporarily),
+         * and if you don't need signing or encryption.
+         *
          * @param endpointUrl   The endpoint URL to which you want to connect
          *                      (e.g. opc.tcp://localhost:48010)
          * @param settings      The session settings that you want your session to have.
          * @param clientConnectionId A return parameter, giving you the id of the session if it
          *                           was created.
+         * @param serverCertificate The server certificate.
          * @return              Good if the session was created, Bad if not.
          */
         uaf::Status manuallyConnectToEndpoint(
                 const std::string&              endpointUrl,
                 const uafc::SessionSettings&    settings,
+                const uaf::PkiCertificate&      serverCertificate,
                 uaf::ClientConnectionId&        clientConnectionId);
 
 

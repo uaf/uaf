@@ -746,10 +746,14 @@ class Client(ClientBase):
         """
         Override this method if you want to handle an untrusted certificate.
         
-        This method is called by the UAF whenever a server certificate must be checked, and it was
-        not found in the trust list.
+        This method is called by the UAF whenever an untrusted (e.g. unknown) server certificate 
+        must be checked at the application level (as part of the connection step, before a 
+        communication channel is established). Note that this has nothing to do with signed or
+        encrypted communication! Even if you don't want to connect to a secured endpoint,
+        you're advised to verify the certificate of the server to make sure you're talking to 
+        the right one.
         
-        It will *not* be called however when you registered a callback function via 
+        It will **not** be called however when you registered a callback function via 
         :meth:`~pyuaf.client.Client.registerUntrustedServerCertificateCallback`.
         So you must choose how to handle untrusted server certificates:
         - either by overriding :meth:`~pyuaf.client.Client.untrustedServerCertificateReceived`
@@ -779,8 +783,6 @@ class Client(ClientBase):
           the client application will automatically trust the certificate in the future (until
           the certificate expires, of course).
         
-        .. seealso:: Check out example "how_to_connect_to_a_secured_endpoint.py" for more information.
-        
         .. warning::
         
             You must **always** return one of the following integers:
@@ -788,10 +790,17 @@ class Client(ClientBase):
             - :attr:`pyuaf.util.PkiCertificate.Action_Reject`
             - :attr:`pyuaf.util.PkiCertificate.Action_AcceptTemporarily`
             - :attr:`pyuaf.util.PkiCertificate.Action_AcceptPermanently`
+        
+        .. warning::
             
-            By default, :attr:`~pyuaf.util.PkiCertificate.Action_Reject` is returned, which means
-            that all untrusted certificates will be rejected ... unless you override this method
-            or register a callback of course!
+            By default, :attr:`~pyuaf.util.PkiCertificate.Action_AcceptTemporarily` is returned, 
+            which means that all untrusted certificates will be **accepted** by default!
+            Admittingly that doesn't sound very safe, but it simply implies that by default
+            a pyuaf Client will be able to connect to any (unknown) server without needing to 
+            override this method. If you don't trust the servers in your network, you should 
+            override this method.
+            
+        .. seealso:: Check out example "how_to_connect_to_a_secured_endpoint.py" for more information.
         
         :param certificate: The untrusted certificate.
         :type  certificate: :class:`pyuaf.util.PkiCertificate`
@@ -805,7 +814,7 @@ class Client(ClientBase):
                  :attr:`~pyuaf.util.PkiCertificate.Action_AcceptPermanently`.
         :rtype: int
         """
-        return pyuaf.util.PkiCertificate.Action_Reject
+        return pyuaf.util.PkiCertificate.Action_AcceptTemporarily
         
     
     def registerUntrustedServerCertificateCallback(self, callback):
@@ -993,7 +1002,7 @@ class Client(ClientBase):
        return clientConnectionId
     
     
-    def manuallyConnectToEndpoint(self, endpointUrl, sessionSettings=None):
+    def manuallyConnectToEndpoint(self, endpointUrl, sessionSettings=None, serverCertificate=None):
         """
         Manually connect to a specific endpoint, without using the discovery services.
         
@@ -1020,6 +1029,20 @@ class Client(ClientBase):
          - no security policy (:attr:`pyuaf.util.securitypolicies.UA_None`)
          - no security mode (:attr:`pyuaf.util.messagesecuritymodes.Mode_None`)
          - no authentication (:attr:`pyuaf.util.usertokentypes.Anonymous`)
+         
+        Compliant to OPC UA specs, the serverCertificate will:
+        
+        - first be checked at the application level. If it's not valid or not found in the trust
+          list, then the untrustedServerCertificateReceived() callback function will be called.
+          Override this method if you want to handle those cases.
+        - then it may be used for encryption and/or signing (if a secure connection is needed,
+          of course).
+        
+        You can leave serverCertificate ``None`` (or provide a default, invalid, null 
+        :class:`~pyuaf.util.PkiCertificate` instance) if you trust the server (i.e. if you make sure
+        :meth:`~pyuaf.client.Client.untrustedServerCertificateReceived` 
+        returns :attr:`~pyuaf.util.PkiCertificate.Action_AcceptTemporarily`),
+        and if you don't need signing or encryption.
         
         .. warning::
         
@@ -1035,6 +1058,8 @@ class Client(ClientBase):
         :type  serverUri: ``str``
         :param sessionSettings: The settings for the session (leave None for a default instance).
         :type  sessionSettings: :class:`~pyuaf.client.settings.SessionSettings`
+        :param serverCertificate: The server certificate (will be checked!)
+        :type  serverCertificate: :class:`~pyuaf.util.PkiCertificate`
         :return: The client connection id: a number identifying the session.
         :rtype: ``int``
        
@@ -1046,7 +1071,10 @@ class Client(ClientBase):
         if sessionSettings is None:
             sessionSettings = pyuaf.client.settings.SessionSettings()
         
-        status, clientConnectionId = ClientBase.manuallyConnectToEndpoint(self, endpointUrl, sessionSettings)
+        if serverCertificate is None:
+            serverCertificate = pyuaf.util.PkiCertificate()
+        
+        status, clientConnectionId = ClientBase.manuallyConnectToEndpoint(self, endpointUrl, sessionSettings, serverCertificate)
         pyuaf.util.errors.evaluate(status)
         return clientConnectionId
     
