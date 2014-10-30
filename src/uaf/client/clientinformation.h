@@ -55,7 +55,7 @@ namespace uafc
 
 
         /** The status of the last connection attempt. */
-        uaf::Status                         lastConnectionAttemptStatus;
+        uaf::Status lastConnectionAttemptStatus;
 
         /**
          * Get a string representation of the information.
