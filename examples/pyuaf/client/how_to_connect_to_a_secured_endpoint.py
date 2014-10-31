@@ -17,10 +17,6 @@ DEMOSERVER_NS_URI = "http://www.unifiedautomation.com/DemoServer"
 # define a folder where we will store the Public Key Infrastructure files (i.e. certificates and keys)
 PKI_FOLDER = "./securityexample/PKI"
 
-
-
-
-
 description = """
 To run this example, start the UaServerCpp demo server first.
 If you use the evaluation SDK, you can find thCliente executable here (e.g. on Windows):
