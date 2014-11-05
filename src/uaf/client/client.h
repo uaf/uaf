@@ -46,14 +46,6 @@
 namespace uafc
 {
 
-    class UAFC_EXPORT ClientStatus : public uaf::Status
-    {
-    public:
-        bool isRaisedByDiscoverer;
-        bool isRaisedByResolver;
-    };
-
-
 
     /*******************************************************************************************//**
     * A Client offers a clean API to easily invoke OPC UA services.
