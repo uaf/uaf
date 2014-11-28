@@ -26,6 +26,18 @@ namespace uaf
 
     // Is a string a multi-line string?
     // =============================================================================================
+    std::string format(const char* msg, ...)
+    {
+        va_list args;
+        va_start(args, msg);
+        char buffer[UAF_STRING_MAX_BUFFER_SIZE];
+        vsprintf(buffer, msg, args);
+        va_end(args);
+        return std::string(buffer);
+    }
+
+    // Is a string a multi-line string?
+    // =============================================================================================
     bool isMultiLine(const std::string& s)
     {
         return s.find("\n") != std::string::npos;
