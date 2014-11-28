@@ -1,0 +1,5 @@
+pyuaf.util   |  UafError
+pyuaf.client | ... DiscoveryError
+pyuaf.client | ...... FindServersError
+             |          +sdkStatuses
+pyuaf.client | ...... NoParallelFindServersAllowedError

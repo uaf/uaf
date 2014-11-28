@@ -45,7 +45,7 @@ namespace uafc
             uafc::sessionstates::SessionState       sessionState,
             const string&                           serverUri,
             const connectionsteps::ConnectionStep&  lastConnectionAttemptStep,
-            const Status&                           lastConnectionAttemptStatus)
+            const ClientStatus&                     lastConnectionAttemptStatus)
       : sessionState(sessionState),
         clientConnectionId(clientConnectionId),
         serverUri(serverUri),

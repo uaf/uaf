@@ -139,13 +139,13 @@ namespace uafc
 
     // Manually connect a session to a specific endpoint url
     // =============================================================================================
-    Status SessionFactory::manuallyConnectToEndpoint(
+    ClientStatus SessionFactory::manuallyConnectToEndpoint(
             const string&           endpointUrl,
             const SessionSettings&  settings,
             const PkiCertificate&   serverCertificate,
             ClientConnectionId&     clientConnectionId)
     {
-        Status ret;
+        ClientStatus ret;
 
         logger_->debug("Manually connecting to endpoint %s", endpointUrl.c_str());
 
@@ -188,7 +188,6 @@ namespace uafc
             session = 0;
             sessionMap_.erase(clientConnectionId);
             logger_->error("The requested session could not be created");
-            ret.addDiagnostic("The requested session could not be created");
         }
 
         return ret;
@@ -726,7 +725,7 @@ namespace uafc
     bool SessionFactory::connectError(
         OpcUa_UInt32                                clientConnectionId,
         UaClientSdk::UaClient::ConnectServiceType   serviceType,
-        const UaStatus&                             error,
+        const UaStatus&                             uaStatus,
         bool                                        clientSideError)
     {
 
@@ -736,7 +735,7 @@ namespace uafc
         logger_->debug("Received a connectError event:");
         logger_->debug(" - clientConnectionId : %d", clientConnectionId);
         logger_->debug(" - serviceType        : %s", connectionsteps::toString(step).c_str());
-        logger_->debug(" - error              : %s", error.toString().toUtf8());
+        logger_->debug(" - error              : %s", uaStatus.toString().toUtf8());
         logger_->debug(" - clientSideError    : %s", (clientSideError ? "true" : "false") );
 
         // acquire the session for which the event was meant:
@@ -745,8 +744,8 @@ namespace uafc
 
         if (acquireStatus.isGood())
         {
-            Status status;
-            status.fromSdk(error.statusCode(), "Connection error");
+            SdkStatus sdkStatus(uaStatus);
+            ClientStatus status = CouldNotConnectError(session->serverUri(), sdkStatus);
 
             // update the session state
             session->setConnectionStatus(

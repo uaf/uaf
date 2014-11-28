@@ -67,6 +67,8 @@
 #include "uaf/client/subscriptions/monitorediteminformation.h"
 #include "uaf/client/sessions/sessionstates.h"
 #include "uaf/client/sessions/sessioninformation.h"
+#include "uaf/client/discovery/discoveryerrors.h"
+#include "uaf/client/clientstatus.h"
 %}
 
 
@@ -124,6 +126,7 @@ import threading
 %import "pyuaf/client/client_connectionsteps.i"
 %import "pyuaf/client/client_subscriptionstates.i" 
 %import "pyuaf/client/client_monitoreditemstates.i" 
+%import "pyuaf/client/client_errors.i"
 %import "pyuaf/client/client_settings.i"
 %import "pyuaf/client/client_configs.i"
 %import "pyuaf/client/client_requests.i"
@@ -142,8 +145,22 @@ import threading
 %rename(__dispatch_notificationsMissing__)                  uafc::ClientInterface::notificationsMissing;
 %rename(__dispatch_untrustedServerCertificateReceived__)    uafc::ClientInterface::untrustedServerCertificateReceived;
 
+// add a method test() to the ClientStatus class so that we dynamically raise an exception if needed:
+
+%extend uafc::ClientStatus {
+%pythoncode {
+    def test(self):
+        for member in dir(pyuaf.client.ClientStatus):                                           
+            if member[:9] == "raisedBy_":
+                if not getattr(self, member).isNull():
+                    raise getattr(self, member)
+   }
+}
+
+
 
 // now include all classes in a generic way
+UAF_WRAP_CLASS("uaf/client/clientstatus.h"                            , uafc , ClientStatus              , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/subscriptions/subscriptioninformation.h"   , uafc , SubscriptionInformation   , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, SubscriptionInformationVector)
 UAF_WRAP_CLASS("uaf/client/subscriptions/monitorediteminformation.h"  , uafc , MonitoredItemInformation  , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, MonitoredItemInformationVector)
 UAF_WRAP_CLASS("uaf/client/subscriptions/monitoreditemnotification.h" , uafc , MonitoredItemNotification , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, VECTOR_NO)

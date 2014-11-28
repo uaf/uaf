@@ -40,6 +40,7 @@
 #include "uaf/client/resolution/resolver.h"
 #include "uaf/client/sessions/sessionfactory.h"
 #include "uaf/client/clientservices.h"
+#include "uaf/client/clientstatus.h"
 
 
 
@@ -125,7 +126,7 @@ namespace uafc
          * Find the servers in the system now (i.e. irrespective of the thread running in the
          * background, which is also periodically trying to find the servers in the system).
          */
-        uaf::Status findServersNow();
+        uafc::ClientStatus findServersNow();
 
 
         /**
@@ -144,7 +145,7 @@ namespace uafc
          * @param endpointDescriptions  Endpoint descriptions that will be fetched.
          * @return                      Status of the service call.
          */
-        uaf::Status getEndpoints(
+        uafc::ClientStatus getEndpoints(
                 const std::string&                      discoveryUrl,
                 std::vector<uaf::EndpointDescription>&  endpointDescriptions);
 
@@ -756,7 +757,7 @@ namespace uafc
          * @param serverCertificate The server certificate.
          * @return              Good if the session was created, Bad if not.
          */
-        uaf::Status manuallyConnectToEndpoint(
+        uafc::ClientStatus manuallyConnectToEndpoint(
                 const std::string&              endpointUrl,
                 const uafc::SessionSettings&    settings,
                 const uaf::PkiCertificate&      serverCertificate,

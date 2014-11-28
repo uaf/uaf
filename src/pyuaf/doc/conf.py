@@ -13,6 +13,36 @@
 
 import sys, os
 
+print("====== generating generated_error_inheritance_tree.txt ======")
+
+import pyuaf
+
+if not os.path.exists("index.rst"):
+    sys.exit("ABORTED: you have to run this script in the same directory as the *.rst files!")
+
+ignoredMembers = []
+for member in dir(pyuaf.util.UafError):
+    if member[0] != '_':
+        ignoredMembers.append(member)
+
+ljust = len("pyuaf.client")
+
+def makeClassTree(l, cls, indent=0):
+    l.append("%s | %s %s\n" %(cls.__module__.ljust(ljust), '.' * indent, cls.__name__))
+    for member in dir(cls):
+        if member[0] != '_' and (member not in ignoredMembers):
+            l.append("%s | %s   +%s\n" %(''.ljust(ljust), ' ' * indent, member))
+    for subcls in cls.__subclasses__():
+        makeClassTree(l, subcls, indent + 3)
+    return l
+
+
+# This will create a new file or **overwrite an existing file**.
+f = open("generated_error_inheritance_tree.txt", "w")
+f.writelines(makeClassTree(l=[], cls=pyuaf.util.UafError))
+f.close()
+
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.

@@ -55,8 +55,10 @@ namespace uafc
 
     // Update the application descriptions
     // =============================================================================================
-    Status Discoverer::findServers()
+    ClientStatus Discoverer::findServers()
     {
+        ClientStatus ret;
+
         logger_->debug("Finding all configured servers");
 
         // check if findServers() is already busy
@@ -74,14 +76,10 @@ namespace uafc
         }
         findServersBusyMutex_.unlock();
 
-        Status ret;
-
         if (alreadyBusy)
         {
-            ret.setStatus(uaf::statuscodes::InvalidRequestError,
-                          "The FindServers service is already being invoked "
-                          "(no parallel invocations allowed)");
-            logger_->error(ret);
+            ret = NoParallelFindServersAllowedError();
+            logger_->error(ret.toString());
         }
         else
         {
@@ -101,11 +99,10 @@ namespace uafc
                 // create a copy of the URLs
                 vector<string> discoveryUrls = database_->clientSettings.discoveryUrls;
 
-                // we check all URLs, and keep information about those URLs that failed
-                stringstream errorStream;
+                // store the statuses and the number of failures
                 size_t noOfErrors = 0;
-
-
+                vector<SdkStatus> sdkStatuses;
+                sdkStatuses.reserve(discoveryUrls.size());
                 // loop through the URLs
                 for (vector<string>::const_iterator iter = discoveryUrls.begin();
                      iter != discoveryUrls.end();
@@ -119,11 +116,14 @@ namespace uafc
 
                     // invoke the FindServers service for the current URL
                     UaApplicationDescriptions desc;
-                    UaStatus discoveryStatus = uaDiscovery_.findServers(
+                    SdkStatus discoveryStatus = uaDiscovery_.findServers(
                             serviceSettings,
                             UaString(url.c_str()),
                             clientSecurityInfo, // ToDo replace
                             desc);
+
+                    // store the status
+                    sdkStatuses.push_back(discoveryStatus);
 
                     // if the service call went OK, process the result
                     if (discoveryStatus.isGood())
@@ -141,33 +141,19 @@ namespace uafc
                     }
                     else
                     {
-                        if (noOfErrors == 0)
-                            errorStream << "'" << url << "'";
-                        else
-                            errorStream << ", " << "'" << url << "'";
-
-                        UaStatusCode code(discoveryStatus.statusCode());
-                        errorStream << " (" << code.toString().toUtf8() << ")";
-
                         noOfErrors++;
-
-                        // log an error message
-                        uaf::Status status;
-                        status.fromSdk(discoveryStatus.statusCode(),
-                                       "Could not find servers at '%s'", url.c_str());
-                        logger_->error(status);
+                        logger_->error(discoveryStatus.toString());
                     }
                 }
 
                 if (noOfErrors > 0)
                 {
-                    ret.setStatus(uaf::statuscodes::DiscoveryError,
-                                  "The FindServers service failed for these URL(s): %s",
-                                  errorStream.str().c_str());
-                    logger_->error(ret);
+                    ret = FindServersError(sdkStatuses, noOfErrors, discoveryUrls.size());
+                    logger_->error(ret.toString());
                 }
                 else
                 {
+                    ret = ClientStatus::Good;
                     logger_->debug("The FindServers service was successfully invoked on all URLs");
                 }
 
@@ -182,7 +168,7 @@ namespace uafc
                 serverDescriptions_.clear();
 
                 // all done
-                ret.setGood();
+                ret = ClientStatus::Good;
             }
 
             // reset the findServersBusy_ flag
@@ -197,9 +183,9 @@ namespace uafc
 
     // Get the discovery URL for a given server URI
     // =============================================================================================
-    uaf::Status Discoverer::getDiscoveryUrls(const string& serverUri, vector<string>& discoveryUrls)
+    ClientStatus Discoverer::getDiscoveryUrls(const string& serverUri, vector<string>& discoveryUrls)
     {
-        uaf::Status ret;
+        ClientStatus ret;
 
         std::vector<uaf::ApplicationDescription>::const_iterator it;
         for (it = serverDescriptions_.begin(); it != serverDescriptions_.end(); ++it)
@@ -207,21 +193,17 @@ namespace uafc
             if (it->applicationUri == serverUri)
             {
                 discoveryUrls = it->discoveryUrls;
-                ret.setGood();
+                ret = ClientStatus::Good;
             }
         }
 
         if (ret.isNotGood())
         {
-            ret.setStatus(statuscodes::DiscoveryError,
-                          "No server with URI='%s' has been discovered",
-                          serverUri.c_str());
+            ret = UnknownServerError(serverUri);
         }
         else if (discoveryUrls.size() == 0)
         {
-            ret.setStatus(statuscodes::DiscoveryError,
-                          "Server %s has been discovered, but there are no discovery URLs "
-                          "associated with it", serverUri.c_str());
+            ret = NoDiscoveryUrlsExposedByServerError(serverUri);
         }
 
         return ret;
@@ -238,20 +220,19 @@ namespace uafc
 
     // Update the endpoint descriptions
     // =============================================================================================
-    Status Discoverer::getEndpoints(
+    ClientStatus Discoverer::getEndpoints(
             const string&                   discoveryUrl,
             vector<EndpointDescription>&    endpointDescriptions)
     {
         logger_->debug("Getting the endpoints for '%s'", discoveryUrl.c_str());
 
         // create the Status to return
-        Status ret;
+        ClientStatus ret;
 
         // check if we got a non-empty URL (shouldn't be happening, may be a bug)
         if (discoveryUrl.empty())
         {
-            ret.setStatus(statuscodes::DiscoveryError,
-                          "Cannot get the endpoints, got an empty URL!");
+            ret = EmptyUrlError();
             logger_->error(ret.toString().c_str());
         }
         else
@@ -265,16 +246,19 @@ namespace uafc
             serviceSettings.callTimeout = int32_t(
                     database_->clientSettings.discoveryGetEndpointsTimeoutSec * 1000);
 
+            logger_->debug("Now invoking the GetEndpoints service");
+
             // perform the service call
-            UaStatus uaStatus = uaDiscovery_.getEndpoints(
+            SdkStatus sdkStatus = uaDiscovery_.getEndpoints(
                     serviceSettings,
                     UaString(discoveryUrl.c_str()),
                     clientSecurityInfo,
                     uaEndpointDescriptions);
 
-            // update the status
-            ret.fromSdk(uaStatus.statusCode(),
-                        "Could not get the endpoints for %s", discoveryUrl.c_str());
+            logger_->log(sdkStatus);
+
+            if (sdkStatus.isNotGood())
+                ret = GetEndpointsError(sdkStatus);
 
             if (ret.isGood())
             {
@@ -294,14 +278,13 @@ namespace uafc
                 }
                 else
                 {
-                    ret.setStatus(statuscodes::ConnectionError,
-                                  "The server did not provide any endpoints");
+                    ret = NoEndpointsProvidedByServerError();
                     logger_->error(ret.toString().c_str());
                 }
             }
             else
             {
-                logger_->error(ret);
+                logger_->error(ret.toString());
             }
         }
 

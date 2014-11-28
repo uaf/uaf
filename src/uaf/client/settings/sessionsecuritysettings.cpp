@@ -145,14 +145,12 @@ namespace uafc
 
     // Match multiple SessionSecuritySettings with multiple EndpointDescription.
     // =============================================================================================
-    uaf::Status match(
+    uafc::ClientStatus match(
             const vector<SessionSecuritySettings>&  settings,
             const vector<EndpointDescription>&      endpoints,
             SessionSecuritySettings&                suitableSettings,
             EndpointDescription&                    suitableEndpoint)
     {
-        uaf::Status ret;
-
         vector<SessionSecuritySettings>::const_iterator settingsIter;
         vector<EndpointDescription>::const_iterator     endpointsIter;
 
@@ -165,13 +163,12 @@ namespace uafc
                     suitableSettings = *settingsIter;
                     suitableEndpoint = *endpointsIter;
 
-                    return Status(statuscodes::Good);
+                    return ClientStatus(ClientStatus::Good);
                 }
             }
         }
 
-        return Status(statuscodes::SecurityError,
-                      "No given session security settings matched an endpoint");
+        return SecuritySettingsMatchError();
     }
 
 }

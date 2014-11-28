@@ -40,6 +40,7 @@
 #include "uaf/util/browsepath.h"
 #include "uaf/util/helperfunctions.h"
 #include "uaf/client/clientexport.h"
+#include "uaf/client/clientstatus.h"
 #include "uaf/client/sessions/sessionstates.h"
 #include "uaf/client/sessions/sessioninformation.h"
 #include "uaf/client/settings/sessionsettings.h"
@@ -106,13 +107,13 @@ namespace uafc
         /**
          * Connect the session.
          */
-        uaf::Status connect();
+        uafc::ClientStatus connect();
 
 
         /**
          * Connect the session to a specific endpoint.
          */
-        uaf::Status connectToSpecificEndpoint(
+        uafc::ClientStatus connectToSpecificEndpoint(
                 const std::string&          endpointUrl,
                 const uaf::PkiCertificate&  serverCertificate);
 
@@ -346,7 +347,7 @@ namespace uafc
          */
         void setConnectionStatus(
                 uafc::connectionsteps::ConnectionStep   step,
-                uaf::Status                             error,
+                uafc::ClientStatus                      error,
                 bool                                    clientSideError);
 
 
@@ -378,26 +379,26 @@ namespace uafc
         /**
          * Initialize the PKI store
          */
-        uaf::Status initializePkiStore(UaClientSdk::SessionSecurityInfo& uaSecurity);
+        uafc::ClientStatus initializePkiStore(UaClientSdk::SessionSecurityInfo& uaSecurity);
 
 
         /**
          * Load the client certificate from the file specified in the ClientSettings.
          */
-        uaf::Status loadClientCertificate(UaClientSdk::SessionSecurityInfo& uaSecurity);
+        uafc::ClientStatus loadClientCertificate(UaClientSdk::SessionSecurityInfo& uaSecurity);
 
 
         /**
          * Verify the server certificate.
          */
-        uaf::Status verifyServerCertificate(UaClientSdk::SessionSecurityInfo& uaSecurity);
+        uafc::ClientStatus verifyServerCertificate(UaClientSdk::SessionSecurityInfo& uaSecurity);
 
 
         /**
          * Load the server certificate from an endpoint description (which was fetched by the
          * discovery process).
          */
-        uaf::Status loadServerCertificateFromEndpoint(
+        uafc::ClientStatus loadServerCertificateFromEndpoint(
                 UaClientSdk::SessionSecurityInfo& uaSecurity,
                 const uaf::EndpointDescription& endpoint);
 
@@ -412,7 +413,7 @@ namespace uafc
         /**
          * Helper function to check if a path exists, or create the path if needed.
          */
-        uaf::Status checkOrCreatePath(
+        uafc::ClientStatus checkOrCreatePath(
                 bool checkOnly,
                 const std::string& path,
                 const std::string& description) const;
@@ -431,7 +432,7 @@ namespace uafc
 
         // the last connection attempt information:
         uafc::connectionsteps::ConnectionStep lastConnectionAttemptStep_;
-        uaf::Status                           lastConnectionAttemptStatus_;
+        uafc::ClientStatus                    lastConnectionAttemptStatus_;
 
         // fixed session properties:
         uaf::ClientConnectionId             clientConnectionId_;

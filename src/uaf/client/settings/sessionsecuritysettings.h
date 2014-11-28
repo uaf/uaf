@@ -35,6 +35,7 @@
 #include "uaf/util/messagesecuritymodes.h"
 #include "uaf/util/endpointdescription.h"
 #include "uaf/client/clientexport.h"
+#include "uaf/client/clientstatus.h"
 
 namespace uafc
 {
@@ -130,7 +131,7 @@ namespace uafc
      * @return                  Good if one of the settings and one of the endpoints match, bad if
      *                          not.
      */
-    uaf::Status UAFC_EXPORT match(
+    uafc::ClientStatus UAFC_EXPORT match(
             const std::vector<uafc::SessionSecuritySettings>&   settings,
             const std::vector<uaf::EndpointDescription>&        endpoints,
             uafc::SessionSecuritySettings&                      suitableSettings,

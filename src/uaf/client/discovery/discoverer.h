@@ -32,9 +32,11 @@
 // UAF
 #include "uaf/util/logger.h"
 #include "uaf/util/status.h"
+#include "uaf/util/sdkstatus.h"
 #include "uaf/util/applicationdescription.h"
 #include "uaf/util/endpointdescription.h"
 #include "uaf/client/clientexport.h"
+#include "uaf/client/clientstatus.h"
 #include "uaf/client/database/database.h"
 
 
@@ -69,7 +71,7 @@ namespace uafc
          * Update the server descriptions by calling the OPC UA FindServers service
          * on all configured discovery servers.
          */
-        uaf::Status findServers();
+        uafc::ClientStatus findServers();
 
 
         /**
@@ -81,7 +83,7 @@ namespace uafc
          * @return              Good if the server with the given serverUri was discovered, bad
          *                      if not.
          */
-        uaf::Status getDiscoveryUrls(
+        uafc::ClientStatus getDiscoveryUrls(
                 const std::string&          serverUri,
                 std::vector<std::string>&   discoveryUrls);
 
@@ -94,7 +96,7 @@ namespace uafc
          * @param endpointDescriptions  Endpoint descriptions that will be fetched.
          * @return                      Status of the service call.
          */
-        uaf::Status getEndpoints(
+        uafc::ClientStatus getEndpoints(
                 const std::string&                      discoveryUrl,
                 std::vector<uaf::EndpointDescription>&  endpointDescriptions);
 

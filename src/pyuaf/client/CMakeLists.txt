@@ -24,6 +24,7 @@ set(  PYUAF_CLIENT_TARGETS
       monitoreditemstates
       settings
       configs
+      errors
       requests
       results
    )

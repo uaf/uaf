@@ -1,7 +1,7 @@
 
 import pyuaf
 
-class UafError(Exception):
+class OldUafError(Exception):
     
     def __init__(self, status):
         if not isinstance(status, pyuaf.util.Status):
@@ -10,63 +10,63 @@ class UafError(Exception):
         self.status = status
 
 
-class ConfigurationError(UafError):
+class ConfigurationError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class ConnectionError(UafError):
+        OldUafError.__init__(self, status)
+class ConnectionError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class DataFormatError(UafError):
+        OldUafError.__init__(self, status)
+class DataFormatError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class DataSizeError(UafError):
+        OldUafError.__init__(self, status)
+class DataSizeError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class DataSourceError(UafError):
+        OldUafError.__init__(self, status)
+class DataSourceError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class DisconnectionError(UafError):
+        OldUafError.__init__(self, status)
+class DisconnectionError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class DiscoveryError(UafError):
+        OldUafError.__init__(self, status)
+class DiscoveryError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class InvalidRequestError(UafError):
+        OldUafError.__init__(self, status)
+class InvalidRequestError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class LowLevelError(UafError):
+        OldUafError.__init__(self, status)
+class LowLevelError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class ResolutionError(UafError):
+        OldUafError.__init__(self, status)
+class ResolutionError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class WrongTypeError(UafError):
+        OldUafError.__init__(self, status)
+class WrongTypeError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class OtherError(UafError):
+        OldUafError.__init__(self, status)
+class OtherError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class SecurityError(UafError):
+        OldUafError.__init__(self, status)
+class SecurityError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class TimeoutError(UafError):
+        OldUafError.__init__(self, status)
+class TimeoutError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class NoResultReceivedError(UafError):
+        OldUafError.__init__(self, status)
+class NoResultReceivedError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class SubscriptionError(UafError):
+        OldUafError.__init__(self, status)
+class SubscriptionError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class UnexpectedError(UafError):
+        OldUafError.__init__(self, status)
+class UnexpectedError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class UnknownHandleError(UafError):
+        OldUafError.__init__(self, status)
+class UnknownHandleError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
-class UnsupportedError(UafError):
+        OldUafError.__init__(self, status)
+class UnsupportedError(OldUafError):
     def __init__(self, status):
-        UafError.__init__(self, status)
+        OldUafError.__init__(self, status)
 
 
 __statusCodeToErrorDict__ = { pyuaf.util.statuscodes.ConfigurationError      : ConfigurationError,

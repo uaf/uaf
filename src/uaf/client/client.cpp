@@ -161,7 +161,7 @@ namespace uafc
 
     // Find the servers now
     // =============================================================================================
-    uaf::Status Client::findServersNow()
+    uafc::ClientStatus Client::findServersNow()
     {
         return discoverer_->findServers();
     }
@@ -177,7 +177,7 @@ namespace uafc
 
     // Get the endpoints that were found
     // =============================================================================================
-    Status Client::getEndpoints(
+    ClientStatus Client::getEndpoints(
             const string&                   discoveryUrl,
             vector<EndpointDescription>&    endpointDescriptions)
     {
@@ -561,7 +561,7 @@ namespace uafc
 
     // Manual connection to a specific endpoint
     //==============================================================================================
-    Status Client::manuallyConnectToEndpoint(
+    ClientStatus Client::manuallyConnectToEndpoint(
             const string&           endpointUrl,
             const SessionSettings&  settings,
             const PkiCertificate&   serverCertificate,

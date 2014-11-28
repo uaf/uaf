@@ -27,6 +27,7 @@
 // SDK
 // UAF
 #include "uaf/util/pkicertificate.h"
+#include "uaf/util/sdkstatus.h"
 #include "uaf/client/results/results.h"
 #include "uaf/client/sessions/sessioninformation.h"
 #include "uaf/client/subscriptions/datachangenotification.h"
@@ -148,11 +149,12 @@ namespace uafc
          * client (in the trust list, as configrued by the uafc::ClientSettings).
          *
          * @param certificate   The server certificate.
-         * @param cause         The reason why the server certificate was untrusted.
+         * @param cause         The reason why the server certificate was untrusted, according to
+         *                      the SDK.
          */
         virtual uaf::PkiCertificate::Action untrustedServerCertificateReceived(
                 uaf::PkiCertificate&    certificate,
-                const uaf::Status&      cause)
+                const uaf::SdkStatus&   cause)
         { return uaf::PkiCertificate::Action_AcceptTemporarily; }
     };
 }

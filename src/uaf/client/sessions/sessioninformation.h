@@ -32,6 +32,7 @@
 #include "uaf/util/datetime.h"
 #include "uaf/util/status.h"
 #include "uaf/client/clientexport.h"
+#include "uaf/client/clientstatus.h"
 #include "uaf/client/sessions/sessionstates.h"
 #include "uaf/client/sessions/connectionsteps.h"
 
@@ -70,7 +71,7 @@ namespace uafc
                 uafc::sessionstates::SessionState               sessionState,
                 const std::string&                              serverUri,
                 const uafc::connectionsteps::ConnectionStep&    lastConnectionAttemptStep,
-                const uaf::Status&                              lastConnectionAttemptStatus);
+                const uafc::ClientStatus&                       lastConnectionAttemptStatus);
 
 
         /** The state of the session. */
@@ -83,7 +84,7 @@ namespace uafc
         std::string                         serverUri;
 
         /** The status of the last connection attempt. */
-        uaf::Status                         lastConnectionAttemptStatus;
+        uafc::ClientStatus                  lastConnectionAttemptStatus;
 
         /** The step of the last connection attempt. */
         uafc::connectionsteps::ConnectionStep lastConnectionAttemptStep;

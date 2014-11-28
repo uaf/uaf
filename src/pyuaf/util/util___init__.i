@@ -57,6 +57,7 @@
 #include "uaf/util/pkiprivatekey.h"
 #include "uaf/util/pkirsakeypair.h"
 #include "uaf/util/pkicertificate.h"
+#include "uaf/util/sdkstatus.h"
 %}
 
 
@@ -165,6 +166,8 @@ UAF_WRAP_CLASS("uaf/util/pkiprivatekey.h"          , uaf , PkiPrivateKey        
 UAF_WRAP_CLASS("uaf/util/pkicertificateinfo.h"     , uaf , PkiCertificateInfo      , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/pkirsakeypair.h"          , uaf , PkiRsaKeyPair           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/pkicertificate.h"         , uaf , PkiCertificate          , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/sdkstatus.h"              , uaf , SdkStatus               , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
+
 
 
 // also include the Variant typemap(s)

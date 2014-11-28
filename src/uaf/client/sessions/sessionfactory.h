@@ -118,7 +118,7 @@ namespace uafc
          *                           was created.
          * @return              Good if the session was created, Bad if not.
          */
-        uaf::Status manuallyConnectToEndpoint(
+        uafc::ClientStatus manuallyConnectToEndpoint(
                 const std::string&              endpointUrl,
                 const uafc::SessionSettings&    settings,
                 const uaf::PkiCertificate&      serverCertificate,
