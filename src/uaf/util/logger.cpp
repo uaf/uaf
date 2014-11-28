@@ -194,6 +194,19 @@ namespace uaf
     }
 
 
+    // Log a status object
+    //==============================================================================================
+    void Logger::log(const SdkStatus& sdkStatus)
+    {
+        if (sdkStatus.isGood())
+            debug(sdkStatus.toString());
+        else if (sdkStatus.isUncertain())
+            warning(sdkStatus.toString());
+        else
+            error(sdkStatus.toString());
+    }
+
+
     // Log a status object as an error
     //==============================================================================================
     void Logger::error(const Status& status)

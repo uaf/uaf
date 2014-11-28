@@ -37,6 +37,7 @@
 #include "uaf/util/util.h"
 #include "uaf/util/loglevels.h"
 #include "uaf/util/status.h"
+#include "uaf/util/sdkstatus.h"
 #include "uaf/util/logmessage.h"
 #include "uaf/util/logginginterface.h"
 
@@ -257,6 +258,12 @@ namespace uaf
          * associated loggerFactory, or not!
          */
         ~Logger();
+
+
+        /**
+         * Log the SDK status (Debug if Good, Warning if Uncertain, Error if Bad).
+         */
+        void log(const uaf::SdkStatus& sdkStatus);
 
 
         /**
