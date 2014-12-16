@@ -28,6 +28,34 @@ namespace uafc
     using std::string;
 
 
+    // get a string representation
+    // =============================================================================================
+    string ClientStatus::toString() const
+    {
+        if      (!raisedBy_DiscoveryError.isNull())                         return raisedBy_DiscoveryError.description;
+        else if (!raisedBy_FindServersError.isNull())                       return raisedBy_FindServersError.description;
+        else if (!raisedBy_NoParallelFindServersAllowedError.isNull())      return raisedBy_NoParallelFindServersAllowedError.description;
+        else if (!raisedBy_EmptyUrlError.isNull())                          return raisedBy_EmptyUrlError.description;
+        else if (!raisedBy_NoDiscoveryUrlsFoundError.isNull())              return raisedBy_NoDiscoveryUrlsFoundError.description;
+        else if (!raisedBy_ServerCertificateRejectedByUserError.isNull())   return raisedBy_ServerCertificateRejectedByUserError.description;
+        else if (!raisedBy_ServerCertificateSavingError.isNull())           return raisedBy_ServerCertificateSavingError.description;
+        else if (!raisedBy_OpenSSLStoreInitializationError.isNull())        return raisedBy_OpenSSLStoreInitializationError.description;
+        else if (!raisedBy_ClientCertificateLoadingError.isNull())          return raisedBy_ClientCertificateLoadingError.description;
+        else if (!raisedBy_ServerDidNotProvideCertificateError.isNull())    return raisedBy_ServerDidNotProvideCertificateError.description;
+        else if (!raisedBy_CouldNotConnectError.isNull())                   return raisedBy_CouldNotConnectError.description;
+        else if (!raisedBy_PathNotExistsError.isNull())                     return raisedBy_PathNotExistsError.description;
+        else if (!raisedBy_NoSecuritySettingsGivenError.isNull())           return raisedBy_NoSecuritySettingsGivenError.description;
+        else if (!raisedBy_PathCreationError.isNull())                      return raisedBy_PathCreationError.description;
+        else if (!raisedBy_SecuritySettingsMatchError.isNull())             return raisedBy_SecuritySettingsMatchError.description;
+        else if (isUncertain())
+            return "Uncertain";
+        else if (isGood())
+            return "Good";
+        else if (isBad())
+            return "Bad";
+        else
+            return "UNKNOWN!";
+    }
 
     // operator==
     // =============================================================================================
