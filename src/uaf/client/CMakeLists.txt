@@ -5,6 +5,7 @@ aux_source_directory(.                      SOURCES_UAF_CLIENT)
 aux_source_directory(./configs              SOURCES_UAF_CLIENT_CONFIGS)
 aux_source_directory(./database             SOURCES_UAF_CLIENT_DATABASE)
 aux_source_directory(./discovery            SOURCES_UAF_CLIENT_DISCOVERY)
+aux_source_directory(./errors               SOURCES_UAF_CLIENT_ERRORS)
 aux_source_directory(./invocations          SOURCES_UAF_CLIENT_INVOCATIONS)
 aux_source_directory(./requests             SOURCES_UAF_CLIENT_REQUESTS)
 aux_source_directory(./resolution           SOURCES_UAF_CLIENT_RESOLUTION)
@@ -21,6 +22,7 @@ add_library(uafclient SHARED ${SOURCES_UAF_CLIENT}
                              ${SOURCES_UAF_CLIENT_CONFIGS}
                              ${SOURCES_UAF_CLIENT_DATABASE}
                              ${SOURCES_UAF_CLIENT_DISCOVERY}
+                             ${SOURCES_UAF_CLIENT_ERRORS}
                              ${SOURCES_UAF_CLIENT_INVOCATIONS}
                              ${SOURCES_UAF_CLIENT_REQUESTS}
                              ${SOURCES_UAF_CLIENT_RESOLUTION}

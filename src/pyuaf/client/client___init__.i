@@ -67,14 +67,14 @@
 #include "uaf/client/subscriptions/monitorediteminformation.h"
 #include "uaf/client/sessions/sessionstates.h"
 #include "uaf/client/sessions/sessioninformation.h"
-#include "uaf/client/discovery/discoveryerrors.h"
+#include "uaf/client/errors/discoveryerrors.h"
+#include "uaf/client/errors/securityerrors.h"
 #include "uaf/client/clientstatus.h"
 %}
 
 
 // add some import stuff to the __init__.py file that will be produced
 %pythoncode %{
-import pyuaf.util.errors
 import threading
 %}
 
@@ -160,7 +160,7 @@ import threading
 
 
 // now include all classes in a generic way
-UAF_WRAP_CLASS("uaf/client/clientstatus.h"                            , uafc , ClientStatus              , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/clientstatus.h"                            , uafc , ClientStatus              , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/subscriptions/subscriptioninformation.h"   , uafc , SubscriptionInformation   , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, SubscriptionInformationVector)
 UAF_WRAP_CLASS("uaf/client/subscriptions/monitorediteminformation.h"  , uafc , MonitoredItemInformation  , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, MonitoredItemInformationVector)
 UAF_WRAP_CLASS("uaf/client/subscriptions/monitoreditemnotification.h" , uafc , MonitoredItemNotification , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, VECTOR_NO)

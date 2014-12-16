@@ -23,6 +23,7 @@
 #define SWIG_FILE_WITH_INIT
 #include "uaf/client/errors/clienterror.h"
 #include "uaf/client/errors/discoveryerrors.h"
+#include "uaf/client/errors/securityerrors.h"
 %}
 
 
@@ -50,4 +51,5 @@ UAF_WRAP_CLASS("uaf/client/errors/clienterror.h", uafc , ClientError, COPY_YES, 
 %pythoncode %{ _object = object %}
 
 %include "uaf/client/errors/discoveryerrors.h"
+%include "uaf/client/errors/securityerrors.h"
 
