@@ -28,6 +28,7 @@
 #include "uaf/util/util.h"
 #include "uaf/util/status.h"
 #include "uaf/util/stringifiable.h"
+#include "uaf/util/browsepath.h"
 #include "uaf/util/relativepathelement.h"
 #include "uaf/util/expandednodeid.h"
 #include "uaf/util/constants.h"
@@ -86,6 +87,14 @@ namespace uaf
          */
         Address(uaf::Address*                   startingAddress,
                 const uaf::RelativePathElement& relativePath);
+
+
+        /**
+         * Construct a relative Address by providing a BrowsePath.
+         *
+         * @param browsePath   The browse path.
+         */
+        Address(const uaf::BrowsePath& browsePath);
 
 
         /**
@@ -151,7 +160,7 @@ namespace uaf
          *
          * @return  A pointer to the starting Address.
          */
-        uaf::Address* getStartingAddress() const { return startingAddress_; }
+        uaf::Address* getStartingAddress() const;
 
 
         /**
@@ -214,8 +223,10 @@ namespace uaf
 
         // Is the address a relative path, or not?
         bool isRelativePath_;
+        // Is the starting address owned by this Address instance, or not (i.e. is it just a pointer to another Address with unknown lifetime)
+        bool isStartingAddressOwned_;
 
-        // The relative path and its starting address in case the address is relative.
+        // The relative path and its starting address in case the address is relative
         std::vector<uaf::RelativePathElement>* relativePath_;
         uaf::Address* startingAddress_;
 
