@@ -73,13 +73,15 @@
             .. doctest::
             
                 >>> import pyuaf
-                >>> from pyuaf.util import Address, NodeId, ExpandedNodeId, RelativePathElement, QualifiedName
+                >>> from pyuaf.util import Address, NodeId, ExpandedNodeId, RelativePathElement, QualifiedName, BrowsePath
                 
                 >>> # the following ways of constructing a Address are possible:
                 >>> address0 = Address( ExpandedNodeId("someId", "someNsUri", "someServerUri") )
                 >>> address1 = Address( NodeId("someId", "someNsUri"), "someServerUri" )
                 >>> address2 = Address( address0, [RelativePathElement(QualifiedName("someName", "someNsUri"))] )
                 >>> address3 = Address( address1, [RelativePathElement(QualifiedName("someOtherName", 3))] )
+                >>> address3 = Address( BrowsePath( ExpandedNodeId("someId", "someNsUri", "someServerUri"), 
+                ...                                 [RelativePathElement(QualifiedName("someOtherName", 3))] ) )
                 
                 >>> # you may also provide a single RelativePathElement in case the relative path contains just
                 >>> # one element:

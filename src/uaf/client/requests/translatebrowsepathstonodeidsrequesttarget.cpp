@@ -89,8 +89,8 @@ namespace uafc
     // =============================================================================================
     vector<Address> TranslateBrowsePathsToNodeIdsRequestTarget::getResolvableItems() const
     {
-        // don't return anything
         vector<Address> ret;
+        ret.push_back(Address(browsePath));
         return ret;
     }
 
@@ -101,7 +101,9 @@ namespace uafc
             const vector<ExpandedNodeId>& expandedNodeIds,
             const vector<Status>&         resolutionStatuses)
     {
-        return Status(statuscodes::UnexpectedError, "No items to set");
+        // we don't need to set resolved items, because the purpose of this service is to translate 
+        // *unresolved* items
+        return Status(statuscodes::Good);
     }
 
 
