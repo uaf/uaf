@@ -798,6 +798,16 @@ namespace uafc
     }
 
 
+    // Process a TranslateBrowsePathsToNodeIdsRequest
+    // =============================================================================================
+    Status Client::processRequest(
+            const uafc::TranslateBrowsePathsToNodeIdsRequest&  request,
+            uafc::TranslateBrowsePathsToNodeIdsResult&         result)
+    {
+        return processRequest<uafc::TranslateBrowsePathsToNodeIdsService>(request, result);
+    }
+
+
     // Process a CreateMonitoredDataRequest
     // =============================================================================================
     Status Client::processRequest(

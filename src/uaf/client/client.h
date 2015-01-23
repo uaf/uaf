@@ -614,6 +614,19 @@ namespace uafc
                 const uafc::BrowseNextRequest&   request,
                 uafc::BrowseNextResult&          result);
 
+
+        /**
+         * Process a synchronous TranslateBrowsePathsToNodeIdsRequest.
+         *
+         * @param request   The request.
+         * @param result    The result.
+         * @return          The client-side status.
+         */
+        uaf::Status processRequest(
+                const uafc::TranslateBrowsePathsToNodeIdsRequest&  request,
+                uafc::TranslateBrowsePathsToNodeIdsResult&         result);
+
+        
         /**
          * Process a synchronous "create monitored data" request.
          *
