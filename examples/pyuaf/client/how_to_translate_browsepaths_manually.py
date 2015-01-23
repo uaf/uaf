@@ -1,4 +1,4 @@
-# examples/pyuaf/client/how_to_read_some_data.py
+# examples/pyuaf/client/how_to_translate_browsepaths_manually.py
 """
 EXAMPLE: how to translate browsepaths *manually*
 ====================================================================================================
