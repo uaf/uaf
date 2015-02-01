@@ -34,6 +34,7 @@ namespace uaf
     // =============================================================================================
     Address::Address()
     : isRelativePath_(false),
+      isStartingAddressOwned_(false),
       relativePath_(0),
       startingAddress_(0),
       expandedNodeId_(new ExpandedNodeId)
@@ -44,6 +45,7 @@ namespace uaf
     // =============================================================================================
     Address::Address(Address* startingAddress, const vector<RelativePathElement>& relativePath)
     : isRelativePath_(true),
+      isStartingAddressOwned_(false),
       relativePath_(new vector<RelativePathElement>(relativePath)),
       startingAddress_(startingAddress),
       expandedNodeId_(0)
@@ -54,6 +56,7 @@ namespace uaf
     // =============================================================================================
     Address::Address(Address* startingAddress, const RelativePathElement& relativePath)
     : isRelativePath_(true),
+      isStartingAddressOwned_(false),
       startingAddress_(startingAddress),
       expandedNodeId_(0)
     {
@@ -62,10 +65,23 @@ namespace uaf
     }
 
 
+
+    // Constructor
+    // =============================================================================================
+    Address::Address(const uaf::BrowsePath& browsePath)
+    : isRelativePath_(true),
+      isStartingAddressOwned_(true),
+      relativePath_(new vector<RelativePathElement>(browsePath.relativePath)),
+      startingAddress_(new Address(browsePath.startingExpandedNodeId)),
+      expandedNodeId_(0)
+    {}
+
+
     // Constructor
     // =============================================================================================
     Address::Address(const uaf::ExpandedNodeId& expandedNodeId)
     : isRelativePath_(false),
+      isStartingAddressOwned_(false),
       relativePath_(0),
       startingAddress_(0),
       expandedNodeId_(new ExpandedNodeId(expandedNodeId))
@@ -76,6 +92,7 @@ namespace uaf
     // =============================================================================================
     Address::Address(const uaf::NodeId& nodeId, const std::string& serverUri)
     : isRelativePath_(false),
+      isStartingAddressOwned_(false),
       relativePath_(0),
       startingAddress_(0),
       expandedNodeId_(new ExpandedNodeId(nodeId, serverUri))
@@ -87,10 +104,16 @@ namespace uaf
     Address::Address(const Address& other)
     {
         isRelativePath_ = other.isRelativePath_;
+        isStartingAddressOwned_ = other.isStartingAddressOwned_;
+        
         if (isRelativePath_)
         {
             relativePath_    = new vector<RelativePathElement>(*other.relativePath_);
-            startingAddress_ = other.startingAddress_;
+            
+            if (isStartingAddressOwned_)
+                startingAddress_ = new Address(*other.startingAddress_);
+            else
+                startingAddress_ = other.startingAddress_;
         }
         else
         {
@@ -109,10 +132,15 @@ namespace uaf
             clear();
 
             isRelativePath_ = other.isRelativePath_;
+            isStartingAddressOwned_ = other.isStartingAddressOwned_;
             if (isRelativePath_)
             {
                 relativePath_    = new vector<RelativePathElement>(*other.relativePath_);
-                startingAddress_ = other.startingAddress_;
+                
+                if (isStartingAddressOwned_)
+                    startingAddress_ = new Address(*other.startingAddress_);
+                else
+                    startingAddress_ = other.startingAddress_;
             }
             else
             {
@@ -140,6 +168,12 @@ namespace uaf
         {
             delete relativePath_;
             relativePath_ = 0;
+            
+            if (isStartingAddressOwned_)
+            {
+                delete startingAddress_;
+                startingAddress_ = 0;
+            }
         }
         else
         {
@@ -153,9 +187,24 @@ namespace uaf
     vector<RelativePathElement> Address::getRelativePath() const
     {
         if (isRelativePath_)
+        {
             return *relativePath_;
+        }
         else
+        {
             return vector<RelativePathElement>();
+        }
+    }
+
+
+    // Get the starting address
+    // =============================================================================================
+    Address* Address::getStartingAddress() const
+    {
+        if (isRelativePath_)
+            return startingAddress_;
+        else
+            return 0;
     }
 
 

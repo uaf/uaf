@@ -62,7 +62,7 @@ namespace uafc
             {
                 ss << indent << "   " << " - expandedNodeIds[" << i << "]";
                 ss << fillToPos(ss, colon);
-                ss << ": " << expandedNodeIds[i].toString();
+                ss << ": " << expandedNodeIds[i].toString() << "\n";
             }
         }
 
