@@ -416,10 +416,9 @@
         
             The data, as one of the data types described in :ref:`note-variants`.
   
-        .. autoattribute:: pyuaf.util.DataValue.status
+        .. autoattribute:: pyuaf.util.DataValue.opcUaStatusCode
         
-            The status of the data, as a :class:`~pyuaf.util.Status` instance.
-            The status contains the OPC UA status code of the data. 
+            The OPC UA status code (see specs part 4) of the data, as an ``int``.
   
         .. autoattribute:: pyuaf.util.DataValue.sourceTimestamp
         

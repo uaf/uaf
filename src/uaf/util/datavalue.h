@@ -77,8 +77,8 @@ namespace uaf
         /** The data. */
         uaf::Variant data;
 
-        /** The status of the data. */
-        uaf::Status status;
+        /** The OPC UA status of the data. */
+        uaf::OpcUaStatusCode opcUaStatusCode;
 
         /** The source timestamp. */
         uaf::DateTime sourceTimestamp;
