@@ -410,7 +410,6 @@ namespace uaf
                           opcUaExpandedNodeId.NodeId.NamespaceIndex);
         }
 
-
         return ret;
     }
 
@@ -434,6 +433,30 @@ namespace uaf
         {
             ret.setStatus(statuscodes::ResolutionError,
                           "Unknown namespace index %d", opcUaQualfiedName.NamespaceIndex);
+        }
+
+        return ret;
+    }
+
+    // Fill out an ExtensionObject
+    // =============================================================================================
+    Status NamespaceArray::fillExtensionObject(
+            const OpcUa_ExtensionObject&  opcUaExtensionObject,
+            ExtensionObject&              extensionObject) const
+    {
+        Status ret;
+
+        UaExtensionObject uaExtensionObject(opcUaExtensionObject);
+
+        OpcUa_NodeId opcUaNodeId;\
+
+        uaExtensionObject.dataTypeId().copyTo(&opcUaNodeId);
+        ret = fillNodeId(opcUaNodeId, extensionObject.dataTypeId);
+
+        if (ret.isGood())
+        {
+            uaExtensionObject.encodingTypeId().copyTo(&opcUaNodeId);
+            ret = fillNodeId(opcUaNodeId, extensionObject.encodingTypeId);
         }
 
         return ret;
@@ -488,6 +511,10 @@ namespace uaf
         else if (variant.type() == uaf::opcuatypes::QualifiedName)
         {
             FILL_OPCUA_VARIANT_NSURI(QualifiedName)
+        }
+        else if (variant.type() == uaf::opcuatypes::ExtensionObject)
+        {
+            FILL_OPCUA_VARIANT_NSURI(ExtensionObject)
         }
         else
         {
