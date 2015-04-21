@@ -51,6 +51,8 @@
 #include "uaf/util/viewdescription.h"
 #include "uaf/util/referencedescription.h"
 #include "uaf/util/enumvalue.h"
+#include "uaf/util/extensionobject.h"
+#include "uaf/util/modelchangestructuredatatype.h"
 %}
 
 
@@ -153,6 +155,8 @@ UAF_WRAP_CLASS("uaf/util/viewdescription.h"        , uaf , ViewDescription      
 UAF_WRAP_CLASS("uaf/util/referencedescription.h"   , uaf , ReferenceDescription    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ReferenceDescriptionVector)
 UAF_WRAP_CLASS("uaf/util/statusdiagnostics.h"      , uaf , StatusDiagnostics       , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/enumvalue.h"              , uaf , EnumValue               , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/extensionobject.h"        , uaf , ExtensionObject         , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/modelchangestructuredatatype.h", uaf , ModelChangeStructureDataType, COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.util, VECTOR_NO)
 
 
 

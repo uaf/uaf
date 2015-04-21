@@ -124,6 +124,10 @@ class VariantTest(unittest.TestCase):
         v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.DateTime)
         self.assertEqual( v , pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z") )
         
+    def test_util_ExtensionObject_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.ExtensionObject)
+        self.assertEqual( type(v) , pyuaf.util.ExtensionObject )
+        
     def test_util_primitives_Boolean_array_outputtypemap(self):
         v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Boolean, True)
         self.assertEqual( v , [ pyuaf.util.primitives.Boolean(True), 
@@ -226,7 +230,11 @@ class VariantTest(unittest.TestCase):
                                pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"),
                                pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z")] )
         
-        
+    def test_util_ExtensionObject_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.ExtensionObject, True)
+        self.assertEqual( type(v[0]) , pyuaf.util.ExtensionObject )
+        self.assertEqual( type(v[1]) , pyuaf.util.ExtensionObject )
+        self.assertEqual( type(v[2]) , pyuaf.util.ExtensionObject )
         
         ######## input typemaps ########
         
@@ -318,6 +326,10 @@ class VariantTest(unittest.TestCase):
     def test_util_DateTime_inputtypemap(self):
         v = self.tester.testVariantTypemap_in(pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"))
         self.assertEqual( v , pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z") )
+        
+    def test_util_ExtensionObject_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.ExtensionObject())
+        self.assertEqual( type(v) , pyuaf.util.ExtensionObject )
     
     def test_util_primitives_Boolean_array_inputtypemap(self):
         v = self.tester.testVariantTypemap_in( [pyuaf.util.primitives.Boolean(True),
@@ -460,6 +472,15 @@ class VariantTest(unittest.TestCase):
         self.assertEqual( v , [pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"), 
                                pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z"), 
                                pyuaf.util.DateTime.fromString("2013-05-21T12:34:56.789Z")] )
+
+
+    def test_util_ExtensionObject_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.ExtensionObject(), 
+                                                pyuaf.util.ExtensionObject(), 
+                                                pyuaf.util.ExtensionObject()] )
+        self.assertEqual( type(v[0]) , pyuaf.util.ExtensionObject )
+        self.assertEqual( type(v[1]) , pyuaf.util.ExtensionObject )
+        self.assertEqual( type(v[2]) , pyuaf.util.ExtensionObject )
 
     def test_util_VariantVector(self):
         testVector(self, pyuaf.util.VariantVector, [ pyuaf.util.primitives.UInt64(123132),

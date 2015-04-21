@@ -145,6 +145,7 @@ namespace uaf
     IMPLEMENT_VARIANT_TOXXX_METHOD_NATIVE_UAF(NodeId          , nodeId_)
     IMPLEMENT_VARIANT_TOXXX_METHOD_NATIVE_UAF(ExpandedNodeId  , expandedNodeId_)
     IMPLEMENT_VARIANT_TOXXX_METHOD_NATIVE_UAF(QualifiedName   , qualifiedName_)
+    IMPLEMENT_VARIANT_TOXXX_METHOD_NATIVE_UAF(ExtensionObject , extensionObject_)
 
 
 
@@ -169,7 +170,7 @@ namespace uaf
         else                                                                                       \
         {                                                                                          \
             Ua##XXX##Array arr;                                                                    \
-            uaf::Status ret = evaluate(                                                            \
+            ret = evaluate(                                                                        \
                     uaVariant_.to##XXX##Array(arr),                                                \
                     uaVariant_.type(),                                                             \
                     OpcUaType_##XXX);                                                              \
@@ -183,6 +184,7 @@ namespace uaf
     IMPLEMENT_VARIANT_TOXXXARRAY_METHOD_NATIVE_UAF(NodeId          , nodeId_)
     IMPLEMENT_VARIANT_TOXXXARRAY_METHOD_NATIVE_UAF(ExpandedNodeId  , expandedNodeId_)
     IMPLEMENT_VARIANT_TOXXXARRAY_METHOD_NATIVE_UAF(QualifiedName   , qualifiedName_)
+    IMPLEMENT_VARIANT_TOXXXARRAY_METHOD_NATIVE_UAF(ExtensionObject , extensionObject_)
 
 
 
@@ -410,7 +412,7 @@ namespace uaf
 #define IMPLEMENT_VARIANT_SETXXX_METHOD_NATIVE_UAF(XXX, INTERNAL)                                  \
     /** Convert the variant to a native uaf:: C++ type.                                            \
     =========================================================================================== */ \
-    void Variant::set##XXX(const uaf::XXX& val)                                                             \
+    void Variant::set##XXX(const uaf::XXX& val)                                                    \
     {                                                                                              \
         clear();                                                                                   \
         isNativeUaf_ = true;                                                                       \
@@ -420,6 +422,7 @@ namespace uaf
     IMPLEMENT_VARIANT_SETXXX_METHOD_NATIVE_UAF(QualifiedName, qualifiedName_)
     IMPLEMENT_VARIANT_SETXXX_METHOD_NATIVE_UAF(NodeId, nodeId_)
     IMPLEMENT_VARIANT_SETXXX_METHOD_NATIVE_UAF(ExpandedNodeId, expandedNodeId_)
+    IMPLEMENT_VARIANT_SETXXX_METHOD_NATIVE_UAF(ExtensionObject, extensionObject_)
 
 
 #define IMPLEMENT_VARIANT_SETXXXARRAY_METHOD_NATIVE_UAF(XXX, INTERNAL)                             \
@@ -436,6 +439,7 @@ namespace uaf
     IMPLEMENT_VARIANT_SETXXXARRAY_METHOD_NATIVE_UAF(QualifiedName, qualifiedName_)
     IMPLEMENT_VARIANT_SETXXXARRAY_METHOD_NATIVE_UAF(NodeId, nodeId_)
     IMPLEMENT_VARIANT_SETXXXARRAY_METHOD_NATIVE_UAF(ExpandedNodeId, expandedNodeId_)
+    IMPLEMENT_VARIANT_SETXXXARRAY_METHOD_NATIVE_UAF(ExtensionObject, extensionObject_)
 
 
     // Get a string representation
@@ -473,6 +477,9 @@ namespace uaf
                             case uaf::opcuatypes::QualifiedName:
                                 ss << qualifiedName_[i].toString();
                                 break;
+                            case uaf::opcuatypes::ExtensionObject:
+                                ss << extensionObject_[i].toString();
+                                break;
                             default:
                                 ss << "INVALID";
                                 break;
@@ -493,6 +500,9 @@ namespace uaf
                             break;
                         case uaf::opcuatypes::QualifiedName:
                             ss << qualifiedName_[0].toString();
+                            break;
+                        case uaf::opcuatypes::ExtensionObject:
+                            ss << extensionObject_[0].toString();
                             break;
                         default:
                             ss << "INVALID";
@@ -528,6 +538,23 @@ namespace uaf
         uaVariant.set##TYPE(uaObject);                                                             \
     }
 
+#define IMPLEMENT_VARIANT_TOSDK_NATIVE_UAF_WITH_DETACH(TYPE, INTERNAL)                             \
+    if (isArray())                                                                                 \
+    {                                                                                              \
+        Ua##TYPE##Array array;                                                                     \
+        array.resize(INTERNAL.size());                                                             \
+        for (std::size_t i = 0; i<INTERNAL.size(); i++)                                            \
+            INTERNAL[i].toSdk(&array[i]);                                                          \
+        uaVariant.set##TYPE##Array(array);                                                         \
+    }                                                                                              \
+    else                                                                                           \
+    {                                                                                              \
+        Ua##TYPE uaObject;                                                                         \
+        INTERNAL[0].toSdk(uaObject);                                                               \
+        uaVariant.set##TYPE(uaObject, OpcUa_False);                                                \
+    }
+
+
 
     // toSdk
     // =============================================================================================
@@ -547,6 +574,10 @@ namespace uaf
             else if (type() == uaf::opcuatypes::QualifiedName)
             {
                 IMPLEMENT_VARIANT_TOSDK_NATIVE_UAF(QualifiedName, qualifiedName_)
+            }
+            else if (type() == uaf::opcuatypes::ExtensionObject)
+            {
+                IMPLEMENT_VARIANT_TOSDK_NATIVE_UAF_WITH_DETACH(ExtensionObject, extensionObject_)
             }
             uaVariant.copyTo(destination);
         }
@@ -631,6 +662,7 @@ namespace uaf
         nodeId_.clear();
         expandedNodeId_.clear();
         qualifiedName_.clear();
+        extensionObject_.clear();
         isNativeUaf_ = false;
         dataTypeIfNativeUaf_ = opcuatypes::Null;
         arrayTypeIfNativeUaf_ = OpcUa_VariantArrayType_Scalar;
@@ -673,6 +705,8 @@ namespace uaf
                     return expandedNodeId_.size();
                 case uaf::opcuatypes::QualifiedName:
                     return qualifiedName_.size();
+                case uaf::opcuatypes::ExtensionObject:
+                    return extensionObject_.size();
                 default:
                     return -1;
             }

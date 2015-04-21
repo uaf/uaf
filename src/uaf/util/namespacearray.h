@@ -220,6 +220,21 @@ namespace uaf
 
 
         /**
+         * Fill an ExtensionObject from an OpcUa_ExtensionObject (which includes filling out the
+         * namespace URI).
+         *
+         * @param opcUaExtensionObject  The OpcUa_ExtensionObject of which we want to extract
+         *                              the information.
+         * @param extensionObject       The uaf::ExtensionObject which we want to update.
+         * @return                      Good if the uaf::ExtensionObject could be updated without
+         *                              problems (i.e. if the namespace URI could be set).
+         */
+        uaf::Status fillExtensionObject(
+                const OpcUa_ExtensionObject& opcUaExtensionObject,
+                uaf::ExtensionObject&        extensionObject) const;
+
+
+        /**
          * Fill a Variant, which *may* include filling out the namespace URI, if the variant
          * represents a NodeId or ExpandedNodeId or QualifiedName.
          *

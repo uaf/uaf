@@ -26,6 +26,7 @@
 #include "uaf/util/nodeid.h"
 #include "uaf/util/expandednodeid.h"
 #include "uaf/util/localizedtext.h"
+#include "uaf/util/extensionobject.h"
 #include <stdio.h>
 %}
 
@@ -36,6 +37,7 @@
 %import "uaf/util/expandednodeid.h"
 %import "uaf/util/localizedtext.h"
 %import "uaf/util/qualifiedname.h"
+%import "uaf/util/extensionobject.h"
 
 
 // we'll test the python typemaps, so include them here
@@ -63,6 +65,7 @@
         uaf::QualifiedName someQualifiedName2;
         uaf::LocalizedText someLocalizedText;
         uaf::DateTime someDateTime;
+        uaf::ExtensionObject someExtensionObject;
         
         UnitTestHelper() 
         {
@@ -256,6 +259,15 @@
                         v.setDateTimeArray(array);
                         break;
                     }
+                    case uaf::opcuatypes::ExtensionObject:
+                    {
+                        std::vector<uaf::ExtensionObject> array;
+                        array.push_back(someExtensionObject);
+                        array.push_back(someExtensionObject);
+                        array.push_back(someExtensionObject);
+                        v.setExtensionObjectArray(array);
+                        break;
+                    }
                     default:
                     {
                         v.clear();
@@ -267,25 +279,26 @@
             {
                 switch (type)
                 {
-                    case uaf::opcuatypes::Boolean:        { v.setBoolean(true);                       break; }
-                    case uaf::opcuatypes::Byte:           { v.setByte(3);                             break; }
-                    case uaf::opcuatypes::SByte:          { v.setSByte(-3);                           break; }
-                    case uaf::opcuatypes::UInt16:         { v.setUInt16(3);                           break; }
-                    case uaf::opcuatypes::Int16:          { v.setInt16(-3);                           break; }
-                    case uaf::opcuatypes::UInt32:         { v.setUInt32(3);                           break; }
-                    case uaf::opcuatypes::Int32:          { v.setInt32(-3);                           break; }
-                    case uaf::opcuatypes::UInt64:         { v.setUInt64(3);                           break; }
-                    case uaf::opcuatypes::Int64:          { v.setInt64(-3);                           break; }
-                    case uaf::opcuatypes::Float:          { v.setFloat(3.14);                         break; }
-                    case uaf::opcuatypes::Double:         { v.setDouble(3.14);                        break; }
-                    case uaf::opcuatypes::String:         { v.setString("test \xc2\xb0");             break; } // \u00B0 only works for GCC
-                    case uaf::opcuatypes::ByteString:     { v.setByteString(someBytes, 3);            break; }
-                    case uaf::opcuatypes::NodeId:         { v.setNodeId(someNodeId2);                 break; }
-                    case uaf::opcuatypes::ExpandedNodeId: { v.setExpandedNodeId(someExpandedNodeId2); break; }
-                    case uaf::opcuatypes::LocalizedText:  { v.setLocalizedText(someLocalizedText);    break; }
-                    case uaf::opcuatypes::QualifiedName:  { v.setQualifiedName(someQualifiedName2);   break; }
-                    case uaf::opcuatypes::DateTime:       { v.setDateTime(someDateTime);              break; }
-                    default:                              { v.clear();                                break; }
+                    case uaf::opcuatypes::Boolean:         { v.setBoolean(true);                        break; }
+                    case uaf::opcuatypes::Byte:            { v.setByte(3);                              break; }
+                    case uaf::opcuatypes::SByte:           { v.setSByte(-3);                            break; }
+                    case uaf::opcuatypes::UInt16:          { v.setUInt16(3);                            break; }
+                    case uaf::opcuatypes::Int16:           { v.setInt16(-3);                            break; }
+                    case uaf::opcuatypes::UInt32:          { v.setUInt32(3);                            break; }
+                    case uaf::opcuatypes::Int32:           { v.setInt32(-3);                            break; }
+                    case uaf::opcuatypes::UInt64:          { v.setUInt64(3);                            break; }
+                    case uaf::opcuatypes::Int64:           { v.setInt64(-3);                            break; }
+                    case uaf::opcuatypes::Float:           { v.setFloat(3.14);                          break; }
+                    case uaf::opcuatypes::Double:          { v.setDouble(3.14);                         break; }
+                    case uaf::opcuatypes::String:          { v.setString("test \xc2\xb0");              break; } // \u00B0 only works for GCC
+                    case uaf::opcuatypes::ByteString:      { v.setByteString(someBytes, 3);             break; }
+                    case uaf::opcuatypes::NodeId:          { v.setNodeId(someNodeId2);                  break; }
+                    case uaf::opcuatypes::ExpandedNodeId:  { v.setExpandedNodeId(someExpandedNodeId2);  break; }
+                    case uaf::opcuatypes::LocalizedText:   { v.setLocalizedText(someLocalizedText);     break; }
+                    case uaf::opcuatypes::QualifiedName:   { v.setQualifiedName(someQualifiedName2);    break; }
+                    case uaf::opcuatypes::DateTime:        { v.setDateTime(someDateTime);               break; }
+                    case uaf::opcuatypes::ExtensionObject: { v.setExtensionObject(someExtensionObject); break; }
+                    default:                               { v.clear();                                 break; }
                 }
             }
     

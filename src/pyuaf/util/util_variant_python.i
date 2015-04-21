@@ -26,6 +26,7 @@
 #include "uaf/util/nodeid.h"
 #include "uaf/util/expandednodeid.h"
 #include "uaf/util/localizedtext.h"
+#include "uaf/util/extensionobject.h"
 #include "pyuaf/typemaps/util_variant_python_typemap.h"
 %}
 
