@@ -42,6 +42,7 @@
 #include "uaf/util/expandednodeid.h"
 #include "uaf/util/localizedtext.h"
 #include "uaf/util/qualifiedname.h"
+#include "uaf/util/extensionobject.h"
 
 
 
@@ -143,6 +144,8 @@ namespace uaf
         void set##XXX##Array(const std::vector<TYPE>& vec);
 
 
+
+
         DECLARE_VARIANT_METHODS(Boolean         , bool                , bool)
         DECLARE_VARIANT_METHODS(SByte           , int8_t              , int8_t)
         DECLARE_VARIANT_METHODS(Byte            , uint8_t             , uint8_t)
@@ -161,6 +164,7 @@ namespace uaf
         DECLARE_VARIANT_METHODS(LocalizedText   , uaf::LocalizedText  , const uaf::LocalizedText&)
         DECLARE_VARIANT_METHODS(DateTime        , uaf::DateTime       , const uaf::DateTime&)
         DECLARE_VARIANT_METHODS(String          , std::string         , const std::string&)
+        DECLARE_VARIANT_METHODS(ExtensionObject , uaf::ExtensionObject, const uaf::ExtensionObject&)
 
         /**
          * Set the variant to a bytestring.
@@ -229,6 +233,7 @@ namespace uaf
         std::vector<uaf::NodeId> nodeId_;
         std::vector<uaf::ExpandedNodeId> expandedNodeId_;
         std::vector<uaf::QualifiedName> qualifiedName_;
+        std::vector<uaf::ExtensionObject> extensionObject_;
 
         bool isNativeUaf_;
         uaf::opcuatypes::OpcUaType dataTypeIfNativeUaf_;
