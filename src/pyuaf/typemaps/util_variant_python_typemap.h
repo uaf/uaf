@@ -45,7 +45,8 @@
     || UAFTYPE_CONDITION(IN, ExpandedNodeId)    \
     || UAFTYPE_CONDITION(IN, LocalizedText)     \
     || UAFTYPE_CONDITION(IN, DateTime)          \
-    || UAFTYPE_CONDITION(IN, QualifiedName)
+    || UAFTYPE_CONDITION(IN, QualifiedName)     \
+    || UAFTYPE_CONDITION(IN, ExtensionObject)
 
 
 
@@ -116,7 +117,7 @@
         PyObject* currentPyObject = PySequence_GetItem(IN, i);                              \
         if (currentPyObject == 0)                                                           \
         {                                                                                   \
-            PyErr_SetString(PyExc_TypeError, "Invalid type!");                              \
+            PyErr_SetString(PyExc_TypeError, "Unsupported type!");                          \
             return NULL;                                                                    \
         }                                                                                   \
         else if (PRIMITIVE_CONDITION(currentPyObject, TYPE))                                \
@@ -148,7 +149,7 @@
         PyObject* currentPyObject = PySequence_GetItem(IN, i);                              \
         if (currentPyObject == 0)                                                           \
         {                                                                                   \
-            PyErr_SetString(PyExc_TypeError, "Invalid type!");                              \
+            PyErr_SetString(PyExc_TypeError, "Unsupported type!");                          \
             return NULL;                                                                    \
         }                                                                                   \
         else if (UAFTYPE_CONDITION(currentPyObject, TYPE))                                  \
@@ -181,7 +182,7 @@
         PyObject* currentPyObject = PySequence_GetItem(IN, i);                                     \
         if (currentPyObject == 0)                                                                  \
         {                                                                                          \
-            PyErr_SetString(PyExc_TypeError, "Invalid type!");                                     \
+            PyErr_SetString(PyExc_TypeError, "Unsupported type!");                                 \
             return NULL;                                                                           \
         }                                                                                          \
         else if (PyString_Check(currentPyObject))                                                  \
@@ -231,8 +232,9 @@
     else if (UAFTYPE_CONDITION(FIRSTOBJECT, LocalizedText))  { PYUAF_CONVERT_UAFTYPE_ARRAY(PYOBJECT, LocalizedText,  length,   VARIANT) } \
     else if (UAFTYPE_CONDITION(FIRSTOBJECT, QualifiedName))  { PYUAF_CONVERT_UAFTYPE_ARRAY(PYOBJECT, QualifiedName,  length,   VARIANT) } \
     else if (UAFTYPE_CONDITION(FIRSTOBJECT, DateTime))       { PYUAF_CONVERT_UAFTYPE_ARRAY(PYOBJECT, DateTime,       length,   VARIANT) } \
+    else if (UAFTYPE_CONDITION(FIRSTOBJECT, ExtensionObject)){ PYUAF_CONVERT_UAFTYPE_ARRAY(PYOBJECT, ExtensionObject,length,   VARIANT) } \
     else if (STRING_OR_UNICODE_CONDITION(FIRSTOBJECT))       { CONVERT_STRING_ARRAY(PYOBJECT, length, VARIANT) } \
-    else { PyErr_SetString(PyExc_TypeError, "Invalid type!"); return NULL; }
+    else { PyErr_SetString(PyExc_TypeError, "Unsupported type!"); return NULL; }
 
 
 #define CONVERT_OBJECT(PYOBJECT, VARIANT)                                                                          \
@@ -254,9 +256,10 @@
     else if (UAFTYPE_CONDITION(PYOBJECT, LocalizedText))  { PYUAF_CONVERT_UAFTYPE(PYOBJECT, LocalizedText,    VARIANT) } \
     else if (UAFTYPE_CONDITION(PYOBJECT, QualifiedName))  { PYUAF_CONVERT_UAFTYPE(PYOBJECT, QualifiedName,    VARIANT) } \
     else if (UAFTYPE_CONDITION(PYOBJECT, DateTime))       { PYUAF_CONVERT_UAFTYPE(PYOBJECT, DateTime,         VARIANT) } \
+    else if (UAFTYPE_CONDITION(PYOBJECT, ExtensionObject)){ PYUAF_CONVERT_UAFTYPE(PYOBJECT, ExtensionObject,  VARIANT) } \
     else \
     { \
-        PyErr_SetString(PyExc_TypeError, "Invalid type!"); \
+        PyErr_SetString(PyExc_TypeError, "Unsupported type!"); \
         return NULL; \
     }
 
@@ -376,9 +379,10 @@
     else if (VARIANT.type() == uaf::opcuatypes::LocalizedText)   { CREATE_UAFTYPE_ARRAY(LocalizedText, VARIANT, PYOBJECT)  } \
     else if (VARIANT.type() == uaf::opcuatypes::QualifiedName)   { CREATE_UAFTYPE_ARRAY(QualifiedName, VARIANT, PYOBJECT)  } \
     else if (VARIANT.type() == uaf::opcuatypes::DateTime)        { CREATE_UAFTYPE_ARRAY(DateTime, VARIANT, PYOBJECT)       } \
+    else if (VARIANT.type() == uaf::opcuatypes::ExtensionObject) { CREATE_UAFTYPE_ARRAY(ExtensionObject, VARIANT, PYOBJECT)} \
     else                                                                                           \
     {                                                                                              \
-        PyErr_SetString(PyExc_TypeError, "Invalid type!");                                         \
+        PyErr_SetString(PyExc_TypeError, "Unsupported type!");                                     \
         return NULL;                                                                               \
     }
 
@@ -403,9 +407,10 @@
     else if (VARIANT.type() == uaf::opcuatypes::LocalizedText)   { CREATE_UAFTYPE(LocalizedText, VARIANT, PYOBJECT)  }  \
     else if (VARIANT.type() == uaf::opcuatypes::QualifiedName)   { CREATE_UAFTYPE(QualifiedName, VARIANT, PYOBJECT)  }  \
     else if (VARIANT.type() == uaf::opcuatypes::DateTime)        { CREATE_UAFTYPE(DateTime, VARIANT, PYOBJECT)       }  \
+    else if (VARIANT.type() == uaf::opcuatypes::ExtensionObject) { CREATE_UAFTYPE(ExtensionObject, VARIANT, PYOBJECT)}  \
     else                                                                                           \
     {                                                                                              \
-        PyErr_SetString(PyExc_TypeError, "Invalid type!");                                         \
+        PyErr_SetString(PyExc_TypeError, "Unsupported type!");                                     \
         return NULL;                                                                               \
     }
 
