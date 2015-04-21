@@ -1114,6 +1114,35 @@
     
 
 
+
+*class* ExtensionObject
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.ExtensionObject
+
+    An ExtensionObject is a non-standard kind of data that can be encoded/decoded and be sent over 
+    the wire.
+    
+    * Methods:
+
+        .. automethod:: pyuaf.util.ExtensionObject.__init__
+    
+            Construct a new ExtensionObject.
+    
+
+    * Attributes:
+  
+  
+        .. autoattribute:: pyuaf.util.ExtensionObject.encodingTypeId
+        
+            The NodeId that describes the encoding (type :class:`~pyuaf.util.NodeId`).
+    
+        .. autoattribute:: pyuaf.util.ExtensionObject.dataTypeId
+        
+            The NodeId that describes the datatype (type :class:`~pyuaf.util.NodeId`).
+    
+
 *class* Guid
 ----------------------------------------------------------------------------------------------------
 
@@ -1408,6 +1437,38 @@
             :rtype:  :class:`pyuaf.util.Mask`
 
 
+
+
+*class* ModelChangeStructureDataType
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.ModelChangeStructureDataType
+
+    A ModelChangeStructureDataType is usually passed as an event to notify model changes.
+    
+    * Methods:
+
+        .. automethod:: pyuaf.util.ModelChangeStructureDataType.__init__
+    
+            Construct a new ModelChangeStructureDataType.
+    
+
+    * Attributes:
+  
+  
+        .. autoattribute:: pyuaf.util.ModelChangeStructureDataType.affected
+        
+            The NodeId of the affected node (type :class:`~pyuaf.util.NodeId`).
+    
+        .. autoattribute:: pyuaf.util.ModelChangeStructureDataType.affectedType
+        
+            The NodeId of the affected datatype (type :class:`~pyuaf.util.NodeId`).
+    
+        .. autoattribute:: pyuaf.util.ModelChangeStructureDataType.affectedType
+        
+            The verb field (an ``int``).
+    
 
 
 *class* ModificationInfo
