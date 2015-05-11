@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_CONFIGS_H_
-#define UAFC_CONFIGS_H_
+#ifndef UAF_CONFIGS_H_
+#define UAF_CONFIGS_H_
 
 // STD
 // SDK
@@ -44,10 +44,10 @@
 /** Config class holding the service settings and the address resolution settings.  \
  *                                                                                  \
  * @ingroup ClientConfigs */ \
-typedef UAFC_EXPORT uafc::BaseServiceConfig< uafc::NAME##Settings > NAME##Config;
+typedef UAF_EXPORT uaf::BaseServiceConfig< uaf::NAME##Settings > NAME##Config;
 
 
-namespace uafc
+namespace uaf
 {
     DEFINE_CONFIG(Read)
     DEFINE_CONFIG(Write)
@@ -62,4 +62,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_CONFIGS_H_ */
+#endif /* UAF_CONFIGS_H_ */

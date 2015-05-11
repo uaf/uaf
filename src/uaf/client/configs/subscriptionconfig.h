@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_SUBSCRIPTIONCONFIG_H_
-#define UAFC_SUBSCRIPTIONCONFIG_H_
+#ifndef UAF_SUBSCRIPTIONCONFIG_H_
+#define UAF_SUBSCRIPTIONCONFIG_H_
 
 
 
@@ -34,7 +34,7 @@
 #include "uaf/client/settings/subscriptionsettings.h"
 
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
@@ -45,7 +45,7 @@ namespace uafc
     *
     * @ingroup ClientConfigs
     ***********************************************************************************************/
-    class UAFC_EXPORT SubscriptionConfig
+    class UAF_EXPORT SubscriptionConfig
     {
     public:
 
@@ -60,16 +60,16 @@ namespace uafc
         /**
          * Construct a new subscription config with the given default subscription settings.
          */
-        SubscriptionConfig(const uafc::SubscriptionSettings& defaultSubscriptionSettings)
+        SubscriptionConfig(const uaf::SubscriptionSettings& defaultSubscriptionSettings)
         : defaultSubscriptionSettings(defaultSubscriptionSettings)
         {}
 
 
         /** The default subscription settings. */
-        uafc::SubscriptionSettings defaultSubscriptionSettings;
+        uaf::SubscriptionSettings defaultSubscriptionSettings;
 
         /** The subscription settings per server URI. */
-        std::map<std::string, uafc::SubscriptionSettings> specificSubscriptionSettings;
+        std::map<std::string, uaf::SubscriptionSettings> specificSubscriptionSettings;
 
 
         /**
@@ -80,11 +80,11 @@ namespace uafc
     private:
 
         // define the map that will store the settings for specific servers
-        typedef std::map<std::string, uafc::SubscriptionSettings> SpecificsMap;
+        typedef std::map<std::string, uaf::SubscriptionSettings> SpecificsMap;
 
     };
 
 }
 
 
-#endif /* UAFC_SUBSCRIPTIONCONFIG_H_ */
+#endif /* UAF_SUBSCRIPTIONCONFIG_H_ */

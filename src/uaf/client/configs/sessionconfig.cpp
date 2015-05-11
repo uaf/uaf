@@ -21,10 +21,9 @@
 #include "uaf/client/configs/sessionconfig.h"
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::size_t;
     using std::string;
     using std::stringstream;
