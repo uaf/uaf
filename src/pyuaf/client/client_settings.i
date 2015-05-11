@@ -47,7 +47,7 @@
 
 
 // import the EXPORT macro and some numeric typedefs
-%import "uaf/client/clientexport.h"
+%import "uaf/util/util.h"
 %import "uaf/util/handles.h"
 
 
@@ -84,28 +84,28 @@
 
 
 // before including any classes in a generic way, specify the "special treatments" of certain classes:
-%ignore uafc::MonitoredItemSettings::operator=;
+%ignore uaf::MonitoredItemSettings::operator=;
 
 
 // wrap the classes:
-UAF_WRAP_CLASS("uaf/client/settings/clientsettings.h"                        , uafc , ClientSettings                        , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/settings/servicesettings.h"                       , uafc , ServiceSettings                       , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/settings/sessionsecuritysettings.h"               , uafc , SessionSecuritySettings               , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, SessionSecuritySettingsVector)
-UAF_WRAP_CLASS("uaf/client/settings/sessionsettings.h"                       , uafc , SessionSettings                       , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/settings/subscriptionsettings.h"                  , uafc , SubscriptionSettings                  , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/settings/monitoreditemsettings.h"                 , uafc , MonitoredItemSettings                 , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/settings/readsettings.h"                          , uafc , ReadSettings                          , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/settings/writesettings.h"                         , uafc , WriteSettings                         , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/settings/historyreadrawmodifiedsettings.h"        , uafc , HistoryReadRawModifiedSettings        , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/settings/methodcallsettings.h"                    , uafc , MethodCallSettings                    , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/settings/translatebrowsepathstonodeidssettings.h" , uafc , TranslateBrowsePathsToNodeIdsSettings , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/settings/browsesettings.h"                        , uafc , BrowseSettings                        , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/settings/browsenextsettings.h"                    , uafc , BrowseNextSettings                    , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/settings/createmonitoreddatasettings.h"           , uafc , CreateMonitoredDataSettings           , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/settings/createmonitoredeventssettings.h"         , uafc , CreateMonitoredEventsSettings         , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/clientsettings.h"                        , uaf , ClientSettings                        , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/servicesettings.h"                       , uaf , ServiceSettings                       , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/sessionsecuritysettings.h"               , uaf , SessionSecuritySettings               , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, SessionSecuritySettingsVector)
+UAF_WRAP_CLASS("uaf/client/settings/sessionsettings.h"                       , uaf , SessionSettings                       , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/subscriptionsettings.h"                  , uaf , SubscriptionSettings                  , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/monitoreditemsettings.h"                 , uaf , MonitoredItemSettings                 , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/readsettings.h"                          , uaf , ReadSettings                          , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/writesettings.h"                         , uaf , WriteSettings                         , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/historyreadrawmodifiedsettings.h"        , uaf , HistoryReadRawModifiedSettings        , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/methodcallsettings.h"                    , uaf , MethodCallSettings                    , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/translatebrowsepathstonodeidssettings.h" , uaf , TranslateBrowsePathsToNodeIdsSettings , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/browsesettings.h"                        , uaf , BrowseSettings                        , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/browsenextsettings.h"                    , uaf , BrowseNextSettings                    , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/createmonitoreddatasettings.h"           , uaf , CreateMonitoredDataSettings           , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/settings/createmonitoredeventssettings.h"         , uaf , CreateMonitoredEventsSettings         , COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.client.settings, VECTOR_NO)
 
 
 // create the SpecificSessionSettings and SpecificSubscriptionSettings
-%template(SpecificSessionSettings) std::map<std::string, uafc::SessionSettings>;
-%template(SpecificSubscriptionSettings) std::map<std::string, uafc::SubscriptionSettings>;
+%template(SpecificSessionSettings) std::map<std::string, uaf::SessionSettings>;
+%template(SpecificSubscriptionSettings) std::map<std::string, uaf::SubscriptionSettings>;
 

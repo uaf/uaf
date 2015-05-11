@@ -67,9 +67,6 @@
 #include "uaf/client/subscriptions/monitorediteminformation.h"
 #include "uaf/client/sessions/sessionstates.h"
 #include "uaf/client/sessions/sessioninformation.h"
-#include "uaf/client/errors/discoveryerrors.h"
-#include "uaf/client/errors/securityerrors.h"
-#include "uaf/client/clientstatus.h"
 %}
 
 
@@ -80,7 +77,7 @@ import threading
 
 
 // enable directors for the Client
-%feature("director") uafc::Client;  
+%feature("director") uaf::Client;  
 
 
 // include common definitions
@@ -99,6 +96,7 @@ import threading
 %import(module="pyuaf.util.applicationtypes")       "pyuaf/util/util_applicationtypes.i"
 %import(module="pyuaf.util.attributeids")           "pyuaf/util/util_attributeids.i"
 %import(module="pyuaf.util.constants")              "pyuaf/util/util_constants.i"
+%import(module="pyuaf.util.errors")                 "pyuaf/util/util_errors.i" 
 %import(module="pyuaf.util.usertokentypes")         "pyuaf/util/util_usertokentypes.i" 
 %import(module="pyuaf.util.nodeididentifiertypes")  "pyuaf/util/util_nodeididentifiertypes.i"
 %import(module="pyuaf.util.statuscodes")            "pyuaf/util/util_statuscodes.i"
@@ -125,8 +123,7 @@ import threading
 %import "pyuaf/client/client_sessionstates.i"
 %import "pyuaf/client/client_connectionsteps.i"
 %import "pyuaf/client/client_subscriptionstates.i" 
-%import "pyuaf/client/client_monitoreditemstates.i" 
-%import "pyuaf/client/client_errors.i"
+%import "pyuaf/client/client_monitoreditemstates.i"
 %import "pyuaf/client/client_settings.i"
 %import "pyuaf/client/client_configs.i"
 %import "pyuaf/client/client_requests.i"
@@ -134,52 +131,51 @@ import threading
 
 
 // before including any classes in a generic way, specify the "special treatments" of certain classes:
-%rename(__dispatch_readComplete__)                          uafc::ClientInterface::readComplete;
-%rename(__dispatch_writeComplete__)                         uafc::ClientInterface::writeComplete;
-%rename(__dispatch_callComplete__)                          uafc::ClientInterface::callComplete;
-%rename(__dispatch_dataChangesReceived__)                   uafc::ClientInterface::dataChangesReceived;
-%rename(__dispatch_eventsReceived__)                        uafc::ClientInterface::eventsReceived;
-%rename(__dispatch_keepAliveReceived__)                     uafc::ClientInterface::keepAliveReceived;
-%rename(__dispatch_connectionStatusChanged__)               uafc::ClientInterface::connectionStatusChanged;
-%rename(__dispatch_subscriptionStatusChanged__)             uafc::ClientInterface::subscriptionStatusChanged;
-%rename(__dispatch_notificationsMissing__)                  uafc::ClientInterface::notificationsMissing;
-%rename(__dispatch_untrustedServerCertificateReceived__)    uafc::ClientInterface::untrustedServerCertificateReceived;
+%rename(__dispatch_readComplete__)                          uaf::ClientInterface::readComplete;
+%rename(__dispatch_writeComplete__)                         uaf::ClientInterface::writeComplete;
+%rename(__dispatch_callComplete__)                          uaf::ClientInterface::callComplete;
+%rename(__dispatch_dataChangesReceived__)                   uaf::ClientInterface::dataChangesReceived;
+%rename(__dispatch_eventsReceived__)                        uaf::ClientInterface::eventsReceived;
+%rename(__dispatch_keepAliveReceived__)                     uaf::ClientInterface::keepAliveReceived;
+%rename(__dispatch_connectionStatusChanged__)               uaf::ClientInterface::connectionStatusChanged;
+%rename(__dispatch_subscriptionStatusChanged__)             uaf::ClientInterface::subscriptionStatusChanged;
+%rename(__dispatch_notificationsMissing__)                  uaf::ClientInterface::notificationsMissing;
+%rename(__dispatch_untrustedServerCertificateReceived__)    uaf::ClientInterface::untrustedServerCertificateReceived;
 
 // add a method test() to the ClientStatus class so that we dynamically raise an exception if needed:
 
-%extend uafc::ClientStatus {
-%pythoncode {
-    def test(self):
-        for member in dir(pyuaf.client.ClientStatus):                                           
-            if member[:9] == "raisedBy_":
-                if not getattr(self, member).isNull():
-                    raise getattr(self, member)
-   }
-}
+//%extend uaf::Status {
+//%pythoncode {
+//    def test(self):
+//        for member in dir(pyuaf.status.Status):                                           
+//            if member[:9] == "raisedBy_":
+//                if not getattr(self, member).isNull():
+//                    raise getattr(self, member)
+//   }
+//}
 
 
 
 // now include all classes in a generic way
-UAF_WRAP_CLASS("uaf/client/clientstatus.h"                            , uafc , ClientStatus              , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/subscriptions/subscriptioninformation.h"   , uafc , SubscriptionInformation   , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, SubscriptionInformationVector)
-UAF_WRAP_CLASS("uaf/client/subscriptions/monitorediteminformation.h"  , uafc , MonitoredItemInformation  , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, MonitoredItemInformationVector)
-UAF_WRAP_CLASS("uaf/client/subscriptions/monitoreditemnotification.h" , uafc , MonitoredItemNotification , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/subscriptions/datachangenotification.h"    , uafc , DataChangeNotification    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, DataChangeNotificationVector)
-UAF_WRAP_CLASS("uaf/client/subscriptions/eventnotification.h"         , uafc , EventNotification         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, EventNotificationVector)
-UAF_WRAP_CLASS("uaf/client/subscriptions/keepalivenotification.h"     , uafc , KeepAliveNotification     , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/sessions/sessioninformation.h"             , uafc , SessionInformation        , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, SessionInformationVector)
-UAF_WRAP_CLASS("uaf/client/clientinterface.h"                         , uafc , ClientInterface           , COPY_NO,  TOSTRING_NO,  COMP_NO,  pyuaf.client, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/subscriptions/subscriptioninformation.h"   , uaf , SubscriptionInformation   , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, SubscriptionInformationVector)
+UAF_WRAP_CLASS("uaf/client/subscriptions/monitorediteminformation.h"  , uaf , MonitoredItemInformation  , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, MonitoredItemInformationVector)
+UAF_WRAP_CLASS("uaf/client/subscriptions/monitoreditemnotification.h" , uaf , MonitoredItemNotification , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/subscriptions/datachangenotification.h"    , uaf , DataChangeNotification    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, DataChangeNotificationVector)
+UAF_WRAP_CLASS("uaf/client/subscriptions/eventnotification.h"         , uaf , EventNotification         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, EventNotificationVector)
+UAF_WRAP_CLASS("uaf/client/subscriptions/keepalivenotification.h"     , uaf , KeepAliveNotification     , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/sessions/sessioninformation.h"             , uaf , SessionInformation        , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client, SessionInformationVector)
+UAF_WRAP_CLASS("uaf/client/clientinterface.h"                         , uaf , ClientInterface           , COPY_NO,  TOSTRING_NO,  COMP_NO,  pyuaf.client, VECTOR_NO)
 
 
 // Client is quite a special class so we treat it here:
-%rename(ClientBase) uafc::Client;
+%rename(ClientBase) uaf::Client;
 %include <typemaps.i>
 // apply the OUTPUT and INOUT directives
 %apply uaf::ClientConnectionId & OUTPUT { uaf::ClientConnectionId & clientConnectionId };
 %apply uaf::ClientSubscriptionHandle & OUTPUT { uaf::ClientSubscriptionHandle & clientSubscriptionHandle };
 %include "uaf/client/client.h"
 // clear the OUTPUT and INOUT directives
-%clear uafc::ClientConnectionId & clientConnectionId;
-%clear uafc::ClientConnectionId & clientSubscriptionHandle;
+%clear uaf::ClientConnectionId & clientConnectionId;
+%clear uaf::ClientConnectionId & clientSubscriptionHandle;
 // finally, include the client code:
 %include "pyuaf/client/client.py"

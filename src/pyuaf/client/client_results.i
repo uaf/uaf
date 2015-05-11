@@ -44,7 +44,7 @@
 
 
 // import the EXPORT macro and some numeric typedefs
-%import "uaf/client/clientexport.h"
+%import "uaf/util/util.h"
 %import "uaf/util/handles.h"
 
 
@@ -76,75 +76,75 @@
 %ignore operator==(const BaseSubscriptionResult<_Target, _Async>& object1, const BaseSubscriptionResult<_Target, _Async>& object2);
 %ignore operator!=(const BaseSubscriptionResult<_Target, _Async>& object1, const BaseSubscriptionResult<_Target, _Async>& object2);
 %ignore operator< (const BaseSubscriptionResult<_Target, _Async>& object1, const BaseSubscriptionResult<_Target, _Async>& object2);
-%rename(__str__) uafc::BaseSessionResult::toString const;
-%rename(__str__) uafc::BaseSubscriptionResult::toString const;
+%rename(__str__) uaf::BaseSessionResult::toString const;
+%rename(__str__) uaf::BaseSubscriptionResult::toString const;
 
 // wrap some classes that are not defined by macros:
-UAF_WRAP_CLASS("uaf/client/results/basesessionresulttarget.h"                   , uafc , BaseSessionResultTarget                   , COPY_NO , TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/results/basesubscriptionresulttarget.h"              , uafc , BaseSubscriptionResultTarget              , COPY_NO , TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/results/asyncresulttarget.h"                         , uafc , AsyncResultTarget                         , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, AsyncResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/browseresulttarget.h"                        , uafc , BrowseResultTarget                        , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, BrowseResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/createmonitoreddataresulttarget.h"           , uafc , CreateMonitoredDataResultTarget           , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, CreateMonitoredDataResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/createmonitoredeventsresulttarget.h"         , uafc , CreateMonitoredEventsResultTarget         , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, CreateMonitoredEventsResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/methodcallresulttarget.h"                    , uafc , MethodCallResultTarget                    , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, MethodCallResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/readresulttarget.h"                          , uafc , ReadResultTarget                          , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, ReadResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/translatebrowsepathstonodeidsresulttarget.h" , uafc , TranslateBrowsePathsToNodeIdsResultTarget , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, TranslateBrowsePathsToNodeIdsResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/writeresulttarget.h"                         , uafc , WriteResultTarget                         , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, WriteResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/historyreadrawmodifiedresulttarget.h"        , uafc , HistoryReadRawModifiedResultTarget        , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, HistoryReadRawModifiedResultTargetVector)
-UAF_WRAP_CLASS("uaf/client/results/basesessionresult.h"                         , uafc , BaseSessionResult                         , COPY_YES, TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/results/basesubscriptionresult.h"                    , uafc , BaseSubscriptionResult                    , COPY_YES, TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/results/basesessionresulttarget.h"                   , uaf , BaseSessionResultTarget                   , COPY_NO , TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/results/basesubscriptionresulttarget.h"              , uaf , BaseSubscriptionResultTarget              , COPY_NO , TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/results/asyncresulttarget.h"                         , uaf , AsyncResultTarget                         , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, AsyncResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/browseresulttarget.h"                        , uaf , BrowseResultTarget                        , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, BrowseResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/createmonitoreddataresulttarget.h"           , uaf , CreateMonitoredDataResultTarget           , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, CreateMonitoredDataResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/createmonitoredeventsresulttarget.h"         , uaf , CreateMonitoredEventsResultTarget         , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, CreateMonitoredEventsResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/methodcallresulttarget.h"                    , uaf , MethodCallResultTarget                    , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, MethodCallResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/readresulttarget.h"                          , uaf , ReadResultTarget                          , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, ReadResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/translatebrowsepathstonodeidsresulttarget.h" , uaf , TranslateBrowsePathsToNodeIdsResultTarget , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, TranslateBrowsePathsToNodeIdsResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/writeresulttarget.h"                         , uaf , WriteResultTarget                         , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, WriteResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/historyreadrawmodifiedresulttarget.h"        , uaf , HistoryReadRawModifiedResultTarget        , COPY_NO , TOSTRING_YES, COMP_YES, pyuaf.client.results, HistoryReadRawModifiedResultTargetVector)
+UAF_WRAP_CLASS("uaf/client/results/basesessionresult.h"                         , uaf , BaseSessionResult                         , COPY_YES, TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/results/basesubscriptionresult.h"                    , uaf , BaseSubscriptionResult                    , COPY_YES, TOSTRING_NO,  COMP_NO,  pyuaf.client.results, VECTOR_NO)
 
 
 
 // define a macro to create synchronous session results
-%define CREATE_UAFC_SYNC_SESSIONRESULT(SERVICE)
-    %template(SERVICE##Result) uafc::BaseSessionResult<uafc::SERVICE##ResultTarget, false>;
+%define CREATE_UAF_SYNC_SESSIONRESULT(SERVICE)
+    %template(SERVICE##Result) uaf::BaseSessionResult<uaf::SERVICE##ResultTarget, false>;
 %enddef
 
 
 // define a macro to create asynchronous session results
-%define CREATE_UAFC_ASYNC_SESSIONRESULT(SERVICE)
-    %template(Async##SERVICE##Result) uafc::BaseSessionResult<uafc::AsyncResultTarget, true>;
+%define CREATE_UAF_ASYNC_SESSIONRESULT(SERVICE)
+    %template(Async##SERVICE##Result) uaf::BaseSessionResult<uaf::AsyncResultTarget, true>;
 %enddef
 
 
 // create the synchronous session results
-CREATE_UAFC_SYNC_SESSIONRESULT(Read)
-CREATE_UAFC_SYNC_SESSIONRESULT(Write)
-CREATE_UAFC_SYNC_SESSIONRESULT(MethodCall)
-CREATE_UAFC_SYNC_SESSIONRESULT(TranslateBrowsePathsToNodeIds)
-CREATE_UAFC_SYNC_SESSIONRESULT(Browse)
-%template(BrowseNextResult) uafc::BaseSessionResult<uafc::BrowseResultTarget, false>;
-CREATE_UAFC_SYNC_SESSIONRESULT(HistoryReadRawModified)
+CREATE_UAF_SYNC_SESSIONRESULT(Read)
+CREATE_UAF_SYNC_SESSIONRESULT(Write)
+CREATE_UAF_SYNC_SESSIONRESULT(MethodCall)
+CREATE_UAF_SYNC_SESSIONRESULT(TranslateBrowsePathsToNodeIds)
+CREATE_UAF_SYNC_SESSIONRESULT(Browse)
+%template(BrowseNextResult) uaf::BaseSessionResult<uaf::BrowseResultTarget, false>;
+CREATE_UAF_SYNC_SESSIONRESULT(HistoryReadRawModified)
 
 // create the asynchronous session results
-CREATE_UAFC_ASYNC_SESSIONRESULT(Read)
-CREATE_UAFC_ASYNC_SESSIONRESULT(Write)
-CREATE_UAFC_ASYNC_SESSIONRESULT(MethodCall)
+CREATE_UAF_ASYNC_SESSIONRESULT(Read)
+CREATE_UAF_ASYNC_SESSIONRESULT(Write)
+CREATE_UAF_ASYNC_SESSIONRESULT(MethodCall)
 
 
 // define a macro to create synchronous subscription results
-%define CREATE_UAFC_SYNC_SUBSCRIPTIONRESULT(SERVICE)
-    %template(Base##SERVICE##Result) uafc::BaseSessionResult<uafc::SERVICE##ResultTarget, false>;
-    %template(SERVICE##Result) uafc::BaseSubscriptionResult<uafc::SERVICE##ResultTarget, false>;
+%define CREATE_UAF_SYNC_SUBSCRIPTIONRESULT(SERVICE)
+    %template(Base##SERVICE##Result) uaf::BaseSessionResult<uaf::SERVICE##ResultTarget, false>;
+    %template(SERVICE##Result) uaf::BaseSubscriptionResult<uaf::SERVICE##ResultTarget, false>;
 %enddef
 
 
 // define a macro to create asynchronous subscription results
-%define CREATE_UAFC_ASYNC_SUBSCRIPTIONRESULT(SERVICE)
-    %template(BaseAsync##SERVICE##Result) uafc::BaseSessionResult<uafc::AsyncResultTarget, true>;
-    %template(Async##SERVICE##Result) uafc::BaseSubscriptionResult<uafc::AsyncResultTarget, true>;
+%define CREATE_UAF_ASYNC_SUBSCRIPTIONRESULT(SERVICE)
+    %template(BaseAsync##SERVICE##Result) uaf::BaseSessionResult<uaf::AsyncResultTarget, true>;
+    %template(Async##SERVICE##Result) uaf::BaseSubscriptionResult<uaf::AsyncResultTarget, true>;
 %enddef
 
 
 // create the synchronous subscription results
-CREATE_UAFC_SYNC_SUBSCRIPTIONRESULT(CreateMonitoredData)
-CREATE_UAFC_SYNC_SUBSCRIPTIONRESULT(CreateMonitoredEvents)
+CREATE_UAF_SYNC_SUBSCRIPTIONRESULT(CreateMonitoredData)
+CREATE_UAF_SYNC_SUBSCRIPTIONRESULT(CreateMonitoredEvents)
 
 
 // create the asynchronous subscription results
-CREATE_UAFC_ASYNC_SUBSCRIPTIONRESULT(CreateMonitoredData)
-CREATE_UAFC_ASYNC_SUBSCRIPTIONRESULT(CreateMonitoredEvents)
+CREATE_UAF_ASYNC_SUBSCRIPTIONRESULT(CreateMonitoredData)
+CREATE_UAF_ASYNC_SUBSCRIPTIONRESULT(CreateMonitoredEvents)
 
 
 // include the results header

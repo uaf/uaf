@@ -894,8 +894,7 @@ class Client(ClientBase):
        :raise pyuaf.util.errors.UafError:
             Base exception, catch this to handle any other errors.
        """
-       status = ClientBase.findServersNow(self)
-       pyuaf.util.errors.evaluate(status)
+       ClientBase.findServersNow(self).test()
     
     
     def serversFound(self):
@@ -931,8 +930,7 @@ class Client(ClientBase):
             Base exception, catch this to handle any other errors.
         """
         vec = pyuaf.util.EndpointDescriptionVector()
-        status = ClientBase.getEndpoints(self, discoveryUrl, vec)
-        pyuaf.util.errors.evaluate(status)
+        ClientBase.getEndpoints(self, discoveryUrl, vec).test()
         
         # put the elements in a normal python list
         l = []
@@ -998,7 +996,7 @@ class Client(ClientBase):
            sessionSettings = pyuaf.client.settings.SessionSettings()
             
        status, clientConnectionId = ClientBase.manuallyConnect(self, serverUri, sessionSettings)
-       pyuaf.util.errors.evaluate(status)
+       status.test()
        return clientConnectionId
     
     
@@ -1075,7 +1073,7 @@ class Client(ClientBase):
             serverCertificate = pyuaf.util.PkiCertificate()
         
         status, clientConnectionId = ClientBase.manuallyConnectToEndpoint(self, endpointUrl, sessionSettings, serverCertificate)
-        pyuaf.util.errors.evaluate(status)
+        status.test()
         return clientConnectionId
     
     
@@ -1097,8 +1095,7 @@ class Client(ClientBase):
        :raise pyuaf.util.errors.UafError:
             Base exception, catch this to handle any other errors.
        """
-       status = ClientBase.manuallyDisconnect(self, clientConnectionId)
-       pyuaf.util.errors.evaluate(status)
+       ClientBase.manuallyDisconnect(self, clientConnectionId).test()
     
     
     def manuallySubscribe(self, clientConnectionId, subscriptionSettings=None):
@@ -1123,7 +1120,7 @@ class Client(ClientBase):
            subscriptionSettings = pyuaf.client.settings.SubscriptionSettings()
        
        status, clientSubscriptionHandle = ClientBase.manuallySubscribe(self, clientConnectionId, subscriptionSettings)
-       pyuaf.util.errors.evaluate(status)
+       status.test()
        return clientSubscriptionHandle
     
     
@@ -1145,8 +1142,7 @@ class Client(ClientBase):
        :raise pyuaf.util.errors.UafError:
             Base exception, catch this to handle any other errors.
        """
-       status = ClientBase.manuallyUnsubscribe(self, clientConnectionId, clientSubscriptionHandle)
-       pyuaf.util.errors.evaluate(status)
+       ClientBase.manuallyUnsubscribe(self, clientConnectionId, clientSubscriptionHandle).test()
     
     
     def sessionInformation(self, clientConnectionId):
@@ -1164,8 +1160,7 @@ class Client(ClientBase):
              Base exception, catch this to handle any other errors.
         """
         sessionInfo = pyuaf.client.SessionInformation()
-        status = ClientBase.sessionInformation(self, clientConnectionId, sessionInfo)
-        pyuaf.util.errors.evaluate(status)
+        ClientBase.sessionInformation(self, clientConnectionId, sessionInfo).test()
         return sessionInfo
     
     
@@ -1198,8 +1193,7 @@ class Client(ClientBase):
              Base exception, catch this to handle any other errors.
         """
         subscriptionInfo = pyuaf.client.SubscriptionInformation()
-        status = ClientBase.subscriptionInformation(self, clientSubscriptionHandle, subscriptionInfo)
-        pyuaf.util.errors.evaluate(status)
+        ClientBase.subscriptionInformation(self, clientSubscriptionHandle, subscriptionInfo).test()
         return subscriptionInfo
     
     
@@ -1242,8 +1236,7 @@ class Client(ClientBase):
              Base exception, catch this to handle any other errors.
         """
         info = pyuaf.client.MonitoredItemInformation()
-        status = ClientBase.monitoredItemInformation(self, clientHandle, info)
-        pyuaf.util.errors.evaluate(status)
+        ClientBase.monitoredItemInformation(self, clientHandle, info).test()
         return info
     
     
@@ -1292,9 +1285,8 @@ class Client(ClientBase):
         if sessionConfig is None:
             sessionConfig = pyuaf.client.configs.SessionConfig()
         
-        status = ClientBase.read(self, addressVector, attributeId, serviceConfig, sessionConfig, result)
+        ClientBase.read(self, addressVector, attributeId, serviceConfig, sessionConfig, result).test()
         
-        pyuaf.util.errors.evaluate(status)
         return result
     
     
@@ -1377,10 +1369,8 @@ class Client(ClientBase):
         try:
             self.__asyncReadLock__.acquire()
         
-            status = ClientBase.beginRead(self, addressVector, attributeId, serviceConfig, sessionConfig, result)
+            ClientBase.beginRead(self, addressVector, attributeId, serviceConfig, sessionConfig, result).test()
             
-            pyuaf.util.errors.evaluate(status)
-                    
             # register the callback function if necessary
             if callback is not None:
                 self.__asyncReadCallbacks__[result.requestHandle] = callback
@@ -1452,10 +1442,8 @@ class Client(ClientBase):
         if sessionConfig is None:
             sessionConfig = pyuaf.client.configs.SessionConfig()
         
-        status = ClientBase.write(self, addressVector, dataVector, attributeId, serviceConfig, 
-                                  sessionConfig, result)
+        ClientBase.write(self, addressVector, dataVector, attributeId, serviceConfig, sessionConfig, result).test()
         
-        pyuaf.util.errors.evaluate(status)
         return result
 
     
@@ -1551,11 +1539,8 @@ class Client(ClientBase):
         try:
             self.__asyncWriteLock__.acquire()
         
-            status = ClientBase.beginWrite(self, addressVector, dataVector, attributeId, serviceConfig, 
-                                           sessionConfig, result)
+            ClientBase.beginWrite(self, addressVector, dataVector, attributeId, serviceConfig, sessionConfig, result).test()
             
-            pyuaf.util.errors.evaluate(status)
-                    
             # register the callback function if necessary
             if callback is not None:
                 self.__asyncWriteCallbacks__[result.requestHandle] = callback
@@ -1625,10 +1610,8 @@ class Client(ClientBase):
         if sessionConfig is None:
             sessionConfig = pyuaf.client.configs.SessionConfig()
         
-        status = ClientBase.call(self, objectAddress, methodAddress, inputArgsVector, 
-                                 serviceConfig, sessionConfig, result)
+        ClientBase.call(self, objectAddress, methodAddress, inputArgsVector, serviceConfig, sessionConfig, result).test()
         
-        pyuaf.util.errors.evaluate(status)
         return result
     
     
@@ -1708,11 +1691,8 @@ class Client(ClientBase):
         try:
             self.__asyncCallLock__.acquire()
             
-            status = ClientBase.beginCall(self, objectAddress, methodAddress, inputArgsVector, 
-                                          serviceConfig, sessionConfig, result)
+            ClientBase.beginCall(self, objectAddress, methodAddress, inputArgsVector, serviceConfig, sessionConfig, result).test()
             
-            pyuaf.util.errors.evaluate(status)
-                    
             # register the callback function if necessary
             if callback is not None:
                 self.__asyncCallCallbacks__[result.requestHandle] = callback
@@ -1777,10 +1757,9 @@ class Client(ClientBase):
         if sessionConfig is None:
             sessionConfig = pyuaf.client.configs.SessionConfig()
         
-        status = ClientBase.browse(self, addressVector, maxAutoBrowseNext, serviceConfig, 
-                                   sessionConfig, result)
+        ClientBase.browse(self, addressVector, maxAutoBrowseNext, serviceConfig, 
+                                   sessionConfig, result).test()
         
-        pyuaf.util.errors.evaluate(status)
         return result
     
     
@@ -1854,10 +1833,9 @@ class Client(ClientBase):
         if sessionConfig is None:
             sessionConfig = pyuaf.client.configs.SessionConfig()
         
-        status = ClientBase.browseNext(self, addressVector, byteStringVector, serviceConfig, 
-                                       sessionConfig, result)
+        ClientBase.browseNext(self, addressVector, byteStringVector, serviceConfig, 
+                              sessionConfig, result).test()
         
-        pyuaf.util.errors.evaluate(status)
         return result
     
     
@@ -1971,11 +1949,10 @@ class Client(ClientBase):
         if sessionConfig is None:
             sessionConfig = pyuaf.client.configs.SessionConfig()
         
-        status = ClientBase.historyReadRaw(self, addressVector, startTime, 
-                                           endTime, numValuesPerNode, maxAutoReadMore, 
-                                           byteStringVector, serviceConfig, sessionConfig, result)
+        ClientBase.historyReadRaw(self, addressVector, startTime, 
+                                       endTime, numValuesPerNode, maxAutoReadMore, 
+                                       byteStringVector, serviceConfig, sessionConfig, result).test()
         
-        pyuaf.util.errors.evaluate(status)
         return result
     
     
@@ -2091,12 +2068,11 @@ class Client(ClientBase):
         if sessionConfig is None:
             sessionConfig = pyuaf.client.configs.SessionConfig()
         
-        status = ClientBase.historyReadModified(self, addressVector, startTime, 
+        ClientBase.historyReadModified(self, addressVector, startTime, 
                                                 endTime, numValuesPerNode, maxAutoReadMore, 
                                                 byteStringVector, serviceConfig, sessionConfig, 
-                                                result)
+                                                result).test()
         
-        pyuaf.util.errors.evaluate(status)
         return result
     
     
@@ -2218,7 +2194,7 @@ class Client(ClientBase):
                     raise TypeError("The number of result targets does not correspond to the "
                                     "number of nofificationCallbacks")
             
-            pyuaf.util.errors.evaluate(status)
+            status.test()
             
             return result
         
@@ -2357,7 +2333,7 @@ class Client(ClientBase):
                     raise TypeError("The number of result targets does not correspond to the "
                                     "number of nofificationCallbacks")
             
-            pyuaf.util.errors.evaluate(status)
+            status.test()
             
             return result
         
@@ -2437,7 +2413,7 @@ class Client(ClientBase):
                                               clientSubscriptionHandle, 
                                               publishingEnabled, 
                                               serviceSettings)
-        pyuaf.util.errors.evaluate(status)
+        status.test()
     
             
     def setMonitoringMode(self, clientHandles, monitoringMode, serviceSettings=None):
@@ -2525,7 +2501,7 @@ class Client(ClientBase):
                                               monitoringMode, 
                                               serviceSettings, 
                                               results)
-        pyuaf.util.errors.evaluate(status)
+        status.test()
         return results
         
         
@@ -2659,7 +2635,7 @@ class Client(ClientBase):
                             if type(request) == pyuaf.client.requests.CreateMonitoredDataRequest:
                                 self.__dataNotificationCallbacks__[result.targets[i].clientHandle] = notificationCallbacks[i]
                 
-                pyuaf.util.errors.evaluate(status)
+                status.test()
                 
                 # register the resultCallback if necessary
                 if resultCallback is not None:

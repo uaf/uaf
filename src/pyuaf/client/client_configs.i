@@ -39,7 +39,7 @@
 
 
 // import the EXPORT macro and some numeric typedefs
-%import "uaf/client/clientexport.h"
+%import "uaf/util/util.h"
 %import "uaf/util/handles.h"
 
 
@@ -66,27 +66,27 @@
 
 
 // wrap some configs that are not defined by macros:
-UAF_WRAP_CLASS("uaf/client/configs/baseserviceconfig.h"  , uafc , BaseServiceConfig  , COPY_NO, TOSTRING_YES, COMP_NO,  pyuaf.client.configs, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/configs/sessionconfig.h"      , uafc , SessionConfig      , COPY_NO, TOSTRING_YES, COMP_NO,  pyuaf.client.configs, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/configs/subscriptionconfig.h" , uafc , SubscriptionConfig , COPY_NO, TOSTRING_YES, COMP_NO,  pyuaf.client.configs, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/configs/baseserviceconfig.h"  , uaf , BaseServiceConfig  , COPY_NO, TOSTRING_YES, COMP_NO,  pyuaf.client.configs, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/configs/sessionconfig.h"      , uaf , SessionConfig      , COPY_NO, TOSTRING_YES, COMP_NO,  pyuaf.client.configs, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/configs/subscriptionconfig.h" , uaf , SubscriptionConfig , COPY_NO, TOSTRING_YES, COMP_NO,  pyuaf.client.configs, VECTOR_NO)
 
 
 // define a macro to create the service configs (which are just typedefs)
-%define CREATE_UAFC_CONFIG(SERVICE)
-    %template(SERVICE##Config) uafc::BaseServiceConfig< uafc::SERVICE##Settings >;
+%define CREATE_UAF_CONFIG(SERVICE)
+    %template(SERVICE##Config) uaf::BaseServiceConfig< uaf::SERVICE##Settings >;
 %enddef
 
 
 // create the service configs
-CREATE_UAFC_CONFIG(Read)
-CREATE_UAFC_CONFIG(Write)
-CREATE_UAFC_CONFIG(MethodCall)
-CREATE_UAFC_CONFIG(TranslateBrowsePathsToNodeIds)
-CREATE_UAFC_CONFIG(Browse)
-CREATE_UAFC_CONFIG(BrowseNext)
-CREATE_UAFC_CONFIG(HistoryReadRawModified)
-CREATE_UAFC_CONFIG(CreateMonitoredData)
-CREATE_UAFC_CONFIG(CreateMonitoredEvents)
+CREATE_UAF_CONFIG(Read)
+CREATE_UAF_CONFIG(Write)
+CREATE_UAF_CONFIG(MethodCall)
+CREATE_UAF_CONFIG(TranslateBrowsePathsToNodeIds)
+CREATE_UAF_CONFIG(Browse)
+CREATE_UAF_CONFIG(BrowseNext)
+CREATE_UAF_CONFIG(HistoryReadRawModified)
+CREATE_UAF_CONFIG(CreateMonitoredData)
+CREATE_UAF_CONFIG(CreateMonitoredEvents)
 
 
 // include configs header
