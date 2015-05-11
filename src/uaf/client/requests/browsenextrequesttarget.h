@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_BROWSENEXTREQUESTTARGET_H_
-#define UAFC_BROWSENEXTREQUESTTARGET_H_
+#ifndef UAF_BROWSENEXTREQUESTTARGET_H_
+#define UAF_BROWSENEXTREQUESTTARGET_H_
 
 
 
@@ -35,17 +35,17 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::BrowseNextRequestTarget is the part of a uafc::BrowseNextRequest that specifies the
+    * A uaf::BrowseNextRequestTarget is the part of a uaf::BrowseNextRequest that specifies the
     * continuation point.
     *
     * @ingroup ClientRequests
     ***********************************************************************************************/
-    class UAFC_EXPORT BrowseNextRequestTarget : public uafc::BaseSessionRequestTarget
+    class UAF_EXPORT BrowseNextRequestTarget : public uaf::BaseSessionRequestTarget
     {
     public:
 
@@ -93,13 +93,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const BrowseNextRequestTarget& object1,
                 const BrowseNextRequestTarget& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const BrowseNextRequestTarget& object1,
                 const BrowseNextRequestTarget& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const BrowseNextRequestTarget& object1,
                 const BrowseNextRequestTarget& object2);
 
@@ -140,4 +140,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_BROWSENEXTREQUESTTARGET_H_ */
+#endif /* UAF_BROWSENEXTREQUESTTARGET_H_ */
