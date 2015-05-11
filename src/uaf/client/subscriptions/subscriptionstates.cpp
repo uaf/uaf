@@ -20,22 +20,21 @@
 
 #include "uaf/client/subscriptions/subscriptionstates.h"
 
-namespace uafc
+namespace uaf
 {
-    using namespace uafc;
 
     namespace subscriptionstates
     {
 
         // Get a string representation
         // =============================================================================================
-        std::string toString(uafc::subscriptionstates::SubscriptionState state)
+        std::string toString(uaf::subscriptionstates::SubscriptionState state)
         {
             switch (state)
             {
-                case uafc::subscriptionstates::Created:
+                case uaf::subscriptionstates::Created:
                     return "Created";
-                case uafc::subscriptionstates::Deleted:
+                case uaf::subscriptionstates::Deleted:
                     return "Deleted";
                 default:
                     return "UNKNOWN";
@@ -45,13 +44,13 @@ namespace uafc
 
         // SDK to UAF mode
         // =============================================================================================
-        UaStatus toSdk(uafc::subscriptionstates::SubscriptionState state)
+        UaStatus toSdk(uaf::subscriptionstates::SubscriptionState state)
         {
             switch (state)
             {
-                case uafc::subscriptionstates::Created:
+                case uaf::subscriptionstates::Created:
                     return UaStatus(OpcUa_Good);
-                case uafc::subscriptionstates::Deleted:
+                case uaf::subscriptionstates::Deleted:
                     return UaStatus(OpcUa_Bad);
                 default:
                     return UaStatus(OpcUa_Bad);
@@ -60,12 +59,12 @@ namespace uafc
 
         // UAF to SDK mode
         // =============================================================================================
-        uafc::subscriptionstates::SubscriptionState toUaf(const UaStatus& serverStatus)
+        uaf::subscriptionstates::SubscriptionState toUaf(const UaStatus& serverStatus)
         {
             if (serverStatus.isGood())
-                return uafc::subscriptionstates::Created;
+                return uaf::subscriptionstates::Created;
             else
-                return uafc::subscriptionstates::Deleted;
+                return uaf::subscriptionstates::Deleted;
         }
     }
 }
