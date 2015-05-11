@@ -21,10 +21,10 @@ class StatusTest(unittest.TestCase):
         self.s0  = pyuaf.util.Status()
         self.s1  = pyuaf.util.Status(pyuaf.util.statuscodes.Good)
         self.s2  = pyuaf.util.Status(pyuaf.util.statuscodes.InvalidRequestError)
-        self.s3  = pyuaf.util.Status(pyuaf.util.statuscodes.ConnectionError, "Some connection error")
-        self.s3_ = pyuaf.util.Status(pyuaf.util.statuscodes.ConnectionError, "Some connection error")
-        self.s4  = pyuaf.util.Status(pyuaf.util.statuscodes.ConnectionError, "Some other connection error")
-        self.s5  = pyuaf.util.Status(pyuaf.util.statuscodes.ResolutionError, "Some address resolution error")
+        self.s3  = pyuaf.util.Status(pyuaf.util.errors.UnexpectedError("Some connection error"))
+        self.s3_ = pyuaf.util.Status(pyuaf.util.errors.UnexpectedError("Some connection error"))
+        self.s4  = pyuaf.util.Status(pyuaf.util.errors.UnexpectedError("Some other connection error"))
+        self.s5  = pyuaf.util.Status(pyuaf.util.errors.FindServersError())
     
     def test_util_Status_isUncertain(self):
         self.assertTrue( self.s0.isUncertain() )
@@ -57,15 +57,9 @@ class StatusTest(unittest.TestCase):
         self.assertFalse( self.s2.isNotBad() )
     
     def test_util_Status_statusCode(self):
-        self.assertEqual( self.s2.statusCode() , pyuaf.util.statuscodes.InvalidRequestError )
-    
-    def test_util_Status_statusCodeName(self):
-        self.assertEqual( self.s2.statusCodeName() , "InvalidRequestError" )
-    
-    def test_util_Status_addDiagnostic(self):
-        self.s0.addDiagnostic("test")
-        self.assertEqual( self.s0.additionalDiagnostics().hasDescription() , True   )
-        self.assertEqual( self.s0.additionalDiagnostics().getDescription() , "test" )
+        self.assertEqual( self.s2.statusCode , pyuaf.util.statuscodes.InvalidRequestError )
+        self.assertEqual( self.s3.statusCode , pyuaf.util.statuscodes.UnexpectedError )
+        self.assertEqual( self.s5.statusCode , pyuaf.util.statuscodes.FindServersError )
     
     def test_util_Status___eq__(self):
         self.assertTrue( self.s3 == self.s3_ )
@@ -76,11 +70,11 @@ class StatusTest(unittest.TestCase):
     
     def test_util_Status___lt__(self):
         self.assertTrue( self.s3 < self.s4 )
-        self.assertTrue( self.s3 < self.s5 )
+        self.assertTrue( self.s5 < self.s3 )
     
     def test_util_Status___gt__(self):
         self.assertTrue( self.s4 > self.s3 )
-        self.assertTrue( self.s5 > self.s3 )
+        self.assertTrue( self.s3 > self.s5 )
     
     def test_util_StatusVector(self):
         testVector(self, pyuaf.util.StatusVector, [self.s0, self.s1, self.s2, self.s3, self.s4, self.s5])
