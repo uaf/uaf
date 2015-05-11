@@ -20,22 +20,21 @@
 
 #include "uaf/client/subscriptions/monitoreditemstates.h"
 
-namespace uafc
+namespace uaf
 {
-    using namespace uafc;
 
     namespace monitoreditemstates
     {
 
         // Get a string representation
         // =============================================================================================
-        std::string toString(uafc::monitoreditemstates::MonitoredItemState state)
+        std::string toString(uaf::monitoreditemstates::MonitoredItemState state)
         {
             switch (state)
             {
-                case uafc::monitoreditemstates::Created:
+                case uaf::monitoreditemstates::Created:
                     return "Created";
-                case uafc::monitoreditemstates::NotCreated:
+                case uaf::monitoreditemstates::NotCreated:
                     return "NotCreated";
                 default:
                     return "UNKNOWN";
