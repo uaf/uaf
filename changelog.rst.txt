@@ -38,6 +38,9 @@ Informally:
 
 - SessionInformation contains more diagnostic info.
 
+- Relevant for C++ side only: the uafc:: namespace has been removed and all code is now part of the
+  uaf:: namespace. We did this because SWIG apparently has problems with namespaces in certain cases
+  (such as subclassing abstract classes of another namespace). 
 
 Formally:
 
