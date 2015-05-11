@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_CONNECTIONSTEP_H_
-#define UAFC_CONNECTIONSTEP_H_
+#ifndef UAF_CONNECTIONSTEP_H_
+#define UAF_CONNECTIONSTEP_H_
 
 // STD
 #include <string>
@@ -27,9 +27,9 @@
 // SDK
 #include "uaclient/uaclientsdk.h"
 // UAF
-#include "uaf/client/clientexport.h"
+#include "uaf/util/util.h"
 
-namespace uafc
+namespace uaf
 {
 
 
@@ -62,7 +62,7 @@ namespace uafc
          *
          * @ingroup ClientSessions
          */
-        std::string UAFC_EXPORT toString(uafc::connectionsteps::ConnectionStep step);
+        std::string UAF_EXPORT toString(uaf::connectionsteps::ConnectionStep step);
 
 
         /**
@@ -73,11 +73,11 @@ namespace uafc
          *
          * @ingroup ClientSessions
          */
-        uafc::connectionsteps::ConnectionStep UAFC_EXPORT fromSdk(
+        uaf::connectionsteps::ConnectionStep UAF_EXPORT fromSdk(
                 UaClientSdk::UaClient::ConnectServiceType step);
     }
 
 }
 
 
-#endif /* UAFC_CONNECTIONSTEP_H_ */
+#endif /* UAF_CONNECTIONSTEP_H_ */

@@ -20,10 +20,9 @@
 
 #include "uaf/client/sessions/sessioninformation.h"
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::size_t;
@@ -32,9 +31,9 @@ namespace uafc
     // Constructor
     // =============================================================================================
     SessionInformation::SessionInformation()
-    : sessionState(uafc::sessionstates::Disconnected),
+    : sessionState(uaf::sessionstates::Disconnected),
       clientConnectionId(0),
-      lastConnectionAttemptStep(uafc::connectionsteps::ActivateSession)
+      lastConnectionAttemptStep(uaf::connectionsteps::ActivateSession)
     {}
 
 
@@ -42,10 +41,10 @@ namespace uafc
     // =============================================================================================
     SessionInformation::SessionInformation(
             ClientConnectionId                      clientConnectionId,
-            uafc::sessionstates::SessionState       sessionState,
+            uaf::sessionstates::SessionState        sessionState,
             const string&                           serverUri,
             const connectionsteps::ConnectionStep&  lastConnectionAttemptStep,
-            const ClientStatus&                     lastConnectionAttemptStatus)
+            const Status&                           lastConnectionAttemptStatus)
       : sessionState(sessionState),
         clientConnectionId(clientConnectionId),
         serverUri(serverUri),
@@ -66,7 +65,7 @@ namespace uafc
 
         ss << indent << " - sessionState";
         ss << fillToPos(ss, colon);
-        ss << ": " << sessionState << " (" << uafc::sessionstates::toString(sessionState) << ")\n";
+        ss << ": " << sessionState << " (" << uaf::sessionstates::toString(sessionState) << ")\n";
 
         ss << indent << " - serverUri";
         ss << fillToPos(ss, colon);
@@ -74,7 +73,7 @@ namespace uafc
 
         ss << indent << " - lastConnectionAttemptStep";
         ss << fillToPos(ss, colon);
-        ss << ": " << uafc::connectionsteps::toString(lastConnectionAttemptStep) << "\n";
+        ss << ": " << uaf::connectionsteps::toString(lastConnectionAttemptStep) << "\n";
 
         ss << indent << " - lastConnectionAttemptStatus";
         ss << fillToPos(ss, colon);

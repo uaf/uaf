@@ -20,28 +20,27 @@
 
 #include "uaf/client/sessions/connectionsteps.h"
 
-namespace uafc
+namespace uaf
 {
-    using namespace uafc;
 
     namespace connectionsteps
     {
 
         // Get a string representation
         // =============================================================================================
-        std::string toString(uafc::connectionsteps::ConnectionStep step)
+        std::string toString(uaf::connectionsteps::ConnectionStep step)
         {
             switch (step)
             {
-                case uafc::connectionsteps::ActivateSession:
+                case uaf::connectionsteps::ActivateSession:
                     return "ActivateSession";
-                case uafc::connectionsteps::CertificateValidation:
+                case uaf::connectionsteps::CertificateValidation:
                     return "CertificateValidation";
-                case uafc::connectionsteps::CreateSession:
+                case uaf::connectionsteps::CreateSession:
                     return "CreateSession";
-                case uafc::connectionsteps::OpenSecureChannel:
+                case uaf::connectionsteps::OpenSecureChannel:
                     return "OpenSecureChannel";
-                case uafc::connectionsteps::NoAttemptYet:
+                case uaf::connectionsteps::NoAttemptYet:
                     return "NoAttemptYet";
                 default:
                     return "Unknown";
@@ -50,20 +49,20 @@ namespace uafc
 
         // to UAF
         // =============================================================================================
-        uafc::connectionsteps::ConnectionStep fromSdk(UaClientSdk::UaClient::ConnectServiceType step)
+        uaf::connectionsteps::ConnectionStep fromSdk(UaClientSdk::UaClient::ConnectServiceType step)
         {
             switch (step)
             {
                 case UaClientSdk::UaClient::ActivateSession:
-                    return uafc::connectionsteps::ActivateSession;
+                    return uaf::connectionsteps::ActivateSession;
                 case UaClientSdk::UaClient::CertificateValidation:
-                    return uafc::connectionsteps::CertificateValidation;
+                    return uaf::connectionsteps::CertificateValidation;
                 case UaClientSdk::UaClient::CreateSession:
-                    return uafc::connectionsteps::CreateSession;
+                    return uaf::connectionsteps::CreateSession;
                 case UaClientSdk::UaClient::OpenSecureChannel:
-                    return uafc::connectionsteps::OpenSecureChannel;
+                    return uaf::connectionsteps::OpenSecureChannel;
                 default:
-                    return uafc::connectionsteps::Unknown;
+                    return uaf::connectionsteps::Unknown;
             }
         }
     }

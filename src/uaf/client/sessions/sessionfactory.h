@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_SESSIONFACTORY_H_
-#define UAFC_SESSIONFACTORY_H_
+#ifndef UAF_SESSIONFACTORY_H_
+#define UAF_SESSIONFACTORY_H_
 
 // STD
 #include <vector>
@@ -41,16 +41,16 @@
 #include "uaf/client/invocations/invocationfactory.h"
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::SessionFactory creates and owns uafc::Session instances.
+    * An uaf::SessionFactory creates and owns uaf::Session instances.
     *
     * @ingroup ClientSessions
     ***********************************************************************************************/
-    class UAFC_EXPORT SessionFactory : private UaClientSdk::UaSessionCallback
+    class UAF_EXPORT SessionFactory : private UaClientSdk::UaSessionCallback
     {
     public:
 
@@ -65,9 +65,9 @@ namespace uafc
          */
         SessionFactory(
                 uaf::LoggerFactory* loggerFactory,
-                uafc::ClientInterface* clientInterface,
-                uafc::Discoverer* discoverer,
-                uafc::Database* database);
+                uaf::ClientInterface* clientInterface,
+                uaf::Discoverer* discoverer,
+                uaf::Database* database);
 
 
         /**
@@ -88,12 +88,12 @@ namespace uafc
         /**
          * Manually connect to a specific server.
          *
-         * See uafc::Client::manuallyConnect for more info.
+         * See uaf::Client::manuallyConnect for more info.
          *
          * @param serverUri     The server URI to which the client must connect. This server URI
          *                      (e.g. 'urn:UnifiedAutomation:UaDemoserver') must have been found
          *                      by the discovery process (which requires a Discovery URL that you
-         *                      must provide via the uafc::Client::setClientSettings method).
+         *                      must provide via the uaf::Client::setClientSettings method).
          * @param settings      The session settings that you want your session to have.
          * @param clientConnectionId A return parameter, giving you the id of the session if it
          *                           was created.
@@ -101,14 +101,14 @@ namespace uafc
          */
         uaf::Status manuallyConnect(
                 const std::string&              serverUri,
-                const uafc::SessionSettings&    settings,
+                const uaf::SessionSettings&    settings,
                 uaf::ClientConnectionId&        clientConnectionId);
 
 
         /**
          * Manually connect to a specific endpoint *without* any discovery involved.
          *
-         * See uafc::Client::manuallyConnectToEndpoint for more info.
+         * See uaf::Client::manuallyConnectToEndpoint for more info.
          *
          * @param endpointUrl   The endpoint URL to which you want to connect
          *                      (e.g. opc.tcp://localhost:48010)
@@ -118,9 +118,9 @@ namespace uafc
          *                           was created.
          * @return              Good if the session was created, Bad if not.
          */
-        uafc::ClientStatus manuallyConnectToEndpoint(
+        uaf::Status manuallyConnectToEndpoint(
                 const std::string&              endpointUrl,
-                const uafc::SessionSettings&    settings,
+                const uaf::SessionSettings&    settings,
                 const uaf::PkiCertificate&      serverCertificate,
                 uaf::ClientConnectionId&        clientConnectionId);
 
@@ -156,7 +156,7 @@ namespace uafc
          */
         uaf::Status sessionInformation(
                  uaf::ClientConnectionId    clientConnectionId,
-                 uafc::SessionInformation&  sessionInformation);
+                 uaf::SessionInformation&  sessionInformation);
 
         /**
          * Get the information of all sessions currently created by the client.
@@ -165,14 +165,14 @@ namespace uafc
          *
          * @return  A vector of the information of all sessions.
          */
-        std::vector<uafc::SessionInformation> allSessionInformations();
+        std::vector<uaf::SessionInformation> allSessionInformations();
 
 
         /**
          * Manually create a subscription.
          *
          * For more info about "manual" methods, see the documentation on the
-         * uafc::Client::manuallyConnect method.
+         * uaf::Client::manuallyConnect method.
          *
          * @param clientConnectionId    The id of the session which should host the subscription.
          * @param settings              The settings of the subscription you'd like to create.
@@ -183,7 +183,7 @@ namespace uafc
          */
         uaf::Status manuallySubscribe(
                 uaf::ClientConnectionId             clientConnectionId,
-                const uafc::SubscriptionSettings&   settings,
+                const uaf::SubscriptionSettings&   settings,
                 uaf::ClientSubscriptionHandle&      clientSubscriptionHandle);
 
 
@@ -210,7 +210,7 @@ namespace uafc
          */
         uaf::Status subscriptionInformation(
                  uaf::ClientSubscriptionHandle     clientSubscriptionHandle,
-                 uafc::SubscriptionInformation&     subscriptionInformation);
+                 uaf::SubscriptionInformation&     subscriptionInformation);
 
 
         /**
@@ -223,7 +223,7 @@ namespace uafc
          */
          uaf::Status monitoredItemInformation(
                 uaf::ClientHandle               clientHandle,
-                uafc::MonitoredItemInformation& monitoredItemInformation);
+                uaf::MonitoredItemInformation& monitoredItemInformation);
 
 
         /**
@@ -231,7 +231,7 @@ namespace uafc
          *
          * @return  A vector of all available SubscriptionInformation.
          */
-        std::vector<uafc::SubscriptionInformation> allSubscriptionInformations();
+        std::vector<uaf::SubscriptionInformation> allSubscriptionInformations();
 
 
         /**
@@ -245,7 +245,7 @@ namespace uafc
         uaf::Status setPublishingMode(
                  uaf::ClientSubscriptionHandle  clientSubscriptionHandle,
                  bool                           publishingEnabled,
-                 const uafc::ServiceSettings&   serviceSettings);
+                 const uaf::ServiceSettings&   serviceSettings);
 
         /**
         * Set the monitoring mode for the specified monitored items.
@@ -259,15 +259,15 @@ namespace uafc
         uaf::Status setMonitoringMode(
                std::vector<uaf::ClientHandle>          clientHandles,
                uaf::monitoringmodes::MonitoringMode    monitoringMode,
-               const uafc::ServiceSettings&            serviceSettings,
+               const uaf::ServiceSettings&            serviceSettings,
                std::vector<uaf::Status>&               results);
 
 
         /**
          * Invoke a request.
          *
-         * @tparam _Service The service to be requested (such as uafc::ReadService,
-         *                  uafc::AsyncMethodCallService, etc.).
+         * @tparam _Service The service to be requested (such as uaf::ReadService,
+         *                  uaf::AsyncMethodCallService, etc.).
          * @param request   The request to invoke.
          * @param mask      The mask identifying the targets of the request that need to be included
          *                  in the invocation.
@@ -297,7 +297,7 @@ namespace uafc
             bool handleStored = storeRequestHandleIfNeeded<_Service>(request, transactionId);
 
             // create an invocation factory
-            uafc::InvocationFactory<_Service> factory;
+            uaf::InvocationFactory<_Service> factory;
 
             logger_->debug("Building the invocations");
 
@@ -314,8 +314,7 @@ namespace uafc
             if (ret.isGood() && _Service::asynchronous)
             {
                 if (factory.invocations.size() > 1)
-                    ret.setStatus(uaf::statuscodes::UnsupportedError,
-                           "Asynchronous requests must be able to be assigned to a single session");
+                    ret = uaf::AsyncInvocationOnMultipleSessionsNotSupportedError();
             }
 
             // typedef the map iterator which holds the invocation for each server URI
@@ -340,7 +339,7 @@ namespace uafc
                 }
 
                 // try to acquire a session for the current server URI and session settings
-                uafc::Session* session;
+                uaf::Session* session;
                 ret = acquireSession(it->first, invocation->sessionSettings(), session);
 
                 // check if the session was acquired
@@ -351,15 +350,14 @@ namespace uafc
                     invocation->setSessionInformation(session->sessionInformation());
 
                     // if the session is connected, invoke the service
-                    if (session->isConnected() && ret.isGood())
+                    if (session->isConnected())
                     {
                         logger_->debug("Forwarding the invocation to session %d",
                                        session->clientConnectionId());
                         ret = session->invokeService<_Service>(request, *invocation);
                     }
                     else
-                        ret.setStatus(uaf::statuscodes::ConnectionError,
-                                      "No connected session to invoke the service");
+                        ret = session->sessionInformation().lastConnectionAttemptStatus;
 
                     // copy all data to the result
                     if (!_Service::asynchronous && ret.isGood())
@@ -398,7 +396,7 @@ namespace uafc
         typedef uint32_t Activity;
 
         // define a map to store all sessions, and their number of running activities
-        typedef std::map<uaf::ClientConnectionId, uafc::Session*>   SessionMap;
+        typedef std::map<uaf::ClientConnectionId, uaf::Session*>   SessionMap;
         typedef std::map<uaf::ClientConnectionId, Activity>         ActivityMap;
 
         // define a map to relate transaction ids with request handles
@@ -420,8 +418,8 @@ namespace uafc
          */
         uaf::Status acquireSession(
                 const std::string&              serverUri,
-                const uafc::SessionSettings&    sessionSettings,
-                uafc::Session*&                 session);
+                const uaf::SessionSettings&    sessionSettings,
+                uaf::Session*&                 session);
 
 
         /**
@@ -437,7 +435,7 @@ namespace uafc
          */
         uaf::Status acquireExistingSession(
                 uaf::ClientConnectionId     clientConnectionId,
-                uafc::Session*&             session);
+                uaf::Session*&             session);
 
 
         /**
@@ -453,7 +451,7 @@ namespace uafc
          *                  This means that a programming bug is present, most likely in the
          *                  sessionfactory!
          */
-        uaf::Status releaseSession(uafc::Session*& session, bool allowGarbageCollection=true);
+        uaf::Status releaseSession(uaf::Session*& session, bool allowGarbageCollection=true);
 
 
         /**
@@ -541,7 +539,7 @@ namespace uafc
          */
         template<typename _Service>
         bool storeRequestHandleIfNeeded(
-                const uafc::BaseSessionRequest<typename _Service::Config,
+                const uaf::BaseSessionRequest<typename _Service::Config,
                                                typename _Service::RequestTarget,
                                                _Service::asynchronous>& request,
                 uaf::TransactionId& transactionId)
@@ -574,7 +572,7 @@ namespace uafc
          */
         template<typename _Service>
         bool storeRequestHandleIfNeeded(
-                const uafc::BaseSubscriptionRequest<typename _Service::Config,
+                const uaf::BaseSubscriptionRequest<typename _Service::Config,
                                                     typename _Service::RequestTarget,
                                                     _Service::asynchronous>& request,
                 uaf::TransactionId& transactionId)
@@ -590,11 +588,11 @@ namespace uafc
         // logger of the session factory
         uaf::Logger* logger_;
         // the client interface to call whenever an asynchronous message is received
-        uafc::ClientInterface* clientInterface_;
+        uaf::ClientInterface* clientInterface_;
         // the discoverer of the servers in the system
-        uafc::Discoverer* discoverer_;
+        uaf::Discoverer* discoverer_;
         // pointer to the client database
-        uafc::Database* database_;
+        uaf::Database* database_;
 
         // the current transaction id, and a mutex to safely increment it
         uaf::TransactionId  transactionId_;
@@ -621,4 +619,4 @@ namespace uafc
 
 }
 
-#endif /* UAFC_SESSIONFACTORY_H_ */
+#endif /* UAF_SESSIONFACTORY_H_ */

@@ -20,10 +20,9 @@
 
 #include "uaf/client/sessions/sessionfactory.h"
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::vector;
     using std::map;
@@ -128,8 +127,8 @@ namespace uafc
         }
         else
         {
-            ret.addDiagnostic("Could not manually connect");
-            logger_->error(ret);
+            logger_->error("Could not manually connect:");
+            logger_->error(ret.toString());
         }
 
 
@@ -139,13 +138,13 @@ namespace uafc
 
     // Manually connect a session to a specific endpoint url
     // =============================================================================================
-    ClientStatus SessionFactory::manuallyConnectToEndpoint(
+    Status SessionFactory::manuallyConnectToEndpoint(
             const string&           endpointUrl,
             const SessionSettings&  settings,
             const PkiCertificate&   serverCertificate,
             ClientConnectionId&     clientConnectionId)
     {
-        ClientStatus ret;
+        Status ret;
 
         logger_->debug("Manually connecting to endpoint %s", endpointUrl.c_str());
 
@@ -244,7 +243,7 @@ namespace uafc
 
             if (acquisitionStatus.isGood())
             {
-                if (session->sessionState() == uafc::sessionstates::Disconnected)
+                if (session->sessionState() == uaf::sessionstates::Disconnected)
                 {
                     // if other activities are going on besides the house keeping,
                     // then try to reconnect the session
@@ -304,9 +303,7 @@ namespace uafc
                 return ret;
         }
 
-        return Status(statuscodes::InvalidRequestError,
-                      "ClientSubscriptionHandle %d was not found",
-                      clientSubscriptionHandle);
+        return UnknownClientSubscriptionHandleError(clientSubscriptionHandle);
     }
 
 
@@ -318,8 +315,7 @@ namespace uafc
     {
         Status ret;
 
-        ret.setStatus(statuscodes::InvalidRequestError,
-                      "clientHandle %d was not found", clientHandle);
+        ret = UnknownClientHandleError(clientHandle);
 
         // lock the mutex to make sure the sessionMap_ is not being manipulated
         UaMutexLocker locker(&sessionMapMutex_);
@@ -336,7 +332,7 @@ namespace uafc
                     monitoredItemInformation);
 
             if (monitoredItemFound)
-                ret.setGood();
+                ret = statuscodes::Good;
         }
 
         return ret;
@@ -452,9 +448,7 @@ namespace uafc
                 return ret;
         }
 
-        return Status(statuscodes::UnknownHandleError,
-                      "ClientSubscriptionHandle %d was not found",
-                      clientSubscriptionHandle);
+        return UnknownClientSubscriptionHandleError(clientSubscriptionHandle);
     }
 
 
@@ -472,10 +466,10 @@ namespace uafc
         // set the correct size for the results output parameter
         results.resize(clientHandles.size());
 
-        // fill all statuses with an "UnknownHandleError" status.
+        // fill all statuses with an "UnknownClientHandleError" status.
         // The statuses for which a handle will be found, will be updated further on.
-        for (vector<Status>::iterator it = results.begin(); it != results.end(); ++it)
-            it->setStatus(uaf::statuscodes::UnknownHandleError, "Unknown client handle!");
+        for (std::size_t i = 0; i < clientHandles.size(); i++)
+            results[i] = UnknownClientHandleError(clientHandles[i]);
 
         // lock the mutex to make sure the sessionMap_ is not being manipulated
         UaMutexLocker locker(&sessionMapMutex_);
@@ -530,7 +524,7 @@ namespace uafc
                 activityMap_[id] = activityMap_[id] + 1;
                 activityMapMutex_.unlock();
 
-                ret.setGood();
+                ret = statuscodes::Good;
 
                 break;
             }
@@ -570,7 +564,7 @@ namespace uafc
 
             // regardless of whether the connection succeeded or failed, set the return status
             // to 'good'
-            ret.setGood();
+            ret = statuscodes::Good;
         }
 
         // add some diagnostics
@@ -584,7 +578,7 @@ namespace uafc
         else
         {
             logger_->error("The requested session could not be acquired");
-            ret.addDiagnostic("The requested session could not be acquired");
+            //ret.addDiagnostic("The requested session could not be acquired");
         }
 
         return ret;
@@ -610,8 +604,7 @@ namespace uafc
 
         if (iter == sessionMap_.end())
         {
-            ret.setStatus(statuscodes::InvalidRequestError,
-                          "No session with clientConnectionId %d is known", clientConnectionId);
+            ret = UnknownClientConnectionIdError(clientConnectionId);
 
             logger_->error(ret);
         }
@@ -627,7 +620,7 @@ namespace uafc
             activityMapMutex_.unlock();
 
             // an existing session was acquired, so set the status to Good
-            ret.setGood();
+            ret = statuscodes::Good;
 
             logger_->debug("Session %d was acquired (#activities: %d)",
                            clientConnectionId, newActivityCount);
@@ -651,13 +644,12 @@ namespace uafc
 
         if (session == 0)
         {
-            ret.setStatus(statuscodes::UnexpectedError, "releaseSession() got a null pointer!");
+            ret = UnexpectedError("releaseSession() got a null pointer!");
             logger_->error(ret);
         }
         else if (activityMap_[session->clientConnectionId()] == 0)
         {
-            ret.setStatus(statuscodes::UnexpectedError,
-                          "Trying to release a fully released session!");
+            ret = UnexpectedError("Trying to release a fully released session!");
             logger_->error(ret);
         }
         else
@@ -666,12 +658,12 @@ namespace uafc
             ClientConnectionId id = session->clientConnectionId();
 
             activityMap_[id] = activityMap_[id] - 1;
-            ret.setGood();
+            ret = statuscodes::Good;
 
             logger_->debug("Session %d is now released (#activities: %d)", id, activityMap_[id]);
 
             // check if the session is disconnected
-            if (session->sessionState() == uafc::sessionstates::Disconnected)
+            if (session->sessionState() == uaf::sessionstates::Disconnected)
             {
                 // if there is no ongoing activity of the session (in other words: if there is no
                 // pointer to this session being used), we may delete it!
@@ -696,7 +688,7 @@ namespace uafc
 
     // Get a new transaction id
     // =============================================================================================
-    uafc::TransactionId SessionFactory::getNewTransactionId()
+    uaf::TransactionId SessionFactory::getNewTransactionId()
     {
         UaMutexLocker locker(&transactionIdMutex_);
 
@@ -745,7 +737,7 @@ namespace uafc
         if (acquireStatus.isGood())
         {
             SdkStatus sdkStatus(uaStatus);
-            ClientStatus status = CouldNotConnectError(session->serverUri(), sdkStatus);
+            Status status = AsyncConnectionFailedError(session->serverUri(), sdkStatus);
 
             // update the session state
             session->setConnectionStatus(
@@ -813,16 +805,24 @@ namespace uafc
         MethodCallResult result;
 
         // fill the status
-        result.overallStatus.fromSdk(uaStatus.statusCode(), uaStatus.toString().toUtf8());
+        if (uaStatus.isGood())
+            result.overallStatus = statuscodes::Good;
+        else
+            result.overallStatus = CallCompleteError(SdkStatus(uaStatus));
 
         // create the target and requestHandle
         result.requestHandle = handle;
         result.targets.resize(1);
 
         // set the status of the target
-        result.targets[0].status.fromSdk(
-                callResponse.callResult.statusCode(),
-                callResponse.callResult.toString().toUtf8());
+        if (OpcUa_IsGood(callResponse.callResult.statusCode()))
+            result.targets[0].status = statuscodes::Good;
+        else
+            result.targets[0].status = ServerCouldNotCallMethodError(
+                                            SdkStatus(callResponse.callResult.statusCode()));
+
+        // set the statuscode
+        result.targets[0].opcUaStatusCode = callResponse.callResult.statusCode();
 
         // fill the output arguments of the target
         for (uint32_t i = 0; i < callResponse.outputArguments.length(); i++)
@@ -832,7 +832,12 @@ namespace uafc
         for (uint32_t i = 0; i < callResponse.inputArgumentResults.length(); i++)
         {
             Status status;
-            status.fromSdk(callResponse.inputArgumentResults[i], "Invalid argument");
+
+            if (OpcUa_IsGood(callResponse.inputArgumentResults[i]))
+                status = statuscodes::Good;
+            else
+                status = InputArgumentError(SdkStatus(callResponse.inputArgumentResults[i]));
+
             result.targets[0].inputArgumentStatuses.push_back(status);
         }
 
@@ -883,9 +888,15 @@ namespace uafc
         // create a result to fill it
         ReadResult result;
 
-        // fill the status and requestHandle
+        // create the target and requestHandle
         result.requestHandle = handle;
-        result.overallStatus.fromSdk(uaStatus.statusCode(), uaStatus.toString().toUtf8());
+        result.targets.resize(1);
+
+        // fill the status
+        if (uaStatus.isGood())
+            result.overallStatus = statuscodes::Good;
+        else
+            result.overallStatus = ReadCompleteError(SdkStatus(uaStatus));
 
         // create the target
         result.targets.resize(values.length());
@@ -893,7 +904,16 @@ namespace uafc
         // walk through the received data values
         for (uint32_t i = 0; i < values.length(); i++)
         {
-            result.targets[i].status.fromSdk(values[i].StatusCode, "Server reported error");
+            // set the status of the target
+            if (OpcUa_IsGood(values[i].StatusCode))
+                result.targets[i].status = statuscodes::Good;
+            else
+                result.targets[i].status = ServerCouldNotReadError(SdkStatus(values[i].StatusCode));
+
+            // set the statuscode
+            result.targets[i].opcUaStatusCode = values[i].StatusCode;
+
+            // set the data
             result.targets[i].data = Variant(values[i].Value);
         }
         logger_->debug("ReadResult for request %d (transaction %d):", handle, transactionId);
@@ -951,7 +971,12 @@ namespace uafc
 
         // fill the status and requestHandle
         result.requestHandle = handle;
-        result.overallStatus.fromSdk(uaStatus.statusCode(), uaStatus.toString().toUtf8());
+
+        // fill the status
+        if (uaStatus.isGood())
+            result.overallStatus = statuscodes::Good;
+        else
+            result.overallStatus = WriteCompleteError(SdkStatus(uaStatus));
 
         // create the target
         result.targets.resize(results.length());
@@ -959,7 +984,13 @@ namespace uafc
         // walk through the received results
         for (uint32_t i = 0; i < results.length(); i++)
         {
-            result.targets[i].status.fromSdk(results[i], "Server reported error");
+            // set the status of the target
+            if (OpcUa_IsGood(results[i]))
+                result.targets[i].status = statuscodes::Good;
+            else
+                result.targets[i].status = ServerCouldNotWriteError(SdkStatus(results[i]));
+
+            result.targets[i].opcUaStatusCode = results[i];
         }
         logger_->debug("WriteResult for request %d (transaction %d):", handle, transactionId);
         logger_->debug(result.toString());
