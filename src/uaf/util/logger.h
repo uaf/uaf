@@ -267,6 +267,12 @@ namespace uaf
 
 
         /**
+         * Log the SDK status (Debug if Good, Warning if Uncertain, Error if Bad).
+         */
+        void log(const std::string& prefix, const uaf::SdkStatus& sdkStatus);
+
+
+        /**
          * Log a status object as an error.
          *
          * @param status    The status to print its message.
