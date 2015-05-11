@@ -21,10 +21,9 @@
 #include "uaf/client/settings/clientsettings.h"
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::size_t;
     using std::string;
     using std::stringstream;
@@ -100,28 +99,24 @@ namespace uafc
 
         location = certificateTrustListLocation.c_str();
         if (helperDir.exists(location))
-            ret.setGood();
+            ret = statuscodes::Good;
         else
             if (helperDir.mkpath(location))
-                ret.setGood();
+                ret = statuscodes::Good;
             else
-                ret.setStatus(uaf::statuscodes::ConfigurationError,
-                              "Failed to create the certificate trust list location '%s'",
-                              certificateTrustListLocation.c_str());
-
+                ret = CouldNotCreateCertificateTrustListLocationError(certificateTrustListLocation);
         if (ret.isGood())
         {
             location = certificateRevocationListLocation.c_str();
 
             if (helperDir.exists(location))
-                ret.setGood();
+                ret = statuscodes::Good;
             else
                 if (helperDir.mkpath(location))
-                    ret.setGood();
+                    ret = statuscodes::Good;
                 else
-                    ret.setStatus(uaf::statuscodes::ConfigurationError,
-                                  "Failed to create the certificate revocation list location '%s'",
-                                  certificateRevocationListLocation.c_str());
+                    ret = CouldNotCreateCertificateRevocationListLocationError(
+                            certificateRevocationListLocation);
         }
 
         if (ret.isGood())
@@ -129,14 +124,13 @@ namespace uafc
             location = issuersCertificatesLocation.c_str();
 
             if (helperDir.exists(location))
-                ret.setGood();
+                ret = statuscodes::Good;
             else
                 if (helperDir.mkpath(location))
-                    ret.setGood();
+                    ret = statuscodes::Good;
                 else
-                    ret.setStatus(uaf::statuscodes::ConfigurationError,
-                                  "Failed to create the issuers certificates location '%s'",
-                                  issuersCertificatesLocation.c_str());
+                    ret = CouldNotCreateIssuersCertificateLocationError(
+                            issuersCertificatesLocation);
         }
 
         if (ret.isGood())
@@ -144,14 +138,13 @@ namespace uafc
             location = issuersRevocationListLocation.c_str();
 
             if (helperDir.exists(location))
-                ret.setGood();
+                ret = statuscodes::Good;
             else
                 if (helperDir.mkpath(location))
-                    ret.setGood();
+                    ret = statuscodes::Good;
                 else
-                    ret.setStatus(uaf::statuscodes::ConfigurationError,
-                                  "Failed to create the issuers revocation list location '%s'",
-                                  issuersRevocationListLocation.c_str());
+                    ret = CouldNotCreateIssuersRevocationListLocationError(
+                            issuersRevocationListLocation);
         }
 
         if (ret.isGood())
@@ -159,14 +152,12 @@ namespace uafc
             location = helperDir.filePath(UaUniString(clientPrivateKey.c_str()));
 
             if (helperDir.exists(location))
-                ret.setGood();
+                ret = statuscodes::Good;
             else
                 if (helperDir.mkpath(location))
-                    ret.setGood();
+                    ret = statuscodes::Good;
                 else
-                    ret.setStatus(uaf::statuscodes::ConfigurationError,
-                                  "Failed to create the client private key location for '%s'",
-                                  clientPrivateKey.c_str());
+                    ret = CouldNotCreateClientPrivateKeyLocationError(clientPrivateKey);
         }
 
         if (ret.isGood())
@@ -174,14 +165,12 @@ namespace uafc
             location = helperDir.filePath(UaUniString(clientCertificate.c_str()));
 
             if (helperDir.exists(location))
-                ret.setGood();
+                ret = statuscodes::Good;
             else
                 if (helperDir.mkpath(location))
-                    ret.setGood();
+                    ret = statuscodes::Good;
                 else
-                    ret.setStatus(uaf::statuscodes::ConfigurationError,
-                                  "Failed to create the client certificate location for '%s'",
-                                  clientCertificate.c_str());
+                    ret = CouldNotCreateClientCertificateLocationError(clientCertificate);
         }
 
         return ret;

@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_CLIENTSETTINGS_H_
-#define UAFC_CLIENTSETTINGS_H_
+#ifndef UAF_CLIENTSETTINGS_H_
+#define UAF_CLIENTSETTINGS_H_
 
 // STD
 #include <string>
@@ -35,16 +35,16 @@
 #include "uaf/client/clientexport.h"
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::ClientSettings instance holds the settings of a uafc::Client instance.
+    * An uaf::ClientSettings instance holds the settings of a uaf::Client instance.
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT ClientSettings
+    class UAF_EXPORT ClientSettings
     {
     public:
 
@@ -223,13 +223,13 @@ namespace uafc
 
 
         // comparison operators
-        friend UAFC_EXPORT bool operator< (
+        friend UAF_EXPORT bool operator< (
                 const ClientSettings& object1,
                 const ClientSettings& object2);
-        friend UAFC_EXPORT bool operator==(
+        friend UAF_EXPORT bool operator==(
                 const ClientSettings& object1,
                 const ClientSettings& object2);
-        friend UAFC_EXPORT bool operator!=(
+        friend UAF_EXPORT bool operator!=(
                 const ClientSettings& object1,
                 const ClientSettings& object2);
 
@@ -242,4 +242,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_CLIENTSETTINGS_H_ */
+#endif /* UAF_CLIENTSETTINGS_H_ */
