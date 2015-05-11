@@ -28,19 +28,12 @@
 #include "uaf/util/util.h"
 #include "uaf/util/constants.h"
 #include "uaf/util/nodeididentifier.h"
+#include "uaf/util/status.h"
 // SDK
 
 
 namespace uaf
 {
-
-    /**
-     * An OPC UA namespace index is used to relate something (e.g. a NodeIdIdentifier) to a
-     * namespace URI via a namespace array.
-     *
-     * @ingroup Util
-     */
-    typedef uint16_t NameSpaceIndex;
 
 
     /*******************************************************************************************//**

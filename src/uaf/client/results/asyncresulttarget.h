@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_ASYNCRESULTTARGET_H_
-#define UAFC_ASYNCRESULTTARGET_H_
+#ifndef UAF_ASYNCRESULTTARGET_H_
+#define UAF_ASYNCRESULTTARGET_H_
 
 
 
@@ -33,12 +33,12 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::AsyncResultTarget is part of a uafc::AsyncXXXXXResult (with XXXXXX being Read,
+    * A uaf::AsyncResultTarget is part of a uaf::AsyncXXXXXResult (with XXXXXX being Read,
     * Write, CrateMonitoredData, ...) and contains the immediate result of the corresponding
     * asynchronous request target.
     *
@@ -49,7 +49,7 @@ namespace uafc
     *
     * @ingroup ClientResults
     ***********************************************************************************************/
-    class UAFC_EXPORT AsyncResultTarget : public uafc::BaseSessionResultTarget
+    class UAF_EXPORT AsyncResultTarget : public uaf::BaseSessionResultTarget
     {
     public:
 
@@ -71,13 +71,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const AsyncResultTarget& object1,
                 const AsyncResultTarget& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const AsyncResultTarget& object1,
                 const AsyncResultTarget& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const AsyncResultTarget& object1,
                 const AsyncResultTarget& object2);
     };
@@ -88,4 +88,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_ASYNCRESULTTARGET_H_ */
+#endif /* UAF_ASYNCRESULTTARGET_H_ */

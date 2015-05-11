@@ -64,4 +64,9 @@ How to manually connect to an endpoint without discovery?
 
 .. literalinclude:: ../../../examples/pyuaf/client/how_to_manually_connect_to_an_endpoint_without_discovery.py
 
+How to connect to a secured endpoint?
+====================================================================================================
+
+.. literalinclude:: ../../../examples/pyuaf/client/how_to_connect_to_a_secured_endpoint.py
+
 

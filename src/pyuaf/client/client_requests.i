@@ -48,7 +48,7 @@
 
 
 // import the EXPORT macro and some numeric typedefs
-%import "uaf/client/clientexport.h"
+%import "uaf/util/util.h"
 %import "uaf/util/handles.h"
 
 
@@ -76,17 +76,17 @@
 
 // before including any classes in a generic way, specify the "special treatments" of certain classes:
 %ignore getServerUriFromTarget(const BaseSessionRequestTarget& target, std::string& serverUri);
-%ignore uafc::Resolvable;
+%ignore uaf::Resolvable;
 %import "uaf/client/resolution/resolvable.h"
-MAKE_NON_DYNAMIC(uafc::CreateMonitoredDataRequestTarget)
-MAKE_NON_DYNAMIC(uafc::CreateMonitoredEventsRequestTarget)
-MAKE_NON_DYNAMIC(uafc::MethodCallRequestTarget)
-MAKE_NON_DYNAMIC(uafc::ReadRequestTarget)
-MAKE_NON_DYNAMIC(uafc::TranslateBrowsePathsToNodeIdsRequestTarget)
-MAKE_NON_DYNAMIC(uafc::BrowseRequestTarget)
-MAKE_NON_DYNAMIC(uafc::BrowseNextRequestTarget)
-MAKE_NON_DYNAMIC(uafc::WriteRequestTarget)
-MAKE_NON_DYNAMIC(uafc::HistoryReadRawModifiedRequestTarget)
+MAKE_NON_DYNAMIC(uaf::CreateMonitoredDataRequestTarget)
+MAKE_NON_DYNAMIC(uaf::CreateMonitoredEventsRequestTarget)
+MAKE_NON_DYNAMIC(uaf::MethodCallRequestTarget)
+MAKE_NON_DYNAMIC(uaf::ReadRequestTarget)
+MAKE_NON_DYNAMIC(uaf::TranslateBrowsePathsToNodeIdsRequestTarget)
+MAKE_NON_DYNAMIC(uaf::BrowseRequestTarget)
+MAKE_NON_DYNAMIC(uaf::BrowseNextRequestTarget)
+MAKE_NON_DYNAMIC(uaf::WriteRequestTarget)
+MAKE_NON_DYNAMIC(uaf::HistoryReadRawModifiedRequestTarget)
 %ignore operator==(const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2);
 %ignore operator!=(const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2);
 %ignore operator< (const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2);
@@ -96,24 +96,24 @@ MAKE_NON_DYNAMIC(uafc::HistoryReadRawModifiedRequestTarget)
 
 
 // wrap some classes that are not defined by macros:
-UAF_WRAP_CLASS("uaf/client/requests/basesessionrequesttarget.h"                  , uafc , BaseSessionRequestTarget                   , COPY_NO , TOSTRING_NO,  COMP_NO,  pyuaf.client.requests, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/requests/basesubscriptionrequesttarget.h"             , uafc , BaseSubscriptionRequestTarget              , COPY_NO , TOSTRING_NO,  COMP_NO,  pyuaf.client.requests, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/requests/browserequesttarget.h"                       , uafc , BrowseRequestTarget                        , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, BrowseRequestTargetVector)
-UAF_WRAP_CLASS("uaf/client/requests/browsenextrequesttarget.h"                   , uafc , BrowseNextRequestTarget                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, BrowseNextRequestTargetVector)
-UAF_WRAP_CLASS("uaf/client/requests/createmonitoreddatarequesttarget.h"          , uafc , CreateMonitoredDataRequestTarget           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, CreateMonitoredDataRequestTargetVector)
-UAF_WRAP_CLASS("uaf/client/requests/createmonitoredeventsrequesttarget.h"        , uafc , CreateMonitoredEventsRequestTarget         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, CreateMonitoredEventsRequestTargetVector)
-UAF_WRAP_CLASS("uaf/client/requests/methodcallrequesttarget.h"                   , uafc , MethodCallRequestTarget                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, MethodCallRequestTargetVector)
-UAF_WRAP_CLASS("uaf/client/requests/readrequesttarget.h"                         , uafc , ReadRequestTarget                          , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, ReadRequestTargetVector)
-UAF_WRAP_CLASS("uaf/client/requests/translatebrowsepathstonodeidsrequesttarget.h", uafc , TranslateBrowsePathsToNodeIdsRequestTarget , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, TranslateBrowsePathsToNodeIdsRequestTargetVector)
-UAF_WRAP_CLASS("uaf/client/requests/writerequesttarget.h"                        , uafc , WriteRequestTarget                         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, WriteRequestTargetVector)
-UAF_WRAP_CLASS("uaf/client/requests/historyreadrawmodifiedrequesttarget.h"       , uafc , HistoryReadRawModifiedRequestTarget        , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, HistoryReadRawModifiedRequestTargetVector)
-UAF_WRAP_CLASS("uaf/client/requests/basesessionrequest.h"                        , uafc , BaseSessionRequest                         , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client.requests, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/client/requests/basesubscriptionrequest.h"                   , uafc , BaseSubscriptionRequest                    , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client.requests, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/requests/basesessionrequesttarget.h"                  , uaf , BaseSessionRequestTarget                   , COPY_NO , TOSTRING_NO,  COMP_NO,  pyuaf.client.requests, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/requests/basesubscriptionrequesttarget.h"             , uaf , BaseSubscriptionRequestTarget              , COPY_NO , TOSTRING_NO,  COMP_NO,  pyuaf.client.requests, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/requests/browserequesttarget.h"                       , uaf , BrowseRequestTarget                        , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, BrowseRequestTargetVector)
+UAF_WRAP_CLASS("uaf/client/requests/browsenextrequesttarget.h"                   , uaf , BrowseNextRequestTarget                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, BrowseNextRequestTargetVector)
+UAF_WRAP_CLASS("uaf/client/requests/createmonitoreddatarequesttarget.h"          , uaf , CreateMonitoredDataRequestTarget           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, CreateMonitoredDataRequestTargetVector)
+UAF_WRAP_CLASS("uaf/client/requests/createmonitoredeventsrequesttarget.h"        , uaf , CreateMonitoredEventsRequestTarget         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, CreateMonitoredEventsRequestTargetVector)
+UAF_WRAP_CLASS("uaf/client/requests/methodcallrequesttarget.h"                   , uaf , MethodCallRequestTarget                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, MethodCallRequestTargetVector)
+UAF_WRAP_CLASS("uaf/client/requests/readrequesttarget.h"                         , uaf , ReadRequestTarget                          , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, ReadRequestTargetVector)
+UAF_WRAP_CLASS("uaf/client/requests/translatebrowsepathstonodeidsrequesttarget.h", uaf , TranslateBrowsePathsToNodeIdsRequestTarget , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, TranslateBrowsePathsToNodeIdsRequestTargetVector)
+UAF_WRAP_CLASS("uaf/client/requests/writerequesttarget.h"                        , uaf , WriteRequestTarget                         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, WriteRequestTargetVector)
+UAF_WRAP_CLASS("uaf/client/requests/historyreadrawmodifiedrequesttarget.h"       , uaf , HistoryReadRawModifiedRequestTarget        , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.client.requests, HistoryReadRawModifiedRequestTargetVector)
+UAF_WRAP_CLASS("uaf/client/requests/basesessionrequest.h"                        , uaf , BaseSessionRequest                         , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client.requests, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/client/requests/basesubscriptionrequest.h"                   , uaf , BaseSubscriptionRequest                    , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client.requests, VECTOR_NO)
 
 
 // define a macro to create synchronous session requests
-%define CREATE_UAFC_SYNC_SESSIONREQUEST(SERVICE)
-    %template(_##SERVICE##Request) uafc::BaseSessionRequest< uafc::BaseServiceConfig<uafc::SERVICE##Settings>, uafc::SERVICE##RequestTarget, false>;
+%define CREATE_UAF_SYNC_SESSIONREQUEST(SERVICE)
+    %template(_##SERVICE##Request) uaf::BaseSessionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, false>;
     
     %pythoncode %{
     class SERVICE##Request(_##SERVICE##Request):
@@ -132,8 +132,8 @@ UAF_WRAP_CLASS("uaf/client/requests/basesubscriptionrequest.h"                  
 
 
 // define a macro to create asynchronous session requests
-%define CREATE_UAFC_ASYNC_SESSIONREQUEST(SERVICE)
-    %template(_Async##SERVICE##Request) uafc::BaseSessionRequest< uafc::BaseServiceConfig<uafc::SERVICE##Settings>, uafc::SERVICE##RequestTarget, true>;
+%define CREATE_UAF_ASYNC_SESSIONREQUEST(SERVICE)
+    %template(_Async##SERVICE##Request) uaf::BaseSessionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, true>;
     
     %pythoncode %{
     class Async##SERVICE##Request(_Async##SERVICE##Request):
@@ -151,25 +151,25 @@ UAF_WRAP_CLASS("uaf/client/requests/basesubscriptionrequest.h"                  
 
 
 // create synchronous session requests
-CREATE_UAFC_SYNC_SESSIONREQUEST(Read)
-CREATE_UAFC_SYNC_SESSIONREQUEST(Write)
-CREATE_UAFC_SYNC_SESSIONREQUEST(MethodCall)
-CREATE_UAFC_SYNC_SESSIONREQUEST(TranslateBrowsePathsToNodeIds)
-CREATE_UAFC_SYNC_SESSIONREQUEST(Browse)
-CREATE_UAFC_SYNC_SESSIONREQUEST(BrowseNext)
-CREATE_UAFC_SYNC_SESSIONREQUEST(HistoryReadRawModified)
+CREATE_UAF_SYNC_SESSIONREQUEST(Read)
+CREATE_UAF_SYNC_SESSIONREQUEST(Write)
+CREATE_UAF_SYNC_SESSIONREQUEST(MethodCall)
+CREATE_UAF_SYNC_SESSIONREQUEST(TranslateBrowsePathsToNodeIds)
+CREATE_UAF_SYNC_SESSIONREQUEST(Browse)
+CREATE_UAF_SYNC_SESSIONREQUEST(BrowseNext)
+CREATE_UAF_SYNC_SESSIONREQUEST(HistoryReadRawModified)
 
 
 // create asynchronous session requests
-CREATE_UAFC_ASYNC_SESSIONREQUEST(Read)
-CREATE_UAFC_ASYNC_SESSIONREQUEST(Write)
-CREATE_UAFC_ASYNC_SESSIONREQUEST(MethodCall)
+CREATE_UAF_ASYNC_SESSIONREQUEST(Read)
+CREATE_UAF_ASYNC_SESSIONREQUEST(Write)
+CREATE_UAF_ASYNC_SESSIONREQUEST(MethodCall)
 
 
 // define a macro to create synchronous subscription requests
-%define CREATE_UAFC_SYNC_SUBSCRIPTIONREQUEST(SERVICE)
-    %template(Base##SERVICE##Request) uafc::BaseSessionRequest< uafc::BaseServiceConfig<uafc::SERVICE##Settings>, uafc::SERVICE##RequestTarget, false>;
-    %template(_##SERVICE##Request) uafc::BaseSubscriptionRequest< uafc::BaseServiceConfig<uafc::SERVICE##Settings>, uafc::SERVICE##RequestTarget, false>;
+%define CREATE_UAF_SYNC_SUBSCRIPTIONREQUEST(SERVICE)
+    %template(Base##SERVICE##Request) uaf::BaseSessionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, false>;
+    %template(_##SERVICE##Request) uaf::BaseSubscriptionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, false>;
 
     %pythoncode %{
     class SERVICE##Request(_##SERVICE##Request):
@@ -188,9 +188,9 @@ CREATE_UAFC_ASYNC_SESSIONREQUEST(MethodCall)
 
 
 // define a macro to create asynchronous subscription requests
-%define CREATE_UAFC_ASYNC_SUBSCRIPTIONREQUEST(SERVICE)
-    %template(BaseAsync##SERVICE##Request) uafc::BaseSessionRequest< uafc::BaseServiceConfig<uafc::SERVICE##Settings>, uafc::SERVICE##RequestTarget, true>;
-    %template(_Async##SERVICE##Request) uafc::BaseSubscriptionRequest< uafc::BaseServiceConfig<uafc::SERVICE##Settings>, uafc::SERVICE##RequestTarget, true> ;
+%define CREATE_UAF_ASYNC_SUBSCRIPTIONREQUEST(SERVICE)
+    %template(BaseAsync##SERVICE##Request) uaf::BaseSessionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, true>;
+    %template(_Async##SERVICE##Request) uaf::BaseSubscriptionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, true> ;
 
     %pythoncode %{
     class Async##SERVICE##Request(_Async##SERVICE##Request):
@@ -209,13 +209,13 @@ CREATE_UAFC_ASYNC_SESSIONREQUEST(MethodCall)
 
 
 // create synchronous subscription requests
-CREATE_UAFC_SYNC_SUBSCRIPTIONREQUEST(CreateMonitoredData)
-CREATE_UAFC_SYNC_SUBSCRIPTIONREQUEST(CreateMonitoredEvents)
+CREATE_UAF_SYNC_SUBSCRIPTIONREQUEST(CreateMonitoredData)
+CREATE_UAF_SYNC_SUBSCRIPTIONREQUEST(CreateMonitoredEvents)
 
 
 // create asynchronous subscription requests
-CREATE_UAFC_ASYNC_SUBSCRIPTIONREQUEST(CreateMonitoredData)
-CREATE_UAFC_ASYNC_SUBSCRIPTIONREQUEST(CreateMonitoredEvents)
+CREATE_UAF_ASYNC_SUBSCRIPTIONREQUEST(CreateMonitoredData)
+CREATE_UAF_ASYNC_SUBSCRIPTIONREQUEST(CreateMonitoredEvents)
 
 
 // include the requests header

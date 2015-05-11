@@ -11,10 +11,82 @@ Version = X.Y with
 - Y : minor version number 
    - incremented every time some minor functionality has been added
    - e.g. when the Client implementation supports another OPC UA service
-    
+
 
 Bugfixes (which do not have any implications on the API) can only be tracked 
 via the GIT version control system.
+
+
+
+Version under development (will become 2.0.0)
+----------------------------------------------------------------------------------------------------
+
+Version still under development.
+
+Informally:
+
+- OpenSSL security is now supported. See the example how_to_connect_to_a_secured_endpoint.py.
+
+- The Status class (and the whole exception handling part of the UAF) has changed significantly.
+  Many more error types are now defined, so they can be handled much more "fine grained" 
+  (see pyuaf.util.errors). Also many errors have diagnostic attributes, to better understand them.
+
+- ExtensionObjects are now supported, and model change events. 
+
+- The endpoint descriptions of the discovered servers can now be accessed 
+  via Client::getEndpoints().
+
+- SessionInformation contains more diagnostic info.
+
+
+Formally:
+
+- The following code has changed quite radically, check out the documentation!
+  - uaf::Status
+    (pyuaf.util.Status)
+  - uaf::statuscodes
+    (pyuaf.util.statuscodes)
+  - uaf::*Error
+    (pyuaf.util.errors)
+
+- The following classes were added:
+
+  - uaf::PkiIdentity
+    (pyuaf.util.PkiIdentity)
+  - uaf::SdkStatus
+    (pyuaf.util.SdkStatus)
+
+- The following methods were added to existing classes:
+
+  - uaf::Client::getEndpoints
+    (pyuaf.client.Client.getEndpoints)
+  - uaf::Guid::fromString
+    (pyuaf.util.Guid.fromString)
+  - pyuaf.util.NodeId: various missing constructors
+
+- The following attributes were added to existing classes:
+
+  - uaf::Client::SessionInformation::lastConnectionAttemptTime
+    (pyuaf.client.Client.SessionInformation.lastConnectionAttemptTime)
+  - uaf::Client::SessionInformation::lastConnectionAttemptStatus
+    (pyuaf.client.Client.SessionInformation.lastConnectionAttemptStatus)
+  - uaf::ReadResultTarget::opcUaStatusCode 
+    (pyuaf.client.results.ReadResultTarget.opcUaStatusCode)
+  - uaf::HistoryReadRawModifiedResultTarget::opcUaStatusCode 
+    (pyuaf.client.results.HistoryReadRawModifiedResultTarget.opcUaStatusCode)
+
+- The following attributes of existing classes have been replaced:
+
+  - uaf::WriteRequestTarget::status --> opcUaStatusCode 
+    (pyuaf.client.requests.WriteRequestTarget::status --> opcUaStatusCode
+  - uaf::DataValue::status --> opcUaStatusCode 
+    (pyuaf.util.DataValue::status --> opcUaStatusCode
+  - uaf::DataValue::status --> opcUaStatusCode 
+    (pyuaf.util.DataValue::status --> opcUaStatusCode
+
+- The following classes have been removed:
+  - uaf::StatusDiagnostics
+    (pyuaf.util.StatusDiagnostics)
 
 
 1.10 @ 2014/07/30
@@ -147,6 +219,10 @@ Formally:
 
 
 
+=======
+>>>>>>> Documented the changes the SessionInformation
+=======
+>>>>>>> c885b270db1cbefb1314019602cad6bb6961b664
 1.9 @ 2014/04/17
 ----------------------------------------------------------------------------------------------------
 

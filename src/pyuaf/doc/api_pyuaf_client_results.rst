@@ -599,6 +599,10 @@
             Status of the result (Good if the monitored item was created, Bad if not), 
             as a :class:`~pyuaf.util.Status` instance.
     
+        .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.opcUaStatusCode
+
+            OPC UA Status code, as reported by the server (an ``int``).
+    
         .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.clientConnectionId
 
             The id of the session that was used for this target, as an ``int``
@@ -777,6 +781,10 @@
 
             Status of the result (Good if the monitored item was created, Bad if not), 
             as a :class:`~pyuaf.util.Status` instance.
+    
+        .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.opcUaStatusCode
+
+            OPC UA Status code, as reported by the server (an ``int``).
     
         .. autoattribute:: pyuaf.client.results.CreateMonitoredEventsResultTarget.clientConnectionId
 

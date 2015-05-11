@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_EVENTNOTIFICATION_H_
-#define UAFC_EVENTNOTIFICATION_H_
+#ifndef UAF_EVENTNOTIFICATION_H_
+#define UAF_EVENTNOTIFICATION_H_
 
 
 // STD
@@ -39,15 +39,15 @@
 #include "uaf/client/settings/monitoreditemsettings.h"
 
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
-    * A uafc::EventNotification is a notification for a monitored event item.
+    * A uaf::EventNotification is a notification for a monitored event item.
     *
     * @ingroup ClientSubscriptions
     ***********************************************************************************************/
-    class UAFC_EXPORT EventNotification : public MonitoredItemNotification
+    class UAF_EXPORT EventNotification : public MonitoredItemNotification
     {
     public:
 
@@ -71,13 +71,13 @@ namespace uafc
 
 
         // comparison operators
-        friend UAFC_EXPORT bool operator==(
+        friend UAF_EXPORT bool operator==(
                 const EventNotification& object1,
                 const EventNotification& object2);
-        friend UAFC_EXPORT bool operator!=(
+        friend UAF_EXPORT bool operator!=(
                 const EventNotification& object1,
                 const EventNotification& object2);
-        friend UAFC_EXPORT bool operator<(
+        friend UAF_EXPORT bool operator<(
                 const EventNotification& object1,
                 const EventNotification& object2);
     };
@@ -91,4 +91,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_EVENTNOTIFICATION_H_ */
+#endif /* UAF_EVENTNOTIFICATION_H_ */

@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_SUBSCRIPTIONSETTINGS_H_
-#define UAFC_SUBSCRIPTIONSETTINGS_H_
+#ifndef UAF_SUBSCRIPTIONSETTINGS_H_
+#define UAF_SUBSCRIPTIONSETTINGS_H_
 
 
 // STD
@@ -33,16 +33,16 @@
 #include "uaf/client/clientexport.h"
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::SubscriptionSettings instance stores the settings of a uafc::Subscription.
+    * An uaf::SubscriptionSettings instance stores the settings of a uaf::Subscription.
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT SubscriptionSettings
+    class UAF_EXPORT SubscriptionSettings
     {
     public:
 
@@ -89,13 +89,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const SubscriptionSettings& object1,
                 const SubscriptionSettings& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const SubscriptionSettings& object1,
                 const SubscriptionSettings& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const SubscriptionSettings& object1,
                 const SubscriptionSettings& object2);
 
@@ -111,4 +111,4 @@ namespace uafc
     };
 }
 
-#endif /* UAFC_SUBSCRIPTIONSETTINGS_H_ */
+#endif /* UAF_SUBSCRIPTIONSETTINGS_H_ */

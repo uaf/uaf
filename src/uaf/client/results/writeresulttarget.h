@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_WRITERESULTTARGET_H_
-#define UAFC_WRITERESULTTARGET_H_
+#ifndef UAF_WRITERESULTTARGET_H_
+#define UAF_WRITERESULTTARGET_H_
 
 
 
@@ -33,20 +33,20 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
 
     /*******************************************************************************************//**
-    * An uafc::WriteResultTarget is the "result target" of the corresponding
+    * An uaf::WriteResultTarget is the "result target" of the corresponding
     * "request target" that specified the attribute and node and data etc. to be written.
     *
     * It tells you if the data was written successfully.
     *
     * @ingroup ClientResults
     ***********************************************************************************************/
-    class UAFC_EXPORT WriteResultTarget : public uafc::BaseSessionResultTarget
+    class UAF_EXPORT WriteResultTarget : public uaf::BaseSessionResultTarget
     {
     public:
 
@@ -60,6 +60,9 @@ namespace uafc
         /** The status of the write target (good if the attribute could be written, bad if not). */
         uaf::Status status;
 
+        /** The OPC UA status code reported by the server. */
+        uaf::OpcUaStatusCode opcUaStatusCode;
+
 
         /**
          * Get a string representation of the target.
@@ -68,13 +71,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const WriteResultTarget& object1,
                 const WriteResultTarget& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const WriteResultTarget& object1,
                 const WriteResultTarget& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const WriteResultTarget& object1,
                 const WriteResultTarget& object2);
 
@@ -84,4 +87,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_WRITERESULTTARGET_H_ */
+#endif /* UAF_WRITERESULTTARGET_H_ */

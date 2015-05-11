@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_BASESESSIONREQUEST_H_
-#define UAFC_BASESESSIONREQUEST_H_
+#ifndef UAF_BASESESSIONREQUEST_H_
+#define UAF_BASESESSIONREQUEST_H_
 
 
 // STD
@@ -41,16 +41,16 @@
 #include "uaf/client/configs/sessionconfig.h"
 
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
-    * A uafc::SessionRequest is a service request logically handled at the session level.
+    * A uaf::SessionRequest is a service request logically handled at the session level.
     *
     * @ingroup ClientRequests
     ***********************************************************************************************/
     template<typename _ServiceConfig, typename _Target, bool _Async>
-    class UAFC_EXPORT BaseSessionRequest
+    class UAF_EXPORT BaseSessionRequest
     {
     public:
 
@@ -78,7 +78,7 @@ namespace uafc
         BaseSessionRequest(
                 std::size_t                 noOfTargets,
                 const _ServiceConfig&       serviceConfig = _ServiceConfig(),
-                const uafc::SessionConfig&  sessionConfig = uafc::SessionConfig())
+                const uaf::SessionConfig&  sessionConfig = uaf::SessionConfig())
         : targets(noOfTargets),
           serviceConfig(serviceConfig),
           sessionConfig(sessionConfig),
@@ -96,7 +96,7 @@ namespace uafc
         BaseSessionRequest(
                 const _Target&              target,
                 const _ServiceConfig&       serviceConfig = _ServiceConfig(),
-                const uafc::SessionConfig&  sessionConfig = uafc::SessionConfig())
+                const uaf::SessionConfig&  sessionConfig = uaf::SessionConfig())
         : serviceConfig(serviceConfig),
           sessionConfig(sessionConfig),
           requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
@@ -113,7 +113,7 @@ namespace uafc
         BaseSessionRequest(
                 const typename std::vector<_Target>&    targets,
                 const _ServiceConfig&                   serviceConfig = _ServiceConfig(),
-                const uafc::SessionConfig&              sessionConfig = uafc::SessionConfig())
+                const uaf::SessionConfig&              sessionConfig = uaf::SessionConfig())
         : targets(targets),
           serviceConfig(serviceConfig),
           sessionConfig(sessionConfig),
@@ -128,7 +128,7 @@ namespace uafc
         _ServiceConfig serviceConfig;
 
         /** Session config to use */
-        uafc::SessionConfig sessionConfig;
+        uaf::SessionConfig sessionConfig;
 
         /** Static attribute: is this an asynchronous request or not. */
         static const bool asynchronous = _Async;
@@ -251,4 +251,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_BASESESSIONREQUEST_H_ */
+#endif /* UAF_BASESESSIONREQUEST_H_ */

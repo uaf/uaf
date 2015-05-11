@@ -49,17 +49,5 @@
  * @ingroup Client
  * The client/subscriptions group bundles all code related to subscription management at the client side.
  *
- *
- * @namespace uafc
- * uafc contains the UAF code related to the Client side (hence the 'c').
- *
  */
 
-
-// Microsoft Visual Studio needs the following declaration in order to export a .lib file.
-// See http://www.cmake.org/Wiki/BuildingWinDLL for more info.
-#ifdef _MSC_VER
-    #define UAFC_EXPORT __declspec(dllexport)
-#else
-    #define UAFC_EXPORT
-#endif

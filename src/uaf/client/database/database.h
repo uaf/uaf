@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_DATABASE_H_
-#define UAFC_DATABASE_H_
+#ifndef UAF_DATABASE_H_
+#define UAF_DATABASE_H_
 
 
 // STD
@@ -32,18 +32,18 @@
 #include "uaf/client/settings/clientsettings.h"
 
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
     * A client database holds notification buffers, an address cache and client settings.
     *
-    * The uafc::Client holds a single instance of this class, and shares its pointer to all
+    * The uaf::Client holds a single instance of this class, and shares its pointer to all
     * sessions, subscriptions and their factories.
     *
     * @ingroup ClientDatabase
     ***********************************************************************************************/
-    class UAFC_EXPORT Database
+    class UAF_EXPORT Database
     {
     public:
 
@@ -57,16 +57,16 @@ namespace uafc
 
 
         /** The configuration settings of the client. */
-        uafc::ClientSettings clientSettings;
+        uaf::ClientSettings clientSettings;
 
         /** The store for monitored data requests. */
-        uafc::CreateMonitoredDataRequestStore createMonitoredDataRequestStore;
+        uaf::CreateMonitoredDataRequestStore createMonitoredDataRequestStore;
 
         /** The store for monitored event requests. */
-        uafc::CreateMonitoredEventsRequestStore createMonitoredEventsRequestStore;
+        uaf::CreateMonitoredEventsRequestStore createMonitoredEventsRequestStore;
 
         /** The cache used by the resolver. */
-        uafc::AddressCache addressCache;
+        uaf::AddressCache addressCache;
 
         /** A vector storing all the client handles that were ever assigned. */
         std::vector<uaf::ClientHandle> allClientHandles;
@@ -130,18 +130,18 @@ namespace uafc
      *                  version of storeIfNeeded() is called.
      */
     template <typename _Service>
-    uaf::Status UAFC_EXPORT storeIfNeeded(
+    uaf::Status UAF_EXPORT storeIfNeeded(
             const typename _Service::Request& request,
             const typename _Service::Result&  result,
             const uaf::Mask&                  mask,
-            uafc::Database*                   database)
+            uaf::Database*                   database)
     {
         return uaf::Status(uaf::statuscodes::Good);
     }
 
 
     /**
-     * Store a uafc::CreateMonitoredDataRequest and corresponding result, if needed.
+     * Store a uaf::CreateMonitoredDataRequest and corresponding result, if needed.
      *
      * @param request   The request to be stored.
      * @param result    The result corresponding with the request.
@@ -150,18 +150,18 @@ namespace uafc
      * @return          Good if the request could be stored, Bad if not.
      */
     template <>
-    inline uaf::Status UAFC_EXPORT storeIfNeeded<uafc::CreateMonitoredDataService>(
-            const uafc::CreateMonitoredDataRequest& request,
-            const uafc::CreateMonitoredDataResult&  result,
+    inline uaf::Status UAF_EXPORT storeIfNeeded<uaf::CreateMonitoredDataService>(
+            const uaf::CreateMonitoredDataRequest& request,
+            const uaf::CreateMonitoredDataResult&  result,
             const uaf::Mask&                        mask,
-            uafc::Database*                         database)
+            uaf::Database*                         database)
     {
         return database->createMonitoredDataRequestStore.storeIfNeeded(request, result, mask);
     }
 
 
     /**
-     * Store a uafc::CreateMonitoredEventsRequest and corresponding result, if needed.
+     * Store a uaf::CreateMonitoredEventsRequest and corresponding result, if needed.
      *
      * @param request   The request to be stored.
      * @param result    The result corresponding with the request.
@@ -170,11 +170,11 @@ namespace uafc
      * @return          Good if the request could be stored, Bad if not.
      */
     template <>
-    inline uaf::Status UAFC_EXPORT storeIfNeeded<uafc::CreateMonitoredEventsService>(
-            const uafc::CreateMonitoredEventsRequest&   request,
-            const uafc::CreateMonitoredEventsResult&    result,
+    inline uaf::Status UAF_EXPORT storeIfNeeded<uaf::CreateMonitoredEventsService>(
+            const uaf::CreateMonitoredEventsRequest&   request,
+            const uaf::CreateMonitoredEventsResult&    result,
             const uaf::Mask&                            mask,
-            uafc::Database*                             database)
+            uaf::Database*                             database)
     {
         return database->createMonitoredEventsRequestStore.storeIfNeeded(request, result, mask);
     }
@@ -193,10 +193,10 @@ namespace uafc
      *                  version of updateResultIfNeeded() is called.
      */
     template<typename _Service>
-    uaf::Status UAFC_EXPORT updateResultIfNeeded(
+    uaf::Status UAF_EXPORT updateResultIfNeeded(
             const typename _Service::Result&    result,
             const uaf::Mask&                    mask,
-            uafc::Database*                     database)
+            uaf::Database*                     database)
     {
         return uaf::Status(uaf::statuscodes::Good);
     }
@@ -211,10 +211,10 @@ namespace uafc
      * @return          Good if the result could be updated, Bad if not.
      */
     template <>
-    inline uaf::Status UAFC_EXPORT updateResultIfNeeded<uafc::CreateMonitoredDataService>(
-            const uafc::CreateMonitoredDataResult&  result,
+    inline uaf::Status UAF_EXPORT updateResultIfNeeded<uaf::CreateMonitoredDataService>(
+            const uaf::CreateMonitoredDataResult&  result,
             const uaf::Mask&                        mask,
-            uafc::Database*                         database)
+            uaf::Database*                         database)
     {
         return database->createMonitoredDataRequestStore.updateResult(result, mask);
     }
@@ -229,10 +229,10 @@ namespace uafc
      * @return          Good if the result could be updated, Bad if not.
      */
     template <>
-    inline uaf::Status UAFC_EXPORT updateResultIfNeeded<uafc::CreateMonitoredEventsService>(
-            const uafc::CreateMonitoredEventsResult&    result,
+    inline uaf::Status UAF_EXPORT updateResultIfNeeded<uaf::CreateMonitoredEventsService>(
+            const uaf::CreateMonitoredEventsResult&    result,
             const uaf::Mask&                            mask,
-            uafc::Database*                             database)
+            uaf::Database*                             database)
     {
         return database->createMonitoredEventsRequestStore.updateResult(result, mask);
     }
@@ -253,11 +253,12 @@ namespace uafc
      *                  (always false for this particular template function).
      */
     template <typename _Service>
-    uaf::Status UAFC_EXPORT assignClientHandlesIfNeeded(
-            typename _Service::Result&  result,
-            const uaf::Mask&            mask,
-            uafc::Database*             database,
-            bool&                       assigned)
+    uaf::Status UAF_EXPORT assignClientHandlesIfNeeded(
+            typename _Service::Result&          result,
+            const uaf::Mask&                    mask,
+            uaf::Database*                      database,
+            bool&                               assigned,
+            std::vector<uaf::ClientHandle>&     clientHandles)
     {
         assigned = false;
         return uaf::Status(uaf::statuscodes::Good);
@@ -277,11 +278,12 @@ namespace uafc
      *                  assigned.
      */
     template <>
-    inline uaf::Status UAFC_EXPORT assignClientHandlesIfNeeded<uafc::CreateMonitoredDataService>(
-            uafc::CreateMonitoredDataResult&    result,
-            const uaf::Mask&                    mask,
-            uafc::Database*                     database,
-            bool&                               assigned)
+    inline uaf::Status UAF_EXPORT assignClientHandlesIfNeeded<uaf::CreateMonitoredDataService>(
+            uaf::CreateMonitoredDataResult&    result,
+            const uaf::Mask&                   mask,
+            uaf::Database*                     database,
+            bool&                              assigned,
+            std::vector<uaf::ClientHandle>&    clientHandles)
     {
         uaf::Status ret;
         assigned = true;
@@ -300,20 +302,17 @@ namespace uafc
             }
 
             // add the client handles to the status diagnostics object!
-            std::vector<uaf::ClientHandle> clientHandles;
             clientHandles.reserve(result.targets.size());
 
             for (std::size_t i = 0; i < result.targets.size(); i++)
                 clientHandles.push_back(result.targets[i].clientHandle);
 
-            ret.additionalDiagnostics().setClientHandles(clientHandles);
 
-            ret.setGood();
+            ret = uaf::statuscodes::Good;
         }
         else
         {
-            ret.setStatus(uaf::statuscodes::UnexpectedError,
-                          "Could not assign client handles (mask has wrong size!)");
+            ret =  uaf::UnexpectedError("Could not assign client handles (mask has wrong size!)");
         }
 
         return ret;
@@ -332,11 +331,12 @@ namespace uafc
      *                  assigned.
      */
     template <>
-    inline uaf::Status UAFC_EXPORT assignClientHandlesIfNeeded<uafc::CreateMonitoredEventsService>(
-            uafc::CreateMonitoredEventsResult&  result,
+    inline uaf::Status UAF_EXPORT assignClientHandlesIfNeeded<uaf::CreateMonitoredEventsService>(
+            uaf::CreateMonitoredEventsResult&   result,
             const uaf::Mask&                    mask,
-            uafc::Database*                     database,
-            bool&                               assigned)
+            uaf::Database*                      database,
+            bool&                               assigned,
+            std::vector<uaf::ClientHandle>&     clientHandles)
     {
         uaf::Status ret;
         assigned = true;
@@ -354,21 +354,17 @@ namespace uafc
                 }
             }
 
-            // add the client monitored item handles to the status diagnostics object!
-            std::vector<uaf::ClientHandle> clientHandles;
+            // add the client handles to the status diagnostics object!
             clientHandles.reserve(result.targets.size());
 
             for (std::size_t i = 0; i < result.targets.size(); i++)
                 clientHandles.push_back(result.targets[i].clientHandle);
 
-            ret.additionalDiagnostics().setClientHandles(clientHandles);
-
-            ret.setGood();
+            ret = uaf::statuscodes::Good;
         }
         else
         {
-            ret.setStatus(uaf::statuscodes::UnexpectedError,
-                          "Could not assign ClientHandles (mask has wrong size!)");
+            ret = uaf::UnexpectedError("Could not assign ClientHandles (mask has wrong size!)");
         }
 
         return ret;
@@ -379,4 +375,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_DATABASE_H_ */
+#endif /* UAF_DATABASE_H_ */

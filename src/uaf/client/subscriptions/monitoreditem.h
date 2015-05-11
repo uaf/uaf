@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_MONITOREDITEM_H_
-#define UAFC_MONITOREDITEM_H_
+#ifndef UAF_MONITOREDITEM_H_
+#define UAF_MONITOREDITEM_H_
 
 
 // STD
@@ -38,21 +38,21 @@
 #include "uaf/client/settings/monitoreditemsettings.h"
 #include "uaf/client/database/database.h"
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::MonitoredItem represents the monitored item from the client side.
+    * A uaf::MonitoredItem represents the monitored item from the client side.
     *
-    * A uafc::MonitoredItem exists within a uafc::Subscription.
+    * A uaf::MonitoredItem exists within a uaf::Subscription.
     *
     * @ingroup ClientSubscriptions
     ***********************************************************************************************/
-    struct UAFC_EXPORT MonitoredItem
+    struct UAF_EXPORT MonitoredItem
     {
         /** The settings of the monitored item. */
-        uafc::MonitoredItemSettings     settings;
+        uaf::MonitoredItemSettings     settings;
 
         /** The request handle of the monitored item (i.e. the handle that identifies the request
          * that created this monitored item). */
@@ -76,4 +76,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_MONITOREDITEMREQUEST_H_ */
+#endif /* UAF_MONITOREDITEMREQUEST_H_ */

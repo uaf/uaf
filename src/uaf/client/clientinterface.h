@@ -18,14 +18,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_CLIENTINTERFACE_H_
-#define UAFC_CLIENTINTERFACE_H_
+#ifndef UAF_CLIENTINTERFACE_H_
+#define UAF_CLIENTINTERFACE_H_
 
 
 // STD
 #include <vector>
 // SDK
 // UAF
+#include "uaf/util/pkicertificate.h"
+#include "uaf/util/sdkstatus.h"
 #include "uaf/client/results/results.h"
 #include "uaf/client/sessions/sessioninformation.h"
 #include "uaf/client/subscriptions/datachangenotification.h"
@@ -34,16 +36,16 @@
 #include "uaf/client/subscriptions/subscriptioninformation.h"
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * The uafc::ClientInterface must be implemented to handle asynchronous calls.
+    * The uaf::ClientInterface must be implemented to handle asynchronous calls.
     *
     * @ingroup Client
     ***********************************************************************************************/
-    class UAFC_EXPORT ClientInterface
+    class UAF_EXPORT ClientInterface
     {
     public:
 
@@ -59,7 +61,7 @@ namespace uafc
          *
          * @param info      The new session information.
          */
-        virtual void connectionStatusChanged(const uafc::SessionInformation& info) {}
+        virtual void connectionStatusChanged(const uaf::SessionInformation& info) {}
 
 
         /**
@@ -67,7 +69,7 @@ namespace uafc
          *
          * @param info      The new subscription information.
          */
-        virtual void subscriptionStatusChanged(const uafc::SubscriptionInformation& info) {}
+        virtual void subscriptionStatusChanged(const uaf::SubscriptionInformation& info) {}
 
 
         /**
@@ -79,7 +81,7 @@ namespace uafc
          * @param newSequenceNumber         The sequence number after the notifications were lost.
          */
         virtual void notificationsMissing(
-                const uafc::SubscriptionInformation& info,
+                const uaf::SubscriptionInformation& info,
                 uint32_t previousSequenceNumber,
                 uint32_t newSequenceNumber) {}
 
@@ -89,7 +91,7 @@ namespace uafc
          *
          * @param result    Read result.
          */
-        virtual void readComplete(const uafc::ReadResult& result) {}
+        virtual void readComplete(const uaf::ReadResult& result) {}
 
 
         /**
@@ -97,7 +99,7 @@ namespace uafc
          *
          * @param result    Write result.
          */
-        virtual void writeComplete(const uafc::WriteResult& result) {}
+        virtual void writeComplete(const uaf::WriteResult& result) {}
 
 
         /**
@@ -105,7 +107,7 @@ namespace uafc
          *
          * @param result    Result of the method call.
          */
-        virtual void callComplete(const uafc::MethodCallResult& result) {}
+        virtual void callComplete(const uaf::MethodCallResult& result) {}
 
 
         /**
@@ -113,7 +115,7 @@ namespace uafc
          *
          * @param notifications Received event notifications.
          */
-        virtual void eventsReceived(std::vector<uafc::EventNotification> notifications) {}
+        virtual void eventsReceived(std::vector<uaf::EventNotification> notifications) {}
 
 
         /**
@@ -121,7 +123,7 @@ namespace uafc
          *
          * @param notifications Received data change notifications.
          */
-        virtual void dataChangesReceived(std::vector<uafc::DataChangeNotification> notifications) {}
+        virtual void dataChangesReceived(std::vector<uaf::DataChangeNotification> notifications) {}
 
 
         /**
@@ -129,9 +131,33 @@ namespace uafc
          *
          * @param notifications Received Keep Alive notifications.
          */
-        virtual void keepAliveReceived(uafc::KeepAliveNotification notification) {}
+        virtual void keepAliveReceived(uaf::KeepAliveNotification notification) {}
+
+
+        /**
+         * Override this method to trust or reject or the server certificate during connection.
+         *
+         * By default, uaf::PkiCertificate::Action_Reject will be returned. It means that all
+         * untrusted server certificates will be rejected if you do not override this method.
+         *
+         * If you override this method and return uaf::PkiCertificate::Action_AcceptTemporarily
+         * instead, the connection will be accepted but the certificate will *not* be stored by the
+         * client (in the trust list, as configured by the uaf::ClientSettings).
+         *
+         * If you override this method and return uaf::PkiCertificate::Action_AcceptPermanently
+         * instead, the connection will be accepted and the certificate will be stored by the
+         * client (in the trust list, as configrued by the uaf::ClientSettings).
+         *
+         * @param certificate   The server certificate.
+         * @param cause         The reason why the server certificate was untrusted, according to
+         *                      the SDK.
+         */
+        virtual uaf::PkiCertificate::Action untrustedServerCertificateReceived(
+                uaf::PkiCertificate&    certificate,
+                const uaf::SdkStatus&   cause)
+        { return uaf::PkiCertificate::Action_AcceptTemporarily; }
     };
 }
 
 
-#endif /* UAFC_CLIENTINTERFACE_H_ */
+#endif /* UAF_CLIENTINTERFACE_H_ */

@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_CLIENTSERVICES_H_
-#define UAFC_CLIENTSERVICES_H_
+#ifndef UAF_CLIENTSERVICES_H_
+#define UAF_CLIENTSERVICES_H_
 
 // STD
 // SDK
@@ -35,22 +35,22 @@
 #define DEFINE_SYNC_SERVICE(NAME)                                                                \
 /** A xxxxService carries type information about the associated requests, targets, results, etc. \
     @ingroup ClientServices  */                                                                          \
-struct UAFC_EXPORT NAME##Service                                                                \
+struct UAF_EXPORT NAME##Service                                                                \
 {                                                                                               \
     /** The type of the service Request. */                                                     \
-    typedef uafc::NAME##Request         Request;                                                \
+    typedef uaf::NAME##Request         Request;                                                \
     /** The type of the service RequestTarget. */                                               \
-    typedef uafc::NAME##RequestTarget   RequestTarget;                                          \
+    typedef uaf::NAME##RequestTarget   RequestTarget;                                          \
     /** The type of the service Result. */                                                      \
-    typedef uafc::NAME##Result          Result;                                                 \
+    typedef uaf::NAME##Result          Result;                                                 \
     /** The type of the service ResultTarget. */                                                \
-    typedef uafc::NAME##ResultTarget    ResultTarget;                                           \
+    typedef uaf::NAME##ResultTarget    ResultTarget;                                           \
     /** The type of the service Config. */                                                      \
-    typedef uafc::NAME##Config          Config;                                                 \
+    typedef uaf::NAME##Config          Config;                                                 \
     /** The type of the service Settings. */                                                    \
-    typedef uafc::NAME##Settings        Settings;                                               \
+    typedef uaf::NAME##Settings        Settings;                                               \
     /** The type of the service Invocation. */                                                  \
-    typedef uafc::NAME##Invocation      Invocation;                                             \
+    typedef uaf::NAME##Invocation      Invocation;                                             \
     /** A flag indicating whether the service is asynchronous or not. */                        \
     static const bool asynchronous = false;                                                     \
     /** Get the name of the service. */                                                         \
@@ -61,22 +61,22 @@ struct UAFC_EXPORT NAME##Service                                                
 #define DEFINE_ASYNC_SERVICE(NAME)                                                               \
 /** A xxxxService carries type information about the associated requests, targets, results, etc. \
     @ingroup ClientServices  */                                                                          \
-struct UAFC_EXPORT Async##NAME##Service                                                         \
+struct UAF_EXPORT Async##NAME##Service                                                         \
 {                                                                                               \
     /** The type of the service Request. */                                                     \
-    typedef uafc::Async##NAME##Request    Request;                                              \
+    typedef uaf::Async##NAME##Request    Request;                                              \
     /** The type of the service RequestTarget. */                                               \
-    typedef uafc::Async##NAME##Result     Result;                                               \
+    typedef uaf::Async##NAME##Result     Result;                                               \
     /** The type of the service Result. */                                                      \
-    typedef uafc::NAME##RequestTarget     RequestTarget;                                        \
+    typedef uaf::NAME##RequestTarget     RequestTarget;                                        \
     /** The type of the service ResultTarget. */                                                \
-    typedef uafc::NAME##ResultTarget      ResultTarget;                                         \
+    typedef uaf::NAME##ResultTarget      ResultTarget;                                         \
     /** The type of the service Config. */                                                      \
-    typedef uafc::NAME##Config            Config;                                               \
+    typedef uaf::NAME##Config            Config;                                               \
     /** The type of the service Settings. */                                                    \
-    typedef uafc::NAME##Settings          Settings;                                             \
+    typedef uaf::NAME##Settings          Settings;                                             \
     /** The type of the service Invocation. */                                                  \
-    typedef uafc::NAME##Invocation        Invocation;                                           \
+    typedef uaf::NAME##Invocation        Invocation;                                           \
     /** A flag indicating whether the service is asynchronous or not. */                        \
     static const bool asynchronous = true;                                                      \
     /** Get the name of the service. */                                                         \
@@ -84,7 +84,7 @@ struct UAFC_EXPORT Async##NAME##Service                                         
 };
 
 
-namespace uafc
+namespace uaf
 {
     // define the synchronous services
     DEFINE_SYNC_SERVICE(Read)
@@ -106,4 +106,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_CLIENTSERVICES_H_ */
+#endif /* UAF_CLIENTSERVICES_H_ */

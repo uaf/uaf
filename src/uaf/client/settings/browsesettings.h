@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_BROWSESETTINGS_H_
-#define UAFC_BROWSESETTINGS_H_
+#ifndef UAF_BROWSESETTINGS_H_
+#define UAF_BROWSESETTINGS_H_
 
 
 
@@ -32,17 +32,17 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::MethodCallSettings object holds the service settings that are particular
+    * An uaf::MethodCallSettings object holds the service settings that are particular
     * for the MethodCall service.
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT BrowseSettings : public uafc::ServiceSettings
+    class UAF_EXPORT BrowseSettings : public uaf::ServiceSettings
     {
     public:
 
@@ -91,4 +91,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_BROWSESETTINGS_H_ */
+#endif /* UAF_BROWSESETTINGS_H_ */

@@ -21,10 +21,9 @@
 #include "uaf/client/results/browseresulttarget.h"
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;
@@ -34,7 +33,8 @@ namespace uafc
     // Constructor
     // =============================================================================================
     BrowseResultTarget::BrowseResultTarget()
-    : autoBrowsedNext(0)
+    : opcUaStatusCode(OpcUa_Uncertain),
+      autoBrowsedNext(0)
     {}
 
 
@@ -52,9 +52,13 @@ namespace uafc
         ss << fillToPos(ss, colon);
         ss << ": " << status.toString() << "\n";
 
+        ss << indent << " - opcUaStatusCode";
+        ss << fillToPos(ss, colon);
+        ss << ": " << double(opcUaStatusCode) << "\n";
+
         ss << indent << " - continuationPoint";
         ss << fillToPos(ss, colon);
-        ss << ": " << int(continuationPoint.length()) << " bytes\n";
+        ss << ": " << double(continuationPoint.length()) << " bytes\n";
 
         ss << indent << " - autoBrowsedNext";
         ss << fillToPos(ss, colon);
@@ -87,6 +91,7 @@ namespace uafc
     {
         return    object1.clientConnectionId == object2.clientConnectionId
                && object1.status             == object2.status
+               && object1.opcUaStatusCode    == object2.opcUaStatusCode
                && object1.continuationPoint  == object2.continuationPoint
                && object1.autoBrowsedNext    == object2.autoBrowsedNext
                && object1.references         == object2.references;
@@ -107,6 +112,8 @@ namespace uafc
     {
         if (object1.status != object2.status)
             return object1.status < object2.status;
+        else if (object1.opcUaStatusCode != object2.opcUaStatusCode)
+            return object1.opcUaStatusCode < object2.opcUaStatusCode;
         else if (object1.continuationPoint != object2.continuationPoint)
             return object1.continuationPoint < object2.continuationPoint;
         else if (object1.autoBrowsedNext != object2.autoBrowsedNext)

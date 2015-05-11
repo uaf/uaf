@@ -21,10 +21,9 @@
 #include "uaf/client/client.h"
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::map;
     using std::vector;
@@ -55,7 +54,7 @@ namespace uafc
 
     // Constructor
     // =============================================================================================
-    Client::Client(const uafc::ClientSettings& settings)
+    Client::Client(const uaf::ClientSettings& settings)
     {
         logger_ = new Logger(settings.applicationName, "Client");
         logger_->loggerFactory()->registerCallbackInterface(this);
@@ -66,7 +65,7 @@ namespace uafc
 
     // Constructor
     // =============================================================================================
-    Client::Client(const uafc::ClientSettings& settings, LoggerFactory* loggerFactory)
+    Client::Client(const uaf::ClientSettings& settings, LoggerFactory* loggerFactory)
     {
         logger_ = loggerFactory->createLogger("Client");
         construct();
@@ -161,7 +160,7 @@ namespace uafc
 
     // Find the servers now
     // =============================================================================================
-    uaf::Status Client::findServersNow()
+    Status Client::findServersNow()
     {
         return discoverer_->findServers();
     }
@@ -175,14 +174,24 @@ namespace uafc
     }
 
 
+    // Get the endpoints that were found
+    // =============================================================================================
+    Status Client::getEndpoints(
+            const string&                   discoveryUrl,
+            vector<EndpointDescription>&    endpointDescriptions)
+    {
+        return discoverer_->getEndpoints(discoveryUrl, endpointDescriptions);
+    }
+
+
     // Read a number of node attributes
     //==============================================================================================
-    uaf::Status Client::read(
+    Status Client::read(
             const std::vector<uaf::Address>&        addresses,
-            const uafc::attributeids::AttributeId   attributeId,
-            const uafc::ReadConfig&                 serviceConfig,
-            const uafc::SessionConfig&              sessionConfig,
-            uafc::ReadResult&                       result)
+            const uaf::attributeids::AttributeId   attributeId,
+            const uaf::ReadConfig&                 serviceConfig,
+            const uaf::SessionConfig&              sessionConfig,
+            uaf::ReadResult&                       result)
     {
         // log read request
         logger_->debug("Reading %d node attributes", addresses.size());
@@ -201,12 +210,12 @@ namespace uafc
 
     // Read a number of node attributes asynchronously
     //==============================================================================================
-    uaf::Status Client::beginRead(
+    Status Client::beginRead(
             const std::vector<uaf::Address>&        addresses,
-            const uafc::attributeids::AttributeId   attributeId,
-            const uafc::ReadConfig&                 serviceConfig,
-            const uafc::SessionConfig&              sessionConfig,
-            uafc::AsyncReadResult&                  result)
+            const uaf::attributeids::AttributeId   attributeId,
+            const uaf::ReadConfig&                 serviceConfig,
+            const uaf::SessionConfig&              sessionConfig,
+            uaf::AsyncReadResult&                  result)
     {
         // log read request
         logger_->debug("Reading %d node attributes", addresses.size());
@@ -225,13 +234,13 @@ namespace uafc
 
     // Write a number of node attributes
     //==============================================================================================
-    uaf::Status Client::write(
+    Status Client::write(
             const std::vector<uaf::Address>&        addresses,
             const std::vector<uaf::Variant>&        data,
-            const uafc::attributeids::AttributeId   attributeId,
-            const uafc::WriteConfig&                serviceConfig,
-            const uafc::SessionConfig&              sessionConfig,
-            uafc::WriteResult&                      result)
+            const uaf::attributeids::AttributeId   attributeId,
+            const uaf::WriteConfig&                serviceConfig,
+            const uaf::SessionConfig&              sessionConfig,
+            uaf::WriteResult&                      result)
     {
         // log write request
         logger_->debug("Writing %d node attributes", addresses.size());
@@ -241,8 +250,7 @@ namespace uafc
 
         // check if the addresses and the data match
         if (addresses.size() != data.size())
-            return uaf::Status(uaf::statuscodes::InvalidRequestError,
-                               "Data doesn't match addresses");
+            return DataDontMatchAddressesError();
 
         // reserve some space to speed up the adding of the targets
         request.targets.reserve(addresses.size());
@@ -258,13 +266,13 @@ namespace uafc
 
     // Write a number of node attributes asynchronously
     //==============================================================================================
-    uaf::Status Client::beginWrite(
+    Status Client::beginWrite(
             const std::vector<uaf::Address>&        addresses,
             const std::vector<uaf::Variant>&        data,
-            const uafc::attributeids::AttributeId   attributeId,
-            const uafc::WriteConfig&                serviceConfig,
-            const uafc::SessionConfig&              sessionConfig,
-            uafc::AsyncWriteResult&                 result)
+            const uaf::attributeids::AttributeId   attributeId,
+            const uaf::WriteConfig&                serviceConfig,
+            const uaf::SessionConfig&              sessionConfig,
+            uaf::AsyncWriteResult&                 result)
     {
         // log write request
         logger_->debug("Writing %d node attributes", addresses.size());
@@ -274,8 +282,7 @@ namespace uafc
 
         // check if the addresses and the data match
         if (addresses.size() != data.size())
-            return uaf::Status(uaf::statuscodes::InvalidRequestError,
-                               "Data doesn't match addresses");
+            return uaf::DataDontMatchAddressesError();
 
         // reserve some space to speed up the adding of the targets
         request.targets.reserve(addresses.size());
@@ -295,9 +302,9 @@ namespace uafc
             const uaf::Address&                 objectAddress,
             const uaf::Address&                 methodAddress,
             const std::vector<uaf::Variant>&    inputArguments,
-            const uafc::MethodCallConfig&       serviceConfig,
-            const uafc::SessionConfig&          sessionConfig,
-            uafc::MethodCallResult&             result)
+            const uaf::MethodCallConfig&       serviceConfig,
+            const uaf::SessionConfig&          sessionConfig,
+            uaf::MethodCallResult&             result)
     {
         MethodCallRequest request(0, serviceConfig, sessionConfig);
 
@@ -319,9 +326,9 @@ namespace uafc
             const uaf::Address&                 objectAddress,
             const uaf::Address&                 methodAddress,
             const std::vector<uaf::Variant>&    inputArguments,
-            const uafc::MethodCallConfig&       serviceConfig,
-            const uafc::SessionConfig&          sessionConfig,
-            uafc::AsyncMethodCallResult&        result)
+            const uaf::MethodCallConfig&       serviceConfig,
+            const uaf::SessionConfig&          sessionConfig,
+            uaf::AsyncMethodCallResult&        result)
     {
         AsyncMethodCallRequest request(0, serviceConfig, sessionConfig);
 
@@ -340,9 +347,9 @@ namespace uafc
     uaf::Status Client::browse(
             const std::vector<uaf::Address>&    addresses,
             uint32_t                            maxAutoBrowseNext,
-            const uafc::BrowseConfig&           serviceConfig,
-            const uafc::SessionConfig&          sessionConfig,
-            uafc::BrowseResult&                 result)
+            const uaf::BrowseConfig&           serviceConfig,
+            const uaf::SessionConfig&          sessionConfig,
+            uaf::BrowseResult&                 result)
     {
         // log read request
         logger_->debug("Browsing %d nodes", addresses.size());
@@ -372,9 +379,9 @@ namespace uafc
             uint32_t                                    numValuesPerNode,
             uint32_t                                    maxAutoReadMore,
             const std::vector<uaf::ByteString>&         continuationPoints,
-            const uafc::HistoryReadRawModifiedConfig&   serviceConfig,
-            const uafc::SessionConfig&                  sessionConfig,
-            uafc::HistoryReadRawModifiedResult&         result)
+            const uaf::HistoryReadRawModifiedConfig&   serviceConfig,
+            const uaf::SessionConfig&                  sessionConfig,
+            uaf::HistoryReadRawModifiedResult&         result)
     {
         // log read request
         logger_->debug("Reading the raw historical data of %d nodes", addresses.size());
@@ -414,9 +421,9 @@ namespace uafc
             uint32_t                                    numValuesPerNode,
             uint32_t                                    maxAutoReadMore,
             const std::vector<uaf::ByteString>&         continuationPoints,
-            const uafc::HistoryReadRawModifiedConfig&   serviceConfig,
-            const uafc::SessionConfig&                  sessionConfig,
-            uafc::HistoryReadRawModifiedResult&         result)
+            const uaf::HistoryReadRawModifiedConfig&   serviceConfig,
+            const uaf::SessionConfig&                  sessionConfig,
+            uaf::HistoryReadRawModifiedResult&         result)
     {
         // log read request
         logger_->debug("Reading the historical data modifications of %d nodes", addresses.size());
@@ -452,9 +459,9 @@ namespace uafc
     uaf::Status Client::browseNext(
             const std::vector<uaf::Address>&    addresses,
             const std::vector<uaf::ByteString>& continuationPoints,
-            const uafc::BrowseNextConfig&       serviceConfig,
-            const uafc::SessionConfig&          sessionConfig,
-            uafc::BrowseNextResult&             result)
+            const uaf::BrowseNextConfig&       serviceConfig,
+            const uaf::SessionConfig&          sessionConfig,
+            uaf::BrowseNextResult&             result)
     {
         // log read request
         logger_->debug("BrowseNext %d continuation points", continuationPoints.size());
@@ -462,12 +469,9 @@ namespace uafc
         Status ret;
 
         if (addresses.size() == continuationPoints.size())
-            ret.setGood();
+            ret = statuscodes::Good;
         else
-            ret.setStatus(
-                    uaf::statuscodes::InvalidRequestError,
-                    "The number of given addresses should correspond to the number of given "
-                    "continuation points");
+            ret = ContinuationPointsDontMatchAddressesError();
 
         if (ret.isGood())
         {
@@ -492,10 +496,10 @@ namespace uafc
     //==============================================================================================
     Status Client::createMonitoredData(
             const std::vector<uaf::Address>&        addresses,
-            const uafc::CreateMonitoredDataConfig&  serviceConfig,
-            const uafc::SessionConfig&              sessionConfig,
-            const uafc::SubscriptionConfig&         subscriptionConfig,
-            uafc::CreateMonitoredDataResult&        result)
+            const uaf::CreateMonitoredDataConfig&  serviceConfig,
+            const uaf::SessionConfig&              sessionConfig,
+            const uaf::SubscriptionConfig&         subscriptionConfig,
+            uaf::CreateMonitoredDataResult&        result)
     {
         CreateMonitoredDataRequest request(
                 0,
@@ -519,10 +523,10 @@ namespace uafc
     Status Client::createMonitoredEvents(
             const std::vector<uaf::Address>&            addresses,
             const uaf::EventFilter&                     eventFilter,
-            const uafc::CreateMonitoredEventsConfig&    serviceConfig,
-            const uafc::SessionConfig&                  sessionConfig,
-            const uafc::SubscriptionConfig&             subscriptionConfig,
-            uafc::CreateMonitoredEventsResult&          result)
+            const uaf::CreateMonitoredEventsConfig&    serviceConfig,
+            const uaf::SessionConfig&                  sessionConfig,
+            const uaf::SubscriptionConfig&             subscriptionConfig,
+            uaf::CreateMonitoredEventsResult&          result)
     {
         CreateMonitoredEventsRequest request(
                 0,
@@ -554,9 +558,11 @@ namespace uafc
     Status Client::manuallyConnectToEndpoint(
             const string&           endpointUrl,
             const SessionSettings&  settings,
+            const PkiCertificate&   serverCertificate,
             ClientConnectionId&     clientConnectionId)
     {
-        return sessionFactory_->manuallyConnectToEndpoint(endpointUrl, settings, clientConnectionId);
+        return sessionFactory_->manuallyConnectToEndpoint(
+                endpointUrl, settings, serverCertificate, clientConnectionId);
     }
 
 
@@ -610,7 +616,7 @@ namespace uafc
     // Get information about the subscription
     // =============================================================================================
     Status Client::subscriptionInformation(
-            uafc::ClientSubscriptionHandle  clientSubscriptionHandle,
+            uaf::ClientSubscriptionHandle  clientSubscriptionHandle,
             SubscriptionInformation&        subscriptionInformation)
     {
         return sessionFactory_->subscriptionInformation(
@@ -646,7 +652,7 @@ namespace uafc
             if (isFound)
             {
                 monitoredItemInformation.monitoredItemState = monitoreditemstates::NotCreated;
-                ret.setGood();
+                ret = statuscodes::Good;
             }
         }
 
@@ -734,14 +740,14 @@ namespace uafc
 
     // Process a ReadRequest
     // =============================================================================================
-    Status Client::processRequest(const uafc::ReadRequest& request, uafc::ReadResult& result)
+    Status Client::processRequest(const uaf::ReadRequest& request, uaf::ReadResult& result)
     {
         return processRequest<ReadService>(request, result);
     }
 
     // Process a ReadRequest
     // =============================================================================================
-    Status Client::processRequest(const uafc::AsyncReadRequest& request, uafc::AsyncReadResult& result)
+    Status Client::processRequest(const uaf::AsyncReadRequest& request, uaf::AsyncReadResult& result)
     {
         return processRequest<AsyncReadService>(request, result);
     }
@@ -749,14 +755,14 @@ namespace uafc
 
     // Process a WriteRequest
     // =============================================================================================
-    Status Client::processRequest(const uafc::WriteRequest& request, uafc::WriteResult& result)
+    Status Client::processRequest(const uaf::WriteRequest& request, uaf::WriteResult& result)
     {
-        return processRequest<uafc::WriteService>(request, result);
+        return processRequest<uaf::WriteService>(request, result);
     }
 
     // Process a ReadRequest
     // =============================================================================================
-    Status Client::processRequest(const uafc::AsyncWriteRequest& request, uafc::AsyncWriteResult& result)
+    Status Client::processRequest(const uaf::AsyncWriteRequest& request, uaf::AsyncWriteResult& result)
     {
         return processRequest<AsyncWriteService>(request, result);
     }
@@ -764,37 +770,37 @@ namespace uafc
 
     // Process a MethodCallRequest
     // =============================================================================================
-    Status Client::processRequest(const uafc::MethodCallRequest& request, uafc::MethodCallResult& result)
+    Status Client::processRequest(const uaf::MethodCallRequest& request, uaf::MethodCallResult& result)
     {
-        return processRequest<uafc::MethodCallService>(request, result);
+        return processRequest<uaf::MethodCallService>(request, result);
     }
 
 
     // Process an AsyncMethodCallRequest
     // =============================================================================================
     Status Client::processRequest(
-            const uafc::AsyncMethodCallRequest&   request,
-            uafc::AsyncMethodCallResult&          result)
+            const uaf::AsyncMethodCallRequest&   request,
+            uaf::AsyncMethodCallResult&          result)
     {
-        return processRequest<uafc::AsyncMethodCallService>(request, result);
+        return processRequest<uaf::AsyncMethodCallService>(request, result);
     }
 
 
     // Process a BrowseRequest
     // =============================================================================================
-    Status Client::processRequest(const uafc::BrowseRequest& request, uafc::BrowseResult& result)
+    Status Client::processRequest(const uaf::BrowseRequest& request, uaf::BrowseResult& result)
     {
-        return processRequest<uafc::BrowseService>(request, result);
+        return processRequest<uaf::BrowseService>(request, result);
     }
 
 
     // Process a BrowseNextRequest
     // =============================================================================================
     Status Client::processRequest(
-            const uafc::BrowseNextRequest&  request,
-            uafc::BrowseNextResult&         result)
+            const uaf::BrowseNextRequest&  request,
+            uaf::BrowseNextResult&         result)
     {
-        return processRequest<uafc::BrowseNextService>(request, result);
+        return processRequest<uaf::BrowseNextService>(request, result);
     }
 
 
@@ -811,30 +817,30 @@ namespace uafc
     // Process a CreateMonitoredDataRequest
     // =============================================================================================
     Status Client::processRequest(
-            const uafc::CreateMonitoredDataRequest&  request,
-            uafc::CreateMonitoredDataResult&         result)
+            const uaf::CreateMonitoredDataRequest&  request,
+            uaf::CreateMonitoredDataResult&         result)
     {
-        return processRequest<uafc::CreateMonitoredDataService>(request, result);
+        return processRequest<uaf::CreateMonitoredDataService>(request, result);
     }
 
 
     // Process a CreateMonitoredEventsRequest
     // =============================================================================================
     Status Client::processRequest(
-            const uafc::CreateMonitoredEventsRequest&  request,
-            uafc::CreateMonitoredEventsResult&         result)
+            const uaf::CreateMonitoredEventsRequest&  request,
+            uaf::CreateMonitoredEventsResult&         result)
     {
-        return processRequest<uafc::CreateMonitoredEventsService>(request, result);
+        return processRequest<uaf::CreateMonitoredEventsService>(request, result);
     }
 
 
     // Process a HistoryReadRawModifiedRequest
     // =============================================================================================
     Status Client::processRequest(
-            const uafc::HistoryReadRawModifiedRequest&  request,
-            uafc::HistoryReadRawModifiedResult&         result)
+            const uaf::HistoryReadRawModifiedRequest&  request,
+            uaf::HistoryReadRawModifiedResult&         result)
     {
-        return processRequest<uafc::HistoryReadRawModifiedService>(request, result);
+        return processRequest<uaf::HistoryReadRawModifiedService>(request, result);
     }
 
 
@@ -852,25 +858,24 @@ namespace uafc
         UaMutexLocker locker(&requestHandleMutex_);
 
         // check if we still can increment the handle
-        if (currentRequestHandle_ < uafc::REQUESTHANDLE_MAX)
+        if (currentRequestHandle_ < uaf::REQUESTHANDLE_MAX)
         {
             // increment the handle, assign it to the request and result, and update the status
             currentRequestHandle_++;
             request.requestHandle_ = currentRequestHandle_;
             result.requestHandle   = currentRequestHandle_;
-            ret.setGood();
+            ret = statuscodes::Good;
         }
         else
         {
             // more than 2**64 assigned is virtually impossible, we must have discovered a bug!
-            ret.setStatus(uaf::statuscodes::UnexpectedError,
-                          "Maximum number of UAF handles (2**64!) reached, this must be a bug");
+            ret = uaf::UnexpectedError("Maximum number of UAF handles (2**64!) reached, this must be a bug");
         }
 
         if (ret.isGood())
             logger_->debug("Assigning handle %d to the request", currentRequestHandle_);
         else
-            logger_->error(ret);
+            logger_->error(ret.toString());
 
         return ret;
     }
@@ -936,25 +941,22 @@ namespace uafc
 
         // get a new unique request handle if necessary,
         // and update the copied request and result with it
-        if (request.requestHandle() == uafc::REQUESTHANDLE_NOT_ASSIGNED)
+        if (request.requestHandle() == uaf::REQUESTHANDLE_NOT_ASSIGNED)
             ret = assignRequestHandle<_Service>(copiedRequest, result);
         else
-            ret.setGood();
+            ret = uaf::statuscodes::Good;
 
         // assign client handles if necessary
         // (this is only needed for CreateMonitoredDataRequests and CreateMonitoredEventsRequests)
-        std::vector<uaf::ClientHandle> assignedClientHandles;
+        std::vector<uaf::ClientHandle> clientHandles;
         bool assigned;
         if (ret.isGood())
-            ret = uafc::assignClientHandlesIfNeeded<_Service>(
-                    result, mask, database_, assigned);
-            if (assigned)
-                assignedClientHandles = ret.additionalDiagnostics().getClientHandles();
+            ret = uaf::assignClientHandlesIfNeeded<_Service>(result, mask, database_, assigned, clientHandles);
 
         // if no error occurred, store the copied request if needed
         // (this is only needed for 'persistent' requests such as CreateMonitoredDataRequests)
         if (ret.isGood())
-            ret = uafc::storeIfNeeded<_Service>(
+            ret = uaf::storeIfNeeded<_Service>(
                     copiedRequest,
                     result,
                     result.getBadTargetsMask(),
@@ -972,8 +974,7 @@ namespace uafc
         }
 
         // finally, update the overall status
-        if (ret.isGood())
-            result.updateOverallStatus();
+        result.updateOverallStatus();
 
         // if no error occurred, update the result if needed
         // (this is only needed for 'persistent' results such as CreateMonitoredDataResults)
@@ -988,8 +989,12 @@ namespace uafc
         }
 
         // if client handles were assigned, copy them to the diagnostics of the Status object
-        if (assigned)
-            ret.additionalDiagnostics().setClientHandles(assignedClientHandles);
+        if (assigned && ret.isBad())
+        {
+            Status newRet = uaf::CreateMonitoredItemsError(clientHandles);
+            newRet.setRaisedBy(ret);
+            ret = newRet;
+        }
 
         return ret;
     }

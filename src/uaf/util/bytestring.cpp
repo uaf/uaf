@@ -55,6 +55,27 @@ namespace uaf
     }
 
 
+    // Convert a UaByteArray
+    // =============================================================================================
+    void ByteString::fromSdk(const UaByteArray& uaByteArray)
+    {
+        OpcUa_ByteString opcUaByteString;
+        uaByteArray.copyTo(&opcUaByteString);
+        uaByteString_.attach(&opcUaByteString); // uaByteString_ = opcUaByteString;
+    }
+
+
+    // Convert a UaByteArray
+    // =============================================================================================
+    void ByteString::toSdk(UaByteArray& uaByteArray) const
+    {
+        //uaByteArray = UaByteArray((char*) uaByteString_.data(), uaByteString_.length());
+        OpcUa_ByteString opcUaByteString;
+        uaByteString_.copyTo(&opcUaByteString);
+        uaByteArray = opcUaByteString;
+    }
+
+
     // Comparison operator ==
     // =============================================================================================
     bool operator==(const ByteString& object1, const ByteString& object2)

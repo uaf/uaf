@@ -25,7 +25,6 @@
 #include "uaf/client/client.h"
 
 using namespace uaf;
-using namespace uafc;
 
 
 int main(int argc, char* argv[])
@@ -85,8 +84,8 @@ int main(int argc, char* argv[])
     myMonitoredData.push_back(motorStatus3);
     CreateMonitoredDataResult myCreateMonitoredDataResult;
     Status status  = myClient.createMonitoredData(myMonitoredData,
-                                                  uafc::CreateMonitoredDataConfig(),
-                                                  uafc::SessionConfig(),
+                                                  uaf::CreateMonitoredDataConfig(),
+                                                  uaf::SessionConfig(),
                                                   subscriptionCfg,
                                                   myCreateMonitoredDataResult);
 
@@ -101,8 +100,8 @@ int main(int argc, char* argv[])
     CreateMonitoredEventsResult myCreateMonitoredEventsResult;
     status = myClient.createMonitoredEvents(myMonitoredEvents,
                                             uaf::EventFilter(),                  // default event filter
-                                            uafc::CreateMonitoredEventsConfig(), // default service settings
-                                            uafc::SessionConfig(),               // default session settings
+                                            uaf::CreateMonitoredEventsConfig(), // default service settings
+                                            uaf::SessionConfig(),               // default session settings
                                             subscriptionCfg,
                                             myCreateMonitoredEventsResult);
 

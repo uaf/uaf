@@ -19,6 +19,7 @@ set(  CMAKE_SWIG_OUTDIR     ${LIB_PYUAF_CLIENT_DIR} )
 set(  PYUAF_CLIENT_TARGETS
       __init__
       sessionstates
+      connectionsteps
       subscriptionstates
       monitoreditemstates
       settings

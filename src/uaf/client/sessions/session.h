@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_SESSION_H_
-#define UAFC_SESSION_H_
+#ifndef UAF_SESSION_H_
+#define UAF_SESSION_H_
 
 
 // STD
@@ -29,6 +29,7 @@
 #include "uaclient/uaclientsdk.h"
 #include "uaclient/uasession.h"
 #include "uabase/uastring.h"
+#include "uabase/uadir.h"
 #include "uapki/uapkicertificate.h"
 // UAF
 #include "uaf/util/status.h"
@@ -37,6 +38,7 @@
 #include "uaf/util/namespacearray.h"
 #include "uaf/util/nodeid.h"
 #include "uaf/util/browsepath.h"
+#include "uaf/util/status.h"
 #include "uaf/util/helperfunctions.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/sessions/sessionstates.h"
@@ -50,16 +52,16 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::Session wraps the Session object of the SDK and adds some functionality.
+    * An uaf::Session wraps the Session object of the SDK and adds some functionality.
     *
     * @ingroup ClientSessions
     ***********************************************************************************************/
-    class UAFC_EXPORT Session
+    class UAF_EXPORT Session
     {
     public:
 
@@ -79,13 +81,13 @@ namespace uafc
          */
         Session(
                 uaf::LoggerFactory*             loggerFactory,
-                const uafc::SessionSettings&    sessionSettings,
+                const uaf::SessionSettings&    sessionSettings,
                 const std::string&              serverUri,
                 uaf::ClientConnectionId         clientConnectionId,
                 UaClientSdk::UaSessionCallback* uaSessionCallback,
-                uafc::ClientInterface*          clientInterface,
-                uafc::Discoverer*               discoverer,
-                uafc::Database*                 database);
+                uaf::ClientInterface*          clientInterface,
+                uaf::Discoverer*               discoverer,
+                uaf::Database*                 database);
 
 
         /**
@@ -111,7 +113,9 @@ namespace uafc
         /**
          * Connect the session to a specific endpoint.
          */
-        uaf::Status connectToSpecificEndpoint(const std::string& endpointUrl);
+        uaf::Status connectToSpecificEndpoint(
+                const std::string&          endpointUrl,
+                const uaf::PkiCertificate&  serverCertificate);
 
 
         /**
@@ -143,7 +147,7 @@ namespace uafc
          *
          * @return  The information.
          */
-        uafc::SessionInformation sessionInformation() const;
+        uaf::SessionInformation sessionInformation() const;
 
 
         /**
@@ -159,12 +163,12 @@ namespace uafc
         /**
          * Get the settings of the session.
          */
-        uafc::SessionSettings sessionSettings()             const { return sessionSettings_; };
+        uaf::SessionSettings sessionSettings()             const { return sessionSettings_; };
 
         /**
          * Get the state of the session.
          */
-        uafc::sessionstates::SessionState sessionState()    const { return sessionState_; };
+        uaf::sessionstates::SessionState sessionState()    const { return sessionState_; };
 
 
         ///@} //////////////////////////////////////////////////////////////////////////////////////
@@ -178,7 +182,7 @@ namespace uafc
          * Manually create a subscription.
          *
          * For more info about "manual" methods, see the documentation on the
-         * uafc::Client::manuallyConnect method.
+         * uaf::Client::manuallyConnect method.
          *
          * @param settings              The settings of the subscription you'd like to create.
          * @param clientSubscriptionHandle  Output parameter, giving you the handle of the newly
@@ -187,7 +191,7 @@ namespace uafc
          *                              something went wrong.
          */
         uaf::Status manuallySubscribe(
-                const uafc::SubscriptionSettings&   settings,
+                const uaf::SubscriptionSettings&   settings,
                 uaf::ClientSubscriptionHandle&      clientSubscriptionHandle);
 
 
@@ -211,7 +215,7 @@ namespace uafc
          */
         uaf::Status subscriptionInformation(
                  uaf::ClientSubscriptionHandle      clientSubscriptionHandle,
-                 uafc::SubscriptionInformation&     subscriptionInformation);
+                 uaf::SubscriptionInformation&     subscriptionInformation);
 
 
         /**
@@ -223,14 +227,14 @@ namespace uafc
         */
         bool monitoredItemInformation(
                 uaf::ClientHandle               clientHandle,
-                uafc::MonitoredItemInformation& monitoredItemInformation);
+                uaf::MonitoredItemInformation& monitoredItemInformation);
 
         /**
          * Get information about all subscriptions.
          *
          * @return  A vector of all available SubscriptionInformation.
          */
-        std::vector<uafc::SubscriptionInformation> allSubscriptionInformations();
+        std::vector<uaf::SubscriptionInformation> allSubscriptionInformations();
 
 
         /**
@@ -246,7 +250,7 @@ namespace uafc
         uaf::Status setPublishingMode(
                 uaf::ClientSubscriptionHandle  clientSubscriptionHandle,
                 bool                           publishingEnabled,
-                const uafc::ServiceSettings&   serviceSettings,
+                const uaf::ServiceSettings&   serviceSettings,
                 bool&                          subscriptionFound);
 
 
@@ -262,7 +266,7 @@ namespace uafc
         uaf::Status setMonitoringModeIfNeeded(
                std::vector<uaf::ClientHandle>          clientHandles,
                uaf::monitoringmodes::MonitoringMode    monitoringMode,
-               const uafc::ServiceSettings&            serviceSettings,
+               const uaf::ServiceSettings&            serviceSettings,
                std::vector<uaf::Status>&               results);
 
 
@@ -282,7 +286,7 @@ namespace uafc
          */
         template<typename _Service>
         uaf::Status invokeService(
-                const uafc::BaseSessionRequest<typename _Service::Config,
+                const uaf::BaseSessionRequest<typename _Service::Config,
                                                typename _Service::RequestTarget,
                                                _Service::asynchronous>& request,
                 typename _Service::Invocation& invocation)
@@ -300,7 +304,7 @@ namespace uafc
          */
         template<typename _Service>
         uaf::Status invokeService(
-                const uafc::BaseSubscriptionRequest<typename _Service::Config,
+                const uaf::BaseSubscriptionRequest<typename _Service::Config,
                                                     typename _Service::RequestTarget,
                                                     _Service::asynchronous>& request,
                 typename _Service::Invocation& invocation)
@@ -333,7 +337,18 @@ namespace uafc
          *
          * @param sessionState     The new state.
          */
-        void setSessionState(uafc::sessionstates::SessionState sessionState);
+        void setSessionState(uaf::sessionstates::SessionState sessionState);
+
+
+        /**
+         * Change the last connection attempt status.
+         *
+         * @param status The new status.
+         */
+        void setConnectionStatus(
+                uaf::connectionsteps::ConnectionStep   step,
+                uaf::Status                            error,
+                bool                                   clientSideError);
 
 
         ///@}
@@ -370,18 +385,13 @@ namespace uafc
         /**
          * Load the client certificate from the file specified in the ClientSettings.
          */
-        uaf::Status loadClientCertificateFromFile(UaClientSdk::SessionSecurityInfo& uaSecurity);
+        uaf::Status loadClientCertificate(UaClientSdk::SessionSecurityInfo& uaSecurity);
 
 
         /**
-         * Load the server certificate from the file specified in the ClientSettings.
-         *
-         * Note that this file will **only** be used in case you manually connect to a specific
-         * endpoint (thereby avoiding discovery!!!).
-         * In normal circumstances, the server certificate will be fetched through the discovery
-         * process!!!
+         * Verify the server certificate.
          */
-        uaf::Status loadServerCertificateFromFile(UaClientSdk::SessionSecurityInfo& uaSecurity);
+        uaf::Status verifyServerCertificate(UaClientSdk::SessionSecurityInfo& uaSecurity);
 
 
         /**
@@ -398,7 +408,15 @@ namespace uafc
          */
         uaf::Status setUserIdentity(
                 UaClientSdk::SessionSecurityInfo& uaSecurity,
-                const uafc::SessionSecuritySettings& securitySettings);
+                const uaf::SessionSecuritySettings& securitySettings);
+
+        /**
+         * Helper function to check if a path exists, or create the path if needed.
+         */
+        uaf::Status checkOrCreatePath(
+                bool checkOnly,
+                const std::string& path,
+                const std::string& description) const;
 
 
         // Wrapped SDK session instance and callback instance
@@ -410,28 +428,32 @@ namespace uafc
         uaf::NamespaceArray                 namespaceArray_;
 
         // the current session state:
-        uafc::sessionstates::SessionState   sessionState_;
+        uaf::sessionstates::SessionState   sessionState_;
+
+        // the last connection attempt information:
+        uaf::connectionsteps::ConnectionStep lastConnectionAttemptStep_;
+        uaf::Status                          lastConnectionAttemptStatus_;
 
         // fixed session properties:
         uaf::ClientConnectionId             clientConnectionId_;
         std::string                         serverUri_;
-        uafc::SessionSettings               sessionSettings_;
+        uaf::SessionSettings               sessionSettings_;
 
         // the logger of the session
         uaf::Logger*                        logger_;
         // pointer to the client databse
-        uafc::Database*                     database_;
+        uaf::Database*                     database_;
         // the subscription factory of this session
-        uafc::SubscriptionFactory*          subscriptionFactory_;
+        uaf::SubscriptionFactory*          subscriptionFactory_;
         // the SessionConnectInfo
         UaClientSdk::SessionConnectInfo     uaSessionConnectInfo_;
         UaClientSdk::SessionConnectInfo     uaSessionConnectInfoNoInitialRetry_;
         // mutex for critical sections
         UaMutex                             sessionMutex_;
         // the RequesterInterface to call when asynchronous messages are received
-        uafc::ClientInterface*              clientInterface_;
+        uaf::ClientInterface*              clientInterface_;
         // the Discoverer to use
-        uafc::Discoverer*                   discoverer_;
+        uaf::Discoverer*                   discoverer_;
 
 
     };
@@ -440,4 +462,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_SESSION_H_ */
+#endif /* UAF_SESSION_H_ */

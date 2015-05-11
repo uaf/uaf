@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_METHODCALLREQUESTTARGET_H_
-#define UAFC_METHODCALLREQUESTTARGET_H_
+#ifndef UAF_METHODCALLREQUESTTARGET_H_
+#define UAF_METHODCALLREQUESTTARGET_H_
 
 
 
@@ -35,17 +35,17 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::MethodCallRequestTarget is the part of a uafc::MethodCallRequest that specifies the
+    * A uaf::MethodCallRequestTarget is the part of a uaf::MethodCallRequest that specifies the
     * target to call.
     *
     * @ingroup ClientRequests
     ***********************************************************************************************/
-    class UAFC_EXPORT MethodCallRequestTarget : public uafc::BaseSessionRequestTarget
+    class UAF_EXPORT MethodCallRequestTarget : public uaf::BaseSessionRequestTarget
     {
     public:
 
@@ -97,13 +97,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const MethodCallRequestTarget& object1,
                 const MethodCallRequestTarget& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const MethodCallRequestTarget& object1,
                 const MethodCallRequestTarget& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const MethodCallRequestTarget& object1,
                 const MethodCallRequestTarget& object2);
 
@@ -147,4 +147,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_METHODCALLREQUESTTARGET_H_ */
+#endif /* UAF_METHODCALLREQUESTTARGET_H_ */

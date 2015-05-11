@@ -62,6 +62,8 @@ class ClientManualConnectionTest(unittest.TestCase):
         self.sessionSettings0 = pyuaf.client.settings.SessionSettings()
         self.sessionSettings1 = pyuaf.client.settings.SessionSettings()
         self.sessionSettings1.sessionTimeoutSec = 0.12345
+        self.sessionSettings1.lastConnectionAttemptTime = pyuaf.util.DateTime()
+        self.sessionSettings1.lastConnectionAttemptStatus = pyuaf.util.Status()
         
     
     def help_manuallyConnect(self):
@@ -78,8 +80,8 @@ class ClientManualConnectionTest(unittest.TestCase):
         info0 = self.client.sessionInformation(self.clientConnectionId0)
         info1 = self.client.sessionInformation(self.clientConnectionId1)
         
-        self.assertEqual( info0 , pyuaf.client.SessionInformation(self.clientConnectionId0, pyuaf.client.sessionstates.Connected, ARGS.demo_server_uri) )
-        self.assertEqual( info1 , pyuaf.client.SessionInformation(self.clientConnectionId1, pyuaf.client.sessionstates.Connected , ARGS.demo_server_uri) )
+        self.assertEqual( info0 , pyuaf.client.SessionInformation(self.clientConnectionId0, pyuaf.client.sessionstates.Connected, ARGS.demo_server_uri, pyuaf.client.connectionsteps.ActivateSession, info0.lastConnectionAttemptStatus) )
+        self.assertEqual( info1 , pyuaf.client.SessionInformation(self.clientConnectionId1, pyuaf.client.sessionstates.Connected , ARGS.demo_server_uri, pyuaf.client.connectionsteps.ActivateSession, info1.lastConnectionAttemptStatus) )
         
     def test_client_Client_allSessionInformations(self):
         self.help_manuallyConnect()

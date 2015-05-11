@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_BASESESSIONREQUESTTARGET_H_
-#define UAFC_BASESESSIONREQUESTTARGET_H_
+#ifndef UAF_BASESESSIONREQUESTTARGET_H_
+#define UAF_BASESESSIONREQUESTTARGET_H_
 
 
 // STD
@@ -32,16 +32,16 @@
 #include "uaf/client/resolution/resolvable.h"
 
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
-    * An uafc::BaseSessionRequestTarget is the superclass for "request targets" such as
-    * uafc:ReadRequestTarget and uafc::WriteRequestTarget.
+    * An uaf::BaseSessionRequestTarget is the superclass for "request targets" such as
+    * uaf::ReadRequestTarget and uaf::WriteRequestTarget.
     *
     * @ingroup ClientRequests
     ***********************************************************************************************/
-    class UAFC_EXPORT BaseSessionRequestTarget :  public uafc::Resolvable
+    class UAF_EXPORT BaseSessionRequestTarget :  public uaf::Resolvable
     {
     public:
 
@@ -89,4 +89,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_BASESESSIONREQUESTTARGET_H_ */
+#endif /* UAF_BASESESSIONREQUESTTARGET_H_ */

@@ -23,7 +23,6 @@
 #include "uaf/client/client.h"
 
 using namespace uaf;
-using namespace uafc;
 
 
 int main(int argc, char* argv[])
@@ -84,7 +83,7 @@ int main(int argc, char* argv[])
     ReadResult myReadResult;
     Status readStatus  = myClient.read(myReadNodes,
                                        uaf::attributeids::Value, // read the Value attribute
-                                       uafc::ReadConfig(),       // default settings for the Read service
+                                       uaf::ReadConfig(),        // default settings for the Read service
                                        sessionCfg,
                                        myReadResult);
 
@@ -99,7 +98,7 @@ int main(int argc, char* argv[])
     Status writeStatus = myClient.write(myWriteNodes,
                                         myData,
                                         uaf::attributeids::Value, // write the Value attribute
-                                        uafc::WriteConfig(),      // default settings for the Write service
+                                        uaf::WriteConfig(),       // default settings for the Write service
                                         sessionCfg,
                                         myWriteResult);
 

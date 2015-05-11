@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_HISTORYREADRAWMODIFIEDSETTINGS_H_
-#define UAFC_HISTORYREADRAWMODIFIEDSETTINGS_H_
+#ifndef UAF_HISTORYREADRAWMODIFIEDSETTINGS_H_
+#define UAF_HISTORYREADRAWMODIFIEDSETTINGS_H_
 
 
 
@@ -33,17 +33,17 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::HistoryReadRawModifiedSettings object holds the service settings that are particular
+    * An uaf::HistoryReadRawModifiedSettings object holds the service settings that are particular
     * for the HistoryReadRawModified service.
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT HistoryReadRawModifiedSettings : public uafc::ServiceSettings
+    class UAF_EXPORT HistoryReadRawModifiedSettings : public uaf::ServiceSettings
     {
     public:
 
@@ -124,4 +124,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_HISTORYREADRAWMODIFIEDSETTINGS_H_ */
+#endif /* UAF_HISTORYREADRAWMODIFIEDSETTINGS_H_ */

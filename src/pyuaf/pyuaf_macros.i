@@ -51,7 +51,7 @@
 // 
 // Handle the comparison operators ==, != and <.
 //
-//   - argument NS   : the namespace of the class, e.g. uaf or uafc
+//   - argument NS   : the namespace of the class, e.g. uaf
 //   - argument TYPE : the type of the class, e.g. LocalizedText
 //
 // The macro assumes that the C++ class has defined:
@@ -94,7 +94,7 @@
 // 
 // Handle the toString() method.
 //
-//   - argument NS        : the namespace of the class, e.g. uaf or uafc
+//   - argument NS        : the namespace of the class, e.g. uaf
 //   - argument TYPE      : the type of the class, e.g. LocalizedText
 //   - argument PYTHON_NS : the namespace for the Python classes, e.g. pyuaf.util
 //

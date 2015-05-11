@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_HISTORYREADRAWMODIFIEDREQUESTTARGET_H_
-#define UAFC_HISTORYREADRAWMODIFIEDREQUESTTARGET_H_
+#ifndef UAF_HISTORYREADRAWMODIFIEDREQUESTTARGET_H_
+#define UAF_HISTORYREADRAWMODIFIEDREQUESTTARGET_H_
 
 
 
@@ -35,18 +35,18 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::HistoryReadRawModifiedRequestTarget is the part of a
-    * uafc::HistoryReadRawModifiedRequest that specifies the node that provides historical
+    * A uaf::HistoryReadRawModifiedRequestTarget is the part of a
+    * uaf::HistoryReadRawModifiedRequest that specifies the node that provides historical
     * information.
     *
     * @ingroup ClientRequests
     ***********************************************************************************************/
-    class UAFC_EXPORT HistoryReadRawModifiedRequestTarget : public uafc::BaseSessionRequestTarget
+    class UAF_EXPORT HistoryReadRawModifiedRequestTarget : public uaf::BaseSessionRequestTarget
     {
     public:
 
@@ -89,10 +89,10 @@ namespace uafc
 
         /** The continuation point of a previous HistoryRead service call.
          *  The UAF can automatically handle continuation points, for more info take a look
-         *  at the documentation of uafc::HistoryReadRawModifiedSettings::maxAutoReadMore
+         *  at the documentation of uaf::HistoryReadRawModifiedSettings::maxAutoReadMore
          *  If you decide to use the continuation points manually, you can still do so of course
          *  by copying the continuation point of a previous result
-         *  (uafc::HistoryReadRawModifiedResultTarget::continuationPoint) to here. */
+         *  (uaf::HistoryReadRawModifiedResultTarget::continuationPoint) to here. */
         uaf::ByteString continuationPoint;
 
         /** The index range in case the node is an array. */
@@ -112,13 +112,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const HistoryReadRawModifiedRequestTarget& object1,
                 const HistoryReadRawModifiedRequestTarget& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const HistoryReadRawModifiedRequestTarget& object1,
                 const HistoryReadRawModifiedRequestTarget& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const HistoryReadRawModifiedRequestTarget& object1,
                 const HistoryReadRawModifiedRequestTarget& object2);
 
@@ -162,4 +162,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_HISTORYREADRAWMODIFIEDREQUESTTARGET_H_ */
+#endif /* UAF_HISTORYREADRAWMODIFIEDREQUESTTARGET_H_ */

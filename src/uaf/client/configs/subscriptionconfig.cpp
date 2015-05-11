@@ -21,7 +21,7 @@
 #include "uaf/client/configs/subscriptionconfig.h"
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
     using std::string;

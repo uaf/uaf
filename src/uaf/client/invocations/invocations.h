@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_INVOCATIONS_H_
-#define UAFC_INVOCATIONS_H_
+#ifndef UAF_INVOCATIONS_H_
+#define UAF_INVOCATIONS_H_
 
 // STD
 // SDK
@@ -40,4 +40,4 @@
 
 
 
-#endif /* UAFC_INVOCATIONS_H_ */
+#endif /* UAF_INVOCATIONS_H_ */

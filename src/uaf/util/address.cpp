@@ -278,16 +278,17 @@ namespace uaf
             if (address.expandedNodeId_->hasServerUri())
             {
                 serverUri = address.expandedNodeId_->serverUri();
-                ret.setGood();
+                ret = statuscodes::Good;
             }
             else
-                ret.setStatus(statuscodes::ResolutionError,
-                              "Cannot get the server URI because the expanded node id has no "
-                              "server URI defined");
+            {
+                ret = EmptyServerUriError();
+            }
         }
         else
-            ret.setStatus(statuscodes::ResolutionError,
-                          "Cannot get the server URI if the address is not an expanded node id");
+        {
+            ret = ExpandedNodeIdAddressExpectedError();
+        }
 
         return ret;
     }
@@ -304,8 +305,7 @@ namespace uaf
         if (isExpandedNodeId())
             ret = expandedNodeId_->nodeId().toSdk(uaNodeId);
         else
-            ret.setStatus(statuscodes::ResolutionError,
-                          "Cannot prepare an SDK NodeId if the address is not an expanded node id");
+            ret = ExpandedNodeIdAddressExpectedError();
 
         return ret;
     }

@@ -20,10 +20,9 @@
 
 #include "uaf/client/subscriptions/monitorediteminformation.h"
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::size_t;
@@ -32,7 +31,7 @@ namespace uafc
     // Constructor
     // =============================================================================================
     MonitoredItemInformation::MonitoredItemInformation()
-    : monitoredItemState(uafc::monitoreditemstates::NotCreated),
+    : monitoredItemState(uaf::monitoreditemstates::NotCreated),
       clientConnectionId(0),
       clientSubscriptionHandle(0),
       clientHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED)
@@ -42,7 +41,7 @@ namespace uafc
     // Constructor
     // =============================================================================================
     MonitoredItemInformation::MonitoredItemInformation(
-            uafc::monitoreditemstates::MonitoredItemState   monitoredItemState,
+            uaf::monitoreditemstates::MonitoredItemState   monitoredItemState,
             uaf::ClientConnectionId                         clientConnectionId,
             uaf::ClientSubscriptionHandle                   clientSubscriptionHandle,
             uaf::ClientHandle                               clientHandle,
@@ -62,7 +61,7 @@ namespace uafc
 
         ss << indent << " - monitoredItemState";
         ss << fillToPos(ss, colon);
-        ss << ": " << uafc::monitoreditemstates::toString(monitoredItemState) << "\n";
+        ss << ": " << uaf::monitoreditemstates::toString(monitoredItemState) << "\n";
 
         ss << indent << " - clientConnectionId";
         ss << fillToPos(ss, colon);

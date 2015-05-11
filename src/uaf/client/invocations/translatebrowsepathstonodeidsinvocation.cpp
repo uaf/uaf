@@ -20,10 +20,9 @@
 
 #include "uaf/client/invocations/translatebrowsepathstonodeidsinvocation.h"
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;
@@ -71,7 +70,7 @@ namespace uafc
                 // problems.
                 // In case an element could not be resolved, we remember its index (because we will
                 // be able to let the server translate the part of the path that we can resolve).
-                Status   elementsStatus(statuscodes::Good);
+                Status elementsStatus(statuscodes::Good);
                 uint32_t index = 0;
 
                 while (index < elements.size() && elementsStatus.isGood())
@@ -110,7 +109,7 @@ namespace uafc
             const NamespaceArray&                                       nameSpaceArray,
             const ServerArray&                                          serverArray)
     {
-        return Status(statuscodes::UnsupportedError, "Asynchronous translation is not supported");
+        return AsyncInvocationNotSupportedError();
     }
 
 
@@ -121,13 +120,16 @@ namespace uafc
     {
         Status ret;
 
-        UaStatus uaStatus = uaSession->translateBrowsePathsToNodeIds(
+        SdkStatus sdkStatus = uaSession->translateBrowsePathsToNodeIds(
                 uaServiceSettings_,
                 uaBrowsePaths_,
                 uaBrowsePathResults_,
                 uaDiagnosticInfos_);
 
-        ret.fromSdk(uaStatus.statusCode(), "Synchronous write invocation failed");
+        if (sdkStatus.isGood())
+            ret = uaf::statuscodes::Good;
+        else
+            ret = TranslateBrowsePathsToNodeIdsInvocationError(sdkStatus);
 
         return ret;
     }
@@ -139,7 +141,7 @@ namespace uafc
             UaClientSdk::UaSession* uaSession,
             TransactionId           transactionId)
     {
-        return Status(statuscodes::UnsupportedError, "Asynchronous translation is not supported");
+        return AsyncInvocationNotSupportedError();
     }
 
 
@@ -166,8 +168,14 @@ namespace uafc
             {
 
                 // update the status
-                targets[i].status.fromSdk(uaBrowsePathResults_[i].StatusCode,
-                                          "The server reported a translation failure");
+                if (OpcUa_IsGood(uaBrowsePathResults_[i].StatusCode))
+                    targets[i].status = statuscodes::Good;
+                else
+                    targets[i].status = ServerCouldNotTranslateBrowsePathsToNodeIdsError(
+                            SdkStatus(uaBrowsePathResults_[i].StatusCode));
+
+                // update the status code
+                targets[i].opcUaStatusCode = uaBrowsePathResults_[i].StatusCode;
 
                 // declare the number of "targets of the current ResultTarget"
                 uint32_t noOfResultTargetTargets = uaBrowsePathResults_[i].NoOfTargets;
@@ -208,9 +216,7 @@ namespace uafc
                         else
                         {
                             // update the status
-                            targets[i].status.setStatus(
-                                    statuscodes::ResolutionError,
-                                    "Translation result returned an unknown server index!");
+                            targets[i].status = uaf::UnknownServerIndexError();
                         }
                     }
                     else
@@ -223,21 +229,17 @@ namespace uafc
                         else
                         {
                             // update the status
-                            targets[i].status.setStatus(
-                                    statuscodes::ResolutionError,
-                                    "Translation result returned an unknown server index and "
-                                    "namespace index!");
+                            targets[i].status = uaf::UnknownNamespaceIndexAndServerIndexError();
                         }
                     }
                 }
             }
 
-            ret.setGood();
+            ret = uaf::statuscodes::Good;
         }
         else
         {
-            ret.setStatus(statuscodes::UnexpectedError,
-                          "Number of targets does not match number of targets");
+            ret = uaf::UnexpectedError("Number of targets does not match number of targets");
         }
 
         return ret;

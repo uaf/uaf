@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_INVOCATIONFACTORY_H_
-#define UAFC_INVOCATIONFACTORY_H_
+#ifndef UAF_INVOCATIONFACTORY_H_
+#define UAF_INVOCATIONFACTORY_H_
 
 
 // STD
@@ -31,13 +31,13 @@
 #include "uaf/client/clientexport.h"
 #include "uaf/client/clientservices.h"
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
-    * An uafc::InvocationFactory is a factory to produce service invocations for a given request.
+    * An uaf::InvocationFactory is a factory to produce service invocations for a given request.
     *
-    * A single request may lead to several invocations, e.g. an uafc::ReadRequest of some variables
+    * A single request may lead to several invocations, e.g. an uaf::ReadRequest of some variables
     * will result in multiple invocations if the variables are not all exposed by the same server.
     *
     * An invocation therefore "groups" targets of a specific service (e.g. Read, Write, ...)
@@ -95,10 +95,9 @@ namespace uafc
 
             // check the input parameters
             if (request.targets.size() == mask.size())
-                ret.setGood();
+                ret = uaf::statuscodes::Good;
             else
-                ret.setStatus(uaf::statuscodes::UnexpectedError,
-                              "The mask does not match the number of targets");
+                ret = uaf::UnexpectedError("The mask does not match the number of targets");
 
             std::string serverUri;
 
@@ -127,9 +126,7 @@ namespace uafc
                         }
                         else
                         {
-                            ret.setStatus(uaf::statuscodes::UnexpectedError,
-                                          "Can't build an invocation for a target with invalid "
-                                          "ServerUri!");
+                            ret = uaf::InvalidServerUriError(serverUri);
                         }
                     }
                 }
@@ -137,9 +134,7 @@ namespace uafc
 
             // asynchronous requests can (in this UAF version) only have targets on the same server
             if (RequestType::asynchronous && invocations.size() > 1)
-                ret.setStatus(uaf::statuscodes::UnsupportedError,
-                              "Asynchronous requests can (in this UAF version) only have targets of"
-                              " the same server URI");
+                ret = uaf::AsyncInvocationOnMultipleSessionsNotSupportedError();
 
             return ret;
         }
@@ -169,4 +164,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_INVOCATIONFACTORY_H_ */
+#endif /* UAF_INVOCATIONFACTORY_H_ */

@@ -19,8 +19,8 @@
  */
 
 
-#ifndef UAFC_BASESERVICECONFIG_H_
-#define UAFC_BASESERVICECONFIG_H_
+#ifndef UAF_BASESERVICECONFIG_H_
+#define UAF_BASESERVICECONFIG_H_
 
 
 // STD
@@ -34,7 +34,7 @@
 #include "uaf/client/settings/translatebrowsepathstonodeidssettings.h"
 
 
-namespace uafc
+namespace uaf
 {
 
 
@@ -48,7 +48,7 @@ namespace uafc
     * @ingroup ClientConfigs
     ***********************************************************************************************/
     template<typename _ServiceSettings>
-    class UAFC_EXPORT BaseServiceConfig
+    class UAF_EXPORT BaseServiceConfig
     {
     public:
 
@@ -59,7 +59,7 @@ namespace uafc
 
         /** The settings to translate any relative addresses that are involved in the service
          *  call. */
-        uafc::TranslateBrowsePathsToNodeIdsSettings translationSettings;
+        uaf::TranslateBrowsePathsToNodeIdsSettings translationSettings;
 
 
         /**
@@ -82,4 +82,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_BASESERVICECONFIG_H_ */
+#endif /* UAF_BASESERVICECONFIG_H_ */

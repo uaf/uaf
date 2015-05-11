@@ -20,106 +20,82 @@
 
 #include "uaf/util/status.h"
 
+
 namespace uaf
 {
     using namespace uaf;
     using std::string;
-    using std::stringstream;
     using std::vector;
-    using uaf::statuscodes::StatusCode;
-
-
-
-    // Constructor
-    // =============================================================================================
-    Status::Status()
-    : statusCode_(uaf::statuscodes::Uncertain),
-      opcUaStatusCode_(OpcUa_Uncertain)
-    {}
 
 
     // Constructor
     // =============================================================================================
-    Status::Status(uaf::statuscodes::StatusCode statusCode)
-    : statusCode_(statusCode)
+    Status::Status(const Status& other)
     {
-        opcUaStatusCode_ = statuscodes::fromUafToSdk(statusCode);
-    }
+        copyErrors(other);
+        statusCode = other.statusCode;
 
-
-    // Constructor
-    // =============================================================================================
-    Status::Status(uaf::statuscodes::StatusCode statusCode, const char* description, ...)
-    : statusCode_(statusCode)
-    {
-        opcUaStatusCode_ = statuscodes::fromUafToSdk(statusCode);
-        va_list args;
-        va_start(args, description);
-        char buffer[512];
-        vsprintf(buffer, description, args);
-        va_end(args);
-        description_ = buffer;
-    }
-
-
-    // Add diagnostic info
-    // =============================================================================================
-    void Status::addDiagnostic(const char* info, ...)
-    {
-        va_list args;
-        va_start(args, info);
-        char buffer[512];
-        vsprintf(buffer, info, args);
-        va_end(args);
-
-        if (additionalDiagnostics_.hasDescription())
-            additionalDiagnostics_.setDescription(
-                    std::string(buffer) + " (" + additionalDiagnostics_.getDescription() + ")");
+        if (other.isRaisedBy())
+        {
+            raisedBy_ = new Status(*other.raisedBy_);
+        }
         else
-            additionalDiagnostics_.setDescription(std::string(buffer));
+        {
+            raisedBy_ = NULL;
+        }
     }
 
 
-
-    // Set the status to Good with a message
+    // Assignment operator
     // =============================================================================================
-    void Status::setGood(const char* description, ...)
+    Status& Status::operator=(const Status& other)
     {
-        va_list args;
-        va_start(args, description);
-        char buffer[512];
-        vsprintf(buffer, description, args);
-        va_end(args);
-        description_        = buffer;
-        statusCode_         = uaf::statuscodes::Good;
-        opcUaStatusCode_    = OpcUa_Good;
+        // protect for self-assignment
+        if (&other != this)
+        {
+            clearRaisedBy();
+            copyErrors(other);
+            statusCode = other.statusCode;
+            if (other.isRaisedBy())
+            {
+                raisedBy_ = new Status(*other.raisedBy_);
+            }
+            else
+            {
+                raisedBy_ = NULL;
+            }
+        }
+        return *this;
     }
 
 
-    // Set the status to Uncertain with a message
+    // Destructor
     // =============================================================================================
-    void Status::setUncertain(const char* description, ...)
+    Status::~Status()
     {
-        va_list args;
-        va_start(args, description);
-        char buffer[512];
-        vsprintf(buffer, description, args);
-        va_end(args);
-        description_        = buffer;
-        statusCode_         = uaf::statuscodes::Uncertain;
-        opcUaStatusCode_    = OpcUa_Uncertain;
+        clearRaisedBy();
     }
 
+
+    // Clear the internal variables
+    // =============================================================================================
+    void Status::clearRaisedBy()
+    {
+        if (isRaisedBy())
+        {
+            delete raisedBy_;
+            raisedBy_ = NULL;
+        }
+    }
 
     // Make a summary from other Statuses
     // =============================================================================================
     void Status::summarize(const vector<Status>& statuses)
     {
-        Status summary;
-        size_t noOfGood      = 0;
-        size_t noOfUncertain = 0;
-        size_t noOfBad       = 0;
-        for (vector<Status>::const_iterator it = statuses.begin(); it != statuses.end(); it++)
+        uint32_t noOfGood      = 0;
+        uint32_t noOfUncertain = 0;
+        uint32_t noOfBad       = 0;
+        for (vector<Status>::const_iterator it = statuses.begin(); it != statuses.end(); ++it)
         {
             if      (it->isGood())      noOfGood++;
             else if (it->isUncertain()) noOfUncertain++;
@@ -127,96 +103,333 @@ namespace uaf
         }
 
         if (statuses.size() == 0)
-            setStatus(statuscodes::UnexpectedError, "Could not summarize, no statuses given");
+        {
+            statusCode = uaf::statuscodes::NoStatusesGivenError;
+            raisedBy_NoStatusesGivenError = NoStatusesGivenError();
+        }
         else if (noOfGood == statuses.size())
-            setGood();
+            statusCode = uaf::statuscodes::Good;
         else if (noOfUncertain > 0 && noOfBad == 0)
-            setStatus(statuscodes::Uncertain,
-                      "#Good: %d, #Uncertain: %d, #Bad: 0", noOfGood, noOfUncertain);
+            statusCode = uaf::statuscodes::Uncertain;
         else
-            setStatus(statuscodes::OtherError,
-                      "#Good: %d, #Uncertain: %d, #Bad: %d", noOfGood, noOfUncertain, noOfBad);
+        {
+            statusCode = uaf::statuscodes::BadStatusesPresentError;
+            raisedBy_BadStatusesPresentError = BadStatusesPresentError(noOfGood, noOfUncertain, noOfBad);
+        }
     }
 
 
-
-    // Does the status have a specific OPC UA status code?
+    // set the status to Good
     // =============================================================================================
-    bool Status::hasSpecificOpcUaStatusCode() const
+    void Status::setGood()
     {
-        return    (opcUaStatusCode_ != OpcUa_Good)
-               && (opcUaStatusCode_ != OpcUa_Uncertain)
-               && (opcUaStatusCode_ != OpcUa_Bad);
+        clearRaisedBy();
+        statusCode = uaf::statuscodes::Good;
+    }
+
+    // set the status to Uncertain
+    // =============================================================================================
+    void Status::setUncertain()
+    {
+        clearRaisedBy();
+        statusCode = uaf::statuscodes::Uncertain;
+    }
+
+
+    // Add the status that caused this status (i.e. the current instance).
+    // =============================================================================================
+    void Status::setRaisedBy(const Status& status)
+    {
+        raisedBy_ = new uaf::Status(status);
+    }
+
+    // Check if this status is raised by some other status.
+    // =============================================================================================
+    bool Status::isRaisedBy() const
+    {
+        return raisedBy_ != NULL;
+    }
+
+    // If this status is raised by some other status, get a copy of this other status.
+    // =============================================================================================
+    Status Status::raisedBy() const
+    {
+        if (isRaisedBy())
+            return *raisedBy_;
+        else
+            return Status();
+    }
+
+    // Get the name of the status code.
+    // =============================================================================================
+    string Status::statusCodeName() const
+    {
+       return uaf::statuscodes::toString(statusCode);
     }
 
 
 
-    // Get a string representation
+#define UAF_STATUS_COPY_ERROR(ERROR)       \
+        raisedBy_##ERROR = from.raisedBy_##ERROR;
+
+    void Status::copyErrors(const Status& from)
+    {
+        //UAF_STATUS_COPY_ERROR(DiscoveryError)
+        //UAF_STATUS_COPY_ERROR(InvalidRequestError)
+        //UAF_STATUS_COPY_ERROR(ResolutionError)
+        UAF_STATUS_COPY_ERROR(FindServersError)
+        UAF_STATUS_COPY_ERROR(UnknownServerError)
+        UAF_STATUS_COPY_ERROR(EmptyUrlError)
+        UAF_STATUS_COPY_ERROR(NoParallelFindServersAllowedError)
+        UAF_STATUS_COPY_ERROR(NoDiscoveryUrlsFoundError)
+        UAF_STATUS_COPY_ERROR(ServerCertificateRejectedByUserError)
+        UAF_STATUS_COPY_ERROR(ServerCertificateSavingError)
+        UAF_STATUS_COPY_ERROR(OpenSSLStoreInitializationError)
+        UAF_STATUS_COPY_ERROR(ClientCertificateLoadingError)
+        UAF_STATUS_COPY_ERROR(ServerDidNotProvideCertificateError)
+        //UAF_STATUS_COPY_ERROR(ConnectionError)
+        UAF_STATUS_COPY_ERROR(PathNotExistsError)
+        UAF_STATUS_COPY_ERROR(NoSecuritySettingsGivenError)
+        UAF_STATUS_COPY_ERROR(PathCreationError)
+        UAF_STATUS_COPY_ERROR(SecuritySettingsMatchError)
+        UAF_STATUS_COPY_ERROR(WrongTypeError)
+        UAF_STATUS_COPY_ERROR(UnexpectedError)
+        UAF_STATUS_COPY_ERROR(ServerArrayConversionError)
+        UAF_STATUS_COPY_ERROR(NamespaceArrayConversionError)
+        UAF_STATUS_COPY_ERROR(BadNamespaceArrayError)
+        UAF_STATUS_COPY_ERROR(BadServerArrayError)
+        UAF_STATUS_COPY_ERROR(UnknownServerIndexError)
+        UAF_STATUS_COPY_ERROR(InvalidAddressError)
+        UAF_STATUS_COPY_ERROR(UnknownNamespaceUriError)
+        UAF_STATUS_COPY_ERROR(NoNamespaceIndexOrUriGivenError)
+        UAF_STATUS_COPY_ERROR(UnknownNamespaceIndexError)
+        UAF_STATUS_COPY_ERROR(EmptyServerUriAndUnknownNamespaceIndexError)
+        UAF_STATUS_COPY_ERROR(ExpandedNodeIdAddressExpectedError)
+        UAF_STATUS_COPY_ERROR(EmptyServerUriError)
+        UAF_STATUS_COPY_ERROR(UnsupportedError)
+        UAF_STATUS_COPY_ERROR(UnsupportedNodeIdIdentifierTypeError)
+        UAF_STATUS_COPY_ERROR(SyncInvocationNotSupportedError)
+        UAF_STATUS_COPY_ERROR(AsyncInvocationNotSupportedError)
+        UAF_STATUS_COPY_ERROR(NoStatusesGivenError)
+        UAF_STATUS_COPY_ERROR(BadStatusesPresentError)
+        UAF_STATUS_COPY_ERROR(NotAllTargetsCouldBeResolvedError)
+        UAF_STATUS_COPY_ERROR(InvalidServerUriError)
+        UAF_STATUS_COPY_ERROR(SubscriptionNotCreatedError)
+        UAF_STATUS_COPY_ERROR(NoTargetsGivenError)
+        UAF_STATUS_COPY_ERROR(DataDontMatchAddressesError)
+        UAF_STATUS_COPY_ERROR(ItemNotFoundForTheGivenHandleError)
+        UAF_STATUS_COPY_ERROR(TargetRankOutOfBoundsError)
+        UAF_STATUS_COPY_ERROR(NoItemFoundForTheGivenRequestHandleError)
+        UAF_STATUS_COPY_ERROR(ContinuationPointsDontMatchAddressesError)
+        UAF_STATUS_COPY_ERROR(UnknownNamespaceIndexAndServerIndexError)
+        UAF_STATUS_COPY_ERROR(AsyncMultiMethodCallNotSupportedError)
+        UAF_STATUS_COPY_ERROR(EmptyAddressError)
+        UAF_STATUS_COPY_ERROR(MultipleTranslationResultsError)
+        UAF_STATUS_COPY_ERROR(UnknownClientSubscriptionHandleError)
+        UAF_STATUS_COPY_ERROR(UnknownClientHandleError)
+        UAF_STATUS_COPY_ERROR(UnknownClientConnectionIdError)
+        UAF_STATUS_COPY_ERROR(AsyncConnectionFailedError)
+        UAF_STATUS_COPY_ERROR(ConnectionFailedError)
+        UAF_STATUS_COPY_ERROR(SessionSecuritySettingsDontMatchEndpointError)
+        UAF_STATUS_COPY_ERROR(CouldNotManuallyUnsubscribeError)
+        UAF_STATUS_COPY_ERROR(CouldNotManuallySubscribeError)
+        UAF_STATUS_COPY_ERROR(SessionNotConnectedError)
+        UAF_STATUS_COPY_ERROR(ServerCouldNotSetMonitoringModeError)
+        UAF_STATUS_COPY_ERROR(CreateSubscriptionError)
+        UAF_STATUS_COPY_ERROR(DeleteSubscriptionError)
+        UAF_STATUS_COPY_ERROR(SubscriptionHasBeenDeletedError)
+        UAF_STATUS_COPY_ERROR(SetMonitoringModeInvocationError)
+        UAF_STATUS_COPY_ERROR(NoDiscoveryUrlsExposedByServerError)
+        UAF_STATUS_COPY_ERROR(GetEndpointsError)
+        UAF_STATUS_COPY_ERROR(NoEndpointsProvidedByServerError)
+        UAF_STATUS_COPY_ERROR(DisconnectionFailedError)
+        UAF_STATUS_COPY_ERROR(NoConnectedSessionToUpdateArraysError)
+        UAF_STATUS_COPY_ERROR(BadDataReceivedError)
+
+
+        // service errors
+        //UAF_STATUS_COPY_ERROR(ServiceError)
+        UAF_STATUS_COPY_ERROR(CouldNotReadArraysError)
+        UAF_STATUS_COPY_ERROR(CreateMonitoredItemsError)
+        UAF_STATUS_COPY_ERROR(CreateMonitoredItemsInvocationError)
+        UAF_STATUS_COPY_ERROR(BeginCreateMonitoredItemsInvocationError)
+        UAF_STATUS_COPY_ERROR(ServerCouldNotCreateMonitoredItemsError)
+        UAF_STATUS_COPY_ERROR(ServerCouldNotBrowseNextError)
+        UAF_STATUS_COPY_ERROR(BrowseNextInvocationError)
+        UAF_STATUS_COPY_ERROR(ReadInvocationError)
+        UAF_STATUS_COPY_ERROR(BeginReadInvocationError)
+        UAF_STATUS_COPY_ERROR(ServerCouldNotReadError)
+        UAF_STATUS_COPY_ERROR(TranslateBrowsePathsToNodeIdsInvocationError)
+        UAF_STATUS_COPY_ERROR(ServerCouldNotTranslateBrowsePathsToNodeIdsError)
+        UAF_STATUS_COPY_ERROR(HistoryReadInvocationError)
+        UAF_STATUS_COPY_ERROR(HistoryReadRawModifiedInvocationError)
+        UAF_STATUS_COPY_ERROR(ServerCouldNotHistoryReadError)
+        UAF_STATUS_COPY_ERROR(MethodCallInvocationError)
+        UAF_STATUS_COPY_ERROR(AsyncMethodCallInvocationError)
+        UAF_STATUS_COPY_ERROR(ServerCouldNotCallMethodError)
+        UAF_STATUS_COPY_ERROR(ServerCouldNotBrowseError)
+        UAF_STATUS_COPY_ERROR(BrowseInvocationError)
+        UAF_STATUS_COPY_ERROR(WriteInvocationError)
+        UAF_STATUS_COPY_ERROR(AsyncWriteInvocationError)
+        UAF_STATUS_COPY_ERROR(ServerCouldNotWriteError)
+        UAF_STATUS_COPY_ERROR(CallCompleteError)
+        UAF_STATUS_COPY_ERROR(InputArgumentError)
+        UAF_STATUS_COPY_ERROR(ReadCompleteError)
+        UAF_STATUS_COPY_ERROR(WriteCompleteError)
+        UAF_STATUS_COPY_ERROR(EmptyUserCertificateError)
+        UAF_STATUS_COPY_ERROR(InvalidPrivateKeyError)
+        UAF_STATUS_COPY_ERROR(SetPublishingModeInvocationError)
+
+        // configuration errors
+        UAF_STATUS_COPY_ERROR(ConfigurationError)
+        UAF_STATUS_COPY_ERROR(CouldNotCreateCertificateTrustListLocationError)
+        UAF_STATUS_COPY_ERROR(CouldNotCreateCertificateRevocationListLocationError)
+        UAF_STATUS_COPY_ERROR(CouldNotCreateIssuersCertificateLocationError)
+        UAF_STATUS_COPY_ERROR(CouldNotCreateIssuersRevocationListLocationError)
+        UAF_STATUS_COPY_ERROR(CouldNotCreateClientPrivateKeyLocationError)
+        UAF_STATUS_COPY_ERROR(CouldNotCreateClientCertificateLocationError)
+    }
+
+#define UAF_STATUS_TOSTRING_IF(ERROR)       \
+        if (statusCode == uaf::statuscodes::ERROR) return raisedBy_##ERROR.message;
+#define UAF_STATUS_TOSTRING_ELSE_IF(ERROR)       \
+        else UAF_STATUS_TOSTRING_IF(ERROR)
+
+    // get a string representation
     // =============================================================================================
     string Status::toString() const
     {
-        string ret;
+        //UAF_STATUS_TOSTRING_IF(DiscoveryError)
+        //UAF_STATUS_TOSTRING_ELSE_IF(InvalidRequestError)
+        //UAF_STATUS_TOSTRING_ELSE_IF(ResolutionError)
+        UAF_STATUS_TOSTRING_IF(FindServersError)
+        UAF_STATUS_TOSTRING_ELSE_IF(UnknownServerError)
+        UAF_STATUS_TOSTRING_ELSE_IF(EmptyUrlError)
+        UAF_STATUS_TOSTRING_ELSE_IF(NoParallelFindServersAllowedError)
+        UAF_STATUS_TOSTRING_ELSE_IF(NoDiscoveryUrlsFoundError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ServerCertificateRejectedByUserError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ServerCertificateSavingError)
+        UAF_STATUS_TOSTRING_ELSE_IF(OpenSSLStoreInitializationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ClientCertificateLoadingError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ServerDidNotProvideCertificateError)
+        //UAF_STATUS_TOSTRING_ELSE_IF(ConnectionError)
+        UAF_STATUS_TOSTRING_ELSE_IF(PathNotExistsError)
+        UAF_STATUS_TOSTRING_ELSE_IF(NoSecuritySettingsGivenError)
+        UAF_STATUS_TOSTRING_ELSE_IF(PathCreationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(SecuritySettingsMatchError)
+        UAF_STATUS_TOSTRING_ELSE_IF(WrongTypeError)
+        UAF_STATUS_TOSTRING_ELSE_IF(UnexpectedError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ServerArrayConversionError)
+        UAF_STATUS_TOSTRING_ELSE_IF(NamespaceArrayConversionError)
+        UAF_STATUS_TOSTRING_ELSE_IF(BadNamespaceArrayError)
+        UAF_STATUS_TOSTRING_ELSE_IF(BadServerArrayError)
+        UAF_STATUS_TOSTRING_ELSE_IF(UnknownServerIndexError)
+        UAF_STATUS_TOSTRING_ELSE_IF(InvalidAddressError)
+        UAF_STATUS_TOSTRING_ELSE_IF(UnknownNamespaceUriError)
+        UAF_STATUS_TOSTRING_ELSE_IF(NoNamespaceIndexOrUriGivenError)
+        UAF_STATUS_TOSTRING_ELSE_IF(UnknownNamespaceIndexError)
+        UAF_STATUS_TOSTRING_ELSE_IF(EmptyServerUriAndUnknownNamespaceIndexError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ExpandedNodeIdAddressExpectedError)
+        UAF_STATUS_TOSTRING_ELSE_IF(EmptyServerUriError)
+        UAF_STATUS_TOSTRING_ELSE_IF(UnsupportedError)
+        UAF_STATUS_TOSTRING_ELSE_IF(UnsupportedNodeIdIdentifierTypeError)
+        UAF_STATUS_TOSTRING_ELSE_IF(SyncInvocationNotSupportedError)
+        UAF_STATUS_TOSTRING_ELSE_IF(AsyncInvocationNotSupportedError)
+        UAF_STATUS_TOSTRING_ELSE_IF(NoStatusesGivenError)
+        UAF_STATUS_TOSTRING_ELSE_IF(BadStatusesPresentError)
+        UAF_STATUS_TOSTRING_ELSE_IF(NotAllTargetsCouldBeResolvedError)
+        UAF_STATUS_TOSTRING_ELSE_IF(InvalidServerUriError)
+        UAF_STATUS_TOSTRING_ELSE_IF(SubscriptionNotCreatedError)
+        UAF_STATUS_TOSTRING_ELSE_IF(NoTargetsGivenError)
+        UAF_STATUS_TOSTRING_ELSE_IF(DataDontMatchAddressesError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ItemNotFoundForTheGivenHandleError)
+        UAF_STATUS_TOSTRING_ELSE_IF(TargetRankOutOfBoundsError)
+        UAF_STATUS_TOSTRING_ELSE_IF(NoItemFoundForTheGivenRequestHandleError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ContinuationPointsDontMatchAddressesError)
+        UAF_STATUS_TOSTRING_ELSE_IF(UnknownNamespaceIndexAndServerIndexError)
+        UAF_STATUS_TOSTRING_ELSE_IF(AsyncMultiMethodCallNotSupportedError)
+        UAF_STATUS_TOSTRING_ELSE_IF(EmptyAddressError)
+        UAF_STATUS_TOSTRING_ELSE_IF(MultipleTranslationResultsError)
+        UAF_STATUS_TOSTRING_ELSE_IF(UnknownClientSubscriptionHandleError)
+        UAF_STATUS_TOSTRING_ELSE_IF(UnknownClientHandleError)
+        UAF_STATUS_TOSTRING_ELSE_IF(UnknownClientConnectionIdError)
+        UAF_STATUS_TOSTRING_ELSE_IF(AsyncConnectionFailedError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ConnectionFailedError)
+        UAF_STATUS_TOSTRING_ELSE_IF(SessionSecuritySettingsDontMatchEndpointError)
+        UAF_STATUS_TOSTRING_ELSE_IF(CouldNotManuallyUnsubscribeError)
+        UAF_STATUS_TOSTRING_ELSE_IF(CouldNotManuallySubscribeError)
+        UAF_STATUS_TOSTRING_ELSE_IF(SessionNotConnectedError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ServerCouldNotSetMonitoringModeError)
+        UAF_STATUS_TOSTRING_ELSE_IF(CreateSubscriptionError)
+        UAF_STATUS_TOSTRING_ELSE_IF(DeleteSubscriptionError)
+        UAF_STATUS_TOSTRING_ELSE_IF(SubscriptionHasBeenDeletedError)
+        UAF_STATUS_TOSTRING_ELSE_IF(SetMonitoringModeInvocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(NoDiscoveryUrlsExposedByServerError)
+        UAF_STATUS_TOSTRING_ELSE_IF(GetEndpointsError)
+        UAF_STATUS_TOSTRING_ELSE_IF(NoEndpointsProvidedByServerError)
+        UAF_STATUS_TOSTRING_ELSE_IF(DisconnectionFailedError)
+        UAF_STATUS_TOSTRING_ELSE_IF(NoConnectedSessionToUpdateArraysError)
+        UAF_STATUS_TOSTRING_ELSE_IF(BadDataReceivedError)
 
-        if (description_.empty())
-            ret = statuscodes::toString(statusCode_);
+
+        // service errors
+        //UAF_STATUS_TOSTRING_ELSE_IF(ServiceError)
+        UAF_STATUS_TOSTRING_ELSE_IF(CouldNotReadArraysError)
+        UAF_STATUS_TOSTRING_ELSE_IF(CreateMonitoredItemsError)
+        UAF_STATUS_TOSTRING_ELSE_IF(CreateMonitoredItemsInvocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(BeginCreateMonitoredItemsInvocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ServerCouldNotCreateMonitoredItemsError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ServerCouldNotBrowseNextError)
+        UAF_STATUS_TOSTRING_ELSE_IF(BrowseNextInvocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ReadInvocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(BeginReadInvocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ServerCouldNotReadError)
+        UAF_STATUS_TOSTRING_ELSE_IF(TranslateBrowsePathsToNodeIdsInvocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ServerCouldNotTranslateBrowsePathsToNodeIdsError)
+        UAF_STATUS_TOSTRING_ELSE_IF(HistoryReadInvocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(HistoryReadRawModifiedInvocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ServerCouldNotHistoryReadError)
+        UAF_STATUS_TOSTRING_ELSE_IF(MethodCallInvocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(AsyncMethodCallInvocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ServerCouldNotCallMethodError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ServerCouldNotBrowseError)
+        UAF_STATUS_TOSTRING_ELSE_IF(BrowseInvocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(WriteInvocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(AsyncWriteInvocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ServerCouldNotWriteError)
+        UAF_STATUS_TOSTRING_ELSE_IF(CallCompleteError)
+        UAF_STATUS_TOSTRING_ELSE_IF(InputArgumentError)
+        UAF_STATUS_TOSTRING_ELSE_IF(ReadCompleteError)
+        UAF_STATUS_TOSTRING_ELSE_IF(WriteCompleteError)
+        UAF_STATUS_TOSTRING_ELSE_IF(EmptyUserCertificateError)
+        UAF_STATUS_TOSTRING_ELSE_IF(InvalidPrivateKeyError)
+        UAF_STATUS_TOSTRING_ELSE_IF(SetPublishingModeInvocationError)
+
+        // configuration errors
+        UAF_STATUS_TOSTRING_ELSE_IF(ConfigurationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(CouldNotCreateCertificateTrustListLocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(CouldNotCreateCertificateRevocationListLocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(CouldNotCreateIssuersCertificateLocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(CouldNotCreateIssuersRevocationListLocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(CouldNotCreateClientPrivateKeyLocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(CouldNotCreateClientCertificateLocationError)
+
+        else if (isUncertain())
+            return "Uncertain";
+        else if (isGood())
+            return "Good";
+        else if (isBad())
+            return "Bad";
         else
-            ret = description_;
-
-        if (hasSpecificOpcUaStatusCode())
-        {
-            ret += string(" [OPC-UA:")
-                   + UaStatusCode(opcUaStatusCode_).toString().toUtf8()
-                   + std::string("]");
-        }
-
-        if (!additionalDiagnostics_.isEmpty())
-            ret += std::string(" - ") + additionalDiagnostics_.toCompactString();
-
-        return ret;
+            return "UNKNOWN!";
     }
-
-
-    // Set the status from a UAF status code + description
-    // =============================================================================================
-    void Status::setStatus(uaf::statuscodes::StatusCode statusCode, const char* description, ...)
-    {
-        va_list args;
-        va_start(args, description);
-        char buffer[512];
-        vsprintf(buffer, description, args);
-        va_end(args);
-        description_     = buffer;
-        statusCode_      = statusCode;
-        opcUaStatusCode_ = statuscodes::fromUafToSdk(statusCode);
-    }
-
-
-    // Set the status from a SDK status code + description
-    // =============================================================================================
-    void Status::fromSdk(uint32_t opcUaCode, const char* diagnostic, ...)
-    {
-        opcUaStatusCode_    = opcUaCode;
-        statusCode_         = uaf::statuscodes::fromSdkToUaf(opcUaCode);
-        if (isBad())
-        {
-            va_list args;
-            va_start(args, diagnostic);
-            char buffer[512];
-            vsprintf(buffer, diagnostic, args);
-            va_end(args);
-            description_ = buffer;
-        }
-    }
-
 
     // operator==
     // =============================================================================================
     bool operator==(const Status& object1, const Status& object2)
     {
-        return object1.opcUaStatusCode_ == object2.opcUaStatusCode_
-            && object1.statusCode_ == object2.statusCode_
-            && object1.description_ == object2.description_
-            && object1.additionalDiagnostics_ == object2.additionalDiagnostics_;
+        return    object1.statusCode == object2.statusCode
+               && object1.toString() == object2.toString();
     }
 
 
@@ -232,15 +445,10 @@ namespace uaf
     // =============================================================================================
     bool operator<(const Status& object1, const Status& object2)
     {
-        if (object1.opcUaStatusCode_ != object2.opcUaStatusCode_)
-            return object1.opcUaStatusCode_ < object2.opcUaStatusCode_;
-        else if (object1.statusCode_ != object2.statusCode_)
-            return object1.statusCode_ < object2.statusCode_;
-        else if (object1.description_ != object2.description_)
-            return object1.description_ < object2.description_;
+        if (object1.statusCode != object2.statusCode)
+            return object1.statusCode < object2.statusCode;
         else
-            return object1.additionalDiagnostics_ < object2.additionalDiagnostics_;
+            return object1.toString() < object2.toString();
     }
-
-
 }
+

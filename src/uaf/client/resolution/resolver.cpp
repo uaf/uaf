@@ -20,10 +20,9 @@
 
 #include "uaf/client/resolution/resolver.h"
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::vector;
     using std::map;
@@ -81,7 +80,7 @@ namespace uafc
 
             if (database_->addressCache.find(addresses[i], expandedNodeIds[i]))
             {
-                statuses[i].setGood();
+                statuses[i] = statuscodes::Good;
                 logger_->debug("Address %d was already cached", i);
             }
             else
@@ -98,8 +97,7 @@ namespace uafc
                 }
                 else
                 {
-                    ret.setStatus(statuscodes::InvalidRequestError,
-                                  "Cannot resolve an empty address");
+                    ret = EmptyAddressError();
                     logger_->error("Address %d cannot be resolved since it's an empty address", i);
                     break;
                 }
@@ -198,20 +196,16 @@ namespace uafc
                         || results[i].nodeId().hasNameSpaceUri())
                     {
                         database_->addressCache.add(addresses[i], results[i]);
-                        resultStatuses[i].setGood();
+                        resultStatuses[i] = statuscodes::Good;
                     }
                     else
                     {
-                        ret.setStatus(statuscodes::ResolutionError,
-                                      "No namespace index or URI is given for address:\n%s",
-                                      addresses[i].toString().c_str());
+                        ret = NoNamespaceIndexOrUriGivenError();
                     }
                 }
                 else
                 {
-                    ret.setStatus(statuscodes::ResolutionError,
-                                  "No server URI is given for address:\n%s",
-                                  addresses[i].toString().c_str());
+                    ret = EmptyServerUriError();
                 }
             }
         }
@@ -343,7 +337,7 @@ namespace uafc
         // check if the mask has the correct size
         if (mask.size() != noOfBrowsePaths)
         {
-            ret.setStatus(statuscodes::UnexpectedError, "Mask does not have the correct size!");
+            ret = UnexpectedError("Mask does not have the correct size!");
         }
         else if (mask.setCount() == 0)
         {
@@ -419,7 +413,7 @@ namespace uafc
             {
                 // no matches, which would be unexpected since the status reported
                 // by the server was not Bad
-                statuses[rank].setStatus(statuscodes::UnexpectedError,
+                statuses[rank] = UnexpectedError(
                                          "Server reported a Good translation result but no"
                                          "results were given");
 
@@ -445,7 +439,7 @@ namespace uafc
                     // we're finished with this target, so unset the mask item
                     mask.unset(rank);
                 }
-                else if (target.status.opcUaStatusCode() == OpcUa_UncertainReferenceOutOfServer)
+                else if (target.opcUaStatusCode == OpcUa_UncertainReferenceOutOfServer)
                 {
                     logger_->debug("Target %d could not be fully resolved, there is an "
                                    "out-of-server reference", rank);
@@ -459,12 +453,12 @@ namespace uafc
 
                     if (remainingIndex == 0 || remainingIndex >= maxIndex)
                     {
-                        statuses[rank].setStatus(
-                                statuscodes::UnexpectedError,
+                        statuses[rank] = UnexpectedError(
+                                uaf::format(
                                 "Unexpected translation result returned by the server (StatusCode="
                                 "UncertainReferenceOutOfServer, RemainingPathIndex=%d), while "
                                 "the number of BrowsePath elements is %d",
-                                remainingIndex, noOfElements);
+                                remainingIndex, noOfElements));
 
                         logger_->error(statuses[rank]);
 
@@ -488,10 +482,10 @@ namespace uafc
                 }
                 else
                 {
-                    statuses[rank].setStatus(
-                            statuscodes::UnexpectedError,
+                    statuses[rank] = UnexpectedError(
+                        uaf::format(
                             "Unexpected translation result (status reported by server: %s)",
-                            target.status.toString().c_str());
+                            target.status.toString().c_str()));
 
                     logger_->error(statuses[rank]);
 
@@ -504,12 +498,9 @@ namespace uafc
                 // we received multiple matches for a single browse path!
                 // This may be a valid result for a TranslateBrowsePathsToNodeIds service
                 // invocation, but not in this case since we're trying to resolve an address.
-                statuses[rank].setStatus(statuscodes::ResolutionError,
-                                         "Resolution failed because of ambiguity: %d addresses "
-                                         "matched the same BrowsePath",
-                                         target.expandedNodeIds.size());
+                statuses[rank] = MultipleTranslationResultsError();
 
-                logger_->error(statuses[rank]);
+                logger_->error(statuses[rank].toString());
 
                 // we're finished with this target, so unset the mask item
                 mask.unset(rank);

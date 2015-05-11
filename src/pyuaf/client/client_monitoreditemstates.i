@@ -29,8 +29,8 @@
 %include "../pyuaf.i"
 
 
-// import the EXPORT macro and some numeric typedefs
-%import "uaf/client/clientexport.h"
+// import the EXPORT macro
+%import "uaf/util/util.h"
 
 
 // include the subscription states

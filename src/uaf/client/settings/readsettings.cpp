@@ -23,10 +23,9 @@
 
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;

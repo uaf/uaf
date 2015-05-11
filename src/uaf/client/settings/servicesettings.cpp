@@ -21,10 +21,9 @@
 #include "uaf/client/settings/servicesettings.h"
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
 
@@ -59,7 +58,7 @@ namespace uafc
 
         uaServiceSettings.callTimeout = int32_t(callTimeoutSec * 1000);
 
-        ret.setGood();
+        ret = statuscodes::Good;
 
         return ret;
 

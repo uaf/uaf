@@ -20,10 +20,9 @@
 
 #include "uaf/client/sessions/session.h"
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;
@@ -43,7 +42,8 @@ namespace uafc
             Discoverer*                     discoverer,
             Database*                       database)
     : uaSessionCallback_(uaSessionCallback),
-      sessionState_(uafc::sessionstates::Disconnected),
+      sessionState_(uaf::sessionstates::Disconnected),
+      lastConnectionAttemptStep_(connectionsteps::NoAttemptYet),
       clientConnectionId_(clientConnectionId),
       serverUri_(serverUri),
       sessionSettings_(sessionSettings),
@@ -133,66 +133,120 @@ namespace uafc
         Status ret;
         logger_->debug("Initializing the PKI store");
 
-        string revocationList = replacePathSeparators(replaceVariables(
-                database_->clientSettings.certificateRevocationListAbsoluteFileName));
+        string certificateRevocationListLocation = \
+                database_->clientSettings.certificateRevocationListLocation;
+        string certificateTrustListLocation = \
+                database_->clientSettings.certificateTrustListLocation;
+        string issuersRevocationListLocation = \
+                database_->clientSettings.issuersRevocationListLocation;
+        string issuersCertificatesLocation = \
+                database_->clientSettings.issuersCertificatesLocation;
 
-        string trustDirectory = replacePathSeparators(replaceVariables(
-                database_->clientSettings.certificateTrustAbsoluteDirectory));
+        bool checkOnly = !(database_->clientSettings.createSecurityLocationsIfNeeded);
 
-        logger_->debug(" - Revocation list : %s", revocationList.c_str());
-        logger_->debug(" - Trust directory : %s", trustDirectory.c_str());
+        ret = checkOrCreatePath(
+                checkOnly,
+                certificateRevocationListLocation,
+                "certificate revocation list location");
 
-        UaStatus uaStatus = uaSecurity.initializePkiProviderOpenSSL(
-                UaString(revocationList.c_str()),
-                UaString(trustDirectory.c_str()));
+        if (ret.isGood())
+            ret = checkOrCreatePath(
+                    checkOnly,
+                    certificateTrustListLocation,
+                    "certificate trust list location");
 
-        ret.fromSdk(uaStatus.statusCode(), "Could not initialize the PKI store");
+        if (ret.isGood())
+            ret = checkOrCreatePath(
+                    checkOnly,
+                    issuersRevocationListLocation,
+                    "issuers revocation trust list location");
+
+        if (ret.isGood())
+            ret = checkOrCreatePath(
+                    checkOnly,
+                    issuersCertificatesLocation,
+                    "issuers certificates location");
+
+        if (ret.isGood())
+        {
+            logger_->debug("Now initializing the OpenSSL PKI store via the SDK");
+            SdkStatus sdkStatus = uaSecurity.initializePkiProviderOpenSSL(
+                    UaString(certificateRevocationListLocation.c_str()),
+                    UaString(certificateTrustListLocation.c_str()),
+                    UaString(issuersRevocationListLocation.c_str()),
+                    UaString(issuersCertificatesLocation.c_str()));
+
+            if (sdkStatus.isGood())
+                logger_->debug("The OpenSSL PKI store was initialized successfully");
+            else
+                ret = OpenSSLStoreInitializationError(sdkStatus);
+        }
+
+        if (ret.isGood())
+            logger_->debug("The PKI store has been initialized");
+        else
+            logger_->error(ret.toString());
+
         return ret;
     }
 
 
     // Load the client certificate from a file
     // =============================================================================================
-    Status Session::loadClientCertificateFromFile(UaClientSdk::SessionSecurityInfo& uaSecurity)
+    Status Session::loadClientCertificate(UaClientSdk::SessionSecurityInfo& uaSecurity)
     {
-        Status ret;
-        logger_->debug("Loading the client certificate from file");
+        logger_->debug("Loading the client certificate and private key");
 
-        string certificate = replacePathSeparators(replaceVariables(
-                database_->clientSettings.clientCertificateAbsoluteFileName));
+        string clientCertificate = database_->clientSettings.clientCertificate;
+        string clientPrivateKey = database_->clientSettings.clientPrivateKey;
 
-        string privateKey = replacePathSeparators(replaceVariables(
-                database_->clientSettings.clientPrivateKeyAbsoluteFileName));
+        const bool checkOnly = true;
 
-        logger_->debug(" - Client certificate : %s", certificate.c_str());
-        logger_->debug(" - Client private key : %s", privateKey.c_str());
+        Status ret = checkOrCreatePath(checkOnly, clientCertificate, "client certificate");
 
-        UaStatus uaStatus = uaSecurity.loadClientCertificateOpenSSL(
-                UaString(certificate.c_str()),
-                UaString(privateKey.c_str()));
+        if (ret.isGood())
+            ret = checkOrCreatePath(checkOnly, clientPrivateKey, "client private key");
 
-        ret.fromSdk(uaStatus.statusCode(), "Could not load the client certificate");
+        if (ret.isGood())
+        {
+            logger_->debug("Now loading the client certificate via the SDK");
+            SdkStatus sdkStatus = uaSecurity.loadClientCertificateOpenSSL(
+                    UaString(clientCertificate.c_str()),
+                    UaString(clientPrivateKey.c_str()));
+
+            if (sdkStatus.isGood())
+                logger_->debug("The client certificate was loaded successfully (%s)",
+                               sdkStatus.toString().c_str());
+            else
+                ret = ClientCertificateLoadingError(sdkStatus);
+        }
+
+        if (ret.isGood())
+            logger_->debug("The client certificate and private key are loaded");
+        else
+            logger_->error(ret.toString());
+
         return ret;
     }
 
 
-    // Load the server certificate from a file
-    // =============================================================================================
-    Status Session::loadServerCertificateFromFile(UaClientSdk::SessionSecurityInfo& uaSecurity)
-    {
-        Status ret;
-        logger_->debug("Loading the server certificate from file");
-
-        string certificate = replacePathSeparators(replaceVariables(
-                database_->clientSettings.serverCertificateAbsoluteFileName));
-
-        logger_->debug("Server certificate: %s", certificate.c_str());
-
-        UaStatus uaStatus = uaSecurity.loadServerCertificateOpenSSL(UaString(certificate.c_str()));
-
-        ret.fromSdk(uaStatus.statusCode(), "Could not load the server certificate");
-        return ret;
-    }
+//    // Load the server certificate from a file
+//    // =============================================================================================
+//    Status Session::loadServerCertificateFromFile(UaClientSdk::SessionSecurityInfo& uaSecurity)
+//    {
+//        Status ret;
+//        logger_->debug("Loading the server certificate from file");
+//
+//        string certificate = replacePathSeparators(replaceVariables(
+//                database_->clientSettings.serverCertificateAbsoluteFileName));
+//
+//        logger_->debug("Server certificate: %s", certificate.c_str());
+//
+//        UaStatus uaStatus = uaSecurity.loadServerCertificateOpenSSL(UaString(certificate.c_str()));
+//
+//        ret.fromSdk(uaStatus.statusCode(), "Could not load the server certificate");
+//        return ret;
+//    }
 
 
     // Load the server certificate from an endpoint
@@ -204,15 +258,17 @@ namespace uafc
         Status ret;
         logger_->debug("Loading the server certificate from the endpoint");
 
-        if (endpoint.serverCertificate.first > 0)
+        if (!endpoint.serverCertificate.isNull())
         {
-            uaSecurity.serverCertificate = UaByteString(
-                    endpoint.serverCertificate.first,
-                    endpoint.serverCertificate.second);
-            ret.setGood();
+            endpoint.serverCertificate.toSdk(uaSecurity.serverCertificate);
+            ret = statuscodes::Good;
+            logger_->debug("OK the server certificate is now loaded");
         }
         else
-            ret.setStatus(statuscodes::SecurityError, "Server did not provide a certificate!");
+        {
+            ret = ServerDidNotProvideCertificateError();
+            logger_->error(ret.toString());
+        }
 
         return ret;
     }
@@ -222,7 +278,7 @@ namespace uafc
     // =============================================================================================
     Status Session::setUserIdentity(
             UaClientSdk::SessionSecurityInfo& uaSecurity,
-            const uafc::SessionSecuritySettings& securitySettings)
+            const uaf::SessionSecuritySettings& securitySettings)
     {
         Status ret;
         logger_->debug("Setting the user identity");
@@ -230,7 +286,7 @@ namespace uafc
         {
             logger_->debug("User is not authenticating (anonymous log in)");
             uaSecurity.setAnonymousUserIdentity();
-            ret.setGood();
+            ret = statuscodes::Good;
         }
         else if (securitySettings.userTokenType == usertokentypes::UserName)
         {
@@ -241,7 +297,7 @@ namespace uafc
                     UaString(securitySettings.userName.c_str()),
                     UaString(securitySettings.userPassword.c_str()));
 
-            ret.setGood();
+            ret = statuscodes::Good;
         }
         else if (securitySettings.userTokenType == usertokentypes::Certificate)
         {
@@ -264,13 +320,11 @@ namespace uafc
 
             if (uaUserCertificate.isNull())
             {
-                ret.setStatus(statuscodes::SecurityError,
-                              "User certificate %s can not be imported!", certificate.c_str());
+                ret = EmptyUserCertificateError(certificate);
             }
             else if (!uaUserPrivateKey.isValid())
             {
-                ret.setStatus(statuscodes::SecurityError,
-                              "User private key %s is invalid!", privateKey.c_str());
+                ret = InvalidPrivateKeyError(privateKey);
             }
             else
             {
@@ -285,9 +339,77 @@ namespace uafc
                         (OpcUa_Byte*)baUserPrivateKey.data());
 
                 uaSecurity.setCertificateUserIdentity(bsUserCertificate, bsUserPrivateKey);
-                ret.setGood();
+                ret = statuscodes::Good;
             }
         }
+        return ret;
+    }
+
+
+
+
+    // Connect the session
+    // =============================================================================================
+    Status Session::verifyServerCertificate(UaClientSdk::SessionSecurityInfo& uaSecurity)
+    {
+        Status ret;
+
+        logger_->debug("Now verifying the server certificate");
+
+        SdkStatus trustStatus(uaSecurity.verifyServerCertificate());
+
+        if (trustStatus.isGood())
+        {
+            logger_->debug("The server certificate is trusted");
+            ret = statuscodes::Good;
+        }
+        else
+        {
+            logger_->debug("The server certificate is NOT trusted");
+            logger_->debug("Therefore we call the untrustedServerCertificateReceived(...) callback:");
+
+            ByteString bs;
+            bs.fromSdk(uaSecurity.serverCertificate);
+            PkiCertificate cert = PkiCertificate::fromDER(bs);
+
+            PkiCertificate::Action action;
+            action = clientInterface_->untrustedServerCertificateReceived(cert, trustStatus);
+
+            if (action == PkiCertificate::Action_Reject)
+            {
+                logger_->debug("The server certificate was rejected by the user");
+                ret = ServerCertificateRejectedByUserError();
+            }
+            else if (action == PkiCertificate::Action_AcceptTemporarily)
+            {
+                logger_->debug("The server certificate was accepted temporarily by the user");
+                uaSecurity.doServerCertificateVerify = false;
+                ret = statuscodes::Good;
+            }
+            else if (action == PkiCertificate::Action_AcceptPermanently)
+            {
+                logger_->debug("The server certificate was accepted permanently by the user");
+                logger_->debug("We therefore try to store the certificate first");
+                UaPkiCertificate uaCert = UaPkiCertificate::fromDER(uaSecurity.serverCertificate);
+                UaString uaThumbprint = uaCert.thumbPrint().toHex();
+
+                logger_->debug("Name of the certificate (thumbprint): %s", uaThumbprint.toUtf8());
+
+                SdkStatus savingStatus = uaSecurity.saveServerCertificate(uaThumbprint);
+
+                if (savingStatus.isGood())
+                {
+                    logger_->debug("Certificate %s was stored", uaThumbprint.toUtf8());
+                    ret = statuscodes::Good;
+                }
+                else
+                {
+                    ret = ServerCertificateSavingError(savingStatus);
+                }
+                uaSecurity.doServerCertificateVerify = true;
+            }
+        }
+
         return ret;
     }
 
@@ -297,8 +419,11 @@ namespace uafc
     Status Session::connect()
     {
         Status ret;
-
         logger_->debug("Connecting the session");
+
+        // reset the last connection attempt step and status
+        lastConnectionAttemptStep_ = connectionsteps::NoAttemptYet;
+        lastConnectionAttemptStatus_ = statuscodes::Uncertain;
 
         // declare an empty list of discovery URLs and endpoint descriptions
         vector<string>              discoveryUrls;
@@ -325,7 +450,7 @@ namespace uafc
 
         // in case discovery went fine, check if we found some endpoints
         if (ret.isGood() && discoveredEndpoints.size() == 0)
-            ret.setStatus(statuscodes::DiscoveryError, "No endpoints were found");
+            ret = NoDiscoveryUrlsFoundError();
 
         // declare the SDK SessionSecurityInfo
         UaClientSdk::SessionSecurityInfo uaSecurity;
@@ -338,38 +463,43 @@ namespace uafc
                   suitableSettings,
                   suitableEndpoint);
 
-        // check if we need to use certificates
-        bool certificatesNeeded = \
-                suitableSettings.messageSecurityMode == messagesecuritymodes::Mode_Sign
-             || suitableSettings.messageSecurityMode == messagesecuritymodes::Mode_SignAndEncrypt
-             || suitableSettings.userTokenType == usertokentypes::Certificate
-             || suitableSettings.userTokenType == usertokentypes::IssuedToken;
-
-        // try to load the certificates if needed
-        if (certificatesNeeded && ret.isGood())
+        if (ret.isGood())
         {
-            ret = initializePkiStore(uaSecurity);
-
-            if (ret.isGood())
-                ret = loadClientCertificateFromFile(uaSecurity);
-
-            if (ret.isGood())
-                ret = loadServerCertificateFromEndpoint(uaSecurity, suitableEndpoint);
+            logger_->debug("The following SessionSecuritySettings were found suitable:");
+            logger_->debug(suitableSettings.toString());
+            logger_->debug("The following endpoint was found suitable:");
+            logger_->debug(suitableEndpoint.toString());
         }
 
-        // try to set the user identity
+        // initialize the PKI store so that we can verify the server certificate
         if (ret.isGood())
-            setUserIdentity(uaSecurity, suitableSettings);
+            ret = initializePkiStore(uaSecurity);
 
-        // set the remaining security parameters
+        // load the server certificate from the endpoint description
+        if (ret.isGood())
+            ret = loadServerCertificateFromEndpoint(uaSecurity, suitableEndpoint);
+
+        // always verify the server certificate
+        if (ret.isGood())
+            ret = verifyServerCertificate(uaSecurity);
+
+        // only load the client certificate if we need to sign or encrypt the data!
         if (ret.isGood())
         {
+            if (   suitableSettings.messageSecurityMode == messagesecuritymodes::Mode_Sign
+                || suitableSettings.messageSecurityMode == messagesecuritymodes::Mode_SignAndEncrypt)
+                ret = loadClientCertificate(uaSecurity);
+            else
+                logger_->debug("Security is not needed so we don't need to initialize the PKI store");
+        }
+
+        // try to set the user identity, security policy and message security mode
+        if (ret.isGood())
+        {
+            setUserIdentity(uaSecurity, suitableSettings);
             uaSecurity.sSecurityPolicy     = UaString(suitableSettings.securityPolicy.c_str());
             uaSecurity.messageSecurityMode = messagesecuritymodes::fromUafToSdk(
                                                         suitableSettings.messageSecurityMode);
-
-            // we let the SDK verify the server certificate
-            uaSecurity.doServerCertificateVerify = true;
         }
 
         // if everything is OK, we can try to connect!
@@ -377,25 +507,38 @@ namespace uafc
         {
             logger_->debug("Now connecting the session at the SDK level");
 
-            UaStatus uaStatus = uaSession_->connect(
+            SdkStatus sdkStatus = uaSession_->connect(
                     suitableEndpoint.endpointUrl.c_str(),
-                    uaSessionConnectInfo_,
+                    uaSessionConnectInfo_,//uaSessionConnectInfo_, uaSessionConnectInfoNoInitialRetry_
                     uaSecurity,
                     uaSessionCallback_);
 
-            // update the return status
-            ret.fromSdk(uaStatus.statusCode(),
-                        "Could not connect to %s", suitableEndpoint.endpointUrl.c_str());
+            if (sdkStatus.isGood())
+            {
+                ret = statuscodes::Good;
+                logger_->debug("The session was connected successfully (SDK status: %s)",
+                               sdkStatus.toString().c_str());
+            }
+            else
+            {
+                ret = ConnectionFailedError(suitableEndpoint.endpointUrl, sdkStatus);
+            }
         }
 
         // log the result
         if (ret.isGood())
-            logger_->debug("The session has been connected successfully");
+            logger_->debug("The connection was finished (%s)", ret.toString().c_str());
         else
         {
-            // add some info
-            ret.addDiagnostic("Connection failed");
-            logger_->error(ret);
+            logger_->error(ret.toString());
+        }
+
+        // update the lastConnectionAttemptStatus_ and lastConnectionAttemptStep_ if they
+        // weren't updated yet by a connectError event:
+        if (lastConnectionAttemptStep_ == connectionsteps::NoAttemptYet)
+        {
+            lastConnectionAttemptStep_ = connectionsteps::ActivateSession;
+            lastConnectionAttemptStatus_ = ret;
         }
 
         return ret;
@@ -404,16 +547,16 @@ namespace uafc
 
     // Connect to a specific endpoint
     // =============================================================================================
-    Status Session::connectToSpecificEndpoint(const string& endpointUrl)
+    Status Session::connectToSpecificEndpoint(
+            const string&           endpointUrl,
+            const PkiCertificate&   serverCertificate)
     {
         Status ret;
 
         logger_->debug("Connecting the session to endpoint %s", endpointUrl.c_str());
 
         if (sessionSettings_.securitySettingsList.size() == 0)
-            ret.setStatus(uaf::statuscodes::InvalidRequestError,
-                          "Can't connect to endpoint %s because no security settings given "
-                          "(empty securitySettingsList)!", endpointUrl.c_str());
+            ret = NoSecuritySettingsGivenError();
 
         // try to connect to the endpoint URL for each of SessionSecuritySettings that are
         // given by the SessionSettings
@@ -425,44 +568,42 @@ namespace uafc
             logger_->debug("Trying to connect with the following security settings:");
             logger_->debug(securitySettings->toString());
 
-            Status connectionAttemptStatus;
-            connectionAttemptStatus.setGood();
+            Status connectionAttemptStatus = statuscodes::Good;
 
             // declare the SDK SessionSecurityInfo
             UaClientSdk::SessionSecurityInfo uaSecurity;
 
-            // check if we need to use certificates
-            bool certificatesNeeded = \
-                    securitySettings->messageSecurityMode == messagesecuritymodes::Mode_Sign
-                 || securitySettings->messageSecurityMode == messagesecuritymodes::Mode_SignAndEncrypt
-                 || securitySettings->userTokenType == usertokentypes::Certificate
-                 || securitySettings->userTokenType == usertokentypes::IssuedToken;
+            // ============
 
-            // try to load the certificates if needed
-            if (certificatesNeeded && connectionAttemptStatus.isGood())
+            // initialize the PKI store so that we can verify the server certificate
+            if (ret.isGood())
+                ret = initializePkiStore(uaSecurity);
+
+            // load the server certificate
+            if (ret.isGood())
+                serverCertificate.toDER().toSdk(uaSecurity.serverCertificate);
+
+            // always verify the server certificate
+            if (ret.isGood())
+                ret = verifyServerCertificate(uaSecurity);
+
+            // only load the client certificate if we need to sign or encrypt the data!
+            if (ret.isGood())
             {
-                connectionAttemptStatus = initializePkiStore(uaSecurity);
-
-                if (connectionAttemptStatus.isGood())
-                    connectionAttemptStatus = loadClientCertificateFromFile(uaSecurity);
-
-                if (connectionAttemptStatus.isGood())
-                    connectionAttemptStatus = loadServerCertificateFromFile(uaSecurity);
+                if (   securitySettings->messageSecurityMode == messagesecuritymodes::Mode_Sign
+                    || securitySettings->messageSecurityMode == messagesecuritymodes::Mode_SignAndEncrypt)
+                    ret = loadClientCertificate(uaSecurity);
+                else
+                    logger_->debug("Security is not needed so we don't need to initialize the PKI store");
             }
 
-            // try to set the user identity
-            if (connectionAttemptStatus.isGood())
-                setUserIdentity(uaSecurity, *securitySettings);
-
-            // set the remaining security parameters
-            if (connectionAttemptStatus.isGood())
+            // try to set the user identity, security policy and message security mode
+            if (ret.isGood())
             {
+                setUserIdentity(uaSecurity, *securitySettings);
                 uaSecurity.sSecurityPolicy     = UaString(securitySettings->securityPolicy.c_str());
                 uaSecurity.messageSecurityMode = messagesecuritymodes::fromUafToSdk(
                         securitySettings->messageSecurityMode);
-
-                // we let the SDK verify the server certificate
-                uaSecurity.doServerCertificateVerify = true;
             }
 
             // if everything is OK, we can try to connect!
@@ -470,23 +611,24 @@ namespace uafc
             {
                 logger_->debug("Now connecting the session at the SDK level");
 
-                UaStatus uaStatus = uaSession_->connect(
+                SdkStatus sdkStatus = uaSession_->connect(
                         endpointUrl.c_str(),
                         uaSessionConnectInfoNoInitialRetry_,
                         uaSecurity,
                         uaSessionCallback_);
 
-                logger_->error("Connection result: %s", uaStatus.toString().toUtf8());
 
-                // if the resulting statuscode is simply "Bad", make it a ConnectionError:
-                if (uaStatus.statusCode() == OpcUa_Bad)
-                    connectionAttemptStatus.setStatus(
-                            uaf::statuscodes::ConnectionError,
-                            "Could not connect to %s", endpointUrl.c_str());
+                if (sdkStatus.isGood())
+                {
+                    ret = uaf::statuscodes::Good;
+                    logger_->debug("The session was connected successfully (SDK status: %s)",
+                                   sdkStatus.toString().c_str());
+                }
                 else
-                    connectionAttemptStatus.fromSdk(
-                            uaStatus.statusCode(),
-                            "Could not connect to %s", endpointUrl.c_str());
+                {
+                    ret = ConnectionFailedError(endpointUrl, sdkStatus);
+                    logger_->error(ret.toString());
+                }
             }
 
             ret = connectionAttemptStatus;
@@ -498,8 +640,7 @@ namespace uafc
         else
         {
             // add some info
-            ret.addDiagnostic("Connection failed");
-            logger_->error(ret);
+            logger_->error("The session could not be connected: %s", ret.toString().c_str());
         }
 
         return ret;
@@ -522,19 +663,23 @@ namespace uafc
             UaClientSdk::ServiceSettings serviceSettings;
             UaStatus uaStatus = uaSession_->disconnect(serviceSettings, OpcUa_True);
 
-            ret.fromSdk(uaStatus.statusCode(),
-                                   "The session could not be disconnected");
-
             // log the result
-            if (ret.isGood())
+            if (uaStatus.isGood())
+            {
+                ret = statuscodes::Good;
                 logger_->debug("The session has been disconnected successfully");
+            }
             else
+            {
+                ret = DisconnectionFailedError(uaSession_->currentlyUsedEndpointUrl().toUtf8(),
+                                               uaStatus.statusCode());
                 logger_->error(ret);
+            }
         }
         else
         {
             logger_->debug("The session was already disconnected");
-            ret.setGood();
+            ret = statuscodes::Good;
         }
 
         return ret;
@@ -543,9 +688,14 @@ namespace uafc
 
     // Get information about the session
     // =============================================================================================
-    uafc::SessionInformation Session::sessionInformation() const
+    uaf::SessionInformation Session::sessionInformation() const
     {
-        uafc::SessionInformation info(clientConnectionId_, sessionState_, serverUri_);
+        uaf::SessionInformation info(
+                clientConnectionId_,
+                sessionState_,
+                serverUri_,
+                lastConnectionAttemptStep_,
+                lastConnectionAttemptStatus_);
         logger_->debug("Fetching session information:");
         logger_->debug(info.toString());
         return info;
@@ -556,7 +706,7 @@ namespace uafc
     // =============================================================================================
     bool Session::isConnected() const
     {
-        return sessionState_ == uafc::sessionstates::Connected;
+        return sessionState_ == uaf::sessionstates::Connected;
     }
 
 
@@ -570,8 +720,7 @@ namespace uafc
 
         if (!isConnected())
         {
-            ret.setStatus(statuscodes::ConnectionError,
-                          "Cannot update the arrays (session is not connected)");
+            ret = NoConnectedSessionToUpdateArraysError();
             logger_->error(ret);
         }
         else
@@ -606,9 +755,8 @@ namespace uafc
             // process the result
             if (uaReadStatus.isBad())
             {
-                ret.fromSdk(uaReadStatus.statusCode(),
-                                       "Couldn't read server and namespace arrays");
-                logger_->error(ret);
+                ret = CouldNotReadArraysError(uaReadStatus);
+                logger_->error(ret.toString());
             }
             else
             {
@@ -621,7 +769,6 @@ namespace uafc
                 // log the result
                 if (serverArrayStatus.isBad())
                 {
-                    serverArrayStatus.addDiagnostic("Could not read the server array");
                     logger_->error(serverArrayStatus);
                 }
                 else
@@ -666,7 +813,6 @@ namespace uafc
                 // log the result
                 if (serverArrayStatus.isBad())
                 {
-                    serverArrayStatus.addDiagnostic("Could not read the namespace array");
                     logger_->error(serverArrayStatus);
                 }
                 else
@@ -681,7 +827,7 @@ namespace uafc
                 else if (namespaceArrayStatus.isBad())
                     ret = namespaceArrayStatus;
                 else
-                    ret.setGood();
+                    ret = uaf::statuscodes::Good;
             }
         }
 
@@ -763,32 +909,44 @@ namespace uafc
 
     // Update the session status.
     // =============================================================================================
-    void Session::setSessionState(uafc::sessionstates::SessionState sessionState)
+    void Session::setSessionState(uaf::sessionstates::SessionState sessionState)
     {
         // acquire the session lock
         UaMutexLocker locker(&sessionMutex_); //auto-unlocks when out of scope
 
         logger_->debug(
                 "The session has changed its state from %s to %s",
-                uafc::sessionstates::toString(sessionState_).c_str(),
-                uafc::sessionstates::toString(sessionState).c_str());
+                uaf::sessionstates::toString(sessionState_).c_str(),
+                uaf::sessionstates::toString(sessionState).c_str());
 
         // update the session state member
         sessionState_ = sessionState;
 
         // if the session became connected, update the arrays
-        if (sessionState == uafc::sessionstates::Connected)
+        if (sessionState == uaf::sessionstates::Connected)
             updateArrays();
         // if the session has difficulties, we remove all references to this serverUri from
         // the address resolution cache (because maybe the node resolution is not valid anymore)
-        else if (   (sessionState == uafc::sessionstates::ConnectionErrorApiReconnect)
-                 || (sessionState == uafc::sessionstates::ConnectionWarningWatchdogTimeout)
-                 || (sessionState == uafc::sessionstates::Disconnected)
-                 || (sessionState == uafc::sessionstates::ServerShutdown))
+        else if (   (sessionState == uaf::sessionstates::ConnectionErrorApiReconnect)
+                 || (sessionState == uaf::sessionstates::ConnectionWarningWatchdogTimeout)
+                 || (sessionState == uaf::sessionstates::Disconnected)
+                 || (sessionState == uaf::sessionstates::ServerShutdown))
             database_->addressCache.clear(serverUri_);
 
         // call the callback interface
         clientInterface_->connectionStatusChanged(sessionInformation());
+    }
+
+
+    // Set the connection status.
+    // =============================================================================================
+    void Session::setConnectionStatus(
+            uaf::connectionsteps::ConnectionStep    step,
+            uaf::Status                             error,
+            bool                                    clientSideError)
+    {
+        lastConnectionAttemptStep_   = step;
+        lastConnectionAttemptStatus_ = error;
     }
 
 
@@ -819,5 +977,46 @@ namespace uafc
                                                                monitoringMode,
                                                                serviceSettings,
                                                                results);
+    }
+
+
+    // Set the publishing mode.
+    // =============================================================================================
+    Status Session::checkOrCreatePath(
+            bool checkOnly, const string& path, const string& description) const
+    {
+        Status ret;
+
+        logger_->debug("Checking %s: %s", description.c_str(), path.c_str());
+        UaDir helperDir(UaUniString(""));
+        if (helperDir.exists(UaUniString(path.c_str())))
+        {
+            ret = statuscodes::Good;
+            logger_->debug("OK, the %s exists", description.c_str());
+        }
+        else
+        {
+            if (checkOnly)
+            {
+                ret = PathNotExistsError(path, description);
+                logger_->error(ret.toString());
+            }
+            else
+            {
+                logger_->debug("The path does not exist so we try to create it");
+                if (helperDir.mkpath(UaUniString(path.c_str())))
+                {
+                    ret = statuscodes::Good;
+                    logger_->debug("The %s has been created", path.c_str());
+                }
+                else
+                {
+                    ret = PathCreationError(path, description);
+                    logger_->error(ret.toString());
+                }
+            }
+        }
+
+        return ret;
     }
 }

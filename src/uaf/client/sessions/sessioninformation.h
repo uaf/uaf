@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_SESSIONINFORMATION_H_
-#define UAFC_SESSIONINFORMATION_H_
+#ifndef UAF_SESSIONINFORMATION_H_
+#define UAF_SESSIONINFORMATION_H_
 
 // STD
 #include <string>
@@ -29,10 +29,13 @@
 // UAF
 #include "uaf/util/stringifiable.h"
 #include "uaf/util/handles.h"
+#include "uaf/util/datetime.h"
+#include "uaf/util/status.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/sessions/sessionstates.h"
+#include "uaf/client/sessions/connectionsteps.h"
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
@@ -41,7 +44,7 @@ namespace uafc
     *
     * @ingroup ClientSessions
     ***********************************************************************************************/
-    class UAFC_EXPORT SessionInformation
+    class UAF_EXPORT SessionInformation
     {
     public:
 
@@ -59,15 +62,19 @@ namespace uafc
          * @param sessionState          The state of the session.
          * @param serverUri             The URI of the server to which the session should be
          *                              connected.
+         * @param sessionState          The time of the last connection attempt.
+         * @param sessionState          The status of the last connection attempt.
          */
         SessionInformation(
-                uaf::ClientConnectionId             clientConnectionId,
-                uafc::sessionstates::SessionState   sessionState,
-                const std::string&                  serverUri);
+                uaf::ClientConnectionId                         clientConnectionId,
+                uaf::sessionstates::SessionState                sessionState,
+                const std::string&                              serverUri,
+                const uaf::connectionsteps::ConnectionStep&     lastConnectionAttemptStep,
+                const uaf::Status&                              lastConnectionAttemptStatus);
 
 
         /** The state of the session. */
-        uafc::sessionstates::SessionState   sessionState;
+        uaf::sessionstates::SessionState   sessionState;
 
         /** The id of the session. */
         uaf::ClientConnectionId             clientConnectionId;
@@ -75,21 +82,26 @@ namespace uafc
         /** The URI of the server to which the session should be connected. */
         std::string                         serverUri;
 
+        /** The status of the last connection attempt. */
+        uaf::Status                         lastConnectionAttemptStatus;
+
+        /** The step of the last connection attempt. */
+        uaf::connectionsteps::ConnectionStep lastConnectionAttemptStep;
 
         /**
          * Get a string representation of the information.
          */
-        std::string toString(const std::string& indent="", std::size_t colon=22) const;
+        std::string toString(const std::string& indent="", std::size_t colon=31) const;
 
 
         // comparison operators
-        friend UAFC_EXPORT bool operator==(
+        friend UAF_EXPORT bool operator==(
                 const SessionInformation& object1,
                 const SessionInformation& object2);
-        friend UAFC_EXPORT bool operator!=(
+        friend UAF_EXPORT bool operator!=(
                 const SessionInformation& object1,
                 const SessionInformation& object2);
-        friend UAFC_EXPORT bool operator<(
+        friend UAF_EXPORT bool operator<(
                 const SessionInformation& object1,
                 const SessionInformation& object2);
     };
@@ -98,4 +110,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_SESSIONINFORMATION_H_ */
+#endif /* UAF_SESSIONINFORMATION_H_ */

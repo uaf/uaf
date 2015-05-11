@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_SUBSCRIPTIONREQUESTTARGET_H_
-#define UAFC_SUBSCRIPTIONREQUESTTARGET_H_
+#ifndef UAF_SUBSCRIPTIONREQUESTTARGET_H_
+#define UAF_SUBSCRIPTIONREQUESTTARGET_H_
 
 
 // STD
@@ -30,22 +30,22 @@
 #include "uaf/client/requests/basesessionrequesttarget.h"
 
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
-    * An uafc::BaseSubscriptionRequestTarget is the superclass for "request targets" that need to
-    * be handled at the subscription level, such as uafc:CreateMonitoredDataRequestTarget.
+    * An uaf::BaseSubscriptionRequestTarget is the superclass for "request targets" that need to
+    * be handled at the subscription level, such as uaf::CreateMonitoredDataRequestTarget.
     *
     * @ingroup ClientRequests
     ***********************************************************************************************/
-    class UAFC_EXPORT BaseSubscriptionRequestTarget : public uafc::BaseSessionRequestTarget
+    class UAF_EXPORT BaseSubscriptionRequestTarget : public uaf::BaseSessionRequestTarget
     {
     public:
 
 
         /**
-         * Overridden pure virtual method (see uafc::BaseSessionRequestTarget::getServerUri).
+         * Overridden pure virtual method (see uaf::BaseSessionRequestTarget::getServerUri).
          */
         virtual uaf::Status getServerUri(std::string& serverUri) const = 0;
     };
@@ -56,4 +56,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_SUBSCRIPTIONREQUESTTARGET_H_ */
+#endif /* UAF_SUBSCRIPTIONREQUESTTARGET_H_ */

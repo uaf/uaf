@@ -21,6 +21,7 @@ add_library(uafclient SHARED ${SOURCES_UAF_CLIENT}
                              ${SOURCES_UAF_CLIENT_CONFIGS}
                              ${SOURCES_UAF_CLIENT_DATABASE}
                              ${SOURCES_UAF_CLIENT_DISCOVERY}
+                             ${SOURCES_UAF_CLIENT_ERRORS}
                              ${SOURCES_UAF_CLIENT_INVOCATIONS}
                              ${SOURCES_UAF_CLIENT_REQUESTS}
                              ${SOURCES_UAF_CLIENT_RESOLUTION}

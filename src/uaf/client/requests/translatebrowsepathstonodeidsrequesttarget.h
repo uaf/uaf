@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_TRANSLATEBROWSEPATHSTONODEIDSREQUESTTARGET_H_
-#define UAFC_TRANSLATEBROWSEPATHSTONODEIDSREQUESTTARGET_H_
+#ifndef UAF_TRANSLATEBROWSEPATHSTONODEIDSREQUESTTARGET_H_
+#define UAF_TRANSLATEBROWSEPATHSTONODEIDSREQUESTTARGET_H_
 
 
 
@@ -33,18 +33,18 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::TranslateBrowsePathsToNodeIdsRequestTarget is the part of a
-    * uafc::TranslateBrowsePathsToNodeIdsRequest that specifies the target to translate.
+    * A uaf::TranslateBrowsePathsToNodeIdsRequestTarget is the part of a
+    * uaf::TranslateBrowsePathsToNodeIdsRequest that specifies the target to translate.
     *
     * @ingroup ClientRequests
     ***********************************************************************************************/
-    class UAFC_EXPORT TranslateBrowsePathsToNodeIdsRequestTarget
-    : public uafc::BaseSessionRequestTarget
+    class UAF_EXPORT TranslateBrowsePathsToNodeIdsRequestTarget
+    : public uaf::BaseSessionRequestTarget
     {
     public:
 
@@ -82,13 +82,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const TranslateBrowsePathsToNodeIdsRequestTarget& object1,
                 const TranslateBrowsePathsToNodeIdsRequestTarget& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const TranslateBrowsePathsToNodeIdsRequestTarget& object1,
                 const TranslateBrowsePathsToNodeIdsRequestTarget& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const TranslateBrowsePathsToNodeIdsRequestTarget& object1,
                 const TranslateBrowsePathsToNodeIdsRequestTarget& object2);
 
@@ -137,4 +137,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_TRANSLATEBROWSEPATHSTONODEIDSREQUESTTARGET_H_ */
+#endif /* UAF_TRANSLATEBROWSEPATHSTONODEIDSREQUESTTARGET_H_ */

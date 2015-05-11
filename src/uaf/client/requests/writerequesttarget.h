@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_WRITEREQUESTTARGET_H_
-#define UAFC_WRITEREQUESTTARGET_H_
+#ifndef UAF_WRITEREQUESTTARGET_H_
+#define UAF_WRITEREQUESTTARGET_H_
 
 
 
@@ -36,17 +36,17 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::WriteRequestTarget is the part of a uafc::WriteRequest that specifies the target
+    * A uaf::WriteRequestTarget is the part of a uaf::WriteRequest that specifies the target
     * to write.
     *
     * @ingroup ClientRequests
     ***********************************************************************************************/
-    class UAFC_EXPORT WriteRequestTarget : public uafc::BaseSessionRequestTarget,
+    class UAF_EXPORT WriteRequestTarget : public uaf::BaseSessionRequestTarget,
                                            public uaf::DataValue
     {
     public:
@@ -95,13 +95,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const WriteRequestTarget& object1,
                 const WriteRequestTarget& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const WriteRequestTarget& object1,
                 const WriteRequestTarget& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const WriteRequestTarget& object1,
                 const WriteRequestTarget& object2);
 
@@ -148,4 +148,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_WRITEREQUESTTARGET_H_ */
+#endif /* UAF_WRITEREQUESTTARGET_H_ */

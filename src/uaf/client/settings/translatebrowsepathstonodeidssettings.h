@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_TRANSLATEBROWSEPATHSTONODEIDSSETTINGS_H_
-#define UAFC_TRANSLATEBROWSEPATHSTONODEIDSSETTINGS_H_
+#ifndef UAF_TRANSLATEBROWSEPATHSTONODEIDSSETTINGS_H_
+#define UAF_TRANSLATEBROWSEPATHSTONODEIDSSETTINGS_H_
 
 
 
@@ -31,17 +31,17 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::TranslateBrowsePathsToNodeIdsSettings object holds the service settings that are
+    * An uaf::TranslateBrowsePathsToNodeIdsSettings object holds the service settings that are
     * particular for the TranslateBrowsePathsToNodeIds service.
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT TranslateBrowsePathsToNodeIdsSettings : public uafc::ServiceSettings
+    class UAF_EXPORT TranslateBrowsePathsToNodeIdsSettings : public uaf::ServiceSettings
     {
     public:
 
@@ -56,4 +56,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_TRANSLATEBROWSEPATHSTONODEIDSSETTINGS_H_ */
+#endif /* UAF_TRANSLATEBROWSEPATHSTONODEIDSSETTINGS_H_ */

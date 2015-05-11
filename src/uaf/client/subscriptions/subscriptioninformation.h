@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_SUBSCRIPTIONINFORMATION_H_
-#define UAFC_SUBSCRIPTIONINFORMATION_H_
+#ifndef UAF_SUBSCRIPTIONINFORMATION_H_
+#define UAF_SUBSCRIPTIONINFORMATION_H_
 
 // STD
 #include <string>
@@ -32,7 +32,7 @@
 #include "uaf/client/clientexport.h"
 #include "uaf/client/subscriptions/subscriptionstates.h"
 
-namespace uafc
+namespace uaf
 {
 
 
@@ -41,7 +41,7 @@ namespace uafc
     *
     * @ingroup ClientSubscriptions
     ***********************************************************************************************/
-    class UAFC_EXPORT SubscriptionInformation
+    class UAF_EXPORT SubscriptionInformation
     {
     public:
 
@@ -62,7 +62,7 @@ namespace uafc
         SubscriptionInformation(
                 uaf::ClientConnectionId                     clientConnectionId,
                 uaf::ClientSubscriptionHandle               clientSubscriptionHandle,
-                uafc::subscriptionstates::SubscriptionState subscriptionState);
+                uaf::subscriptionstates::SubscriptionState subscriptionState);
 
 
         /** The id of the session that hosts the subscription. */
@@ -72,7 +72,7 @@ namespace uafc
         uaf::ClientSubscriptionHandle               clientSubscriptionHandle;
 
         /** The state of the subscription. */
-        uafc::subscriptionstates::SubscriptionState subscriptionState;
+        uaf::subscriptionstates::SubscriptionState subscriptionState;
 
 
         /**
@@ -82,13 +82,13 @@ namespace uafc
 
 
         // comparison operators
-        friend UAFC_EXPORT bool operator==(
+        friend UAF_EXPORT bool operator==(
                 const SubscriptionInformation& object1,
                 const SubscriptionInformation& object2);
-        friend UAFC_EXPORT bool operator!=(
+        friend UAF_EXPORT bool operator!=(
                 const SubscriptionInformation& object1,
                 const SubscriptionInformation& object2);
-        friend UAFC_EXPORT bool operator<(
+        friend UAF_EXPORT bool operator<(
                 const SubscriptionInformation& object1,
                 const SubscriptionInformation& object2);
     };
@@ -97,4 +97,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_SUBSCRIPTIONINFORMATION_H_ */
+#endif /* UAF_SUBSCRIPTIONINFORMATION_H_ */
