@@ -104,6 +104,21 @@ namespace uaf
     /** Maximum client handle value. */
     static const uint32_t CLIENTHANDLE_MAX = OpcUa_UInt32_Max - 1;
 
+    /**
+     * A ServerIndex is an unsigned 32-bit integer, identifying a server in a ServerArray.
+     *
+     * @ingroup Util
+     */
+    typedef uint32_t ServerIndex;
+
+    /**
+     * An OPC UA namespace index is used to relate something (e.g. a NodeIdIdentifier) to a
+     * namespace URI via a namespace array.
+     *
+     * @ingroup Util
+     */
+    typedef uint16_t NameSpaceIndex;
+
 }
 
 

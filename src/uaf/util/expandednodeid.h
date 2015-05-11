@@ -34,12 +34,6 @@ namespace uaf
 {
 
 
-    /**
-     * A ServerIndex is an unsigned 32-bit integer, identifying a server in a ServerArray.
-     *
-     * @ingroup Util
-     */
-    typedef uint32_t ServerIndex;
 
 
     /*******************************************************************************************//**
