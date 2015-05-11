@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_BROWSENEXTSETTINGS_H_
-#define UAFC_BROWSENEXTSETTINGS_H_
+#ifndef UAF_BROWSENEXTSETTINGS_H_
+#define UAF_BROWSENEXTSETTINGS_H_
 
 
 
@@ -31,17 +31,17 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::BrowseNextSettings object holds the service settings that are particular
+    * An uaf::BrowseNextSettings object holds the service settings that are particular
     * for the BrowseNext service.
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT BrowseNextSettings : public uafc::ServiceSettings
+    class UAF_EXPORT BrowseNextSettings : public uaf::ServiceSettings
     {
     public:
 
@@ -79,4 +79,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_BROWSENEXTSETTINGS_H_ */
+#endif /* UAF_BROWSENEXTSETTINGS_H_ */
