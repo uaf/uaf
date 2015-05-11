@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_SUBSCRIPTION_H_
-#define UAFC_SUBSCRIPTION_H_
+#ifndef UAF_SUBSCRIPTION_H_
+#define UAF_SUBSCRIPTION_H_
 
 // STD
 #include <string>
@@ -49,15 +49,15 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
-    * An uafc::Subscription wraps an SDK Subscription instance and adds some functionality.
+    * An uaf::Subscription wraps an SDK Subscription instance and adds some functionality.
     *
     * @ingroup ClientSubscriptions
     ***********************************************************************************************/
-    class UAFC_EXPORT Subscription
+    class UAF_EXPORT Subscription
     {
     public:
 
@@ -77,13 +77,13 @@ namespace uafc
          */
         Subscription(
                 uaf::LoggerFactory*                     loggerFactory,
-                const uafc::SubscriptionSettings&       subscriptionSettings,
+                const uaf::SubscriptionSettings&       subscriptionSettings,
                 uaf::ClientSubscriptionHandle           clientSubscriptionHandle,
                 uaf::ClientConnectionId                 clientConnectionId,
                 UaClientSdk::UaSession*                 uaSession,
                 UaClientSdk::UaSubscriptionCallback*    uaSubscriptionCallback,
-                uafc::ClientInterface*                  clientInterface,
-                uafc::Database*                         database);
+                uaf::ClientInterface*                  clientInterface,
+                uaf::Database*                         database);
 
 
         /**
@@ -128,7 +128,7 @@ namespace uafc
          *
          * @return  The information of the subscription.
          */
-        uafc::SubscriptionInformation subscriptionInformation() const;
+        uaf::SubscriptionInformation subscriptionInformation() const;
 
 
         /**
@@ -140,7 +140,7 @@ namespace uafc
          */
          bool monitoredItemInformation(
                 uaf::ClientHandle               clientHandle,
-                uafc::MonitoredItemInformation& monitoredItemInformation);
+                uaf::MonitoredItemInformation& monitoredItemInformation);
 
 
         /**
@@ -167,7 +167,7 @@ namespace uafc
          */
         uaf::Status setPublishingMode(
                 bool                           publishingEnabled,
-                const uafc::ServiceSettings&   serviceSettings);
+                const uaf::ServiceSettings&   serviceSettings);
 
 
        /**
@@ -183,7 +183,7 @@ namespace uafc
         uaf::Status setMonitoringModeIfNeeded(
                std::vector<uaf::ClientHandle>          clientHandles,
                uaf::monitoringmodes::MonitoringMode    monitoringMode,
-               const uafc::ServiceSettings&            serviceSettings,
+               const uaf::ServiceSettings&            serviceSettings,
                std::vector<uaf::Status>&               results);
 
 
@@ -196,7 +196,7 @@ namespace uafc
          * @return                  Good if there was no error on the client side.
          */
         uaf::Status invokeService(
-                uafc::CreateMonitoredDataInvocation& invocation,
+                uaf::CreateMonitoredDataInvocation& invocation,
                 const uaf::NamespaceArray&           nameSpaceArray,
                 const uaf::ServerArray&              serverArray)
         {
@@ -214,7 +214,7 @@ namespace uafc
                     clientHandle = database_->createUniqueClientHandle();
 
                 // store the monitored item
-                monitoredItemsMap_[clientHandle].settings = uafc::MonitoredItemSettings(
+                monitoredItemsMap_[clientHandle].settings = uaf::MonitoredItemSettings(
                         invocation.requestTargets()[i].samplingIntervalSec,
                         invocation.requestTargets()[i].queueSize,
                         invocation.requestTargets()[i].discardOldest,
@@ -259,7 +259,7 @@ namespace uafc
          * @return                  Good if there was no error on the client side.
          */
         uaf::Status invokeService(
-                uafc::CreateMonitoredEventsInvocation& invocation,
+                uaf::CreateMonitoredEventsInvocation& invocation,
                 const uaf::NamespaceArray&             nameSpaceArray,
                 const uaf::ServerArray&                serverArray)
         {
@@ -277,7 +277,7 @@ namespace uafc
                     clientHandle = database_->createUniqueClientHandle();
 
                 // store the monitored item
-                monitoredItemsMap_[clientHandle].settings = uafc::MonitoredItemSettings(
+                monitoredItemsMap_[clientHandle].settings = uaf::MonitoredItemSettings(
                         invocation.requestTargets()[i].samplingIntervalSec,
                         invocation.requestTargets()[i].queueSize,
                         invocation.requestTargets()[i].discardOldest,
@@ -326,7 +326,7 @@ namespace uafc
          *
          * @return  The settings of the subscription.
          */
-        uafc::SubscriptionSettings subscriptionSettings()
+        uaf::SubscriptionSettings subscriptionSettings()
         { return subscriptionSettings_; };
 
 
@@ -335,7 +335,7 @@ namespace uafc
          *
          * @return  The current status of the subscription.
          */
-        uafc::subscriptionstates::SubscriptionState subscriptionState()
+        uaf::subscriptionstates::SubscriptionState subscriptionState()
         { return subscriptionState_; }
 
 
@@ -344,7 +344,7 @@ namespace uafc
          *
          * @param subscriptionState    The new status of the subscription.
          */
-        void setSubscriptionState(uafc::subscriptionstates::SubscriptionState subscriptionState);
+        void setSubscriptionState(uaf::subscriptionstates::SubscriptionState subscriptionState);
 
 
 
@@ -355,7 +355,7 @@ namespace uafc
 
 
         // a private typedef for the container that will hold the monitored items.
-        typedef std::map<uaf::ClientHandle, uafc::MonitoredItem> MonitoredItemsMap;
+        typedef std::map<uaf::ClientHandle, uaf::MonitoredItem> MonitoredItemsMap;
 
 
         // logger of the subscription
@@ -367,18 +367,18 @@ namespace uafc
         // SDK subscription callback
         UaClientSdk::UaSubscriptionCallback*        uaSubscriptionCallback_;
         // the settings of the subscription
-        uafc::SubscriptionSettings                  subscriptionSettings_;
+        uaf::SubscriptionSettings                  subscriptionSettings_;
         // the client handle of the subscription
         uaf::ClientSubscriptionHandle               clientSubscriptionHandle_;
-        // the connection ID of the uafc::Session instance that hosts this subscription.
+        // the connection ID of the uaf::Session instance that hosts this subscription.
         uaf::ClientConnectionId                     clientConnectionId_;
         // the current status of the subscription
-        uafc::subscriptionstates::SubscriptionState subscriptionState_;
+        uaf::subscriptionstates::SubscriptionState subscriptionState_;
         // the shared client database
-        uafc::Database*                             database_;
+        uaf::Database*                             database_;
 
         // the RequesterInterface to call when asynchronous messages are received
-        uafc::ClientInterface*                      clientInterface_;
+        uaf::ClientInterface*                      clientInterface_;
 
         // the current monitored item handle (gets incremented every time!) and its mutex.
         uaf::ClientHandle                           clientHandle_;
@@ -393,4 +393,4 @@ namespace uafc
     };
 }
 
-#endif /* UAFC_SUBSCRIPTION_H_ */
+#endif /* UAF_SUBSCRIPTION_H_ */
