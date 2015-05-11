@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_METHODCALLSETTINGS_H_
-#define UAFC_METHODCALLSETTINGS_H_
+#ifndef UAF_METHODCALLSETTINGS_H_
+#define UAF_METHODCALLSETTINGS_H_
 
 
 
@@ -31,27 +31,27 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::MethodCallSettings object holds the service settings that are particular
+    * An uaf::MethodCallSettings object holds the service settings that are particular
     * for the MethodCall service.
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT MethodCallSettings : public uafc::ServiceSettings
+    class UAF_EXPORT MethodCallSettings : public uaf::ServiceSettings
     {
     public:
 
         /**
          * Create default MethodCall settings.
          */
-        MethodCallSettings() : uafc::ServiceSettings() {}
+        MethodCallSettings() : uaf::ServiceSettings() {}
     };
 }
 
 
 
-#endif /* UAFC_METHODCALLSETTINGS_H_ */
+#endif /* UAF_METHODCALLSETTINGS_H_ */
