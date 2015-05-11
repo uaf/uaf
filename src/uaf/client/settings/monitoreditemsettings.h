@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_MONITOREDITEMSETTINGS_H_
-#define UAFC_MONITOREDITEMSETTINGS_H_
+#ifndef UAF_MONITOREDITEMSETTINGS_H_
+#define UAF_MONITOREDITEMSETTINGS_H_
 
 
 // STD
@@ -35,17 +35,17 @@
 #include "uaf/client/clientexport.h"
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::MonitoredItemSettings instance holds the settings for a both a data and an event
+    * A uaf::MonitoredItemSettings instance holds the settings for a both a data and an event
     * monitored item.
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT MonitoredItemSettings
+    class UAF_EXPORT MonitoredItemSettings
     {
     public:
 
@@ -65,7 +65,7 @@ namespace uafc
          * Construct default monitored item settings.
          *
          * Defaults are:
-         *  - kind()              : uafc::MonitoredItemSettings::Data
+         *  - kind()              : uaf::MonitoredItemSettings::Data
          *  - dataChangeFilter    : new DataChangeFilter()
          *  - eventFilter         : NULL
          *  - samplingIntervalSec : 1.0
@@ -155,13 +155,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const MonitoredItemSettings& object1,
                 const MonitoredItemSettings& object2);
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const MonitoredItemSettings& object1,
                 const MonitoredItemSettings& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const MonitoredItemSettings& object1,
                 const MonitoredItemSettings& object2);
 
@@ -172,4 +172,4 @@ namespace uafc
 
 }
 
-#endif /* UAFC_MONITOREDITEMSETTINGS_H_ */
+#endif /* UAF_MONITOREDITEMSETTINGS_H_ */
