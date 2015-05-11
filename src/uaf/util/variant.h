@@ -42,6 +42,7 @@
 #include "uaf/util/expandednodeid.h"
 #include "uaf/util/localizedtext.h"
 #include "uaf/util/qualifiedname.h"
+#include "uaf/util/errors/generalerrors.h"
 
 
 

@@ -121,15 +121,15 @@ namespace uaf
         uaf::Status ret;                                                                           \
         if (isNativeUaf_)                                                                          \
         {                                                                                          \
-            if (dataTypeIfNativeUaf_ != uaf::opcuatypes::XXX)                                           \
-                ret.setStatus(uaf::statuscodes::WrongTypeError, "The variant is of the wrong type");    \
-            else if (arrayTypeIfNativeUaf_ != OpcUa_VariantArrayType_Scalar)                            \
-                ret.setStatus(uaf::statuscodes::WrongTypeError, "The variant is not a scalar");         \
-            else if (INTERNAL.size() != 1)                                                              \
-                ret.setStatus(uaf::statuscodes::UnexpectedError, "Bug: wrong size of internal vector"); \
+            if (dataTypeIfNativeUaf_ != uaf::opcuatypes::XXX)                                      \
+                ret = uaf::WrongTypeError();                                                       \
+            else if (arrayTypeIfNativeUaf_ != OpcUa_VariantArrayType_Scalar)                       \
+                ret = uaf::WrongTypeError();                                                       \
+            else if (INTERNAL.size() != 1)                                                         \
+                ret = uaf::UnexpectedError("Bug: wrong size of internal vector");                  \
             else                                                                                   \
             {                                                                                      \
-                ret.setGood();                                                                     \
+                ret = uaf::statuscodes::Good;                                                      \
                 val = INTERNAL[0];                                                                 \
             }                                                                                      \
         }                                                                                          \
@@ -155,21 +155,21 @@ namespace uaf
     {                                                                                              \
         uaf::Status ret;                                                                           \
         if (isNativeUaf_)                                                                          \
-        {                                                                                              \
-            if (dataTypeIfNativeUaf_ != uaf::opcuatypes::XXX)                                          \
-                ret.setStatus(uaf::statuscodes::WrongTypeError, "The variant is of the wrong type");   \
-            else if (arrayTypeIfNativeUaf_ != OpcUa_VariantArrayType_Array)                            \
-                ret.setStatus(uaf::statuscodes::WrongTypeError, "The variant is not a array");         \
+        {                                                                                          \
+            if (dataTypeIfNativeUaf_ != uaf::opcuatypes::XXX)                                      \
+                ret = uaf::WrongTypeError();                                                       \
+            else if (arrayTypeIfNativeUaf_ != OpcUa_VariantArrayType_Array)                        \
+                ret = uaf::WrongTypeError();                                                       \
             else                                                                                   \
             {                                                                                      \
-                ret.setGood();                                                                     \
+                ret = uaf::statuscodes::Good;                                                      \
                 vec = INTERNAL;                                                                    \
             }                                                                                      \
         }                                                                                          \
         else                                                                                       \
         {                                                                                          \
             Ua##XXX##Array arr;                                                                    \
-            uaf::Status ret = evaluate(                                                            \
+            ret = evaluate(                                                                        \
                     uaVariant_.to##XXX##Array(arr),                                                \
                     uaVariant_.type(),                                                             \
                     OpcUaType_##XXX);                                                              \
@@ -291,7 +291,7 @@ namespace uaf
     Status Variant::toString(string &val) const
     {
         val = uaVariant_.toString().toUtf8();
-        return uaf::Status(uaf::statuscodes::Good);
+        return uaf::statuscodes::Good;
     }
 
 
@@ -603,21 +603,25 @@ namespace uaf
     {
         Status ret;
 
-        if (fromType != toType)
+
+        if (OpcUa_IsBad(conversionResult))
         {
-            ret.setStatus(
-                    statuscodes::WrongTypeError,
-                    "Cannot convert %s to %s",
-                    opcuatypes::toString(opcuatypes::fromSdkToUaf(fromType)).c_str(),
-                    opcuatypes::toString(opcuatypes::fromSdkToUaf(toType  )).c_str());
+            ret = uaf::WrongTypeError(
+                    uaf::format(
+                        "Cannot convert the %s: %s",
+                        opcuatypes::toString(opcuatypes::fromSdkToUaf(fromType)).c_str(),
+                        UaStatusCode(conversionResult).toString().toUtf8()));
+        }
+        else if (fromType != toType)
+        {
+            ret = uaf::WrongTypeError(
+                    uaf::format(
+                        "Cannot convert %s to %s",
+                        opcuatypes::toString(opcuatypes::fromSdkToUaf(fromType)).c_str(),
+                        opcuatypes::toString(opcuatypes::fromSdkToUaf(toType  )).c_str()));
         }
         else
-        {
-            ret.fromSdk(
-                    conversionResult,
-                    "Cannot convert the %s",
-                    opcuatypes::toString(opcuatypes::fromSdkToUaf(fromType)).c_str());
-        }
+            ret = uaf::statuscodes::Good;
 
         return ret;
     }
