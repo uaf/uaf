@@ -27,47 +27,65 @@
 // SDK
 #include "uabase/statuscode.h"
 // UAF
-#include "uaf/util/status.h"
 
 
 
 namespace uaf
 {
 
-
+    /*******************************************************************************************//**
+     * An SdkStatus stores the information (i.e. status code and description) of a Status object
+     * by the SDK.
+     *
+     * @ingroup Util
+     **********************************************************************************************/
     class UAF_EXPORT SdkStatus
     {
     public:
 
+        /** Construct an uncertain status without description */
         SdkStatus()
         : statusCode(OpcUa_Uncertain)
         {}
 
+        /** Construct a status based on a UaStatus object. */
         SdkStatus(const UaStatus& uaStatus)
-        : description(uaStatus.toString().toUtf8()),
+        : message(uaStatus.toString().toUtf8()),
           statusCode(uaStatus.statusCode())
         {}
 
+        /** Construct a status based on a UaStatusCode object. */
         SdkStatus(const UaStatusCode& uaStatusCode)
-        : description(uaStatusCode.toString().toUtf8()),
+        : message(uaStatusCode.toString().toUtf8()),
           statusCode(uaStatusCode.statusCode())
         {}
 
-        std::string description;
+        /** Construct a status based on a OpcUa_StatusCode integer. */
+        SdkStatus(OpcUa_StatusCode uaStatusCode)
+        : message(UaStatusCode(uaStatusCode).toString().toUtf8()),
+          statusCode(uaStatusCode)
+        {}
+
+        /** The message of the status. */
+        std::string message;
+
+        /** The OPC UA (!) status code. */
         uint32_t    statusCode;
 
+        /** Check if the Status is good/bad/uncertain/... */
         bool isGood()           const { return OpcUa_IsGood(statusCode);      }
         bool isBad()            const { return OpcUa_IsBad(statusCode);       }
         bool isUncertain()      const { return OpcUa_IsUncertain(statusCode); }
-
         bool isNotGood()        const { return !isGood();      }
         bool isNotBad()         const { return !isBad();       }
         bool isNotUncertain()   const { return !isUncertain(); }
 
+
+        /** Get a string representation. */
         std::string toString() const
         {
             UaStatus status;
-            status.setStatus(statusCode, description.c_str());
+            status.setStatus(statusCode, message.c_str());
             return status.toString().toUtf8();
         }
 
