@@ -25,7 +25,6 @@
 #include "uaf/client/client.h"
 
 using namespace uaf;
-using namespace uafc;
 using std::string;
 using std::cout;
 using std::vector;
@@ -179,15 +178,15 @@ int main(int argc, char* argv[])
         {
             // Strange, we didn't receive any historical data.
             // Check if this is expected behavior:
-            if (result.targets[0].status.opcUaStatusCode() == OpcUa_GoodNoData)
+            if (result.targets[0].opcUaStatusCode == OpcUa_GoodNoData)
                 cout << "OK, no data could be received because he server reports that there is "
                         "no data that matches your request";
         }
         else
         {
-            vector<Status>   allStatuses;
-            vector<double>   allDoubleValues;
-            vector<DateTime> allSourceTimes;
+            vector<OpcUa_StatusCode>    allStatusCodes;
+            vector<double>              allDoubleValues;
+            vector<DateTime>            allSourceTimes;
 
             for (vector<DataValue>::const_iterator it = result.targets[0].dataValues.begin();
                  it != result.targets[0].dataValues.end();
@@ -197,7 +196,7 @@ int main(int argc, char* argv[])
                 if (it->data.type() == opcuatypes::Double)
                 {
                     double doubleValue;
-                    allStatuses.push_back(it->status);
+                    allStatusCodes.push_back(it->opcUaStatusCode);
                     allSourceTimes.push_back(it->sourceTimestamp);
                     it->data.toDouble(doubleValue);
                     allDoubleValues.push_back(doubleValue);
@@ -208,9 +207,9 @@ int main(int argc, char* argv[])
             cout << "\n";
             cout << "The results are:\n";
 
-            for (size_t i = 0; i < allStatuses.size(); i++)
+            for (size_t i = 0; i < allStatusCodes.size(); i++)
             {
-                cout << "Code=" << int(allStatuses[i].statusCode());
+                cout << "Code=" << int(allStatusCodes[i]);
                 cout << " Value=" << int(allDoubleValues[i]);
                 cout << " Time=" << allSourceTimes[i].toTimeString();
                 cout << "\n";

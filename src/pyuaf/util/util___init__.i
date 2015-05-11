@@ -113,22 +113,19 @@
 %rename(__and__) uaf::Mask::operator&&;
 %rename(__dispatch_logMessageReceived__) uaf::LoggingInterface::logMessageReceived;
 %ignore extractServerUri(const Address& object, std::string& serverUri);
-%ignore uaf::Address::operator=;
 %ignore operator>(const DateTime&, const DateTime&);
 %ignore uaf::DateTime::DateTime(const FILETIME& t);
-%ignore uaf::StatusDiagnostics::operator=;
-%ignore uaf::PkiPublicKey::operator=;
 
 // The default SWIG output returned by uaf::Status::opcUaStatusCode() is a signed representation (Long) of an unsigned 32-bit integer.
 // The returned value (a Long which can only be positive) does not correspond bit-to-bit to the original OPC UA status codes, e.g. as found in
 // pyuaf.util.opcuastatuscodes (which may appear to be negative ints because Python interprets the unsigned value as a signed value).
 // We therefore manually convert the output of the opcUaStatusCode() method, so that the result can be compared to pyuaf.util.opcuastatuscodes.
 // (Note that the convert_uint32_to_int32() function is defined in src/pyuaf/util/init_extras.py)
-%rename(opcUaStatusCodeUnsigned) uaf::Status::opcUaStatusCode;
 %extend uaf::Status {
   %pythoncode {
-    def opcUaStatusCode(self):
-        return convert_uint32_to_int32(self.opcUaStatusCodeUnsigned())
+    def test(self):
+        if self.isBad():
+            raise getattr(self, "raisedBy_%s" %self.statusCodeName())
   }
 }
 
@@ -158,7 +155,6 @@ UAF_WRAP_CLASS("uaf/util/usertokenpolicy.h"        , uaf , UserTokenPolicy      
 UAF_WRAP_CLASS("uaf/util/endpointdescription.h"    , uaf , EndpointDescription     , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, EndpointDescriptionVector)
 UAF_WRAP_CLASS("uaf/util/viewdescription.h"        , uaf , ViewDescription         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/referencedescription.h"   , uaf , ReferenceDescription    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ReferenceDescriptionVector)
-UAF_WRAP_CLASS("uaf/util/statusdiagnostics.h"      , uaf , StatusDiagnostics       , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/pkiidentity.h"            , uaf , PkiIdentity             , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/enumvalue.h"              , uaf , EnumValue               , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/pkipublickey.h"           , uaf , PkiPublicKey            , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)

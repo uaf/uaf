@@ -20,7 +20,6 @@
 #include "uaf/client/client.h"
 
 using namespace uaf;
-using namespace uafc;
 using std::string;
 using std::cout;
 using std::vector;

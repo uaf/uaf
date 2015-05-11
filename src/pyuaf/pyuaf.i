@@ -50,4 +50,5 @@
 %typemap(in)  time_t { $1 = (time_t) PyLong_AsLong($input); }
 %typemap(out) time_t { $result = PyLong_FromLong((long)$1); }
 
-
+// SWIG ignores all operator= methods, so to avoid warnings we ignore them explicitly:
+%ignore *::operator=;

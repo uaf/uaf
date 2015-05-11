@@ -6,7 +6,50 @@
 
 .. automodule:: pyuaf.util.errors
 
-    This module defines the exceptions that may be thrown by UAF functions.
+    This module defines the exceptions (errors) that may be raised by the UAF.
+    
+    PyuAF defines an error for each situation that may go wrong. The errors are subclasses of
+    the python ``Exception`` class, so they can be raised, and they contain a ``message`` attribute.
+    In other words, they are normal python exceptions.
+    
+    Many many errors are defined, so based on their type, you (the user) have a good idea of what's
+    going wrong. In some cases the errors have additional attributes for more diagnostics.
+    Since they are normal python exceptions, all pyuaf errors also have a ``message`` attribute
+    that conveys the error information in a human readable way. 
+    
+    The UAF defines one "root" error, i.e. a superclass of all other errors: `~pyuaf.util.errors.UafError`.
+    Further below this documentation, you'll see the whole subclassing hierarchy of all errors.
+    When an error has attributes, these attributes (name and type) are displayed too.  
+    
+    Usage example:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> from pyuaf.util import NodeId, Address
+        >>> from pyuaf.util.errors import 
+        >>> from pyuaf.client import Client, ClientSettings
+        >>> from pyuaf.util.errors import UnknownServerError, UafError
+        >>>
+        >>> # dummy logger function: 
+        >>> def log(msg): pass
+        >>>
+        >>> c = Client(ClientSettings('my client', ['opc.tcp://localhost:4841'])
+        >>> 
+        >>> # let's try to read a node on the server with server URI 'urn:my:server:uri'
+        >>> try:
+        ...    c.read( Address(NodeId('identifier', 'http://my/ns/uri'), 'urn:my:server:uri') )
+        ... except UnknownServerError, e:
+        ...    log("The server %s is unknown to the client!" %e.unknownServerUri)
+        ...    log("These are the servers that *are* known to the client:")
+        ...    for knownServerUri in e.knownServerUris:
+        ...        log(" - %s" %knownServerUri)
+        ... except UafServer, e:
+        ...    log("Oops, an OPC UA error occurred that we didn't anticipate:")
+        ...    log(str(e))
+        ... except Exception, e:
+        ...    log("Oops, another non-OPC UA error occurred that we didn't anticipate:")
+        ...    log(str(e))
 
 
 
@@ -18,466 +61,21 @@
     
     A UafError is the superclass of all UAF related exceptions.
     
-    Catch this error to catch all errors thrown by the UAF.
+    Catch this error to catch all errors raised by the UAF.
     
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a UafError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
              
-    * Attributes:
+    * Attributes inherited from the built-in class ``Exception``:
   
-        .. attribute:: status
+        .. attribute:: message
         
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
+            The message of the error.
     
 
 
-*class* ConfigurationError
+Inheritance tree of all UAF errors
 ----------------------------------------------------------------------------------------------------
 
-.. autoclass:: pyuaf.util.errors.ConfigurationError
-    
-    
-    * Methods:
 
-        .. method:: __init__(status)
-        
-            Create a ConfigurationError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
+.. literalinclude:: generated_error_inheritance_tree.txt
 
-
-*class* ConnectionError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.ConnectionError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a ConnectionError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
-
-
-
-*class* DataFormatError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.DataFormatError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a DataFormatError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
-
-
-
-
-*class* DataSizeError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.DataSizeError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a DataSizeError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-            
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-
-
-*class* DataSourceError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.DataSourceError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a DataSourceError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
-
-
-*class* DisconnectionError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.DisconnectionError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a DisconnectionError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
-
-
-
-*class* DiscoveryError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.DiscoveryError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a DiscoveryError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
-
-
-*class* InvalidRequestError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.InvalidRequestError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a InvalidRequestError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
-
-
-*class* LowLevelError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.LowLevelError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a LowLevelError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
-
-
-*class* ResolutionError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.ResolutionError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a ResolutionError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
-
-
-*class* WrongTypeError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.WrongTypeError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a WrongTypeError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
-
-
-*class* OtherError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.OtherError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a OtherError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
-
-*class* SecurityError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.SecurityError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a SecurityError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
-    
-
-
-*class* TimeoutError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.TimeoutError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a TimeoutError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
-    
-
-*class* NoResultReceivedError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.NoResultReceivedError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a NoResultReceivedError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
-    
-    
-
-*class* SubscriptionError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.SubscriptionError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a SubscriptionError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
-    
-
-*class* UnexpectedError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.UnexpectedError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a UnexpectedError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
-    
-    
-
-*class* UnknownHandleError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.UnknownHandleError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a UnknownHandleError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
-    
-    
-    
-    
-
-*class* UnsupportedError
-----------------------------------------------------------------------------------------------------
-
-.. autoclass:: pyuaf.util.errors.UnsupportedError
-    
-    
-    * Methods:
-
-        .. method:: __init__(status)
-        
-            Create a UnsupportedError.
-            
-            :param status: The status object that caused the error to be raised.
-            :type status: :class:`~pyuaf.util.Status`
-             
-    * Attributes:
-  
-        .. attribute:: status
-        
-            The :class:`~pyuaf.util.Status` object that caused the error to be raised.
-    
     

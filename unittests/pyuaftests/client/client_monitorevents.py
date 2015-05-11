@@ -108,8 +108,11 @@ class ClientMonitorEventsTest(unittest.TestCase):
         # Check if the write failed due to a BadUserAccessDenied failure
         # This appears to be the case for the UaServerCpp shipped with the Windows MSVS2008 demo SDK,
         # probably a bug in the UaServerCpp.
-        if result.targets[0].status.opcUaStatusCode() == pyuaf.util.opcuastatuscodes.OpcUa_BadUserAccessDenied:
-            self.skipTest("Some old versions of the UaServerCpp have non-writeable triggers (bug in UaServerCpp?)")
+        try:
+            result.targets[0].status.test()
+        except pyuaf.util.errors.ServerCouldNotWriteError, e:
+            if e.sdkStatus.statusCode == pyuaf.util.opcuastatuscodes.OpcUa_BadUserAccessDenied:
+                self.skipTest("Some old versions of the UaServerCpp have non-writeable triggers (bug in UaServerCpp?)")
     
     def test_client_Client_createMonitoredEvents(self):
         

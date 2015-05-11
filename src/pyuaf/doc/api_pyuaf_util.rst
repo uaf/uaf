@@ -2653,6 +2653,91 @@
             Flag specifying if subtypes of the reference type should be included (as a ``bool``).
 
 
+*class* SdkStatus
+----------------------------------------------------------------------------------------------------
+
+.. autoclass:: pyuaf.util.SdkStatus
+
+    An SdkStatus stores the information (i.e. status code and message) of a Status object
+    by the SDK.
+
+
+    * Methods:
+    
+        .. automethod:: pyuaf.util.SdkStatus.__init__
+    
+            Construct a new SdkStatus.
+
+
+        .. automethod:: pyuaf.util.SdkStatus.isGood
+        
+            Check if the status has a "good" status code.
+            
+            :return: True if the status is Good.
+            :rtype:  bool
+    
+    
+        .. automethod:: pyuaf.util.SdkStatus.isNotGood
+        
+            Check if the status does not have a "good" status code.
+            
+            :return: True if the status is not Good.
+            :rtype:  bool
+    
+    
+        .. automethod:: pyuaf.util.SdkStatus.isUncertain
+        
+            Check if the status has an "uncertain" status code.
+            
+            :return: True if the status is Uncertain.
+            :rtype:  bool
+    
+    
+        .. automethod:: pyuaf.util.SdkStatus.isNotUncertain
+        
+            Check if the status does not have a "uncertain" status code.
+            
+            :return: True if the status is not Uncertain.
+            :rtype:  bool
+    
+    
+        .. automethod:: pyuaf.util.SdkStatus.isBad
+        
+            Check if the status has a "bad" status code.
+            
+            :return: True if the status is Bad.
+            :rtype:  bool
+    
+    
+        .. automethod:: pyuaf.util.SdkStatus.isNotBad
+        
+            Check if the status does not have a "bad" status code.
+            
+            :return: True if the status is not Bad.
+            :rtype:  bool
+
+
+    * Attributes:
+    
+        .. autoattribute:: pyuaf.util.SdkStatus.statusCode
+        
+            Get the OPC UA status code.
+            
+            *OPC UA status codes* are not the same as *UAF status codes*! 
+            See the :mod:`pyuaf.util.opcuastatuscodes` and :mod:`pyuaf.util.statuscodes` modules
+            for more info!
+            
+            :return: The OPC UA status code, as defined by :mod:`pyuaf.util.opcuastatuscodes`.
+            :rtype:  ``int``
+
+        .. autoattribute:: pyuaf.util.SdkStatus.message
+        
+            Get the message of the SDK status.
+            
+            :return: The message of the status.
+            :rtype:  ``str``
+
+
 
 *class* SimpleAttributeOperand
 ----------------------------------------------------------------------------------------------------
@@ -2745,6 +2830,8 @@
 
 
 
+
+
 *class* Status
 ----------------------------------------------------------------------------------------------------
 
@@ -2752,15 +2839,26 @@
 .. autoclass:: pyuaf.util.Status
 
 
-     A Status object holds a UAF status code, a description and an OPC UA status code.
+     A Status object holds a UAF status code, a message and an OPC UA status code.
+
+    * Attributes:
     
+        .. autoattribute:: pyuaf.util.Status.statusCode
+        
+            The UAF status code (an ``int`` as defined by :mod:`pyuaf.util.statuscodes`).
+            
+            UAF status codes are not the same as OPC UA status codes! 
+            For each UAF status code (except for Good and Uncertain), there is a corresponding 
+            error.
+            See the :mod:`pyuaf.util.statuscodes` and :mod:`pyuaf.util.opcuastatuscodes` modules
+            for more info!    
 
     * Methods:
 
         .. automethod:: pyuaf.util.Status.__init__
         
             Construct a Status by providing a UAF status code (as defined by 
-            :mod:`pyuaf.util.statuscodes`) and optionally a description (a string).
+            :mod:`pyuaf.util.statuscodes`).
             
             UAF Status objects are Uncertain by default.
         
@@ -2769,146 +2867,32 @@
             .. doctest::
             
                 >>> import pyuaf
-                >>> from pyuaf.util import Status, statuscodes
+                >>> from pyuaf.util import Status
+                >>> from pyuaf.util.errors import InvalidServerUriError
             
                 >>> status0 = Status() # Uncertain by default!
                 >>> status1 = Status(statuscodes.Good)
-                >>> status2 = Status(statuscodes.InvalidRequestError, "This is an invalid request!")
+                >>> status2 = Status(InvalidServerUriError("http://invalid/server/uri"))
                 
         
-        .. automethod:: pyuaf.util.Status.statusCode
+        .. automethod:: pyuaf.util.Status.test()
         
-            Get the UAF status code (as defined by :mod:`pyuaf.util.statuscodes`).
+            Important method: raise an error if the status is Bad! E.g. 
+            if `~pyuaf.util.Status.statusCode` equals `pyuaf.util.statuscodes.InvalidServerUriError`,
+            then a `pyuaf.util.errors.InvalidServerUriError` will be raised!
+            If the `~pyuaf.util.Status.statusCode` attribute is `~pyuaf.util.statuscodes.Good` 
+            or `~pyuaf.util.statuscodes.Uncertain`, nothing will happen when you call this method.
             
-            UAF status codes are not the same as OPC UA status codes! 
-            See the :mod:`pyuaf.util.statuscodes` and :mod:`pyuaf.util.opcuastatuscodes` modules
-            for more info!
             
-            :return: The UAF status code (as defined by :mod:`pyuaf.util.statuscodes`).
-            :rtype:  ``int``
+        .. automethod:: pyuaf.util.Status.setGood()
         
-        
-        .. automethod:: pyuaf.util.Status.statusCodeName
-        
-            Get the name of the UAF status code.
-            
-            UAF status codes are not the same as OPC UA status codes! 
-            See the :mod:`pyuaf.util.statuscodes` and :mod:`pyuaf.util.opcuastatuscodes` modules
-            for more info!
-            
-            :return: The name of the UAF status code.
-            :rtype:  ``str``
-        
-        
-        .. automethod:: pyuaf.util.Status.addDiagnostic
-        
-            Add some diagnostic info (extra description text).
-            
-            This text will end up in the additionalDiagnostics object of this Status object
-            (it will be appended to the description of this diagnostics object, that can be 
-            accessed via :meth:`pyuaf.util.StatusDiagnostics.getDescription`.
-            
-            :param name: The extra diagnostic info.
-            :type  name: ``str``
-        
-        
-        .. automethod:: pyuaf.util.Status.additionalDiagnostics
-        
-            Get the additional diagnostics object (that can hold extra descriptions of the Status,
-            or some data specific to a particular use-case of the Status).
-            
-            :return: The additional StatusDiagnostics object that belongs to the Status.
-            :rtype:  :class:`~pyuaf.util.StatusDiagnostics`
-
-    
-        .. automethod:: pyuaf.util.Status.hasSpecificOpcUaStatusCode
-        
-            Check if the Status object, besides a UAF status code, also contains a specific OPC 
-            UA status code (which can be retrieved with :meth:`~pyuaf.util.Status.opcUaStatusCode`.
-            
-            With "specific" we mean anything more than just
-            :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Good`, 
-            :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Bad`, or 
-            :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Uncertain`.
-            
-            UAF status codes are not the same as OPC UA status codes! 
-            See the :mod:`pyuaf.util.statuscodes` and :mod:`pyuaf.util.opcuastatuscodes` modules
-            for more info!
-            
-            :return: True if the status object has a specific OPC UA status code.
-            :rtype:  bool
-
-
-        .. automethod:: pyuaf.util.Status.opcUaStatusCode
-        
-            Get the OPC UA status code.
-            
-            *UAF status codes* are not the same as *OPC UA status codes*! 
-            See the :mod:`pyuaf.util.statuscodes` and :mod:`pyuaf.util.opcuastatuscodes` modules
-            for more info!
-            
-            All :mod:`pyuaf.util.opcuastatuscodes` correspond *bitwise* to the 32-bit unsigned numbers as defined
-            by the OPC UA standard. This means that some statuscodes may appear to be negative, since 
-            python interprets the 32-bit data as signed integers.
-            If you want to see only positive numbers (which will be numerically equivalent but not 
-            bitwise equivalent to the numbers defined by the OPC UA standard), 
-            then use the :meth:`~pyuaf.util.Status.opcUaStatusCodeUnsigned` method.
-            
-            :return: The OPC UA status code, as defined by :mod:`pyuaf.util.opcuastatuscodes`.
-            :rtype:  ``int``
-
-
-        .. automethod:: pyuaf.util.Status.opcUaStatusCodeUnsigned
-        
-            Get a number which is numerically equivalent (but not bitwise equivalent) to the OPC UA
-            status code as defined by the OPC UA specs.
-            
-            You may *not* compare the output of this method with the integers defined by 
-            :mod:`pyuaf.util.opcuastatuscodes`, since the latter are bitwise equivalent (but not
-            numerically equivalent!) to the numbers defined by the OPC UA standard.
-            
-            :return: A positive number, representing the OPC UA status code.
-            :rtype:  ``int``
-
+            Set the status to Good.
             
         
-        .. automethod:: pyuaf.util.Status.setGood([message])
+        .. automethod:: pyuaf.util.Status.setUncertain()
         
-            Set the status to Good (and optionally add a message).
-            
-            :param message: The optional message.
-            :type  message: ``str``
-
+            Set the status to Uncertain.
         
-        .. automethod:: pyuaf.util.Status.setUncertain([message])
-        
-            Set the status to Uncertain (and optionally add a message).
-            
-            :param message: The optional message.
-            :type  message: ``str``
-        
-        
-        .. automethod:: pyuaf.util.Status.setStatus(statusCode[, message])
-        
-            Set the status to the given status code (and optionally add a message).
-            
-            :param statusCode: The new UAF status code (as defined by :mod:`pyuaf.util.statuscodes`).
-            :type  statusCode: ``int``
-            :param message: The optional message.
-            :type  message: ``str``
-        
-        
-        .. automethod:: pyuaf.util.Status.setOpcUaStatusCode(opcUaStatusCode)
-        
-            Set the status to the given OPC UA status code.
-            
-            UAF status codes are not the same as OPC UA status codes! 
-            See the :mod:`pyuaf.util.statuscodes` and :mod:`pyuaf.util.opcuastatuscodes` modules
-            for more info!
-            
-            :param statusCode: The new OPC UA status code, as defined by :mod:`pyuaf.util.opcuastatuscodes`.
-            :type  statusCode: ``int``
-
     
         .. automethod:: pyuaf.util.Status.isGood
         
@@ -2957,6 +2941,17 @@
             :return: True if the status is not Bad.
             :rtype:  bool
     
+        
+        .. automethod:: pyuaf.util.Status.statusCodeName
+        
+            Get the name of the UAF status code.
+            
+            UAF status codes are not the same as OPC UA status codes! 
+            See the :mod:`pyuaf.util.statuscodes` and :mod:`pyuaf.util.opcuastatuscodes` modules
+            for more info!
+            
+            :return: The name of the UAF status code.
+            :rtype:  ``str``
     
         .. automethod:: pyuaf.util.Status.summarize(statuses)
         
@@ -2970,100 +2965,32 @@
             :param statuses: The statuses to summarize.
             :type  statuses: :class:`pyuaf.util.StatusVector`.
 
-
-
-
-*class* StatusDiagnostics
-----------------------------------------------------------------------------------------------------
-
-
-.. autoclass:: pyuaf.util.StatusDiagnostics
-
-
-    A StatusDiagnostics object holds some more detailed diagnostic info for a Status object,
-    depending on the use case of this Status object
     
-
-    * Methods:
-
-        .. automethod:: pyuaf.util.StatusDiagnostics.__init__
+        .. automethod:: pyuaf.util.Status.isRaisedBy
         
-            Construct an empty StatusDiagnostics object.
+            Check if this (bad!) status is raised by some other status.
             
-            You normally don't create these objects: they are part of a Status object.
+            :return: True if this status was raised by some other status.
+            :rtype:  bool
 
+    
+        .. automethod:: pyuaf.util.Status.raisedBy
         
-        .. automethod:: pyuaf.util.StatusDiagnostics.clear
-        
-            Remove any diagnostic information.
-        
-        
-        .. automethod:: pyuaf.util.StatusDiagnostics.isEmpty
-        
-            Is any diagnostic info given?
+            If this status is raised by some other status, get a copy of this other status.
+            It only make sense to call this method when `~pyuaf.util.Status.isRaisedBy` returns True.
             
-            :return: True if the object holds some data (e.g. some description text or some other 
-                     data), False if not.
-            :rtype:  ``bool``
-        
-        
-        .. automethod:: pyuaf.util.StatusDiagnostics.hasDescription
-        
-            Does the diagnostic object has a description?
-            
-            :return: True if the object holds some description text, False if not.
-            :rtype:  ``bool``
-        
-        
-        .. automethod:: pyuaf.util.StatusDiagnostics.hasClientHandles
-        
-            Does the diagnostic object has client handles?
-            See a use case example at :meth:`pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle`.
-            
-            :return: True if the object holds some client handles, False if not.
-            :rtype:  ``bool``
+            :return: Get a copy of the status that raised this status.
+            :rtype:  `~pyuaf.util.Status`
 
 
-        .. automethod:: pyuaf.util.StatusDiagnostics.getDescription
+        .. automethod:: pyuaf.util.Status.setRaisedBy
         
-            Get the description (only makes sense in case 
-            :meth:`~pyuaf.util.StatusDiagnostics.hasDescription` is True).
+            Store the status that caused this status (i.e. the current instance).
             
-            :return: Additional description text.
-            :rtype:  ``str``
-
-
-        .. automethod:: pyuaf.util.StatusDiagnostics.getClientHandles
-        
-            Get the client handles (only makes sense in case 
-            :meth:`~pyuaf.util.StatusDiagnostics.hasClientHandles` is True).
+            :param status: The status that caused this (bad!) status.
+            :type status: `~pyuaf.util.Status`
             
-            See a use case example at :meth:`pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle`.
             
-            :return: A tuple of client handles (=integers), e.g. (1,2,3).
-            :rtype:  ``tuple`` of ``int``
-
-
-        .. automethod:: pyuaf.util.StatusDiagnostics.setDescription
-        
-            Set the description text. As a result of this, 
-            :meth:`~pyuaf.util.StatusDiagnostics.hasDescription` will return True.
-            
-            :param desc: Additional description text.
-            :type desc: ``str``
-
-
-        .. automethod:: pyuaf.util.StatusDiagnostics.setClientHandles
-        
-            Set the client handles. As a result of this, 
-            :meth:`~pyuaf.util.StatusDiagnostics.hasClientHandles` will return True.
-            
-            See a use case example at :meth:`pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle`.
-            
-            :param handles: A tuple of client handles (=integers), e.g. (1,2,3).
-            :type handles: ``tuple`` of ``int``
-            
-
 
 *class* StatusVector
 ----------------------------------------------------------------------------------------------------

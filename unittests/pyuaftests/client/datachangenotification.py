@@ -23,7 +23,7 @@ class DataChangeNotificationTest(unittest.TestCase):
         self.notif1 = pyuaf.client.DataChangeNotification()
         self.notif1.clientHandle = 123
         self.notif1.data = pyuaf.util.primitives.UInt16(456)
-        self.notif1.status.setStatus(pyuaf.util.statuscodes.DiscoveryError, "some error")
+        self.notif1.status = pyuaf.util.Status(pyuaf.util.errors.NoTargetsGivenError())
     
     def test_client_DataChangeNotification_clientHandle(self):
         self.assertEqual( self.notif1.clientHandle , 123 )
@@ -32,9 +32,7 @@ class DataChangeNotificationTest(unittest.TestCase):
         self.assertEqual( self.notif1.data , pyuaf.util.primitives.UInt16(456) )
     
     def test_client_DataChangeNotification_status(self):
-        status = pyuaf.util.Status()
-        status.setStatus(pyuaf.util.statuscodes.DiscoveryError, "some error")
-        self.assertEqual( self.notif1.status , status )
+        self.assertEqual( self.notif1.status , pyuaf.util.Status(pyuaf.util.errors.NoTargetsGivenError()) )
     
     def test_client_DataChangeNotificationVector(self):
         testVector(self, pyuaf.client.DataChangeNotificationVector, [self.notif0, self.notif1])

@@ -389,7 +389,7 @@ print("")
 #  - wait a few seconds, so that the server stores at least a second of historical data
 #  - read the historical data
 
-myClient.call(address_History, address_StartLogging)
+result = myClient.call(address_History, address_StartLogging)
 
 if result.overallStatus.isNotGood():
     raise Exception("Couldn't start the logging!")
@@ -420,6 +420,10 @@ result = myClient.historyReadRaw(addresses       = [address_ByteWithHistory, add
 
 print("Result of the historical read:")
 print(result)
+
+
+# OK we can stop the logging now
+result = myClient.call(address_History, address_StopLogging)
 
 
 # delete the client and create a new instance, so we can proceed cleanly with the next step of the tutorial
