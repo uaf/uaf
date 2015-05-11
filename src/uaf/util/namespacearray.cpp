@@ -63,16 +63,16 @@ namespace uaf
                             string(UaString(&stringArray[i]).toUtf8()));
                 }
             }
-
-            // update the return status
-            ret.fromSdk(uaConversionStatusCode,
-                                   "Could not convert the received data value");
+            else
+            {
+                ret = NamespaceArrayConversionError();
+            }
 
         }
         // if the status of the value was not good, just update the return status
         else
         {
-            ret.fromSdk(value.StatusCode, "Could not process the received data value");
+            ret = BadNamespaceArrayError();
         }
 
         return ret;
@@ -175,8 +175,7 @@ namespace uaf
         if (address.isExpandedNodeId())
             return fillOpcUaNodeId(address.getExpandedNodeId().nodeId(), opcUaNodeId);
         else
-            return Status(statuscodes::UnexpectedError,
-                          "Can't extract the NodeId from the address");
+            return InvalidAddressError();
     }
 
 
@@ -196,22 +195,23 @@ namespace uaf
         {
 
             if (findNamespaceIndex(nodeId.nameSpaceUri(), nameSpaceIndex))
-                ret.setGood();
+                ret = statuscodes::Good;
             else
-                ret.setStatus(statuscodes::ResolutionError,
-                              "Could not resolve the node, unknown namespace URI");
+                ret = UnknownNamespaceUriError(
+                        nodeId.nameSpaceUri(),
+                        nameSpaceMap_,
+                        toString(nameSpaceMap_));
         }
         else if (nodeId.hasNameSpaceIndex())
         {
             // OK we don't have a namespace URI but we do have a namespace index
             nameSpaceIndex = nodeId.nameSpaceIndex();
-            ret.setGood();
+            ret = statuscodes::Good;
         }
         else
         {
             // we have no possible means to get the namespace index
-            ret.setStatus(statuscodes::ResolutionError,
-                          "Could not resolve the node since no namespace index or URI are given");
+            ret = NoNamespaceIndexOrUriGivenError();
         }
 
 
@@ -246,7 +246,7 @@ namespace uaf
             }
             else
             {
-                ret.setStatus(statuscodes::UnexpectedError, "Unknown identifier type!");
+                ret = UnsupportedNodeIdIdentifierTypeError();
             }
         }
 
@@ -300,27 +300,23 @@ namespace uaf
                 // copy the contents from the qualified name to the SDK object
                 // (except the namespaceUri because that's not relevant for the SDK object anyway)
                 QualifiedName(qualifiedName.name(), nameSpaceIndex).toSdk(&opcUaQualifiedName);
-                ret.setGood();
+                ret = statuscodes::Good;
             }
             else
             {
-                ret.setStatus(statuscodes::ResolutionError,
-                              "Could not resolve '%s', unknown namespace URI",
-                              qualifiedName.toString().c_str());
+                ret = UnknownNamespaceUriError();
             }
         }
         else if (qualifiedName.hasNameSpaceIndex())
         {
             // OK we don't have a namespace URI but we do have a namespace index
             qualifiedName.toSdk(&opcUaQualifiedName);
-            ret.setGood();
+            ret = statuscodes::Good;
         }
         else
         {
             // we have no possible means to get the namespace index
-            ret.setStatus(statuscodes::ResolutionError,
-                          "Could not resolve qualified name '%s' since no namespace index or URI "
-                          "are provided");
+            ret = NoNamespaceIndexOrUriGivenError();
         }
 
         return ret;
@@ -371,8 +367,7 @@ namespace uaf
         if (findNamespaceUri(opcUaNodeId.NamespaceIndex, namespaceUri))
             ret = nodeId.fromSdk(opcUaNodeId, namespaceUri);
         else
-            ret.setStatus(statuscodes::ResolutionError,
-                          "Unknown namespace index %d", opcUaNodeId.NamespaceIndex);
+            ret = UnknownNamespaceIndexError(opcUaNodeId.NamespaceIndex);
 
         return ret;
     }
@@ -405,9 +400,8 @@ namespace uaf
         }
         else
         {
-            ret.setStatus(statuscodes::ResolutionError,
-                          "Empty server URI and unknown namespace index %d",
-                          opcUaExpandedNodeId.NodeId.NamespaceIndex);
+            ret = EmptyServerUriAndUnknownNamespaceIndexError(
+                    opcUaExpandedNodeId.NodeId.NamespaceIndex);
         }
 
 
@@ -428,12 +422,11 @@ namespace uaf
         if (findNamespaceUri(opcUaQualfiedName.NamespaceIndex, namespaceUri))
         {
             qualifiedName.fromSdk(opcUaQualfiedName, namespaceUri);
-            ret.setGood();
+            ret = statuscodes::Good;
         }
         else
         {
-            ret.setStatus(statuscodes::ResolutionError,
-                          "Unknown namespace index %d", opcUaQualfiedName.NamespaceIndex);
+            ret = UnknownNamespaceIndexError(opcUaQualfiedName.NamespaceIndex);
         }
 
         return ret;
@@ -446,7 +439,7 @@ namespace uaf
             vector<TYPE> vec;                                                                       \
             variant.to##TYPE##Array(vec);                                                           \
                                                                                                     \
-            if (vec.size() == 0) ret.setGood();                                                     \
+            if (vec.size() == 0) ret = statuscodes::Good;                                           \
                                                                                                     \
             for (std::size_t i = 0; i < vec.size() && ret.isNotBad(); i++)                          \
             {                                                                                       \
@@ -491,11 +484,32 @@ namespace uaf
         }
         else
         {
-            ret.setGood();
+            ret = statuscodes::Good;
         }
 
         return ret;
     }
+
+
+    // static function!
+    // Create a simplified (plain) URI
+    // =============================================================================================
+    string NamespaceArray::toString(const NameSpaceMap& map)
+    {
+        stringstream ss;
+
+        for (NameSpaceMap::const_iterator it = map.begin(); it != map.end(); ++it)
+        {
+            if (it != map.begin())
+                ss << std::endl;
+
+            ss << it->first << " : " << it->second;
+        }
+
+        return ss.str();
+    }
+
+
 
 }
 

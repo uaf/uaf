@@ -41,6 +41,8 @@
 
 namespace uaf
 {
+    // Define a map with key=namespaceIndex value=namespaceURI
+    typedef std::map<NameSpaceIndex, std::string> NameSpaceMap;
 
 
     /*******************************************************************************************//**
@@ -55,6 +57,8 @@ namespace uaf
     class UAF_EXPORT NamespaceArray
     {
     public:
+
+
         /**
          * Construct an empty NamespaceArray.
          */
@@ -230,10 +234,17 @@ namespace uaf
         uaf::Status fillVariant(uaf::Variant& variant) const;
 
 
+        /**
+         * A static function to create a string from the given namespace map.
+         *
+         * @param uri   URI that may contain capitals, a trailing forward slash, ...
+         * @return      A simplified "plain" string.
+         */
+        static std::string toString(const NameSpaceMap& map);
+
+
 
     private:
-        // Define a map with key=namespaceIndex value=namespaceURI
-        typedef std::map<NameSpaceIndex, std::string> NameSpaceMap;
 
         // the internal NameSpaceIndex:NameSpaceURI map
         NameSpaceMap nameSpaceMap_;
