@@ -26,6 +26,22 @@ namespace uaf
 
     // Is a string a multi-line string?
     // =============================================================================================
+    std::string uint32ArrayToString(const std::vector<uint32_t> arr)
+    {
+        std::stringstream ss;
+        std::vector<uint32_t>::const_iterator iter;
+        for (iter = arr.begin(); iter != arr.end(); ++iter)
+        {
+            if (ss.str().size() == 0)
+                ss << *iter;
+            else
+                ss << ", " << *iter;
+        }
+        return ss.str();
+    }
+
+    // Is a string a multi-line string?
+    // =============================================================================================
     std::string format(const char* msg, ...)
     {
         va_list args;

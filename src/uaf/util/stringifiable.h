@@ -28,6 +28,7 @@
 #include <stdio.h>
 #include <cstdio>
 #include <stdarg.h>
+#include <vector>
 // SDK
 // UAF
 #include "uaf/util/util.h"
@@ -37,6 +38,8 @@
 
 namespace uaf
 {
+
+    std::string UAF_EXPORT uint32ArrayToString(const std::vector<uint32_t> arr);
 
     /**
      * Make a string based on varargs.
