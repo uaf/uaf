@@ -20,10 +20,9 @@
 
 #include "uaf/client/settings/sessionsecuritysettings.h"
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;
@@ -139,13 +138,13 @@ namespace uafc
             }
         }
 
-        return Status(statuscodes::SecurityError, "Bad match");
+        return SessionSecuritySettingsDontMatchEndpointError();
     }
 
 
     // Match multiple SessionSecuritySettings with multiple EndpointDescription.
     // =============================================================================================
-    uafc::ClientStatus match(
+    uaf::Status match(
             const vector<SessionSecuritySettings>&  settings,
             const vector<EndpointDescription>&      endpoints,
             SessionSecuritySettings&                suitableSettings,
@@ -163,7 +162,7 @@ namespace uafc
                     suitableSettings = *settingsIter;
                     suitableEndpoint = *endpointsIter;
 
-                    return ClientStatus(ClientStatus::Good);
+                    return statuscodes::Good;
                 }
             }
         }
