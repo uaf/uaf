@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_SESSIONSETTINGS_H_
-#define UAFC_SESSIONSETTINGS_H_
+#ifndef UAF_SESSIONSETTINGS_H_
+#define UAF_SESSIONSETTINGS_H_
 
 
 // STD
@@ -34,16 +34,16 @@
 #include "uaf/client/settings/readsettings.h"
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::SessionSettings instance stores the settings of a uafc::Session.
+    * An uaf::SessionSettings instance stores the settings of a uaf::Session.
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT SessionSettings
+    class UAF_EXPORT SessionSettings
     {
     public:
 
@@ -73,14 +73,14 @@ namespace uafc
 
         /** The settings to be used to read the namespace array and server array, when the session
          *  is first connected (UAF clients will do this automatically in the background). */
-        uafc::ReadSettings readServerInfoSettings;
+        uaf::ReadSettings readServerInfoSettings;
 
         /** The allowed security settings to be used to connect the session, in the order they
          *  are given in the list.
          *
          *  So securitySettingsList[0] will be tried first, then securitySettingsList[1],
          *  and so on. */
-        std::vector<uafc::SessionSecuritySettings> securitySettingsList;
+        std::vector<uaf::SessionSecuritySettings> securitySettingsList;
 
 
         /**
@@ -92,13 +92,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator< (
+        friend bool UAF_EXPORT operator< (
                 const SessionSettings& object1,
                 const SessionSettings& object2);
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const SessionSettings& object1,
                 const SessionSettings& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const SessionSettings& object1,
                 const SessionSettings& object2);
 
@@ -107,4 +107,4 @@ namespace uafc
     };
 }
 
-#endif /* UAFC_SESSIONSETTINGS_H_ */
+#endif /* UAF_SESSIONSETTINGS_H_ */
