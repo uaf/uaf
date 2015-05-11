@@ -19,8 +19,8 @@
  */
 
 
-#ifndef UAFC_HISTORYREADRAWMODIFIEDINVOCATION_H_
-#define UAFC_HISTORYREADRAWMODIFIEDINVOCATION_H_
+#ifndef UAF_HISTORYREADRAWMODIFIEDINVOCATION_H_
+#define UAF_HISTORYREADRAWMODIFIEDINVOCATION_H_
 
 
 // STD
@@ -35,51 +35,51 @@
 #include "uaf/client/results/results.h"
 #include "uaf/client/invocations/baseserviceinvocation.h"
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
-    * An uafc::HistoryReadRawModifiedInvocation wraps the functional SDK code to invoke the
+    * An uaf::HistoryReadRawModifiedInvocation wraps the functional SDK code to invoke the
     * HistoryReadRawModified service.
     *
     * @ingroup ClientInvocations
     ***********************************************************************************************/
-    class UAFC_EXPORT HistoryReadRawModifiedInvocation
-    : public uafc::BaseServiceInvocation< uafc::HistoryReadRawModifiedSettings,
-                                          uafc::HistoryReadRawModifiedRequestTarget,
-                                          uafc::HistoryReadRawModifiedResultTarget >
+    class UAF_EXPORT HistoryReadRawModifiedInvocation
+    : public uaf::BaseServiceInvocation< uaf::HistoryReadRawModifiedSettings,
+                                          uaf::HistoryReadRawModifiedRequestTarget,
+                                          uaf::HistoryReadRawModifiedResultTarget >
     {
     private:
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromSyncUafToSdk(
-                const std::vector<uafc::HistoryReadRawModifiedRequestTarget>&   targets,
-                const uafc::HistoryReadRawModifiedSettings&                     settings,
+                const std::vector<uaf::HistoryReadRawModifiedRequestTarget>&   targets,
+                const uaf::HistoryReadRawModifiedSettings&                     settings,
                 const uaf::NamespaceArray&                                      nameSpaceArray,
                 const uaf::ServerArray&                                         serverArray);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromAsyncUafToSdk(
-                const std::vector<uafc::HistoryReadRawModifiedRequestTarget>&   targets,
-                const uafc::HistoryReadRawModifiedSettings&                     settings,
+                const std::vector<uaf::HistoryReadRawModifiedRequestTarget>&   targets,
+                const uaf::HistoryReadRawModifiedSettings&                     settings,
                 const uaf::NamespaceArray&                                      nameSpaceArray,
                 const uaf::ServerArray&                                         serverArray);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status invokeSyncSdkService(UaClientSdk::UaSession* uaSession);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status invokeAsyncSdkService(
                 UaClientSdk::UaSession*     uaSession,
@@ -87,12 +87,12 @@ namespace uafc
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromSyncSdkToUaf(
                 const uaf::NamespaceArray&                              nameSpaceArray,
                 const uaf::ServerArray&                                 serverArray,
-                std::vector<uafc::HistoryReadRawModifiedResultTarget>&  targets);
+                std::vector<uaf::HistoryReadRawModifiedResultTarget>&  targets);
 
 
         // private data members used during the invocation
@@ -112,4 +112,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_HISTORYREADRAWMODIFIEDINVOCATION_H_ */
+#endif /* UAF_HISTORYREADRAWMODIFIEDINVOCATION_H_ */

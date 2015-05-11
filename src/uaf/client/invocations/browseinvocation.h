@@ -19,8 +19,8 @@
  */
 
 
-#ifndef UAFC_BROWSEINVOCATION_H_
-#define UAFC_BROWSEINVOCATION_H_
+#ifndef UAF_BROWSEINVOCATION_H_
+#define UAF_BROWSEINVOCATION_H_
 
 
 // STD
@@ -35,18 +35,18 @@
 #include "uaf/client/results/results.h"
 #include "uaf/client/invocations/baseserviceinvocation.h"
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
-    * An uafc::BrowseInvocation wraps the functional SDK code to invoke the Browse service.
+    * An uaf::BrowseInvocation wraps the functional SDK code to invoke the Browse service.
     *
     * @ingroup ClientInvocations
     ***********************************************************************************************/
-    class UAFC_EXPORT BrowseInvocation
-    : public uafc::BaseServiceInvocation< uafc::BrowseSettings,
-                                          uafc::BrowseRequestTarget,
-                                          uafc::BrowseResultTarget >
+    class UAF_EXPORT BrowseInvocation
+    : public uaf::BaseServiceInvocation< uaf::BrowseSettings,
+                                          uaf::BrowseRequestTarget,
+                                          uaf::BrowseResultTarget >
     {
     public:
 
@@ -66,33 +66,33 @@ namespace uafc
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromSyncUafToSdk(
-                const std::vector<uafc::BrowseRequestTarget>& targets,
-                const uafc::BrowseSettings&                   settings,
+                const std::vector<uaf::BrowseRequestTarget>& targets,
+                const uaf::BrowseSettings&                   settings,
                 const uaf::NamespaceArray&                    nameSpaceArray,
                 const uaf::ServerArray&                       serverArray);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromAsyncUafToSdk(
-                const std::vector<uafc::BrowseRequestTarget>& targets,
-                const uafc::BrowseSettings&                   settings,
+                const std::vector<uaf::BrowseRequestTarget>& targets,
+                const uaf::BrowseSettings&                   settings,
                 const uaf::NamespaceArray&                    nameSpaceArray,
                 const uaf::ServerArray&                       serverArray);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status invokeSyncSdkService(UaClientSdk::UaSession* uaSession);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status invokeAsyncSdkService(
                 UaClientSdk::UaSession*     uaSession,
@@ -100,12 +100,12 @@ namespace uafc
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromSyncSdkToUaf(
                 const uaf::NamespaceArray&             nameSpaceArray,
                 const uaf::ServerArray&                serverArray,
-                std::vector<uafc::BrowseResultTarget>& targets);
+                std::vector<uaf::BrowseResultTarget>& targets);
 
 
         // private data members used during the invocation
@@ -124,4 +124,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_BROWSEINVOCATION_H_ */
+#endif /* UAF_BROWSEINVOCATION_H_ */

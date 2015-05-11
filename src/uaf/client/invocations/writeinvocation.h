@@ -19,8 +19,8 @@
  */
 
 
-#ifndef UAFC_WRITEINVOCATION_H_
-#define UAFC_WRITEINVOCATION_H_
+#ifndef UAF_WRITEINVOCATION_H_
+#define UAF_WRITEINVOCATION_H_
 
 
 // STD
@@ -37,50 +37,50 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
-    * An uafc::WriteInvocation wraps the functional SDK code to invoke the Write service.
+    * An uaf::WriteInvocation wraps the functional SDK code to invoke the Write service.
     *
     * @ingroup ClientInvocations
     ***********************************************************************************************/
-    class UAFC_EXPORT WriteInvocation
-    : public uafc::BaseServiceInvocation< uafc::WriteSettings,
-                                          uafc::WriteRequestTarget,
-                                          uafc::WriteResultTarget >
+    class UAF_EXPORT WriteInvocation
+    : public uaf::BaseServiceInvocation< uaf::WriteSettings,
+                                          uaf::WriteRequestTarget,
+                                          uaf::WriteResultTarget >
     {
     private:
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromSyncUafToSdk(
-                const std::vector<uafc::WriteRequestTarget>&    targets,
-                const uafc::WriteSettings&                      settings,
+                const std::vector<uaf::WriteRequestTarget>&    targets,
+                const uaf::WriteSettings&                      settings,
                 const uaf::NamespaceArray&                      nameSpaceArray,
                 const uaf::ServerArray&                         serverArray);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromAsyncUafToSdk(
-                const std::vector<uafc::WriteRequestTarget>&    targets,
-                const uafc::WriteSettings&                      settings,
+                const std::vector<uaf::WriteRequestTarget>&    targets,
+                const uaf::WriteSettings&                      settings,
                 const uaf::NamespaceArray&                      nameSpaceArray,
                 const uaf::ServerArray&                         serverArray);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status invokeSyncSdkService(UaClientSdk::UaSession* uaSession);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status invokeAsyncSdkService(
                 UaClientSdk::UaSession*     uaSession,
@@ -88,12 +88,12 @@ namespace uafc
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromSyncSdkToUaf(
                 const uaf::NamespaceArray&              nameSpaceArray,
                 const uaf::ServerArray&                 serverArray,
-                std::vector<uafc::WriteResultTarget>&   targets);
+                std::vector<uaf::WriteResultTarget>&   targets);
 
 
         // private data members used during the invocation
@@ -109,5 +109,5 @@ namespace uafc
 
 
 
-#endif /* UAFC_WRITEINVOCATION_H_ */
+#endif /* UAF_WRITEINVOCATION_H_ */
 

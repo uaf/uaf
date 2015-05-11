@@ -20,10 +20,9 @@
 
 #include "uaf/client/invocations/readinvocation.h"
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;
@@ -102,7 +101,7 @@ namespace uafc
     {
         Status ret;
 
-        UaStatus uaStatus = uaSession->read(
+        UaStatus sdkStatus = uaSession->read(
                 uaServiceSettings_,
                 uaMaxAge_,
                 uaTimestampsToReturn_,
@@ -110,7 +109,10 @@ namespace uafc
                 uaDataValues_,
                 uaDiagnosticInfos_);
 
-        ret.fromSdk(uaStatus.statusCode(), "Synchronous read invocation failed");
+        if (sdkStatus.isGood())
+            ret = uaf::statuscodes::Good;
+        else
+            ret = ReadInvocationError(sdkStatus);
 
         return ret;
     }
@@ -124,14 +126,17 @@ namespace uafc
     {
         Status ret;
 
-        UaStatus uaStatus = uaSession->beginRead(
+        UaStatus sdkStatus = uaSession->beginRead(
                 uaServiceSettings_,
                 uaMaxAge_,
                 uaTimestampsToReturn_,
                 uaReadValueIds_,
                 transactionId);
 
-        ret.fromSdk(uaStatus.statusCode(), "Asynchronous read invocation failed");
+        if (sdkStatus.isGood())
+            ret = uaf::statuscodes::Good;
+        else
+            ret = BeginReadInvocationError(sdkStatus);
 
         return ret;
     }
@@ -161,12 +166,11 @@ namespace uafc
                 serverArray.fillVariant(targets[i].data);
             }
 
-            ret.setGood();
+            ret = statuscodes::Good;
         }
         else
         {
-            ret.setStatus(statuscodes::UnexpectedError,
-                          "Number of targets does not match number of targets");
+            ret = UnexpectedError("Number of targets does not match number of targets");
         }
 
         return ret;

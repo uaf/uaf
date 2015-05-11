@@ -20,10 +20,9 @@
 
 #include "uaf/client/invocations/writeinvocation.h"
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;
@@ -99,13 +98,16 @@ namespace uafc
     {
         Status ret;
 
-        UaStatus uaStatus = uaSession->write(
+        SdkStatus sdkStatus = uaSession->write(
                 uaServiceSettings_,
                 uaWriteValues_,
                 uaStatusCodes_,
                 uaDiagnosticInfos_);
 
-        ret.fromSdk(uaStatus.statusCode(), "Synchronous write invocation failed");
+        if (sdkStatus.isGood())
+            ret = uaf::statuscodes::Good;
+        else
+            ret = WriteInvocationError(sdkStatus);
 
         return ret;
     }
@@ -119,12 +121,15 @@ namespace uafc
     {
         Status ret;
 
-        UaStatus uaStatus = uaSession->beginWrite(
+        SdkStatus sdkStatus = uaSession->beginWrite(
                 uaServiceSettings_,
                 uaWriteValues_,
                 transactionId);
 
-        ret.fromSdk(uaStatus.statusCode(), "Asynchronous write invocation failed");
+        if (sdkStatus.isGood())
+            ret = uaf::statuscodes::Good;
+        else
+            ret = AsyncWriteInvocationError(sdkStatus);
 
         return ret;
     }
@@ -152,17 +157,21 @@ namespace uafc
 
             for (uint32_t i=0; i<noOfTargets ; i++)
             {
-                // update the value and the status
-                targets[i].status.fromSdk(uaStatusCodes_[i],
-                                          "The server reported a write failure");
+                // update the status
+                if (OpcUa_IsGood(uaStatusCodes_[i]))
+                    targets[i].status = statuscodes::Good;
+                else
+                    targets[i].status = ServerCouldNotWriteError(SdkStatus(uaStatusCodes_[i]));
+
+                // update the status code
+                targets[i].opcUaStatusCode = uaStatusCodes_[i];
             }
 
-            ret.setGood();
+            ret = uaf::statuscodes::Good;
         }
         else
         {
-            ret.setStatus(statuscodes::UnexpectedError,
-                          "Number of targets does not match number of targets");
+            ret = UnexpectedError("Number of targets does not match number of targets");
         }
 
         return ret;

@@ -20,10 +20,9 @@
 
 #include "uaf/client/invocations/createmonitoredeventsinvocation.h"
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using namespace uaf::monitoringmodes;
     using std::string;
     using std::stringstream;
@@ -54,9 +53,9 @@ namespace uafc
 
         // check if the client handles have been set correctly
         if (clientHandles_.size() == noOfTargets)
-            ret.setGood();
+            ret = statuscodes::Good;
         else
-            ret.setStatus(statuscodes::UnexpectedError, "Handles have not been set correctly!");
+            ret = UnexpectedError("Handles have not been set correctly!");
 
         // loop through the targets
         for (size_t i = 0; i < noOfTargets && ret.isGood(); i++)
@@ -154,14 +153,16 @@ namespace uafc
     {
         uaf::Status ret;
 
-        UaStatus status = uaSubscription->createMonitoredItems(
+        SdkStatus sdkStatus = uaSubscription->createMonitoredItems(
                 uaServiceSettings_,
                 uaTimeStamps_,
                 uaCreateRequests_,
                 uaCreateResults_);
 
-        ret.fromSdk(status.statusCode(),
-                    "The synchronous CreateMonitoredItems service failed");
+        if (sdkStatus.isGood())
+            ret = statuscodes::Good;
+        else
+            ret = CreateMonitoredItemsInvocationError(sdkStatus);
 
         return ret;
     }
@@ -176,14 +177,16 @@ namespace uafc
     {
         uaf::Status ret;
 
-        UaStatus status = uaSubscription->beginCreateMonitoredItems(
+        SdkStatus sdkStatus = uaSubscription->beginCreateMonitoredItems(
                 uaServiceSettings_,
                 uaTimeStamps_,
                 uaCreateRequests_,
                 transactionId);
 
-        ret.fromSdk(status.statusCode(),
-                    "The asynchronous CreateMonitoredItems service failed");
+        if (sdkStatus.isGood())
+            ret = statuscodes::Good;
+        else
+            ret = BeginCreateMonitoredItemsInvocationError(sdkStatus);
 
         return ret;
     }
@@ -206,10 +209,9 @@ namespace uafc
 
         // check if the number of results is correct
         if (noOfResults == clientHandles_.size())
-            ret.setGood();
+            ret = statuscodes::Good;
         else
-            ret.setStatus(statuscodes::UnexpectedError,
-                          "Mismatch between number of results and number of client handles");
+            ret = UnexpectedError("Mismatch between number of results and number of client handles");
 
         // if everything is OK so far, update the targets
         if (ret.isGood())
@@ -221,7 +223,13 @@ namespace uafc
                 targets[i].revisedQueueSize = uaCreateResults_[i].RevisedQueueSize;
                 targets[i].revisedSamplingIntervalSec
                     = uaCreateResults_[i].RevisedSamplingInterval / 1000.0;
-                targets[i].status.fromSdk(uaCreateResults_[i].StatusCode, "Error on the server side");
+                targets[i].opcUaStatusCode = uaCreateResults_[i].StatusCode;
+
+                if (OpcUa_IsGood(uaCreateResults_[i].StatusCode))
+                    targets[i].status = uaf::statuscodes::Good;
+                else
+                    targets[i].status = ServerCouldNotCreateMonitoredItemsError(
+                            SdkStatus(UaStatus(uaCreateResults_[i].StatusCode)));
             }
         }
 

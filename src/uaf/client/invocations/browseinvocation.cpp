@@ -20,10 +20,9 @@
 
 #include "uaf/client/invocations/browseinvocation.h"
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::size_t;
     using std::stringstream;
@@ -33,9 +32,9 @@ namespace uafc
     // Constructor
     // =============================================================================================
     BrowseInvocation::BrowseInvocation()
-    : uafc::BaseServiceInvocation< uafc::BrowseSettings,
-                                   uafc::BrowseRequestTarget,
-                                   uafc::BrowseResultTarget >()
+    : uaf::BaseServiceInvocation< uaf::BrowseSettings,
+                                   uaf::BrowseRequestTarget,
+                                   uaf::BrowseResultTarget >()
     {
         // initialize the view description
         OpcUa_ViewDescription_Initialize(&uaViewDescription_);
@@ -125,7 +124,7 @@ namespace uafc
             const NamespaceArray&               nameSpaceArray,
             const ServerArray&                  serverArray)
     {
-        return Status(statuscodes::UnsupportedError, "Asynchronous browse is not supported");
+        return AsyncInvocationNotSupportedError();
     }
 
 
@@ -135,7 +134,7 @@ namespace uafc
     {
         Status ret;
 
-        UaStatus uaStatus = uaSession->browseList(
+        SdkStatus sdkStatus = uaSession->browseList(
                 uaServiceSettings_,
                 uaViewDescription_,
                 uaMaxReferencesToReturn_,
@@ -143,7 +142,10 @@ namespace uafc
                 uaBrowseResults_,
                 uaDiagnosticInfos_);
 
-        ret.fromSdk(uaStatus.statusCode(), "Synchronous browse invocation failed");
+        if (sdkStatus.isGood())
+            ret = uaf::statuscodes::Good;
+        else
+            ret = BrowseInvocationError(sdkStatus);
 
         uint32_t autoBrowsedNext   = 0;
         uint32_t maxAutoBrowseNext = this->serviceSettings().maxAutoBrowseNext;
@@ -189,14 +191,17 @@ namespace uafc
             if (uaNextContinuationPoints.length() > 0)
             {
                 // perform the BrowseNext call
-                UaStatus uaNextStatus = uaSession->browseListNext(
+                SdkStatus sdkNextStatus = uaSession->browseListNext(
                         uaServiceSettings_,
                         OpcUa_False,              // do not release the continuation point yet
                         uaNextContinuationPoints,
                         uaNextResults,
                         uaNextDiagnosticInfos);
 
-                ret.fromSdk(uaNextStatus.statusCode(), "Synchronous BrowseNext invocation failed");
+                if (sdkNextStatus.isGood())
+                    ret = uaf::statuscodes::Good;
+                else
+                    ret = BrowseNextInvocationError(sdkNextStatus);
 
                 // we've finished an automatic BrowseNext call, so increment the counter
                 autoBrowsedNext++;
@@ -278,7 +283,7 @@ namespace uafc
             UaClientSdk::UaSession* uaSession,
             TransactionId           transactionId)
     {
-        return Status(statuscodes::UnsupportedError, "Asynchronous browse is not supported");
+        return AsyncInvocationNotSupportedError();
     }
 
 
@@ -304,8 +309,14 @@ namespace uafc
             for (uint32_t i=0; i<noOfTargets ; i++)
             {
                 // update the status
-                targets[i].status.fromSdk(uaBrowseResults_[i].StatusCode,
-                                          "The server reported a browse failure");
+                if (OpcUa_IsGood(uaBrowseResults_[i].StatusCode))
+                    targets[i].status = statuscodes::Good;
+                else
+                    targets[i].status = ServerCouldNotBrowseError(
+                            SdkStatus(uaBrowseResults_[i].StatusCode));
+
+                // update the status code
+                targets[i].opcUaStatusCode = uaBrowseResults_[i].StatusCode;
 
                 // update the autoBrowsedNext counter
                 targets[i].autoBrowsedNext = autoBrowsedNextPerTarget_[i];
@@ -380,11 +391,11 @@ namespace uafc
                 }
             }
 
-            ret.setGood();
+            ret = uaf::statuscodes::Good;
         }
         else
         {
-            ret.setStatus(statuscodes::UnexpectedError,
+            ret = UnexpectedError(
                           "Number of result targets does not match number of request targets,"
                           "or number of automatic BrowseNext counters");
         }

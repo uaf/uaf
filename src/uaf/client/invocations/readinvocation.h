@@ -19,8 +19,8 @@
  */
 
 
-#ifndef UAFC_READINVOCATION_H_
-#define UAFC_READINVOCATION_H_
+#ifndef UAF_READINVOCATION_H_
+#define UAF_READINVOCATION_H_
 
 
 // STD
@@ -35,50 +35,50 @@
 #include "uaf/client/results/results.h"
 #include "uaf/client/invocations/baseserviceinvocation.h"
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
-    * An uafc::ReadInvocation wraps the functional SDK code to invoke the Read service.
+    * An uaf::ReadInvocation wraps the functional SDK code to invoke the Read service.
     *
     * @ingroup ClientInvocations
     ***********************************************************************************************/
-    class UAFC_EXPORT ReadInvocation
-    : public uafc::BaseServiceInvocation< uafc::ReadSettings,
-                                          uafc::ReadRequestTarget,
-                                          uafc::ReadResultTarget >
+    class UAF_EXPORT ReadInvocation
+    : public uaf::BaseServiceInvocation< uaf::ReadSettings,
+                                          uaf::ReadRequestTarget,
+                                          uaf::ReadResultTarget >
     {
     private:
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromSyncUafToSdk(
-                const std::vector<uafc::ReadRequestTarget>& targets,
-                const uafc::ReadSettings&                   settings,
+                const std::vector<uaf::ReadRequestTarget>& targets,
+                const uaf::ReadSettings&                   settings,
                 const uaf::NamespaceArray&                  nameSpaceArray,
                 const uaf::ServerArray&                     serverArray);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromAsyncUafToSdk(
-                const std::vector<uafc::ReadRequestTarget>& targets,
-                const uafc::ReadSettings&                   settings,
+                const std::vector<uaf::ReadRequestTarget>& targets,
+                const uaf::ReadSettings&                   settings,
                 const uaf::NamespaceArray&                  nameSpaceArray,
                 const uaf::ServerArray&                     serverArray);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status invokeSyncSdkService(UaClientSdk::UaSession* uaSession);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status invokeAsyncSdkService(
                 UaClientSdk::UaSession*     uaSession,
@@ -86,12 +86,12 @@ namespace uafc
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromSyncSdkToUaf(
                 const uaf::NamespaceArray&           nameSpaceArray,
                 const uaf::ServerArray&              serverArray,
-                std::vector<uafc::ReadResultTarget>& targets);
+                std::vector<uaf::ReadResultTarget>& targets);
 
 
         // private data members used during the invocation
@@ -110,4 +110,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_READINVOCATION_H_ */
+#endif /* UAF_READINVOCATION_H_ */

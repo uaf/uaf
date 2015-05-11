@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_BASESERVICEINVOCATION_H_
-#define UAFC_BASESERVICEINVOCATION_H_
+#ifndef UAF_BASESERVICEINVOCATION_H_
+#define UAF_BASESERVICEINVOCATION_H_
 
 
 // STD
@@ -41,7 +41,7 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
@@ -67,20 +67,20 @@ namespace uafc
     * @ingroup ClientInvocations
     ***********************************************************************************************/
     template<typename _ServiceSettings, typename _RequestTarget, typename _ResultTarget>
-    class UAFC_EXPORT BaseServiceInvocation
+    class UAF_EXPORT BaseServiceInvocation
     {
     public:
 
         // lot's of public typedefs that depend on the template arguments:
-        typedef uafc::BaseServiceConfig<_ServiceSettings>                               ServiceConfigType;
-        typedef uafc::BaseSessionRequest<ServiceConfigType, _RequestTarget, false>      SessionRequestType;
-        typedef uafc::BaseSessionResult<_ResultTarget, false>                           SessionResultType;
-        typedef uafc::BaseSessionRequest<ServiceConfigType, _RequestTarget, true>       AsyncSessionRequestType;
-        typedef uafc::BaseSessionResult<uafc::AsyncResultTarget, true>                  AsyncSessionResultType;
-        typedef uafc::BaseSubscriptionRequest<ServiceConfigType, _RequestTarget, false> SubscriptionRequestType;
-        typedef uafc::BaseSubscriptionResult<_ResultTarget, false>                      SubscriptionResultType;
-        typedef uafc::BaseSubscriptionRequest<ServiceConfigType, _RequestTarget, true>  AsyncSubscriptionRequestType;
-        typedef uafc::BaseSubscriptionResult<uafc::AsyncResultTarget, true>             AsyncSubscriptionResultType;
+        typedef uaf::BaseServiceConfig<_ServiceSettings>                               ServiceConfigType;
+        typedef uaf::BaseSessionRequest<ServiceConfigType, _RequestTarget, false>      SessionRequestType;
+        typedef uaf::BaseSessionResult<_ResultTarget, false>                           SessionResultType;
+        typedef uaf::BaseSessionRequest<ServiceConfigType, _RequestTarget, true>       AsyncSessionRequestType;
+        typedef uaf::BaseSessionResult<uaf::AsyncResultTarget, true>                  AsyncSessionResultType;
+        typedef uaf::BaseSubscriptionRequest<ServiceConfigType, _RequestTarget, false> SubscriptionRequestType;
+        typedef uaf::BaseSubscriptionResult<_ResultTarget, false>                      SubscriptionResultType;
+        typedef uaf::BaseSubscriptionRequest<ServiceConfigType, _RequestTarget, true>  AsyncSubscriptionRequestType;
+        typedef uaf::BaseSubscriptionResult<uaf::AsyncResultTarget, true>             AsyncSubscriptionResultType;
 
 
         /**
@@ -90,7 +90,7 @@ namespace uafc
         : asynchronous_(false),
           transactionId_(0),
           requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED),
-          invocationLevel_(uafc::SessionLevel)
+          invocationLevel_(uaf::SessionLevel)
         {}
 
 
@@ -115,10 +115,10 @@ namespace uafc
         const _ServiceSettings&             serviceSettings()       const { return serviceSettings_; }
 
         /** Get the session settings of the service invocation. */
-        const uafc::SessionSettings&        sessionSettings()       const { return sessionSettings_; }
+        const uaf::SessionSettings&        sessionSettings()       const { return sessionSettings_; }
 
         /** Get the session settings of the service invocation. */
-        const uafc::SubscriptionSettings&   subscriptionSettings()  const { return subscriptionSettings_; }
+        const uaf::SubscriptionSettings&   subscriptionSettings()  const { return subscriptionSettings_; }
 
         /** Get the request handle associated with the request. */
         const uaf::RequestHandle&           requestHandle()         const { return requestHandle_; }
@@ -139,7 +139,7 @@ namespace uafc
         bool                                asynchronous()          const { return asynchronous_; }
 
         /** Get the level at which the service should be invoked. */
-        uafc::InvocationLevel               invocationLevel()       const { return invocationLevel_; }
+        uaf::InvocationLevel               invocationLevel()       const { return invocationLevel_; }
 
 
         ///@} //////////////////////////////////////////////////////////////////////////////////////
@@ -166,7 +166,7 @@ namespace uafc
         void addTarget(
                 std::size_t                     rank,
                 const _RequestTarget&           requestTarget,
-                const uafc::AsyncResultTarget&  asyncResultTarget)
+                const uaf::AsyncResultTarget&  asyncResultTarget)
         {
             ranks_.push_back(rank);
             requestTargets_.push_back(requestTarget);
@@ -179,14 +179,14 @@ namespace uafc
 
 
         /** Provide the information about the session. */
-        void setSessionInformation(const uafc::SessionInformation& sessionInformation)
+        void setSessionInformation(const uaf::SessionInformation& sessionInformation)
         {
             sessionInformation_ = sessionInformation;
         }
 
 
         /** Provide the information about the subscription. */
-        void setSubscriptionInformation(const uafc::SubscriptionInformation& subscriptionInformation)
+        void setSubscriptionInformation(const uaf::SubscriptionInformation& subscriptionInformation)
         {
             subscriptionInformation_ = subscriptionInformation;
         }
@@ -292,8 +292,8 @@ namespace uafc
                 logger->debug("The request has been invoked successfully");
             else
             {
-                ret.addDiagnostic("Service invocation failed");
-                logger->error(ret);
+                logger->error("The service invocation failed");
+                logger->error(ret.toString());
             }
 
             return ret;
@@ -380,10 +380,10 @@ namespace uafc
             uaf::Status ret(uaf::statuscodes::Good);
 
             if (resultTargets_.size() != ranks_.size())
-                ret.setStatus(uaf::statuscodes::UnexpectedError,
-                              "Bug in BaseServiceInvocation: " \
-                              "number of result targets (%d) != number of ranks (%d)",
-                              resultTargets_.size(), ranks_.size());
+                ret = uaf::UnexpectedError(
+                        uaf::format("Bug in BaseServiceInvocation: " \
+                                    "number of result targets (%d) != number of ranks (%d)",
+                                    resultTargets_.size(), ranks_.size()));
 
 
             for (std::size_t i = 0; i < resultTargets_.size() && ret.isGood(); i++)
@@ -398,9 +398,10 @@ namespace uafc
                 }
                 else
                 {
-                    ret.setStatus(uaf::statuscodes::UnexpectedError,
-                                  "Bug in BaseServiceInvocation: rank (%d) > targets.size() (%d)",
-                                  rank, result.targets.size());
+                    ret = uaf::UnexpectedError(
+                            uaf::format("Bug in BaseServiceInvocation: " \
+                                        "rank (%d) > targets.size() (%d)",
+                                        rank, result.targets.size()));
                 }
             }
             return ret;
@@ -419,10 +420,11 @@ namespace uafc
             uaf::Status ret(uaf::statuscodes::Good);
 
             if (resultTargets_.size() != ranks_.size())
-                ret.setStatus(uaf::statuscodes::UnexpectedError,
+                ret = uaf::UnexpectedError(
+                        uaf::format(
                               "Bug in BaseServiceInvocation: " \
                               "number of result targets (%d) != number of ranks (%d)",
-                              resultTargets_.size(), ranks_.size());
+                              resultTargets_.size(), ranks_.size()));
 
 
             for (std::size_t i = 0; i < resultTargets_.size() && ret.isGood(); i++)
@@ -439,9 +441,10 @@ namespace uafc
                 }
                 else
                 {
-                    ret.setStatus(uaf::statuscodes::UnexpectedError,
+                    ret = uaf::UnexpectedError(
+                            uaf::format(
                                   "Bug in BaseServiceInvocation: rank (%d) > targets.size() (%d)",
-                                  rank, result.targets.size());
+                                  rank, result.targets.size()));
                 }
             }
             return ret;
@@ -461,13 +464,12 @@ namespace uafc
 
             if (ranks_.size() == resultTargets_.size())
             {
-                ret.setGood();
+                ret = uaf::statuscodes::Good;
             }
             else
             {
-                ret.setStatus(uaf::statuscodes::UnexpectedError,
-                              "Bug in BaseServiceInvocation: Ranks do not match the received " \
-                              "result targets");
+                ret = uaf::UnexpectedError("Bug in BaseServiceInvocation: Ranks do not match "
+                                           "the received result targets");
             }
 
             return ret;
@@ -487,13 +489,12 @@ namespace uafc
 
             if (ranks_.size() == resultTargets_.size())
             {
-                ret.setGood();
+                ret = uaf::statuscodes::Good;
             }
             else
             {
-                ret.setStatus(uaf::statuscodes::UnexpectedError,
-                              "Bug in BaseServiceInvocation: Ranks do not match the received " \
-                              "result targets");
+                ret = uaf::UnexpectedError("Bug in BaseServiceInvocation: Ranks do not "
+                                           "match the received result targets");
             }
 
             return ret;
@@ -518,7 +519,7 @@ namespace uafc
         template<typename _Request>
         void setSessionRequestSettings(const std::string serverUri, const _Request& request)
         {
-            std::map<std::string, uafc::SessionSettings>::const_iterator it;
+            std::map<std::string, uaf::SessionSettings>::const_iterator it;
             it = request.sessionConfig.specificSessionSettings.find(serverUri);
 
             if (it != request.sessionConfig.specificSessionSettings.end())
@@ -542,7 +543,7 @@ namespace uafc
         template<typename _Request>
         void setSubscriptionRequestSettings(const std::string serverUri, const _Request& request)
         {
-            std::map<std::string, uafc::SubscriptionSettings>::const_iterator it;
+            std::map<std::string, uaf::SubscriptionSettings>::const_iterator it;
             it = request.subscriptionConfig.specificSubscriptionSettings.find(serverUri);
 
             if (it != request.subscriptionConfig.specificSubscriptionSettings.end())
@@ -576,11 +577,9 @@ namespace uafc
                 const uaf::ServerArray&             serverArray)
         {
             if (asynchronous_)
-                return uaf::Status(uaf::statuscodes::UnexpectedError,
-                                   "Method is not supposed to be called!");
+                return uaf::Status(uaf::UnexpectedError("Method is not supposed to be called!"));
             else
-                return uaf::Status(uaf::statuscodes::UnsupportedError,
-                                   "Synchronous invocation is not implemented");
+                return uaf::Status(uaf::SyncInvocationNotSupportedError());
         }
 
 
@@ -605,11 +604,9 @@ namespace uafc
                 const uaf::ServerArray&     serverArray)
         {
             if (!asynchronous_)
-                return uaf::Status(uaf::statuscodes::UnexpectedError,
-                                   "Method is not supposed to be called!");
+                return uaf::Status(uaf::UnexpectedError("Method is not supposed to be called!"));
             else
-                return uaf::Status(uaf::statuscodes::UnsupportedError,
-                                   "Asynchronous invocation is not implemented");
+                return uaf::Status(uaf::AsyncInvocationNotSupportedError());
         }
 
 
@@ -627,11 +624,9 @@ namespace uafc
                 UaClientSdk::UaSession*     uaSession)
         {
             if (asynchronous_ || (invocationLevel_ != SessionLevel))
-                return uaf::Status(uaf::statuscodes::UnexpectedError,
-                                   "Method is not supposed to be called!");
+                return uaf::Status(uaf::UnexpectedError("Method is not supposed to be called!"));
             else
-                return uaf::Status(uaf::statuscodes::UnsupportedError,
-                                   "Synchronous invocation is not implemented");
+                return uaf::Status(uaf::SyncInvocationNotSupportedError());
         }
 
 
@@ -651,11 +646,9 @@ namespace uafc
                 uaf::TransactionId          transactionId)
         {
             if (!asynchronous_ || (invocationLevel_ != SessionLevel))
-                return uaf::Status(uaf::statuscodes::UnexpectedError,
-                                   "Method is not supposed to be called!");
+                return uaf::Status(uaf::UnexpectedError("Method is not supposed to be called!"));
             else
-                return uaf::Status(uaf::statuscodes::UnsupportedError,
-                                   "Asynchronous invocation is not implemented");
+                return uaf::Status(uaf::AsyncInvocationNotSupportedError());
         }
 
 
@@ -673,11 +666,9 @@ namespace uafc
                 UaClientSdk::UaSubscription*    uaSubscription)
         {
             if (asynchronous_ || (invocationLevel_ != SubscriptionLevel))
-                return uaf::Status(uaf::statuscodes::UnexpectedError,
-                                   "Method is not supposed to be called!");
+                return uaf::Status(uaf::UnexpectedError("Method is not supposed to be called!"));
             else
-                return uaf::Status(uaf::statuscodes::UnsupportedError,
-                                   "Synchronous invocation is not implemented");
+                return uaf::Status(uaf::SyncInvocationNotSupportedError());
         }
 
 
@@ -697,11 +688,9 @@ namespace uafc
                 uaf::TransactionId              transactionId)
         {
             if (!asynchronous_ || (invocationLevel_ != SubscriptionLevel))
-                return uaf::Status(uaf::statuscodes::UnexpectedError,
-                                   "Method is not supposed to be called!");
+                return uaf::Status(uaf::UnexpectedError("Method is not supposed to be called!"));
             else
-                return uaf::Status(uaf::statuscodes::UnsupportedError,
-                                   "Asynchronous invocation is not implemented");
+                return uaf::Status(uaf::AsyncInvocationNotSupportedError());
         }
 
 
@@ -724,11 +713,9 @@ namespace uafc
                 std::vector<_ResultTarget>&     targets)
         {
             if (asynchronous_)
-                return uaf::Status(uaf::statuscodes::UnexpectedError,
-                                   "Method is not supposed to be called!");
+                return uaf::Status(uaf::UnexpectedError("Method is not supposed to be called!"));
             else
-                return uaf::Status(uaf::statuscodes::UnsupportedError,
-                                   "Synchronous invocation is not implemented");
+                return uaf::Status(uaf::SyncInvocationNotSupportedError());
         }
 
 
@@ -743,19 +730,19 @@ namespace uafc
         // the service settings, particular for this service
         _ServiceSettings            serviceSettings_;
         // the session settings of the session that will invoke the service
-        uafc::SessionSettings       sessionSettings_;
+        uaf::SessionSettings       sessionSettings_;
         // the results of the service invocation
         std::vector<_ResultTarget>  resultTargets_;
         // the unique handle of the request (defined by the UAF, not by the OPC UA standard!)
         uaf::RequestHandle          requestHandle_;
         // some details about the session
-        uafc::SessionInformation    sessionInformation_;
+        uaf::SessionInformation    sessionInformation_;
         // some details about the subscription
-        uafc::SubscriptionInformation subscriptionInformation_;
+        uaf::SubscriptionInformation subscriptionInformation_;
         // the level at which the service should be invoked
-        uafc::InvocationLevel       invocationLevel_;
+        uaf::InvocationLevel       invocationLevel_;
         // the settings of the subscription that will be used for the service invocation
-        uafc::SubscriptionSettings  subscriptionSettings_;
+        uaf::SubscriptionSettings  subscriptionSettings_;
 
     };
 
@@ -770,4 +757,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_BASESERVICEINVOCATION_H_ */
+#endif /* UAF_BASESERVICEINVOCATION_H_ */

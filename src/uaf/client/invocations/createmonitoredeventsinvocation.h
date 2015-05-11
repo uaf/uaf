@@ -19,8 +19,8 @@
  */
 
 
-#ifndef UAFC_CREATEMONITOREDEVENTSINVOCATION_H_
-#define UAFC_CREATEMONITOREDEVENTSINVOCATION_H_
+#ifndef UAF_CREATEMONITOREDEVENTSINVOCATION_H_
+#define UAF_CREATEMONITOREDEVENTSINVOCATION_H_
 
 
 // STD
@@ -36,20 +36,20 @@
 #include "uaf/client/results/results.h"
 #include "uaf/client/invocations/baseserviceinvocation.h"
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::CreateMonitoredEventsInvocation wraps the functional SDK code to invoke the
+    * An uaf::CreateMonitoredEventsInvocation wraps the functional SDK code to invoke the
     * CreateMonitoredItem service for monitored events.
     *
     * @ingroup ClientInvocations
     ***********************************************************************************************/
-    class UAFC_EXPORT CreateMonitoredEventsInvocation
-    : public uafc::BaseServiceInvocation< uafc::CreateMonitoredEventsSettings,
-                                          uafc::CreateMonitoredEventsRequestTarget,
-                                          uafc::CreateMonitoredEventsResultTarget >
+    class UAF_EXPORT CreateMonitoredEventsInvocation
+    : public uaf::BaseServiceInvocation< uaf::CreateMonitoredEventsSettings,
+                                          uaf::CreateMonitoredEventsRequestTarget,
+                                          uaf::CreateMonitoredEventsResultTarget >
     {
     public:
 
@@ -73,34 +73,34 @@ namespace uafc
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromSyncUafToSdk(
-                const std::vector<uafc::CreateMonitoredEventsRequestTarget>&    targets,
-                const uafc::CreateMonitoredEventsSettings&                      settings,
+                const std::vector<uaf::CreateMonitoredEventsRequestTarget>&    targets,
+                const uaf::CreateMonitoredEventsSettings&                      settings,
                 const uaf::NamespaceArray&                                      nameSpaceArray,
                 const uaf::ServerArray&                                         serverArray);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromAsyncUafToSdk(
-                const std::vector<uafc::CreateMonitoredEventsRequestTarget>&    targets,
-                const uafc::CreateMonitoredEventsSettings&                      settings,
+                const std::vector<uaf::CreateMonitoredEventsRequestTarget>&    targets,
+                const uaf::CreateMonitoredEventsSettings&                      settings,
                 const uaf::NamespaceArray&                                      nameSpaceArray,
                 const uaf::ServerArray&                                         serverArray);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status invokeSyncSdkService(
                 UaClientSdk::UaSubscription* uaSubscription);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status invokeAsyncSdkService(
                 UaClientSdk::UaSubscription* uaSubscription,
@@ -108,12 +108,12 @@ namespace uafc
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromSyncSdkToUaf(
                 const uaf::NamespaceArray&                            nameSpaceArray,
                 const uaf::ServerArray&                               serverArray,
-                std::vector<uafc::CreateMonitoredEventsResultTarget>& targets);
+                std::vector<uaf::CreateMonitoredEventsResultTarget>& targets);
 
 
         // private data members used during the invocation
@@ -130,4 +130,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_CREATEMONITOREDEVENTSINVOCATION_H_ */
+#endif /* UAF_CREATEMONITOREDEVENTSINVOCATION_H_ */
