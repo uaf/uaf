@@ -71,7 +71,7 @@ namespace uaf
          * @param data      The data.
          * @param status    The status.
          */
-        DataValue(const uaf::Variant& data, const uaf::Status& status);
+        DataValue(const uaf::Variant& data, const uaf::OpcUaStatusCode& opcUaStatusCode);
 
 
         /** The data. */

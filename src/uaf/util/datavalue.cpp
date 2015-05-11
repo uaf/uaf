@@ -49,9 +49,9 @@ namespace uaf
 
     // Constructor
     // =============================================================================================
-    DataValue::DataValue(const Variant& data, const Status& status)
+    DataValue::DataValue(const Variant& data, const OpcUaStatusCode& opcUaStatusCode)
     : data(data),
-      opcUaStatusCode(OpcUa_Good),
+      opcUaStatusCode(opcUaStatusCode),
       sourcePicoseconds(0),
       serverPicoseconds(0)
     {}
