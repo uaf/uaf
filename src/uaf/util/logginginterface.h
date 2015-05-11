@@ -34,7 +34,7 @@ namespace uaf
 
 
     /*******************************************************************************************//**
-    * The uafc::LoggingInterface must be implemented to handle log messages.
+    * The uaf::LoggingInterface must be implemented to handle log messages.
     *
     * @ingroup Util
     ***********************************************************************************************/
