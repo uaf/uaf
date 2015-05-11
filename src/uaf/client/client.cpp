@@ -807,10 +807,10 @@ namespace uaf
     // Process a TranslateBrowsePathsToNodeIdsRequest
     // =============================================================================================
     Status Client::processRequest(
-            const uafc::TranslateBrowsePathsToNodeIdsRequest&  request,
-            uafc::TranslateBrowsePathsToNodeIdsResult&         result)
+            const uaf::TranslateBrowsePathsToNodeIdsRequest&  request,
+            uaf::TranslateBrowsePathsToNodeIdsResult&         result)
     {
-        return processRequest<uafc::TranslateBrowsePathsToNodeIdsService>(request, result);
+        return processRequest<uaf::TranslateBrowsePathsToNodeIdsService>(request, result);
     }
 
 

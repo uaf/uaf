@@ -636,8 +636,8 @@ namespace uaf
          * @return          The client-side status.
          */
         uaf::Status processRequest(
-                const uafc::TranslateBrowsePathsToNodeIdsRequest&  request,
-                uafc::TranslateBrowsePathsToNodeIdsResult&         result);
+                const uaf::TranslateBrowsePathsToNodeIdsRequest&  request,
+                uaf::TranslateBrowsePathsToNodeIdsResult&         result);
 
         
         /**
