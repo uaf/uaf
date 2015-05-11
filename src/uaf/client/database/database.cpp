@@ -21,10 +21,9 @@
 #include "uaf/client/database/database.h"
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
 
 
     // Constructor
@@ -41,7 +40,7 @@ namespace uafc
 
     // Create a unique clientConnectionId
     // =============================================================================================
-    uafc::ClientConnectionId Database::createUniqueClientConnectionId()
+    uaf::ClientConnectionId Database::createUniqueClientConnectionId()
     {
         UaMutexLocker locker(&clientConnectionIdMutex_);
         return clientConnectionId_++;
@@ -50,7 +49,7 @@ namespace uafc
 
     // Create a unique ClientSubscriptionHandle
     //==============================================================================================
-    uafc::ClientSubscriptionHandle Database::createUniqueClientSubscriptionHandle()
+    uaf::ClientSubscriptionHandle Database::createUniqueClientSubscriptionHandle()
     {
         UaMutexLocker locker(&clientSubscriptionHandleMutex_); //auto-unlocks when out of scope
         return clientSubscriptionHandle_++;

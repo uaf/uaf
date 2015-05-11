@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_REQUESTSTORE_H_
-#define UAFC_REQUESTSTORE_H_
+#ifndef UAF_REQUESTSTORE_H_
+#define UAF_REQUESTSTORE_H_
 
 
 
@@ -36,7 +36,7 @@
 #include "uaf/client/clientservices.h"
 
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
@@ -46,7 +46,7 @@ namespace uafc
     * @ingroup ClientDatabase
     ***********************************************************************************************/
     template <typename _Service>
-    class UAFC_EXPORT RequestStore
+    class UAF_EXPORT RequestStore
     {
     public:
 
@@ -258,12 +258,11 @@ namespace uafc
         if (iter != itemsMap_.end())
         {
             itemsMap_.erase(iter);
-            ret.setGood();
+            ret = uaf::statuscodes::Good;
         }
         else
         {
-            ret.setStatus(uaf::statuscodes::InvalidRequestError,
-                          "No item found for the given handle");
+            ret = NoItemFoundForTheGivenRequestHandleError(handle);
         }
 
         return ret;
@@ -298,20 +297,16 @@ namespace uafc
                     iter->second.badTargetsMask.set(targetRank);
 
                 // updated successfully:
-                ret.setGood();
+                ret = uaf::statuscodes::Good;
             }
             else
             {
-                ret.setStatus(
-                        uaf::statuscodes::InvalidRequestError,
-                        "The target rank (%d) is higher or equal to the number of targets (%d)",
-                        targetRank, iter->second.result.targets.size());
+                ret = uaf::TargetRankOutOfBoundsError(targetRank, iter->second.result.targets.size());
             }
         }
         else
         {
-            ret.setStatus(uaf::statuscodes::InvalidRequestError,
-                          "No item found for the given request handle");
+            ret = uaf::NoItemFoundForTheGivenRequestHandleError(requestHandle);
         }
 
         if (ret.isGood())
@@ -338,12 +333,11 @@ namespace uafc
         if (iter != itemsMap_.end())
         {
             item = iter->second;
-            ret.setGood();
+            ret = uaf::statuscodes::Good;
         }
         else
         {
-            ret.setStatus(uaf::statuscodes::InvalidRequestError,
-                          "No item found for the given handle");
+            ret = uaf::ItemNotFoundForTheGivenHandleError();
         }
 
         return ret;
@@ -353,7 +347,7 @@ namespace uafc
     // Get a pointer to a result
     // =============================================================================================
     template <typename _Service>
-    std::vector< typename uafc::RequestStore<_Service>::Item > RequestStore<_Service>::getBadItems()
+    std::vector< typename uaf::RequestStore<_Service>::Item > RequestStore<_Service>::getBadItems()
     {
         typename std::vector<Item> ret;
 
@@ -391,7 +385,7 @@ namespace uafc
         if (it != itemsMap_.end())
         {
             // the item was found, so update the return status
-            ret.setGood();
+            ret = uaf::statuscodes::Good;
 
             // loop over the targets
             for (std::size_t i = 0; i < result.targets.size(); i++)
@@ -411,8 +405,7 @@ namespace uafc
         }
         else
         {
-            ret.setStatus(uaf::statuscodes::UnexpectedError,
-                          "No item was found for the given handle");
+            ret = uaf::UnexpectedError("No item was found for the given handle");
         }
 
         return ret;
@@ -450,7 +443,7 @@ namespace uafc
         }
 
         // ToDo add checks, e.g. if a valid handle is found, and update the return status
-        ret.setGood();
+        ret = uaf::statuscodes::Good;
 
         return ret;
     }
@@ -464,7 +457,7 @@ namespace uafc
     *
     * @ingroup ClientDatabase
     ***********************************************************************************************/
-    typedef uafc::RequestStore<uafc::CreateMonitoredDataService> CreateMonitoredDataRequestStore;
+    typedef uaf::RequestStore<uaf::CreateMonitoredDataService> CreateMonitoredDataRequestStore;
 
 
 
@@ -474,11 +467,11 @@ namespace uafc
     *
     * @ingroup ClientDatabase
     ***********************************************************************************************/
-    typedef uafc::RequestStore<uafc::CreateMonitoredEventsService> CreateMonitoredEventsRequestStore;
+    typedef uaf::RequestStore<uaf::CreateMonitoredEventsService> CreateMonitoredEventsRequestStore;
 
 
 
 
 }
 
-#endif /* UAFC_REQUESTSTORE_H_ */
+#endif /* UAF_REQUESTSTORE_H_ */
