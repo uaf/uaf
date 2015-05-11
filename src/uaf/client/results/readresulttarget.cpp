@@ -21,10 +21,9 @@
 #include "uaf/client/results/readresulttarget.h"
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;
@@ -47,6 +46,10 @@ namespace uafc
         ss << fillToPos(ss, colon);
         ss << ": " << int(clientConnectionId) << "\n";
 
+        ss << indent << " - status";
+        ss << fillToPos(ss, colon);
+        ss << ": " << status.toString().c_str() << "\n";
+
         ss << DataValue::toString(indent, colon);
 
         return ss.str();
@@ -60,6 +63,7 @@ namespace uafc
             const ReadResultTarget& object2)
     {
         return    object1.clientConnectionId == object2.clientConnectionId
+               && object1.status             == object2.status
                && (DataValue)object1         == (DataValue)object2;
     }
 
@@ -82,6 +86,8 @@ namespace uafc
     {
         if (object1.clientConnectionId != object2.clientConnectionId)
             return object1.clientConnectionId < object2.clientConnectionId;
+        else if (object1.status != object2.status)
+            return object1.status < object2.status;
         else
             return (DataValue)object1 < (DataValue)object2;
     }

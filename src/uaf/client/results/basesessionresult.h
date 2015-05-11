@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_BASESESSIONRESULT_H_
-#define UAFC_BASESESSIONRESULT_H_
+#ifndef UAF_BASESESSIONRESULT_H_
+#define UAF_BASESESSIONRESULT_H_
 
 
 // STD
@@ -35,25 +35,25 @@
 #include "uaf/util/handles.h"
 #include "uaf/client/results/basesessionresulttarget.h"
 
-namespace uafc
+namespace uaf
 {
 
 
 
     /*******************************************************************************************//**
-    * A uafc::BaseSessionResult is the result of a uafc::BaseSessionRequest, i.e. the result of an
+    * A uaf::BaseSessionResult is the result of a uaf::BaseSessionRequest, i.e. the result of an
     * OPC UA service request that was handled at the Session level (and not at the Subscription
     * level).
     *
-    * This is the template class which is implemented by uafc::ReadResult, uafc::WriteResult,
-    * uafc::MethodCallResult, ...
+    * This is the template class which is implemented by uaf::ReadResult, uaf::WriteResult,
+    * uaf::MethodCallResult, ...
     *
     * A result can hold multiple targets, one for each target of the corresponding request.
     *
     * @ingroup ClientResults
     ***********************************************************************************************/
     template<class _Target, bool _Async>
-    class UAFC_EXPORT BaseSessionResult
+    class UAF_EXPORT BaseSessionResult
     {
     public:
 
@@ -194,7 +194,7 @@ namespace uafc
         if (overallStatus.isNotBad())
         {
             if (targets.size() == 0)
-                overallStatus.setStatus(uaf::statuscodes::InvalidRequestError, "No targets given");
+                overallStatus = uaf::NoTargetsGivenError();
             else
             {
                 std::vector<uaf::Status> statuses;
@@ -351,10 +351,9 @@ namespace uafc
 
         // check the input arguments
         if (noOfTargets == mask.size())
-            ret.setGood();
+            ret = uaf::statuscodes::Good;
         else
-            ret.setStatus(uaf::statuscodes::UnexpectedError,
-                          "Mask size does not match number of targets");
+            ret = uaf::UnexpectedError("Mask size does not match number of targets");
 
         // if everything is OK, loop through the statuses and update the 'set' targets
         if (ret.isGood())
@@ -388,14 +387,12 @@ namespace uafc
         // check the input parameters
         if (mask.setCount() != statuses.size())
         {
-            ret.setStatus(uaf::statuscodes::UnexpectedError,
-                          "Mask does not match statuses");
+            ret = uaf::UnexpectedError("Mask does not match statuses");
         }
         // check if the mask corresponds to the number of targets
         else if (mask.size() != noOfTargets)
         {
-            ret.setStatus(uaf::statuscodes::UnexpectedError,
-                          "Mask size does not match number of targets");
+            ret = uaf::UnexpectedError("Mask size does not match number of targets");
         }
         // if everything is OK, loop through the statuses and update the 'set' targets
         else
@@ -408,7 +405,7 @@ namespace uafc
                     j++;
                 }
             }
-            ret.setGood();
+            ret = uaf::statuscodes::Good;
         }
 
         return ret;
@@ -417,4 +414,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_SESSIONRESULT_H_ */
+#endif /* UAF_SESSIONRESULT_H_ */

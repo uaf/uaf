@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_BROWSERESULTTARGET_H_
-#define UAFC_BROWSERESULTTARGET_H_
+#ifndef UAF_BROWSERESULTTARGET_H_
+#define UAF_BROWSERESULTTARGET_H_
 
 
 
@@ -35,19 +35,19 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::BrowseResultTarget is the "result target" of the corresponding
+    * An uaf::BrowseResultTarget is the "result target" of the corresponding
     * "request target" that specified the node etc. to be browsed.
     *
     * It tells you the browse status, the references that were found during the browse, etc.
     *
     * @ingroup ClientResults
     ***********************************************************************************************/
-    class UAFC_EXPORT BrowseResultTarget : public uafc::BaseSessionResultTarget
+    class UAF_EXPORT BrowseResultTarget : public uaf::BaseSessionResultTarget
     {
     public:
 
@@ -60,6 +60,8 @@ namespace uafc
         /** The status of the browse target. */
         uaf::Status status;
 
+        /** The OPC UA status code reported by the server. */
+        uaf::OpcUaStatusCode opcUaStatusCode;
 
         /** How many times did the UAF automatically invoke the "BrowseNext" OPC UA service in
          *  order to get the results? */
@@ -85,13 +87,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const BrowseResultTarget& object1,
                 const BrowseResultTarget& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const BrowseResultTarget& object1,
                 const BrowseResultTarget& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const BrowseResultTarget& object1,
                 const BrowseResultTarget& object2);
 
@@ -100,4 +102,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_BROWSERESULTTARGET_H_ */
+#endif /* UAF_BROWSERESULTTARGET_H_ */

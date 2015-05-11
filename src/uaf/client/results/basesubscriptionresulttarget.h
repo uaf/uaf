@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_BASESUBSCRIPTIONRESULTTARGET_H_
-#define UAFC_BASESUBSCRIPTIONRESULTTARGET_H_
+#ifndef UAF_BASESUBSCRIPTIONRESULTTARGET_H_
+#define UAF_BASESUBSCRIPTIONRESULTTARGET_H_
 
 
 // STD
@@ -30,15 +30,15 @@
 #include "uaf/client/results/basesessionresulttarget.h"
 
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
-    * A uafc::BaseSubscriptionResultTarget is the superclass of the result targets that are handled
+    * A uaf::BaseSubscriptionResultTarget is the superclass of the result targets that are handled
     * at the Subscription level.
     *
-    * This is the superclass of an uafc::CreateMonitoredDataResultTarget,
-    * uafc::CrateMonitoredEventsResultTarget, ... since these targets are all handled at the
+    * This is the superclass of an uaf::CreateMonitoredDataResultTarget,
+    * uaf::CrateMonitoredEventsResultTarget, ... since these targets are all handled at the
     * Subscription level and not at the Session level.
     *
     * Result targets are part of a Result, and correspond one-to-one to the Request targets of a
@@ -46,7 +46,7 @@ namespace uafc
     *
     * @ingroup ClientResults
     ***********************************************************************************************/
-    class UAFC_EXPORT BaseSubscriptionResultTarget : public uafc::BaseSessionResultTarget
+    class UAF_EXPORT BaseSubscriptionResultTarget : public uaf::BaseSessionResultTarget
     {
     public:
 
@@ -69,4 +69,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_BASESUBSCRIPTIONRESULTTARGET_H_ */
+#endif /* UAF_BASESUBSCRIPTIONRESULTTARGET_H_ */

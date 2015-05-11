@@ -21,10 +21,9 @@
 #include "uaf/client/results/createmonitoreddataresulttarget.h"
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;
@@ -52,9 +51,13 @@ namespace uafc
         ss << fillToPos(ss, colon);
         ss << ": " << status.toString() << "\n";
 
+        ss << indent << " - opcUaStatusCode";
+        ss << fillToPos(ss, colon);
+        ss << ": " << double(opcUaStatusCode) << "\n";
+
         ss << indent << " - monitoredItemId";
         ss << fillToPos(ss, colon);
-        ss << ": "<< int(monitoredItemId) << "\n";
+        ss << ": "<< double(monitoredItemId) << "\n";
 
         ss << indent << " - revisedSamplingIntervalSec";
         ss << fillToPos(ss, colon);
@@ -77,6 +80,7 @@ namespace uafc
                && object1.clientSubscriptionHandle == object2.clientSubscriptionHandle
                && object1.clientHandle == object2.clientHandle
                && object1.status == object2.status
+               && object1.opcUaStatusCode == object2.opcUaStatusCode
                && object1.monitoredItemId == object2.monitoredItemId
                && object1.revisedSamplingIntervalSec == object2.revisedSamplingIntervalSec
                && object1.revisedQueueSize == object2.revisedQueueSize;
@@ -107,6 +111,8 @@ namespace uafc
             return object1.clientHandle < object2.clientHandle;
         else if (object1.status != object2.status)
             return object1.status < object2.status;
+        else if (object1.opcUaStatusCode != object2.opcUaStatusCode)
+            return object1.opcUaStatusCode < object2.opcUaStatusCode;
         else if (object1.monitoredItemId != object2.monitoredItemId)
             return object1.monitoredItemId < object2.monitoredItemId;
         else if (object1.revisedSamplingIntervalSec != object2.revisedSamplingIntervalSec)

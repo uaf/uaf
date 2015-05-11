@@ -21,10 +21,9 @@
 #include "uaf/client/results/translatebrowsepathstonodeidsresulttarget.h"
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;
@@ -48,6 +47,10 @@ namespace uafc
         ss << " - status";
         ss << fillToPos(ss, colon);
         ss << ": " << status.toString() << "\n";
+
+        ss << indent << " - opcUaStatusCode";
+        ss << fillToPos(ss, colon);
+        ss << ": " << double(opcUaStatusCode) << "\n";
 
         ss << indent << " - expandedNodeIds[]";
         if (expandedNodeIds.size() == 0)
@@ -97,6 +100,7 @@ namespace uafc
     {
         return    object1.clientConnectionId   == object2.clientConnectionId
                && object1.status               == object2.status
+               && object1.opcUaStatusCode      == object2.opcUaStatusCode
                && object1.expandedNodeIds      == object2.expandedNodeIds
                && object1.remainingPathIndexes == object2.remainingPathIndexes;
     }
@@ -122,6 +126,8 @@ namespace uafc
             return object1.clientConnectionId < object2.clientConnectionId;
         else if (object1.status != object2.status)
             return object1.status < object2.status;
+        else if (object1.opcUaStatusCode != object2.opcUaStatusCode)
+            return object1.opcUaStatusCode < object2.opcUaStatusCode;
         else if (object1.expandedNodeIds != object2.expandedNodeIds)
             return object1.expandedNodeIds < object2.expandedNodeIds;
         else

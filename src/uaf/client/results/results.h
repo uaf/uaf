@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_RESULTS_H_
-#define UAFC_RESULTS_H_
+#ifndef UAF_RESULTS_H_
+#define UAF_RESULTS_H_
 
 // STD
 // SDK
@@ -44,25 +44,25 @@
 
 #define DEFINE_SYNC_SESSIONRESULT(NAME) \
 /** This is a synchronous service result handled at the session level.  @ingroup ClientResults */ \
-typedef UAFC_EXPORT uafc::BaseSessionResult<uafc::NAME##ResultTarget, false> NAME##Result;
+typedef UAF_EXPORT uaf::BaseSessionResult<uaf::NAME##ResultTarget, false> NAME##Result;
 
 
 #define DEFINE_ASYNC_SESSIONRESULT(NAME) \
 /** This is an asynchronous service result handled at the session level.  @ingroup ClientResults */ \
-typedef UAFC_EXPORT uafc::BaseSessionResult<uafc::AsyncResultTarget, true> Async##NAME##Result;
+typedef UAF_EXPORT uaf::BaseSessionResult<uaf::AsyncResultTarget, true> Async##NAME##Result;
 
 
 #define DEFINE_SYNC_SUBSCRIPTIONRESULT(NAME) \
 /** This is a synchronous service result handled at the subscription level.  @ingroup ClientResults */ \
-typedef UAFC_EXPORT uafc::BaseSubscriptionResult<uafc::NAME##ResultTarget, false> NAME##Result;
+typedef UAF_EXPORT uaf::BaseSubscriptionResult<uaf::NAME##ResultTarget, false> NAME##Result;
 
 
 #define DEFINE_ASYNC_SUBSCRIPTIONRESULT(NAME) \
 /** This is an asynchronous service result handled at the subscription level.  @ingroup ClientResults */ \
-typedef UAFC_EXPORT uafc::BaseSubscriptionResult<uafc::AsyncResultTarget, true> Async##NAME##Result;
+typedef UAF_EXPORT uaf::BaseSubscriptionResult<uaf::AsyncResultTarget, true> Async##NAME##Result;
 
 
-namespace uafc
+namespace uaf
 {
     // synchronous session results
     DEFINE_SYNC_SESSIONRESULT(Read)
@@ -70,7 +70,7 @@ namespace uafc
     DEFINE_SYNC_SESSIONRESULT(MethodCall)
     DEFINE_SYNC_SESSIONRESULT(TranslateBrowsePathsToNodeIds)
     DEFINE_SYNC_SESSIONRESULT(Browse)
-    typedef UAFC_EXPORT uafc::BrowseResult BrowseNextResult;
+    typedef UAF_EXPORT uaf::BrowseResult BrowseNextResult;
     DEFINE_SYNC_SESSIONRESULT(HistoryReadRawModified)
 
     // synchronous subscription results
@@ -89,4 +89,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_RESULTS_H_ */
+#endif /* UAF_RESULTS_H_ */

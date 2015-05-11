@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_CREATEMONITOREDEVENTSRESULTTARGET_H_
-#define UAFC_CREATEMONITOREDEVENTSRESULTTARGET_H_
+#ifndef UAF_CREATEMONITOREDEVENTSRESULTTARGET_H_
+#define UAF_CREATEMONITOREDEVENTSRESULTTARGET_H_
 
 
 
@@ -33,12 +33,12 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::CreateMonitoredEventsResultTarget is the "result target" of the corresponding
+    * An uaf::CreateMonitoredEventsResultTarget is the "result target" of the corresponding
     * "request target" that specified the item to be monitored.
     *
     * It tells you whether or not the item is now being monitored, the value of the client handle
@@ -46,7 +46,7 @@ namespace uafc
     *
     * @ingroup ClientResults
     ***********************************************************************************************/
-    class UAFC_EXPORT CreateMonitoredEventsResultTarget : public uafc::BaseSubscriptionResultTarget
+    class UAF_EXPORT CreateMonitoredEventsResultTarget : public uaf::BaseSubscriptionResultTarget
     {
     public:
 
@@ -55,7 +55,8 @@ namespace uafc
          * Create a default result target.
          */
         CreateMonitoredEventsResultTarget()
-        : clientHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
+        : opcUaStatusCode(OpcUa_Uncertain),
+          clientHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
           monitoredItemId(0),
           revisedSamplingIntervalSec(0.0),
           revisedQueueSize(0)
@@ -63,6 +64,8 @@ namespace uafc
 
         /** Status of the result (Good if the monitored item was created, Bad if not). */
         uaf::Status status;
+        /** The status code, as reported by the server. */
+        uaf::OpcUaStatusCode opcUaStatusCode;
         /** ClientHandle that was assigned to the monitored item. */
         uaf::ClientHandle clientHandle;
         /** MonitoredItemId that was assigned to the monitored item by the server. */
@@ -82,13 +85,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const CreateMonitoredEventsResultTarget& object1,
                 const CreateMonitoredEventsResultTarget& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const CreateMonitoredEventsResultTarget& object1,
                 const CreateMonitoredEventsResultTarget& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const CreateMonitoredEventsResultTarget& object1,
                 const CreateMonitoredEventsResultTarget& object2);
 
@@ -99,4 +102,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_CREATEMONITOREDEVENTSRESULTTARGET_H_ */
+#endif /* UAF_CREATEMONITOREDEVENTSRESULTTARGET_H_ */
