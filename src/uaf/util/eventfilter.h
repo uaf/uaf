@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_EVENTFILTER_H_
-#define UAFC_EVENTFILTER_H_
+#ifndef UAF_EVENTFILTER_H_
+#define UAF_EVENTFILTER_H_
 
 
 
@@ -38,7 +38,7 @@ namespace uaf
 {
 
     /*******************************************************************************************//**
-    * An uafc::EventFilter defines select clauses and a where clause.
+    * An uaf::EventFilter defines select clauses and a where clause.
     *
     * @ingroup Util
     ***********************************************************************************************/
@@ -54,7 +54,7 @@ namespace uaf
 
         std::vector<uaf::SimpleAttributeOperand> selectClauses;
 
-        //uafc::WhereClause whereClause;
+        //uaf::WhereClause whereClause;
 
 
         /**
@@ -72,4 +72,4 @@ namespace uaf
     };
 
 }
-#endif /* UAFC_EVENTFILTER_H_ */
+#endif /* UAF_EVENTFILTER_H_ */
