@@ -214,37 +214,35 @@ namespace uaf
             if (identifier_.type == nodeididentifiertypes::Identifier_String)
             {
                 destination.setNodeId(identifier_.idString.c_str(), nameSpaceIndex_);
-                ret.setGood();
+                ret = statuscodes::Good;
             }
             else if (identifier_.type == nodeididentifiertypes::Identifier_Numeric)
             {
                 destination.setNodeId(identifier_.idNumeric, nameSpaceIndex_);
-                ret.setGood();
+                ret = statuscodes::Good;
             }
             else if (identifier_.type == nodeididentifiertypes::Identifier_Guid)
             {
                 UaGuid uaGuid;
                 identifier_.idGuid.toSdk(uaGuid);
                 destination.setNodeId(uaGuid, nameSpaceIndex_);
-                ret.setGood();
+                ret = statuscodes::Good;
             }
             else if (identifier_.type == nodeididentifiertypes::Identifier_Opaque)
             {
                 UaByteString uaOpaque;
                 identifier_.idOpaque.toSdk(uaOpaque);
                 destination.setNodeId(uaOpaque, nameSpaceIndex_);
-                ret.setGood();
+                ret = statuscodes::Good;
             }
             else
             {
-                ret.setStatus(uaf::statuscodes::UnexpectedError, "Unknown NodeId identifier!");
+                ret = UnsupportedNodeIdIdentifierTypeError();
             }
         }
         else
         {
-            // update the status
-            ret.setStatus(statuscodes::UnexpectedError,
-                          "Cannot prepare an OpcUa_NodeId since no namespace index is known");
+            ret = UnknownNamespaceIndexError();
         }
 
         return ret;
