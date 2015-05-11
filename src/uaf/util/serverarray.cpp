@@ -53,18 +53,19 @@ namespace uaf
             // if the conversion succeeded, fill the map
             if (OpcUa_IsGood(uaConversionStatusCode))
             {
+                ret = uaf::statuscodes::Good;
                 for (uint32_t i=0; i<stringArray.length(); i++)
                     update(i, string(UaString(&stringArray[i]).toUtf8()));
             }
-
-            // update the status
-            ret.fromSdk(uaConversionStatusCode,
-                                   "Could not convert the received data value");
+            else
+            {
+                ret = uaf::ServerArrayConversionError();
+            }
         }
         // if the status of the value was not good, just update the return status
         else
         {
-            ret.fromSdk(value.StatusCode, "Could not process the received data value");
+            ret = uaf::BadServerArrayError();
         }
 
         return ret;
@@ -136,13 +137,11 @@ namespace uaf
         if (findServerUri(opcUaExpandedNodeId.ServerIndex, serverUri))
         {
             expandedNodeId.setServerUri(serverUri);
-            ret.setGood();
+            ret = uaf::statuscodes::Good;
         }
         else
         {
-            ret.setStatus(statuscodes::ResolutionError,
-                          "Unknown server index %d",
-                          opcUaExpandedNodeId.ServerIndex);
+            ret = UnknownServerIndexError(opcUaExpandedNodeId.ServerIndex);
         }
 
         return ret;
@@ -173,7 +172,7 @@ namespace uaf
             vector<TYPE> vec;                                                                       \
             variant.to##TYPE##Array(vec);                                                           \
                                                                                                     \
-            if (vec.size() == 0) ret.setGood();                                                     \
+            if (vec.size() == 0) ret = uaf::statuscodes::Good;                                      \
                                                                                                     \
             for (std::size_t i = 0; i < vec.size() && ret.isNotBad(); i++)                          \
             {                                                                                       \
@@ -211,7 +210,7 @@ namespace uaf
 
         else
         {
-            ret.setGood();
+            ret = uaf::statuscodes::Good;
         }
 
         return ret;
