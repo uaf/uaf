@@ -4,6 +4,9 @@
 .pydevproject
 .settings/
 
+# ignore directories and files created by running examples
+examples/pyuaf/client/securityexample/
+
 # Ignore python bytecode
 *.py[cod]
 
