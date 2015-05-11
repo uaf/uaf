@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_MONITOREDITEMNOTIFICATION_H_
-#define UAFC_MONITOREDITEMNOTIFICATION_H_
+#ifndef UAF_MONITOREDITEMNOTIFICATION_H_
+#define UAF_MONITOREDITEMNOTIFICATION_H_
 
 
 // STD
@@ -37,17 +37,17 @@
 #include "uaf/client/clientexport.h"
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::MonitoredItemNotification is the common superclass class of
-    * uafc::DataChangeNotification and uafc::EventNotification.
+    * A uaf::MonitoredItemNotification is the common superclass class of
+    * uaf::DataChangeNotification and uaf::EventNotification.
     *
     * @ingroup ClientSubscriptions
     ***********************************************************************************************/
-    class UAFC_EXPORT MonitoredItemNotification
+    class UAF_EXPORT MonitoredItemNotification
     {
     public:
 
@@ -69,13 +69,13 @@ namespace uafc
 
 
         // comparison operators
-        friend UAFC_EXPORT bool operator==(
+        friend UAF_EXPORT bool operator==(
                 const MonitoredItemNotification& object1,
                 const MonitoredItemNotification& object2);
-        friend UAFC_EXPORT bool operator!=(
+        friend UAF_EXPORT bool operator!=(
                 const MonitoredItemNotification& object1,
                 const MonitoredItemNotification& object2);
-        friend UAFC_EXPORT bool operator<(
+        friend UAF_EXPORT bool operator<(
                 const MonitoredItemNotification& object1,
                 const MonitoredItemNotification& object2);
     };
@@ -86,4 +86,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_MONITOREDITEMNOTIFICATION_H_ */
+#endif /* UAF_MONITOREDITEMNOTIFICATION_H_ */
