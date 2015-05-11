@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_DISCOVERER_H_
-#define UAFC_DISCOVERER_H_
+#ifndef UAF_DISCOVERER_H_
+#define UAF_DISCOVERER_H_
 
 
 // STD
@@ -36,20 +36,19 @@
 #include "uaf/util/applicationdescription.h"
 #include "uaf/util/endpointdescription.h"
 #include "uaf/client/clientexport.h"
-#include "uaf/client/clientstatus.h"
 #include "uaf/client/database/database.h"
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::Discoverer can discover OPC UA servers in the system.
+    * An uaf::Discoverer can discover OPC UA servers in the system.
     *
     * @ingroup ClientDiscovery
     ***********************************************************************************************/
-    class UAFC_EXPORT Discoverer
+    class UAF_EXPORT Discoverer
     {
     public:
 
@@ -58,7 +57,7 @@ namespace uafc
          * Construct a Discoverer instance by providing a pointer to a logger factory and a client
          * database.
          */
-        Discoverer(uaf::LoggerFactory *loggerFactory, uafc::Database* database);
+        Discoverer(uaf::LoggerFactory *loggerFactory, uaf::Database* database);
 
 
         /**
@@ -71,7 +70,7 @@ namespace uafc
          * Update the server descriptions by calling the OPC UA FindServers service
          * on all configured discovery servers.
          */
-        uafc::ClientStatus findServers();
+        uaf::Status findServers();
 
 
         /**
@@ -83,7 +82,7 @@ namespace uafc
          * @return              Good if the server with the given serverUri was discovered, bad
          *                      if not.
          */
-        uafc::ClientStatus getDiscoveryUrls(
+        uaf::Status getDiscoveryUrls(
                 const std::string&          serverUri,
                 std::vector<std::string>&   discoveryUrls);
 
@@ -96,7 +95,7 @@ namespace uafc
          * @param endpointDescriptions  Endpoint descriptions that will be fetched.
          * @return                      Status of the service call.
          */
-        uafc::ClientStatus getEndpoints(
+        uaf::Status getEndpoints(
                 const std::string&                      discoveryUrl,
                 std::vector<uaf::EndpointDescription>&  endpointDescriptions);
 
@@ -118,7 +117,7 @@ namespace uafc
         // the logger of the discoverer
         uaf::Logger* logger_;
         // a pointer to the shared database
-        uafc::Database* database_;
+        uaf::Database* database_;
         // are we busy with findServers()?
         bool findServersBusy_;
         // mutex to change the internal state
@@ -136,4 +135,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_DISCOVERER_H_ */
+#endif /* UAF_DISCOVERER_H_ */

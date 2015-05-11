@@ -21,10 +21,9 @@
 #include "uaf/client/discovery/discoverer.h"
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::map;
@@ -55,9 +54,9 @@ namespace uafc
 
     // Update the application descriptions
     // =============================================================================================
-    ClientStatus Discoverer::findServers()
+    Status Discoverer::findServers()
     {
-        ClientStatus ret;
+        Status ret;
 
         logger_->debug("Finding all configured servers");
 
@@ -153,7 +152,7 @@ namespace uafc
                 }
                 else
                 {
-                    ret = ClientStatus::Good;
+                    ret = statuscodes::Good;
                     logger_->debug("The FindServers service was successfully invoked on all URLs");
                 }
 
@@ -168,7 +167,7 @@ namespace uafc
                 serverDescriptions_.clear();
 
                 // all done
-                ret = ClientStatus::Good;
+                ret = statuscodes::Good;
             }
 
             // reset the findServersBusy_ flag
@@ -183,23 +182,26 @@ namespace uafc
 
     // Get the discovery URL for a given server URI
     // =============================================================================================
-    ClientStatus Discoverer::getDiscoveryUrls(const string& serverUri, vector<string>& discoveryUrls)
+    Status Discoverer::getDiscoveryUrls(const string& serverUri, vector<string>& discoveryUrls)
     {
-        ClientStatus ret;
+        Status ret;
+
+        std::vector<std::string> knownServerUris;
 
         std::vector<uaf::ApplicationDescription>::const_iterator it;
         for (it = serverDescriptions_.begin(); it != serverDescriptions_.end(); ++it)
         {
+            knownServerUris.push_back(it->applicationUri);
             if (it->applicationUri == serverUri)
             {
                 discoveryUrls = it->discoveryUrls;
-                ret = ClientStatus::Good;
+                ret = statuscodes::Good;
             }
         }
 
         if (ret.isNotGood())
         {
-            ret = UnknownServerError(serverUri);
+            ret = UnknownServerError(serverUri, knownServerUris);
         }
         else if (discoveryUrls.size() == 0)
         {
@@ -220,20 +222,20 @@ namespace uafc
 
     // Update the endpoint descriptions
     // =============================================================================================
-    ClientStatus Discoverer::getEndpoints(
+    Status Discoverer::getEndpoints(
             const string&                   discoveryUrl,
             vector<EndpointDescription>&    endpointDescriptions)
     {
         logger_->debug("Getting the endpoints for '%s'", discoveryUrl.c_str());
 
         // create the Status to return
-        ClientStatus ret;
+        Status ret;
 
         // check if we got a non-empty URL (shouldn't be happening, may be a bug)
         if (discoveryUrl.empty())
         {
             ret = EmptyUrlError();
-            logger_->error(ret.toString().c_str());
+            logger_->error(ret.toString());
         }
         else
         {
@@ -255,9 +257,11 @@ namespace uafc
                     clientSecurityInfo,
                     uaEndpointDescriptions);
 
-            logger_->log(sdkStatus);
+            logger_->log("Result: ", sdkStatus);
 
-            if (sdkStatus.isNotGood())
+            if (sdkStatus.isGood())
+                ret = statuscodes::Good;
+            else
                 ret = GetEndpointsError(sdkStatus);
 
             if (ret.isGood())
