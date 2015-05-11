@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_CLIENTINFORMATION_H_
-#define UAFC_CLIENTINFORMATION_H_
+#ifndef UAF_CLIENTINFORMATION_H_
+#define UAF_CLIENTINFORMATION_H_
 
 // STD
 #include <string>
@@ -34,7 +34,7 @@
 #include "uaf/client/clientexport.h"
 #include "uaf/client/sessions/sessionstates.h"
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
@@ -43,7 +43,7 @@ namespace uafc
     *
     * @ingroup ClientSessions
     ***********************************************************************************************/
-    class UAFC_EXPORT ClientInformation
+    class UAF_EXPORT ClientInformation
     {
     public:
 
@@ -64,13 +64,13 @@ namespace uafc
 
 
         // comparison operators
-        friend UAFC_EXPORT bool operator==(
+        friend UAF_EXPORT bool operator==(
                 const SessionInformation& object1,
                 const SessionInformation& object2);
-        friend UAFC_EXPORT bool operator!=(
+        friend UAF_EXPORT bool operator!=(
                 const SessionInformation& object1,
                 const SessionInformation& object2);
-        friend UAFC_EXPORT bool operator<(
+        friend UAF_EXPORT bool operator<(
                 const SessionInformation& object1,
                 const SessionInformation& object2);
     };
@@ -79,4 +79,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_CLIENTINFORMATION_H_ */
+#endif /* UAF_CLIENTINFORMATION_H_ */
