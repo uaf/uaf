@@ -1,0 +1,650 @@
+.. autoclass:: pyuaf.util.errors.AsyncConnectionFailedError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.AsyncConnectionFailedError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+   .. autoattribute:: pyuaf.util.errors.AsyncConnectionFailedError.serverUri
+
+    - type: ``str``
+
+.. autoclass:: pyuaf.util.errors.AsyncInvocationNotSupportedError
+
+.. autoclass:: pyuaf.util.errors.AsyncInvocationOnMultipleSessionsNotSupportedError
+
+.. autoclass:: pyuaf.util.errors.AsyncMethodCallInvocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.AsyncMethodCallInvocationError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.AsyncMultiMethodCallNotSupportedError
+
+.. autoclass:: pyuaf.util.errors.AsyncWriteInvocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.AsyncWriteInvocationError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.BadDataReceivedError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.BadDataReceivedError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.BadNamespaceArrayError
+
+.. autoclass:: pyuaf.util.errors.BadServerArrayError
+
+.. autoclass:: pyuaf.util.errors.BadStatusesPresentError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.BadStatusesPresentError.noOfBad
+
+    - type: ``int``
+
+   .. autoattribute:: pyuaf.util.errors.BadStatusesPresentError.noOfGood
+
+    - type: ``int``
+
+   .. autoattribute:: pyuaf.util.errors.BadStatusesPresentError.noOfUncertain
+
+    - type: ``int``
+
+.. autoclass:: pyuaf.util.errors.BeginCreateMonitoredItemsInvocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.BeginCreateMonitoredItemsInvocationError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.BeginReadInvocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.BeginReadInvocationError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.BrowseInvocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.BrowseInvocationError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.BrowseNextInvocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.BrowseNextInvocationError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.CallCompleteError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.CallCompleteError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.ClientCertificateLoadingError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.ClientCertificateLoadingError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.ConfigurationError
+
+.. autoclass:: pyuaf.util.errors.ConnectionError
+
+.. autoclass:: pyuaf.util.errors.ConnectionFailedError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.ConnectionFailedError.endpointUrl
+
+    - type: ``str``
+
+   .. autoattribute:: pyuaf.util.errors.ConnectionFailedError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.ContinuationPointsDontMatchAddressesError
+
+.. autoclass:: pyuaf.util.errors.CouldNotCreateCertificateRevocationListLocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.CouldNotCreateCertificateRevocationListLocationError.certificateRevocationListLocation
+
+    - type: ``str``
+
+.. autoclass:: pyuaf.util.errors.CouldNotCreateCertificateTrustListLocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.CouldNotCreateCertificateTrustListLocationError.certificateTrustListLocation
+
+    - type: ``str``
+
+.. autoclass:: pyuaf.util.errors.CouldNotCreateClientCertificateLocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.CouldNotCreateClientCertificateLocationError.clientCertificate
+
+    - type: ``str``
+
+.. autoclass:: pyuaf.util.errors.CouldNotCreateClientPrivateKeyLocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.CouldNotCreateClientPrivateKeyLocationError.clientPrivateKey
+
+    - type: ``str``
+
+.. autoclass:: pyuaf.util.errors.CouldNotCreateIssuersCertificateLocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.CouldNotCreateIssuersCertificateLocationError.issuersCertificatesLocation
+
+    - type: ``str``
+
+.. autoclass:: pyuaf.util.errors.CouldNotCreateIssuersRevocationListLocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.CouldNotCreateIssuersRevocationListLocationError.issuersRevocationListLocation
+
+    - type: ``str``
+
+.. autoclass:: pyuaf.util.errors.CouldNotManuallySubscribeError
+
+.. autoclass:: pyuaf.util.errors.CouldNotManuallyUnsubscribeError
+
+.. autoclass:: pyuaf.util.errors.CouldNotReadArraysError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.CouldNotReadArraysError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.CreateMonitoredItemsError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.CreateMonitoredItemsError.assignedClientHandles
+
+    - type: :class:`~pyuaf.util.UInt32Vector`
+
+.. autoclass:: pyuaf.util.errors.CreateMonitoredItemsInvocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.CreateMonitoredItemsInvocationError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.CreateSubscriptionError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.CreateSubscriptionError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.DataDontMatchAddressesError
+
+.. autoclass:: pyuaf.util.errors.DeleteSubscriptionError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.DeleteSubscriptionError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.DisconnectionFailedError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.DisconnectionFailedError.endpointUrl
+
+    - type: ``str``
+
+   .. autoattribute:: pyuaf.util.errors.DisconnectionFailedError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.DiscoveryError
+
+.. autoclass:: pyuaf.util.errors.EmptyAddressError
+
+.. autoclass:: pyuaf.util.errors.EmptyServerUriAndUnknownNamespaceIndexError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.EmptyServerUriAndUnknownNamespaceIndexError.unknownNamespaceIndex
+
+    - type: ``long``
+
+.. autoclass:: pyuaf.util.errors.EmptyServerUriError
+
+.. autoclass:: pyuaf.util.errors.EmptyUrlError
+
+.. autoclass:: pyuaf.util.errors.EmptyUserCertificateError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.EmptyUserCertificateError.certificate
+
+    - type: ``str``
+
+.. autoclass:: pyuaf.util.errors.ExpandedNodeIdAddressExpectedError
+
+.. autoclass:: pyuaf.util.errors.FindServersError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.FindServersError.sdkStatuses
+
+    - type: ``SwigPyObject``
+
+.. autoclass:: pyuaf.util.errors.GeneralError
+
+.. autoclass:: pyuaf.util.errors.GetEndpointsError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.GetEndpointsError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.HistoryReadInvocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.HistoryReadInvocationError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.HistoryReadRawModifiedInvocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.HistoryReadRawModifiedInvocationError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.InputArgumentError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.InputArgumentError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.InvalidAddressError
+
+.. autoclass:: pyuaf.util.errors.InvalidPrivateKeyError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.InvalidPrivateKeyError.privateKey
+
+    - type: ``str``
+
+.. autoclass:: pyuaf.util.errors.InvalidRequestError
+
+.. autoclass:: pyuaf.util.errors.InvalidServerUriError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.InvalidServerUriError.invalidServerUri
+
+    - type: ``str``
+
+.. autoclass:: pyuaf.util.errors.ItemNotFoundForTheGivenHandleError
+
+.. autoclass:: pyuaf.util.errors.MethodCallInvocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.MethodCallInvocationError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.MultipleTranslationResultsError
+
+.. autoclass:: pyuaf.util.errors.NamespaceArrayConversionError
+
+.. autoclass:: pyuaf.util.errors.NoConnectedSessionToUpdateArraysError
+
+.. autoclass:: pyuaf.util.errors.NoDiscoveryUrlsExposedByServerError
+
+.. autoclass:: pyuaf.util.errors.NoDiscoveryUrlsFoundError
+
+.. autoclass:: pyuaf.util.errors.NoEndpointsProvidedByServerError
+
+.. autoclass:: pyuaf.util.errors.NoItemFoundForTheGivenRequestHandleError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.NoItemFoundForTheGivenRequestHandleError.requestHandle
+
+    - type: ``long``
+
+.. autoclass:: pyuaf.util.errors.NoNamespaceIndexOrUriGivenError
+
+.. autoclass:: pyuaf.util.errors.NoParallelFindServersAllowedError
+
+.. autoclass:: pyuaf.util.errors.NoSecuritySettingsGivenError
+
+.. autoclass:: pyuaf.util.errors.NoStatusesGivenError
+
+.. autoclass:: pyuaf.util.errors.NoTargetsGivenError
+
+.. autoclass:: pyuaf.util.errors.NotAllTargetsCouldBeResolvedError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.NotAllTargetsCouldBeResolvedError.unresolvedTargetNumbers
+
+    - type: :class:`~pyuaf.util.UInt32Vector`
+
+.. autoclass:: pyuaf.util.errors.OpenSSLStoreInitializationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.OpenSSLStoreInitializationError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.PathCreationError
+
+.. autoclass:: pyuaf.util.errors.PathNotExistsError
+
+.. autoclass:: pyuaf.util.errors.ReadCompleteError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.ReadCompleteError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.ReadInvocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.ReadInvocationError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.ResolutionError
+
+.. autoclass:: pyuaf.util.errors.SecurityError
+
+.. autoclass:: pyuaf.util.errors.SecuritySettingsMatchError
+
+.. autoclass:: pyuaf.util.errors.ServerArrayConversionError
+
+.. autoclass:: pyuaf.util.errors.ServerCertificateRejectedByUserError
+
+.. autoclass:: pyuaf.util.errors.ServerCertificateSavingError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.ServerCertificateSavingError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.ServerCouldNotBrowseError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.ServerCouldNotBrowseError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.ServerCouldNotBrowseNextError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.ServerCouldNotBrowseNextError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.ServerCouldNotCallMethodError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.ServerCouldNotCallMethodError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.ServerCouldNotCreateMonitoredItemsError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.ServerCouldNotCreateMonitoredItemsError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.ServerCouldNotHistoryReadError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.ServerCouldNotHistoryReadError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.ServerCouldNotReadError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.ServerCouldNotReadError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.ServerCouldNotSetMonitoringModeError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.ServerCouldNotSetMonitoringModeError.clientHandle
+
+    - type: ``int``
+
+   .. autoattribute:: pyuaf.util.errors.ServerCouldNotSetMonitoringModeError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.ServerCouldNotTranslateBrowsePathsToNodeIdsError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.ServerCouldNotTranslateBrowsePathsToNodeIdsError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.ServerCouldNotWriteError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.ServerCouldNotWriteError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.ServerDidNotProvideCertificateError
+
+.. autoclass:: pyuaf.util.errors.ServiceError
+
+.. autoclass:: pyuaf.util.errors.SessionNotConnectedError
+
+.. autoclass:: pyuaf.util.errors.SessionSecuritySettingsDontMatchEndpointError
+
+.. autoclass:: pyuaf.util.errors.SetMonitoringModeInvocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.SetMonitoringModeInvocationError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.SetPublishingModeInvocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.SetPublishingModeInvocationError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.SubscriptionError
+
+.. autoclass:: pyuaf.util.errors.SubscriptionHasBeenDeletedError
+
+.. autoclass:: pyuaf.util.errors.SubscriptionNotCreatedError
+
+.. autoclass:: pyuaf.util.errors.SyncInvocationNotSupportedError
+
+.. autoclass:: pyuaf.util.errors.TargetRankOutOfBoundsError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.TargetRankOutOfBoundsError.noOfTargets
+
+    - type: ``int``
+
+   .. autoattribute:: pyuaf.util.errors.TargetRankOutOfBoundsError.targetRank
+
+    - type: ``int``
+
+.. autoclass:: pyuaf.util.errors.TranslateBrowsePathsToNodeIdsInvocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.TranslateBrowsePathsToNodeIdsInvocationError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.UafError
+
+.. autoclass:: pyuaf.util.errors.UnexpectedError
+
+.. autoclass:: pyuaf.util.errors.UnknownClientConnectionIdError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.UnknownClientConnectionIdError.unknownClientConnectionId
+
+    - type: ``int``
+
+.. autoclass:: pyuaf.util.errors.UnknownClientHandleError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.UnknownClientHandleError.unknownClientHandle
+
+    - type: ``int``
+
+.. autoclass:: pyuaf.util.errors.UnknownClientSubscriptionHandleError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.UnknownClientSubscriptionHandleError.unknownClientSubscriptionHandle
+
+    - type: ``int``
+
+.. autoclass:: pyuaf.util.errors.UnknownNamespaceIndexAndServerIndexError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.UnknownNamespaceIndexAndServerIndexError.unknownNamespaceIndex
+
+    - type: ``long``
+
+   .. autoattribute:: pyuaf.util.errors.UnknownNamespaceIndexAndServerIndexError.unknownServerIndex
+
+    - type: ``int``
+
+.. autoclass:: pyuaf.util.errors.UnknownNamespaceIndexError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.UnknownNamespaceIndexError.unknownNamespaceIndex
+
+    - type: ``long``
+
+.. autoclass:: pyuaf.util.errors.UnknownNamespaceUriError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.UnknownNamespaceUriError.nameSpaceMap
+
+    - type: ``SwigPyObject``
+
+   .. autoattribute:: pyuaf.util.errors.UnknownNamespaceUriError.nameSpaceMapString
+
+    - type: ``str``
+
+   .. autoattribute:: pyuaf.util.errors.UnknownNamespaceUriError.unknownNamespaceUri
+
+    - type: ``str``
+
+.. autoclass:: pyuaf.util.errors.UnknownServerError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.UnknownServerError.knownServerUris
+
+    - type: :class:`~pyuaf.util.StringVector`
+
+   .. autoattribute:: pyuaf.util.errors.UnknownServerError.unknownServerUri
+
+    - type: ``str``
+
+.. autoclass:: pyuaf.util.errors.UnknownServerIndexError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.UnknownServerIndexError.unknownServerIndex
+
+    - type: ``int``
+
+.. autoclass:: pyuaf.util.errors.UnsupportedError
+
+.. autoclass:: pyuaf.util.errors.UnsupportedNodeIdIdentifierTypeError
+
+.. autoclass:: pyuaf.util.errors.WriteCompleteError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.WriteCompleteError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.WriteInvocationError
+
+- attributes:
+
+   .. autoattribute:: pyuaf.util.errors.WriteInvocationError.sdkStatus
+
+    - type: :class:`~pyuaf.util.SdkStatus`
+
+.. autoclass:: pyuaf.util.errors.WrongTypeError
+
