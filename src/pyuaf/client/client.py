@@ -1230,7 +1230,7 @@ class Client(ClientBase):
         :type  clientHandle: ``int``
         :return: Information about the specified monitored item.
         :rtype:  :class:`~pyuaf.client.MonitoredItemInformation`
-        :raise pyuaf.util.errors.UnknownHandleError:
+        :raise pyuaf.util.errors.UnknownClientHandleError:
              Raised in case no monitored item is known for the given client handle.
         :raise pyuaf.util.errors.UafError:
              Base exception, catch this to handle any other errors.
@@ -2104,10 +2104,11 @@ class Client(ClientBase):
             
              - via the returned  :class:`~pyuaf.client.results.CreateMonitoredDataResult`, in case
                createMonitoredData() was successful and didn't raise an exception
-             - via the exception that was raised in case createMonitoredData() was not successful. 
-               This exception has a "status" attribute (of type :class:`~pyuaf.util.Status`),
-               and this will provide you a diagnostics object (see :meth:`pyuaf.util.Status.additionalDiagnostics`),
-               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getClientHandles`).
+             - via the :class:`~pyuaf.util.errors.CreateMonitoredItemsError` exception that was 
+               raised in case processRequest() was not successful. 
+               This exception has a 
+               :attr:`~pyuaf.util.errors.CreateMonitoredItemsError.assignedClientHandles`
+               attribute, providing the assigned client handles.
         
         .. warning::
             
@@ -2231,10 +2232,11 @@ class Client(ClientBase):
             
              - via the returned  :class:`~pyuaf.client.results.CreateMonitoredEventsResult`, in case
                createMonitoredEvents() was successful and didn't raise an exception
-             - via the exception that was raised in case createMonitoredEvents() was not successful. 
-               This exception has a "status" attribute (of type :class:`~pyuaf.util.Status`),
-               and this will provide you a diagnostics object (see :meth:`pyuaf.util.Status.additionalDiagnostics`),
-               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getClientHandles`).
+             - via the :class:`~pyuaf.util.errors.CreateMonitoredItemsError` exception that was 
+               raised in case processRequest() was not successful. 
+               This exception has a 
+               :attr:`~pyuaf.util.errors.CreateMonitoredItemsError.assignedClientHandles`
+               attribute, providing the assigned client handles.
         
         .. warning::
             
@@ -2358,7 +2360,7 @@ class Client(ClientBase):
         .. doctest::
         
             >>> import pyuaf
-            >>> from pyuaf.util.errors import UafError
+            >>> from pyuaf.util.errors import UafError, CreateMonitoredItemsError
             >>> from pyuaf.util import Address, NodeId
             >>> from pyuaf.client import Client
             >>> 
@@ -2375,12 +2377,13 @@ class Client(ClientBase):
             ...     result = myClient.createMonitoredData([address], 
             ...                                           notificationCallbacks = [myCallback])
             ...     clientHandle = result.targets[0].clientHandle
-            ... except UafError, e:
+            ... except CreateMonitoredItemsError, e:
             ...     # The monitored items could not be created, because there was some failure
             ...     #  (maybe the server is off-line?).
             ...     # Nevertheless, the client handles were already assigned, and we can get them like this: 
-            ...     diagnostics = e.status.additionalDiagnostics()
-            ...     clientHandle = diagnostics.getClientHandles()[0]
+            ...     clientHandle = e.assignedClientHandles[0]
+            ... except UafError, e:
+            ...     print("Oops, an unexpected error!")
             >>> 
             >>> 
             >>> info = myClient.monitoredItemInformation(clientHandle)
@@ -2401,7 +2404,7 @@ class Client(ClientBase):
         :param serviceSettings:             The service settings to be used (leave None for 
                                             default settings).
         :type  serviceSettings:             :class:`pyuaf.client.settings.ServiceSettings`
-        :raise pyuaf.util.errors.UnknownHandleError:
+        :raise pyuaf.util.errors.UnknownClientHandleError:
              The clientSubscriptionHandle is unknown!
         :raise pyuaf.util.errors.UafError:
              Base exception, catch this to handle any UAF errors.
@@ -2436,7 +2439,7 @@ class Client(ClientBase):
         .. doctest::
         
             >>> import pyuaf
-            >>> from pyuaf.util.errors import UafError
+            >>> from pyuaf.util.errors import UafError, CreateMonitoredItemsError
             >>> from pyuaf.util import Address, NodeId
             >>> from pyuaf.client import Client
             >>> from pyuaf.util import monitoringmodes 
@@ -2460,12 +2463,13 @@ class Client(ClientBase):
             ...                 notificationCallbacks = [updateTemperatureWidget, updatePressureWidget])
             ...     # store the clientHandles:
             ...     clientHandles = [ target.clientHandle for target in result.targets ]
-            ... except UafError, e:
+            ... except CreateMonitoredItemsError, e:
             ...     # The monitored items could not be created, because there was some failure
             ...     #  (maybe the server is off-line?).
             ...     # Nevertheless, the client handles were already assigned, and we can get them like this: 
-            ...     diagnostics = e.status.additionalDiagnostics()
-            ...     clientHandles = diagnostics.getClientHandles()[0]
+            ...     clientHandle = e.assignedClientHandles[0]
+            ... except UafError, e:
+            ...     print("Oops, an unexpected error!")
             >>> 
             >>> def uiTabChangedState(visible):
             ...     if visible:
@@ -2538,10 +2542,11 @@ class Client(ClientBase):
              - via the returned :class:`~pyuaf.client.results.CreateMonitoredDataResult` (or
                :class:`~pyuaf.client.results.CreateMonitoredEventsResult`), in case
                processRequest() was successful and didn't raise an exception
-             - via the exception that was raised in case processRequest() was not successful. 
-               This exception has a "status" attribute (of type :class:`~pyuaf.util.Status`),
-               and this will provide you a diagnostics object (see :meth:`pyuaf.util.Status.additionalDiagnostics`),
-               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getClientHandles`).
+             - via the :class:`~pyuaf.util.errors.CreateMonitoredItemsError` exception that was 
+               raised in case processRequest() was not successful. 
+               This exception has a 
+               :attr:`~pyuaf.util.errors.CreateMonitoredItemsError.assignedClientHandles`
+               attribute, providing the assigned client handles.
         
         .. warning::
             Asynchronous requests MUST be invoked on a single session. Meaning:

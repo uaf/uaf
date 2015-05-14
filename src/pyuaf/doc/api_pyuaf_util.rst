@@ -2930,7 +2930,7 @@
             .. doctest::
             
                 >>> import pyuaf
-                >>> from pyuaf.util import Status
+                >>> from pyuaf.util import Status, statuscodes
                 >>> from pyuaf.util.errors import InvalidServerUriError
             
                 >>> status0 = Status() # Uncertain by default!

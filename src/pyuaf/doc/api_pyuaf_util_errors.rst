@@ -27,14 +27,14 @@
     
         >>> import pyuaf
         >>> from pyuaf.util import NodeId, Address
-        >>> from pyuaf.util.errors import 
-        >>> from pyuaf.client import Client, ClientSettings
+        >>> from pyuaf.client import Client
+        >>> from pyuaf.client.settings import ClientSettings
         >>> from pyuaf.util.errors import UnknownServerError, UafError
         >>>
         >>> # dummy logger function: 
         >>> def log(msg): pass
         >>>
-        >>> c = Client(ClientSettings('my client', ['opc.tcp://localhost:4841'])
+        >>> c = Client(ClientSettings('my client', ['opc.tcp://localhost:4841']))
         >>> 
         >>> # let's try to read a node on the server with server URI 'urn:my:server:uri'
         >>> try:
@@ -44,7 +44,7 @@
         ...    log("These are the servers that *are* known to the client:")
         ...    for knownServerUri in e.knownServerUris:
         ...        log(" - %s" %knownServerUri)
-        ... except UafServer, e:
+        ... except UafError, e:
         ...    log("Oops, an OPC UA error occurred that we didn't anticipate:")
         ...    log(str(e))
         ... except Exception, e:
@@ -53,6 +53,12 @@
 
 
 
+Inheritance tree of all UAF errors
+----------------------------------------------------------------------------------------------------
+
+
+.. literalinclude:: generated_error_inheritance_tree.txt
+    
 
 *class* UafError
 ----------------------------------------------------------------------------------------------------
@@ -70,12 +76,12 @@
         
             The message of the error.
     
-
-
-Inheritance tree of all UAF errors
+    
+*Subclasses of UafError*
 ----------------------------------------------------------------------------------------------------
 
 
-.. literalinclude:: generated_error_inheritance_tree.txt
+.. include:: generated_error_list.txt
+
 
     

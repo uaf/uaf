@@ -620,7 +620,7 @@
             .. doctest::
             
                 >>> import pyuaf
-                >>> from pyuaf.util.errors import UafError
+                >>> from pyuaf.util.errors import UafError, CreateMonitoredItemsError
                 >>> from pyuaf.util import Address, NodeId
                 >>> from pyuaf.client import Client
                 >>> 
@@ -642,13 +642,13 @@
                 ...                                           notificationCallbacks = [myCallback0, myCallback1])
                 ...     clientHandle0 = result.targets[0].clientHandle 
                 ...     clientHandle1 = result.targets[1].clientHandle 
-                ... except UafError, e:
+                ... except CreateMonitoredItemsError, e:
                 ...     # The monitored items could not be created, because there was some failure
                 ...     #  (maybe the server is off-line?).
                 ...     # Nevertheless, the client handles were already assigned, and we can get them like this: 
-                ...     diagnostics = e.status.additionalDiagnostics()
-                ...     if diagnostics.hasClientHandles():
-                ...         clientHandle0, clientHandle1 = diagnostics.getClientHandles()
+                ...     clientHandles = e.assignedClientHandles
+                ... except UafError, e:
+                ...     print("Oops, an unexpected error!")
         
         .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.monitoredItemId
     
@@ -953,7 +953,7 @@
                 >>> # if the result didn't return any data values, you may want to check if there is
                 >>> # simply no historical data that matches your request:
                 >>> if len(someReceivedResult.targets[0].dataValues) == 0:
-                ...    noDataFound = (someReceivedResult.targets[0].status.opcUaStatusCode() == OpcUa_GoodNoData)
+                ...    noDataFound = someReceivedResult.targets[0].opcUaStatusCode == OpcUa_GoodNoData
     
         .. autoattribute:: pyuaf.client.results.HistoryReadRawModifiedResultTarget.clientConnectionId
 
