@@ -39,6 +39,7 @@
 #include "uaf/util/errors/subscriptionerrors.h"
 #include "uaf/util/errors/serviceerrors.h"
 #include "uaf/util/errors/configurationerrors.h"
+#include "uaf/util/errors/backwardscompatibilityerrors.h"
 
 
 #define UAF_STATUS_CONSTRUCTOR(ERROR)           \
@@ -84,9 +85,6 @@ namespace uaf
         Status& operator=(const Status& other);
 
 
-        //UAF_STATUS_CONSTRUCTOR(DiscoveryError)
-        //UAF_STATUS_CONSTRUCTOR(InvalidRequestError)
-        //UAF_STATUS_CONSTRUCTOR(ResolutionError)
         UAF_STATUS_CONSTRUCTOR(FindServersError)
         UAF_STATUS_CONSTRUCTOR(UnknownServerError)
         UAF_STATUS_CONSTRUCTOR(EmptyUrlError)
@@ -97,7 +95,6 @@ namespace uaf
         UAF_STATUS_CONSTRUCTOR(OpenSSLStoreInitializationError)
         UAF_STATUS_CONSTRUCTOR(ClientCertificateLoadingError)
         UAF_STATUS_CONSTRUCTOR(ServerDidNotProvideCertificateError)
-        //UAF_STATUS_CONSTRUCTOR(ConnectionError)
         UAF_STATUS_CONSTRUCTOR(PathNotExistsError)
         UAF_STATUS_CONSTRUCTOR(NoSecuritySettingsGivenError)
         UAF_STATUS_CONSTRUCTOR(PathCreationError)
@@ -155,7 +152,6 @@ namespace uaf
         UAF_STATUS_CONSTRUCTOR(BadDataReceivedError)
 
         // service errors
-        //UAF_STATUS_CONSTRUCTOR(ServiceError)
         UAF_STATUS_CONSTRUCTOR(CouldNotReadArraysError)
         UAF_STATUS_CONSTRUCTOR(CreateMonitoredItemsError)
         UAF_STATUS_CONSTRUCTOR(CreateMonitoredItemsInvocationError)

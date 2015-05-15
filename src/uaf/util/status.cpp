@@ -174,9 +174,6 @@ namespace uaf
 
     void Status::copyErrors(const Status& from)
     {
-        //UAF_STATUS_COPY_ERROR(DiscoveryError)
-        //UAF_STATUS_COPY_ERROR(InvalidRequestError)
-        //UAF_STATUS_COPY_ERROR(ResolutionError)
         UAF_STATUS_COPY_ERROR(FindServersError)
         UAF_STATUS_COPY_ERROR(UnknownServerError)
         UAF_STATUS_COPY_ERROR(EmptyUrlError)
@@ -187,7 +184,6 @@ namespace uaf
         UAF_STATUS_COPY_ERROR(OpenSSLStoreInitializationError)
         UAF_STATUS_COPY_ERROR(ClientCertificateLoadingError)
         UAF_STATUS_COPY_ERROR(ServerDidNotProvideCertificateError)
-        //UAF_STATUS_COPY_ERROR(ConnectionError)
         UAF_STATUS_COPY_ERROR(PathNotExistsError)
         UAF_STATUS_COPY_ERROR(NoSecuritySettingsGivenError)
         UAF_STATUS_COPY_ERROR(PathCreationError)
@@ -248,7 +244,6 @@ namespace uaf
 
 
         // service errors
-        //UAF_STATUS_COPY_ERROR(ServiceError)
         UAF_STATUS_COPY_ERROR(CouldNotReadArraysError)
         UAF_STATUS_COPY_ERROR(CreateMonitoredItemsError)
         UAF_STATUS_COPY_ERROR(CreateMonitoredItemsInvocationError)
@@ -299,9 +294,6 @@ namespace uaf
     // =============================================================================================
     string Status::toString() const
     {
-        //UAF_STATUS_TOSTRING_IF(DiscoveryError)
-        //UAF_STATUS_TOSTRING_ELSE_IF(InvalidRequestError)
-        //UAF_STATUS_TOSTRING_ELSE_IF(ResolutionError)
         UAF_STATUS_TOSTRING_IF(FindServersError)
         UAF_STATUS_TOSTRING_ELSE_IF(UnknownServerError)
         UAF_STATUS_TOSTRING_ELSE_IF(EmptyUrlError)
@@ -312,7 +304,6 @@ namespace uaf
         UAF_STATUS_TOSTRING_ELSE_IF(OpenSSLStoreInitializationError)
         UAF_STATUS_TOSTRING_ELSE_IF(ClientCertificateLoadingError)
         UAF_STATUS_TOSTRING_ELSE_IF(ServerDidNotProvideCertificateError)
-        //UAF_STATUS_TOSTRING_ELSE_IF(ConnectionError)
         UAF_STATUS_TOSTRING_ELSE_IF(PathNotExistsError)
         UAF_STATUS_TOSTRING_ELSE_IF(NoSecuritySettingsGivenError)
         UAF_STATUS_TOSTRING_ELSE_IF(PathCreationError)
