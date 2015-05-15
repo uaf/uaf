@@ -1,0 +1,198 @@
+UafError..............................................................
+   InvalidRequestError................................................InvalidRequestError
+      DataDontMatchAddressesError.....................................The data don't match the addresses
+      ContinuationPointsDontMatchAddressesError.......................The continuation points don't match the addresses
+      NoTargetsGivenError.............................................No targets are given
+      NoStatusesGivenError............................................No statuses are given
+      InvalidServerUriError...........................................The server URI is invalid
+          +invalidServerUri                                           Attribute of type: str
+      BadStatusesPresentError.........................................Bad statuses are present
+          +noOfBad                                                    Attribute of type: int
+          +noOfGood                                                   Attribute of type: int
+          +noOfUncertain                                              Attribute of type: int
+      ItemNotFoundForTheGivenHandleError..............................No item was found for the given handle
+      TargetRankOutOfBoundsError......................................The target rank is out of bounds
+          +noOfTargets                                                Attribute of type: int
+          +targetRank                                                 Attribute of type: int
+      NoItemFoundForTheGivenRequestHandleError........................No item was found for the given request handle
+          +requestHandle                                              Attribute of type: long
+      EmptyAddressError...............................................The address is empty (no valid NodeId or BrowsePath)
+      UnknownClientSubscriptionHandleError............................Unknown client subscription handle
+          +unknownClientSubscriptionHandle                            Attribute of type: int
+      UnknownClientHandleError........................................Unknown client handle
+          +unknownClientHandle                                        Attribute of type: int
+      UnknownClientConnectionIdError..................................Unknown client connection id
+          +unknownClientConnectionId                                  Attribute of type: int
+      ConnectionError.................................................Connection error
+         ConnectionFailedError........................................Connection failed
+             +endpointUrl                                             Attribute of type: str
+             +sdkStatus                                               Attribute of type: SdkStatus
+         AsyncConnectionFailedError...................................Connection failed
+             +sdkStatus                                               Attribute of type: SdkStatus
+             +serverUri                                               Attribute of type: str
+         DisconnectionFailedError.....................................Disconnection failed
+             +endpointUrl                                             Attribute of type: str
+             +sdkStatus                                               Attribute of type: SdkStatus
+         NoConnectedSessionToUpdateArraysError........................There's no connected session to update the arrays
+         SessionNotConnectedError.....................................The session is not connected
+      DiscoveryError..................................................Discovery error
+         NoEndpointsProvidedByServerError.............................The server did not provide any endpoints
+         NoDiscoveryUrlsExposedByServerError..........................No discovery Urls are exposed by the server
+         NoDiscoveryUrlsFoundError....................................No discovery Urls were found
+         GetEndpointsError............................................The GetEndpoints service failed
+             +sdkStatus                                               Attribute of type: SdkStatus
+         UnknownServerError...........................................The requested server has not been discovered
+             +knownServerUris                                         Attribute of type: StringVector
+             +unknownServerUri                                        Attribute of type: str
+         FindServersError.............................................The FindServers service failed
+             +sdkStatuses                                             Attribute of type: SwigPyObject
+         NoParallelFindServersAllowedError............................The FindServers service is already being invoked (no parallel invocations allowed)
+      SecurityError...................................................Security error
+         SecuritySettingsMatchError...................................No session security settings matched an endpoint
+         NoSecuritySettingsGivenError.................................No session security settings were given
+         ServerDidNotProvideCertificateError..........................The server did not provide a certificate
+         ClientCertificateLoadingError................................Could not load the client certificate
+             +sdkStatus                                               Attribute of type: SdkStatus
+         OpenSSLStoreInitializationError..............................Could not initialize the OpenSSL PKI Provider
+             +sdkStatus                                               Attribute of type: SdkStatus
+         ServerCertificateSavingError.................................Could not save the server certificate
+             +sdkStatus                                               Attribute of type: SdkStatus
+         ServerCertificateRejectedByUserError.........................The server certificate was rejected by the user
+         EmptyUserCertificateError....................................The user certificate is empty
+             +certificate                                             Attribute of type: str
+         InvalidPrivateKeyError.......................................The private key is invalid
+             +privateKey                                              Attribute of type: str
+         SessionSecuritySettingsDontMatchEndpointError................The session security settings dont match the endpoint
+   ConfigurationError.................................................configuration error
+      CouldNotCreateCertificateTrustListLocationError.................The certificate trust list location could not be created
+          +certificateTrustListLocation                               Attribute of type: str
+      CouldNotCreateCertificateRevocationListLocationError............The certificate trust list location could not be created
+          +certificateRevocationListLocation                          Attribute of type: str
+      CouldNotCreateIssuersCertificateLocationError...................The issuers certificate location could not be created
+          +issuersCertificatesLocation                                Attribute of type: str
+      CouldNotCreateIssuersRevocationListLocationError................The issuers revocation list location could not be created
+          +issuersRevocationListLocation                              Attribute of type: str
+      CouldNotCreateClientPrivateKeyLocationError.....................The client private key location could not be created
+          +clientPrivateKey                                           Attribute of type: str
+      CouldNotCreateClientCertificateLocationError....................The client certificate location could not be created
+          +clientCertificate                                          Attribute of type: str
+   GeneralError.......................................................General error
+      WrongTypeError..................................................Wrong type
+      UnexpectedError.................................................Unexpected error
+      EmptyUrlError...................................................An empty URL was given
+      PathNotExistsError..............................................Patn does not exist
+      PathCreationError...............................................Patn could not be created
+   ResolutionError....................................................Resolution error
+      NotAllTargetsCouldBeResolvedError...............................Could not convert all targets
+          +unresolvedTargetNumbers                                    Attribute of type: UInt32Vector
+      ServerArrayConversionError......................................Could not convert the value received from the server to a server array
+      NamespaceArrayConversionError...................................Could not convert the value received from the server to a namespace array
+      BadNamespaceArrayError..........................................The namespace array received by the server has a Bad value
+      BadServerArrayError.............................................The server array received by the server has a Bad value
+      UnknownNamespaceUriError........................................The namespace uri is not known
+          +nameSpaceMap                                               Attribute of type: SwigPyObject
+          +nameSpaceMapString                                         Attribute of type: str
+          +unknownNamespaceUri                                        Attribute of type: str
+      EmptyServerUriError.............................................The server uri is empty
+      ExpandedNodeIdAddressExpectedError..............................The given address should contain an ExpandedNodeId
+      EmptyServerUriAndUnknownNamespaceIndexError.....................The server uri is empty and namespace index is unknown
+          +unknownNamespaceIndex                                      Attribute of type: long
+      NoNamespaceIndexOrUriGivenError.................................No namespace index or URI were given
+      UnknownServerIndexError.........................................The server index is not known
+          +unknownServerIndex                                         Attribute of type: int
+      UnknownNamespaceIndexError......................................The namespace index is not known
+          +unknownNamespaceIndex                                      Attribute of type: long
+      UnknownNamespaceIndexAndServerIndexError........................The namespace index is not known
+          +unknownNamespaceIndex                                      Attribute of type: long
+          +unknownServerIndex                                         Attribute of type: int
+      InvalidAddressError.............................................Invalid address
+      MultipleTranslationResultsError.................................Multiple nodes were found when translating the given browsepath
+   ServiceError.......................................................Service error
+      CouldNotReadArraysError.........................................Could not read the namespace and server arrays
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      CreateMonitoredItemsError.......................................The monitored items could not be created
+          +assignedClientHandles                                      Attribute of type: UInt32Vector
+      CreateMonitoredItemsInvocationError.............................Could not invoke the CreateMontitoredItem service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      BeginCreateMonitoredItemsInvocationError........................Could not invoke the BeginCreateMontitoredItem service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      ServerCouldNotCreateMonitoredItemsError.........................The server could not create the requested monitored items
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      BrowseNextInvocationError.......................................Could not invoke the BrowseNext service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      ServerCouldNotBrowseNextError...................................The server could not successfully process the BrowseNext service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      BrowseInvocationError...........................................Could not invoke the Browse service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      ServerCouldNotBrowseError.......................................The server could not successfully process the Browse service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      ReadInvocationError.............................................Could not invoke the Read service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      BeginReadInvocationError........................................Could not invoke the async Read service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      ServerCouldNotReadError.........................................The server could not successfully process the Read service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      TranslateBrowsePathsToNodeIdsInvocationError....................Could not invoke the TranslateBrowsePathsToNodeIds service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      ServerCouldNotTranslateBrowsePathsToNodeIdsError................The server could not successfully process the TranslateBrowsePathsToNodeIds service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      HistoryReadInvocationError......................................Could not invoke the HistoryRead service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      HistoryReadRawModifiedInvocationError...........................Could not invoke the HistoryReadRawModified service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      ServerCouldNotHistoryReadError..................................The server could not successfully process the HistoryRead service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      MethodCallInvocationError.......................................Could not invoke the MethodCall service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      AsyncMethodCallInvocationError..................................Could not invoke the async MethodCall service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      ServerCouldNotCallMethodError...................................The server could not successfully process the MethodCall service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      WriteInvocationError............................................Could not invoke the Write service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      AsyncWriteInvocationError.......................................Could not invoke the async Write service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      ServerCouldNotWriteError........................................The server could not successfully process the Write service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      CallCompleteError...............................................The async call was completed with error
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      InputArgumentError..............................................There was an error for the given input argument
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      ReadCompleteError...............................................The async read was completed with error
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      WriteCompleteError..............................................The async write was completed with error
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      SetPublishingModeInvocationError................................Could not invoke the SetPublishingMode service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      SetMonitoringModeInvocationError................................Could not invoke the SetMonitoringMode service
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      ServerCouldNotSetMonitoringModeError............................The server could not set the monitoring mode successfully
+          +clientHandle                                               Attribute of type: int
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      BadDataReceivedError............................................Bad data received
+          +sdkStatus                                                  Attribute of type: SdkStatus
+   SubscriptionError..................................................Subscription error
+      SubscriptionNotCreatedError.....................................The subscription is not created
+      CouldNotManuallySubscribeError..................................Could not manually subscribe
+      CouldNotManuallyUnsubscribeError................................Could not manually unsubscribe
+      SubscriptionHasBeenDeletedError.................................The subscription has been deleted
+      CreateSubscriptionError.........................................Could not create the subscription
+          +sdkStatus                                                  Attribute of type: SdkStatus
+      DeleteSubscriptionError.........................................Could not delete the subscription
+          +sdkStatus                                                  Attribute of type: SdkStatus
+   UnsupportedError...................................................UnsupportedError
+      UnsupportedNodeIdIdentifierTypeError............................The given NodeId identifier type is not supported
+      SyncInvocationNotSupportedError.................................Synchronous invocation is not supported
+      AsyncInvocationNotSupportedError................................Asynchronous invocation is not supported
+      AsyncInvocationOnMultipleSessionsNotSupportedError..............Asynchronous invocation on multiple sessions is not supported
+      AsyncMultiMethodCallNotSupportedError...........................Asynchronous multiple method calls are not supported
+   BackwardsCompatibilityError........................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      DataFormatError.................................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      DataSizeError...................................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      DataSourceError.................................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      DisconnectionError..............................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      LowLevelError...................................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      OtherError......................................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      TimeoutError....................................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      NoResultReceivedError...........................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      UnknownHandleError..............................................This error is only kept for backwards compatibility. It will never be raised by the UAF.

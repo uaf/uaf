@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_CREATEMONITOREDEVENTSREQUESTTARGET_H_
-#define UAFC_CREATEMONITOREDEVENTSREQUESTTARGET_H_
+#ifndef UAF_CREATEMONITOREDEVENTSREQUESTTARGET_H_
+#define UAF_CREATEMONITOREDEVENTSREQUESTTARGET_H_
 
 
 
@@ -35,19 +35,19 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
 
     /*******************************************************************************************//**
-    * A uafc::CreateMonitoredEventTarget is the part of a uafc::CreateMonitoredEventsRequest that
+    * A uaf::CreateMonitoredEventTarget is the part of a uaf::CreateMonitoredEventsRequest that
     * specifies the target to monitor.
     *
     * @ingroup ClientRequests
     ***********************************************************************************************/
-    class UAFC_EXPORT CreateMonitoredEventsRequestTarget
-    : public uafc::BaseSubscriptionRequestTarget
+    class UAF_EXPORT CreateMonitoredEventsRequestTarget
+    : public uaf::BaseSubscriptionRequestTarget
     {
     public:
 
@@ -129,13 +129,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const CreateMonitoredEventsRequestTarget& object1,
                 const CreateMonitoredEventsRequestTarget& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const CreateMonitoredEventsRequestTarget& object1,
                 const CreateMonitoredEventsRequestTarget& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const CreateMonitoredEventsRequestTarget& object1,
                 const CreateMonitoredEventsRequestTarget& object2);
     private:
@@ -176,4 +176,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_CREATEMONITOREDEVENTSREQUESTTARGET_H_ */
+#endif /* UAF_CREATEMONITOREDEVENTSREQUESTTARGET_H_ */

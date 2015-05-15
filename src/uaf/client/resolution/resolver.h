@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_RESOLVER_H_
-#define UAFC_RESOLVER_H_
+#ifndef UAF_RESOLVER_H_
+#define UAF_RESOLVER_H_
 
 
 // STD
@@ -40,19 +40,19 @@
 #include "uaf/client/requests/requests.h"
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::Resolver can resolve addresses (of type uafc::Address).
+    * An uaf::Resolver can resolve addresses (of type uaf::Address).
     *
-    * The uafc::Resolver uses the TranslateBrowsePathsToNodeIds service to resolve the relative
-    * addresses, and uses the uafc::AddressCache to cache the resolution results.
+    * The uaf::Resolver uses the TranslateBrowsePathsToNodeIds service to resolve the relative
+    * addresses, and uses the uaf::AddressCache to cache the resolution results.
     *
     * @ingroup ClientResolution
     ***********************************************************************************************/
-    class UAFC_EXPORT Resolver
+    class UAF_EXPORT Resolver
     {
     public:
 
@@ -66,8 +66,8 @@ namespace uafc
          */
         Resolver(
                 uaf::LoggerFactory*     loggerFactory,
-                uafc::SessionFactory*   sessionFactory,
-                uafc::Database*         database);
+                uaf::SessionFactory*   sessionFactory,
+                uaf::Database*         database);
 
 
         /**
@@ -117,10 +117,9 @@ namespace uafc
 
             // verify if the input parameters make sense
             if (request.targets.size() == mask.size())
-                ret.setGood();
+                ret = uaf::statuscodes::Good;
             else
-                ret.setStatus(uaf::statuscodes::UnexpectedError,
-                              "Mask does not match request size");
+                ret = uaf::UnexpectedError("Mask does not match request size");
 
             // resize the result
             result.targets.resize(request.targets.size());
@@ -161,7 +160,7 @@ namespace uafc
             }
             else
             {
-                ret.addDiagnostic("The request could not be resolved");
+                logger_->error("The request could not be resolved");
                 logger_->error(ret);
             }
 
@@ -289,7 +288,7 @@ namespace uafc
          *                      addresses), Bad otherwise.
          */
         void processBrowsePathsResolutionResultTarget(
-                const uafc::TranslateBrowsePathsToNodeIdsResultTarget& target,
+                const uaf::TranslateBrowsePathsToNodeIdsResultTarget& target,
                 std::size_t                                            rank,
                 std::vector<uaf::BrowsePath>&                          browsePaths,
                 uaf::Mask&                                             mask,
@@ -352,10 +351,9 @@ namespace uafc
             // do a couple of checks on the input
             if (   expandedNodeIds.size() != statuses.size()
                 || mask.size() != request.targets.size())
-                ret.setStatus(uaf::statuscodes::UnexpectedError,
-                              "Bug: input arguments do not match");
+                ret = uaf::UnexpectedError("Bug: input arguments do not match");
             else
-                ret.setGood();
+                ret = uaf::statuscodes::Good;
 
 
             if (ret.isGood())
@@ -391,27 +389,19 @@ namespace uafc
                             // in case of multiple items per target, make a summary
                             else
                             {
+                                std::vector<uint32_t> unresolvedTargetNumbers;
                                 std::stringstream unresolvedStringStream;
-                                for (std::size_t k = 0; k < targetStatuses.size(); k++)
+                                for (uint32_t k = 0; k < targetStatuses.size(); k++)
                                 {
                                     if (targetStatuses[k].isNotGood())
-                                    {
-                                        if (unresolvedStringStream.str().size() == 0)
-                                            unresolvedStringStream << k;
-                                        else
-                                            unresolvedStringStream << ", " << k;
-                                    }
+                                        unresolvedTargetNumbers.push_back(k);
                                 }
 
                                 if (unresolvedStringStream.str().size() == 0)
-                                    result.targets[i].status.setGood();
+                                    result.targets[i].status = uaf::statuscodes::Good;
                                 else
-                                    result.targets[i].status.setStatus(
-                                            uaf::statuscodes::ResolutionError,
-                                            "Resolvable items [%s] (of %d in total) could not be "
-                                            "resolved",
-                                            unresolvedStringStream.str().c_str(),
-                                            noOfItems);
+                                    result.targets[i].status = \
+                                        uaf::NotAllTargetsCouldBeResolvedError(unresolvedTargetNumbers);
                             }
                         }
 
@@ -420,7 +410,7 @@ namespace uafc
                     }
                 }
 
-                ret.setGood();
+                ret = uaf::statuscodes::Good;
             }
 
             return ret;
@@ -430,13 +420,13 @@ namespace uafc
         // logger of the resover
         uaf::Logger* logger_;
         // pointer to the session factory
-        uafc::SessionFactory* sessionFactory_; // not owned!
+        uaf::SessionFactory* sessionFactory_; // not owned!
         // pointer to the shared database
-        uafc::Database* database_; // not owned!
+        uaf::Database* database_; // not owned!
 
     };
 
 }
 
 
-#endif /* UAFC_RESOLVER_H_ */
+#endif /* UAF_RESOLVER_H_ */

@@ -21,10 +21,9 @@
 #include "uaf/client/results/historyreadrawmodifiedresulttarget.h"
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;
@@ -34,7 +33,8 @@ namespace uafc
     // Constructor
     // =============================================================================================
     HistoryReadRawModifiedResultTarget::HistoryReadRawModifiedResultTarget()
-    : autoReadMore(0)
+    : opcUaStatusCode(OpcUa_Uncertain),
+      autoReadMore(0)
     {}
 
 
@@ -51,6 +51,10 @@ namespace uafc
         ss << indent << " - status";
         ss << fillToPos(ss, colon);
         ss << ": " << status.toString() << "\n";
+
+        ss << indent << " - opcUaStatusCode";
+        ss << fillToPos(ss, colon);
+        ss << ": " << double(opcUaStatusCode) << "\n";
 
         ss << indent << " - continuationPoint";
         ss << fillToPos(ss, colon);
@@ -106,6 +110,7 @@ namespace uafc
     {
         return    object1.clientConnectionId == object2.clientConnectionId
                && object1.status             == object2.status
+               && object1.opcUaStatusCode    == object2.opcUaStatusCode
                && object1.continuationPoint  == object2.continuationPoint
                && object1.autoReadMore       == object2.autoReadMore
                && object1.dataValues         == object2.dataValues
@@ -133,6 +138,8 @@ namespace uafc
             return object1.clientConnectionId < object2.clientConnectionId;
         else if (object1.status != object2.status)
             return object1.status < object2.status;
+        else if (object1.opcUaStatusCode != object2.opcUaStatusCode)
+            return object1.opcUaStatusCode < object2.opcUaStatusCode;
         else if (object1.continuationPoint != object2.continuationPoint)
             return object1.continuationPoint < object2.continuationPoint;
         else if (object1.autoReadMore != object2.autoReadMore)

@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_SESSIONCONFIG_H_
-#define UAFC_SESSIONCONFIG_H_
+#ifndef UAF_SESSIONCONFIG_H_
+#define UAF_SESSIONCONFIG_H_
 
 
 
@@ -34,7 +34,7 @@
 #include "uaf/client/settings/sessionsettings.h"
 
 
-namespace uafc
+namespace uaf
 {
 
 
@@ -46,7 +46,7 @@ namespace uafc
     *
     * @ingroup ClientConfigs
     ***********************************************************************************************/
-    class UAFC_EXPORT SessionConfig
+    class UAF_EXPORT SessionConfig
     {
     public:
 
@@ -60,7 +60,7 @@ namespace uafc
         /**
          * Construct a new session config with the given default settings.
          */
-        SessionConfig(const uafc::SessionSettings& defaultSettings);
+        SessionConfig(const uaf::SessionSettings& defaultSettings);
 
 
         /**
@@ -69,13 +69,13 @@ namespace uafc
          * These settings will be used to create the sessions to servers that aren't specified in
          * the 'specificSessionSettings' map (unless 'useOnlySpecificSettings' is true).
          */
-        uafc::SessionSettings defaultSessionSettings;
+        uaf::SessionSettings defaultSessionSettings;
 
 
         /**
          * The session settings for particular serverURIs.
          */
-        std::map<std::string, uafc::SessionSettings> specificSessionSettings;
+        std::map<std::string, uaf::SessionSettings> specificSessionSettings;
 
 
         /**
@@ -98,11 +98,11 @@ namespace uafc
     private:
 
         /** Typedef for the map that maps serverUris to session settings. */
-        typedef std::map<std::string, uafc::SessionSettings> SpecificsMap;
+        typedef std::map<std::string, uaf::SessionSettings> SpecificsMap;
 
     };
 
 }
 
 
-#endif /* UAFC_SESSIONCONFIG_H_ */
+#endif /* UAF_SESSIONCONFIG_H_ */

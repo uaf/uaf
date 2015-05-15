@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_BROWSENEXTRESULTTARGET_H_
-#define UAFC_BROWSENEXTRESULTTARGET_H_
+#ifndef UAF_BROWSENEXTRESULTTARGET_H_
+#define UAF_BROWSENEXTRESULTTARGET_H_
 
 
 
@@ -35,12 +35,12 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
-    typedef uafc::BrowseResultTarget BrowseNextResultTarget;
+    typedef uaf::BrowseResultTarget BrowseNextResultTarget;
 
 }
 
 
-#endif /* UAFC_BROWSENEXTRESULTTARGET_H_ */
+#endif /* UAF_BROWSENEXTRESULTTARGET_H_ */

@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_SERVICESETTINGS_H_
-#define UAFC_SERVICESETTINGS_H_
+#ifndef UAF_SERVICESETTINGS_H_
+#define UAF_SERVICESETTINGS_H_
 
 
 // STD
@@ -35,17 +35,17 @@
 #include "uaf/client/clientexport.h"
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::ServiceSettings instance stores the settings of a service call
+    * An uaf::ServiceSettings instance stores the settings of a service call
     * (e.g. read/write/...).
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT ServiceSettings
+    class UAF_EXPORT ServiceSettings
     {
     public:
 
@@ -78,13 +78,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const ServiceSettings& object1,
                 const ServiceSettings& object2);
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const ServiceSettings& object1,
                 const ServiceSettings& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const ServiceSettings& object1,
                 const ServiceSettings& object2);
 
@@ -92,4 +92,4 @@ namespace uafc
     };
 }
 
-#endif /* UAFC_SERVICESETTINGS_H_ */
+#endif /* UAF_SERVICESETTINGS_H_ */

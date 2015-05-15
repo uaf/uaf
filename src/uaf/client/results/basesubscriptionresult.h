@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_BASESUBSCRIPTIONRESULT_H_
-#define UAFC_BASESUBSCRIPTIONRESULT_H_
+#ifndef UAF_BASESUBSCRIPTIONRESULT_H_
+#define UAF_BASESUBSCRIPTIONRESULT_H_
 
 
 // STD
@@ -31,23 +31,23 @@
 #include "uaf/client/results/basesessionresulttarget.h"
 #include "uaf/client/results/basesubscriptionresulttarget.h"
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
-    * A uafc::BaseSubscriptionResult is the result of a uafc::BaseSubscriptionRequest, i.e. the
+    * A uaf::BaseSubscriptionResult is the result of a uaf::BaseSubscriptionRequest, i.e. the
     * result of an OPC UA service request that was handled at the Subscription level
     * (and not at the Session level).
     *
-    * This is the template class which is implemented by uafc::CreateMonitoredDataResult,
-    * uafc::CreateMonitoredEventsResult, ...
+    * This is the template class which is implemented by uaf::CreateMonitoredDataResult,
+    * uaf::CreateMonitoredEventsResult, ...
     *
     * A result can hold multiple targets, one for each target of the corresponding request.
     *
     * @ingroup ClientResults
     ***********************************************************************************************/
     template<class _Target, bool _Async>
-    class UAFC_EXPORT BaseSubscriptionResult : public uafc::BaseSessionResult<_Target, _Async>
+    class UAF_EXPORT BaseSubscriptionResult : public uaf::BaseSessionResult<_Target, _Async>
     {
     public:
 
@@ -56,7 +56,7 @@ namespace uafc
          * Construct an default result.
          */
         BaseSubscriptionResult()
-        : uafc::BaseSessionResult<_Target, _Async>()
+        : uaf::BaseSessionResult<_Target, _Async>()
         {}
 
 
@@ -66,7 +66,7 @@ namespace uafc
          * @param status  Status of the result.
          */
         BaseSubscriptionResult(const uaf::Status& status)
-        : uafc::BaseSessionResult<_Target, _Async>(status)
+        : uaf::BaseSessionResult<_Target, _Async>(status)
         {}
 
 
@@ -75,8 +75,8 @@ namespace uafc
                 const BaseSubscriptionResult<_Target, _Async>& object1,
                 const BaseSubscriptionResult<_Target, _Async>& object2)
         {
-            return     (uafc::BaseSessionResult<_Target, _Async>&)object1
-                    == (uafc::BaseSessionResult<_Target, _Async>&)object2;
+            return     (uaf::BaseSessionResult<_Target, _Async>&)object1
+                    == (uaf::BaseSessionResult<_Target, _Async>&)object2;
         }
 
 
@@ -92,8 +92,8 @@ namespace uafc
                 const BaseSubscriptionResult<_Target, _Async>& object1,
                 const BaseSubscriptionResult<_Target, _Async>& object2)
         {
-            return   (uafc::BaseSessionResult<_Target, _Async>&)object1
-                   < (uafc::BaseSessionResult<_Target, _Async>&)object2;
+            return   (uaf::BaseSessionResult<_Target, _Async>&)object1
+                   < (uaf::BaseSessionResult<_Target, _Async>&)object2;
         }
     };
 
@@ -104,4 +104,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_BASESUBSCRIPTIONRESULT_H_ */
+#endif /* UAF_BASESUBSCRIPTIONRESULT_H_ */

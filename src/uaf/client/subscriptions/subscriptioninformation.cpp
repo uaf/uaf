@@ -20,10 +20,9 @@
 
 #include "uaf/client/subscriptions/subscriptioninformation.h"
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::size_t;
@@ -34,7 +33,7 @@ namespace uafc
     SubscriptionInformation::SubscriptionInformation()
     : clientConnectionId(0),
       clientSubscriptionHandle(0),
-      subscriptionState(uafc::subscriptionstates::Deleted)
+      subscriptionState(uaf::subscriptionstates::Deleted)
     {}
 
 
@@ -43,7 +42,7 @@ namespace uafc
     SubscriptionInformation::SubscriptionInformation(
             uaf::ClientConnectionId                     clientConnectionId,
             uaf::ClientSubscriptionHandle               clientSubscriptionHandle,
-            uafc::subscriptionstates::SubscriptionState subscriptionState)
+            uaf::subscriptionstates::SubscriptionState subscriptionState)
     : clientConnectionId(clientConnectionId),
       clientSubscriptionHandle(clientSubscriptionHandle),
       subscriptionState(subscriptionState)
@@ -66,7 +65,7 @@ namespace uafc
         ss << indent << " - subscriptionState";
         ss << fillToPos(ss, colon);
         ss << ": " << subscriptionState
-                << " (" << uafc::subscriptionstates::toString(subscriptionState) << ")";
+                << " (" << uaf::subscriptionstates::toString(subscriptionState) << ")";
 
 
         return ss.str();

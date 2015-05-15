@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_SUBSCRIPTIONSTATE_H_
-#define UAFC_SUBSCRIPTIONSTATE_H_
+#ifndef UAF_SUBSCRIPTIONSTATE_H_
+#define UAF_SUBSCRIPTIONSTATE_H_
 
 // STD
 #include <string>
@@ -27,9 +27,9 @@
 // SDK
 #include "uaclient/uaclientsdk.h"
 // UAF
-#include "uaf/client/clientexport.h"
+#include "uaf/util/util.h"
 
-namespace uafc
+namespace uaf
 {
 
 
@@ -56,7 +56,7 @@ namespace uafc
          *
          * @ingroup ClientSubscriptions
          */
-        std::string UAFC_EXPORT toString(uafc::subscriptionstates::SubscriptionState state);
+        std::string UAF_EXPORT toString(uaf::subscriptionstates::SubscriptionState state);
 
 
         /**
@@ -67,7 +67,7 @@ namespace uafc
          *
          * @ingroup ClientSubscriptions
          */
-        UaStatus UAFC_EXPORT toSdk(uafc::subscriptionstates::SubscriptionState state);
+        UaStatus UAF_EXPORT toSdk(uaf::subscriptionstates::SubscriptionState state);
 
 
         /**
@@ -78,10 +78,10 @@ namespace uafc
          *
          * @ingroup ClientSubscriptions
          */
-        uafc::subscriptionstates::SubscriptionState UAFC_EXPORT toUaf(const UaStatus& status);
+        uaf::subscriptionstates::SubscriptionState UAF_EXPORT toUaf(const UaStatus& status);
     }
 
 }
 
 
-#endif /* UAFC_SUBSCRIPTIONSTATE_H_ */
+#endif /* UAF_SUBSCRIPTIONSTATE_H_ */

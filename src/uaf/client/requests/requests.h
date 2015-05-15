@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_REQUESTS_H_
-#define UAFC_REQUESTS_H_
+#ifndef UAF_REQUESTS_H_
+#define UAF_REQUESTS_H_
 
 // STD
 // SDK
@@ -44,25 +44,25 @@
 
 #define DEFINE_SYNC_SESSIONREQUEST(name) \
 /** This is a synchronous service request handled at the session level.  @ingroup ClientRequests */ \
-typedef UAFC_EXPORT uafc::BaseSessionRequest<uafc::name##Config, uafc::name##RequestTarget, false> name##Request;
+typedef UAF_EXPORT uaf::BaseSessionRequest<uaf::name##Config, uaf::name##RequestTarget, false> name##Request;
 
 #define DEFINE_ASYNC_SESSIONREQUEST(name) \
 /** This is an asynchronous service request handled at the session level.  @ingroup ClientRequests */ \
-typedef UAFC_EXPORT uafc::BaseSessionRequest<uafc::name##Config, uafc::name##RequestTarget, true> Async##name##Request;
+typedef UAF_EXPORT uaf::BaseSessionRequest<uaf::name##Config, uaf::name##RequestTarget, true> Async##name##Request;
 
 
 #define DEFINE_SYNC_SUBSCRIPTIONREQUEST(name) \
 /** This is a synchronous service request handled at the subscription level.  @ingroup ClientRequests */ \
-typedef UAFC_EXPORT uafc::BaseSubscriptionRequest<uafc::name##Config, uafc::name##RequestTarget, false> name##Request;
+typedef UAF_EXPORT uaf::BaseSubscriptionRequest<uaf::name##Config, uaf::name##RequestTarget, false> name##Request;
 
 #define DEFINE_ASYNC_SUBSCRIPTIONREQUEST(name) \
 /** This is an asynchronous service request handled at the subscription level.  @ingroup ClientRequests */ \
-typedef UAFC_EXPORT uafc::BaseSubscriptionRequest<uafc::name##Config, uafc::name##RequestTarget, true> Async##name##Request;
+typedef UAF_EXPORT uaf::BaseSubscriptionRequest<uaf::name##Config, uaf::name##RequestTarget, true> Async##name##Request;
 
 
 
 
-namespace uafc
+namespace uaf
 {
     // synchronous
     DEFINE_SYNC_SESSIONREQUEST(Read)
@@ -84,4 +84,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_REQUESTS_H_ */
+#endif /* UAF_REQUESTS_H_ */

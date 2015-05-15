@@ -21,10 +21,9 @@
 #include "uaf/client/requests/createmonitoreddatarequesttarget.h"
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::size_t;
@@ -205,11 +204,11 @@ namespace uafc
             if (resolutionStatuses[0].isGood())
                 address = expandedNodeIds[0];
 
-            ret.setGood();
+            ret = statuscodes::Good;
         }
         else
         {
-            ret.setStatus(statuscodes::UnexpectedError, "Could not set the resolved items");
+            ret = UnexpectedError("Could not set the resolved items");
         }
 
         return ret;

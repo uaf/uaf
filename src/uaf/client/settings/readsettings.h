@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_READSETTINGS_H_
-#define UAFC_READSETTINGS_H_
+#ifndef UAF_READSETTINGS_H_
+#define UAF_READSETTINGS_H_
 
 
 
@@ -31,17 +31,17 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::ReadSettings object holds the service settings that are particular
+    * An uaf::ReadSettings object holds the service settings that are particular
     * for the Read service.
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT ReadSettings : public uafc::ServiceSettings
+    class UAF_EXPORT ReadSettings : public uaf::ServiceSettings
     {
     public:
 
@@ -79,4 +79,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_READSETTINGS_H_ */
+#endif /* UAF_READSETTINGS_H_ */

@@ -11,60 +11,53 @@
     (which are defined in the :mod:`pyuaf.util.statuscodes` module)
     are not to be confused with the *OPC UA status codes* 
     (which are defined in the :mod:`pyuaf.util.opcuastatuscodes` module). 
-    The *OPC UA status codes* are more than 200 "detailed" codes defined by the OPC UA standard, 
-    while the *UAF status codes* are around 20 more "general" codes.
-    Each one of the more than 200 *OPC UA status codes* can be mapped to exactly one *UAF status code*.
     
-    E.g. the OPC UA :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_GoodMoreData`, 
-    :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_GoodNoData`, 
-    :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_GoodShutdownEvent` etc. codes are 
-    all mapped to the UAF :attr:`~pyuaf.util.statuscodes.Good` code since there is only one 
-    "Good" *UAF status code*.
+    - The *OPC UA status codes* are 32-bit integers defined by the OPC UA standard. They provide 
+      low-level information about the OPC UA communication. Whenever
+      you see an OPC UA status code (often as an attribute called ``opcUaStatusCode``), it is 
+      produced by the SDK or the Stack (in other words, not by the UAF).
     
-    Similarly, an  :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadUserAccessDenied`, 
-    :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateInvalid`, 
-    :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateUntrusted` (and many more) 
-    *OPC UA status codes* lead to a 
-    :py:attr:`~pyuaf.util.statuscodes.SecurityError` *UAF status code*.  
+    - The *UAF status codes* are 32-bit integers defined by the UAF. 
+      They provide high-level information. For all "bad" status codes (those ending with ``Error``),
+      there is a corresponding error defined in :mod:`pyuaf.util.errors`. 
+      For instance, a :attr:`pyuaf.util.statuscodes.InvalidServerUriError` corresponds to a 
+      :class:`pyuaf.util.errors.InvalidServerUriError`. UAF status codes are used exclusively to 
+      determine which error is held by a :class:`pyuaf.util.Status` object. 
+      For instance, if the :attr:`~pyuaf.util.Status.statusCode` attribute of a 
+      :class:`pyuaf.util.Status` instance is equal to :attr:`pyuaf.util.statuscodes.InvalidServerUriError`,
+      then the Status object in fact holds a :class:`pyuaf.util.errors.InvalidServerUriError` instance.
+      See the example below:
     
-    Simply read the *UAF status code* (e.g. with :meth:`pyuaf.util.Status.statusCode`) if you're 
-    happy with general status information, or read the *UAF + OPC UA status codes* (e.g. with 
-    :meth:`pyuaf.util.Status.statusCode` and :meth:`pyuaf.util.Status.opcUaStatusCode`) if you 
-    want more detailed status information. 
+        .. doctest::
     
+            >>> import pyuaf
+            >>> from pyuaf.util import Status
+            >>> from pyuaf.util import errors, statuscodes
+            >>> 
+            >>> sts = Status( errors.InvalidServerUriError("my/invalid/server/uri"))
+            >>>
+            >>> assert sts.statusCode == statuscodes.InvalidServerUriError
+            >>>
+            >>> try:
+            ...    sts.test()
+            ...    raised = False;
+            ... except errors.InvalidServerUriError:
+            ...    raised = True;
+            ...
+            >>> assert raised
     
 
     * Attributes:
     
-        .. autoattribute:: pyuaf.util.statuscodes.Good
-        .. autoattribute:: pyuaf.util.statuscodes.Uncertain
-        .. autoattribute:: pyuaf.util.statuscodes.ConfigurationError
-        .. autoattribute:: pyuaf.util.statuscodes.ConnectionError
-        .. autoattribute:: pyuaf.util.statuscodes.DataFormatError
-        .. autoattribute:: pyuaf.util.statuscodes.DataSizeError
-        .. autoattribute:: pyuaf.util.statuscodes.DataSourceError
-        .. autoattribute:: pyuaf.util.statuscodes.DisconnectionError
-        .. autoattribute:: pyuaf.util.statuscodes.DiscoveryError
-        .. autoattribute:: pyuaf.util.statuscodes.InvalidRequestError
-        .. autoattribute:: pyuaf.util.statuscodes.LowLevelError
-        .. autoattribute:: pyuaf.util.statuscodes.ResolutionError
-        .. autoattribute:: pyuaf.util.statuscodes.WrongTypeError
-        .. autoattribute:: pyuaf.util.statuscodes.OtherError
-        .. autoattribute:: pyuaf.util.statuscodes.SecurityError
-        .. autoattribute:: pyuaf.util.statuscodes.TimeoutError
-        .. autoattribute:: pyuaf.util.statuscodes.NoResultReceivedError
-        .. autoattribute:: pyuaf.util.statuscodes.SubscriptionError
-        .. autoattribute:: pyuaf.util.statuscodes.UnexpectedError
-        .. autoattribute:: pyuaf.util.statuscodes.UnknownHandleError
-        .. autoattribute:: pyuaf.util.statuscodes.UnsupportedError
-               
+        .. include:: generated_statuscodes.txt
+    
     * Functions:
          
         .. autofunction:: pyuaf.util.statuscodes.toString(code)
         
             Get a string representation of the UAF status code.
         
-            :param code: The code, e.g. :py:attr:`pyuaf.util.statuscodes.SecurityError`.
+            :param code: The code, e.g. :py:attr:`pyuaf.util.statuscodes.InvalidServerUriError`.
             :type  code: ``int``
-            :return: The name of the type, e.g. 'SecurityError'.
+            :return: The name of the type, e.g. 'InvalidServerUriError'.
             :rtype:  ``str``

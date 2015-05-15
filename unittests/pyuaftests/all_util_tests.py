@@ -16,7 +16,6 @@ ALL_MODULES = [ "primitives",
                 "relativepathelement",
                 "datetime",
                 "browsepath",
-                "statusdiagnostics",
                 "status",
                 "variant",
                 "datavalue",
@@ -26,7 +25,12 @@ ALL_MODULES = [ "primitives",
                 "usertokenpolicy",
                 "endpointdescription",
                 "referencedescription",
-                "enumvalue"
+                "pkiidentity",
+                "enumvalue",
+                "pkicertificateinfo",
+                "pkipublickey",
+                "pkirsakeypair",
+                "pkicertificate"
               ]
 
 

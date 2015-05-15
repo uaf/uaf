@@ -20,10 +20,9 @@
 
 #include "uaf/client/invocations/methodcallinvocation.h"
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;
@@ -105,11 +104,9 @@ namespace uafc
         size_t noOfTargets = targets.size();
 
         if (targets.size() != 1)
-            ret.setStatus(statuscodes::UnsupportedError,
-                          "The SDK does not support asynchronous calling of multiple methods "
-                          "at once");
+            ret = AsyncMultiMethodCallNotSupportedError();
         else
-            ret.setGood();
+            ret = statuscodes::Good;
 
         // loop through the targets
         for (size_t i = 0; i < noOfTargets && ret.isGood(); i++)
@@ -158,13 +155,16 @@ namespace uafc
     {
         Status ret;
 
-        UaStatus uaStatus = uaSession->callList(
+        SdkStatus sdkStatus = uaSession->callList(
                     uaServiceSettings_,
                     uaCallMethodRequests_,
                     uaCallMethodResults_,
                     uaDiagnosticInfos_);
-        ret.fromSdk(uaStatus.statusCode(),
-                               "Synchronous method call invocation failed");
+
+        if (sdkStatus.isGood())
+            ret = uaf::statuscodes::Good;
+        else
+            ret = MethodCallInvocationError(sdkStatus);
 
         return ret;
     }
@@ -179,9 +179,12 @@ namespace uafc
     {
         Status ret;
 
-        UaStatus uaStatus = uaSession->beginCall(uaServiceSettings_, uaCallIn_, transactionId);
+        SdkStatus sdkStatus = uaSession->beginCall(uaServiceSettings_, uaCallIn_, transactionId);
 
-        ret.fromSdk(uaStatus.statusCode(), "Asynchronous method call invocation failed");
+        if (sdkStatus.isGood())
+            ret = uaf::statuscodes::Good;
+        else
+            ret = AsyncMethodCallInvocationError(sdkStatus);
 
         return ret;
     }
@@ -209,9 +212,14 @@ namespace uafc
             for (uint32_t i = 0; i < noOfTargets ; i++)
             {
                 // update the status
-                targets[i].status.fromSdk(
-                        uaCallMethodResults_[i].StatusCode,
-                        "Server reported method call error");
+                if (OpcUa_IsGood(uaCallMethodResults_[i].StatusCode))
+                    targets[i].status = statuscodes::Good;
+                else
+                    targets[i].status = ServerCouldNotCallMethodError(
+                            SdkStatus(uaCallMethodResults_[i].StatusCode));
+
+                // update the status code
+                targets[i].opcUaStatusCode = uaCallMethodResults_[i].StatusCode;
 
                 // get the number of output arguments
                 int32_t noOfOutputArguments = uaCallMethodResults_[i].NoOfOutputArguments;
@@ -229,12 +237,11 @@ namespace uafc
 
             }
 
-            ret.setGood();
+            ret = uaf::statuscodes::Good;
         }
         else
         {
-            ret.setStatus(statuscodes::UnexpectedError,
-                          "Number of targets does not match number of targets");
+            ret = UnexpectedError("Number of targets does not match number of targets");
         }
 
         return ret;

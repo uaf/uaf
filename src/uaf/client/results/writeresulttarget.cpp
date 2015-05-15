@@ -21,10 +21,9 @@
 #include "uaf/client/results/writeresulttarget.h"
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;
@@ -34,6 +33,7 @@ namespace uafc
     // Constructor
     // =============================================================================================
     WriteResultTarget::WriteResultTarget()
+    : opcUaStatusCode(OpcUa_Uncertain)
     {}
 
 
@@ -43,6 +43,13 @@ namespace uafc
     {
         stringstream ss;
         ss << "status: " << status.toString();
+        ss << fillToPos(ss, colon);
+        ss << ": " << status.toString() << "\n";
+
+        ss << indent << " - opcUaStatusCode";
+        ss << fillToPos(ss, colon);
+        ss << ": " << double(opcUaStatusCode);
+
         return ss.str();
     }
 
@@ -54,7 +61,8 @@ namespace uafc
             const WriteResultTarget& object2)
     {
         return    object1.clientConnectionId == object2.clientConnectionId
-               && object1.status             == object2.status;
+               && object1.status             == object2.status
+               && object1.opcUaStatusCode    == object2.opcUaStatusCode;
     }
 
 
@@ -76,6 +84,8 @@ namespace uafc
     {
         if (object1.clientConnectionId != object2.clientConnectionId)
             return object1.clientConnectionId < object2.clientConnectionId;
+        else if (object1.opcUaStatusCode != object2.opcUaStatusCode)
+            return object1.opcUaStatusCode < object2.opcUaStatusCode;
         else
             return object1.status < object2.status;
     }

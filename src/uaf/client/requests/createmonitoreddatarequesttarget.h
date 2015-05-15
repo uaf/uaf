@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_CREATEMONITOREDDATAREQUESTTARGET_H_
-#define UAFC_CREATEMONITOREDDATAREQUESTTARGET_H_
+#ifndef UAF_CREATEMONITOREDDATAREQUESTTARGET_H_
+#define UAF_CREATEMONITOREDDATAREQUESTTARGET_H_
 
 
 
@@ -35,17 +35,17 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::CreateMonitoredDataRequestTarget is the part of a uafc::CreateMonitoredDataRequest
+    * A uaf::CreateMonitoredDataRequestTarget is the part of a uaf::CreateMonitoredDataRequest
     * that specifies the target to monitor.
     *
     * @ingroup ClientRequests
     ***********************************************************************************************/
-    class UAFC_EXPORT CreateMonitoredDataRequestTarget : public uafc::BaseSubscriptionRequestTarget
+    class UAF_EXPORT CreateMonitoredDataRequestTarget : public uaf::BaseSubscriptionRequestTarget
     {
     public:
 
@@ -125,13 +125,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const CreateMonitoredDataRequestTarget& object1,
                 const CreateMonitoredDataRequestTarget& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const CreateMonitoredDataRequestTarget& object1,
                 const CreateMonitoredDataRequestTarget& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const CreateMonitoredDataRequestTarget& object1,
                 const CreateMonitoredDataRequestTarget& object2);
 
@@ -173,4 +173,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_CREATEMONITOREDDATAREQUESTTARGET_H_ */
+#endif /* UAF_CREATEMONITOREDDATAREQUESTTARGET_H_ */

@@ -5,7 +5,6 @@
 #include "uaf/client/client.h"
 
 using namespace uaf;
-using namespace uafc;
 using namespace std;
 
 

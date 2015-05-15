@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_MONITOREDITEMSTATES_H_
-#define UAFC_MONITOREDITEMSTATES_H_
+#ifndef UAF_MONITOREDITEMSTATES_H_
+#define UAF_MONITOREDITEMSTATES_H_
 
 // STD
 #include <string>
@@ -27,9 +27,9 @@
 // SDK
 #include "uaclient/uaclientsdk.h"
 // UAF
-#include "uaf/client/clientexport.h"
+#include "uaf/util/util.h"
 
-namespace uafc
+namespace uaf
 {
 
 
@@ -56,10 +56,10 @@ namespace uafc
          *
          * @ingroup ClientSubscriptions
          */
-        std::string UAFC_EXPORT toString(uafc::monitoreditemstates::MonitoredItemState state);
+        std::string UAF_EXPORT toString(uaf::monitoreditemstates::MonitoredItemState state);
     }
 
 }
 
 
-#endif /* UAFC_MONITOREDITEMSTATES_H_ */
+#endif /* UAF_MONITOREDITEMSTATES_H_ */

@@ -44,8 +44,9 @@ class Client(ClientBase):
                          input argument, which you should call "msg" or so,
                          because this argument is of type :class:`pyuaf.util.LogMessage`.
         """
-        # define the logging callback
+        # define the logging and untrustedCertificate callbacks
         self.__loggingCallback__ = loggingCallback
+        self.__untrustedCertificateCallback__ = None
         
         # define some more callbacks to receive status changes
         self.__connectionCallbacks__ = []
@@ -311,6 +312,46 @@ class Client(ClientBase):
         :type  eventNotifications: ``list`` of :class:`~pyuaf.client.EventNotification`
         """
         pass
+    
+    def __dispatch_logMessageReceived__(self, message):
+        try:
+            if self.__loggingCallback__ is None:
+                self.logMessageReceived(message)
+            else:
+                self.__loggingCallback__(message)
+        except:
+            pass # nothing we can do at this point!
+    
+    
+    def logMessageReceived(self, message):
+        """
+        Override this method if you want to process logging output from the UAF. 
+        
+        This method is called by the UAF if:
+          - :attr:`pyuaf.client.settings.ClientSettings.logToCallbackLevel` is not set to :attr:`pyuaf.util.loglevels.Disabled`
+          - no external logging callback function is registered 
+            (via :meth:`~pyuaf.client.Client` or via :meth:`~pyuaf.client.Client.registerLoggingCallback`).
+        
+        :param message: The received LogMessage.
+        :type  message: :class:`pyuaf.util.LogMessage`
+        """
+        pass
+        
+    
+    def registerLoggingCallback(self, callback):
+        """
+        Register a callback function to receive all log messages.
+        
+        If you register a callback function, this callback function will be called instead of 
+        the :meth:`~pyuaf.client.Client.logMessageReceived` function (so the latter function will 
+        NOT be called anymore!).
+        
+        :param callback: A callback function for the logging. This function should have one 
+                         input argument, which you should call "msg" or so,
+                         because this argument is of type :class:`pyuaf.util.LogMessage`.
+        """
+        self.__loggingCallback__ = callback
+    
     
     def __dispatch_logMessageReceived__(self, message):
         try:
@@ -691,6 +732,127 @@ class Client(ClientBase):
         self.__loggingCallback__ = None
     
     
+    def __dispatch_untrustedServerCertificateReceived__(self, certificate, cause):
+        try:
+            if self.__untrustedCertificateCallback__ is None:
+                return self.untrustedServerCertificateReceived(certificate, cause)
+            else:
+                return self.__untrustedCertificateCallback__(certificate, cause)
+        except:
+            pass # nothing we can do at this point!
+    
+    
+    def untrustedServerCertificateReceived(self, certificate, cause):
+        """
+        Override this method if you want to handle an untrusted certificate.
+        
+        This method is called by the UAF whenever an untrusted (e.g. unknown) server certificate 
+        must be checked at the application level (as part of the connection step, before a 
+        communication channel is established). Note that this has nothing to do with signed or
+        encrypted communication! Even if you don't want to connect to a secured endpoint,
+        you're advised to verify the certificate of the server to make sure you're talking to 
+        the right one.
+        
+        It will **not** be called however when you registered a callback function via 
+        :meth:`~pyuaf.client.Client.registerUntrustedServerCertificateCallback`.
+        So you must choose how to handle untrusted server certificates:
+        - either by overriding :meth:`~pyuaf.client.Client.untrustedServerCertificateReceived`
+        - or by registering a callback via  :meth:`~pyuaf.client.Client.registerUntrustedServerCertificateCallback`.
+        
+        This method will be called by the UAF, so you must override it. It is called by
+        the UAF whenever it thinks that it should verify the certificate of the server 
+        (i.e. during (re)connection).
+        
+        Typically, during the first connection to a server, the certificate of the server is 
+        not known to the client yet. By overriding this method, you can therefore show the 
+        certificate to the user of your software, and ask him/her whether or not
+        he/she thinks the certificate can be trusted. 
+        
+        Three options are available:
+        
+        - :attr:`~pyuaf.util.PkiCertificate.Action_Reject`: don't trust the certificate, and 
+          therefore don't try to connect.
+        - :attr:`~pyuaf.util.PkiCertificate.Action_AcceptTemporarily`: trust the certificate
+          temporarily, i.e. don't store it in the trust list but just -for now- allow connection
+          to the server. If the UAF must reconnect at some point to the server and the server 
+          certificate must be checked again, the user shall again have to confirm the certificate.
+        - :attr:`~pyuaf.util.PkiCertificate.Action_AcceptPermanently`: store the certificate 
+          in the trust list (as defined by the 
+          :attr:`~pyuaf.client.settings.ClientSettings.certificateTrustListLocation`: setting) and 
+          accept the connection. Since the certificate is stored on disk in the trust list,
+          the client application will automatically trust the certificate in the future (until
+          the certificate expires, of course).
+        
+        .. warning::
+        
+            You must **always** return one of the following integers:
+            
+            - :attr:`pyuaf.util.PkiCertificate.Action_Reject`
+            - :attr:`pyuaf.util.PkiCertificate.Action_AcceptTemporarily`
+            - :attr:`pyuaf.util.PkiCertificate.Action_AcceptPermanently`
+        
+        .. warning::
+            
+            By default, :attr:`~pyuaf.util.PkiCertificate.Action_AcceptTemporarily` is returned, 
+            which means that all untrusted certificates will be **accepted** by default!
+            Admittingly that doesn't sound very safe, but it simply implies that by default
+            a pyuaf Client will be able to connect to any (unknown) server without needing to 
+            override this method. If you don't trust the servers in your network, you should 
+            override this method.
+            
+        .. seealso:: Check out example "how_to_connect_to_a_secured_endpoint.py" for more information.
+        
+        :param certificate: The untrusted certificate.
+        :type  certificate: :class:`pyuaf.util.PkiCertificate`
+        :param cause: The reason why it was untrusted 
+                      (mostly because it is simply not found in the trust list, but it may also
+                      be that it's not trusted because e.g. the trust list could not be opened).
+        :type  cause: :class:`pyuaf.util.Status`
+        :return: either 
+                 :attr:`~pyuaf.util.PkiCertificate.Action_Reject` or 
+                 :attr:`~pyuaf.util.PkiCertificate.Action_AcceptTemporarily` or 
+                 :attr:`~pyuaf.util.PkiCertificate.Action_AcceptPermanently`.
+        :rtype: int
+        """
+        return pyuaf.util.PkiCertificate.Action_AcceptTemporarily
+        
+    
+    def registerUntrustedServerCertificateCallback(self, callback):
+        """
+        Register a callback function to handle untrusted certificates during the connection process.
+        
+        If you register a callback function, this callback function will be called instead of 
+        the :meth:`~pyuaf.client.Client.untrustedServerCertificateReceived` function 
+        (so the latter function will NOT be called anymore!).
+        
+        The callback function should have:
+        
+        - 2 input arguments: 'certificate' and 'cause'
+        - 1 returned value: either :attr:`~pyuaf.util.PkiCertificate.Action_Reject` 
+          or :attr:`~pyuaf.util.PkiCertificate.Action_AcceptTemporarily` 
+          or :attr:`~pyuaf.util.PkiCertificate.Action_AcceptPermanently`.
+        
+        The signature of this method (and the meaning of these input arguments and returned value)
+        is exactly the same as :meth:`~pyuaf.client.Client.untrustedServerCertificateReceived`.
+        
+        :param callback: A callback function for handling untrusted certificates.
+        """
+        self.__untrustedCertificateCallback__ = callback
+    
+    
+    def unregisterUntrustedServerCertificateCallback(self):
+        """
+        Unregister a callback function to stop handling untrusted certificates.
+        
+        If you unregister a callback function, the untrusted certificates will be send to 
+        :meth:`~pyuaf.client.Client.untrustedServerCertificateReceived` instead
+        (so you can override this method to receive the certificates).
+        """
+        self.__untrustedCertificateCallback__ = None
+    
+    
+    
+    
     def clientSettings(self):
         """
         Get a copy of the current client settings.
@@ -732,8 +894,7 @@ class Client(ClientBase):
        :raise pyuaf.util.errors.UafError:
             Base exception, catch this to handle any other errors.
        """
-       status = ClientBase.findServersNow(self)
-       pyuaf.util.errors.evaluate(status)
+       ClientBase.findServersNow(self).test()
     
     
     def serversFound(self):
@@ -751,6 +912,29 @@ class Client(ClientBase):
         # put the elements in a normal python list
         l = []
         for desc in descriptionVector:
+            l.append(desc)
+        return l
+    
+    
+    def getEndpoints(self, discoveryUrl):
+        """
+        Get a list of endpoint descriptions supported by the server.
+        
+        :param discoveryUrl:  The URL of a Discovery Server (e.g. opc.tcp://mymachine:4840).
+        :type  discoveryUrl: ``str``
+        :return: A list of the endpoint descriptions that were found.
+        :rtype: ``list`` of :class:`pyuaf.util.EndpointDescription`
+        :raise pyuaf.util.errors.DiscoveryError:
+            Raised in case no endpoints could be retrieved.
+        :raise pyuaf.util.errors.UafError:
+            Base exception, catch this to handle any other errors.
+        """
+        vec = pyuaf.util.EndpointDescriptionVector()
+        ClientBase.getEndpoints(self, discoveryUrl, vec).test()
+        
+        # put the elements in a normal python list
+        l = []
+        for desc in vec:
             l.append(desc)
         return l
     
@@ -778,6 +962,22 @@ class Client(ClientBase):
        via the :class:`~pyuaf.client.settings.ClientSettings` (which you can set via 
        :meth:`~pyuaf.client.Client` and via :meth:`~pyuaf.client.Client.setClientSettings`).
        
+        .. warning::
+        
+           If the connection fails (e.g. because you specified a wrong server URI, or because
+           the security settings were incorrect), this methd will *not* raise an Exception! 
+           It will simply return the ClientConnectionId assigned to the internal Session object, 
+           which the UAF will try to reconnect in the background! So if you want to make sure
+           this method call resulted in a connected session, you should do something like this::
+           
+               clientConnectionId = myClient.manuallyConnect(SERVER_URI)
+               sessionInformation = myClient.sessionInformation(clientConnectionId)
+               if sessionInformation.sessionState == pyuaf.client.sessionstates.Disconnected:
+                   pass # OK, we can proceed
+               else:
+                   print("Oops, something went wrong:")
+                   print(sessionInformation.lastConnectionAttemptStatus)
+           
        
        :param serverUri: The server URI to manually connect to.
        :type  serverUri: ``str``
@@ -796,11 +996,11 @@ class Client(ClientBase):
            sessionSettings = pyuaf.client.settings.SessionSettings()
             
        status, clientConnectionId = ClientBase.manuallyConnect(self, serverUri, sessionSettings)
-       pyuaf.util.errors.evaluate(status)
+       status.test()
        return clientConnectionId
     
     
-    def manuallyConnectToEndpoint(self, endpointUrl, sessionSettings=None):
+    def manuallyConnectToEndpoint(self, endpointUrl, sessionSettings=None, serverCertificate=None):
         """
         Manually connect to a specific endpoint, without using the discovery services.
         
@@ -827,6 +1027,20 @@ class Client(ClientBase):
          - no security policy (:attr:`pyuaf.util.securitypolicies.UA_None`)
          - no security mode (:attr:`pyuaf.util.messagesecuritymodes.Mode_None`)
          - no authentication (:attr:`pyuaf.util.usertokentypes.Anonymous`)
+         
+        Compliant to OPC UA specs, the serverCertificate will:
+        
+        - first be checked at the application level. If it's not valid or not found in the trust
+          list, then the untrustedServerCertificateReceived() callback function will be called.
+          Override this method if you want to handle those cases.
+        - then it may be used for encryption and/or signing (if a secure connection is needed,
+          of course).
+        
+        You can leave serverCertificate ``None`` (or provide a default, invalid, null 
+        :class:`~pyuaf.util.PkiCertificate` instance) if you trust the server (i.e. if you make sure
+        :meth:`~pyuaf.client.Client.untrustedServerCertificateReceived` 
+        returns :attr:`~pyuaf.util.PkiCertificate.Action_AcceptTemporarily`),
+        and if you don't need signing or encryption.
         
         .. warning::
         
@@ -842,6 +1056,8 @@ class Client(ClientBase):
         :type  serverUri: ``str``
         :param sessionSettings: The settings for the session (leave None for a default instance).
         :type  sessionSettings: :class:`~pyuaf.client.settings.SessionSettings`
+        :param serverCertificate: The server certificate (will be checked!)
+        :type  serverCertificate: :class:`~pyuaf.util.PkiCertificate`
         :return: The client connection id: a number identifying the session.
         :rtype: ``int``
        
@@ -853,8 +1069,11 @@ class Client(ClientBase):
         if sessionSettings is None:
             sessionSettings = pyuaf.client.settings.SessionSettings()
         
-        status, clientConnectionId = ClientBase.manuallyConnectToEndpoint(self, endpointUrl, sessionSettings)
-        pyuaf.util.errors.evaluate(status)
+        if serverCertificate is None:
+            serverCertificate = pyuaf.util.PkiCertificate()
+        
+        status, clientConnectionId = ClientBase.manuallyConnectToEndpoint(self, endpointUrl, sessionSettings, serverCertificate)
+        status.test()
         return clientConnectionId
     
     
@@ -876,8 +1095,7 @@ class Client(ClientBase):
        :raise pyuaf.util.errors.UafError:
             Base exception, catch this to handle any other errors.
        """
-       status = ClientBase.manuallyDisconnect(self, clientConnectionId)
-       pyuaf.util.errors.evaluate(status)
+       ClientBase.manuallyDisconnect(self, clientConnectionId).test()
     
     
     def manuallySubscribe(self, clientConnectionId, subscriptionSettings=None):
@@ -902,7 +1120,7 @@ class Client(ClientBase):
            subscriptionSettings = pyuaf.client.settings.SubscriptionSettings()
        
        status, clientSubscriptionHandle = ClientBase.manuallySubscribe(self, clientConnectionId, subscriptionSettings)
-       pyuaf.util.errors.evaluate(status)
+       status.test()
        return clientSubscriptionHandle
     
     
@@ -924,8 +1142,7 @@ class Client(ClientBase):
        :raise pyuaf.util.errors.UafError:
             Base exception, catch this to handle any other errors.
        """
-       status = ClientBase.manuallyUnsubscribe(self, clientConnectionId, clientSubscriptionHandle)
-       pyuaf.util.errors.evaluate(status)
+       ClientBase.manuallyUnsubscribe(self, clientConnectionId, clientSubscriptionHandle).test()
     
     
     def sessionInformation(self, clientConnectionId):
@@ -943,8 +1160,7 @@ class Client(ClientBase):
              Base exception, catch this to handle any other errors.
         """
         sessionInfo = pyuaf.client.SessionInformation()
-        status = ClientBase.sessionInformation(self, clientConnectionId, sessionInfo)
-        pyuaf.util.errors.evaluate(status)
+        ClientBase.sessionInformation(self, clientConnectionId, sessionInfo).test()
         return sessionInfo
     
     
@@ -977,8 +1193,7 @@ class Client(ClientBase):
              Base exception, catch this to handle any other errors.
         """
         subscriptionInfo = pyuaf.client.SubscriptionInformation()
-        status = ClientBase.subscriptionInformation(self, clientSubscriptionHandle, subscriptionInfo)
-        pyuaf.util.errors.evaluate(status)
+        ClientBase.subscriptionInformation(self, clientSubscriptionHandle, subscriptionInfo).test()
         return subscriptionInfo
     
     
@@ -1015,14 +1230,13 @@ class Client(ClientBase):
         :type  clientHandle: ``int``
         :return: Information about the specified monitored item.
         :rtype:  :class:`~pyuaf.client.MonitoredItemInformation`
-        :raise pyuaf.util.errors.UnknownHandleError:
+        :raise pyuaf.util.errors.UnknownClientHandleError:
              Raised in case no monitored item is known for the given client handle.
         :raise pyuaf.util.errors.UafError:
              Base exception, catch this to handle any other errors.
         """
         info = pyuaf.client.MonitoredItemInformation()
-        status = ClientBase.monitoredItemInformation(self, clientHandle, info)
-        pyuaf.util.errors.evaluate(status)
+        ClientBase.monitoredItemInformation(self, clientHandle, info).test()
         return info
     
     
@@ -1071,9 +1285,8 @@ class Client(ClientBase):
         if sessionConfig is None:
             sessionConfig = pyuaf.client.configs.SessionConfig()
         
-        status = ClientBase.read(self, addressVector, attributeId, serviceConfig, sessionConfig, result)
+        ClientBase.read(self, addressVector, attributeId, serviceConfig, sessionConfig, result).test()
         
-        pyuaf.util.errors.evaluate(status)
         return result
     
     
@@ -1156,10 +1369,8 @@ class Client(ClientBase):
         try:
             self.__asyncReadLock__.acquire()
         
-            status = ClientBase.beginRead(self, addressVector, attributeId, serviceConfig, sessionConfig, result)
+            ClientBase.beginRead(self, addressVector, attributeId, serviceConfig, sessionConfig, result).test()
             
-            pyuaf.util.errors.evaluate(status)
-                    
             # register the callback function if necessary
             if callback is not None:
                 self.__asyncReadCallbacks__[result.requestHandle] = callback
@@ -1231,10 +1442,8 @@ class Client(ClientBase):
         if sessionConfig is None:
             sessionConfig = pyuaf.client.configs.SessionConfig()
         
-        status = ClientBase.write(self, addressVector, dataVector, attributeId, serviceConfig, 
-                                  sessionConfig, result)
+        ClientBase.write(self, addressVector, dataVector, attributeId, serviceConfig, sessionConfig, result).test()
         
-        pyuaf.util.errors.evaluate(status)
         return result
 
     
@@ -1330,11 +1539,8 @@ class Client(ClientBase):
         try:
             self.__asyncWriteLock__.acquire()
         
-            status = ClientBase.beginWrite(self, addressVector, dataVector, attributeId, serviceConfig, 
-                                           sessionConfig, result)
+            ClientBase.beginWrite(self, addressVector, dataVector, attributeId, serviceConfig, sessionConfig, result).test()
             
-            pyuaf.util.errors.evaluate(status)
-                    
             # register the callback function if necessary
             if callback is not None:
                 self.__asyncWriteCallbacks__[result.requestHandle] = callback
@@ -1404,10 +1610,8 @@ class Client(ClientBase):
         if sessionConfig is None:
             sessionConfig = pyuaf.client.configs.SessionConfig()
         
-        status = ClientBase.call(self, objectAddress, methodAddress, inputArgsVector, 
-                                 serviceConfig, sessionConfig, result)
+        ClientBase.call(self, objectAddress, methodAddress, inputArgsVector, serviceConfig, sessionConfig, result).test()
         
-        pyuaf.util.errors.evaluate(status)
         return result
     
     
@@ -1487,11 +1691,8 @@ class Client(ClientBase):
         try:
             self.__asyncCallLock__.acquire()
             
-            status = ClientBase.beginCall(self, objectAddress, methodAddress, inputArgsVector, 
-                                          serviceConfig, sessionConfig, result)
+            ClientBase.beginCall(self, objectAddress, methodAddress, inputArgsVector, serviceConfig, sessionConfig, result).test()
             
-            pyuaf.util.errors.evaluate(status)
-                    
             # register the callback function if necessary
             if callback is not None:
                 self.__asyncCallCallbacks__[result.requestHandle] = callback
@@ -1556,10 +1757,9 @@ class Client(ClientBase):
         if sessionConfig is None:
             sessionConfig = pyuaf.client.configs.SessionConfig()
         
-        status = ClientBase.browse(self, addressVector, maxAutoBrowseNext, serviceConfig, 
-                                   sessionConfig, result)
+        ClientBase.browse(self, addressVector, maxAutoBrowseNext, serviceConfig, 
+                                   sessionConfig, result).test()
         
-        pyuaf.util.errors.evaluate(status)
         return result
     
     
@@ -1633,10 +1833,9 @@ class Client(ClientBase):
         if sessionConfig is None:
             sessionConfig = pyuaf.client.configs.SessionConfig()
         
-        status = ClientBase.browseNext(self, addressVector, byteStringVector, serviceConfig, 
-                                       sessionConfig, result)
+        ClientBase.browseNext(self, addressVector, byteStringVector, serviceConfig, 
+                              sessionConfig, result).test()
         
-        pyuaf.util.errors.evaluate(status)
         return result
     
     
@@ -1750,11 +1949,10 @@ class Client(ClientBase):
         if sessionConfig is None:
             sessionConfig = pyuaf.client.configs.SessionConfig()
         
-        status = ClientBase.historyReadRaw(self, addressVector, startTime, 
-                                           endTime, numValuesPerNode, maxAutoReadMore, 
-                                           byteStringVector, serviceConfig, sessionConfig, result)
+        ClientBase.historyReadRaw(self, addressVector, startTime, 
+                                       endTime, numValuesPerNode, maxAutoReadMore, 
+                                       byteStringVector, serviceConfig, sessionConfig, result).test()
         
-        pyuaf.util.errors.evaluate(status)
         return result
     
     
@@ -1870,12 +2068,11 @@ class Client(ClientBase):
         if sessionConfig is None:
             sessionConfig = pyuaf.client.configs.SessionConfig()
         
-        status = ClientBase.historyReadModified(self, addressVector, startTime, 
+        ClientBase.historyReadModified(self, addressVector, startTime, 
                                                 endTime, numValuesPerNode, maxAutoReadMore, 
                                                 byteStringVector, serviceConfig, sessionConfig, 
-                                                result)
+                                                result).test()
         
-        pyuaf.util.errors.evaluate(status)
         return result
     
     
@@ -1907,10 +2104,11 @@ class Client(ClientBase):
             
              - via the returned  :class:`~pyuaf.client.results.CreateMonitoredDataResult`, in case
                createMonitoredData() was successful and didn't raise an exception
-             - via the exception that was raised in case createMonitoredData() was not successful. 
-               This exception has a "status" attribute (of type :class:`~pyuaf.util.Status`),
-               and this will provide you a diagnostics object (see :meth:`pyuaf.util.Status.additionalDiagnostics`),
-               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getClientHandles`).
+             - via the :class:`~pyuaf.util.errors.CreateMonitoredItemsError` exception that was 
+               raised in case processRequest() was not successful. 
+               This exception has a 
+               :attr:`~pyuaf.util.errors.CreateMonitoredItemsError.assignedClientHandles`
+               attribute, providing the assigned client handles.
         
         .. warning::
             
@@ -1997,7 +2195,7 @@ class Client(ClientBase):
                     raise TypeError("The number of result targets does not correspond to the "
                                     "number of nofificationCallbacks")
             
-            pyuaf.util.errors.evaluate(status)
+            status.test()
             
             return result
         
@@ -2034,10 +2232,11 @@ class Client(ClientBase):
             
              - via the returned  :class:`~pyuaf.client.results.CreateMonitoredEventsResult`, in case
                createMonitoredEvents() was successful and didn't raise an exception
-             - via the exception that was raised in case createMonitoredEvents() was not successful. 
-               This exception has a "status" attribute (of type :class:`~pyuaf.util.Status`),
-               and this will provide you a diagnostics object (see :meth:`pyuaf.util.Status.additionalDiagnostics`),
-               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getClientHandles`).
+             - via the :class:`~pyuaf.util.errors.CreateMonitoredItemsError` exception that was 
+               raised in case processRequest() was not successful. 
+               This exception has a 
+               :attr:`~pyuaf.util.errors.CreateMonitoredItemsError.assignedClientHandles`
+               attribute, providing the assigned client handles.
         
         .. warning::
             
@@ -2136,7 +2335,7 @@ class Client(ClientBase):
                     raise TypeError("The number of result targets does not correspond to the "
                                     "number of nofificationCallbacks")
             
-            pyuaf.util.errors.evaluate(status)
+            status.test()
             
             return result
         
@@ -2161,7 +2360,7 @@ class Client(ClientBase):
         .. doctest::
         
             >>> import pyuaf
-            >>> from pyuaf.util.errors import UafError
+            >>> from pyuaf.util.errors import UafError, CreateMonitoredItemsError
             >>> from pyuaf.util import Address, NodeId
             >>> from pyuaf.client import Client
             >>> 
@@ -2178,12 +2377,13 @@ class Client(ClientBase):
             ...     result = myClient.createMonitoredData([address], 
             ...                                           notificationCallbacks = [myCallback])
             ...     clientHandle = result.targets[0].clientHandle
-            ... except UafError, e:
+            ... except CreateMonitoredItemsError, e:
             ...     # The monitored items could not be created, because there was some failure
             ...     #  (maybe the server is off-line?).
             ...     # Nevertheless, the client handles were already assigned, and we can get them like this: 
-            ...     diagnostics = e.status.additionalDiagnostics()
-            ...     clientHandle = diagnostics.getClientHandles()[0]
+            ...     clientHandle = e.assignedClientHandles[0]
+            ... except UafError, e:
+            ...     print("Oops, an unexpected error!")
             >>> 
             >>> 
             >>> info = myClient.monitoredItemInformation(clientHandle)
@@ -2204,7 +2404,7 @@ class Client(ClientBase):
         :param serviceSettings:             The service settings to be used (leave None for 
                                             default settings).
         :type  serviceSettings:             :class:`pyuaf.client.settings.ServiceSettings`
-        :raise pyuaf.util.errors.UnknownHandleError:
+        :raise pyuaf.util.errors.UnknownClientHandleError:
              The clientSubscriptionHandle is unknown!
         :raise pyuaf.util.errors.UafError:
              Base exception, catch this to handle any UAF errors.
@@ -2216,7 +2416,7 @@ class Client(ClientBase):
                                               clientSubscriptionHandle, 
                                               publishingEnabled, 
                                               serviceSettings)
-        pyuaf.util.errors.evaluate(status)
+        status.test()
     
             
     def setMonitoringMode(self, clientHandles, monitoringMode, serviceSettings=None):
@@ -2239,7 +2439,7 @@ class Client(ClientBase):
         .. doctest::
         
             >>> import pyuaf
-            >>> from pyuaf.util.errors import UafError
+            >>> from pyuaf.util.errors import UafError, CreateMonitoredItemsError
             >>> from pyuaf.util import Address, NodeId
             >>> from pyuaf.client import Client
             >>> from pyuaf.util import monitoringmodes 
@@ -2263,12 +2463,13 @@ class Client(ClientBase):
             ...                 notificationCallbacks = [updateTemperatureWidget, updatePressureWidget])
             ...     # store the clientHandles:
             ...     clientHandles = [ target.clientHandle for target in result.targets ]
-            ... except UafError, e:
+            ... except CreateMonitoredItemsError, e:
             ...     # The monitored items could not be created, because there was some failure
             ...     #  (maybe the server is off-line?).
             ...     # Nevertheless, the client handles were already assigned, and we can get them like this: 
-            ...     diagnostics = e.status.additionalDiagnostics()
-            ...     clientHandles = diagnostics.getClientHandles()[0]
+            ...     clientHandle = e.assignedClientHandles[0]
+            ... except UafError, e:
+            ...     print("Oops, an unexpected error!")
             >>> 
             >>> def uiTabChangedState(visible):
             ...     if visible:
@@ -2304,7 +2505,7 @@ class Client(ClientBase):
                                               monitoringMode, 
                                               serviceSettings, 
                                               results)
-        pyuaf.util.errors.evaluate(status)
+        status.test()
         return results
         
         
@@ -2341,10 +2542,11 @@ class Client(ClientBase):
              - via the returned :class:`~pyuaf.client.results.CreateMonitoredDataResult` (or
                :class:`~pyuaf.client.results.CreateMonitoredEventsResult`), in case
                processRequest() was successful and didn't raise an exception
-             - via the exception that was raised in case processRequest() was not successful. 
-               This exception has a "status" attribute (of type :class:`~pyuaf.util.Status`),
-               and this will provide you a diagnostics object (see :meth:`pyuaf.util.Status.additionalDiagnostics`),
-               which will finally provide you the handles (see :meth:`pyuaf.util.StatusDiagnostics.getClientHandles`).
+             - via the :class:`~pyuaf.util.errors.CreateMonitoredItemsError` exception that was 
+               raised in case processRequest() was not successful. 
+               This exception has a 
+               :attr:`~pyuaf.util.errors.CreateMonitoredItemsError.assignedClientHandles`
+               attribute, providing the assigned client handles.
         
         .. warning::
             Asynchronous requests MUST be invoked on a single session. Meaning:
@@ -2438,7 +2640,7 @@ class Client(ClientBase):
                             if type(request) == pyuaf.client.requests.CreateMonitoredDataRequest:
                                 self.__dataNotificationCallbacks__[result.targets[i].clientHandle] = notificationCallbacks[i]
                 
-                pyuaf.util.errors.evaluate(status)
+                status.test()
                 
                 # register the resultCallback if necessary
                 if resultCallback is not None:

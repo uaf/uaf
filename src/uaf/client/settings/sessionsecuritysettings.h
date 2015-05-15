@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_SESSIONSECURITYSETTINGS_H_
-#define UAFC_SESSIONSECURITYSETTINGS_H_
+#ifndef UAF_SESSIONSECURITYSETTINGS_H_
+#define UAF_SESSIONSECURITYSETTINGS_H_
 
 // STD
 #include <string>
@@ -36,7 +36,7 @@
 #include "uaf/util/endpointdescription.h"
 #include "uaf/client/clientexport.h"
 
-namespace uafc
+namespace uaf
 {
 
 
@@ -45,7 +45,7 @@ namespace uafc
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT SessionSecuritySettings
+    class UAF_EXPORT SessionSecuritySettings
     {
     public:
 
@@ -89,13 +89,13 @@ namespace uafc
 
 
         // comparison operators
-        friend UAFC_EXPORT bool operator<(
+        friend UAF_EXPORT bool operator<(
                 const SessionSecuritySettings& object1,
                 const SessionSecuritySettings& object2);
-        friend UAFC_EXPORT bool operator==(
+        friend UAF_EXPORT bool operator==(
                 const SessionSecuritySettings& object1,
                 const SessionSecuritySettings& object2);
-        friend UAFC_EXPORT bool operator!=(
+        friend UAF_EXPORT bool operator!=(
                 const SessionSecuritySettings& object1,
                 const SessionSecuritySettings& object2);
 
@@ -113,8 +113,8 @@ namespace uafc
      * @param endpoint  The endpoint description, e.g. as discovered by the UAF client.
      * @return          Good if the settings and the endpoint match, bad if not.
      */
-    uaf::Status UAFC_EXPORT match(
-            const uafc::SessionSecuritySettings&    settings,
+    uaf::Status UAF_EXPORT match(
+            const uaf::SessionSecuritySettings&    settings,
             const uaf::EndpointDescription&         endpoint);
 
 
@@ -130,14 +130,14 @@ namespace uafc
      * @return                  Good if one of the settings and one of the endpoints match, bad if
      *                          not.
      */
-    uaf::Status UAFC_EXPORT match(
-            const std::vector<uafc::SessionSecuritySettings>&   settings,
+    uaf::Status UAF_EXPORT match(
+            const std::vector<uaf::SessionSecuritySettings>&   settings,
             const std::vector<uaf::EndpointDescription>&        endpoints,
-            uafc::SessionSecuritySettings&                      suitableSettings,
+            uaf::SessionSecuritySettings&                      suitableSettings,
             uaf::EndpointDescription&                           suitableEndpoint);
 
 
 }
 
 
-#endif /* UAFC_SESSIONSECURITYSETTINGS_H_ */
+#endif /* UAF_SESSIONSECURITYSETTINGS_H_ */

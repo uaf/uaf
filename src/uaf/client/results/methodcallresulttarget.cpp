@@ -21,15 +21,20 @@
 #include "uaf/client/results/methodcallresulttarget.h"
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;
     using std::size_t;
 
+
+    // Constructor
+    // =============================================================================================
+    MethodCallResultTarget::MethodCallResultTarget()
+    : opcUaStatusCode(OpcUa_Uncertain)
+    {}
 
 
     // Get a string representation
@@ -45,6 +50,10 @@ namespace uafc
         ss << indent << " - status";
         ss << fillToPos(ss, colon);
         ss << ": " << status.toString() << "\n";
+
+        ss << indent << " - opcUaStatusCode";
+        ss << fillToPos(ss, colon);
+        ss << ": " << double(opcUaStatusCode) << "\n";
 
         ss << indent << " - outputArguments[]";
         ss << fillToPos(ss, colon);
@@ -71,6 +80,7 @@ namespace uafc
     {
         return    object1.clientConnectionId == object2.clientConnectionId
                && object1.status             == object2.status
+               && object1.opcUaStatusCode    == object2.opcUaStatusCode
                && object1.outputArguments    == object2.outputArguments;
     }
 
@@ -93,6 +103,8 @@ namespace uafc
     {
         if (object1.clientConnectionId != object2.clientConnectionId)
             return object1.clientConnectionId < object2.clientConnectionId;
+        else if (object1.opcUaStatusCode != object2.opcUaStatusCode)
+            return object1.opcUaStatusCode < object2.opcUaStatusCode;
         else if (object1.status != object2.status)
             return object1.status < object2.status;
         else

@@ -130,11 +130,11 @@ try:
         if len(result.targets[0].dataValues) == 0:
             # Strange, we didn't receive any historical data.
             # Check if this is expected behavior:
-            if result.targets[0].status.opcUaStatusCode() == opcuastatuscodes.OpcUa_GoodNoData:
+            if result.targets[0].opcUaStatusCode == opcuastatuscodes.OpcUa_GoodNoData:
                 print("OK, no data could be received because he server reports that there is "
                       "no data that matches your request")
         else:
-            allStatuses     = []
+            allStatusCodes  = []
             allDoubleValues = []
             allSourceTimes  = []
             
@@ -152,8 +152,8 @@ try:
                     # And when Python garbage collects this data, your pointers will point to
                     # invalid memory, and your software will crash when you try to use them!
                     
-                    allStatuses.append( Status(dataValue.status) )               # notice the copy constructor!
-                    allDoubleValues.append( dataValue.data.value )                  # an int, no copy constructor needed
+                    allStatusCodes.append( dataValue.opcUaStatusCode )           # notice the copy constructor!
+                    allDoubleValues.append( dataValue.data.value )               # an int, no copy constructor needed
                     allSourceTimes.append( DateTime(dataValue.sourceTimestamp) ) # notice the copy constructor!
             
             # now print the lists 
@@ -167,7 +167,7 @@ try:
                              + "."                                  \
                              + ("%.3d" %allSourceTimes[i].msec())
                 
-                print("Code=%d - Value=%s - Time=%s" %(allStatuses[i].statusCode(), allDoubleValues[i], timeString))
+                print("Code=%d - Value=%s - Time=%s" %(allStatusCodes[i], allDoubleValues[i], timeString))
     
     print("")
     print("Second example:")

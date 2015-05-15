@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_SESSIONSTATE_H_
-#define UAFC_SESSIONSTATE_H_
+#ifndef UAF_SESSIONSTATE_H_
+#define UAF_SESSIONSTATE_H_
 
 // STD
 #include <string>
@@ -28,9 +28,9 @@
 #include "uaclient/uaclientsdk.h"
 #include "uaclient/uasession.h"
 // UAF
-#include "uaf/client/clientexport.h"
+#include "uaf/util/util.h"
 
-namespace uafc
+namespace uaf
 {
 
 
@@ -61,7 +61,7 @@ namespace uafc
          *
          * @ingroup ClientSessions
          */
-        std::string UAFC_EXPORT toString(uafc::sessionstates::SessionState state);
+        std::string UAF_EXPORT toString(uaf::sessionstates::SessionState state);
 
 
         /**
@@ -72,8 +72,8 @@ namespace uafc
          *
          * @ingroup ClientSessions
          */
-        UaClientSdk::UaClient::ServerStatus UAFC_EXPORT toSdk(
-                uafc::sessionstates::SessionState state);
+        UaClientSdk::UaClient::ServerStatus UAF_EXPORT toSdk(
+                uaf::sessionstates::SessionState state);
 
 
         /**
@@ -84,11 +84,11 @@ namespace uafc
          *
          * @ingroup ClientSessions
          */
-        uafc::sessionstates::SessionState UAFC_EXPORT toUaf(
+        uaf::sessionstates::SessionState UAF_EXPORT toUaf(
                 UaClientSdk::UaClient::ServerStatus status);
     }
 
 }
 
 
-#endif /* UAFC_SESSIONSTATE_H_ */
+#endif /* UAF_SESSIONSTATE_H_ */

@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_WRITESETTINGS_H_
-#define UAFC_WRITESETTINGS_H_
+#ifndef UAF_WRITESETTINGS_H_
+#define UAF_WRITESETTINGS_H_
 
 
 
@@ -31,17 +31,17 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::WriteSettings object holds the service settings that are particular
+    * An uaf::WriteSettings object holds the service settings that are particular
     * for the Write service.
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT WriteSettings : public uafc::ServiceSettings
+    class UAF_EXPORT WriteSettings : public uaf::ServiceSettings
     {
     public:
 
@@ -49,11 +49,11 @@ namespace uafc
         /**
          * Create default Write settings.
          */
-        WriteSettings() : uafc::ServiceSettings() {}
+        WriteSettings() : uaf::ServiceSettings() {}
     };
 
 }
 
 
 
-#endif /* UAFC_WRITESETTINGS_H_ */
+#endif /* UAF_WRITESETTINGS_H_ */

@@ -20,10 +20,9 @@
 
 #include "uaf/client/subscriptions/subscriptionfactory.h"
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;
@@ -33,7 +32,7 @@ namespace uafc
     // =============================================================================================
     SubscriptionFactory::SubscriptionFactory(
             LoggerFactory*              loggerFactory,
-            uafc::ClientConnectionId    clientConnectionId,
+            uaf::ClientConnectionId    clientConnectionId,
             UaClientSdk::UaSession*     uaSession,
             ClientInterface*            clientInterface,
             Database*                   database)
@@ -70,7 +69,7 @@ namespace uafc
 
     // Get a new transaction id
     // =============================================================================================
-    uafc::TransactionId SubscriptionFactory::getNewTransactionId_()
+    uaf::TransactionId SubscriptionFactory::getNewTransactionId_()
     {
         UaMutexLocker locker(&transactionIdMutex_);
 
@@ -105,9 +104,9 @@ namespace uafc
         Status ret;
         Subscription* subscription = 0;
 
-        ret = acquireSubscription(settings, subscription);
+        Status acquisitionStatus = acquireSubscription(settings, subscription);
 
-        if (ret.isGood())
+        if (acquisitionStatus.isGood())
         {
             clientSubscriptionHandle = subscription->clientSubscriptionHandle();
 
@@ -115,8 +114,9 @@ namespace uafc
         }
         else
         {
-            ret.addDiagnostic("Could not manually subscribe");
-            logger_->error(ret);
+            ret = CouldNotManuallySubscribeError();
+            ret.setRaisedBy(acquisitionStatus);
+            logger_->error(ret.toString());
         }
 
         return ret;
@@ -130,17 +130,18 @@ namespace uafc
         Status ret;
         Subscription* subscription = 0;
 
-        ret = acquireExistingSubscription(clientSubscriptionHandle, subscription);
+        Status acquisitionStatus = acquireExistingSubscription(clientSubscriptionHandle, subscription);
 
-        if (ret.isGood())
+        if (acquisitionStatus.isGood())
         {
             ret = subscription->deleteSubscription();
             releaseSubscription(subscription);
         }
         else
         {
-            ret.addDiagnostic("Could not manually unsubscribe");
-            logger_->error(ret);
+            ret = CouldNotManuallyUnsubscribeError();
+            ret.setRaisedBy(acquisitionStatus);
+            logger_->error(ret.toString());
         }
 
         return ret;
@@ -241,10 +242,7 @@ namespace uafc
                 return it->second->setPublishingMode(publishingEnabled, serviceSettings);
         }
 
-        return Status(uaf::statuscodes::InvalidRequestError,
-                      "Could not set the publishing mode since clientSubscriptionHandle %d was " \
-                      "not found",
-                      clientSubscriptionHandle);
+        return UnknownClientSubscriptionHandleError(clientSubscriptionHandle);
     }
 
 
@@ -323,7 +321,7 @@ namespace uafc
                     activityMap_[handle] = activityMap_[handle] + 1;
                     activityMapMutex_.unlock();
 
-                    ret.setGood();
+                    ret = statuscodes::Good;
 
                     break;
                 }
@@ -367,9 +365,6 @@ namespace uafc
         // 'subscription' now points to an existing Subscription instance
         // (i.e. a valid memory location)
 
-        ret.setGood();
-
-
         // add some diagnostics
         if (ret.isGood())
         {
@@ -381,7 +376,6 @@ namespace uafc
         else
         {
             logger_->error("The requested subscription could not be acquired");
-            ret.addDiagnostic("The requested subscription could not be acquired");
         }
         return ret;
     }
@@ -408,10 +402,7 @@ namespace uafc
 
         if (iter == subscriptionMap_.end())
         {
-            ret.setStatus(statuscodes::InvalidRequestError,
-                          "No subscription with ClientSubscriptionHandle %d is known",
-                          clientSubscriptionHandle);
-
+            ret = UnknownClientSubscriptionHandleError(clientSubscriptionHandle);
             logger_->error(ret);
         }
         else
@@ -426,7 +417,7 @@ namespace uafc
             activityMapMutex_.unlock();
 
             // an existing session was acquired, so set the status to Good
-            ret.setGood();
+            ret = statuscodes::Good;
 
             logger_->debug("Subscription %d was acquired (#activities: %d)",
                            clientSubscriptionHandle, newActivityCount);
@@ -455,14 +446,12 @@ namespace uafc
 
         if (subscription == 0)
         {
-            ret.setStatus(statuscodes::UnexpectedError,
-                          "releaseSubscription() got a null pointer!");
+            ret = UnexpectedError("releaseSubscription() got a null pointer!");
             logger_->error(ret);
         }
         else if (activityMap_[subscription->clientSubscriptionHandle()] == 0)
         {
-            ret.setStatus(statuscodes::UnexpectedError,
-                          "Trying to release a fully released subscription!");
+            ret = UnexpectedError("Trying to release a fully released subscription!");
             logger_->error(ret);
         }
         else
@@ -470,7 +459,7 @@ namespace uafc
             ClientSubscriptionHandle handle = subscription->clientSubscriptionHandle();
 
             activityMap_[handle] = activityMap_[handle] - 1;
-            ret.setGood();
+            ret = statuscodes::Good;
 
             logger_->debug("Subscription %d is now released (#activities: %d)",
                            handle, activityMap_[handle]);
@@ -514,7 +503,7 @@ namespace uafc
         if (acquireStatus.isGood())
         {
             // update the session state
-            subscription->setSubscriptionState(uafc::subscriptionstates::toUaf(uaStatus));
+            subscription->setSubscriptionState(uaf::subscriptionstates::toUaf(uaStatus));
 
             // release the acquired session
             releaseSubscription(subscription);

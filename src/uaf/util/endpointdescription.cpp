@@ -65,7 +65,7 @@ namespace uaf
     EndpointDescription::EndpointDescription(
             std::string                                     endpointUrl,
             uaf::ApplicationDescription                     server,
-            std::pair<int32_t, uint8_t*>                    serverCertificate,
+            uaf::ByteString                                 serverCertificate,
             uaf::messagesecuritymodes::MessageSecurityMode  securityMode,
             std::string                                     securityPolicyUri,
             std::vector<uaf::UserTokenPolicy>               userIdentityTokens,
@@ -107,11 +107,11 @@ namespace uaf
             ss << ": " << endpointUrl << "\n";
 
             ss << indent << " - server\n";
-            ss << server.toString(indent + "   ", colon);
+            ss << server.toString(indent + "   ", colon) << "\n";
 
             ss << indent << " - serverCertificate";
             ss << fillToPos(ss, colon);
-            ss << ": " << serverCertificate.first << " bytes\n";
+            ss << ": " << serverCertificate.toString() << "\n";
 
             ss << indent << " - securityMode";
             ss << fillToPos(ss, colon);

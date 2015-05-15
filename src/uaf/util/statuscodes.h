@@ -42,39 +42,133 @@ namespace uaf
         /**
          * This enum defines the status codes as specified by the UAF.
          *
-         * These status codes are more general than the (more than hundred!) status codes specified
-         * by the OPC UA standard. Each "OPC UA status code" can be mapped to exactly one
-         * "UAF statuscode".
-         *
-         * For instance, an OpcUa_BadUserAccessDenied, OpcUa_BadCertificateInvalid,
-         * OpcUa_BadCertificateUntrusted (and many more) OPC UA status codes lead to a
-         * uaf::statuscodes::SecurityError status code.
-         *
          * @ingroup Util
          */
         enum StatusCode
         {
             Good,
             Uncertain,
-            ConfigurationError,
+            DiscoveryError,
+            ResolutionError,
+            InvalidRequestError,
+            FindServersError,
+            UnknownServerError,
+            EmptyUrlError,
+            NoParallelFindServersAllowedError,
+            NoDiscoveryUrlsFoundError,
+            ServerCertificateRejectedByUserError,
+            ServerCertificateSavingError,
+            OpenSSLStoreInitializationError,
+            ClientCertificateLoadingError,
+            ServerDidNotProvideCertificateError,
             ConnectionError,
+            PathNotExistsError,
+            SecurityError,
+            NoSecuritySettingsGivenError,
+            PathCreationError,
+            SecuritySettingsMatchError,
+            WrongTypeError,
+            UnexpectedError,
+            ServerArrayConversionError,
+            NamespaceArrayConversionError,
+            BadNamespaceArrayError,
+            BadServerArrayError,
+            UnknownServerIndexError,
+            InvalidAddressError,
+            UnknownNamespaceUriError,
+            NoNamespaceIndexOrUriGivenError,
+            UnknownNamespaceIndexError,
+            EmptyServerUriAndUnknownNamespaceIndexError,
+            ExpandedNodeIdAddressExpectedError,
+            EmptyServerUriError,
+            UnsupportedError,
+            UnsupportedNodeIdIdentifierTypeError,
+            SyncInvocationNotSupportedError,
+            AsyncInvocationNotSupportedError,
+            NoStatusesGivenError,
+            BadStatusesPresentError,
+            NotAllTargetsCouldBeResolvedError,
+            InvalidServerUriError,
+            SubscriptionNotCreatedError,
+            NoTargetsGivenError,
+            DataDontMatchAddressesError,
+            ItemNotFoundForTheGivenHandleError,
+            TargetRankOutOfBoundsError,
+            NoItemFoundForTheGivenRequestHandleError,
+            ContinuationPointsDontMatchAddressesError,
+            UnknownNamespaceIndexAndServerIndexError,
+            AsyncMultiMethodCallNotSupportedError,
+            EmptyAddressError,
+            MultipleTranslationResultsError,
+            UnknownClientSubscriptionHandleError,
+            UnknownClientHandleError,
+            UnknownClientConnectionIdError,
+            AsyncConnectionFailedError,
+            ConnectionFailedError,
+            EmptyUserCertificateError,
+            InvalidPrivateKeyError,
+            SessionSecuritySettingsDontMatchEndpointError,
+            CouldNotManuallyUnsubscribeError,
+            CouldNotManuallySubscribeError,
+            SessionNotConnectedError,
+            SubscriptionHasBeenDeletedError,
+            NoDiscoveryUrlsExposedByServerError,
+            GetEndpointsError,
+            NoEndpointsProvidedByServerError,
+            DisconnectionFailedError,
+            NoConnectedSessionToUpdateArraysError,
+            BadDataReceivedError,
+            ServiceError,
+            CouldNotReadArraysError,
+            CreateMonitoredItemsError,
+            CreateMonitoredItemsInvocationError,
+            BeginCreateMonitoredItemsInvocationError,
+            ServerCouldNotCreateMonitoredItemsError,
+            ServerCouldNotBrowseNextError,
+            BrowseNextInvocationError,
+            ReadInvocationError,
+            BeginReadInvocationError,
+            ServerCouldNotReadError,
+            TranslateBrowsePathsToNodeIdsInvocationError,
+            ServerCouldNotTranslateBrowsePathsToNodeIdsError,
+            HistoryReadInvocationError,
+            HistoryReadRawModifiedInvocationError,
+            ServerCouldNotHistoryReadError,
+            MethodCallInvocationError,
+            AsyncMethodCallInvocationError,
+            ServerCouldNotCallMethodError,
+            ServerCouldNotBrowseError,
+            BrowseInvocationError,
+            WriteInvocationError,
+            AsyncWriteInvocationError,
+            ServerCouldNotWriteError,
+            CallCompleteError,
+            InputArgumentError,
+            ReadCompleteError,
+            WriteCompleteError,
+            SubscriptionError,
+            SetPublishingModeInvocationError,
+            ServerCouldNotSetMonitoringModeError,
+            CreateSubscriptionError,
+            DeleteSubscriptionError,
+            SetMonitoringModeInvocationError,
+            ConfigurationError,
+            CouldNotCreateCertificateTrustListLocationError,
+            CouldNotCreateCertificateRevocationListLocationError,
+            CouldNotCreateIssuersCertificateLocationError,
+            CouldNotCreateIssuersRevocationListLocationError,
+            CouldNotCreateClientPrivateKeyLocationError,
+            CouldNotCreateClientCertificateLocationError,
+            // status codes kept for backwards compatibility:
             DataFormatError,
             DataSizeError,
             DataSourceError,
             DisconnectionError,
-            DiscoveryError,
-            InvalidRequestError,
             LowLevelError,
-            ResolutionError,
-            WrongTypeError,
             OtherError,
-            SecurityError,
             TimeoutError,
             NoResultReceivedError,
-            SubscriptionError,
-            UnexpectedError,
-            UnknownHandleError,
-            UnsupportedError
+            UnknownHandleError
         };
 
 
@@ -89,20 +183,6 @@ namespace uaf
         std::string UAF_EXPORT toString(uaf::statuscodes::StatusCode code);
 
 
-        /**
-         * Convert the SDK/Stack code to a UAF code.
-         *
-         * @ingroup Util
-         */
-        uaf::statuscodes::StatusCode UAF_EXPORT fromSdkToUaf(OpcUa_StatusCode code);
-
-
-        /**
-         * Convert the UAF code to a SDK code.
-         *
-         * @ingroup Util
-         */
-        OpcUa_StatusCode UAF_EXPORT fromUafToSdk(uaf::statuscodes::StatusCode code);
 
     }
 

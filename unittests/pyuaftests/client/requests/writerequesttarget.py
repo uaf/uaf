@@ -27,7 +27,6 @@ class WriteRequestTargetTest(unittest.TestCase):
         self.target1.nodeClassMask = 4
         self.target1.referenceTypeId = pyuaf.util.NodeId("id", "ns")
         self.target1.resultMask = 5
-        
         self.target1.attributeId = pyuaf.util.attributeids.DisplayName
         self.target1.data = pyuaf.util.LocalizedText("en", "text")
         self.target1.indexRange = "indexRange"
@@ -35,7 +34,7 @@ class WriteRequestTargetTest(unittest.TestCase):
         self.target1.serverTimestamp = pyuaf.util.DateTime(123.45)
         self.target1.sourcePicoseconds = 456
         self.target1.sourceTimestamp = pyuaf.util.DateTime(456.78)
-        self.target1.status.setGood()
+        self.target1.opcUaStatusCode = pyuaf.util.opcuastatuscodes.OpcUa_Good
     
     def test_client_WriteRequestTarget_address(self):
         self.assertEqual( self.target1.address , pyuaf.util.Address( pyuaf.util.NodeId("id", "ns"), "svr" ) )
@@ -76,10 +75,8 @@ class WriteRequestTargetTest(unittest.TestCase):
     def test_client_WriteRequestTarget_sourceTimestamp(self):
         self.assertEqual( self.target1.sourceTimestamp , pyuaf.util.DateTime(456.78) )
     
-    def test_client_WriteRequestTarget_status(self):
-        status = pyuaf.util.Status()
-        status.setGood()
-        self.assertEqual( self.target1.status , status )
+    def test_client_WriteRequestTarget_opcUaStatusCode(self):
+        self.assertEqual( self.target1.opcUaStatusCode , pyuaf.util.opcuastatuscodes.OpcUa_Good )
     
     def test_client_WriteRequestTargetVector(self):
         testVector(self, pyuaf.client.requests.WriteRequestTargetVector, [self.target0, self.target1])

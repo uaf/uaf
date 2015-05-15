@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_CREATEMONITOREDDATASETTINGS_H_
-#define UAFC_CREATEMONITOREDDATASETTINGS_H_
+#ifndef UAF_CREATEMONITOREDDATASETTINGS_H_
+#define UAF_CREATEMONITOREDDATASETTINGS_H_
 
 
 
@@ -31,23 +31,23 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
-    * An uafc::CreateMonitoredDataSettings object holds the service settings that are particular
+    * An uaf::CreateMonitoredDataSettings object holds the service settings that are particular
     * for the CreateMonitoredItems service (used to monitor data changes).
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT CreateMonitoredDataSettings : public uafc::ServiceSettings
+    class UAF_EXPORT CreateMonitoredDataSettings : public uaf::ServiceSettings
     {
     public:
 
         /**
          * Create default CreateMonitoredData settings.
          */
-        CreateMonitoredDataSettings() : uafc::ServiceSettings() {}
+        CreateMonitoredDataSettings() : uaf::ServiceSettings() {}
 
         // ToDo add timestampstoreturn
     };
@@ -57,4 +57,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_CREATEMONITOREDDATASETTINGS_H_ */
+#endif /* UAF_CREATEMONITOREDDATASETTINGS_H_ */

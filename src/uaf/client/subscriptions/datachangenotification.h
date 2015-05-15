@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_DATACHANGENOTIFICATION_H_
-#define UAFC_DATACHANGENOTIFICATION_H_
+#ifndef UAF_DATACHANGENOTIFICATION_H_
+#define UAF_DATACHANGENOTIFICATION_H_
 
 
 // STD
@@ -39,16 +39,16 @@
 #include "uaf/client/settings/monitoreditemsettings.h"
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::DataChangeNotification is a notification for a monitored data item.
+    * A uaf::DataChangeNotification is a notification for a monitored data item.
     *
     * @ingroup ClientSubscriptions
     ***********************************************************************************************/
-    class UAFC_EXPORT DataChangeNotification : public MonitoredItemNotification
+    class UAF_EXPORT DataChangeNotification : public MonitoredItemNotification
     {
     public:
 
@@ -73,13 +73,13 @@ namespace uafc
 
 
         // comparison operators
-        friend UAFC_EXPORT bool operator==(
+        friend UAF_EXPORT bool operator==(
                 const DataChangeNotification& object1,
                 const DataChangeNotification& object2);
-        friend UAFC_EXPORT bool operator!=(
+        friend UAF_EXPORT bool operator!=(
                 const DataChangeNotification& object1,
                 const DataChangeNotification& object2);
-        friend UAFC_EXPORT bool operator<(
+        friend UAF_EXPORT bool operator<(
                 const DataChangeNotification& object1,
                 const DataChangeNotification& object2);
     };
@@ -93,4 +93,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_DATACHANGENOTIFICATION_H_ */
+#endif /* UAF_DATACHANGENOTIFICATION_H_ */

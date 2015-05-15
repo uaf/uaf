@@ -20,30 +20,29 @@
 
 #include "uaf/client/sessions/sessionstates.h"
 
-namespace uafc
+namespace uaf
 {
-    using namespace uafc;
 
     namespace sessionstates
     {
 
         // Get a string representation
         // =============================================================================================
-        std::string toString(uafc::sessionstates::SessionState state)
+        std::string toString(uaf::sessionstates::SessionState state)
         {
             switch (state)
             {
-                case uafc::sessionstates::Disconnected:
+                case uaf::sessionstates::Disconnected:
                     return "Disconnected";
-                case uafc::sessionstates::Connected:
+                case uaf::sessionstates::Connected:
                     return "Connected";
-                case uafc::sessionstates::ConnectionErrorApiReconnect:
+                case uaf::sessionstates::ConnectionErrorApiReconnect:
                     return "ConnectionErrorApiReconnect";
-                case uafc::sessionstates::ConnectionWarningWatchdogTimeout:
+                case uaf::sessionstates::ConnectionWarningWatchdogTimeout:
                     return "ConnectionWarningWatchdogTimeout";
-                case uafc::sessionstates::NewSessionCreated:
+                case uaf::sessionstates::NewSessionCreated:
                     return "NewSessionCreated";
-                case uafc::sessionstates::ServerShutdown:
+                case uaf::sessionstates::ServerShutdown:
                     return "ServerShutdown";
                 default:
                     return "UNKNOWN";
@@ -53,21 +52,21 @@ namespace uafc
 
         // SDK to UAF mode
         // =============================================================================================
-        UaClientSdk::UaClient::ServerStatus toSdk(uafc::sessionstates::SessionState state)
+        UaClientSdk::UaClient::ServerStatus toSdk(uaf::sessionstates::SessionState state)
         {
             switch (state)
             {
-                case uafc::sessionstates::Disconnected:
+                case uaf::sessionstates::Disconnected:
                     return UaClientSdk::UaClient::Disconnected;
-                case uafc::sessionstates::Connected:
+                case uaf::sessionstates::Connected:
                     return UaClientSdk::UaClient::Connected;
-                case uafc::sessionstates::ConnectionErrorApiReconnect:
+                case uaf::sessionstates::ConnectionErrorApiReconnect:
                     return UaClientSdk::UaClient::ConnectionErrorApiReconnect;
-                case uafc::sessionstates::ConnectionWarningWatchdogTimeout:
+                case uaf::sessionstates::ConnectionWarningWatchdogTimeout:
                     return UaClientSdk::UaClient::ConnectionWarningWatchdogTimeout;
-                case uafc::sessionstates::NewSessionCreated:
+                case uaf::sessionstates::NewSessionCreated:
                     return UaClientSdk::UaClient::NewSessionCreated;
-                case uafc::sessionstates::ServerShutdown:
+                case uaf::sessionstates::ServerShutdown:
                     return UaClientSdk::UaClient::ServerShutdown;
                 default:
                     return UaClientSdk::UaClient::Disconnected;
@@ -81,19 +80,19 @@ namespace uafc
             switch (serverStatus)
             {
                 case UaClientSdk::UaClient::Disconnected:
-                    return uafc::sessionstates::Disconnected;
+                    return uaf::sessionstates::Disconnected;
                 case UaClientSdk::UaClient::Connected:
-                    return uafc::sessionstates::Connected;
+                    return uaf::sessionstates::Connected;
                 case UaClientSdk::UaClient::ConnectionErrorApiReconnect:
-                    return uafc::sessionstates::ConnectionErrorApiReconnect;
+                    return uaf::sessionstates::ConnectionErrorApiReconnect;
                 case UaClientSdk::UaClient::ConnectionWarningWatchdogTimeout:
-                    return uafc::sessionstates::ConnectionWarningWatchdogTimeout;
+                    return uaf::sessionstates::ConnectionWarningWatchdogTimeout;
                 case UaClientSdk::UaClient::NewSessionCreated:
-                    return uafc::sessionstates::NewSessionCreated;
+                    return uaf::sessionstates::NewSessionCreated;
                 case UaClientSdk::UaClient::ServerShutdown:
-                    return uafc::sessionstates::ServerShutdown;
+                    return uaf::sessionstates::ServerShutdown;
                 default:
-                    return uafc::sessionstates::Disconnected;
+                    return uaf::sessionstates::Disconnected;
             }
         }
     }

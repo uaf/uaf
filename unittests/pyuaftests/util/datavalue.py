@@ -21,10 +21,8 @@ class DataValueTest(unittest.TestCase):
         self.d0  = pyuaf.util.DataValue()
         self.d1  = pyuaf.util.DataValue(pyuaf.util.primitives.UInt16(123))
         
-        status = pyuaf.util.Status()
-        status.setGood()
-        self.d2  = pyuaf.util.DataValue(pyuaf.util.primitives.Int64(456), status)
-        self.d2_ = pyuaf.util.DataValue(pyuaf.util.primitives.Int64(456), status)
+        self.d2  = pyuaf.util.DataValue(pyuaf.util.primitives.Int64(456), pyuaf.util.opcuastatuscodes.OpcUa_BadArgumentsMissing)
+        self.d2_ = pyuaf.util.DataValue(pyuaf.util.primitives.Int64(456), pyuaf.util.opcuastatuscodes.OpcUa_BadArgumentsMissing)
         
         self.d3 = pyuaf.util.DataValue()
         self.d3.data = pyuaf.util.LocalizedText("en", "some text")
@@ -32,7 +30,7 @@ class DataValueTest(unittest.TestCase):
         self.d3.serverTimestamp = pyuaf.util.DateTime(1.23)
         self.d3.sourcePicoseconds = 456
         self.d3.sourceTimestamp = pyuaf.util.DateTime(4.56)
-        self.d3.status.setStatus(pyuaf.util.statuscodes.DataFormatError, "dfe")
+        self.d3.opcUaStatusCode = pyuaf.util.opcuastatuscodes.OpcUa_BadDataLost
     
     def test_util_DataValue_data(self):
         self.assertEqual( self.d0.data , None )
@@ -65,14 +63,11 @@ class DataValueTest(unittest.TestCase):
         self.assertEqual( self.d3.sourceTimestamp, pyuaf.util.DateTime(4.56) )
     
     def test_util_DataValue_status(self):
-        status = pyuaf.util.Status()
-        status.setGood()
-        self.assertEqual( self.d0.status, status )
-        self.assertEqual( self.d1.status, status )
-        self.assertEqual( self.d2.status, status )
+        self.assertEqual( self.d0.opcUaStatusCode, pyuaf.util.opcuastatuscodes.OpcUa_Good )
+        self.assertEqual( self.d1.opcUaStatusCode, pyuaf.util.opcuastatuscodes.OpcUa_Good )
+        self.assertEqual( self.d2.opcUaStatusCode, pyuaf.util.opcuastatuscodes.OpcUa_BadArgumentsMissing )
         
-        status.setStatus(pyuaf.util.statuscodes.DataFormatError, "dfe")
-        self.assertEqual( self.d3.status, status )
+        self.assertEqual( self.d3.opcUaStatusCode, pyuaf.util.opcuastatuscodes.OpcUa_BadDataLost )
     
     def test_util_DataValue___eq__(self):
         self.assertTrue( self.d2 == self.d2_ )

@@ -71,14 +71,14 @@ namespace uaf
          * @param data      The data.
          * @param status    The status.
          */
-        DataValue(const uaf::Variant& data, const uaf::Status& status);
+        DataValue(const uaf::Variant& data, const uaf::OpcUaStatusCode& opcUaStatusCode);
 
 
         /** The data. */
         uaf::Variant data;
 
-        /** The status of the data. */
-        uaf::Status status;
+        /** The OPC UA status of the data. */
+        uaf::OpcUaStatusCode opcUaStatusCode;
 
         /** The source timestamp. */
         uaf::DateTime sourceTimestamp;

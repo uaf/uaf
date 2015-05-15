@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_CREATEMONITOREDEVENTSSETTINGS_H_
-#define UAFC_CREATEMONITOREDEVENTSSETTINGS_H_
+#ifndef UAF_CREATEMONITOREDEVENTSSETTINGS_H_
+#define UAF_CREATEMONITOREDEVENTSSETTINGS_H_
 
 
 
@@ -31,24 +31,24 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::CreateMonitoredEventsSettings object holds the service settings that are particular
+    * An uaf::CreateMonitoredEventsSettings object holds the service settings that are particular
     * for the CreateMonitoredItems service (used to monitor events).
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT CreateMonitoredEventsSettings : public uafc::ServiceSettings
+    class UAF_EXPORT CreateMonitoredEventsSettings : public uaf::ServiceSettings
     {
     public:
 
         /**
          * Create default CreateMonitoredEvents settings.
          */
-        CreateMonitoredEventsSettings() : uafc::ServiceSettings() {}
+        CreateMonitoredEventsSettings() : uaf::ServiceSettings() {}
 
         // ToDo add timestampstoreturn
     };
@@ -58,4 +58,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_CREATEMONITOREDEVENTSSETTINGS_H_ */
+#endif /* UAF_CREATEMONITOREDEVENTSSETTINGS_H_ */

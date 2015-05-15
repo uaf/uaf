@@ -172,6 +172,26 @@
         .. method:: __str__()
     
             Get a formatted string representation of the settings.
+            
+    
+        .. automethod:: pyuaf.client.settings.ClientSettings.createSecurityLocations()
+    
+            Create the security locations (directories).
+            
+            These locations will be created (if they don't exist already):
+            
+            - certificateTrustListLocation
+            - certificateRevocationListLocation
+            - issuersCertificatesLocation
+            - issuersRevocationListLocation
+            - base path of clientPrivateKey
+            - base path of clientCertificate
+            
+            :return: A Good status if the locations were created (or if they already existed).
+                     A Bad status if some location could not be created (e.g. due to wrong 
+                     permissions).
+            :rtype: :class:`~pyuaf.util.Status`
+            
     
     
     * Attributes
@@ -193,7 +213,7 @@
                 The unique product URI of the client (as a ``str``).
             
             .. autoattribute:: pyuaf.client.settings.ClientSettings.localeId
-            
+             
                 The Locale identifier (e.g. "en", "de", "en-US", ...) (as a ``str``).
                 
                 
@@ -237,45 +257,84 @@
        * Attributes related to security
            
            
-           .. autoattribute:: pyuaf.client.settings.ClientSettings.certificateRevocationListAbsoluteFileName
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.certificateTrustListLocation
            
-               The revocation list (i.e. file that holds all revoked certificates), as a full path, of type ``str``.
-             
-               ``[ApplicationPath]`` may be used as placeholder, and the directories must be separated by
-               forward slashes (``/``), also on Windows.
-             
-               Example: ``"[ApplicationPath]/PKI/CA/crl/uaclientcpp.crl"``.
-           
-           
-           .. autoattribute:: pyuaf.client.settings.ClientSettings.certificateTrustAbsoluteDirectory
-             
-               The directory holding the trusted certificates, as a full path, of type ``str``.
+               The trust list location as a ``str``.
+               
+               This directory can be specified either as an absolute path, or as a path relative to
+               the application path.
           
-               ``[ApplicationPath]`` may be used as placeholder, and the directories must be separated by
-               forward slashes (``/``), also on Windows.
-             
-               Example: ``"[ApplicationPath]/PKI/CA/certs"``.
-         
-         
-           .. autoattribute:: pyuaf.client.settings.ClientSettings.clientCertificateAbsoluteFileName
-           
-               The certificate of the client, as a full path (i.e. absolute filename), of type ``str``.
-         
-               ``[ApplicationPath]`` may be used as placeholder, and the directories must be separated by
-               forward slashes (``/``), also on Windows.
-          
-               Example: ``"[ApplicationPath]/PKI/CA/certs/my_client_certificate.der"``.
+               Default: "PKI/trusted/certs/".
            
            
-           .. autoattribute:: pyuaf.client.settings.ClientSettings.clientPrivateKeyAbsoluteFileName
-
-               The private key of the client, as a full path (i.e. absolute filename), of type ``str``.
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.certificateRevocationListLocation
+           
+               The revocation list location as a ``str``.
+               
+               This directory can be specified either as an absolute path, or as a path relative to
+               the application path.
           
-               ``[ApplicationPath]`` may be used as placeholder, and the directories must be separated by
-               forward slashes (``/``), also on Windows.
+               Default: "PKI/trusted/crl/".
+           
+           
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.issuersCertificatesLocation
+           
+               The issuers certificates location as a ``str``.
+               
+               This directory can be specified either as an absolute path, or as a path relative to
+               the application path.
           
-                Example: ``"[ApplicationPath]/PKI/CA/private/my_client_private_key.pem"``.
-    
+               Default: "PKI/issuers/certs/".
+           
+           
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.issuersRevocationListLocation
+           
+               The issuers revocation list location as a ``str``.
+               
+               This directory can be specified either as an absolute path, or as a path relative to
+               the application path.
+          
+               Default: "PKI/issuers/crl/".
+           
+           
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.createSecurityLocationsIfNeeded
+           
+               A ``bool`` to automatically create the security-related directories if they don't 
+               exist yet, or not.
+               
+               The following directories will be created *if* this boolean is ``True`` and *if* 
+               the UAF needs to connect to a secured endpoint and *if* these directories don't 
+               exist already:
+               - certificateTrustListLocation
+               - certificateRevocationListLocation
+               - issuersCertificatesLocation
+               - issuersRevocationListLocation
+               
+               If this boolean is ``False`` and the UAF needs to connect to a secured endpoint,
+               the UAF will simply check if the above directories exist. If they don't exist,
+               the connection will fail and you'll get an exception.
+          
+               Default: True
+           
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.clientPrivateKey
+           
+               The private key of this client application as a ``str``.
+               
+               This file can be specified either as an absolute path, or as a path relative to
+               the application path.
+          
+               Default: "PKI/client/private/client.pem".
+           
+           
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.clientCertificate
+           
+               The certificate of this client application as a ``str``.
+               
+               This file can be specified either as an absolute path, or as a path relative to
+               the application path.
+          
+               Default: "PKI/client/certs/client.der".
+           
 
 
 

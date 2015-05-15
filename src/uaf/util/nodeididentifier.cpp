@@ -122,29 +122,29 @@ namespace uaf
         {
             type = Identifier_Numeric;
             idNumeric = opcUaNodeId.Identifier.Numeric;
-            ret.setGood();
+            ret = statuscodes::Good;
         }
         else if (opcUaNodeId.IdentifierType == OpcUa_IdentifierType_String)
         {
             type = Identifier_String;
             idString = UaString(&opcUaNodeId.Identifier.String).toUtf8();
-            ret.setGood();
+            ret = statuscodes::Good;
         }
         else if (opcUaNodeId.IdentifierType == OpcUa_IdentifierType_Guid)
         {
             type = Identifier_Guid;
             idGuid.fromSdk(UaGuid(*opcUaNodeId.Identifier.Guid));
-            ret.setGood();
+            ret = statuscodes::Good;
         }
         else if (opcUaNodeId.IdentifierType == OpcUa_IdentifierType_Opaque)
         {
             type = Identifier_Opaque;
             idOpaque.fromSdk(UaByteString(opcUaNodeId.Identifier.ByteString));
-            ret.setGood();
+            ret = statuscodes::Good;
         }
         else
         {
-            ret.setStatus(statuscodes::UnexpectedError, "Unknown identifier type!");
+            ret = UnsupportedNodeIdIdentifierTypeError();
         }
 
         return ret;

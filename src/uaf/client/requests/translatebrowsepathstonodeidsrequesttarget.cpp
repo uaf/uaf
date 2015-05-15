@@ -21,10 +21,9 @@
 #include "uaf/client/requests/translatebrowsepathstonodeidsrequesttarget.h"
 
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;
@@ -114,10 +113,10 @@ namespace uafc
         if (browsePath.startingExpandedNodeId.hasServerUri())
         {
             serverUri = browsePath.startingExpandedNodeId.serverUri();
-            return Status(statuscodes::Good);
+            return statuscodes::Good;
         }
         else
-            return Status(statuscodes::UnexpectedError, "No valid starting node");
+            return UnexpectedError("No valid starting node");
     }
 
 

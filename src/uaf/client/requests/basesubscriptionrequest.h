@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_BASESUBSCRIPTIONREQUEST_H_
-#define UAFC_BASESUBSCRIPTIONREQUEST_H_
+#ifndef UAF_BASESUBSCRIPTIONREQUEST_H_
+#define UAF_BASESUBSCRIPTIONREQUEST_H_
 
 
 // STD
@@ -37,19 +37,19 @@
 #include "uaf/client/requests/basesessionrequest.h"
 #include "uaf/client/configs/subscriptionconfig.h"
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::BaseSubscriptionRequest is a service request logically handled at the subscription
+    * A uaf::BaseSubscriptionRequest is a service request logically handled at the subscription
     * level.
     *
     * @ingroup ClientRequests
     ***********************************************************************************************/
     template<typename _ServiceConfig, typename _Target, bool _Async>
-    class UAFC_EXPORT BaseSubscriptionRequest
-    : public uafc::BaseSessionRequest<_ServiceConfig, _Target, _Async>
+    class UAF_EXPORT BaseSubscriptionRequest
+    : public uaf::BaseSessionRequest<_ServiceConfig, _Target, _Async>
     {
     public:
 
@@ -65,7 +65,7 @@ namespace uafc
          * Construct an empty subscription request.
          */
         BaseSubscriptionRequest()
-        : uafc::BaseSessionRequest<_ServiceConfig, _Target, _Async>()
+        : uaf::BaseSessionRequest<_ServiceConfig, _Target, _Async>()
         {}
 
 
@@ -80,9 +80,9 @@ namespace uafc
         BaseSubscriptionRequest(
                 std::size_t                     noOfTargets,
                 const _ServiceConfig&           serviceConfig       = _ServiceConfig(),
-                const uafc::SessionConfig&      sessionConfig       = uafc::SessionConfig(),
-                const uafc::SubscriptionConfig& subscriptionConfig  = uafc::SubscriptionConfig())
-        : uafc::BaseSessionRequest<_ServiceConfig, _Target, _Async>(
+                const uaf::SessionConfig&      sessionConfig       = uaf::SessionConfig(),
+                const uaf::SubscriptionConfig& subscriptionConfig  = uaf::SubscriptionConfig())
+        : uaf::BaseSessionRequest<_ServiceConfig, _Target, _Async>(
                 noOfTargets,
                 serviceConfig,
                 sessionConfig),
@@ -101,9 +101,9 @@ namespace uafc
         BaseSubscriptionRequest(
                 const _Target&                  target,
                 const _ServiceConfig&           serviceConfig       = _ServiceConfig(),
-                const uafc::SessionConfig&      sessionConfig       = uafc::SessionConfig(),
-                const uafc::SubscriptionConfig& subscriptionConfig  = uafc::SubscriptionConfig())
-        : uafc::BaseSessionRequest<_ServiceConfig, _Target, _Async>(
+                const uaf::SessionConfig&      sessionConfig       = uaf::SessionConfig(),
+                const uaf::SubscriptionConfig& subscriptionConfig  = uaf::SubscriptionConfig())
+        : uaf::BaseSessionRequest<_ServiceConfig, _Target, _Async>(
                 target,
                 serviceConfig,
                 sessionConfig),
@@ -122,9 +122,9 @@ namespace uafc
         BaseSubscriptionRequest(
                 const typename std::vector<_Target>&    targets,
                 const _ServiceConfig&                   serviceConfig       = _ServiceConfig(),
-                const uafc::SessionConfig&              sessionConfig       = uafc::SessionConfig(),
-                const uafc::SubscriptionConfig&         subscriptionConfig  = uafc::SubscriptionConfig())
-        : uafc::BaseSessionRequest<_ServiceConfig, _Target, _Async>(
+                const uaf::SessionConfig&              sessionConfig       = uaf::SessionConfig(),
+                const uaf::SubscriptionConfig&         subscriptionConfig  = uaf::SubscriptionConfig())
+        : uaf::BaseSessionRequest<_ServiceConfig, _Target, _Async>(
                 targets,
                 serviceConfig,
                 sessionConfig),
@@ -134,7 +134,7 @@ namespace uafc
 
 
         /** Session settings to use. */
-        uafc::SubscriptionConfig subscriptionConfig;
+        uaf::SubscriptionConfig subscriptionConfig;
 
 
         /**
@@ -146,7 +146,7 @@ namespace uafc
         {
             std::stringstream ss;
 
-            ss << uafc::BaseSessionRequest<_ServiceConfig, _Target, _Async>::toString(indent, colon);
+            ss << uaf::BaseSessionRequest<_ServiceConfig, _Target, _Async>::toString(indent, colon);
             ss << "\n";
             ss << indent << " - subscriptionConfig\n";
             ss << subscriptionConfig.toString(indent + "   ", colon);
@@ -160,8 +160,8 @@ namespace uafc
                 const BaseSubscriptionRequest<_ServiceConfig, _Target, _Async>& object1,
                 const BaseSubscriptionRequest<_ServiceConfig, _Target, _Async>& object2)
         {
-            if (   (uafc::BaseSessionRequest<_ServiceConfig, _Target, _Async>&)object1
-                != (uafc::BaseSessionRequest<_ServiceConfig, _Target, _Async>&)object2)
+            if (   (uaf::BaseSessionRequest<_ServiceConfig, _Target, _Async>&)object1
+                != (uaf::BaseSessionRequest<_ServiceConfig, _Target, _Async>&)object2)
                 return false;
 
             if (object1.subscriptionConfig != object2.subscriptionConfig)
@@ -183,10 +183,10 @@ namespace uafc
                 const BaseSubscriptionRequest<_ServiceConfig, _Target, _Async>& object1,
                 const BaseSubscriptionRequest<_ServiceConfig, _Target, _Async>& object2)
         {
-            if (   (uafc::BaseSessionRequest<_ServiceConfig, _Target, _Async>&)object1
-                != (uafc::BaseSessionRequest<_ServiceConfig, _Target, _Async>&)object2)
-                return   (uafc::BaseSessionRequest<_ServiceConfig, _Target, _Async>&)object1
-                       < (uafc::BaseSessionRequest<_ServiceConfig, _Target, _Async>&)object2;
+            if (   (uaf::BaseSessionRequest<_ServiceConfig, _Target, _Async>&)object1
+                != (uaf::BaseSessionRequest<_ServiceConfig, _Target, _Async>&)object2)
+                return   (uaf::BaseSessionRequest<_ServiceConfig, _Target, _Async>&)object1
+                       < (uaf::BaseSessionRequest<_ServiceConfig, _Target, _Async>&)object2;
 
             if (object1.subscriptionConfig != object2.subscriptionConfig)
                 return object1.subscriptionConfig < object2.subscriptionConfig;
@@ -209,4 +209,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_BASESUBSCRIPTIONREQUEST_H_ */
+#endif /* UAF_BASESUBSCRIPTIONREQUEST_H_ */

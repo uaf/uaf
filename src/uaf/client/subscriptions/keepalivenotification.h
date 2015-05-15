@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_KEEPALIVENOTIFICATION_H_
-#define UAFC_KEEPALIVENOTIFICATION_H_
+#ifndef UAF_KEEPALIVENOTIFICATION_H_
+#define UAF_KEEPALIVENOTIFICATION_H_
 
 
 // STD
@@ -38,15 +38,15 @@
 #include "uaf/client/subscriptions/subscriptioninformation.h"
 
 
-namespace uafc
+namespace uaf
 {
 
     /*******************************************************************************************//**
-    * A uafc::KeepAliveNotification is the notification that a subscription is still alive.
+    * A uaf::KeepAliveNotification is the notification that a subscription is still alive.
     *
     * @ingroup ClientSubscriptions
     ***********************************************************************************************/
-    class UAFC_EXPORT KeepAliveNotification : public uafc::SubscriptionInformation
+    class UAF_EXPORT KeepAliveNotification : public uaf::SubscriptionInformation
     {
     public:
 
@@ -77,4 +77,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_KEEPALIVENOTIFICATION_H_ */
+#endif /* UAF_KEEPALIVENOTIFICATION_H_ */

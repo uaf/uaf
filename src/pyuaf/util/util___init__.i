@@ -42,6 +42,7 @@
 #include "uaf/util/simpleattributeoperand.h"
 #include "uaf/util/nodeididentifier.h"
 #include "uaf/util/nodeid.h"
+#include "uaf/util/pkiidentity.h"
 #include "uaf/util/expandednodeid.h"
 #include "uaf/util/qualifiedname.h"
 #include "uaf/util/relativepathelement.h"
@@ -53,6 +54,12 @@
 #include "uaf/util/enumvalue.h"
 #include "uaf/util/extensionobject.h"
 #include "uaf/util/modelchangestructuredatatype.h"
+#include "uaf/util/pkicertificateinfo.h"
+#include "uaf/util/pkipublickey.h"
+#include "uaf/util/pkiprivatekey.h"
+#include "uaf/util/pkirsakeypair.h"
+#include "uaf/util/pkicertificate.h"
+#include "uaf/util/sdkstatus.h"
 %}
 
 
@@ -108,22 +115,19 @@
 %rename(__and__) uaf::Mask::operator&&;
 %rename(__dispatch_logMessageReceived__) uaf::LoggingInterface::logMessageReceived;
 %ignore extractServerUri(const Address& object, std::string& serverUri);
-%ignore uaf::Address::operator=;
 %ignore operator>(const DateTime&, const DateTime&);
 %ignore uaf::DateTime::DateTime(const FILETIME& t);
-%ignore uaf::StatusDiagnostics::operator=;
-
 
 // The default SWIG output returned by uaf::Status::opcUaStatusCode() is a signed representation (Long) of an unsigned 32-bit integer.
 // The returned value (a Long which can only be positive) does not correspond bit-to-bit to the original OPC UA status codes, e.g. as found in
 // pyuaf.util.opcuastatuscodes (which may appear to be negative ints because Python interprets the unsigned value as a signed value).
 // We therefore manually convert the output of the opcUaStatusCode() method, so that the result can be compared to pyuaf.util.opcuastatuscodes.
 // (Note that the convert_uint32_to_int32() function is defined in src/pyuaf/util/init_extras.py)
-%rename(opcUaStatusCodeUnsigned) uaf::Status::opcUaStatusCode;
 %extend uaf::Status {
   %pythoncode {
-    def opcUaStatusCode(self):
-        return convert_uint32_to_int32(self.opcUaStatusCodeUnsigned())
+    def test(self):
+        if self.isBad():
+            raise getattr(self, "raisedBy_%s" %self.statusCodeName())
   }
 }
 
@@ -153,10 +157,16 @@ UAF_WRAP_CLASS("uaf/util/usertokenpolicy.h"        , uaf , UserTokenPolicy      
 UAF_WRAP_CLASS("uaf/util/endpointdescription.h"    , uaf , EndpointDescription     , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, EndpointDescriptionVector)
 UAF_WRAP_CLASS("uaf/util/viewdescription.h"        , uaf , ViewDescription         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/referencedescription.h"   , uaf , ReferenceDescription    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ReferenceDescriptionVector)
-UAF_WRAP_CLASS("uaf/util/statusdiagnostics.h"      , uaf , StatusDiagnostics       , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/pkiidentity.h"            , uaf , PkiIdentity             , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/enumvalue.h"              , uaf , EnumValue               , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/extensionobject.h"        , uaf , ExtensionObject         , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/modelchangestructuredatatype.h", uaf , ModelChangeStructureDataType, COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/pkipublickey.h"           , uaf , PkiPublicKey            , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/pkiprivatekey.h"          , uaf , PkiPrivateKey           , COPY_YES, TOSTRING_NO,  COMP_NO,  pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/pkicertificateinfo.h"     , uaf , PkiCertificateInfo      , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/pkirsakeypair.h"          , uaf , PkiRsaKeyPair           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/pkicertificate.h"         , uaf , PkiCertificate          , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/sdkstatus.h"              , uaf , SdkStatus               , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 
 
 

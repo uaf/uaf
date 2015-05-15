@@ -13,6 +13,105 @@
 
 import sys, os
 
+print("====== generating generated_error_inheritance_tree.txt ======")
+
+import pyuaf
+
+from pyuaf.util.errors import *
+
+if not os.path.exists("index.rst"):
+    sys.exit("ABORTED: you have to run this script in the same directory as the *.rst files!")
+
+ignoredMembers = ["this"]
+for member in dir(pyuaf.util.errors.UafError):
+    if member[0] != '_':
+        ignoredMembers.append(member)
+
+def makeClassTree(l, cls, indent=0):
+    
+    instance = globals()[cls.__name__]()
+    
+    l.append(("%s%s" %(' ' * indent, cls.__name__)).ljust(70, ".") + str(instance) + "\n")
+    for member in dir(cls):
+        if member[0] != '_' and (member not in ignoredMembers):
+            #l.append("%s    +%s (%s)\n" %(' ' * indent, member, getattr(instance, member).__class__.__name__))
+            s = ("%s    +%s" %(' ' * indent, member)).ljust(70, " ")
+            s += "Attribute of type: %s\n" %getattr(instance, member).__class__.__name__
+            l.append(s)
+    for subcls in cls.__subclasses__():
+        makeClassTree(l, subcls, indent + 3)
+    return l
+
+# This will create a new file or **overwrite an existing file**.
+f = open("generated_error_inheritance_tree.txt", "w")
+f.writelines(makeClassTree(l=[], cls=pyuaf.util.errors.UafError))
+f.close()
+
+def makeClassList():
+    lines = []
+    for err in dir(pyuaf.util.errors):
+        if err[0] != '_':
+            try:
+                instance = globals()[err]()
+            except:
+                # not an error
+                instance = None
+            
+            if instance is not None:
+            
+                lines.append( ".. autoclass:: pyuaf.util.errors.%s\n\n" %err )
+                
+                memberLines = []
+                
+                for member in dir(getattr(pyuaf.util.errors, err)):
+                    if member[0] != '_' and (member not in ignoredMembers):
+                        memberLines.append( "   .. autoattribute:: pyuaf.util.errors.%s.%s\n\n" %(err,member) )
+                        attr = getattr(instance, member)
+                        try:
+                            memberLines.append( "    - type: :class:`~%s.%s`\n\n" %(attr.__module__, attr.__class__.__name__) )
+                        except:
+                            memberLines.append( "    - type: ``%s``\n\n" %type(attr).__name__ )
+                
+                if len(memberLines) > 0:
+                    lines.append("- attributes:\n\n")
+                    lines.extend(memberLines)
+                
+    return lines
+
+
+# This will create a new file or **overwrite an existing file**.
+f = open("generated_error_list.txt", "w")
+f.writelines(makeClassList())
+f.close()
+
+
+print("====== generating generated_statuscodes.txt ======")
+statuscodes = {}
+for member in dir(pyuaf.util.statuscodes):
+    if member[0] != '_':
+        try:
+            value = int(getattr(pyuaf.util.statuscodes, member))
+            statuscodes[value] = member
+        except:
+            # not an int
+            pass
+
+lines = []
+for k, v in sorted(statuscodes.items()):
+    s = ".. class:: pyuaf.util.statuscodes.%s\n" %v
+    lines.append(s)
+    
+
+# This will create a new file or **overwrite an existing file**.
+f = open("generated_statuscodes.txt", "w")
+f.writelines(lines)
+f.close()
+
+
+# continue with the normal conf.py
+# ==================================================================================================
+
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.

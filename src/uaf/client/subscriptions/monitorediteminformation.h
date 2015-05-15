@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_MONITOREDITEMINFORMATION_H_
-#define UAFC_MONITOREDITEMINFORMATION_H_
+#ifndef UAF_MONITOREDITEMINFORMATION_H_
+#define UAF_MONITOREDITEMINFORMATION_H_
 
 // STD
 #include <string>
@@ -33,7 +33,7 @@
 #include "uaf/client/settings/monitoreditemsettings.h"
 #include "uaf/client/subscriptions/monitoreditemstates.h"
 
-namespace uafc
+namespace uaf
 {
 
 
@@ -42,7 +42,7 @@ namespace uafc
     *
     * @ingroup ClientSubscriptions
     ***********************************************************************************************/
-    class UAFC_EXPORT MonitoredItemInformation
+    class UAF_EXPORT MonitoredItemInformation
     {
     public:
 
@@ -63,14 +63,14 @@ namespace uafc
          * @param settings                  The settings of the monitored item.
          */
         MonitoredItemInformation(
-                uafc::monitoreditemstates::MonitoredItemState   monitoredItemState,
+                uaf::monitoreditemstates::MonitoredItemState   monitoredItemState,
                 uaf::ClientConnectionId                         clientConnectionId,
                 uaf::ClientSubscriptionHandle                   clientSubscriptionHandle,
                 uaf::ClientHandle                               clientHandle,
-                const uafc::MonitoredItemSettings&              settings);
+                const uaf::MonitoredItemSettings&              settings);
 
         /** The state of the monitored item. */
-        uafc::monitoreditemstates::MonitoredItemState monitoredItemState;
+        uaf::monitoreditemstates::MonitoredItemState monitoredItemState;
 
         /** The id of the session that hosts the subscription. */
         uaf::ClientConnectionId                     clientConnectionId;
@@ -82,7 +82,7 @@ namespace uafc
         uaf::ClientHandle                           clientHandle;
 
         /** The settings of the monitored item. */
-        uafc::MonitoredItemSettings                 settings;
+        uaf::MonitoredItemSettings                 settings;
 
         /**
          * Get a string representation of the information.
@@ -91,13 +91,13 @@ namespace uafc
 
 
         // comparison operators
-        friend UAFC_EXPORT bool operator==(
+        friend UAF_EXPORT bool operator==(
                 const MonitoredItemInformation& object1,
                 const MonitoredItemInformation& object2);
-        friend UAFC_EXPORT bool operator!=(
+        friend UAF_EXPORT bool operator!=(
                 const MonitoredItemInformation& object1,
                 const MonitoredItemInformation& object2);
-        friend UAFC_EXPORT bool operator<(
+        friend UAF_EXPORT bool operator<(
                 const MonitoredItemInformation& object1,
                 const MonitoredItemInformation& object2);
     };
@@ -106,4 +106,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_MONITOREDITEMINFORMATION_H_ */
+#endif /* UAF_MONITOREDITEMINFORMATION_H_ */

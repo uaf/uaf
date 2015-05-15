@@ -27,7 +27,8 @@ namespace uaf
 
         using namespace uaf::statuscodes;
 
-
+#define UAF_STATUSCODES_TOSTRING(ERROR)       \
+        case ERROR: return #ERROR;
 
         // Get a string representation
         // =========================================================================================
@@ -35,311 +36,133 @@ namespace uaf
         {
             switch (code)
             {
-                case Good:                      return "Good";
-                case Uncertain:                 return "Uncertain";
-                case ConfigurationError:        return "ConfigurationError";
-                case ConnectionError:           return "ConnectionError";
-                case DataFormatError:           return "DataFormatError";
-                case DataSizeError:             return "DataSizeError";
-                case DataSourceError:           return "DataSourceError";
-                case DisconnectionError:        return "DisconnectionError";
-                case DiscoveryError:            return "DiscoveryError";
-                case InvalidRequestError:       return "InvalidRequestError";
-                case LowLevelError:             return "LowLevelError";
-                case ResolutionError:           return "ResolutionError";
-                case WrongTypeError:            return "WrongTypeError";
-                case OtherError:                return "OtherError";
-                case SecurityError:             return "SecurityError";
-                case TimeoutError:              return "TimeoutError";
-                case SubscriptionError:         return "SubscriptionError";
-                case NoResultReceivedError:     return "NoResultReceivedError";
-                case UnexpectedError:           return "UnexpectedError";
-                case UnknownHandleError:        return "UnknownHandleError";
-                case UnsupportedError:          return "UnsupportedError";
-                default:                        return "UnknownStatusCodeBUG";
-            }
-        }
-
-
-        // Convert the SDK/Stack instance to a UAF instance.
-        // =========================================================================================
-        StatusCode fromSdkToUaf(OpcUa_StatusCode uaCode)
-        {
-            StatusCode code;
-            switch (uaCode)
-            {
-                case OpcUa_Good:
-                case OpcUa_GoodResultsMayBeIncomplete:
-                case OpcUa_GoodLocalOverride:
-                case OpcUa_GoodEntryInserted:
-                case OpcUa_GoodEntryReplaced:
-                case OpcUa_GoodNoData:
-                case OpcUa_GoodMoreData:
-                case OpcUa_GoodDataIgnored:
-                case OpcUa_GoodCommunicationEvent:
-                case OpcUa_GoodShutdownEvent:
-                case OpcUa_GoodCallAgain:
-                case OpcUa_GoodNonCriticalTimeout:
-                                                        code = Good;
-                                                        break;
-                case OpcUa_Uncertain:
-                case OpcUa_UncertainNotAllNodesAvailable:
-                case OpcUa_UncertainReferenceOutOfServer:
-                case OpcUa_UncertainNoCommunicationLastUsableValue:
-                case OpcUa_UncertainLastUsableValue:
-                case OpcUa_UncertainSubstituteValue:
-                case OpcUa_UncertainInitialValue:
-                case OpcUa_UncertainSensorNotAccurate:
-                case OpcUa_UncertainEngineeringUnitsExceeded:
-                case OpcUa_UncertainSubNormal:
-                case OpcUa_UncertainDataSubNormal:
-                                                        code = Uncertain;
-                                                        break;
-                case OpcUa_BadNodeIdInvalid:
-                case OpcUa_BadNodeIdUnknown:
-                case OpcUa_BadAttributeIdInvalid:
-                case OpcUa_BadObjectDeleted:
-                case OpcUa_BadParentNodeIdInvalid:
-                                                        code = ResolutionError;
-                                                        break;
-                case OpcUa_BadUserAccessDenied:
-                case OpcUa_BadCertificateInvalid:
-                case OpcUa_BadSecurityChecksFailed:
-                case OpcUa_BadCertificateTimeInvalid:
-                case OpcUa_BadCertificateIssuerTimeInvalid:
-                case OpcUa_BadCertificateHostNameInvalid:
-                case OpcUa_BadCertificateUriInvalid:
-                case OpcUa_BadCertificateUseNotAllowed:
-                case OpcUa_BadCertificateIssuerUseNotAllowed:
-                case OpcUa_BadCertificateUntrusted:
-                case OpcUa_BadCertificateRevocationUnknown:
-                case OpcUa_BadCertificateIssuerRevocationUnknown:
-                case OpcUa_BadCertificateRevoked:
-                case OpcUa_BadCertificateIssuerRevoked:
-                case OpcUa_BadIdentityTokenInvalid:
-                case OpcUa_BadIdentityTokenRejected:
-                case OpcUa_BadSecureChannelIdInvalid:
-                case OpcUa_BadNonceInvalid:
-                case OpcUa_BadSecurityModeRejected:
-                case OpcUa_BadSecurityPolicyRejected:
-                case OpcUa_BadUserSignatureInvalid:
-                case OpcUa_BadApplicationSignatureInvalid:
-                case OpcUa_BadNoValidCertificates:
-                case OpcUa_BadIdentityChangeNotSupported:
-                                                        code = SecurityError;
-                                                        break;
-                case OpcUa_BadNothingToDo:
-                case OpcUa_BadTooManyOperations:
-                case OpcUa_BadInvalidTimestamp:
-                case OpcUa_BadSessionIdInvalid:
-                case OpcUa_BadRequestHeaderInvalid:
-                case OpcUa_BadTimestampsToReturnInvalid:
-                case OpcUa_BadRequestCancelledByClient:
-                case OpcUa_BadIndexRangeInvalid:
-                case OpcUa_BadIndexRangeNoData:
-                case OpcUa_BadNotReadable:
-                case OpcUa_BadNotWritable:
-                case OpcUa_BadOutOfRange:
-                case OpcUa_BadNotFound:
-                case OpcUa_BadMonitoringModeInvalid:
-                case OpcUa_BadMonitoredItemIdInvalid:
-                case OpcUa_BadMonitoredItemFilterInvalid:
-                case OpcUa_BadFilterNotAllowed:
-                case OpcUa_BadStructureMissing:
-                case OpcUa_BadEventFilterInvalid:
-                case OpcUa_BadContentFilterInvalid:
-                case OpcUa_BadFilterOperatorInvalid:
-                case OpcUa_BadFilterOperandCountMismatch:
-                case OpcUa_BadFilterOperandInvalid:
-                case OpcUa_BadFilterElementInvalid:
-                case OpcUa_BadFilterLiteralInvalid:
-                case OpcUa_BadContinuationPointInvalid:
-                case OpcUa_BadNoContinuationPoints:
-                case OpcUa_BadReferenceTypeIdInvalid:
-                case OpcUa_BadBrowseDirectionInvalid:
-                case OpcUa_BadNodeNotInView:
-                case OpcUa_BadServerUriInvalid:
-                case OpcUa_BadServerNameMissing:
-                case OpcUa_BadDiscoveryUrlMissing:
-                case OpcUa_BadSempahoreFileMissing:
-                case OpcUa_BadRequestTypeInvalid:
-                case OpcUa_BadRequestCancelledByRequest:
-                case OpcUa_BadReferenceNotAllowed:
-                case OpcUa_BadNodeIdRejected:
-                case OpcUa_BadNodeIdExists:
-                case OpcUa_BadNodeClassInvalid:
-                case OpcUa_BadBrowseNameInvalid:
-                case OpcUa_BadBrowseNameDuplicated:
-                case OpcUa_BadNodeAttributesInvalid:
-                case OpcUa_BadTypeDefinitionInvalid:
-                case OpcUa_BadSourceNodeIdInvalid:
-                case OpcUa_BadTargetNodeIdInvalid:
-                case OpcUa_BadDuplicateReferenceNotAllowed:
-                case OpcUa_BadInvalidSelfReference:
-                case OpcUa_BadReferenceLocalOnly:
-                case OpcUa_BadNoDeleteRights:
-                case OpcUa_UncertainReferenceNotDeleted:
-                case OpcUa_BadServerIndexInvalid:
-                case OpcUa_BadViewIdUnknown:
-                case OpcUa_BadViewTimestampInvalid:
-                case OpcUa_BadViewParameterMismatch:
-                case OpcUa_BadViewVersionInvalid:
-                case OpcUa_BadNotTypeDefinition:
-                case OpcUa_BadTooManyMatches:
-                case OpcUa_BadQueryTooComplex:
-                case OpcUa_BadNoMatch:
-                case OpcUa_BadMaxAgeInvalid:
-                case OpcUa_BadHistoryOperationInvalid:
-                case OpcUa_BadInvalidTimestampArgument:
-                case OpcUa_BadTypeMismatch:
-                case OpcUa_BadMethodInvalid:
-                case OpcUa_BadArgumentsMissing:
-                case OpcUa_BadTooManyPublishRequests:
-                case OpcUa_BadSequenceNumberUnknown:
-                case OpcUa_BadMessageNotAvailable:
-                case OpcUa_BadInsufficientClientProfile:
-                case OpcUa_BadStateNotActive:
-                case OpcUa_BadRequestInterrupted:
-                case OpcUa_BadDeadbandFilterInvalid:
-                case OpcUa_BadRefreshInProgress:
-                case OpcUa_BadConditionAlreadyDisabled:
-                case OpcUa_BadConditionAlreadyEnabled:
-                case OpcUa_BadConditionDisabled:
-                case OpcUa_BadEventIdUnknown:
-                case OpcUa_BadEventNotAcknowledgeable:
-                case OpcUa_BadDialogNotActive:
-                case OpcUa_BadDialogResponseInvalid:
-                case OpcUa_BadConditionBranchAlreadyAcked:
-                case OpcUa_BadConditionBranchAlreadyConfirmed:
-                case OpcUa_BadConditionAlreadyShelved:
-                case OpcUa_BadConditionNotShelved:
-                case OpcUa_BadShelvingTimeOutOfRange:
-                case OpcUa_BadNoData:
-                case OpcUa_BadBoundNotFound:
-                case OpcUa_BadBoundNotSupported:
-                case OpcUa_BadDataLost:
-                case OpcUa_BadDataUnavailable:
-                case OpcUa_BadEntryExists:
-                case OpcUa_BadNoEntryExists:
-                case OpcUa_BadTimestampNotSupported:
-                case OpcUa_BadAggregateListMismatch:
-                case OpcUa_BadAggregateNotSupported:
-                case OpcUa_BadAggregateInvalidInputs:
-                case OpcUa_BadAggregateConfigurationRejected:
-                case OpcUa_BadInvalidArgument:
-                case OpcUa_BadInvalidState:
-                                                        code = InvalidRequestError;
-                                                        break;
-                case OpcUa_BadDataEncodingInvalid:
-                case OpcUa_BadDataEncodingUnsupported:
-                case OpcUa_BadEncodingError:
-                case OpcUa_BadDecodingError:
-                case OpcUa_BadUnknownResponse:
-                case OpcUa_BadDataTypeIdUnknown:
-                                                        code = DataFormatError;
-                                                        break;
-                case OpcUa_BadEncodingLimitsExceeded:
-                case OpcUa_BadRequestTooLarge:
-                case OpcUa_BadResponseTooLarge:
-                                                        code = DataSizeError;
-                                                        break;
-                case OpcUa_BadInternalError:
-                case OpcUa_BadOutOfMemory:
-                case OpcUa_BadResourceUnavailable:
-                case OpcUa_BadCommunicationError:
-                case OpcUa_BadTcpServerTooBusy:
-                case OpcUa_BadTcpMessageTypeInvalid:
-                case OpcUa_BadTcpSecureChannelUnknown:
-                case OpcUa_BadTcpMessageTooLarge:
-                case OpcUa_BadTcpNotEnoughResources:
-                case OpcUa_BadTcpInternalError:
-                case OpcUa_BadTcpEndpointUrlInvalid:
-                case OpcUa_BadSecureChannelTokenUnknown:
-                case OpcUa_BadSequenceNumberInvalid:
-                case OpcUa_BadProtocolVersionUnsupported:
-                case OpcUa_BadEndOfStream:
-                case OpcUa_BadNoDataAvailable:
-                case OpcUa_BadWaitingForResponse:
-                case OpcUa_BadOperationAbandoned:
-                case OpcUa_BadExpectedStreamToBlock:
-                case OpcUa_BadWouldBlock:
-                case OpcUa_BadSyntaxError:
-                                                        code = LowLevelError;
-                                                        break;
-                case OpcUa_BadShutdown:
-                case OpcUa_BadServerNotConnected:
-                case OpcUa_BadServerHalted:
-                case OpcUa_BadSessionClosed:
-                case OpcUa_BadSessionNotActivated:
-                case OpcUa_BadTooManySessions:
-                case OpcUa_BadSecureChannelClosed:
-                case OpcUa_BadConnectionRejected:
-                case OpcUa_BadDisconnect:
-                case OpcUa_BadConnectionClosed:
-                case OpcUa_BadMaxConnectionsReached:
-                                                        code = ConnectionError;
-                                                        break;
-                case OpcUa_BadHostUnknown:
-                                                        code = DiscoveryError;
-                                                        break;
-                case OpcUa_BadSubscriptionIdInvalid:
-                case OpcUa_BadTooManySubscriptions:
-                case OpcUa_BadNoSubscription:
-                                                        code = SubscriptionError;
-                                                        break;
-
-                case OpcUa_BadTimeout:
-                case OpcUa_BadRequestTimeout:
-                                                        code = TimeoutError;
-                                                        break;
-                case OpcUa_BadServiceUnsupported:
-                case OpcUa_BadNotSupported:
-                case OpcUa_BadNotImplemented:
-                case OpcUa_BadMonitoredItemFilterUnsupported:
-                case OpcUa_BadFilterOperatorUnsupported:
-                case OpcUa_BadHistoryOperationUnsupported:
-                case OpcUa_BadWriteNotSupported:
-                                                        code = UnsupportedError;
-                                                        break;
-                case OpcUa_BadConfigurationError:
-                                                        code = ConfigurationError;
-                                                        break;
-                case OpcUa_BadNoCommunication:
-                case OpcUa_BadWaitingForInitialData:
-                case OpcUa_BadNotConnected:
-                case OpcUa_BadDeviceFailure:
-                case OpcUa_BadSensorFailure:
-                case OpcUa_BadOutOfService:
-                                                        code = DataSourceError;
-                                                        break;
-                case OpcUa_BadUnexpectedError:
-                                                        code = UnexpectedError;
-                                                        break;
+                UAF_STATUSCODES_TOSTRING(Good)
+                UAF_STATUSCODES_TOSTRING(Uncertain)
+                UAF_STATUSCODES_TOSTRING(DiscoveryError)
+                UAF_STATUSCODES_TOSTRING(InvalidRequestError)
+                UAF_STATUSCODES_TOSTRING(FindServersError)
+                UAF_STATUSCODES_TOSTRING(UnknownServerError)
+                UAF_STATUSCODES_TOSTRING(EmptyUrlError)
+                UAF_STATUSCODES_TOSTRING(NoParallelFindServersAllowedError)
+                UAF_STATUSCODES_TOSTRING(NoDiscoveryUrlsFoundError)
+                UAF_STATUSCODES_TOSTRING(ServerCertificateRejectedByUserError)
+                UAF_STATUSCODES_TOSTRING(ServerCertificateSavingError)
+                UAF_STATUSCODES_TOSTRING(OpenSSLStoreInitializationError)
+                UAF_STATUSCODES_TOSTRING(ClientCertificateLoadingError)
+                UAF_STATUSCODES_TOSTRING(ServerDidNotProvideCertificateError)
+                UAF_STATUSCODES_TOSTRING(ConnectionError)
+                UAF_STATUSCODES_TOSTRING(ConnectionFailedError)
+                UAF_STATUSCODES_TOSTRING(SecurityError)
+                UAF_STATUSCODES_TOSTRING(PathNotExistsError)
+                UAF_STATUSCODES_TOSTRING(NoSecuritySettingsGivenError)
+                UAF_STATUSCODES_TOSTRING(PathCreationError)
+                UAF_STATUSCODES_TOSTRING(SecuritySettingsMatchError)
+                UAF_STATUSCODES_TOSTRING(WrongTypeError)
+                UAF_STATUSCODES_TOSTRING(UnexpectedError)
+                UAF_STATUSCODES_TOSTRING(ServerArrayConversionError)
+                UAF_STATUSCODES_TOSTRING(NamespaceArrayConversionError)
+                UAF_STATUSCODES_TOSTRING(BadNamespaceArrayError)
+                UAF_STATUSCODES_TOSTRING(BadServerArrayError)
+                UAF_STATUSCODES_TOSTRING(UnknownServerIndexError)
+                UAF_STATUSCODES_TOSTRING(InvalidAddressError)
+                UAF_STATUSCODES_TOSTRING(UnknownNamespaceUriError)
+                UAF_STATUSCODES_TOSTRING(NoNamespaceIndexOrUriGivenError)
+                UAF_STATUSCODES_TOSTRING(UnknownNamespaceIndexError)
+                UAF_STATUSCODES_TOSTRING(EmptyServerUriAndUnknownNamespaceIndexError)
+                UAF_STATUSCODES_TOSTRING(ExpandedNodeIdAddressExpectedError)
+                UAF_STATUSCODES_TOSTRING(EmptyServerUriError)
+                UAF_STATUSCODES_TOSTRING(UnsupportedError)
+                UAF_STATUSCODES_TOSTRING(UnsupportedNodeIdIdentifierTypeError)
+                UAF_STATUSCODES_TOSTRING(SyncInvocationNotSupportedError)
+                UAF_STATUSCODES_TOSTRING(AsyncInvocationNotSupportedError)
+                UAF_STATUSCODES_TOSTRING(NoStatusesGivenError)
+                UAF_STATUSCODES_TOSTRING(BadStatusesPresentError)
+                UAF_STATUSCODES_TOSTRING(NotAllTargetsCouldBeResolvedError)
+                UAF_STATUSCODES_TOSTRING(InvalidServerUriError)
+                UAF_STATUSCODES_TOSTRING(SubscriptionNotCreatedError)
+                UAF_STATUSCODES_TOSTRING(NoTargetsGivenError)
+                UAF_STATUSCODES_TOSTRING(DataDontMatchAddressesError)
+                UAF_STATUSCODES_TOSTRING(ItemNotFoundForTheGivenHandleError)
+                UAF_STATUSCODES_TOSTRING(TargetRankOutOfBoundsError)
+                UAF_STATUSCODES_TOSTRING(NoItemFoundForTheGivenRequestHandleError)
+                UAF_STATUSCODES_TOSTRING(ContinuationPointsDontMatchAddressesError)
+                UAF_STATUSCODES_TOSTRING(UnknownNamespaceIndexAndServerIndexError)
+                UAF_STATUSCODES_TOSTRING(AsyncMultiMethodCallNotSupportedError)
+                UAF_STATUSCODES_TOSTRING(EmptyAddressError)
+                UAF_STATUSCODES_TOSTRING(MultipleTranslationResultsError)
+                UAF_STATUSCODES_TOSTRING(UnknownClientSubscriptionHandleError)
+                UAF_STATUSCODES_TOSTRING(UnknownClientHandleError)
+                UAF_STATUSCODES_TOSTRING(UnknownClientConnectionIdError)
+                UAF_STATUSCODES_TOSTRING(AsyncConnectionFailedError)
+                UAF_STATUSCODES_TOSTRING(EmptyUserCertificateError)
+                UAF_STATUSCODES_TOSTRING(InvalidPrivateKeyError)
+                UAF_STATUSCODES_TOSTRING(SessionSecuritySettingsDontMatchEndpointError)
+                UAF_STATUSCODES_TOSTRING(CouldNotManuallyUnsubscribeError)
+                UAF_STATUSCODES_TOSTRING(CouldNotManuallySubscribeError)
+                UAF_STATUSCODES_TOSTRING(SessionNotConnectedError)
+                UAF_STATUSCODES_TOSTRING(SubscriptionHasBeenDeletedError)
+                UAF_STATUSCODES_TOSTRING(NoDiscoveryUrlsExposedByServerError)
+                UAF_STATUSCODES_TOSTRING(GetEndpointsError)
+                UAF_STATUSCODES_TOSTRING(NoEndpointsProvidedByServerError)
+                UAF_STATUSCODES_TOSTRING(DisconnectionFailedError)
+                UAF_STATUSCODES_TOSTRING(NoConnectedSessionToUpdateArraysError)
+                UAF_STATUSCODES_TOSTRING(BadDataReceivedError)
+                UAF_STATUSCODES_TOSTRING(ServiceError)
+                UAF_STATUSCODES_TOSTRING(CouldNotReadArraysError)
+                UAF_STATUSCODES_TOSTRING(CreateMonitoredItemsError)
+                UAF_STATUSCODES_TOSTRING(CreateMonitoredItemsInvocationError)
+                UAF_STATUSCODES_TOSTRING(BeginCreateMonitoredItemsInvocationError)
+                UAF_STATUSCODES_TOSTRING(ServerCouldNotCreateMonitoredItemsError)
+                UAF_STATUSCODES_TOSTRING(ServerCouldNotBrowseNextError)
+                UAF_STATUSCODES_TOSTRING(BrowseNextInvocationError)
+                UAF_STATUSCODES_TOSTRING(ReadInvocationError)
+                UAF_STATUSCODES_TOSTRING(BeginReadInvocationError)
+                UAF_STATUSCODES_TOSTRING(ServerCouldNotReadError)
+                UAF_STATUSCODES_TOSTRING(TranslateBrowsePathsToNodeIdsInvocationError)
+                UAF_STATUSCODES_TOSTRING(ServerCouldNotTranslateBrowsePathsToNodeIdsError)
+                UAF_STATUSCODES_TOSTRING(HistoryReadInvocationError)
+                UAF_STATUSCODES_TOSTRING(HistoryReadRawModifiedInvocationError)
+                UAF_STATUSCODES_TOSTRING(ServerCouldNotHistoryReadError)
+                UAF_STATUSCODES_TOSTRING(MethodCallInvocationError)
+                UAF_STATUSCODES_TOSTRING(AsyncMethodCallInvocationError)
+                UAF_STATUSCODES_TOSTRING(ServerCouldNotCallMethodError)
+                UAF_STATUSCODES_TOSTRING(ServerCouldNotBrowseError)
+                UAF_STATUSCODES_TOSTRING(BrowseInvocationError)
+                UAF_STATUSCODES_TOSTRING(WriteInvocationError)
+                UAF_STATUSCODES_TOSTRING(AsyncWriteInvocationError)
+                UAF_STATUSCODES_TOSTRING(ServerCouldNotWriteError)
+                UAF_STATUSCODES_TOSTRING(CallCompleteError)
+                UAF_STATUSCODES_TOSTRING(InputArgumentError)
+                UAF_STATUSCODES_TOSTRING(ReadCompleteError)
+                UAF_STATUSCODES_TOSTRING(WriteCompleteError)
+                UAF_STATUSCODES_TOSTRING(SubscriptionError)
+                UAF_STATUSCODES_TOSTRING(SetPublishingModeInvocationError)
+                UAF_STATUSCODES_TOSTRING(ServerCouldNotSetMonitoringModeError)
+                UAF_STATUSCODES_TOSTRING(CreateSubscriptionError)
+                UAF_STATUSCODES_TOSTRING(DeleteSubscriptionError)
+                UAF_STATUSCODES_TOSTRING(SetMonitoringModeInvocationError)
+                UAF_STATUSCODES_TOSTRING(ConfigurationError)
+                UAF_STATUSCODES_TOSTRING(CouldNotCreateCertificateTrustListLocationError)
+                UAF_STATUSCODES_TOSTRING(CouldNotCreateCertificateRevocationListLocationError)
+                UAF_STATUSCODES_TOSTRING(CouldNotCreateIssuersCertificateLocationError)
+                UAF_STATUSCODES_TOSTRING(CouldNotCreateIssuersRevocationListLocationError)
+                UAF_STATUSCODES_TOSTRING(CouldNotCreateClientPrivateKeyLocationError)
+                UAF_STATUSCODES_TOSTRING(CouldNotCreateClientCertificateLocationError)
+                // status codes kept for backwards compatibility:
+                UAF_STATUSCODES_TOSTRING(DataFormatError)
+                UAF_STATUSCODES_TOSTRING(DataSizeError)
+                UAF_STATUSCODES_TOSTRING(DataSourceError)
+                UAF_STATUSCODES_TOSTRING(DisconnectionError)
+                UAF_STATUSCODES_TOSTRING(LowLevelError)
+                UAF_STATUSCODES_TOSTRING(OtherError)
+                UAF_STATUSCODES_TOSTRING(TimeoutError)
+                UAF_STATUSCODES_TOSTRING(NoResultReceivedError)
+                UAF_STATUSCODES_TOSTRING(UnknownHandleError)
                 default:
-                {
-                    if (OpcUa_IsGood(uaCode))
-                        code = Good;
-                    else if (OpcUa_IsUncertain(uaCode))
-                        code = Uncertain;
-                    else
-                        code = OtherError;
-                }
+                    return "UNKNOWN!";
             }
-
-            return code;
         }
 
 
-        // Convert the UAF code to a SDK/Stack code.
-        // =========================================================================================
-        OpcUa_StatusCode fromUafToSdk(StatusCode statusCode)
-        {
-            if (statusCode == statuscodes::Good)
-                return OpcUa_Good;
-            else if (statusCode == statuscodes::Uncertain)
-                return OpcUa_Uncertain;
-            else
-                return OpcUa_Bad;
-        }
     }
 }

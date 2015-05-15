@@ -1,10 +1,12 @@
 # uaf/src/util/CMakeLists.txt
 
-# Add all source files in this directory.
-aux_source_directory(. UTIL_SOURCES)
+# Add all source files:
+aux_source_directory(.          SOURCES_UAF_UTIL)
+aux_source_directory(./errors   SOURCES_UAF_UTIL_ERRORS)
 
 # Create a shared library consisting of the previously added source files.
-add_library(uafutil SHARED ${UTIL_SOURCES})
+add_library(uafutil SHARED ${SOURCES_UAF_UTIL} 
+                           ${SOURCES_UAF_UTIL_ERRORS})
 
 # Link the libraries.
 if (WIN32)

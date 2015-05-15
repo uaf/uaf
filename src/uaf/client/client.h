@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_CLIENT_H
-#define UAFC_CLIENT_H
+#ifndef UAF_CLIENT_H
+#define UAF_CLIENT_H
 
 
 // STD
@@ -43,7 +43,7 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
@@ -52,8 +52,8 @@ namespace uafc
     *
     * @ingroup Client
     ***********************************************************************************************/
-    class UAFC_EXPORT Client : private UaThread,
-                               public uafc::ClientInterface,
+    class UAF_EXPORT Client : private UaThread,
+                               public uaf::ClientInterface,
                                public uaf::LoggingInterface
     {
     public:
@@ -63,7 +63,7 @@ namespace uafc
          * Create a client without a name.
          *
          * The name of the application (reflected in the logging and in
-         * uafc::ClientSettings::clientApplicationName) will remain empty.
+         * uaf::ClientSettings::clientApplicationName) will remain empty.
          */
         Client();
 
@@ -81,7 +81,7 @@ namespace uafc
          *
          * @param settings  The Client settings.
          */
-        Client(const uafc::ClientSettings& settings);
+        Client(const uaf::ClientSettings& settings);
 
 
         /**
@@ -90,7 +90,7 @@ namespace uafc
          * @param settings  The Client settings.
          * @param loggerFactory Logger factory to which the client must log all its messages.
          */
-        Client(const uafc::ClientSettings& settings, uaf::LoggerFactory* loggerFactory);
+        Client(const uaf::ClientSettings& settings, uaf::LoggerFactory* loggerFactory);
 
 
         /**
@@ -104,13 +104,13 @@ namespace uafc
          *
          * @return The currently active client settings.
          */
-        uafc::ClientSettings clientSettings() const;
+        uaf::ClientSettings clientSettings() const;
 
 
         /**
          * Overwrite the current client settings.
          */
-        void setClientSettings(const uafc::ClientSettings& settings);
+        void setClientSettings(const uaf::ClientSettings& settings);
 
 
         ////////////////////////////////////////////////////////////////////////////////////////////
@@ -136,6 +136,19 @@ namespace uafc
         const std::vector<uaf::ApplicationDescription>& serversFound() const;
 
 
+        /**
+         * Get the endpoint descriptions for a given server by calling the OPC UA
+         * GetEndpoints service on the given URL.
+         *
+         * @param discoveryUrl          URL of the server to discover.
+         * @param endpointDescriptions  Endpoint descriptions that will be fetched.
+         * @return                      Status of the service call.
+         */
+        uaf::Status getEndpoints(
+                const std::string&                      discoveryUrl,
+                std::vector<uaf::EndpointDescription>&  endpointDescriptions);
+
+
         ///@} //////////////////////////////////////////////////////////////////////////////////////
         /**
          *  @name Convenience
@@ -156,9 +169,9 @@ namespace uafc
         uaf::Status read(
                 const std::vector<uaf::Address>&     addresses,
                 const uaf::attributeids::AttributeId attributeId,
-                const uafc::ReadConfig&              serviceConfig,
-                const uafc::SessionConfig&           sessionConfig,
-                uafc::ReadResult&                    result);
+                const uaf::ReadConfig&              serviceConfig,
+                const uaf::SessionConfig&           sessionConfig,
+                uaf::ReadResult&                    result);
 
 
         /**
@@ -179,9 +192,9 @@ namespace uafc
         uaf::Status beginRead(
                 const std::vector<uaf::Address>&     addresses,
                 const uaf::attributeids::AttributeId attributeId,
-                const uafc::ReadConfig&              serviceConfig,
-                const uafc::SessionConfig&           sessionConfig,
-                uafc::AsyncReadResult&               result);
+                const uaf::ReadConfig&              serviceConfig,
+                const uaf::SessionConfig&           sessionConfig,
+                uaf::AsyncReadResult&               result);
 
 
         /**
@@ -199,9 +212,9 @@ namespace uafc
                 const std::vector<uaf::Address>&     addresses,
                 const std::vector<uaf::Variant>&     data,
                 const uaf::attributeids::AttributeId attributeId,
-                const uafc::WriteConfig&             serviceConfig,
-                const uafc::SessionConfig&           sessionConfig,
-                uafc::WriteResult&                   result);
+                const uaf::WriteConfig&             serviceConfig,
+                const uaf::SessionConfig&           sessionConfig,
+                uaf::WriteResult&                   result);
 
 
         /**
@@ -224,9 +237,9 @@ namespace uafc
                 const std::vector<uaf::Address>&     addresses,
                 const std::vector<uaf::Variant>&     data,
                 const uaf::attributeids::AttributeId attributeId,
-                const uafc::WriteConfig&             serviceConfig,
-                const uafc::SessionConfig&           sessionConfig,
-                uafc::AsyncWriteResult&              result);
+                const uaf::WriteConfig&             serviceConfig,
+                const uaf::SessionConfig&           sessionConfig,
+                uaf::AsyncWriteResult&              result);
 
 
         /**
@@ -246,9 +259,9 @@ namespace uafc
                 const uaf::Address&                 objectAddress,
                 const uaf::Address&                 methodAddress,
                 const std::vector<uaf::Variant>&    inputArguments,
-                const uafc::MethodCallConfig&       serviceConfig,
-                const uafc::SessionConfig&          sessionConfig,
-                uafc::MethodCallResult&             result);
+                const uaf::MethodCallConfig&       serviceConfig,
+                const uaf::SessionConfig&          sessionConfig,
+                uaf::MethodCallResult&             result);
 
 
         /**
@@ -269,9 +282,9 @@ namespace uafc
                 const uaf::Address&                 objectAddress,
                 const uaf::Address&                 methodAddress,
                 const std::vector<uaf::Variant>&    inputArguments,
-                const uafc::MethodCallConfig&       serviceConfig,
-                const uafc::SessionConfig&          sessionConfig,
-                uafc::AsyncMethodCallResult&        result);
+                const uaf::MethodCallConfig&       serviceConfig,
+                const uaf::SessionConfig&          sessionConfig,
+                uaf::AsyncMethodCallResult&        result);
 
 
         /**
@@ -295,9 +308,9 @@ namespace uafc
         uaf::Status browse(
                 const std::vector<uaf::Address>&    addresses,
                 uint32_t                            maxAutoBrowseNext,
-                const uafc::BrowseConfig&           serviceConfig,
-                const uafc::SessionConfig&          sessionConfig,
-                uafc::BrowseResult&                 result);
+                const uaf::BrowseConfig&           serviceConfig,
+                const uaf::SessionConfig&          sessionConfig,
+                uaf::BrowseResult&                 result);
 
 
         /**
@@ -357,9 +370,9 @@ namespace uafc
                 uint32_t                                    numValuesPerNode,
                 uint32_t                                    maxAutoReadMore,
                 const std::vector<uaf::ByteString>&         continuationPoints,
-                const uafc::HistoryReadRawModifiedConfig&   serviceConfig,
-                const uafc::SessionConfig&                  sessionConfig,
-                uafc::HistoryReadRawModifiedResult&         result);
+                const uaf::HistoryReadRawModifiedConfig&   serviceConfig,
+                const uaf::SessionConfig&                  sessionConfig,
+                uaf::HistoryReadRawModifiedResult&         result);
 
 
         /**
@@ -420,9 +433,9 @@ namespace uafc
                 uint32_t                                    numValuesPerNode,
                 uint32_t                                    maxAutoReadMore,
                 const std::vector<uaf::ByteString>&         continuationPoints,
-                const uafc::HistoryReadRawModifiedConfig&   serviceConfig,
-                const uafc::SessionConfig&                  sessionConfig,
-                uafc::HistoryReadRawModifiedResult&         result);
+                const uaf::HistoryReadRawModifiedConfig&   serviceConfig,
+                const uaf::SessionConfig&                  sessionConfig,
+                uaf::HistoryReadRawModifiedResult&         result);
 
 
         /**
@@ -452,9 +465,9 @@ namespace uafc
         uaf::Status browseNext(
                 const std::vector<uaf::Address>&    addresses,
                 const std::vector<uaf::ByteString>& continuationPoints,
-                const uafc::BrowseNextConfig&       serviceConfig,
-                const uafc::SessionConfig&          sessionConfig,
-                uafc::BrowseNextResult&             result);
+                const uaf::BrowseNextConfig&       serviceConfig,
+                const uaf::SessionConfig&          sessionConfig,
+                uaf::BrowseNextResult&             result);
 
 
         /**
@@ -479,10 +492,10 @@ namespace uafc
          */
         uaf::Status createMonitoredData(
                 const std::vector<uaf::Address>&        addresses,
-                const uafc::CreateMonitoredDataConfig&  serviceConfig,
-                const uafc::SessionConfig&              sessionConfig,
-                const uafc::SubscriptionConfig&         subscriptionConfig,
-                uafc::CreateMonitoredDataResult&        result);
+                const uaf::CreateMonitoredDataConfig&  serviceConfig,
+                const uaf::SessionConfig&              sessionConfig,
+                const uaf::SubscriptionConfig&         subscriptionConfig,
+                uaf::CreateMonitoredDataResult&        result);
 
 
         /**
@@ -509,10 +522,10 @@ namespace uafc
         uaf::Status createMonitoredEvents(
                 const std::vector<uaf::Address>&            addresses,
                 const uaf::EventFilter&                     eventFilter,
-                const uafc::CreateMonitoredEventsConfig&    serviceConfig,
-                const uafc::SessionConfig&                  sessionConfig,
-                const uafc::SubscriptionConfig&             subscriptionConfig,
-                uafc::CreateMonitoredEventsResult&          result);
+                const uaf::CreateMonitoredEventsConfig&    serviceConfig,
+                const uaf::SessionConfig&                  sessionConfig,
+                const uaf::SubscriptionConfig&             subscriptionConfig,
+                uaf::CreateMonitoredEventsResult&          result);
 
 
 
@@ -532,8 +545,8 @@ namespace uafc
          * @return          The client-side status.
          */
         uaf::Status processRequest(
-                const uafc::ReadRequest&    request,
-                uafc::ReadResult&           result);
+                const uaf::ReadRequest&    request,
+                uaf::ReadResult&           result);
 
         /**
          * Process a synchronous read request.
@@ -543,8 +556,8 @@ namespace uafc
          * @return          The client-side status.
          */
         uaf::Status processRequest(
-                const uafc::AsyncReadRequest&   request,
-                uafc::AsyncReadResult&          result);
+                const uaf::AsyncReadRequest&   request,
+                uaf::AsyncReadResult&          result);
 
         /**
          * Process a synchronous write request.
@@ -554,8 +567,8 @@ namespace uafc
          * @return          The client-side status.
          */
         uaf::Status processRequest(
-                const uafc::WriteRequest&   request,
-                uafc::WriteResult&          result);
+                const uaf::WriteRequest&   request,
+                uaf::WriteResult&          result);
 
         /**
          * Process an asynchronous write request.
@@ -565,8 +578,8 @@ namespace uafc
          * @return          The client-side status.
          */
         uaf::Status processRequest(
-                const uafc::AsyncWriteRequest&   request,
-                uafc::AsyncWriteResult&          result);
+                const uaf::AsyncWriteRequest&   request,
+                uaf::AsyncWriteResult&          result);
 
 
         /**
@@ -577,8 +590,8 @@ namespace uafc
          * @return          The client-side status.
          */
         uaf::Status processRequest(
-                const uafc::MethodCallRequest&  request,
-                uafc::MethodCallResult&         result);
+                const uaf::MethodCallRequest&  request,
+                uaf::MethodCallResult&         result);
 
 
         /**
@@ -589,8 +602,8 @@ namespace uafc
          * @return          The client-side status.
          */
         uaf::Status processRequest(
-                const uafc::AsyncMethodCallRequest&  request,
-                uafc::AsyncMethodCallResult&         result);
+                const uaf::AsyncMethodCallRequest&  request,
+                uaf::AsyncMethodCallResult&         result);
 
         /**
          * Process a synchronous browse request.
@@ -600,8 +613,8 @@ namespace uafc
          * @return          The client-side status.
          */
         uaf::Status processRequest(
-                const uafc::BrowseRequest&   request,
-                uafc::BrowseResult&          result);
+                const uaf::BrowseRequest&   request,
+                uaf::BrowseResult&          result);
 
         /**
          * Process a synchronous BrowseNext request.
@@ -611,8 +624,8 @@ namespace uafc
          * @return          The client-side status.
          */
         uaf::Status processRequest(
-                const uafc::BrowseNextRequest&   request,
-                uafc::BrowseNextResult&          result);
+                const uaf::BrowseNextRequest&   request,
+                uaf::BrowseNextResult&          result);
 
 
         /**
@@ -623,8 +636,8 @@ namespace uafc
          * @return          The client-side status.
          */
         uaf::Status processRequest(
-                const uafc::TranslateBrowsePathsToNodeIdsRequest&  request,
-                uafc::TranslateBrowsePathsToNodeIdsResult&         result);
+                const uaf::TranslateBrowsePathsToNodeIdsRequest&  request,
+                uaf::TranslateBrowsePathsToNodeIdsResult&         result);
 
         
         /**
@@ -644,8 +657,8 @@ namespace uafc
          * @return          The client-side status.
          */
         uaf::Status processRequest(
-                const uafc::CreateMonitoredDataRequest& request,
-                uafc::CreateMonitoredDataResult&        result);
+                const uaf::CreateMonitoredDataRequest& request,
+                uaf::CreateMonitoredDataResult&        result);
 
         /**
          * Process a synchronous "create monitored events" request.
@@ -664,8 +677,8 @@ namespace uafc
          * @return          The client-side status.
          */
         uaf::Status processRequest(
-                const uafc::CreateMonitoredEventsRequest&   request,
-                uafc::CreateMonitoredEventsResult&          result);
+                const uaf::CreateMonitoredEventsRequest&   request,
+                uaf::CreateMonitoredEventsResult&          result);
 
         /**
          * Process a synchronous HistoryReadRawModified request.
@@ -675,8 +688,8 @@ namespace uafc
          * @return          The client-side status.
          */
         uaf::Status processRequest(
-                const uafc::HistoryReadRawModifiedRequest&  request,
-                uafc::HistoryReadRawModifiedResult&         result);
+                const uaf::HistoryReadRawModifiedRequest&  request,
+                uaf::HistoryReadRawModifiedResult&         result);
 
 
 
@@ -706,7 +719,7 @@ namespace uafc
          * @param serverUri     The server URI to which the client must connect. This server URI
          *                      (e.g. 'urn:UnifiedAutomation:UaDemoserver') must have been found
          *                      by the discovery process (which requires a Discovery URL that you
-         *                      must provide via the uafc::Client::setClientSettings method).
+         *                      must provide via the uaf::Client::setClientSettings method).
          * @param settings      The session settings that you want your session to have.
          * @param clientConnectionId A return parameter, giving you the id of the session if it
          *                           was created.
@@ -714,7 +727,7 @@ namespace uafc
          */
         uaf::Status manuallyConnect(
                 const std::string&              serverUri,
-                const uafc::SessionSettings&    settings,
+                const uaf::SessionSettings&    settings,
                 uaf::ClientConnectionId&        clientConnectionId);
 
 
@@ -736,16 +749,30 @@ namespace uafc
          * Session will be created! This is different behavior from manuallyConnect, which will
          * retry to connect until there's no failure anymore.
          *
+         * Compliant to OPC UA specs, the serverCertificate will:
+         * - first be checked at the application level. If it's not valid or not found in the trust
+         *   list, then the untrustedServerCertificateReceived() callback function will be called.
+         *   Override this method if you want to handle those cases.
+         * - then it may be used for encryption and/or signing (if a secure connection is needed,
+         *   of course).
+         *
+         * You can provide an (invalid, null) default PkiCertificate instance for the
+         * serverCertificate if you trust the server (i.e. if you make sure
+         * untrustedServerCertificateReceived returns PkiCertificate::Action_AcceptTemporarily),
+         * and if you don't need signing or encryption.
+         *
          * @param endpointUrl   The endpoint URL to which you want to connect
          *                      (e.g. opc.tcp://localhost:48010)
          * @param settings      The session settings that you want your session to have.
          * @param clientConnectionId A return parameter, giving you the id of the session if it
          *                           was created.
+         * @param serverCertificate The server certificate.
          * @return              Good if the session was created, Bad if not.
          */
         uaf::Status manuallyConnectToEndpoint(
                 const std::string&              endpointUrl,
-                const uafc::SessionSettings&    settings,
+                const uaf::SessionSettings&    settings,
+                const uaf::PkiCertificate&      serverCertificate,
                 uaf::ClientConnectionId&        clientConnectionId);
 
 
@@ -785,7 +812,7 @@ namespace uafc
          */
         uaf::Status sessionInformation(
                  uaf::ClientConnectionId   clientConnectionId,
-                 uafc::SessionInformation&  sessionInformation);
+                 uaf::SessionInformation&  sessionInformation);
 
 
         /**
@@ -795,7 +822,7 @@ namespace uafc
          *
          * @return  A vector of the information of all sessions.
          */
-        std::vector<uafc::SessionInformation> allSessionInformations();
+        std::vector<uaf::SessionInformation> allSessionInformations();
 
 
         ///@} //////////////////////////////////////////////////////////////////////////////////////
@@ -810,7 +837,7 @@ namespace uafc
          * Manually create a subscription.
          *
          * For more info about "manual" methods, see the documentation on the
-         * uafc::Client::manuallyConnect method.
+         * uaf::Client::manuallyConnect method.
          *
          * @param clientConnectionId    The id of the session which should host the subscription.
          * @param settings              The settings of the subscription you'd like to create.
@@ -821,7 +848,7 @@ namespace uafc
          */
         uaf::Status manuallySubscribe(
                 uaf::ClientConnectionId             clientConnectionId,
-                const uafc::SubscriptionSettings&   settings,
+                const uaf::SubscriptionSettings&   settings,
                 uaf::ClientSubscriptionHandle&      clientSubscriptionHandle);
 
 
@@ -861,7 +888,7 @@ namespace uafc
          */
         uaf::Status subscriptionInformation(
                  uaf::ClientSubscriptionHandle      clientSubscriptionHandle,
-                 uafc::SubscriptionInformation&     subscriptionInformation);
+                 uaf::SubscriptionInformation&     subscriptionInformation);
 
 
         /**
@@ -869,7 +896,7 @@ namespace uafc
          *
          * @return  A vector of all available SubscriptionInformation.
          */
-        std::vector<uafc::SubscriptionInformation> allSubscriptionInformations();
+        std::vector<uaf::SubscriptionInformation> allSubscriptionInformations();
 
 
         ///@} //////////////////////////////////////////////////////////////////////////////////////
@@ -890,7 +917,7 @@ namespace uafc
          */
         uaf::Status monitoredItemInformation(
                  uaf::ClientHandle                  clientHandle,
-                 uafc::MonitoredItemInformation&    monitoredItemInformation);
+                 uaf::MonitoredItemInformation&    monitoredItemInformation);
 
 
         ///@} //////////////////////////////////////////////////////////////////////////////////////
@@ -909,7 +936,7 @@ namespace uafc
          * it can happen that the server that hosts the monitored items is not on-line yet.
          * In this case, the ClientSubscriptionHandle is *not* assigned yet, but
          * ClientHandles *are* assigned yet. Therefore it makes sense to first call
-         * uafc::Client::monitoredItemInformation() of your monitored item, and get the subscription
+         * uaf::Client::monitoredItemInformation() of your monitored item, and get the subscription
          * handle from there.
          *
          * @param clientSubscriptionHandle  The handle identifying the subscription.
@@ -920,7 +947,7 @@ namespace uafc
         uaf::Status setPublishingMode(
                  uaf::ClientSubscriptionHandle  clientSubscriptionHandle,
                  bool                           publishingEnabled,
-                 const uafc::ServiceSettings&   serviceSettings);
+                 const uaf::ServiceSettings&   serviceSettings);
 
 
         /**
@@ -935,7 +962,7 @@ namespace uafc
         uaf::Status setMonitoringMode(
                 std::vector<uaf::ClientHandle>          clientHandles,
                 uaf::monitoringmodes::MonitoringMode    monitoringMode,
-                const uafc::ServiceSettings&            serviceSettings,
+                const uaf::ServiceSettings&            serviceSettings,
                 std::vector<uaf::Status>&               results);
 
 
@@ -947,16 +974,16 @@ namespace uafc
         uaf::Logger* logger_;
 
         /** The session factory of the client. */
-        uafc::SessionFactory* sessionFactory_;
+        uaf::SessionFactory* sessionFactory_;
 
         /** The resolver of the client (to resolve browse paths). */
-        uafc::Resolver* resolver_;
+        uaf::Resolver* resolver_;
 
         /** The discoverer (to find servers in the network). */
-        uafc::Discoverer* discoverer_;
+        uaf::Discoverer* discoverer_;
 
         /** The shared database of the client. */
-        uafc::Database* database_;
+        uaf::Database* database_;
 
         /** The flag to finish the run() method of the thread during destruction of the client. */
         bool doFinishThread_;
@@ -1073,4 +1100,4 @@ namespace uafc
 
 }
 
-#endif /* UAFC_CLIENT_H */
+#endif /* UAF_CLIENT_H */

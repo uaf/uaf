@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_BASESESSIONRESULTTARGET_H_
-#define UAFC_BASESESSIONRESULTTARGET_H_
+#ifndef UAF_BASESESSIONRESULTTARGET_H_
+#define UAF_BASESESSIONRESULTTARGET_H_
 
 
 // STD
@@ -31,16 +31,16 @@
 #include "uaf/util/handles.h"
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::BaseSessionResultTarget is the superclass of the result targets that are handled
+    * A uaf::BaseSessionResultTarget is the superclass of the result targets that are handled
     * at the session level.
     *
-    * This is the superclass of an uafc::ReadResultTarget, uafc::WriteResultTarget,
-    * uafc::MethodCallResultTarget, ... since these targets are all handled at the Session level
+    * This is the superclass of an uaf::ReadResultTarget, uaf::WriteResultTarget,
+    * uaf::MethodCallResultTarget, ... since these targets are all handled at the Session level
     * and not at the Subscription level.
     *
     * Result targets are part of a Result, and correspond one-to-one to the Request targets of a
@@ -48,7 +48,7 @@ namespace uafc
     *
     * @ingroup ClientResults
     ***********************************************************************************************/
-    class UAFC_EXPORT BaseSessionResultTarget
+    class UAF_EXPORT BaseSessionResultTarget
     {
     public:
 
@@ -71,4 +71,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_BASESESSIONRESULTTARGET_H_ */
+#endif /* UAF_BASESESSIONRESULTTARGET_H_ */

@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_SUBSCRIPTIONFACTORY_H_
-#define UAFC_SUBSCRIPTIONFACTORY_H_
+#ifndef UAF_SUBSCRIPTIONFACTORY_H_
+#define UAF_SUBSCRIPTIONFACTORY_H_
 
 
 // STD
@@ -42,17 +42,17 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
 
     /*******************************************************************************************//**
-    * An uafc::SubscriptionFactory creates and owns uafc::Subscription instances.
+    * An uaf::SubscriptionFactory creates and owns uaf::Subscription instances.
     *
     * @ingroup ClientSubscriptions
     ***********************************************************************************************/
-    class UAFC_EXPORT SubscriptionFactory : private UaClientSdk::UaSubscriptionCallback
+    class UAF_EXPORT SubscriptionFactory : private UaClientSdk::UaSubscriptionCallback
     {
     public:
 
@@ -62,7 +62,7 @@ namespace uafc
          *
          * @param loggerFactory      Logger factory to log all messages to.
          * @param clientConnectionId Id of the session that owns this subscription factory.
-         * @param uaSession          SDK session instance of the uafc::Session instance that owns
+         * @param uaSession          SDK session instance of the uaf::Session instance that owns
          *                           this subscription factory.
          * @param clientInterface    Client interface to call when asynchronous
          *                           communication is received.
@@ -72,8 +72,8 @@ namespace uafc
                 uaf::LoggerFactory*             loggerFactory,
                 uaf::ClientConnectionId         clientConnectionId,
                 UaClientSdk::UaSession*         uaSession,
-                uafc::ClientInterface*          clientInterface,
-                uafc::Database*                 database);
+                uaf::ClientInterface*          clientInterface,
+                uaf::Database*                 database);
 
 
         /**
@@ -86,7 +86,7 @@ namespace uafc
          * Manually create a subscription.
          *
          * For more info about "manual" methods, see the documentation on the
-         * uafc::Client::manuallyConnect method.
+         * uaf::Client::manuallyConnect method.
          *
          * @param settings              The settings of the subscription you'd like to create.
          * @param clientSubscriptionHandle  Output parameter, giving you the handle of the newly
@@ -95,7 +95,7 @@ namespace uafc
          *                              something went wrong.
          */
         uaf::Status manuallySubscribe(
-                const uafc::SubscriptionSettings&   settings,
+                const uaf::SubscriptionSettings&   settings,
                 uaf::ClientSubscriptionHandle&      clientSubscriptionHandle);
 
         /**
@@ -118,7 +118,7 @@ namespace uafc
          */
         uaf::Status subscriptionInformation(
                  uaf::ClientSubscriptionHandle      clientSubscriptionHandle,
-                 uafc::SubscriptionInformation&     subscriptionInformation);
+                 uaf::SubscriptionInformation&     subscriptionInformation);
 
 
         /**
@@ -126,7 +126,7 @@ namespace uafc
          *
          * @return  A vector of all available SubscriptionInformation.
          */
-        std::vector<uafc::SubscriptionInformation> allSubscriptionInformations();
+        std::vector<uaf::SubscriptionInformation> allSubscriptionInformations();
 
 
         /**
@@ -138,7 +138,7 @@ namespace uafc
          */
          bool monitoredItemInformation(
                 uaf::ClientHandle               clientHandle,
-                uafc::MonitoredItemInformation& monitoredItemInformation);
+                uaf::MonitoredItemInformation& monitoredItemInformation);
 
 
         /**
@@ -154,7 +154,7 @@ namespace uafc
         uaf::Status setPublishingMode(
                 uaf::ClientSubscriptionHandle  clientSubscriptionHandle,
                 bool                           publishingEnabled,
-                const uafc::ServiceSettings&   serviceSettings,
+                const uaf::ServiceSettings&   serviceSettings,
                 bool&                          subscriptionFound);
 
 
@@ -171,15 +171,15 @@ namespace uafc
         uaf::Status setMonitoringModeIfNeeded(
                std::vector<uaf::ClientHandle>          clientHandles,
                uaf::monitoringmodes::MonitoringMode    monitoringMode,
-               const uafc::ServiceSettings&            serviceSettings,
+               const uaf::ServiceSettings&            serviceSettings,
                std::vector<uaf::Status>&               results);
 
 
         /**
          * Execute a service invocation in a generic way.
          *
-         * @tparam _Service      The service to be invoked (such as uafc::ReadService,
-         *                       uafc::AsyncMethodCallService, etc.).
+         * @tparam _Service      The service to be invoked (such as uaf::ReadService,
+         *                       uaf::AsyncMethodCallService, etc.).
          * @param invocation     The invocation to be executed.
          * @param nameSpaceArray The name space array as fetched by the client.
          * @param serverArray    The server array as fetched by the client.
@@ -201,7 +201,7 @@ namespace uafc
                 storeRequestHandle(invocation.requestHandle());
 
             // try to acquire a subscription for the given subscription settings
-            uafc::Subscription* subscription = 0;
+            uaf::Subscription* subscription = 0;
             ret = acquireSubscription(invocation.subscriptionSettings(), subscription);
 
              // check if the subscription was acquired
@@ -221,8 +221,7 @@ namespace uafc
                             serverArray);
                 }
                 else
-                    ret.setStatus(uaf::statuscodes::SubscriptionError,
-                                  "Subscription is not created");
+                    ret = uaf::SubscriptionNotCreatedError();
 
                 releaseSubscription(subscription);
             }
@@ -241,7 +240,7 @@ namespace uafc
         typedef uint32_t Activity;
 
         // private typedef: a map to store all subscriptions
-        typedef std::map<uaf::ClientSubscriptionHandle, uafc::Subscription*> SubscriptionMap;
+        typedef std::map<uaf::ClientSubscriptionHandle, uaf::Subscription*> SubscriptionMap;
 
         // private typedef: a map to store the activities
         typedef std::map<uaf::ClientSubscriptionHandle, Activity>            ActivityMap;
@@ -263,8 +262,8 @@ namespace uafc
          *                              subscription could be provided via the 'session' argument.
          */
         uaf::Status acquireSubscription(
-                const uafc::SubscriptionSettings&   subscriptionSettings,
-                uafc::Subscription*&                subscription);
+                const uaf::SubscriptionSettings&   subscriptionSettings,
+                uaf::Subscription*&                subscription);
 
 
         /**
@@ -281,7 +280,7 @@ namespace uafc
          */
         uaf::Status acquireExistingSubscription(
                 uaf::ClientSubscriptionHandle  clientSubscriptionHandle,
-                uafc::Subscription*&           subscription);
+                uaf::Subscription*&           subscription);
 
 
         /**
@@ -299,19 +298,19 @@ namespace uafc
          *                      likely in the subscription factory!
          */
         uaf::Status releaseSubscription(
-                uafc::Subscription*&    subscription,
+                uaf::Subscription*&    subscription,
                 bool                    allowGarbageCollection=true);
 
 
-        // pointer to the SDK session instance of the uafc::Session instance that owns
+        // pointer to the SDK session instance of the uaf::Session instance that owns
         // this subscription factory.
         UaClientSdk::UaSession* uaSession_;
-        // the connection ID of the uafc::Session instance that owns this subscription factory.
+        // the connection ID of the uaf::Session instance that owns this subscription factory.
         uaf::ClientConnectionId clientConnectionId_;
         // logger of the subscription factory
         uaf::Logger* logger_;
         // pointer to the client database
-        uafc::Database* database_;
+        uaf::Database* database_;
         // the map storing all subscriptions, and its mutex
         SubscriptionMap subscriptionMap_;
         UaMutex         subscriptionMapMutex_;
@@ -321,7 +320,7 @@ namespace uafc
         // the mutex to safeguard the critical sections
         UaMutex subscriptionMutex_;
         // the RequesterInterface to call when asynchronous messages are received
-        uafc::ClientInterface* clientInterface_;
+        uaf::ClientInterface* clientInterface_;
         // the current transaction id (gets incremented every time), and its mutex
         uaf::TransactionId transactionId_;
         UaMutex            transactionIdMutex_;
@@ -448,4 +447,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_SUBSCRIPTIONFACTORY_H_ */
+#endif /* UAF_SUBSCRIPTIONFACTORY_H_ */

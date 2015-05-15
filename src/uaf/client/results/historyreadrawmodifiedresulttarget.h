@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_HISTORYREADRAWMODIFIEDRESULTTARGET_H_
-#define UAFC_HISTORYREADRAWMODIFIEDRESULTTARGET_H_
+#ifndef UAF_HISTORYREADRAWMODIFIEDRESULTTARGET_H_
+#define UAF_HISTORYREADRAWMODIFIEDRESULTTARGET_H_
 
 
 
@@ -35,18 +35,18 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::HistoryReadRawModifiedResultTarget is the "result target" of the corresponding
+    * An uaf::HistoryReadRawModifiedResultTarget is the "result target" of the corresponding
     * "request target" that specified the node to get the historical data from and the constraints
     * etc.
     *
     * @ingroup ClientResults
     ***********************************************************************************************/
-    class UAFC_EXPORT HistoryReadRawModifiedResultTarget : public uafc::BaseSessionResultTarget
+    class UAF_EXPORT HistoryReadRawModifiedResultTarget : public uaf::BaseSessionResultTarget
     {
     public:
 
@@ -59,6 +59,9 @@ namespace uafc
         /** The resulting status for the operation. */
         uaf::Status status;
 
+        /** The OPC UA status code reported by the server. */
+        uaf::OpcUaStatusCode opcUaStatusCode;
+
         /** The continuation point, in case there are still results left at the server.
          *  If the continuation point is not NULL (i.e. if it contains more than 0 bytes),
          *  then you should copy the continuation point to the continuation point of the next
@@ -68,14 +71,14 @@ namespace uafc
         /** How many times did the UAF automatically invoke the historical read OPC UA service
          *  in addition to the original request, in order to get the remaining results?
          *  In case the UAF did not read more data automatically, this value will be 0.
-         *  See uafc::HistoryReadRawModifiedSettings::maxAutoReadMore for more info. */
+         *  See uaf::HistoryReadRawModifiedSettings::maxAutoReadMore for more info. */
         uint32_t autoReadMore;
 
         /** The requested historical data. */
         std::vector<uaf::DataValue> dataValues;
 
         /** The requested modification information, in case the
-         *  uafc::settings::HistoryReadRawModifiedSettings::isReadModified flag
+         *  uaf::settings::HistoryReadRawModifiedSettings::isReadModified flag
          *  was set in the settings of the original request. */
         std::vector<uaf::ModificationInfo> modificationInfos;
 
@@ -87,13 +90,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const HistoryReadRawModifiedResultTarget& object1,
                 const HistoryReadRawModifiedResultTarget& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const HistoryReadRawModifiedResultTarget& object1,
                 const HistoryReadRawModifiedResultTarget& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const HistoryReadRawModifiedResultTarget& object1,
                 const HistoryReadRawModifiedResultTarget& object2);
 
@@ -102,4 +105,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_HISTORYREADRAWMODIFIEDRESULTTARGET_H_ */
+#endif /* UAF_HISTORYREADRAWMODIFIEDRESULTTARGET_H_ */

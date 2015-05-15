@@ -18,7 +18,6 @@
 #include "uaf/client/client.h"
 
 using namespace uaf;
-using namespace uafc;
 using std::string;
 using std::cout;
 using std::vector;
@@ -29,7 +28,7 @@ class MyClient : public Client
 {
 public:
     MyClient(const ClientSettings& settings) : Client(settings) {}
-    void writeComplete(const uafc::WriteResult& result) {
+    void writeComplete(const uaf::WriteResult& result) {
         cout << "writeComplete result:\n";
         cout << result.toString().c_str();
         cout << "\n";

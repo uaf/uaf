@@ -20,10 +20,9 @@
 
 #include "uaf/client/invocations/historyreadrawmodifiedinvocation.h"
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::size_t;
     using std::stringstream;
@@ -110,7 +109,7 @@ namespace uafc
             const NamespaceArray&                               nameSpaceArray,
             const ServerArray&                                  serverArray)
     {
-        return Status(statuscodes::UnsupportedError, "Asynchronous HistoryRead is not supported");
+        return AsyncInvocationNotSupportedError();
     }
 
 
@@ -119,14 +118,18 @@ namespace uafc
     Status HistoryReadRawModifiedInvocation::invokeSyncSdkService(UaClientSdk::UaSession* uaSession)
     {
         Status ret;
-        UaStatus uaStatus = uaSession->historyReadRawModified(
+
+        SdkStatus sdkStatus = uaSession->historyReadRawModified(
                 uaServiceSettings_,
                 uaContext_,
                 uaNodesToRead_,
                 uaResults_,
                 uaDiagnosticInfos_);
 
-        ret.fromSdk(uaStatus.statusCode(), "Synchronous HistoryRead invocation failed");
+        if (sdkStatus.isGood())
+            ret = uaf::statuscodes::Good;
+        else
+            ret = HistoryReadInvocationError(sdkStatus);
 
         uint32_t autoReadMore    = 0;
         uint32_t maxAutoReadMore = this->serviceSettings().maxAutoReadMore;
@@ -180,15 +183,19 @@ namespace uafc
             {
 
                 // perform the BrowseNext call
-                UaStatus uaNextStatus = uaSession->historyReadRawModified(
+                SdkStatus sdkNextStatus = uaSession->historyReadRawModified(
                         uaServiceSettings_,
                         uaContext_,
                         uaNextNodesToRead,
                         uaNextResults,
                         uaDiagnosticInfos_);
 
-                ret.fromSdk(uaNextStatus.statusCode(),
-                            "Synchronous HistoryReadRawModified invocation failed");
+
+
+                if (sdkStatus.isGood())
+                    ret = uaf::statuscodes::Good;
+                else
+                    ret = HistoryReadRawModifiedInvocationError(sdkStatus);
 
                 // we've finished an automatic read call, so increment the counter
                 autoReadMore++;
@@ -281,7 +288,7 @@ namespace uafc
             UaClientSdk::UaSession* uaSession,
             TransactionId           transactionId)
     {
-        return Status(statuscodes::UnsupportedError, "Asynchronous HistoryRead is not supported");
+        return AsyncInvocationNotSupportedError();
     }
 
 
@@ -305,10 +312,15 @@ namespace uafc
         {
             for (uint32_t i=0; i<noOfTargets ; i++)
             {
-
                 // update the status
-                targets[i].status.fromSdk(uaResults_[i].m_status.statusCode(),
-                                          "The server reported a HistoryRead failure");
+                if (OpcUa_IsGood(uaResults_[i].m_status.statusCode()))
+                    targets[i].status = statuscodes::Good;
+                else
+                    targets[i].status = ServerCouldNotHistoryReadError(
+                            SdkStatus(uaResults_[i].m_status.statusCode()));
+
+                // update the status code
+                targets[i].opcUaStatusCode = uaResults_[i].m_status.statusCode();
 
                 // update the autoBrowsedNext counter
                 targets[i].autoReadMore = autoReadMorePerTarget_[i];
@@ -333,13 +345,12 @@ namespace uafc
                     targets[i].modificationInfos[j].fromSdk(uaResults_[i].m_modificationInformation[j]);
             }
 
-            ret.setGood();
+            ret = uaf::statuscodes::Good;
         }
         else
         {
-            ret.setStatus(statuscodes::UnexpectedError,
-                          "Number of result targets does not match number of request targets,"
-                          "or number of automatic ReadMore counters");
+            ret = UnexpectedError("Number of result targets does not match number of request targets,"
+                                  "or number of automatic ReadMore counters");
         }
 
         return ret;

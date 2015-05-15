@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_TRANSLATEBROWSEPATHSTONODEIDSRESULTTARGET_H_
-#define UAFC_TRANSLATEBROWSEPATHSTONODEIDSRESULTTARGET_H_
+#ifndef UAF_TRANSLATEBROWSEPATHSTONODEIDSRESULTTARGET_H_
+#define UAF_TRANSLATEBROWSEPATHSTONODEIDSRESULTTARGET_H_
 
 
 
@@ -34,20 +34,20 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::TranslateBrowsePathsToNodeIdsResultTarget is the "result target" of the corresponding
+    * An uaf::TranslateBrowsePathsToNodeIdsResultTarget is the "result target" of the corresponding
     * "request target" that specified the browse path to be translated.
     *
     * It tells you the translation status, the translation result, etc.
     *
     * @ingroup ClientResults
     ***********************************************************************************************/
-    class UAFC_EXPORT TranslateBrowsePathsToNodeIdsResultTarget
-    : public uafc::BaseSessionResultTarget
+    class UAF_EXPORT TranslateBrowsePathsToNodeIdsResultTarget
+    : public uaf::BaseSessionResultTarget
     {
     public:
 
@@ -61,6 +61,9 @@ namespace uafc
         /** The status of the translation target (good if the browse path could be translated,
          *  bad if not). */
         uaf::Status status;
+
+        /** The OPC UA status code reported by the server. */
+        uaf::OpcUaStatusCode opcUaStatusCode;
 
         /** The resulting expanded node ids. */
         std::vector<uaf::ExpandedNodeId> expandedNodeIds;
@@ -76,13 +79,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const TranslateBrowsePathsToNodeIdsResultTarget& object1,
                 const TranslateBrowsePathsToNodeIdsResultTarget& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const TranslateBrowsePathsToNodeIdsResultTarget& object1,
                 const TranslateBrowsePathsToNodeIdsResultTarget& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const TranslateBrowsePathsToNodeIdsResultTarget& object1,
                 const TranslateBrowsePathsToNodeIdsResultTarget& object2);
 
@@ -91,4 +94,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_TRANSLATEBROWSEPATHSTONODEIDSRESULTTARGET_H_ */
+#endif /* UAF_TRANSLATEBROWSEPATHSTONODEIDSRESULTTARGET_H_ */

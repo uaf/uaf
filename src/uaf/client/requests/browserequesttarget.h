@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_BROWSEREQUESTTARGET_H_
-#define UAFC_BROWSEREQUESTTARGET_H_
+#ifndef UAF_BROWSEREQUESTTARGET_H_
+#define UAF_BROWSEREQUESTTARGET_H_
 
 
 
@@ -35,17 +35,17 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::BrowseRequestTarget is the part of a uafc::BrowseRequest that specifies the target
+    * A uaf::BrowseRequestTarget is the part of a uaf::BrowseRequest that specifies the target
     * to be browsed.
     *
     * @ingroup ClientRequests
     ***********************************************************************************************/
-    class UAFC_EXPORT BrowseRequestTarget : public uafc::BaseSessionRequestTarget
+    class UAF_EXPORT BrowseRequestTarget : public uaf::BaseSessionRequestTarget
     {
     public:
 
@@ -130,13 +130,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const BrowseRequestTarget& object1,
                 const BrowseRequestTarget& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const BrowseRequestTarget& object1,
                 const BrowseRequestTarget& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const BrowseRequestTarget& object1,
                 const BrowseRequestTarget& object2);
 
@@ -177,4 +177,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_BROWSEREQUESTTARGET_H_ */
+#endif /* UAF_BROWSEREQUESTTARGET_H_ */

@@ -84,6 +84,7 @@
 
 
 // STD
+#include <stdint.h>
 // SDK
 #include "uabase/uaplatformlayer.h"
 
@@ -107,6 +108,8 @@
 namespace uaf
 {
 
+    /** Define the OPC UA StatusCode type (a 32-bit unsigned integer, see Specs Part 4). */
+    typedef uint32_t OpcUaStatusCode;
 
     /**
      * Initialize the framework (must be done before anything else!).

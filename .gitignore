@@ -4,6 +4,9 @@
 .pydevproject
 .settings/
 
+# ignore directories and files created by running examples
+examples/pyuaf/client/securityexample/
+
 # Ignore python bytecode
 *.py[cod]
 
@@ -16,3 +19,7 @@
 *.lai
 *.la
 *.a
+
+# Ignore the PKI folder that may be created when running the examples 
+examples/pyuaf/client/PKI/*
+examples/pyuaf/client/securityexample/*

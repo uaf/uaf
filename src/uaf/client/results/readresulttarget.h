@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_READRESULTTARGET_H_
-#define UAFC_READRESULTTARGET_H_
+#ifndef UAF_READRESULTTARGET_H_
+#define UAF_READRESULTTARGET_H_
 
 
 
@@ -35,20 +35,20 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::ReadResultTarget is the "result target" of the corresponding
+    * An uaf::ReadResultTarget is the "result target" of the corresponding
     * "request target" that specified the attribute and node etc. to be read.
     *
     * It tells you the read status, the read data, etc.
     *
     * @ingroup ClientResults
     ***********************************************************************************************/
-    class UAFC_EXPORT ReadResultTarget : public uafc::BaseSessionResultTarget,
-                                         public uaf::DataValue
+    class UAF_EXPORT ReadResultTarget : public uaf::BaseSessionResultTarget,
+                                        public uaf::DataValue
     {
     public:
 
@@ -58,6 +58,10 @@ namespace uafc
         ReadResultTarget();
 
 
+        /** Status of the target */
+        uaf::Status status;
+
+
         /**
          * Get a string representation of the target.
          */
@@ -65,13 +69,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const ReadResultTarget& object1,
                 const ReadResultTarget& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const ReadResultTarget& object1,
                 const ReadResultTarget& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const ReadResultTarget& object1,
                 const ReadResultTarget& object2);
 
@@ -80,4 +84,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_READRESULTTARGET_H_ */
+#endif /* UAF_READRESULTTARGET_H_ */

@@ -19,8 +19,8 @@
  */
 
 
-#ifndef UAFC_CREATEMONITOREDDATAINVOCATION_H_
-#define UAFC_CREATEMONITOREDDATAINVOCATION_H_
+#ifndef UAF_CREATEMONITOREDDATAINVOCATION_H_
+#define UAF_CREATEMONITOREDDATAINVOCATION_H_
 
 
 // STD
@@ -37,20 +37,20 @@
 #include "uaf/client/requests/requests.h"
 #include "uaf/client/results/results.h"
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::CreateMonitoredDataInvocation wraps the functional SDK code to invoke the
+    * An uaf::CreateMonitoredDataInvocation wraps the functional SDK code to invoke the
     * CreateMonitoredItem service for monitored data.
     *
     * @ingroup ClientInvocations
     ***********************************************************************************************/
-    class UAFC_EXPORT CreateMonitoredDataInvocation
-    : public uafc::BaseServiceInvocation< uafc::CreateMonitoredDataSettings,
-                                          uafc::CreateMonitoredDataRequestTarget,
-                                          uafc::CreateMonitoredDataResultTarget >
+    class UAF_EXPORT CreateMonitoredDataInvocation
+    : public uaf::BaseServiceInvocation< uaf::CreateMonitoredDataSettings,
+                                          uaf::CreateMonitoredDataRequestTarget,
+                                          uaf::CreateMonitoredDataResultTarget >
     {
     public:
 
@@ -74,34 +74,34 @@ namespace uafc
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromSyncUafToSdk(
-                const std::vector<uafc::CreateMonitoredDataRequestTarget>&  targets,
-                const uafc::CreateMonitoredDataSettings&                    settings,
+                const std::vector<uaf::CreateMonitoredDataRequestTarget>&  targets,
+                const uaf::CreateMonitoredDataSettings&                    settings,
                 const uaf::NamespaceArray&                                  nameSpaceArray,
                 const uaf::ServerArray&                                     serverArray);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromAsyncUafToSdk(
-                const std::vector<uafc::CreateMonitoredDataRequestTarget>&  targets,
-                const uafc::CreateMonitoredDataSettings&                    settings,
+                const std::vector<uaf::CreateMonitoredDataRequestTarget>&  targets,
+                const uaf::CreateMonitoredDataSettings&                    settings,
                 const uaf::NamespaceArray&                                  nameSpaceArray,
                 const uaf::ServerArray&                                     serverArray);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status invokeSyncSdkService(
                 UaClientSdk::UaSubscription* uaSubscription);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status invokeAsyncSdkService(
                 UaClientSdk::UaSubscription* uaSubscription,
@@ -109,12 +109,12 @@ namespace uafc
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromSyncSdkToUaf(
                 const uaf::NamespaceArray&                          nameSpaceArray,
                 const uaf::ServerArray&                             serverArray,
-                std::vector<uafc::CreateMonitoredDataResultTarget>& targets);
+                std::vector<uaf::CreateMonitoredDataResultTarget>& targets);
 
 
         // private data members used during the invocation
@@ -131,4 +131,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_CREATEMONITOREDDATAINVOCATION_H_ */
+#endif /* UAF_CREATEMONITOREDDATAINVOCATION_H_ */

@@ -20,10 +20,9 @@
 
 #include "uaf/client/subscriptions/subscription.h"
 
-namespace uafc
+namespace uaf
 {
     using namespace uaf;
-    using namespace uafc;
     using std::string;
     using std::stringstream;
     using std::vector;
@@ -40,7 +39,7 @@ namespace uafc
             ClientConnectionId                      clientConnectionId,
             UaClientSdk::UaSession*                 uaSession,
             UaClientSdk::UaSubscriptionCallback*    uaSubscriptionCallback,
-            uafc::ClientInterface*                  clientInterface,
+            uaf::ClientInterface*                  clientInterface,
             Database*                               database)
     : uaSession_(uaSession),
       uaSubscriptionCallback_(uaSubscriptionCallback),
@@ -56,7 +55,7 @@ namespace uafc
         loggerName << "Subscription-" << int(clientSubscriptionHandle);
         logger_ = new Logger(loggerFactory, loggerName.str());
 
-        subscriptionState_ = uafc::subscriptionstates::Deleted;
+        subscriptionState_ = uaf::subscriptionstates::Deleted;
 
         uaSubscription_ = 0;
 
@@ -76,7 +75,7 @@ namespace uafc
         Status status = deleteSubscription();
 
         // Don't delete the uaSubscription_, it is owned by uaSession_!
-        // And also don't delete the uaSession_ here, it is owned by uafc::Session!
+        // And also don't delete the uaSession_ here, it is owned by uaf::Session!
 
         // delete the logger
         delete logger_;
@@ -96,7 +95,7 @@ namespace uafc
         UaClientSdk::SubscriptionSettings subscriptionSettings;
         subscriptionSettings = toSdk(subscriptionSettings_);
 
-        UaStatus uaStatus = uaSession_->createSubscription(
+        SdkStatus sdkStatus = uaSession_->createSubscription(
                 serviceSettings,
                 uaSubscriptionCallback_,
                 clientSubscriptionHandle_,
@@ -104,20 +103,22 @@ namespace uafc
                 OpcUa_True,
                 &uaSubscription_);
 
-        ret.fromSdk(uaStatus.statusCode(), "Could not create the subscription to the server");
+
+        if (sdkStatus.isGood())
+            ret = statuscodes::Good;
+        else
+            ret = CreateSubscriptionError(sdkStatus);
 
         if (ret.isGood())
         {
-            setSubscriptionState(uafc::subscriptionstates::Created);
+            setSubscriptionState(uaf::subscriptionstates::Created);
             logger_->debug("The subscription has been successfully created to the server");
         }
         else
         {
-            setSubscriptionState(uafc::subscriptionstates::Deleted);
-            ret.addDiagnostic("Subscription creation to the server failed");
+            setSubscriptionState(uaf::subscriptionstates::Deleted);
             logger_->error(ret);
         }
-
 
         return ret;
     }
@@ -135,20 +136,23 @@ namespace uafc
                 logger_->debug("Now deleting subscription %d and thereby deleting all monitored items",
                                clientSubscriptionHandle_);
                 UaClientSdk::ServiceSettings serviceSettings;
-                UaStatus uaStatus = uaSession_->deleteSubscription(serviceSettings, &uaSubscription_);
+                SdkStatus sdkStatus = uaSession_->deleteSubscription(serviceSettings, &uaSubscription_);
 
-                ret.fromSdk(uaStatus.statusCode(), "Could not delete the subscription");
+                if (sdkStatus.isGood())
+                    ret = statuscodes::Good;
+                else
+                    ret = DeleteSubscriptionError(sdkStatus);
             }
             else
             {
                 logger_->debug("No need to delete subscription %d on the server side, as it was " \
                                "already deleted", clientSubscriptionHandle_);
-                ret.setGood();
+                ret = statuscodes::Good;
             }
         }
         else
         {
-            ret.setStatus(statuscodes::ConnectionError, "Could not delete the subscription");
+            ret = SessionNotConnectedError();
         }
 
         // now update the persistent requests
@@ -161,14 +165,14 @@ namespace uafc
                 database_->createMonitoredDataRequestStore.updateTargetStatus(
                         it->second.requestHandle,
                         it->second.targetRank,
-                        Status(statuscodes::SubscriptionError, "The subscription was deleted"));
+                        SubscriptionHasBeenDeletedError());
             }
             else
             {
                 database_->createMonitoredEventsRequestStore.updateTargetStatus(
                         it->second.requestHandle,
                         it->second.targetRank,
-                        Status(statuscodes::SubscriptionError, "The subscription was deleted"));
+                        SubscriptionHasBeenDeletedError());
             }
 
             // remove the monitoredItemsMap_ entry
@@ -179,7 +183,7 @@ namespace uafc
         if (ret.isGood())
         {
             logger_->debug("The subscription has been deleted successfully");
-            setSubscriptionState(uafc::subscriptionstates::Deleted);
+            setSubscriptionState(uaf::subscriptionstates::Deleted);
         } else
         {
             logger_->error(ret);
@@ -191,7 +195,7 @@ namespace uafc
 
     bool Subscription::isCreated() const
     {
-        return subscriptionState_ == uafc::subscriptionstates::Created;
+        return subscriptionState_ == uaf::subscriptionstates::Created;
     }
 
 
@@ -204,11 +208,13 @@ namespace uafc
         OpcUa_Boolean uaPublishingEnabled = publishingEnabled ? OpcUa_True : OpcUa_False;
         UaClientSdk::ServiceSettings uaServiceSettings;
         serviceSettings.toSdk(uaServiceSettings);
-        UaStatus uaStatus = uaSubscription_->setPublishingMode(uaServiceSettings,
-                                                               uaPublishingEnabled);
-        Status ret;
-        ret.fromSdk(uaStatus.statusCode(), "Couldn't set the publishing mode");
-        return ret;
+        SdkStatus sdkStatus = uaSubscription_->setPublishingMode(uaServiceSettings,
+                                                                 uaPublishingEnabled);
+
+        if (sdkStatus.isGood())
+            return statuscodes::Good;
+        else
+            return SetPublishingModeInvocationError(sdkStatus);
     }
 
 
@@ -261,13 +267,17 @@ namespace uafc
         serviceSettings.toSdk(uaServiceSettings);
         UaStatusCodeArray uaStatusCodes;
 
-        UaStatus uaStatus = uaSubscription_->setMonitoringMode(
+        SdkStatus sdkStatus = uaSubscription_->setMonitoringMode(
                 uaServiceSettings,
                 opcUaMonitoringMode,
                 ids,
                 uaStatusCodes);
 
-        ret.fromSdk(uaStatus.statusCode(), "Couldn't set the publishing mode");
+        if (sdkStatus.isGood())
+            return statuscodes::Good;
+        else
+            return SetMonitoringModeInvocationError(sdkStatus);
+
 
         logger_->debug("Result of OPC UA service call: %s", ret.toString().c_str());
 
@@ -275,8 +285,12 @@ namespace uafc
         {
             for (uint32_t i = 0; i < realSize; i++)
             {
-                results[ranks[i]].fromSdk(uaStatusCodes[i],
-                                          "Status of client handle %d", clientHandles[ranks[i]]);
+                if (OpcUa_IsGood(uaStatusCodes[i]))
+                    results[ranks[i]] = statuscodes::Good;
+                else
+                    results[ranks[i]] = ServerCouldNotSetMonitoringModeError(
+                            clientHandles[ranks[i]],
+                            SdkStatus(uaStatusCodes[i]));
             }
         }
 
@@ -288,10 +302,10 @@ namespace uafc
     // Change the subscription status
     // =============================================================================================
     void Subscription::setSubscriptionState(
-            uafc::subscriptionstates::SubscriptionState subscriptionState)
+            uaf::subscriptionstates::SubscriptionState subscriptionState)
     {
         logger_->debug("The subscription status has changed to %s",
-                       uafc::subscriptionstates::toString(subscriptionState).c_str());
+                       uaf::subscriptionstates::toString(subscriptionState).c_str());
         Subscription::subscriptionState_ = subscriptionState;
 
         // call the callback interface
@@ -301,9 +315,9 @@ namespace uafc
 
     // Get information about the session
     // =============================================================================================
-    uafc::SubscriptionInformation Subscription::subscriptionInformation() const
+    uaf::SubscriptionInformation Subscription::subscriptionInformation() const
     {
-        uafc::SubscriptionInformation info;
+        uaf::SubscriptionInformation info;
         info.clientConnectionId = clientConnectionId_;
         info.clientSubscriptionHandle = clientSubscriptionHandle_;
         info.subscriptionState = subscriptionState_;
@@ -390,7 +404,11 @@ namespace uafc
 
                 notification.clientHandle       = clientHandle;
                 notification.data               = dataNotifications[i].Value.Value;
-                notification.status.fromSdk(dataNotifications[i].Value.StatusCode, "Invalid value");
+
+                if (OpcUa_IsGood(dataNotifications[i].Value.StatusCode))
+                    notification.status = statuscodes::Good;
+                else
+                    notification.status = BadDataReceivedError(SdkStatus(dataNotifications[i].Value.StatusCode));
 
                 // add it to the vector of notifications for the callback
                 notifications.push_back(notification);

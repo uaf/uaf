@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_ADDRESSCACHE_H_
-#define UAFC_ADDRESSCACHE_H_
+#ifndef UAF_ADDRESSCACHE_H_
+#define UAF_ADDRESSCACHE_H_
 
 // STD
 #include <string>
@@ -36,17 +36,17 @@
 #include "uaf/client/clientexport.h"
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::AddressCache can speed up address resolution by storing the ExpandedNodeId for each
+    * A uaf::AddressCache can speed up address resolution by storing the ExpandedNodeId for each
     * Address.
     *
     * @ingroup ClientDatabase
     ***********************************************************************************************/
-    class UAFC_EXPORT AddressCache
+    class UAF_EXPORT AddressCache
     {
     public:
 
@@ -145,4 +145,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_ADDRESSCACHE_H_ */
+#endif /* UAF_ADDRESSCACHE_H_ */

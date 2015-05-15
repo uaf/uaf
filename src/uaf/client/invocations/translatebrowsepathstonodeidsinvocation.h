@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_TRANSLATEBROWSEPATHSTONODEIDSINVOCATION_H_
-#define UAFC_TRANSLATEBROWSEPATHSTONODEIDSINVOCATION_H_
+#ifndef UAF_TRANSLATEBROWSEPATHSTONODEIDSINVOCATION_H_
+#define UAF_TRANSLATEBROWSEPATHSTONODEIDSINVOCATION_H_
 
 
 // STD
@@ -34,54 +34,54 @@
 #include "uaf/client/requests/requests.h"
 #include "uaf/client/results/results.h"
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::ReadResultTarget is the "result target" of the corresponding
+    * An uaf::ReadResultTarget is the "result target" of the corresponding
     * "request target" that specified the attribute and node etc. to be read.
     *
     * It tells you the read status, the read data, etc.
     *
     * @ingroup ClientInvocations
     ***********************************************************************************************/
-    class UAFC_EXPORT TranslateBrowsePathsToNodeIdsInvocation
-    : public uafc::BaseServiceInvocation< uafc::TranslateBrowsePathsToNodeIdsSettings,
-                                          uafc::TranslateBrowsePathsToNodeIdsRequestTarget,
-                                          uafc::TranslateBrowsePathsToNodeIdsResultTarget >
+    class UAF_EXPORT TranslateBrowsePathsToNodeIdsInvocation
+    : public uaf::BaseServiceInvocation< uaf::TranslateBrowsePathsToNodeIdsSettings,
+                                          uaf::TranslateBrowsePathsToNodeIdsRequestTarget,
+                                          uaf::TranslateBrowsePathsToNodeIdsResultTarget >
     {
     private:
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromSyncUafToSdk(
-                const std::vector<uafc::TranslateBrowsePathsToNodeIdsRequestTarget>& targets,
-                const uafc::TranslateBrowsePathsToNodeIdsSettings&                   settings,
+                const std::vector<uaf::TranslateBrowsePathsToNodeIdsRequestTarget>& targets,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings&                   settings,
                 const uaf::NamespaceArray&                                           nameSpaceArray,
                 const uaf::ServerArray&                                              serverArray);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromAsyncUafToSdk(
-                const std::vector<uafc::TranslateBrowsePathsToNodeIdsRequestTarget>& targets,
-                const uafc::TranslateBrowsePathsToNodeIdsSettings&                   settings,
+                const std::vector<uaf::TranslateBrowsePathsToNodeIdsRequestTarget>& targets,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings&                   settings,
                 const uaf::NamespaceArray&                                           nameSpaceArray,
                 const uaf::ServerArray&                                              serverArray);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status invokeSyncSdkService(UaClientSdk::UaSession* uaSession);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status invokeAsyncSdkService(
                 UaClientSdk::UaSession*     uaSession,
@@ -89,12 +89,12 @@ namespace uafc
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromSyncSdkToUaf(
                 const uaf::NamespaceArray&                                      nameSpaceArray,
                 const uaf::ServerArray&                                         serverArray,
-                std::vector<uafc::TranslateBrowsePathsToNodeIdsResultTarget>&   targets);
+                std::vector<uaf::TranslateBrowsePathsToNodeIdsResultTarget>&   targets);
 
 
         // private data members used during the invocation
@@ -108,4 +108,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_TRANSLATEBROWSEPATHSTONODEIDSINVOCATION_H_ */
+#endif /* UAF_TRANSLATEBROWSEPATHSTONODEIDSINVOCATION_H_ */

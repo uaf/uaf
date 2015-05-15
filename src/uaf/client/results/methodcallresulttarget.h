@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_METHODCALLRESULTTARGET_H_
-#define UAFC_METHODCALLRESULTTARGET_H_
+#ifndef UAF_METHODCALLRESULTTARGET_H_
+#define UAF_METHODCALLRESULTTARGET_H_
 
 
 
@@ -34,12 +34,12 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::MethodCallResultTarget is the "result target" of the corresponding
+    * An uaf::MethodCallResultTarget is the "result target" of the corresponding
     * "request target" that specified the method to be called.
     *
     * It tells you whether or not the method was successfully called, the returned output parameters
@@ -47,15 +47,21 @@ namespace uafc
     *
     * @ingroup ClientResults
     ***********************************************************************************************/
-    class UAFC_EXPORT MethodCallResultTarget : public uafc::BaseSessionResultTarget
+    class UAF_EXPORT MethodCallResultTarget : public uaf::BaseSessionResultTarget
     {
     public:
+
+        MethodCallResultTarget();
 
 
         /**
          * The resulting status of the method call.
          */
         uaf::Status status;
+
+
+        /** The OPC UA status code reported by the server. */
+        uaf::OpcUaStatusCode opcUaStatusCode;
 
 
         /**
@@ -79,13 +85,13 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(
+        friend bool UAF_EXPORT operator==(
                 const MethodCallResultTarget& object1,
                 const MethodCallResultTarget& object2);
-        friend bool UAFC_EXPORT operator!=(
+        friend bool UAF_EXPORT operator!=(
                 const MethodCallResultTarget& object1,
                 const MethodCallResultTarget& object2);
-        friend bool UAFC_EXPORT operator<(
+        friend bool UAF_EXPORT operator<(
                 const MethodCallResultTarget& object1,
                 const MethodCallResultTarget& object2);
     };
@@ -96,4 +102,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_METHODCALLRESULTTARGET_H_ */
+#endif /* UAF_METHODCALLRESULTTARGET_H_ */

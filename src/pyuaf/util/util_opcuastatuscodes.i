@@ -50,3 +50,16 @@
 #define OpcUa_Good      0x00000000
 #define OpcUa_Uncertain 0x40000000
 #define OpcUa_Bad       0x80000000
+
+// SWIG will have interpreted all integers above as signed. 
+// In reality, they are unsigned  values, so we convert all of them whenever importing this module:
+%pythoncode %{
+################################ BEGINNING OF CUSTOM CODE #################################
+import sys
+names = dir(sys.modules[__name__])
+for name in names:
+    if name[:6] == "OpcUa_":
+        value = getattr(sys.modules[__name__], name)
+        setattr(sys.modules[__name__], name, int(value & 0xffffffff) )
+################################### END OF CUSTOM CODE ####################################
+%}

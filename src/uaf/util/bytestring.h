@@ -29,6 +29,7 @@
 #include <stdint.h>
 // SDK
 #include "uabase/uabytestring.h"
+#include "uabase/uabytearray.h"
 // UAF
 #include "uaf/util/util.h"
 
@@ -101,6 +102,14 @@ namespace uaf
 
 
         /**
+         * Get the contents of the ByteString from a SDK UaByteArray instance.
+         *
+         * @param uaByteArray  SDK UaByteArray instance.
+         */
+        void fromSdk(const UaByteArray& uaByteArray);
+
+
+        /**
          * Copy the contents to an SDK instance.
          *
          * @param uaByteString  SDK UaByteString instance.
@@ -114,6 +123,14 @@ namespace uaf
          * @param dest  Destination stack OpcUa_ByteString instance.
          */
         void toSdk(OpcUa_ByteString* dest) const { uaByteString_.copyTo(dest); };
+
+
+        /**
+         * Copy the contents to an SDK UaByteArray instance.
+         *
+         * @param uaByteArray  SDK UaByteString instance.
+         */
+        void toSdk(UaByteArray& uaByteArray) const;
 
 
         // comparison operators

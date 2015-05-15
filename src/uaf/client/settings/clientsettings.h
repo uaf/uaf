@@ -18,31 +18,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_CLIENTSETTINGS_H_
-#define UAFC_CLIENTSETTINGS_H_
+#ifndef UAF_CLIENTSETTINGS_H_
+#define UAF_CLIENTSETTINGS_H_
 
 // STD
 #include <string>
 #include <sstream>
 #include <vector>
 // SDK
+#include "uabase/uadir.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/loglevels.h"
+#include "uaf/util/status.h"
 #include "uaf/util/stringifiable.h"
 #include "uaf/client/clientexport.h"
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::ClientSettings instance holds the settings of a uafc::Client instance.
+    * An uaf::ClientSettings instance holds the settings of a uaf::Client instance.
     *
     * @ingroup ClientSettings
     ***********************************************************************************************/
-    class UAFC_EXPORT ClientSettings
+    class UAF_EXPORT ClientSettings
     {
     public:
 
@@ -60,10 +62,13 @@ namespace uafc
          *  - discoveryIntervalSec : 30.0
          *  - logToStdOutLevel : uaf::loglevels::Disabled
          *  - logToCallbackLevel : uaf::loglevels::Disabled
-         *  - certificateRevocationListAbsoluteFileName : ""
-         *  - certificateTrustAbsoluteDirectory : ""
-         *  - clientCertificateAbsoluteFileName : ""
-         *  - clientPrivateKeyAbsoluteFileName : ""
+         *  - certificateTrustListLocation : "PKI/trusted/certs/"
+         *  - certificateRevocationListLocation : "PKI/trusted/crl/"
+         *  - issuersCertificatesLocation : "PKI/issuers/certs/"
+         *  - issuersRevocationListLocation : "PKI/issuers/crl/"
+         *  - createSecurityLocationsIfNeeded : true
+         *  - clientPrivateKey : "PKI/client/private/client.pem"
+         *  - clientCertificate : "PKI/client/certs/client.der"
          */
         ClientSettings();
 
@@ -126,52 +131,85 @@ namespace uafc
 
         /////// Security ///////
 
+        /** The trust list location.
+         *
+         *  This directory can be specified either as an absolute path, or as a path relative to
+         *  the application path.
+         *
+         *  Default: "PKI/trusted/certs/". */
+        std::string certificateTrustListLocation;
 
-        /** The revocation list (i.e. file that holds all revoked certificates), as a full path.
+        /** The revocation list location.
          *
-         *  [ApplicationPath] may be used as placeholder, and the directories must be separated by
-         *  forward slashes (/), also on Windows.
+         *  This directory can be specified either as an absolute path, or as a path relative to
+         *  the application path.
          *
-         *  Example: "[ApplicationPath]/PKI/CA/crl/uaclientcpp.crl". */
-        std::string certificateRevocationListAbsoluteFileName;
+         *  Default: "PKI/trusted/crl/" */
+        std::string certificateRevocationListLocation;
 
-        /** The directory holding the trusted certificates, as a full path.
+        /** The issuers certificates location.
          *
-         *  [ApplicationPath] may be used as placeholder, and the directories must be separated by
-         *  forward slashes (/), also on Windows.
+         *  This directory can be specified either as an absolute path, or as a path relative to
+         *  the application path.
          *
-         *  Example: "[ApplicationPath]/PKI/CA/certs". */
-        std::string certificateTrustAbsoluteDirectory;
+         *  Default: "PKI/issuers/certs/". */
+        std::string issuersCertificatesLocation;
 
-        /** The certificate of the client, as a full path (i.e. absolute filename).
+        /** The issuers revocation list location.
          *
-         *  [ApplicationPath] may be used as placeholder, and the directories must be separated by
-         *  forward slashes (/), also on Windows.
+         *  This directory can be specified either as an absolute path, or as a path relative to
+         *  the application path.
          *
-         *  Example: "[ApplicationPath]/PKI/CA/certs/my_client_certificate.der". */
-        std::string clientCertificateAbsoluteFileName;
-
-        /** The private key of the client, as a full path (i.e. absolute filename).
-         *
-         *  [ApplicationPath] may be used as placeholder, and the directories must be separated by
-         *  forward slashes (/), also on Windows.
-         *
-         *  Example: "[ApplicationPath]/PKI/CA/private/my_client_private_key.pem". */
-        std::string clientPrivateKeyAbsoluteFileName;
+         *  Default: "PKI/issuers/crl/". */
+        std::string issuersRevocationListLocation;
 
 
-        /** The certificate of the server, as a full path (i.e. absolute filename).
+        /** Automatically create the security-related directories if they don't exist yet.
          *
-         *  Note that this file will **only** be used in case you manually connect to a specific
-         *  endpoint (thereby avoiding discovery!!!).
-         *  In normal circumstances, the server certificate will be fetched through the discovery
-         *  process!!!
+         *  The following directories will be created *if* the UAF needs to connect to a secured
+         *  endpoint:
+         *   - certificateTrustListLocation
+         *   - certificateRevocationListLocation
+         *   - issuersCertificatesLocation
+         *   - issuersRevocationListLocation
          *
-         *  [ApplicationPath] may be used as placeholder, and the directories must be separated by
-         *  forward slashes (/), also on Windows.
+         *  Default: True
+         */
+        bool createSecurityLocationsIfNeeded;
+
+
+        /** The private key of this client application.
          *
-         *  Example: "[ApplicationPath]/PKI/CA/certs/my_server_certificate.der". */
-        std::string serverCertificateAbsoluteFileName;
+         *  This file can be specified either as an absolute path, or as a path relative to
+         *  the application path.
+         *
+         *  Default: "PKI/client/private/client.pem". */
+        std::string clientPrivateKey;
+
+
+        /** The certificate of this client application.
+         *
+         *  This file can be specified either as an absolute path, or as a path relative to
+         *  the application path.
+         *
+         *  Default: "PKI/client/certs/client.der". */
+        std::string clientCertificate;
+
+
+        /**
+         * Create the security locations (directories).
+         *
+         * These locations will be created (if they don't exist already):
+         *   - certificateTrustListLocation
+         *   - certificateRevocationListLocation
+         *   - issuersCertificatesLocation
+         *   - issuersRevocationListLocation
+         *   - base path of clientPrivateKey
+         *   - base path of clientCertificate
+         *
+         * @return: True if the locations were created (or if they existed already)
+         */
+        uaf::Status createSecurityLocations() const;
 
 
         /**
@@ -185,13 +223,13 @@ namespace uafc
 
 
         // comparison operators
-        friend UAFC_EXPORT bool operator< (
+        friend UAF_EXPORT bool operator< (
                 const ClientSettings& object1,
                 const ClientSettings& object2);
-        friend UAFC_EXPORT bool operator==(
+        friend UAF_EXPORT bool operator==(
                 const ClientSettings& object1,
                 const ClientSettings& object2);
-        friend UAFC_EXPORT bool operator!=(
+        friend UAF_EXPORT bool operator!=(
                 const ClientSettings& object1,
                 const ClientSettings& object2);
 
@@ -204,4 +242,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_CLIENTSETTINGS_H_ */
+#endif /* UAF_CLIENTSETTINGS_H_ */

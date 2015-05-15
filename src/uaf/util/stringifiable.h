@@ -23,16 +23,28 @@
 
 
 // STD
-#include <string>
 #include <sstream>
+#include <string>
+#include <stdio.h>
+#include <cstdio>
+#include <stdarg.h>
+#include <vector>
 // SDK
 // UAF
 #include "uaf/util/util.h"
+
+#define UAF_STRING_MAX_BUFFER_SIZE 4096
 
 
 namespace uaf
 {
 
+    std::string UAF_EXPORT uint32ArrayToString(const std::vector<uint32_t> arr);
+
+    /**
+     * Make a string based on varargs.
+     */
+    std::string UAF_EXPORT format(const char* msg, ...);
 
     /**
      * Does a string have multiline characters or not?

@@ -19,8 +19,8 @@
  */
 
 
-#ifndef UAFC_RESOLVABLE_H_
-#define UAFC_RESOLVABLE_H_
+#ifndef UAF_RESOLVABLE_H_
+#define UAF_RESOLVABLE_H_
 
 
 // STD
@@ -34,16 +34,16 @@
 #include "uaf/client/clientexport.h"
 #include "uaf/util/handles.h"
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::Resolvable class has some items that can be resolved by a uafc::Resolver.
+    * A uaf::Resolvable class has some items that can be resolved by a uaf::Resolver.
     *
     * @ingroup ClientResolution
     ***********************************************************************************************/
-    class UAFC_EXPORT Resolvable
+    class UAF_EXPORT Resolvable
     {
     public:
 
@@ -92,4 +92,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_RESOLVABLE_H_ */
+#endif /* UAF_RESOLVABLE_H_ */

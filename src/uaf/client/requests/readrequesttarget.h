@@ -18,8 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAFC_READREQUESTTARGET_H_
-#define UAFC_READREQUESTTARGET_H_
+#ifndef UAF_READREQUESTTARGET_H_
+#define UAF_READREQUESTTARGET_H_
 
 
 
@@ -35,17 +35,17 @@
 
 
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * A uafc::ReadRequestTarget is the part of a uafc::ReadRequest that specifies the target to be
+    * A uaf::ReadRequestTarget is the part of a uaf::ReadRequest that specifies the target to be
     * read.
     *
     * @ingroup ClientRequests
     ***********************************************************************************************/
-    class UAFC_EXPORT ReadRequestTarget : public uafc::BaseSessionRequestTarget
+    class UAF_EXPORT ReadRequestTarget : public uaf::BaseSessionRequestTarget
     {
     public:
 
@@ -100,9 +100,9 @@ namespace uafc
 
 
         // comparison operators
-        friend bool UAFC_EXPORT operator==(const ReadRequestTarget& object1, const ReadRequestTarget& object2);
-        friend bool UAFC_EXPORT operator!=(const ReadRequestTarget& object1, const ReadRequestTarget& object2);
-        friend bool UAFC_EXPORT operator<(const ReadRequestTarget& object1, const ReadRequestTarget& object2);
+        friend bool UAF_EXPORT operator==(const ReadRequestTarget& object1, const ReadRequestTarget& object2);
+        friend bool UAF_EXPORT operator!=(const ReadRequestTarget& object1, const ReadRequestTarget& object2);
+        friend bool UAF_EXPORT operator<(const ReadRequestTarget& object1, const ReadRequestTarget& object2);
 
 
 
@@ -141,4 +141,4 @@ namespace uafc
 }
 
 
-#endif /* UAFC_READREQUESTTARGET_H_ */
+#endif /* UAF_READREQUESTTARGET_H_ */

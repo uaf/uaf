@@ -19,8 +19,8 @@
  */
 
 
-#ifndef UAFC_METHODCALLINVOCATION_H_
-#define UAFC_METHODCALLINVOCATION_H_
+#ifndef UAF_METHODCALLINVOCATION_H_
+#define UAF_METHODCALLINVOCATION_H_
 
 
 // STD
@@ -35,52 +35,52 @@
 #include "uaf/client/results/results.h"
 #include "uaf/client/invocations/baseserviceinvocation.h"
 
-namespace uafc
+namespace uaf
 {
 
 
     /*******************************************************************************************//**
-    * An uafc::MethodCallInvocation wraps the functional SDK code to invoke the MethodCall service.
+    * An uaf::MethodCallInvocation wraps the functional SDK code to invoke the MethodCall service.
     *
     * @ingroup ClientInvocations
     ***********************************************************************************************/
-    class UAFC_EXPORT MethodCallInvocation
-    : public uafc::BaseServiceInvocation< uafc::MethodCallSettings,
-                                          uafc::MethodCallRequestTarget,
-                                          uafc::MethodCallResultTarget >
+    class UAF_EXPORT MethodCallInvocation
+    : public uaf::BaseServiceInvocation< uaf::MethodCallSettings,
+                                          uaf::MethodCallRequestTarget,
+                                          uaf::MethodCallResultTarget >
     {
 
     private:
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromSyncUafToSdk(
-                const std::vector<uafc::MethodCallRequestTarget>&   targets,
-                const uafc::MethodCallSettings&                     settings,
+                const std::vector<uaf::MethodCallRequestTarget>&   targets,
+                const uaf::MethodCallSettings&                     settings,
                 const uaf::NamespaceArray&                          nameSpaceArray,
                 const uaf::ServerArray&                             serverArray);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromAsyncUafToSdk(
-                const std::vector<uafc::MethodCallRequestTarget>&   targets,
-                const uafc::MethodCallSettings&                     settings,
+                const std::vector<uaf::MethodCallRequestTarget>&   targets,
+                const uaf::MethodCallSettings&                     settings,
                 const uaf::NamespaceArray&                          nameSpaceArray,
                 const uaf::ServerArray&                             serverArray);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status invokeSyncSdkService(UaClientSdk::UaSession* uaSession);
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status invokeAsyncSdkService(
                 UaClientSdk::UaSession*     uaSession,
@@ -88,12 +88,12 @@ namespace uafc
 
 
         /**
-         * Overridden function from uafc::BaseServiceInvocation.
+         * Overridden function from uaf::BaseServiceInvocation.
          */
         uaf::Status fromSyncSdkToUaf(
                 const uaf::NamespaceArray&                  nameSpaceArray,
                 const uaf::ServerArray&                     serverArray,
-                std::vector<uafc::MethodCallResultTarget>&  targets);
+                std::vector<uaf::MethodCallResultTarget>&  targets);
 
 
         // private data members used during the invocation
@@ -111,4 +111,4 @@ namespace uafc
 
 
 
-#endif /* UAFC_METHODCALLINVOCATION_H_ */
+#endif /* UAF_METHODCALLINVOCATION_H_ */

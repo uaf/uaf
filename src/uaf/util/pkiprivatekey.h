@@ -18,14 +18,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAF_SECURITY_H_
-#define UAF_SECURITY_H_
+#ifndef UAF_PKIPRIVATEKEY_H_
+#define UAF_PKIPRIVATEKEY_H_
 
 
 // STD
 #include <string>
+#include <sstream>
+#include <vector>
 #include <stdint.h>
 // SDK
+#include "uapki/uapkiprivatekey.h"
 // UAF
 #include "uaf/util/util.h"
 
@@ -34,34 +37,32 @@ namespace uaf
 {
 
     /*******************************************************************************************//**
-    * An OpenSslStoreSettings instance contains the settings for an OpenSSL store.
+    * A PkiPrivateKey is just a container for a private key.
     *
     * @ingroup Util
     ***********************************************************************************************/
-    struct UAF_EXPORT OpenSslStoreSettings
+    class UAF_EXPORT PkiPrivateKey
     {
-        std::string trustListLocation;
-        std::string revocationListLocation;
-        std::string certificate;
-        std::string privateKey;
-    };
+    public:
+
+        /**
+         * Create an empty key.
+         */
+        PkiPrivateKey() {}
+
+        /**
+         * Create a key based on an SDK instance.
+         */
+        PkiPrivateKey(const UaPkiPrivateKey& uaKey) : uaPkiPrivateKey_(uaKey) {}
 
 
-    /*******************************************************************************************//**
-    * A CertificateSettings instance contains the settings for an OpenSSL certificate.
-    *
-    * @ingroup Util
-    ***********************************************************************************************/
-    // copied from the SDK (UaPkiIdentity)
-    struct UAF_EXPORT CertificateSettings
-    {
-        std::string commonName;
-        std::string organization;
-        std::string organizationUnit;
-        std::string locality;
-        std::string state;
-        std::string country;
-        int32_t     validTime;
+    private:
+        // make it a friend of PkiRsaKeyPair and PkiCertificate so these can access the stack
+        // key directly
+        friend class PkiRsaKeyPair;
+        friend class PkiCertificate;
+
+        UaPkiPrivateKey uaPkiPrivateKey_;
     };
 
 
@@ -69,4 +70,4 @@ namespace uaf
 
 
 
-#endif /* UAF_SECURITY_H_ */
+#endif /* UAF_PKIPRIVATEKEY_H_ */

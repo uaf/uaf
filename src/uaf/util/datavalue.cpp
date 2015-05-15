@@ -31,7 +31,7 @@ namespace uaf
     // Constructor
     // =============================================================================================
     DataValue::DataValue()
-    : status(statuscodes::Good),
+    : opcUaStatusCode(OpcUa_Good),
       sourcePicoseconds(0),
       serverPicoseconds(0)
     {}
@@ -41,7 +41,7 @@ namespace uaf
     // =============================================================================================
     DataValue::DataValue(const Variant& data)
     : data(data),
-      status(statuscodes::Good),
+      opcUaStatusCode(OpcUa_Good),
       sourcePicoseconds(0),
       serverPicoseconds(0)
     {}
@@ -49,9 +49,9 @@ namespace uaf
 
     // Constructor
     // =============================================================================================
-    DataValue::DataValue(const Variant& data, const Status& status)
+    DataValue::DataValue(const Variant& data, const OpcUaStatusCode& opcUaStatusCode)
     : data(data),
-      status(status),
+      opcUaStatusCode(opcUaStatusCode),
       sourcePicoseconds(0),
       serverPicoseconds(0)
     {}
@@ -63,9 +63,9 @@ namespace uaf
     {
         stringstream ss;
 
-        ss << indent << " - status";
+        ss << indent << " - opcUaStatusCode";
         ss << fillToPos(ss, colon);
-        ss << ": " << status.toString() << "\n";
+        ss << ": " << opcUaStatusCode << "\n";
 
         ss << indent << " - data";
         ss << fillToPos(ss, colon);
@@ -97,7 +97,7 @@ namespace uaf
     {
         stringstream ss;
 
-        ss << UaStatusCode(status.opcUaStatusCode()).toString().toUtf8() << "|";
+        ss << opcUaStatusCode << "|";
 
         ss << data.toString();
 
@@ -123,7 +123,7 @@ namespace uaf
     // =============================================================================================
     void DataValue::fromSdk(const UaDataValue& uaDataValue)
     {
-        status.fromSdk(uaDataValue.statusCode(), "");
+        opcUaStatusCode = uaDataValue.statusCode();
         data = Variant(*uaDataValue.value());
         sourceTimestamp.fromSdk(uaDataValue.sourceTimestamp());
         serverTimestamp.fromSdk(uaDataValue.serverTimestamp());
@@ -143,7 +143,7 @@ namespace uaf
             uaDataValue.setValue(uaValue, OpcUa_False, OpcUa_False);
         }
 
-        uaDataValue.setStatusCode(status.opcUaStatusCode());
+        uaDataValue.setStatusCode(opcUaStatusCode);
 
         if (!sourceTimestamp.isNull())
         {
@@ -177,7 +177,7 @@ namespace uaf
     // =============================================================================================
     bool operator==(const DataValue& object1, const DataValue& object2)
     {
-        return    object1.status == object2.status
+        return    object1.opcUaStatusCode == object2.opcUaStatusCode
                && object1.data == object2.data
                && object1.sourceTimestamp == object2.sourceTimestamp
                && object1.serverTimestamp == object2.serverTimestamp
@@ -198,8 +198,8 @@ namespace uaf
     // =============================================================================================
     bool operator<(const DataValue& object1, const DataValue& object2)
     {
-        if (object1.status != object2.status)
-            return object1.status < object2.status;
+        if (object1.opcUaStatusCode != object2.opcUaStatusCode)
+            return object1.opcUaStatusCode < object2.opcUaStatusCode;
         else if (object1.data != object2.data)
             return object1.data < object2.data;
         else if (object1.sourceTimestamp != object2.sourceTimestamp)
