@@ -52,6 +52,7 @@ namespace uaf
                 UAF_STATUSCODES_TOSTRING(ServerDidNotProvideCertificateError)
                 UAF_STATUSCODES_TOSTRING(ConnectionError)
                 UAF_STATUSCODES_TOSTRING(ConnectionFailedError)
+                UAF_STATUSCODES_TOSTRING(SecurityError)
                 UAF_STATUSCODES_TOSTRING(PathNotExistsError)
                 UAF_STATUSCODES_TOSTRING(NoSecuritySettingsGivenError)
                 UAF_STATUSCODES_TOSTRING(PathCreationError)
@@ -134,6 +135,7 @@ namespace uaf
                 UAF_STATUSCODES_TOSTRING(InputArgumentError)
                 UAF_STATUSCODES_TOSTRING(ReadCompleteError)
                 UAF_STATUSCODES_TOSTRING(WriteCompleteError)
+                UAF_STATUSCODES_TOSTRING(SubscriptionError)
                 UAF_STATUSCODES_TOSTRING(SetPublishingModeInvocationError)
                 UAF_STATUSCODES_TOSTRING(ServerCouldNotSetMonitoringModeError)
                 UAF_STATUSCODES_TOSTRING(CreateSubscriptionError)
@@ -146,6 +148,16 @@ namespace uaf
                 UAF_STATUSCODES_TOSTRING(CouldNotCreateIssuersRevocationListLocationError)
                 UAF_STATUSCODES_TOSTRING(CouldNotCreateClientPrivateKeyLocationError)
                 UAF_STATUSCODES_TOSTRING(CouldNotCreateClientCertificateLocationError)
+                // status codes kept for backwards compatibility:
+                UAF_STATUSCODES_TOSTRING(DataFormatError)
+                UAF_STATUSCODES_TOSTRING(DataSizeError)
+                UAF_STATUSCODES_TOSTRING(DataSourceError)
+                UAF_STATUSCODES_TOSTRING(DisconnectionError)
+                UAF_STATUSCODES_TOSTRING(LowLevelError)
+                UAF_STATUSCODES_TOSTRING(OtherError)
+                UAF_STATUSCODES_TOSTRING(TimeoutError)
+                UAF_STATUSCODES_TOSTRING(NoResultReceivedError)
+                UAF_STATUSCODES_TOSTRING(UnknownHandleError)
                 default:
                     return "UNKNOWN!";
             }

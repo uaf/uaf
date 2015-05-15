@@ -15,6 +15,7 @@
 .. class:: pyuaf.util.statuscodes.ServerDidNotProvideCertificateError
 .. class:: pyuaf.util.statuscodes.ConnectionError
 .. class:: pyuaf.util.statuscodes.PathNotExistsError
+.. class:: pyuaf.util.statuscodes.SecurityError
 .. class:: pyuaf.util.statuscodes.NoSecuritySettingsGivenError
 .. class:: pyuaf.util.statuscodes.PathCreationError
 .. class:: pyuaf.util.statuscodes.SecuritySettingsMatchError
@@ -97,6 +98,7 @@
 .. class:: pyuaf.util.statuscodes.InputArgumentError
 .. class:: pyuaf.util.statuscodes.ReadCompleteError
 .. class:: pyuaf.util.statuscodes.WriteCompleteError
+.. class:: pyuaf.util.statuscodes.SubscriptionError
 .. class:: pyuaf.util.statuscodes.SetPublishingModeInvocationError
 .. class:: pyuaf.util.statuscodes.ServerCouldNotSetMonitoringModeError
 .. class:: pyuaf.util.statuscodes.CreateSubscriptionError
@@ -109,3 +111,12 @@
 .. class:: pyuaf.util.statuscodes.CouldNotCreateIssuersRevocationListLocationError
 .. class:: pyuaf.util.statuscodes.CouldNotCreateClientPrivateKeyLocationError
 .. class:: pyuaf.util.statuscodes.CouldNotCreateClientCertificateLocationError
+.. class:: pyuaf.util.statuscodes.DataFormatError
+.. class:: pyuaf.util.statuscodes.DataSizeError
+.. class:: pyuaf.util.statuscodes.DataSourceError
+.. class:: pyuaf.util.statuscodes.DisconnectionError
+.. class:: pyuaf.util.statuscodes.LowLevelError
+.. class:: pyuaf.util.statuscodes.OtherError
+.. class:: pyuaf.util.statuscodes.TimeoutError
+.. class:: pyuaf.util.statuscodes.NoResultReceivedError
+.. class:: pyuaf.util.statuscodes.UnknownHandleError

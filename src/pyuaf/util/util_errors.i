@@ -32,6 +32,7 @@
 #include "uaf/util/errors/serviceerrors.h"
 #include "uaf/util/errors/subscriptionerrors.h"
 #include "uaf/util/errors/unsupportederrors.h"
+#include "uaf/util/errors/backwardscompatibilityerrors.h"
 %}
 
 
@@ -67,6 +68,7 @@ UAF_WRAP_CLASS("uaf/util/errors/uaferror.h", uaf , UafError, COPY_YES, TOSTRING_
 %include "uaf/util/errors/serviceerrors.h"
 %include "uaf/util/errors/subscriptionerrors.h"
 %include "uaf/util/errors/unsupportederrors.h"
+%include "uaf/util/errors/backwardscompatibilityerrors.h"
 
 %pythoncode %{ 
 def evaluateArg(arg, argName, argType, allowedValues=[]):

@@ -63,6 +63,7 @@ namespace uaf
             ServerDidNotProvideCertificateError,
             ConnectionError,
             PathNotExistsError,
+            SecurityError,
             NoSecuritySettingsGivenError,
             PathCreationError,
             SecuritySettingsMatchError,
@@ -145,6 +146,7 @@ namespace uaf
             InputArgumentError,
             ReadCompleteError,
             WriteCompleteError,
+            SubscriptionError,
             SetPublishingModeInvocationError,
             ServerCouldNotSetMonitoringModeError,
             CreateSubscriptionError,
@@ -156,7 +158,17 @@ namespace uaf
             CouldNotCreateIssuersCertificateLocationError,
             CouldNotCreateIssuersRevocationListLocationError,
             CouldNotCreateClientPrivateKeyLocationError,
-            CouldNotCreateClientCertificateLocationError
+            CouldNotCreateClientCertificateLocationError,
+            // status codes kept for backwards compatibility:
+            DataFormatError,
+            DataSizeError,
+            DataSourceError,
+            DisconnectionError,
+            LowLevelError,
+            OtherError,
+            TimeoutError,
+            NoResultReceivedError,
+            UnknownHandleError
         };
 
 

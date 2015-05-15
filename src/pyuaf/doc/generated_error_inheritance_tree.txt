@@ -186,3 +186,13 @@ UafError..............................................................
       AsyncInvocationNotSupportedError................................Asynchronous invocation is not supported
       AsyncInvocationOnMultipleSessionsNotSupportedError..............Asynchronous invocation on multiple sessions is not supported
       AsyncMultiMethodCallNotSupportedError...........................Asynchronous multiple method calls are not supported
+   BackwardsCompatibilityError........................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      DataFormatError.................................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      DataSizeError...................................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      DataSourceError.................................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      DisconnectionError..............................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      LowLevelError...................................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      OtherError......................................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      TimeoutError....................................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      NoResultReceivedError...........................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
+      UnknownHandleError..............................................This error is only kept for backwards compatibility. It will never be raised by the UAF.
