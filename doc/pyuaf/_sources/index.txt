@@ -54,6 +54,7 @@ API
    api_pyuaf
    api_pyuaf_client
    api_pyuaf_client_configs
+   api_pyuaf_client_connectionsteps
    api_pyuaf_client_monitoreditemstates
    api_pyuaf_client_requests
    api_pyuaf_client_results

@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util &mdash; PyUAF 1.10 documentation</title>
+    <title>pyuaf.util &mdash; PyUAF master documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.10',
+        VERSION:     'master',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.10 documentation" href="index.html" />
+    <link rel="top" title="PyUAF master documentation" href="index.html" />
     <link rel="next" title="pyuaf.util.attributeids" href="api_pyuaf_util_attributeids.html" />
     <link rel="prev" title="pyuaf.client.subscriptionstates" href="api_pyuaf_client_subscriptionstates.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.10 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF master documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -153,13 +153,15 @@ point.</p>
 </div></blockquote>
 <p>Usage example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">RelativePathElement</span><span class="p">,</span> <span class="n">QualifiedName</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">RelativePathElement</span><span class="p">,</span> <span class="n">QualifiedName</span><span class="p">,</span> <span class="n">BrowsePath</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># the following ways of constructing a Address are possible:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">address0</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;someId&quot;</span><span class="p">,</span> <span class="s">&quot;someNsUri&quot;</span><span class="p">,</span> <span class="s">&quot;someServerUri&quot;</span><span class="p">)</span> <span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">address1</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;someId&quot;</span><span class="p">,</span> <span class="s">&quot;someNsUri&quot;</span><span class="p">),</span> <span class="s">&quot;someServerUri&quot;</span> <span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">address2</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">address0</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;someName&quot;</span><span class="p">,</span> <span class="s">&quot;someNsUri&quot;</span><span class="p">))]</span> <span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">address3</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">address1</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;someOtherName&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">))]</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address3</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">BrowsePath</span><span class="p">(</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;someId&quot;</span><span class="p">,</span> <span class="s">&quot;someNsUri&quot;</span><span class="p">,</span> <span class="s">&quot;someServerUri&quot;</span><span class="p">),</span>
+<span class="gp">... </span>                                <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;someOtherName&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">))]</span> <span class="p">)</span> <span class="p">)</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># you may also provide a single RelativePathElement in case the relative path contains just</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># one element:</span>
@@ -611,10 +613,9 @@ or <a class="reference internal" href="#pyuaf.util.DataChangeFilter.DeadBandType
 </dd></dl>
 
 <dl class="attribute">
-<dt id="pyuaf.util.DataValue.status">
-<tt class="descname">status</tt><a class="headerlink" href="#pyuaf.util.DataValue.status" title="Permalink to this definition">¶</a></dt>
-<dd><p>The status of the data, as a <a class="reference internal" href="#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a> instance.
-The status contains the OPC UA status code of the data.</p>
+<dt id="pyuaf.util.DataValue.opcUaStatusCode">
+<tt class="descname">opcUaStatusCode</tt><a class="headerlink" href="#pyuaf.util.DataValue.opcUaStatusCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The OPC UA status code (see specs part 4) of the data, as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -1159,7 +1160,7 @@ discovery process, so that the client can choose an endpoint and connect to it).
 <dl class="attribute">
 <dt id="pyuaf.util.EndpointDescription.serverCertificate">
 <tt class="descname">serverCertificate</tt><a class="headerlink" href="#pyuaf.util.EndpointDescription.serverCertificate" title="Permalink to this definition">¶</a></dt>
-<dd><p>The server certificate (as a byte string).</p>
+<dd><p>The server certificate data (type <tt class="docutils literal"><span class="pre">bytearray</span></tt>).</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -1570,6 +1571,44 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 </dd></dl>
 
 </div>
+<div class="section" id="class-extensionobject">
+<h2><em>class</em> ExtensionObject<a class="headerlink" href="#class-extensionobject" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.ExtensionObject">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">ExtensionObject</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.ExtensionObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ExtensionObject is a non-standard kind of data that can be encoded/decoded and be sent over
+the wire.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.ExtensionObject.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.ExtensionObject.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new ExtensionObject.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.ExtensionObject.encodingTypeId">
+<tt class="descname">encodingTypeId</tt><a class="headerlink" href="#pyuaf.util.ExtensionObject.encodingTypeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>The NodeId that describes the encoding (type <a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><tt class="xref py py-class docutils literal"><span class="pre">NodeId</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.ExtensionObject.dataTypeId">
+<tt class="descname">dataTypeId</tt><a class="headerlink" href="#pyuaf.util.ExtensionObject.dataTypeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>The NodeId that describes the datatype (type <a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><tt class="xref py py-class docutils literal"><span class="pre">NodeId</span></tt></a>).</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
 <div class="section" id="class-guid">
 <h2><em>class</em> Guid<a class="headerlink" href="#class-guid" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -1974,6 +2013,49 @@ given.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="class-modelchangestructuredatatype">
+<h2><em>class</em> ModelChangeStructureDataType<a class="headerlink" href="#class-modelchangestructuredatatype" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.ModelChangeStructureDataType">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">ModelChangeStructureDataType</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.ModelChangeStructureDataType" title="Permalink to this definition">¶</a></dt>
+<dd><p>A ModelChangeStructureDataType is usually passed as an event to notify model changes.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.ModelChangeStructureDataType.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.ModelChangeStructureDataType.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new ModelChangeStructureDataType.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.ModelChangeStructureDataType.affected">
+<tt class="descname">affected</tt><a class="headerlink" href="#pyuaf.util.ModelChangeStructureDataType.affected" title="Permalink to this definition">¶</a></dt>
+<dd><p>The NodeId of the affected node (type <a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><tt class="xref py py-class docutils literal"><span class="pre">NodeId</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.ModelChangeStructureDataType.affectedType">
+<tt class="descname">affectedType</tt><a class="headerlink" href="#pyuaf.util.ModelChangeStructureDataType.affectedType" title="Permalink to this definition">¶</a></dt>
+<dd><p>The NodeId of the affected datatype (type <a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><tt class="xref py py-class docutils literal"><span class="pre">NodeId</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<tt class="descname">affectedType</tt></dt>
+<dd><p>The verb field (an <tt class="docutils literal"><span class="pre">int</span></tt>).</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
 <div class="section" id="class-modificationinfo">
 <h2><em>class</em> ModificationInfo<a class="headerlink" href="#class-modificationinfo" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -2366,6 +2448,1001 @@ as defined within <a class="reference internal" href="api_pyuaf_util_nodeidident
 </dd></dl>
 
 </div>
+<div class="section" id="class-pkicertificate">
+<h2><em>class</em> PkiCertificate<a class="headerlink" href="#class-pkicertificate" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.PkiCertificate">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">PkiCertificate</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate" title="Permalink to this definition">¶</a></dt>
+<dd><p>A PkiCertificate holds a X509 certificate.</p>
+<p>Here&#8217;s some example code to set up a certificate:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">PkiRsaKeyPair</span><span class="p">,</span> <span class="n">PkiIdentity</span><span class="p">,</span> <span class="n">PkiCertificateInfo</span><span class="p">,</span> <span class="n">PkiCertificate</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># we&#39;ll need the hostname of the computer later on:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">socket</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hostName</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># we will create a self-signed certificate, which means that the subject and issuer are the same!</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">keyPair</span> <span class="o">=</span> <span class="n">PkiRsaKeyPair</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">issuerPrivateKey</span> <span class="o">=</span> <span class="n">keyPair</span><span class="o">.</span><span class="n">privateKey</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">subjectPublicKey</span> <span class="o">=</span> <span class="n">keyPair</span><span class="o">.</span><span class="n">publicKey</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">identity</span> <span class="o">=</span> <span class="n">PkiIdentity</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">identity</span><span class="o">.</span><span class="n">commonName</span>         <span class="o">=</span> <span class="s">&quot;Wim Pessemier&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">identity</span><span class="o">.</span><span class="n">organization</span>       <span class="o">=</span> <span class="s">&quot;KU Leuven&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">identity</span><span class="o">.</span><span class="n">organizationUnit</span>   <span class="o">=</span> <span class="s">&quot;Institute of Astronomy&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">identity</span><span class="o">.</span><span class="n">locality</span>           <span class="o">=</span> <span class="s">&quot;Leuven&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">identity</span><span class="o">.</span><span class="n">country</span>            <span class="o">=</span> <span class="s">&quot;BE&quot;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">info</span> <span class="o">=</span> <span class="n">PkiCertificateInfo</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="o">.</span><span class="n">uri</span>        <span class="o">=</span> <span class="s">&quot;urn:</span><span class="si">%s</span><span class="s">:InstituteOfAstronomy::MyExampleCode&quot;</span> <span class="o">%</span><span class="n">hostName</span> <span class="c"># must be unique!</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="o">.</span><span class="n">dns</span>        <span class="o">=</span> <span class="n">hostName</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="o">.</span><span class="n">eMail</span>      <span class="o">=</span> <span class="s">&quot;Wxx.Pxxxxxxxx@ster.kuleuven.be&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">info</span><span class="o">.</span><span class="n">validTime</span>  <span class="o">=</span> <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mi">365</span><span class="o">*</span><span class="mi">5</span> <span class="c"># 5 years</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">certificate</span> <span class="o">=</span> <span class="n">PkiCertificate</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">identity</span><span class="p">,</span> <span class="n">subjectPublicKey</span><span class="p">,</span>  <span class="n">identity</span><span class="p">,</span> <span class="n">issuerPrivateKey</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul>
+<li><p class="first">Class attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.PkiCertificate.Action_Reject">
+<tt class="descname">Action_Reject</tt><em class="property"> = 0</em><a class="headerlink" href="#pyuaf.util.PkiCertificate.Action_Reject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiCertificate.Action_AcceptTemporarily">
+<tt class="descname">Action_AcceptTemporarily</tt><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.util.PkiCertificate.Action_AcceptTemporarily" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiCertificate.Action_AcceptPermanently">
+<tt class="descname">Action_AcceptPermanently</tt><em class="property"> = 2</em><a class="headerlink" href="#pyuaf.util.PkiCertificate.Action_AcceptPermanently" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiCertificate.Extension_SubjectAltName">
+<tt class="descname">Extension_SubjectAltName</tt><em class="property"> = 85</em><a class="headerlink" href="#pyuaf.util.PkiCertificate.Extension_SubjectAltName" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiCertificate.Extension_BasicConstraints">
+<tt class="descname">Extension_BasicConstraints</tt><em class="property"> = 87</em><a class="headerlink" href="#pyuaf.util.PkiCertificate.Extension_BasicConstraints" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiCertificate.Extension_NetscapeComment">
+<tt class="descname">Extension_NetscapeComment</tt><em class="property"> = 78</em><a class="headerlink" href="#pyuaf.util.PkiCertificate.Extension_NetscapeComment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiCertificate.Extension_SubjectKeyIdentifier">
+<tt class="descname">Extension_SubjectKeyIdentifier</tt><em class="property"> = 82</em><a class="headerlink" href="#pyuaf.util.PkiCertificate.Extension_SubjectKeyIdentifier" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiCertificate.Extension_AuthorityKeyIdentifier">
+<tt class="descname">Extension_AuthorityKeyIdentifier</tt><em class="property"> = 90</em><a class="headerlink" href="#pyuaf.util.PkiCertificate.Extension_AuthorityKeyIdentifier" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiCertificate.Extension_KeyUsage">
+<tt class="descname">Extension_KeyUsage</tt><em class="property"> = 83</em><a class="headerlink" href="#pyuaf.util.PkiCertificate.Extension_KeyUsage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiCertificate.Extension_ExtendedKeyUsage">
+<tt class="descname">Extension_ExtendedKeyUsage</tt><em class="property"> = 126</em><a class="headerlink" href="#pyuaf.util.PkiCertificate.Extension_ExtendedKeyUsage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.PkiCertificate.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new PkiCertificate with the following arguments:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>info</strong> (<a class="reference internal" href="#pyuaf.util.PkiCertificateInfo" title="pyuaf.util.PkiCertificateInfo"><tt class="xref py py-class docutils literal"><span class="pre">PkiCertificateInfo</span></tt></a>) &#8211; The certificate info.</li>
+<li><strong>subject</strong> (<a class="reference internal" href="#pyuaf.util.PkiIdentity" title="pyuaf.util.PkiIdentity"><tt class="xref py py-class docutils literal"><span class="pre">PkiIdentity</span></tt></a>) &#8211; The subject identity.</li>
+<li><strong>subjectPublicKey</strong> (<a class="reference internal" href="#pyuaf.util.PkiPublicKey" title="pyuaf.util.PkiPublicKey"><tt class="xref py py-class docutils literal"><span class="pre">PkiPublicKey</span></tt></a>) &#8211; The subject public key.</li>
+<li><strong>issuer</strong> (<a class="reference internal" href="#pyuaf.util.PkiIdentity" title="pyuaf.util.PkiIdentity"><tt class="xref py py-class docutils literal"><span class="pre">PkiIdentity</span></tt></a>) &#8211; The issuer identity.</li>
+<li><strong>issuerPrivateKey</strong> (<a class="reference internal" href="#pyuaf.util.PkiPrivateKey" title="pyuaf.util.PkiPrivateKey"><tt class="xref py py-class docutils literal"><span class="pre">PkiPrivateKey</span></tt></a>) &#8211; The issuer private key.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.isNull">
+<tt class="descname">isNull</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.isNull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the certificate has data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the certificate has data, False if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.isValid">
+<tt class="descname">isValid</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.isValid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the signature is not expired.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the certificate is valid, False if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.isSelfSigned">
+<tt class="descname">isSelfSigned</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.isSelfSigned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the certificate is self-signed (i.e. if the subject and issuer are the same).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the certificate is self-signed, False if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.publicKey">
+<tt class="descname">publicKey</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.publicKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the public key of the certificate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The public key of the certificate.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.PkiPublicKey" title="pyuaf.util.PkiPublicKey"><tt class="xref py py-class docutils literal"><span class="pre">PkiPublicKey</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.commonName">
+<tt class="descname">commonName</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.commonName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience method to get the common name of the subject.
+(equals <tt class="docutils literal"><span class="pre">myPkiCertificate.subject().commonName</span></tt>).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The common name of the subject.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.subject">
+<tt class="descname">subject</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.subject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the identity of the subject of the certificate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The subject.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.PkiIdentity" title="pyuaf.util.PkiIdentity"><tt class="xref py py-class docutils literal"><span class="pre">PkiIdentity</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.issuer">
+<tt class="descname">issuer</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.issuer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the identity of the issuer of the certificate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The issuer.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.PkiIdentity" title="pyuaf.util.PkiIdentity"><tt class="xref py py-class docutils literal"><span class="pre">PkiIdentity</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.subjectNameHash">
+<tt class="descname">subjectNameHash</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.subjectNameHash" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the hash of the subject name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The hash of the subject name (e.g. 1877523877).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">long</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.info">
+<tt class="descname">info</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get information from the X509v3 extension &#8220;subjectAltName&#8221; (SAN). It allows various
+values to be associated with a security certificate.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><a class="reference internal" href="#pyuaf.util.PkiCertificateInfo.validTime" title="pyuaf.util.PkiCertificateInfo.validTime"><tt class="xref py py-attr docutils literal"><span class="pre">validTime</span></tt></a> will not be filled,
+use <a class="reference internal" href="#pyuaf.util.PkiCertificate.validFrom" title="pyuaf.util.PkiCertificate.validFrom"><tt class="xref py py-meth docutils literal"><span class="pre">validFrom()</span></tt></a> and
+<a class="reference internal" href="#pyuaf.util.PkiCertificate.validTo" title="pyuaf.util.PkiCertificate.validTo"><tt class="xref py py-meth docutils literal"><span class="pre">validTo()</span></tt></a> instead!</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The certificate info <strong>without</strong> validTime.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.PkiCertificateInfo" title="pyuaf.util.PkiCertificateInfo"><tt class="xref py py-class docutils literal"><span class="pre">PkiCertificateInfo</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.validFrom">
+<tt class="descname">validFrom</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.validFrom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the start date from when the certificate is valid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The start date from when the certificate is valid.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">DateTime</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.validTo">
+<tt class="descname">validTo</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.validTo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the end date until when the certificate is valid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The end date until when the certificate is valid.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">DateTime</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.serialNumber">
+<tt class="descname">serialNumber</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.serialNumber" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the X.509 serial number (a unique number issued by the certificate issuer),
+as a hexadecimal string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The serial number (e.g. &#8220;542BA97B&#8221;).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.signatureTypeNID">
+<tt class="descname">signatureTypeNID</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.signatureTypeNID" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the numerical ID (NID) of the signature algorithm type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The signature algorithm type NID (e.g. 65).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.signatureTypeString">
+<tt class="descname">signatureTypeString</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.signatureTypeString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation of the numerical ID (NID) of the signature algorithm type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The signature algorithm type as a string (e.g. &#8220;RSA-SHA1&#8221;).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.hasExtension">
+<tt class="descname">hasExtension</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.hasExtension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the certificate has the given extension.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>extension</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; Extension ID, e.g. <a class="reference internal" href="#pyuaf.util.PkiCertificate.Extension_SubjectAltName" title="pyuaf.util.PkiCertificate.Extension_SubjectAltName"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.PkiCertificate.Extension_SubjectAltName</span></tt></a>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if the extension is present, False if not.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.extensionValue">
+<tt class="descname">extensionValue</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.extensionValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value of the given extension if the extension is present.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>extension</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; Extension ID, e.g. <a class="reference internal" href="#pyuaf.util.PkiCertificate.Extension_SubjectAltName" title="pyuaf.util.PkiCertificate.Extension_SubjectAltName"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.PkiCertificate.Extension_SubjectAltName</span></tt></a>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The value as a string.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.toDER">
+<tt class="descname">toDER</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.toDER" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a DER encoded bytearray of the certificate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">DER encoded data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bytearray</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.toDERFile">
+<tt class="descname">toDERFile</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.toDERFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the certificate to a DER-encoded file with the given filename.
+An error code is returned (0 if success).</p>
+<p>Note that the directories in which the file should reside, must already exist! This
+function will only create a file, no directories!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fileName</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The filename (may be relative or absolute).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Error code (0 if success).</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.toPEMFile">
+<tt class="descname">toPEMFile</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.toPEMFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the certificate to a PEM-encoded file with the given filename.
+An error code is returned (0 if success).</p>
+<p>Note that the directories in which the file should reside, must already exist! This
+function will only create a file, no directories!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fileName</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The filename (may be relative or absolute).</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Error code (0 if success).</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.thumbPrint">
+<tt class="descname">thumbPrint</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.thumbPrint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a SHA1 thumb print (finger print) of the certficate. It is a short sequence of
+bytes used to identify a certificate efficiently.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Thumb print data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bytearray</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.PkiPublicKey.getErrors">
+<tt class="descclassname">PkiPublicKey.</tt><tt class="descname">getErrors</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.PkiPublicKey.getErrors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of errors.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of error descriptions.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Class methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.PkiCertificate.fromDER">
+<tt class="descname">fromDER</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.fromDER" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method to get a certificate from a DER encoded bytearray.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<tt class="docutils literal"><span class="pre">bytearray</span></tt>) &#8211; DER data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A new certificate instance.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.PkiCertificate" title="pyuaf.util.PkiCertificate"><tt class="xref py py-class docutils literal"><span class="pre">PkiCertificate</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.fromDERFile">
+<tt class="descname">fromDERFile</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.fromDERFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method to get a certificate from a DER encoded file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fileName</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; File name of the DER file.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A new certificate instance.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.PkiCertificate" title="pyuaf.util.PkiCertificate"><tt class="xref py py-class docutils literal"><span class="pre">PkiCertificate</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiCertificate.fromPEMFile">
+<tt class="descname">fromPEMFile</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificate.fromPEMFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Static method to get a certificate from a PEM encoded file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fileName</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; File name of the PEM file.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A new certificate instance.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.PkiCertificate" title="pyuaf.util.PkiCertificate"><tt class="xref py py-class docutils literal"><span class="pre">PkiCertificate</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-pkicertificateinfo">
+<h2><em>class</em> PkiCertificateInfo<a class="headerlink" href="#class-pkicertificateinfo" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.PkiCertificateInfo">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">PkiCertificateInfo</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificateInfo" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>A PkiCertificateInfo holds some information about a PkiCertificate.</div></blockquote>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.PkiCertificateInfo.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiCertificateInfo.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new PkiCertificateInfo.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.PkiCertificateInfo.uri">
+<tt class="descname">uri</tt><a class="headerlink" href="#pyuaf.util.PkiCertificateInfo.uri" title="Permalink to this definition">¶</a></dt>
+<dd><p>The URI of the application certificate, as a string (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiCertificateInfo.ipAddresses">
+<tt class="descname">ipAddresses</tt><a class="headerlink" href="#pyuaf.util.PkiCertificateInfo.ipAddresses" title="Permalink to this definition">¶</a></dt>
+<dd><p>The IP addresses of the application certificate, as a <a class="reference internal" href="#pyuaf.util.StringVector" title="pyuaf.util.StringVector"><tt class="xref py py-class docutils literal"><span class="pre">StringVector</span></tt></a>.
+Optional if no DNS is available.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiCertificateInfo.dnsNames">
+<tt class="descname">dnsNames</tt><a class="headerlink" href="#pyuaf.util.PkiCertificateInfo.dnsNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>The DNS names of the application certificate, as a <a class="reference internal" href="#pyuaf.util.StringVector" title="pyuaf.util.StringVector"><tt class="xref py py-class docutils literal"><span class="pre">StringVector</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiCertificateInfo.eMail">
+<tt class="descname">eMail</tt><a class="headerlink" href="#pyuaf.util.PkiCertificateInfo.eMail" title="Permalink to this definition">¶</a></dt>
+<dd><p>The e-mail address of the application certificate, as a string (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiCertificateInfo.validTime">
+<tt class="descname">validTime</tt><a class="headerlink" href="#pyuaf.util.PkiCertificateInfo.validTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>The valid time of the application certificate, in seconds, as a <tt class="docutils literal"><span class="pre">long</span></tt>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-pkiprivatekey">
+<h2><em>class</em> PkiPrivateKey<a class="headerlink" href="#class-pkiprivatekey" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.PkiPrivateKey">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">PkiPrivateKey</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiPrivateKey" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>A PkiPrivateKey is just a container for a private key.</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A private key only makes sense in combination with a public key. Therefore you should never
+create a PkiPrivateKey instance using the constructor of PkiPrivateKey. Instead, always
+create a <a class="reference internal" href="#pyuaf.util.PkiRsaKeyPair" title="pyuaf.util.PkiRsaKeyPair"><tt class="xref py py-class docutils literal"><span class="pre">PkiRsaKeyPair</span></tt></a> and get the private key from there (i.e. via its
+<a class="reference internal" href="#pyuaf.util.PkiRsaKeyPair.privateKey" title="pyuaf.util.PkiRsaKeyPair.privateKey"><tt class="xref py py-meth docutils literal"><span class="pre">privateKey()</span></tt></a> method). See the documentation of
+<a class="reference internal" href="#pyuaf.util.PkiRsaKeyPair" title="pyuaf.util.PkiRsaKeyPair"><tt class="xref py py-class docutils literal"><span class="pre">PkiRsaKeyPair</span></tt></a> to see example code of how to create a private key
+via a key pair.</p>
+</div>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.PkiPrivateKey.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiPrivateKey.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new PkiPrivateKey... in a <strong>bad</strong> way!
+<strong>See the note above to understand why you should avoid calling this constructor
+directly!</strong></p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-pkipublickey">
+<h2><em>class</em> PkiPublicKey<a class="headerlink" href="#class-pkipublickey" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.PkiPublicKey">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">PkiPublicKey</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiPublicKey" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>A PkiPublicKey can hold an RSA or DSA encrypted public key.</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A public key only makes sense in combination with a private key. Therefore you should never
+create a PkiPublicKey instance using the constructor of PkiPublicKey. Instead, always
+create a <a class="reference internal" href="#pyuaf.util.PkiRsaKeyPair" title="pyuaf.util.PkiRsaKeyPair"><tt class="xref py py-class docutils literal"><span class="pre">PkiRsaKeyPair</span></tt></a> and get the public key from there (i.e. via its
+<a class="reference internal" href="#pyuaf.util.PkiRsaKeyPair.publicKey" title="pyuaf.util.PkiRsaKeyPair.publicKey"><tt class="xref py py-meth docutils literal"><span class="pre">publicKey()</span></tt></a> method). See the documentation of
+<a class="reference internal" href="#pyuaf.util.PkiRsaKeyPair" title="pyuaf.util.PkiRsaKeyPair"><tt class="xref py py-class docutils literal"><span class="pre">PkiRsaKeyPair</span></tt></a> to see example code of how to create a public key
+via a key pair.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The SDK (up to 1.4.2) contains a bug so that your application may crash (segmentation fault)
+if the data of the PkiPublicKey make no sense. To avoid this, always create a public key from
+a key pair (which should also contain sensible data).</p>
+</div>
+<ul>
+<li><p class="first">Class attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.PkiPublicKey.RSA">
+<tt class="descname">RSA</tt><em class="property"> = 0</em><a class="headerlink" href="#pyuaf.util.PkiPublicKey.RSA" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiPublicKey.DSA">
+<tt class="descname">DSA</tt><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.util.PkiPublicKey.DSA" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.PkiPublicKey.Unknown">
+<tt class="descname">Unknown</tt><em class="property"> = 2</em><a class="headerlink" href="#pyuaf.util.PkiPublicKey.Unknown" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Class methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.PkiPublicKey.fromDER">
+<tt class="descname">fromDER</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiPublicKey.fromDER" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the public key from a DER encoded <tt class="docutils literal"><span class="pre">bytearray</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<tt class="docutils literal"><span class="pre">bytearray</span></tt>) &#8211; The DER encoded data.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A new PkiPublicKey instance.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.PkiPublicKey" title="pyuaf.util.PkiPublicKey"><tt class="xref py py-class docutils literal"><span class="pre">PkiPublicKey</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Instance Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.PkiPublicKey.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiPublicKey.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new PkiPublicKey... in a <strong>bad</strong> way!
+<strong>See the note above to understand why you should avoid calling this constructor
+directly!</strong></p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.PkiPublicKey.keyType">
+<tt class="descname">keyType</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiPublicKey.keyType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the type of the key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Either <a class="reference internal" href="#pyuaf.util.PkiPublicKey.RSA" title="pyuaf.util.PkiPublicKey.RSA"><tt class="xref py py-attr docutils literal"><span class="pre">RSA</span></tt></a>
+or <a class="reference internal" href="#pyuaf.util.PkiPublicKey.DSA" title="pyuaf.util.PkiPublicKey.DSA"><tt class="xref py py-attr docutils literal"><span class="pre">DSA</span></tt></a>
+or <a class="reference internal" href="#pyuaf.util.PkiPublicKey.Unknown" title="pyuaf.util.PkiPublicKey.Unknown"><tt class="xref py py-attr docutils literal"><span class="pre">Unknown</span></tt></a>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiPublicKey.keySize">
+<tt class="descname">keySize</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiPublicKey.keySize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the size of the key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The size of the key.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiPublicKey.toDER">
+<tt class="descname">toDER</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiPublicKey.toDER" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the public key to a DER encoded <tt class="docutils literal"><span class="pre">bytearray</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The DER encoded bytearray.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bytearray</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiPublicKey.getErrors">
+<tt class="descname">getErrors</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiPublicKey.getErrors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of errors.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of error descriptions.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-pkirsakeypair">
+<h2><em>class</em> PkiRsaKeyPair<a class="headerlink" href="#class-pkirsakeypair" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.PkiRsaKeyPair">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">PkiRsaKeyPair</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiRsaKeyPair" title="Permalink to this definition">¶</a></dt>
+<dd><p>A PkiRsaKeyPair holds a private and a public key pair.</p>
+<p>Creating a PkiRsaKeyPair is the only sensible way to create a <a class="reference internal" href="#pyuaf.util.PkiPublicKey" title="pyuaf.util.PkiPublicKey"><tt class="xref py py-class docutils literal"><span class="pre">PkiPublicKey</span></tt></a>
+and <a class="reference internal" href="#pyuaf.util.PkiPrivateKey" title="pyuaf.util.PkiPrivateKey"><tt class="xref py py-class docutils literal"><span class="pre">PkiPrivateKey</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pair</span> <span class="o">=</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">PkiRsaKeyPair</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">publicKey</span> <span class="o">=</span> <span class="n">pair</span><span class="o">.</span><span class="n">publicKey</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">privateKey</span> <span class="o">=</span> <span class="n">pair</span><span class="o">.</span><span class="n">privateKey</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The SDK (up to 1.4.2) contains a bug so that your application may crash (segmentation fault)
+if the data of the key pair make no sense. To avoid this, always make sure your key pair
+has sensible data (e.g. don&#8217;t use <a class="reference internal" href="#pyuaf.util.PkiRsaKeyPair.fromPEMFile" title="pyuaf.util.PkiRsaKeyPair.fromPEMFile"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.PkiRsaKeyPair.fromPEMFile()</span></tt></a> with gibberish
+data).</p>
+</div>
+<ul>
+<li><p class="first">Class methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.PkiRsaKeyPair.fromPEMFile">
+<tt class="descname">fromPEMFile</tt><big>(</big><em>args*</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiRsaKeyPair.fromPEMFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the key pair from a PEM file.</p>
+<p>If the file is not protected by a password, then just provide one argument
+(the file name).
+If the file is protected by a password, then provide 2 arguments (the file name
+must be the first argument, the password must be the second argument).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fileName</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The filename, e.g. &#8220;keypair.pem&#8221; or &#8220;somefolder/keypair.pem&#8221; or
+an absolute path.</li>
+<li><strong>password</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The password of the file.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A new PkiRsaKeyPair instance.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#pyuaf.util.PkiRsaKeyPair" title="pyuaf.util.PkiRsaKeyPair"><tt class="xref py py-class docutils literal"><span class="pre">PkiRsaKeyPair</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiRsaKeyPair.checkKeyPair">
+<tt class="descname">checkKeyPair</tt><big>(</big><em>args*</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiRsaKeyPair.checkKeyPair" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if a public and private key pair matches.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>publicKey</strong> (<a class="reference internal" href="#pyuaf.util.PkiPublicKey" title="pyuaf.util.PkiPublicKey"><tt class="xref py py-class docutils literal"><span class="pre">PkiPublicKey</span></tt></a>) &#8211; The public key.</li>
+<li><strong>privateKey</strong> (<a class="reference internal" href="#pyuaf.util.PkiPrivateKey" title="pyuaf.util.PkiPrivateKey"><tt class="xref py py-class docutils literal"><span class="pre">PkiPrivateKey</span></tt></a>) &#8211; The private key.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if the keys match, False if not.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">bool</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This method may <strong>crash</strong> when empty keys are checked, due to a bug in the SDK!!!
+Bug present in SDK v1.4.2.</p>
+</div>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Instance Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.PkiRsaKeyPair.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>bits = 1024</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiRsaKeyPair.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new PkiRsaKeyPair.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bits</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The encryption bitsize.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiRsaKeyPair.privateKey">
+<tt class="descname">privateKey</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiRsaKeyPair.privateKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the private key of this pair.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The private key.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.PkiPrivateKey" title="pyuaf.util.PkiPrivateKey"><tt class="xref py py-class docutils literal"><span class="pre">PkiPrivateKey</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiRsaKeyPair.publicKey">
+<tt class="descname">publicKey</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiRsaKeyPair.publicKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the public key of this pair.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The public key.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.PkiPublicKey" title="pyuaf.util.PkiPublicKey"><tt class="xref py py-class docutils literal"><span class="pre">PkiPublicKey</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiRsaKeyPair.toPEMFile">
+<tt class="descname">toPEMFile</tt><big>(</big><em>args*</em><big>)</big><a class="headerlink" href="#pyuaf.util.PkiRsaKeyPair.toPEMFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the key pair to an unprotected PEM file.</p>
+<p>If the file is not protected by a password, then just provide one argument
+(the file name).
+If the file is protected by a password, then provide 2 arguments (the file name
+must be the first argument, the password must be the second argument).</p>
+<p>Note that the directories in which the file should reside, must already exist! This
+function will only create a file, no directories!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>fileName</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The filename, e.g. &#8220;keypair.pem&#8221; or &#8220;somefolder/keypair.pem&#8221; or
+an absolute path.</li>
+<li><strong>password</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The password of the file.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">exit code (0 on success).</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">int</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiRsaKeyPair.toDER">
+<tt class="descname">toDER</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiRsaKeyPair.toDER" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the key pair to a DER encoded <tt class="docutils literal"><span class="pre">bytearray</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The DER encoded bytearray.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bytearray</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiRsaKeyPair.isValid">
+<tt class="descname">isValid</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiRsaKeyPair.isValid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the key pair is valid.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the key pair is valid, False if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.PkiRsaKeyPair.getErrors">
+<tt class="descname">getErrors</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.PkiRsaKeyPair.getErrors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of errors.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of error descriptions.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
 <div class="section" id="class-pkiidentity">
 <h2><em>class</em> PkiIdentity<a class="headerlink" href="#class-pkiidentity" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -2427,7 +3504,9 @@ as defined within <a class="reference internal" href="api_pyuaf_util_nodeidident
 <dl class="attribute">
 <dt id="pyuaf.util.PkiIdentity.country">
 <tt class="descname">country</tt><a class="headerlink" href="#pyuaf.util.PkiIdentity.country" title="Permalink to this definition">¶</a></dt>
-<dd><p>The country as a string (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+<dd><p>The country code as a string (type <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+<p>Note that invalid data (e.g. &#8220;Belgium&#8221; instead of the correct &#8220;BE&#8221;) will be stored by
+the PkiIdentity, but this data may get lost when it is converted to a X509 certificate.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -2864,6 +3943,163 @@ all).</p>
 </dd></dl>
 
 </div>
+<div class="section" id="class-sdkstatus">
+<h2><em>class</em> SdkStatus<a class="headerlink" href="#class-sdkstatus" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.SdkStatus">
+<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">SdkStatus</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.SdkStatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>An SdkStatus stores the information (i.e. status code and message) of a Status object
+by the SDK.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.SdkStatus.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.SdkStatus.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new SdkStatus.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.SdkStatus.isGood">
+<tt class="descname">isGood</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.SdkStatus.isGood" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the status has a &#8220;good&#8221; status code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the status is Good.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.SdkStatus.isNotGood">
+<tt class="descname">isNotGood</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.SdkStatus.isNotGood" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the status does not have a &#8220;good&#8221; status code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the status is not Good.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.SdkStatus.isUncertain">
+<tt class="descname">isUncertain</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.SdkStatus.isUncertain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the status has an &#8220;uncertain&#8221; status code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the status is Uncertain.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.SdkStatus.isNotUncertain">
+<tt class="descname">isNotUncertain</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.SdkStatus.isNotUncertain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the status does not have a &#8220;uncertain&#8221; status code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the status is not Uncertain.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.SdkStatus.isBad">
+<tt class="descname">isBad</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.SdkStatus.isBad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the status has a &#8220;bad&#8221; status code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the status is Bad.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.SdkStatus.isNotBad">
+<tt class="descname">isNotBad</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.SdkStatus.isNotBad" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the status does not have a &#8220;bad&#8221; status code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the status is not Bad.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.SdkStatus.statusCode">
+<tt class="descname">statusCode</tt><a class="headerlink" href="#pyuaf.util.SdkStatus.statusCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the OPC UA status code.</p>
+<p><em>OPC UA status codes</em> are not the same as <em>UAF status codes</em>!
+See the <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> and <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> modules
+for more info!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The OPC UA status code, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.SdkStatus.message">
+<tt class="descname">message</tt><a class="headerlink" href="#pyuaf.util.SdkStatus.message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the message of the SDK status.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The message of the status.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
 <div class="section" id="class-simpleattributeoperand">
 <h2><em>class</em> SimpleAttributeOperand<a class="headerlink" href="#class-simpleattributeoperand" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -2968,229 +4204,63 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 <dt id="pyuaf.util.Status">
 <em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">Status</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Status" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
-<div>A Status object holds a UAF status code, a description and an OPC UA status code.</div></blockquote>
+<div>A Status object holds a UAF status code, a message and an OPC UA status code.</div></blockquote>
 <ul>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.Status.statusCode">
+<tt class="descname">statusCode</tt><a class="headerlink" href="#pyuaf.util.Status.statusCode" title="Permalink to this definition">¶</a></dt>
+<dd><p>The UAF status code (an <tt class="docutils literal"><span class="pre">int</span></tt> as defined by <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a>).</p>
+<p>UAF status codes are not the same as OPC UA status codes!
+For each UAF status code (except for Good and Uncertain), there is a corresponding
+error.
+See the <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> and <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> modules
+for more info!</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.util.Status.__init__">
 <tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Status.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct a Status by providing a UAF status code (as defined by
-<a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a>) and optionally a description (a string).</p>
+<a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a>).</p>
 <p>UAF Status objects are Uncertain by default.</p>
 <p>You can construct a Status like this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">Status</span><span class="p">,</span> <span class="n">statuscodes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.errors</span> <span class="kn">import</span> <span class="n">InvalidServerUriError</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">status0</span> <span class="o">=</span> <span class="n">Status</span><span class="p">()</span> <span class="c"># Uncertain by default!</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">status1</span> <span class="o">=</span> <span class="n">Status</span><span class="p">(</span><span class="n">statuscodes</span><span class="o">.</span><span class="n">Good</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">status2</span> <span class="o">=</span> <span class="n">Status</span><span class="p">(</span><span class="n">statuscodes</span><span class="o">.</span><span class="n">InvalidRequestError</span><span class="p">,</span> <span class="s">&quot;This is an invalid request!&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">status2</span> <span class="o">=</span> <span class="n">Status</span><span class="p">(</span><span class="n">InvalidServerUriError</span><span class="p">(</span><span class="s">&quot;http://invalid/server/uri&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyuaf.util.Status.statusCode">
-<tt class="descname">statusCode</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.statusCode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the UAF status code (as defined by <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a>).</p>
-<p>UAF status codes are not the same as OPC UA status codes!
-See the <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> and <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> modules
-for more info!</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The UAF status code (as defined by <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a>).</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyuaf.util.Status.statusCodeName">
-<tt class="descname">statusCodeName</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.statusCodeName" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the name of the UAF status code.</p>
-<p>UAF status codes are not the same as OPC UA status codes!
-See the <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> and <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> modules
-for more info!</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The name of the UAF status code.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyuaf.util.Status.addDiagnostic">
-<tt class="descname">addDiagnostic</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Status.addDiagnostic" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add some diagnostic info (extra description text).</p>
-<p>This text will end up in the additionalDiagnostics object of this Status object
-(it will be appended to the description of this diagnostics object, that can be
-accessed via <a class="reference internal" href="#pyuaf.util.StatusDiagnostics.getDescription" title="pyuaf.util.StatusDiagnostics.getDescription"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.StatusDiagnostics.getDescription()</span></tt></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The extra diagnostic info.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyuaf.util.Status.additionalDiagnostics">
-<tt class="descname">additionalDiagnostics</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Status.additionalDiagnostics" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the additional diagnostics object (that can hold extra descriptions of the Status,
-or some data specific to a particular use-case of the Status).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The additional StatusDiagnostics object that belongs to the Status.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.StatusDiagnostics" title="pyuaf.util.StatusDiagnostics"><tt class="xref py py-class docutils literal"><span class="pre">StatusDiagnostics</span></tt></a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyuaf.util.Status.hasSpecificOpcUaStatusCode">
-<tt class="descname">hasSpecificOpcUaStatusCode</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.hasSpecificOpcUaStatusCode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if the Status object, besides a UAF status code, also contains a specific OPC
-UA status code (which can be retrieved with <a class="reference internal" href="#pyuaf.util.Status.opcUaStatusCode" title="pyuaf.util.Status.opcUaStatusCode"><tt class="xref py py-meth docutils literal"><span class="pre">opcUaStatusCode()</span></tt></a>.</p>
-<p>With &#8220;specific&#8221; we mean anything more than just
-<a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Good" title="pyuaf.util.opcuastatuscodes.OpcUa_Good"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_Good</span></tt></a>,
-<a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Bad" title="pyuaf.util.opcuastatuscodes.OpcUa_Bad"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_Bad</span></tt></a>, or
-<a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Uncertain" title="pyuaf.util.opcuastatuscodes.OpcUa_Uncertain"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_Uncertain</span></tt></a>.</p>
-<p>UAF status codes are not the same as OPC UA status codes!
-See the <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> and <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> modules
-for more info!</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the status object has a specific OPC UA status code.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyuaf.util.Status.opcUaStatusCode">
-<tt class="descname">opcUaStatusCode</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.opcUaStatusCode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the OPC UA status code.</p>
-<p><em>UAF status codes</em> are not the same as <em>OPC UA status codes</em>!
-See the <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> and <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> modules
-for more info!</p>
-<p>All <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> correspond <em>bitwise</em> to the 32-bit unsigned numbers as defined
-by the OPC UA standard. This means that some statuscodes may appear to be negative, since
-python interprets the 32-bit data as signed integers.
-If you want to see only positive numbers (which will be numerically equivalent but not
-bitwise equivalent to the numbers defined by the OPC UA standard),
-then use the <a class="reference internal" href="#pyuaf.util.Status.opcUaStatusCodeUnsigned" title="pyuaf.util.Status.opcUaStatusCodeUnsigned"><tt class="xref py py-meth docutils literal"><span class="pre">opcUaStatusCodeUnsigned()</span></tt></a> method.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The OPC UA status code, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a>.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyuaf.util.Status.opcUaStatusCodeUnsigned">
-<tt class="descname">opcUaStatusCodeUnsigned</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.opcUaStatusCodeUnsigned" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get a number which is numerically equivalent (but not bitwise equivalent) to the OPC UA
-status code as defined by the OPC UA specs.</p>
-<p>You may <em>not</em> compare the output of this method with the integers defined by
-<a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a>, since the latter are bitwise equivalent (but not
-numerically equivalent!) to the numbers defined by the OPC UA standard.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A positive number, representing the OPC UA status code.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
-</tr>
-</tbody>
-</table>
+<dt id="pyuaf.util.Status.test">
+<tt class="descname">test</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Important method: raise an error if the status is Bad! E.g.
+if <cite>~pyuaf.util.Status.statusCode</cite> equals <cite>pyuaf.util.statuscodes.InvalidServerUriError</cite>,
+then a <cite>pyuaf.util.errors.InvalidServerUriError</cite> will be raised!
+If the <cite>~pyuaf.util.Status.statusCode</cite> attribute is <cite>~pyuaf.util.statuscodes.Good</cite>
+or <cite>~pyuaf.util.statuscodes.Uncertain</cite>, nothing will happen when you call this method.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyuaf.util.Status.setGood">
-<tt class="descname">setGood</tt><big>(</big><span class="optional">[</span><em>message</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.Status.setGood" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the status to Good (and optionally add a message).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The optional message.</td>
-</tr>
-</tbody>
-</table>
+<tt class="descname">setGood</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.setGood" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the status to Good.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyuaf.util.Status.setUncertain">
-<tt class="descname">setUncertain</tt><big>(</big><span class="optional">[</span><em>message</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.Status.setUncertain" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the status to Uncertain (and optionally add a message).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>message</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The optional message.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyuaf.util.Status.setStatus">
-<tt class="descname">setStatus</tt><big>(</big><em>statusCode</em><span class="optional">[</span>, <em>message</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyuaf.util.Status.setStatus" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the status to the given status code (and optionally add a message).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>statusCode</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The new UAF status code (as defined by <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a>).</li>
-<li><strong>message</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; The optional message.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyuaf.util.Status.setOpcUaStatusCode">
-<tt class="descname">setOpcUaStatusCode</tt><big>(</big><em>opcUaStatusCode</em><big>)</big><a class="headerlink" href="#pyuaf.util.Status.setOpcUaStatusCode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the status to the given OPC UA status code.</p>
-<p>UAF status codes are not the same as OPC UA status codes!
-See the <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> and <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> modules
-for more info!</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>statusCode</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The new OPC UA status code, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a>.</td>
-</tr>
-</tbody>
-</table>
+<tt class="descname">setUncertain</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.setUncertain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the status to Uncertain.</p>
 </dd></dl>
 
 <dl class="method">
@@ -3290,6 +4360,25 @@ for more info!</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="pyuaf.util.Status.statusCodeName">
+<tt class="descname">statusCodeName</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.statusCodeName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the UAF status code.</p>
+<p>UAF status codes are not the same as OPC UA status codes!
+See the <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> and <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> modules
+for more info!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The name of the UAF status code.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyuaf.util.Status.summarize">
 <tt class="descname">summarize</tt><big>(</big><em>statuses</em><big>)</big><a class="headerlink" href="#pyuaf.util.Status.summarize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Make a &#8220;summary&#8221; of other statuses.</p>
@@ -3307,146 +4396,48 @@ Uncertain. And if only Good statuses are present, the summary will be Good.</p>
 </table>
 </dd></dl>
 
-</div></blockquote>
-</li>
-</ul>
-</dd></dl>
-
-</div>
-<div class="section" id="class-statusdiagnostics">
-<h2><em>class</em> StatusDiagnostics<a class="headerlink" href="#class-statusdiagnostics" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="pyuaf.util.StatusDiagnostics">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.</tt><tt class="descname">StatusDiagnostics</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics" title="Permalink to this definition">¶</a></dt>
-<dd><p>A StatusDiagnostics object holds some more detailed diagnostic info for a Status object,
-depending on the use case of this Status object</p>
-<ul>
-<li><p class="first">Methods:</p>
-<blockquote>
-<div><dl class="method">
-<dt id="pyuaf.util.StatusDiagnostics.__init__">
-<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct an empty StatusDiagnostics object.</p>
-<p>You normally don&#8217;t create these objects: they are part of a Status object.</p>
-</dd></dl>
-
 <dl class="method">
-<dt id="pyuaf.util.StatusDiagnostics.clear">
-<tt class="descname">clear</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove any diagnostic information.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyuaf.util.StatusDiagnostics.isEmpty">
-<tt class="descname">isEmpty</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.isEmpty" title="Permalink to this definition">¶</a></dt>
-<dd><p>Is any diagnostic info given?</p>
+<dt id="pyuaf.util.Status.isRaisedBy">
+<tt class="descname">isRaisedBy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.isRaisedBy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if this (bad!) status is raised by some other status.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the object holds some data (e.g. some description text or some other
-data), False if not.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if this status was raised by some other status.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyuaf.util.StatusDiagnostics.hasDescription">
-<tt class="descname">hasDescription</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.hasDescription" title="Permalink to this definition">¶</a></dt>
-<dd><p>Does the diagnostic object has a description?</p>
+<dt id="pyuaf.util.Status.raisedBy">
+<tt class="descname">raisedBy</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.Status.raisedBy" title="Permalink to this definition">¶</a></dt>
+<dd><p>If this status is raised by some other status, get a copy of this other status.
+It only make sense to call this method when <cite>~pyuaf.util.Status.isRaisedBy</cite> returns True.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the object holds some description text, False if not.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Get a copy of the status that raised this status.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><cite>~pyuaf.util.Status</cite></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="pyuaf.util.StatusDiagnostics.hasClientHandles">
-<tt class="descname">hasClientHandles</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.hasClientHandles" title="Permalink to this definition">¶</a></dt>
-<dd><p>Does the diagnostic object has client handles?
-See a use case example at <a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle" title="pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle()</span></tt></a>.</p>
+<dt id="pyuaf.util.Status.setRaisedBy">
+<tt class="descname">setRaisedBy</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.Status.setRaisedBy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store the status that caused this status (i.e. the current instance).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the object holds some client handles, False if not.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyuaf.util.StatusDiagnostics.getDescription">
-<tt class="descname">getDescription</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.getDescription" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the description (only makes sense in case
-<a class="reference internal" href="#pyuaf.util.StatusDiagnostics.hasDescription" title="pyuaf.util.StatusDiagnostics.hasDescription"><tt class="xref py py-meth docutils literal"><span class="pre">hasDescription()</span></tt></a> is True).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Additional description text.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyuaf.util.StatusDiagnostics.getClientHandles">
-<tt class="descname">getClientHandles</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.getClientHandles" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the client handles (only makes sense in case
-<a class="reference internal" href="#pyuaf.util.StatusDiagnostics.hasClientHandles" title="pyuaf.util.StatusDiagnostics.hasClientHandles"><tt class="xref py py-meth docutils literal"><span class="pre">hasClientHandles()</span></tt></a> is True).</p>
-<p>See a use case example at <a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle" title="pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle()</span></tt></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A tuple of client handles (=integers), e.g. (1,2,3).</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">tuple</span></tt> of <tt class="docutils literal"><span class="pre">int</span></tt></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyuaf.util.StatusDiagnostics.setDescription">
-<tt class="descname">setDescription</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.setDescription" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the description text. As a result of this,
-<a class="reference internal" href="#pyuaf.util.StatusDiagnostics.hasDescription" title="pyuaf.util.StatusDiagnostics.hasDescription"><tt class="xref py py-meth docutils literal"><span class="pre">hasDescription()</span></tt></a> will return True.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>desc</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; Additional description text.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="pyuaf.util.StatusDiagnostics.setClientHandles">
-<tt class="descname">setClientHandles</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.StatusDiagnostics.setClientHandles" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the client handles. As a result of this,
-<a class="reference internal" href="#pyuaf.util.StatusDiagnostics.hasClientHandles" title="pyuaf.util.StatusDiagnostics.hasClientHandles"><tt class="xref py py-meth docutils literal"><span class="pre">hasClientHandles()</span></tt></a> will return True.</p>
-<p>See a use case example at <a class="reference internal" href="api_pyuaf_client_results.html#pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle" title="pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.client.results.CreateMonitoredDataResultTarget.clientHandle()</span></tt></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>handles</strong> (<tt class="docutils literal"><span class="pre">tuple</span></tt> of <tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; A tuple of client handles (=integers), e.g. (1,2,3).</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>status</strong> (<cite>~pyuaf.util.Status</cite>) &#8211; The status that caused this (bad!) status.</td>
 </tr>
 </tbody>
 </table>
@@ -3850,15 +4841,22 @@ will return True) if you want to specify the whole address space.</p>
 <li><a class="reference internal" href="#class-eventfilter"><em>class</em> EventFilter</a></li>
 <li><a class="reference internal" href="#class-expandednodeid"><em>class</em> ExpandedNodeId</a></li>
 <li><a class="reference internal" href="#class-expandednodeidvector"><em>class</em> ExpandedNodeIdVector</a></li>
+<li><a class="reference internal" href="#class-extensionobject"><em>class</em> ExtensionObject</a></li>
 <li><a class="reference internal" href="#class-guid"><em>class</em> Guid</a></li>
 <li><a class="reference internal" href="#class-localizedtext"><em>class</em> LocalizedText</a></li>
 <li><a class="reference internal" href="#class-logginginterface"><em>class</em> LoggingInterface</a></li>
 <li><a class="reference internal" href="#class-logmessage"><em>class</em> LogMessage</a></li>
 <li><a class="reference internal" href="#class-mask"><em>class</em> Mask</a></li>
+<li><a class="reference internal" href="#class-modelchangestructuredatatype"><em>class</em> ModelChangeStructureDataType</a></li>
 <li><a class="reference internal" href="#class-modificationinfo"><em>class</em> ModificationInfo</a></li>
 <li><a class="reference internal" href="#class-modificationinfovector"><em>class</em> ModificationInfoVector</a></li>
 <li><a class="reference internal" href="#class-nodeid"><em>class</em> NodeId</a></li>
 <li><a class="reference internal" href="#class-nodeididentifier"><em>class</em> NodeIdIdentifier</a></li>
+<li><a class="reference internal" href="#class-pkicertificate"><em>class</em> PkiCertificate</a></li>
+<li><a class="reference internal" href="#class-pkicertificateinfo"><em>class</em> PkiCertificateInfo</a></li>
+<li><a class="reference internal" href="#class-pkiprivatekey"><em>class</em> PkiPrivateKey</a></li>
+<li><a class="reference internal" href="#class-pkipublickey"><em>class</em> PkiPublicKey</a></li>
+<li><a class="reference internal" href="#class-pkirsakeypair"><em>class</em> PkiRsaKeyPair</a></li>
 <li><a class="reference internal" href="#class-pkiidentity"><em>class</em> PkiIdentity</a></li>
 <li><a class="reference internal" href="#class-qualifiedname"><em>class</em> QualifiedName</a></li>
 <li><a class="reference internal" href="#class-qualifiednamevector"><em>class</em> QualifiedNameVector</a></li>
@@ -3866,10 +4864,10 @@ will return True) if you want to specify the whole address space.</p>
 <li><a class="reference internal" href="#class-referencedescriptionvector"><em>class</em> ReferenceDescriptionVector</a></li>
 <li><a class="reference internal" href="#class-relativepath"><em>class</em> RelativePath</a></li>
 <li><a class="reference internal" href="#class-relativepathelement"><em>class</em> RelativePathElement</a></li>
+<li><a class="reference internal" href="#class-sdkstatus"><em>class</em> SdkStatus</a></li>
 <li><a class="reference internal" href="#class-simpleattributeoperand"><em>class</em> SimpleAttributeOperand</a></li>
 <li><a class="reference internal" href="#class-simpleattributeoperandvector"><em>class</em> SimpleAttributeOperandVector</a></li>
 <li><a class="reference internal" href="#class-status"><em>class</em> Status</a></li>
-<li><a class="reference internal" href="#class-statusdiagnostics"><em>class</em> StatusDiagnostics</a></li>
 <li><a class="reference internal" href="#class-statusvector"><em>class</em> StatusVector</a></li>
 <li><a class="reference internal" href="#class-stringvector"><em>class</em> StringVector</a></li>
 <li><a class="reference internal" href="#class-uint32vector"><em>class</em> UInt32Vector</a></li>
@@ -3924,7 +4922,7 @@ will return True) if you want to specify the whole address space.</p>
         <li class="right" >
           <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.10 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF master documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Client examples &mdash; PyUAF 1.10 documentation</title>
+    <title>Client examples &mdash; PyUAF master documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.10',
+        VERSION:     'master',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.10 documentation" href="index.html" />
+    <link rel="top" title="PyUAF master documentation" href="index.html" />
     <link rel="next" title="pyuaf" href="api_pyuaf.html" />
     <link rel="prev" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)" href="index.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="index.html" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.10 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF master documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -777,11 +777,11 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dataValues</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="c"># Strange, we didn&#39;t receive any historical data.</span>
             <span class="c"># Check if this is expected behavior:</span>
-            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">opcUaStatusCode</span><span class="p">()</span> <span class="o">==</span> <span class="n">opcuastatuscodes</span><span class="o">.</span><span class="n">OpcUa_GoodNoData</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">opcUaStatusCode</span> <span class="o">==</span> <span class="n">opcuastatuscodes</span><span class="o">.</span><span class="n">OpcUa_GoodNoData</span><span class="p">:</span>
                 <span class="k">print</span><span class="p">(</span><span class="s">&quot;OK, no data could be received because he server reports that there is &quot;</span>
                       <span class="s">&quot;no data that matches your request&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">allStatuses</span>     <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">allStatusCodes</span>  <span class="o">=</span> <span class="p">[]</span>
             <span class="n">allDoubleValues</span> <span class="o">=</span> <span class="p">[]</span>
             <span class="n">allSourceTimes</span>  <span class="o">=</span> <span class="p">[]</span>
             
@@ -799,8 +799,8 @@
                     <span class="c"># And when Python garbage collects this data, your pointers will point to</span>
                     <span class="c"># invalid memory, and your software will crash when you try to use them!</span>
                     
-                    <span class="n">allStatuses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">Status</span><span class="p">(</span><span class="n">dataValue</span><span class="o">.</span><span class="n">status</span><span class="p">)</span> <span class="p">)</span>               <span class="c"># notice the copy constructor!</span>
-                    <span class="n">allDoubleValues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">dataValue</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span> <span class="p">)</span>                  <span class="c"># an int, no copy constructor needed</span>
+                    <span class="n">allStatusCodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">dataValue</span><span class="o">.</span><span class="n">opcUaStatusCode</span> <span class="p">)</span>           <span class="c"># notice the copy constructor!</span>
+                    <span class="n">allDoubleValues</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">dataValue</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span> <span class="p">)</span>               <span class="c"># an int, no copy constructor needed</span>
                     <span class="n">allSourceTimes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">dataValue</span><span class="o">.</span><span class="n">sourceTimestamp</span><span class="p">)</span> <span class="p">)</span> <span class="c"># notice the copy constructor!</span>
             
             <span class="c"># now print the lists </span>
@@ -814,7 +814,7 @@
                              <span class="o">+</span> <span class="s">&quot;.&quot;</span>                                  \
                              <span class="o">+</span> <span class="p">(</span><span class="s">&quot;</span><span class="si">%.3d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">allSourceTimes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">msec</span><span class="p">())</span>
                 
-                <span class="k">print</span><span class="p">(</span><span class="s">&quot;Code=</span><span class="si">%d</span><span class="s"> - Value=</span><span class="si">%s</span><span class="s"> - Time=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">allStatuses</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">statusCode</span><span class="p">(),</span> <span class="n">allDoubleValues</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">timeString</span><span class="p">))</span>
+                <span class="k">print</span><span class="p">(</span><span class="s">&quot;Code=</span><span class="si">%d</span><span class="s"> - Value=</span><span class="si">%s</span><span class="s"> - Time=</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">allStatusCodes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">allDoubleValues</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">timeString</span><span class="p">))</span>
     
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;Second example:&quot;</span><span class="p">)</span>
@@ -1212,6 +1212,261 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="how-to-connect-to-a-secured-endpoint">
+<h2>How to connect to a secured endpoint?<a class="headerlink" href="#how-to-connect-to-a-secured-endpoint" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client</span>           <span class="kn">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span><span class="p">,</span> <span class="n">SessionSettings</span><span class="p">,</span> <span class="n">SessionSecuritySettings</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">PkiRsaKeyPair</span><span class="p">,</span> <span class="n">PkiIdentity</span><span class="p">,</span> <span class="n">PkiCertificateInfo</span><span class="p">,</span> <span class="n">PkiCertificate</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util.errors</span>      <span class="kn">import</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">ConnectionError</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">securitypolicies</span><span class="p">,</span> <span class="n">messagesecuritymodes</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="n">DISCOVERY_URL</span>     <span class="o">=</span> <span class="s">&quot;opc.tcp://localhost:48010&quot;</span>
+<span class="n">SERVER_URI</span>        <span class="o">=</span> <span class="s">&quot;urn:UnifiedAutomation:UaServerCpp&quot;</span>
+<span class="n">DEMOSERVER_NS_URI</span> <span class="o">=</span> <span class="s">&quot;http://www.unifiedautomation.com/DemoServer&quot;</span>
+
+<span class="c"># define a folder where we will store the Public Key Infrastructure files (i.e. certificates and keys)</span>
+<span class="n">PKI_FOLDER</span> <span class="o">=</span> <span class="s">&quot;./securityexample/PKI&quot;</span>
+
+<span class="n">description</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">To run this example, start the UaServerCpp demo server first.</span>
+<span class="s">If you use the evaluation SDK, you can find thCliente executable here (e.g. on Windows):</span>
+<span class="s">   C:/Program Files/UnifiedAutomation/UaSdkCppBundleEval/bin/uaservercpp.exe</span>
+<span class="s">Note that all paths below must ALWAYS be specified using &#39;/&#39; separators, also on Windows!</span>
+<span class="s">This means you cannot use e.g. os.path.join or similar, since those functions may</span>
+<span class="s">introduce platform-dependent path separators.</span>
+
+<span class="s">Here&#39;s how the UAF Client handles certificates:</span>
+<span class="s">1) first the server certificate is verified. </span>
+<span class="s">   This server certificate was automatically received and kept in memory by the UAF</span>
+<span class="s">   client in the background during the discovery process, so you don&#39;t have to take </span>
+<span class="s">   care of it yourself. (Note, that if you use ``manuallyConnectToEndpoint`` to avoid </span>
+<span class="s">   discovery for some reason, you may provide the server certificate manually). </span>
+<span class="s">   If the server certificate is not trusted (e.g. because it&#39;s invalid or because </span>
+<span class="s">   it&#39;s not in the trust list), then the ``untrustedServerCertificateReceived`` </span>
+<span class="s">   will be called. This is done **regardless** of whether or not you want to sign or</span>
+<span class="s">   encrypt your communication! In this step you&#39;re **only** checking if you&#39;re trying</span>
+<span class="s">   to connect to the right server. In principle you should always override the </span>
+<span class="s">   ``untrustedServerCertificateReceived`` method for this purpose (or register</span>
+<span class="s">   your own callback via ``registerUntrustedServerCertificateCallback``). </span>
+<span class="s">   By default pyuaf will simply assume that you trust the server to which you&#39;re</span>
+<span class="s">   trying to connect (i.e. ``untrustedServerCertificateReceived`` returns </span>
+<span class="s">   ``Action_AcceptTemporarily`` unless you override it). </span>
+<span class="s">2) then both the client and server certificates are sent around again:</span>
+<span class="s">   - so that the server can decide to accept or reject the session</span>
+<span class="s">   - and so that the actual communication data can be encrypted and/or signed, </span>
+<span class="s">     if needed.</span>
+<span class="s">   All of this is handled by the UAF and SDK behind the scenes, so you don&#39;t have to </span>
+<span class="s">   take care of it yourself. Basically you only have to configure the client</span>
+<span class="s">   settings and session settings. </span>
+<span class="s">   </span>
+<span class="s">&quot;&quot;&quot;</span>
+<span class="k">print</span><span class="p">(</span><span class="n">description</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot; STEP 0: Cleanup and files and directories in the securityexample/ folder, if you want&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">PKI_FOLDER</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Remove the </span><span class="si">%s</span><span class="s"> folder and all of its contents?&quot;</span> <span class="o">%</span><span class="n">PKI_FOLDER</span><span class="p">)</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&quot;Enter your choice (y/n) [n] : &quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">answer</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&quot;Y&quot;</span><span class="p">,</span> <span class="s">&quot;YES&quot;</span><span class="p">]:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">PKI_FOLDER</span><span class="p">)</span>
+
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;STEP 1: Create a client Certificate&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="c"># we will create a self-signed certificate, which means that the subject and issuer are the same!</span>
+
+<span class="n">keyPair</span> <span class="o">=</span> <span class="n">PkiRsaKeyPair</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">issuerPrivateKey</span> <span class="o">=</span> <span class="n">keyPair</span><span class="o">.</span><span class="n">privateKey</span><span class="p">()</span>
+<span class="n">subjectPublicKey</span> <span class="o">=</span> <span class="n">keyPair</span><span class="o">.</span><span class="n">publicKey</span><span class="p">()</span>
+
+<span class="n">identity</span> <span class="o">=</span> <span class="n">PkiIdentity</span><span class="p">()</span>
+<span class="n">identity</span><span class="o">.</span><span class="n">commonName</span>         <span class="o">=</span> <span class="s">&quot;Wim Pessemier&quot;</span>
+<span class="n">identity</span><span class="o">.</span><span class="n">organization</span>       <span class="o">=</span> <span class="s">&quot;KU Leuven&quot;</span>
+<span class="n">identity</span><span class="o">.</span><span class="n">organizationUnit</span>   <span class="o">=</span> <span class="s">&quot;Institute of Astronomy&quot;</span>
+<span class="n">identity</span><span class="o">.</span><span class="n">locality</span>           <span class="o">=</span> <span class="s">&quot;Leuven&quot;</span>
+<span class="n">identity</span><span class="o">.</span><span class="n">country</span>            <span class="o">=</span> <span class="s">&quot;BE&quot;</span>
+
+<span class="n">info</span> <span class="o">=</span> <span class="n">PkiCertificateInfo</span><span class="p">()</span>
+<span class="n">info</span><span class="o">.</span><span class="n">uri</span>        <span class="o">=</span> <span class="s">&quot;urn:</span><span class="si">%s</span><span class="s">:InstituteOfAstronomy::MyExampleCode&quot;</span> <span class="o">%</span><span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span> <span class="c"># must be unique!</span>
+<span class="n">info</span><span class="o">.</span><span class="n">dns</span>        <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">()</span>
+<span class="n">info</span><span class="o">.</span><span class="n">eMail</span>      <span class="o">=</span> <span class="s">&quot;Wxx.Pxxxxxxxx@ster.kuleuven.be&quot;</span>
+<span class="n">info</span><span class="o">.</span><span class="n">validTime</span>  <span class="o">=</span> <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="o">*</span><span class="mi">365</span><span class="o">*</span><span class="mi">5</span> <span class="c"># 5 years</span>
+
+<span class="n">certificate</span> <span class="o">=</span> <span class="n">PkiCertificate</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">identity</span><span class="p">,</span> <span class="n">subjectPublicKey</span><span class="p">,</span>  <span class="n">identity</span><span class="p">,</span> <span class="n">issuerPrivateKey</span><span class="p">)</span>
+
+<span class="c"># note: we will store the certificate and private key in STEP 3</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;STEP 2: Create a Client instance&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+
+<span class="c"># define the settings</span>
+<span class="n">settings</span> <span class="o">=</span> <span class="n">ClientSettings</span><span class="p">()</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">applicationName</span>  <span class="o">=</span> <span class="s">&quot;MyClient&quot;</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">applicationUri</span>   <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">uri</span> <span class="c"># Certificate info URI and application URI must be the same !!!</span>
+<span class="c">#settings.logToStdOutLevel = pyuaf.util.loglevels.Debug # uncomment if needed</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DISCOVERY_URL</span><span class="p">)</span>
+
+<span class="c"># We configure the PKI folder structure (set the PKI_FOLDER to &#39;PKI&#39; and you get the defaults).</span>
+<span class="c"># Note that paths must ALWAYS be specified using &#39;/&#39;, also on Windows! </span>
+<span class="c"># You cannot use os.path.join or similar, since these will introduce platform-dependent separators!</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">clientCertificate</span>                 <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/client/certs/client.der&#39;</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">clientPrivateKey</span>                  <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/client/private/client.pem&#39;</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">certificateTrustListLocation</span>      <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/trusted/certs/&#39;</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">certificateRevocationListLocation</span> <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/trusted/crl/&#39;</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">issuersCertificatesLocation</span>       <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/issuers/certs/&#39;</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">issuersRevocationListLocation</span>     <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/issuers/crl/&#39;</span>
+
+<span class="c"># make sure the above directories are created</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">createSecurityLocations</span><span class="p">()</span>
+
+<span class="c"># create the client</span>
+<span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;STEP 3: Store the client certificate and private key&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="c"># store the certificate </span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">certificate</span><span class="o">.</span><span class="n">toDERFile</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">clientCertificate</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Could not save the client certificate!&quot;</span><span class="p">)</span>
+
+<span class="c"># store the private key:</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">keyPair</span><span class="o">.</span><span class="n">toPEMFile</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">clientPrivateKey</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Could not save the client private key!&quot;</span><span class="p">)</span>
+
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;STEP 4: Copy the client certificate to the trust list of the demo server&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="c"># for convenience, let&#39;s try to find out the path of the uaservercpp demo server,</span>
+<span class="c"># so that the user doesn&#39;t have to type this path manually</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;posix&quot;</span><span class="p">:</span>
+    <span class="c"># in linux we can do the following trick: since the uaservercpp process should be running, </span>
+    <span class="c"># we can extract the uaservercpp path from there</span>
+    <span class="n">uaservercpp</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="s">&quot;ps ax -o cmd | grep uaservercpp&quot;</span><span class="p">,</span> 
+                                   <span class="n">shell</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> 
+                                   <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">)</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">suggestion</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">uaservercpp</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;/pkiserver/trusted/certs/pyuafexample.der&quot;</span>
+<span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">&quot;nt&quot;</span><span class="p">:</span>
+    <span class="n">suggestion</span> <span class="o">=</span> <span class="s">&quot;C:/Documents and Settings/All Users/Application Data/UnifiedAutomation/UaSdkCppBundleEval/pkiserver/trusted/certs/pyuafexample.der&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">suggestion</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Enter the path to copy the client certificate to,&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot; or leave blank to accept the following suggestion:&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot; &#39;</span><span class="si">%s</span><span class="s">&#39;&quot;</span> <span class="o">%</span><span class="n">suggestion</span><span class="p">)</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&quot;Enter your choice: &quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">answer</span> <span class="o">==</span> <span class="s">&quot;&quot;</span><span class="p">:</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="n">suggestion</span>
+
+<span class="c"># store the certificate </span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">certificate</span><span class="o">.</span><span class="n">toDERFile</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Could not save the client certificate to </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">answer</span><span class="p">)</span>
+
+
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;STEP 5: Configure the session to be created&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="c"># WARNING: THIS API MAY CHANGE WHEN UAF v2.0.0 WILL BE RELEASED !!!</span>
+
+<span class="c"># suppose we want Basic128Rsa15 encryption + signed communication:</span>
+<span class="n">sessionSettings</span> <span class="o">=</span> <span class="n">SessionSettings</span><span class="p">()</span>
+<span class="n">sessionSettings</span><span class="o">.</span><span class="n">securitySettingsList</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">securityPolicy</span>      <span class="o">=</span> <span class="n">securitypolicies</span><span class="o">.</span><span class="n">UA_Basic128Rsa15</span>
+<span class="n">sessionSettings</span><span class="o">.</span><span class="n">securitySettingsList</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">messageSecurityMode</span> <span class="o">=</span> <span class="n">messagesecuritymodes</span><span class="o">.</span><span class="n">Mode_Sign</span>
+
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;STEP 6: Register a callback function to handle the server certificate&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">myCallback</span><span class="p">(</span><span class="n">certificate</span><span class="p">,</span> <span class="n">cause</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;The following server certificate was not found in the trust list:&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">certificate</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Choose one of the following options:&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot; [r] : Reject the certificate&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot; [t] : Accept the certificate Temporarily (i.e. don&#39;t store it inside the trust list)&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot; [p] : Accept the certificate Permanently (i.e. store it inside the trust list)&quot;</span><span class="p">)</span>
+    <span class="n">answer</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&quot;Enter your choice (r/t/p) [r] : &quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">answer</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s">&quot;R&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">PkiCertificate</span><span class="o">.</span><span class="n">Action_Reject</span>
+    <span class="k">elif</span> <span class="n">answer</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s">&quot;T&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">PkiCertificate</span><span class="o">.</span><span class="n">Action_AcceptTemporarily</span>
+    <span class="k">elif</span> <span class="n">answer</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="o">==</span> <span class="s">&quot;P&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">PkiCertificate</span><span class="o">.</span><span class="n">Action_AcceptPermanently</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;INVALID CHOICE&quot;</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The certificate will be rejected.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">PkiCertificate</span><span class="o">.</span><span class="n">Action_Reject</span>
+
+
+<span class="n">myClient</span><span class="o">.</span><span class="n">registerUntrustedServerCertificateCallback</span><span class="p">(</span><span class="n">myCallback</span><span class="p">)</span>
+
+
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;STEP 7: Read some variable using the configured secure session&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+<span class="c"># define the address of a node which we would like to read:</span>
+<span class="n">someAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;Demo.SimulationSpeed&quot;</span><span class="p">,</span> <span class="n">DEMOSERVER_NS_URI</span><span class="p">),</span> <span class="n">SERVER_URI</span><span class="p">)</span>
+
+<span class="n">cfg</span> <span class="o">=</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">configs</span><span class="o">.</span><span class="n">SessionConfig</span><span class="p">()</span>
+<span class="n">cfg</span><span class="o">.</span><span class="n">defaultSessionSettings</span> <span class="o">=</span> <span class="n">sessionSettings</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="p">[</span><span class="n">someAddress</span><span class="p">],</span> <span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">cfg</span> <span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;Read result:&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+
+<span class="c"># check the session that was used to read this address:</span>
+<span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">overallStatus</span><span class="o">.</span><span class="n">isGood</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Information about the session:&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">myClient</span><span class="o">.</span><span class="n">sessionInformation</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">clientConnectionId</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -1234,6 +1489,7 @@
 <li><a class="reference internal" href="#how-to-change-the-default-session-behavior">How to change the default session behavior?</a></li>
 <li><a class="reference internal" href="#how-to-change-the-default-subscription-behavior">How to change the default subscription_behavior?</a></li>
 <li><a class="reference internal" href="#how-to-manually-connect-to-an-endpoint-without-discovery">How to manually connect to an endpoint without discovery?</a></li>
+<li><a class="reference internal" href="#how-to-connect-to-a-secured-endpoint">How to connect to a secured endpoint?</a></li>
 </ul>
 </li>
 </ul>
@@ -1281,7 +1537,7 @@
         <li class="right" >
           <a href="index.html" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.10 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF master documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

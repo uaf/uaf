@@ -9,30 +9,25 @@
     This module contains a very long list of numerical OPC UA status codes, as defined
     by the OPC UA standard. 
     
-    The *OPC UA status codes* 
-    (which are defined in the :mod:`pyuaf.util.opcuastatuscodes` module)
-    are not to be confused with the *UAF status codes* 
-    (which are defined in the :mod:`pyuaf.util.statuscodes` module). 
-    The *OPC UA status codes* are more than 200 "detailed" codes defined by the OPC UA standard, 
-    while the *UAF status codes* are around 20 more "general" codes.
-    Each one of the more than 200 *OPC UA status codes* can be mapped to exactly one *UAF status code*.
+    The *UAF status codes* 
+    (which are defined in the :mod:`pyuaf.util.statuscodes` module)
+    are not to be confused with the *OPC UA status codes* 
+    (which are defined in the :mod:`pyuaf.util.opcuastatuscodes` module). 
     
-    E.g. the OPC UA :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_GoodMoreData`, 
-    :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_GoodNoData`, 
-    :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_GoodShutdownEvent` etc. codes are 
-    all mapped to the UAF :attr:`~pyuaf.util.statuscodes.Good` code since there is only one 
-    "Good" *UAF status code*.
+    - The *OPC UA status codes* are 32-bit integers defined by the OPC UA standard. They provide 
+      low-level information about the OPC UA communication. Whenever
+      you see an OPC UA status code (often as an attribute called ``opcUaStatusCode``), it is 
+      produced by the SDK or the Stack (in other words, not by the UAF).
     
-    Similarly, an  :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadUserAccessDenied`, 
-    :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateInvalid`, 
-    :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateUntrusted` (and many more) 
-    *OPC UA status codes* lead to a 
-    :py:attr:`~pyuaf.util.statuscodes.SecurityError` *UAF status code*.  
-    
-    Simply read the *UAF status code* (e.g. with :meth:`pyuaf.util.Status.statusCode`) if you're 
-    happy with general status information, or read the *UAF + OPC UA status codes* (e.g. with 
-    :meth:`pyuaf.util.Status.statusCode` and :meth:`pyuaf.util.Status.opcUaStatusCode`) if you 
-    want more detailed status information. 
+    - The *UAF status codes* are 32-bit integers defined by the UAF. 
+      They provide high-level information. For all "bad" status codes (those ending with ``Error``),
+      there is a corresponding error defined in :mod:`pyuaf.util.errors`. 
+      For instance, a :attr:`pyuaf.util.statuscodes.InvalidServerUriError` corresponds to a 
+      :class:`pyuaf.util.errors.InvalidServerUriError`. UAF status codes are used exclusively to 
+      determine which error is held by a :class:`pyuaf.util.Status` object. 
+      For instance, if the :attr:`~pyuaf.util.Status.statusCode` attribute of a 
+      :class:`pyuaf.util.Status` instance is equal to :attr:`pyuaf.util.statuscodes.InvalidServerUriError`,
+      then the Status object in fact holds a :class:`pyuaf.util.errors.InvalidServerUriError` instance.
     
     The list of OPC UA status codes is not shipped with the UAF, as it is generated from the stack
     header files.
@@ -41,10 +36,6 @@
     documents.
     
     All codes start with an ``OpcUa_`` prefix.
-    
-    All pyuaf.util.opcuastatuscodes correspond *bitwise* to the 32-bit unsigned numbers as defined
-    by the OPC UA standard. This means that some statuscodes may appear to be negative, since 
-    python interprets the 32-bit data as signed integers.  
     
     Here are some examples:
 

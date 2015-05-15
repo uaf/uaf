@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util.opcuastatuscodes &mdash; PyUAF 1.10 documentation</title>
+    <title>pyuaf.util.opcuastatuscodes &mdash; PyUAF master documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -15,7 +15,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '1.10',
+        VERSION:     'master',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 1.10 documentation" href="index.html" />
+    <link rel="top" title="PyUAF master documentation" href="index.html" />
     <link rel="next" title="pyuaf.util.opcuatypes" href="api_pyuaf_util_opcuatypes.html" />
     <link rel="prev" title="pyuaf.util.opcuaidentifiers" href="api_pyuaf_util_opcuaidentifiers.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_util_opcuaidentifiers.html" title="pyuaf.util.opcuaidentifiers"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.10 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF master documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,35 +57,30 @@
 <span id="pyuaf-util-opcuastatuscodes"></span><h1><tt class="docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt><a class="headerlink" href="#module-pyuaf.util.opcuastatuscodes" title="Permalink to this headline">¶</a></h1>
 <p>This module contains a very long list of numerical OPC UA status codes, as defined
 by the OPC UA standard.</p>
-<p>The <em>OPC UA status codes</em>
-(which are defined in the <a class="reference internal" href="#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> module)
-are not to be confused with the <em>UAF status codes</em>
-(which are defined in the <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> module).
-The <em>OPC UA status codes</em> are more than 200 &#8220;detailed&#8221; codes defined by the OPC UA standard,
-while the <em>UAF status codes</em> are around 20 more &#8220;general&#8221; codes.
-Each one of the more than 200 <em>OPC UA status codes</em> can be mapped to exactly one <em>UAF status code</em>.</p>
-<p>E.g. the OPC UA <a class="reference internal" href="#pyuaf.util.opcuastatuscodes.OpcUa_GoodMoreData" title="pyuaf.util.opcuastatuscodes.OpcUa_GoodMoreData"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_GoodMoreData</span></tt></a>,
-<a class="reference internal" href="#pyuaf.util.opcuastatuscodes.OpcUa_GoodNoData" title="pyuaf.util.opcuastatuscodes.OpcUa_GoodNoData"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_GoodNoData</span></tt></a>,
-<a class="reference internal" href="#pyuaf.util.opcuastatuscodes.OpcUa_GoodShutdownEvent" title="pyuaf.util.opcuastatuscodes.OpcUa_GoodShutdownEvent"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_GoodShutdownEvent</span></tt></a> etc. codes are
-all mapped to the UAF <a class="reference internal" href="api_pyuaf_util_statuscodes.html#pyuaf.util.statuscodes.Good" title="pyuaf.util.statuscodes.Good"><tt class="xref py py-attr docutils literal"><span class="pre">Good</span></tt></a> code since there is only one
-&#8220;Good&#8221; <em>UAF status code</em>.</p>
-<p>Similarly, an  <a class="reference internal" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadUserAccessDenied" title="pyuaf.util.opcuastatuscodes.OpcUa_BadUserAccessDenied"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadUserAccessDenied</span></tt></a>,
-<a class="reference internal" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateInvalid" title="pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateInvalid"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadCertificateInvalid</span></tt></a>,
-<a class="reference internal" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateUntrusted" title="pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateUntrusted"><tt class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadCertificateUntrusted</span></tt></a> (and many more)
-<em>OPC UA status codes</em> lead to a
-<a class="reference internal" href="api_pyuaf_util_statuscodes.html#pyuaf.util.statuscodes.SecurityError" title="pyuaf.util.statuscodes.SecurityError"><tt class="xref py py-attr docutils literal"><span class="pre">SecurityError</span></tt></a> <em>UAF status code</em>.</p>
-<p>Simply read the <em>UAF status code</em> (e.g. with <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status.statusCode" title="pyuaf.util.Status.statusCode"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.Status.statusCode()</span></tt></a>) if you&#8217;re
-happy with general status information, or read the <em>UAF + OPC UA status codes</em> (e.g. with
-<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status.statusCode" title="pyuaf.util.Status.statusCode"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.Status.statusCode()</span></tt></a> and <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status.opcUaStatusCode" title="pyuaf.util.Status.opcUaStatusCode"><tt class="xref py py-meth docutils literal"><span class="pre">pyuaf.util.Status.opcUaStatusCode()</span></tt></a>) if you
-want more detailed status information.</p>
+<p>The <em>UAF status codes</em>
+(which are defined in the <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> module)
+are not to be confused with the <em>OPC UA status codes</em>
+(which are defined in the <a class="reference internal" href="#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> module).</p>
+<ul class="simple">
+<li>The <em>OPC UA status codes</em> are 32-bit integers defined by the OPC UA standard. They provide
+low-level information about the OPC UA communication. Whenever
+you see an OPC UA status code (often as an attribute called <tt class="docutils literal"><span class="pre">opcUaStatusCode</span></tt>), it is
+produced by the SDK or the Stack (in other words, not by the UAF).</li>
+<li>The <em>UAF status codes</em> are 32-bit integers defined by the UAF.
+They provide high-level information. For all &#8220;bad&#8221; status codes (those ending with <tt class="docutils literal"><span class="pre">Error</span></tt>),
+there is a corresponding error defined in <a class="reference internal" href="api_pyuaf_util_errors.html#module-pyuaf.util.errors" title="pyuaf.util.errors"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.errors</span></tt></a>.
+For instance, a <tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.statuscodes.InvalidServerUriError</span></tt> corresponds to a
+<a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.InvalidServerUriError" title="pyuaf.util.errors.InvalidServerUriError"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.errors.InvalidServerUriError</span></tt></a>. UAF status codes are used exclusively to
+determine which error is held by a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.Status</span></tt></a> object.
+For instance, if the <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status.statusCode" title="pyuaf.util.Status.statusCode"><tt class="xref py py-attr docutils literal"><span class="pre">statusCode</span></tt></a> attribute of a
+<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.Status</span></tt></a> instance is equal to <tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.statuscodes.InvalidServerUriError</span></tt>,
+then the Status object in fact holds a <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.InvalidServerUriError" title="pyuaf.util.errors.InvalidServerUriError"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.errors.InvalidServerUriError</span></tt></a> instance.</li>
+</ul>
 <p>The list of OPC UA status codes is not shipped with the UAF, as it is generated from the stack
 header files.</p>
 <p>The list is way too long to document here, so you are referred to the OPC UA specification
 documents.</p>
 <p>All codes start with an <tt class="docutils literal"><span class="pre">OpcUa_</span></tt> prefix.</p>
-<p>All pyuaf.util.opcuastatuscodes correspond <em>bitwise</em> to the 32-bit unsigned numbers as defined
-by the OPC UA standard. This means that some statuscodes may appear to be negative, since
-python interprets the 32-bit data as signed integers.</p>
 <p>Here are some examples:</p>
 <blockquote>
 <div><dl class="attribute">
@@ -120,47 +115,47 @@ python interprets the 32-bit data as signed integers.</p>
 
 <dl class="attribute">
 <dt id="pyuaf.util.opcuastatuscodes.OpcUa_Bad">
-<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_Bad</tt><em class="property"> = -2147483648</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_Bad" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_Bad</tt><em class="property"> = 2147483648</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_Bad" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.opcuastatuscodes.OpcUa_BadArgumentsMissing">
-<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_BadArgumentsMissing</tt><em class="property"> = -2139750400</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadArgumentsMissing" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_BadArgumentsMissing</tt><em class="property"> = 2155216896</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadArgumentsMissing" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.opcuastatuscodes.OpcUa_BadAttributeIdInvalid">
-<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_BadAttributeIdInvalid</tt><em class="property"> = -2144010240</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadAttributeIdInvalid" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_BadAttributeIdInvalid</tt><em class="property"> = 2150957056</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadAttributeIdInvalid" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.opcuastatuscodes.OpcUa_BadConnectionClosed">
-<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_BadConnectionClosed</tt><em class="property"> = -2136080384</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadConnectionClosed" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_BadConnectionClosed</tt><em class="property"> = 2158886912</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadConnectionClosed" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateRevoked">
-<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_BadCertificateRevoked</tt><em class="property"> = -2145583104</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateRevoked" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_BadCertificateRevoked</tt><em class="property"> = 2149384192</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateRevoked" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateInvalid">
-<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_BadCertificateInvalid</tt><em class="property"> = -2146304000</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateInvalid" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_BadCertificateInvalid</tt><em class="property"> = 2148663296</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateInvalid" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateUntrusted">
-<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_BadCertificateUntrusted</tt><em class="property"> = -2145779712</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateUntrusted" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_BadCertificateUntrusted</tt><em class="property"> = 2149187584</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateUntrusted" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.opcuastatuscodes.OpcUa_BadUserAccessDenied">
-<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_BadUserAccessDenied</tt><em class="property"> = -2145452032</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadUserAccessDenied" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_BadUserAccessDenied</tt><em class="property"> = 2149515264</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadUserAccessDenied" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.opcuastatuscodes.OpcUa_BadMaxAgeInvalid">
-<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_BadMaxAgeInvalid</tt><em class="property"> = -2140143616</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadMaxAgeInvalid" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">opcuastatuscodes.</tt><tt class="descname">OpcUa_BadMaxAgeInvalid</tt><em class="property"> = 2154823680</em><a class="headerlink" href="#pyuaf.util.opcuastatuscodes.OpcUa_BadMaxAgeInvalid" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div></blockquote>
@@ -260,7 +255,7 @@ e.g. the Windows DOS Prompt or the Linux shell) or write them to a file:</p>
         <li class="right" >
           <a href="api_pyuaf_util_opcuaidentifiers.html" title="pyuaf.util.opcuaidentifiers"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 1.10 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF master documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

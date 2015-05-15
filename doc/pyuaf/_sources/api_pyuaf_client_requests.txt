@@ -1472,10 +1472,10 @@
 
     * Attributes inherited from :class:`pyuaf.util.DataValue`
     
-        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.status
+        .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.opcUaStatusCode
         
-            The status of the data, as a :class:`~pyuaf.util.Status` instance.
-            The status contains the OPC UA status code of the data. 
+            The OPC UA statuscode of the data, as an ``int`` defined 
+            in :mod:`~pyuaf.util.opcuastatuscodes`.
     
         .. autoattribute:: pyuaf.client.requests.WriteRequestTarget.data
 
