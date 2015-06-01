@@ -1115,6 +1115,10 @@
         .. autoattribute:: pyuaf.client.results.MethodCallResultTarget.inputArgumentStatuses
 
             The status for each input argument, as a :class:`pyuaf.util.StatusVector`. 
+    
+        .. autoattribute:: pyuaf.client.results.MethodCallResultTarget.inputArgumentOpcUaStatusCodes
+
+            The status for each input argument, as a :class:`pyuaf.util.UInt32Vector`. 
 
 
 
