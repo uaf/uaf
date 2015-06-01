@@ -839,6 +839,7 @@ namespace uaf
                 status = InputArgumentError(SdkStatus(callResponse.inputArgumentResults[i]));
 
             result.targets[0].inputArgumentStatuses.push_back(status);
+            result.targets[0].inputArgumentOpcUaStatusCodes.push_back(callResponse.inputArgumentResults[i]);
         }
 
         // if the transaction id was found, put the result in the correct cache

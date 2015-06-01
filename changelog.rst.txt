@@ -68,7 +68,10 @@ Informally:
 
 - The endpoint descriptions of the discovered servers can now be accessed via Client::getEndpoints().
 
-- SessionInformation contains more diagnostic info.. 
+- SessionInformation contains more diagnostic info.
+
+- Bugfixes: see https://github.com/uaf/uaf/issues/62
+
 
 Formally:
 
@@ -105,6 +108,8 @@ Formally:
     (pyuaf.client.results.ReadResultTarget.opcUaStatusCode)
   - uaf::HistoryReadRawModifiedResultTarget::opcUaStatusCode 
     (pyuaf.client.results.HistoryReadRawModifiedResultTarget.opcUaStatusCode)
+  - uaf::MethodCallResultTarget::inputArgumentsOpcUaStatusCodes 
+    (pyuaf.client.results.MethodCallResultTarget.inputArgumentsOpcUaStatusCodes)
 
 - The following attributes of existing classes have been replaced:
 

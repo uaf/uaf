@@ -221,19 +221,38 @@ namespace uaf
                 // update the status code
                 targets[i].opcUaStatusCode = uaCallMethodResults_[i].StatusCode;
 
-                // get the number of output arguments
+                // get the number of output arguments.
+                // !!! note that noOfOutputArguments may be -1 if there was some kind of error !!!
                 int32_t noOfOutputArguments = uaCallMethodResults_[i].NoOfOutputArguments;
-
-                // resize the outputArguments vector
-                targets[i].outputArguments.resize(noOfOutputArguments);
 
                 // fill the outputArguments
                 for (int32_t j = 0; j < noOfOutputArguments; j++)
                 {
-                    targets[i].outputArguments[j] = uaCallMethodResults_[i].OutputArguments[j];
+                    targets[i].outputArguments.push_back(uaCallMethodResults_[i].OutputArguments[j]);
                     nameSpaceArray.fillVariant(targets[i].outputArguments[j]);
                     serverArray.fillVariant(targets[i].outputArguments[j]);
                 }
+
+                // get the number of input arguments.
+                // !!! note that noOfInputArgumentResults may be -1 if there was some kind of error !!!
+                int32_t noOfInputArgumentResults = uaCallMethodResults_[i].NoOfInputArgumentResults;
+
+                // fill the outputArguments
+                for (int32_t j = 0; j < noOfInputArgumentResults; j++)
+                {
+                    OpcUa_StatusCode opcUaStatusCode = uaCallMethodResults_[i].InputArgumentResults[j];
+                    Status status;
+
+                    if (OpcUa_IsGood(opcUaStatusCode))
+                        status = statuscodes::Good;
+                    else
+                        status = InputArgumentError(SdkStatus(opcUaStatusCode));
+
+                    targets[i].inputArgumentStatuses.push_back(status);
+                    targets[i].inputArgumentOpcUaStatusCodes.push_back(opcUaStatusCode);
+                }
+
+
 
             }
 
