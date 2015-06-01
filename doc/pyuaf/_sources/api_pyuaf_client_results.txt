@@ -1115,11 +1115,18 @@
         .. autoattribute:: pyuaf.client.results.MethodCallResultTarget.inputArgumentStatuses
 
             The status for each input argument, as a :class:`pyuaf.util.StatusVector`. 
+            These statuses are derived from the :attr:`~pyuaf.client.results.MethodCallResultTarget.inputArgumentOpcUaStatusCodes`
+            attribute, they do not add more information. This attribute is mostly kept for 
+            backwards-compatibility. If you're interested in the status of the input arguments,
+            it's probably easier to just compare the 
+            :attr:`~pyuaf.client.results.MethodCallResultTarget.inputArgumentOpcUaStatusCodes`
+            to those found in :mod:`pyuaf.util.opcuastatuscodes`.
     
         .. autoattribute:: pyuaf.client.results.MethodCallResultTarget.inputArgumentOpcUaStatusCodes
 
-            The status for each input argument, as a :class:`pyuaf.util.UInt32Vector`. 
-
+            The OPC UA statuscode for each input argument, as reported by the server, as 
+            a :class:`pyuaf.util.UInt32Vector`. 
+            You can compare these values to the OPC UA statuscodes defined in :mod:`pyuaf.util.opcuastatuscodes`.
 
 
 *class* MethodCallResultTargetVector
