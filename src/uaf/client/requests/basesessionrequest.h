@@ -49,15 +49,15 @@ namespace uaf
     *
     * @ingroup ClientRequests
     ***********************************************************************************************/
-    template<typename _ServiceConfig, typename _Target, bool _Async>
+    template<typename _ServiceSettings, typename _Target, bool _Async>
     class UAF_EXPORT BaseSessionRequest
     {
     public:
 
 
         // some public typedefs
-        typedef _ServiceConfig ServiceConfigType;
-        typedef _Target        TargetType;
+        typedef _ServiceSettings ServiceSettingsType;
+        typedef _Target          TargetType;
 
 
         /**
@@ -77,10 +77,10 @@ namespace uaf
          */
         BaseSessionRequest(
                 std::size_t                 noOfTargets,
-                const _ServiceConfig&       serviceConfig = _ServiceConfig(),
-                const uaf::SessionConfig&  sessionConfig = uaf::SessionConfig())
+                const _ServiceSettings*     serviceSettings = NULL,
+                const uaf::SessionSettings* sessionSettings = NULL)
         : targets(noOfTargets),
-          serviceConfig(serviceConfig),
+          serviceSettings(serviceSettings),
           sessionConfig(sessionConfig),
           requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
         {}
@@ -124,11 +124,24 @@ namespace uaf
         /** The targets. */
         typename std::vector<_Target> targets;
 
-        /** Service settings to use. */
-        _ServiceConfig serviceConfig;
+        /** Pointer to service settings to use (only if clientConnectionId isn't used). */
+        _ServiceSettings serviceSettings;
 
-        /** Session config to use */
-        uaf::SessionConfig sessionConfig;
+
+
+        void setConnectionPolicy();
+        void setConnectionPolicy(uaf::ClientConnectionId clientConnectionId);
+        void setConnectionPolicy(uaf::SessionSettings    sessionSettings);
+
+
+        /** The ClientConnectionId, identifying the session to invoke the request. If the
+         * clientConnectionId equals CLIENTCONNECTIONID_NOT_ASSIGNED (default!) then the
+         * sessionSettings attribute will be used by the Client.
+         */
+        uaf::ClientConnectionId clientConnectionId;
+
+        /** Pointer to service settings to use (only if clientConnectionId isn't used). */
+        uaf::SessionConfig* sessionConfig;
 
         /** Static attribute: is this an asynchronous request or not. */
         static const bool asynchronous = _Async;
