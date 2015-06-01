@@ -53,19 +53,39 @@ namespace uaf
 
         ss << indent << " - opcUaStatusCode";
         ss << fillToPos(ss, colon);
-        ss << ": " << double(opcUaStatusCode) << "\n";
+        ss << ": " << UaStatusCode(opcUaStatusCode).toString().toUtf8() << "\n";
 
         ss << indent << " - outputArguments[]";
         ss << fillToPos(ss, colon);
         ss << ": [";
-
         for (size_t i = 0; i < outputArguments.size(); i++ )
         {
             ss << outputArguments[i].toTextString().c_str();
             if (i < (outputArguments.size()-1))
                 ss << ", ";
         }
+        ss << "]\n";
 
+        ss << indent << " - inputArgumentStatuses[]";
+        ss << fillToPos(ss, colon);
+        ss << ": [";
+        for (size_t i = 0; i < inputArgumentStatuses.size(); i++ )
+        {
+            ss << inputArgumentStatuses[i].toString().c_str();
+            if (i < (inputArgumentStatuses.size()-1))
+                ss << ", ";
+        }
+        ss << "]\n";
+
+        ss << indent << " - inputArgumentOpcUaStatusCodes[]";
+        ss << fillToPos(ss, colon);
+        ss << ": [";
+        for (size_t i = 0; i < inputArgumentOpcUaStatusCodes.size(); i++ )
+        {
+            ss << UaStatusCode(inputArgumentOpcUaStatusCodes[i]).toString().toUtf8();
+            if (i < (inputArgumentOpcUaStatusCodes.size()-1))
+                ss << ", ";
+        }
         ss << "]";
 
         return ss.str();
@@ -78,10 +98,12 @@ namespace uaf
             const MethodCallResultTarget& object1,
             const MethodCallResultTarget& object2)
     {
-        return    object1.clientConnectionId == object2.clientConnectionId
-               && object1.status             == object2.status
-               && object1.opcUaStatusCode    == object2.opcUaStatusCode
-               && object1.outputArguments    == object2.outputArguments;
+        return    object1.clientConnectionId            == object2.clientConnectionId
+               && object1.status                        == object2.status
+               && object1.opcUaStatusCode               == object2.opcUaStatusCode
+               && object1.outputArguments               == object2.outputArguments
+               && object1.inputArgumentStatuses         == object2.inputArgumentStatuses
+               && object1.inputArgumentOpcUaStatusCodes == object2.inputArgumentOpcUaStatusCodes;
     }
 
 
@@ -107,6 +129,10 @@ namespace uaf
             return object1.opcUaStatusCode < object2.opcUaStatusCode;
         else if (object1.status != object2.status)
             return object1.status < object2.status;
+        else if (object1.inputArgumentStatuses != object2.inputArgumentStatuses)
+            return object1.inputArgumentStatuses < object2.inputArgumentStatuses;
+        else if (object1.inputArgumentOpcUaStatusCodes != object2.inputArgumentOpcUaStatusCodes)
+            return object1.inputArgumentOpcUaStatusCodes < object2.inputArgumentOpcUaStatusCodes;
         else
             return object1.outputArguments < object2.outputArguments;
     }

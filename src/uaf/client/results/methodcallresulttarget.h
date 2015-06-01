@@ -71,9 +71,15 @@ namespace uaf
 
 
         /**
-         * The status for each input argument.
+         * The status for each input argument (derived from inputArgumentOpcUaStatusCodes).
          */
         std::vector<uaf::Status> inputArgumentStatuses;
+
+
+        /**
+         * The OPC UA status code for each input argument, as reported by the server.
+         */
+        std::vector<uaf::OpcUaStatusCode> inputArgumentOpcUaStatusCodes;
 
 
         /**
@@ -81,7 +87,7 @@ namespace uaf
          *
          * @return  String representation.
          */
-        std::string toString(const std::string& indent="", std::size_t colon=23) const;
+        std::string toString(const std::string& indent="", std::size_t colon=35) const;
 
 
         // comparison operators
