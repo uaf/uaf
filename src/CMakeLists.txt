@@ -69,6 +69,9 @@ endif (SWIG_FOUND)
 # set the output directories
 setUafOutputDirectories()
 
+# copy the necessary SDK libraries
+copySdkLibraries()
+
 # Print the include dirs
 message(STATUS "The following directories are included:")
 get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
