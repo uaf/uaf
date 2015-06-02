@@ -302,15 +302,14 @@ namespace uaf
          *
          * @return  The NodeId part of the ExpandedNodeId.
          */
-        const uaf::NodeId& nodeId() const { return nodeId_; }
+        uaf::NodeId nodeId() const { return nodeId_; }
+
 
 
         /**
-         * Get the NodeId part of the ExpandedNodeId.
-         *
-         * @return  The NodeId part of the ExpandedNodeId.
+         * Setter for the nodeId attribute.
          */
-        uaf::NodeId& nodeId() { return nodeId_; }
+        void setNodeId(const uaf::NodeId& nodeId) { nodeId_ = nodeId; }
 
 
         /**

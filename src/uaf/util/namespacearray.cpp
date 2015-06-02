@@ -390,8 +390,12 @@ namespace uaf
         // Else, we try to find the namespace URI that corresponds to the given namespace index.
         if (!UaString(&opcUaExpandedNodeId.NamespaceUri).isEmpty())
         {
-            expandedNodeId.nodeId().setNameSpaceUri(
-                    string(UaString(&opcUaExpandedNodeId.NamespaceUri).toUtf8()));
+            // bugfix: added the following line: also in this situation the attributes from the SDK need to be copied!
+            expandedNodeId.fromSdk(opcUaExpandedNodeId);
+
+            NodeId nodeId = expandedNodeId.nodeId();
+            nodeId.setNameSpaceUri(string(UaString(&opcUaExpandedNodeId.NamespaceUri).toUtf8()));
+            expandedNodeId.setNodeId(nodeId);
             ret.isGood();
         }
         else if (findNamespaceUri(opcUaExpandedNodeId.NodeId.NamespaceIndex, namespaceUri))
