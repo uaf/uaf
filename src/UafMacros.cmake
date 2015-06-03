@@ -423,9 +423,9 @@ ENDMACRO(setPyUafTargetProperties)
 
 # ----------------------------------------------------------------------------
 # copyFile(file, to)
-#    This macro will copy the given file to the given destination.
+#    This function will copy the given file to the given destination.
 # ----------------------------------------------------------------------------
-MACRO(copyFile _FILE _TO)
+FUNCTION(copyFile _FILE _TO)
 
     if( EXISTS "${_FILE}" )
         MESSAGE(STATUS "Copying ${_FILE} to ${_TO}")
@@ -434,7 +434,7 @@ MACRO(copyFile _FILE _TO)
         MESSAGE(FATAL_ERROR "Copying ${_FILE} failed: file not found!")
     endif( EXISTS "${_FILE}" )
 
-ENDMACRO(copyFile)
+ENDFUNCTION(copyFile)
 
 # ----------------------------------------------------------------------------
 # copySdkLibraries()
