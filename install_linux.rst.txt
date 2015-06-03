@@ -88,6 +88,15 @@ Installation procedure for Linux
                     -DCMAKE_INCLUDE_PATH=/software/python/include \
                     -DUASTACK_WITH_HTTPS=ON # or OFF
 
+- By default, the installation procedure will try to copy a required library (libuastack.so) from 
+  the lib/ directory of the SDK. 
+  If the installation procedure cannot find this library, the procedure will fail.
+  In this case you can turn off the automatic copying by setting the COPY_SDK_LIBS flag to OFF 
+  (see below). If the library is not automatically copied to the lib/ folder of the UAF, you need 
+  to copy it manually **or** add the SDK/lib folder to the $LD_LIBRARY_PATH of your system.
+
+      -DCOPY_SDK_LIBS=OFF
+
 
 - If you're building the UAF on a 64-bit platform but you're using the 32-bit 
   Unified Automation SDK libraries, you may want to use ``-DFORCE32`` to force the compiler 
@@ -134,7 +143,7 @@ Installation procedure for Linux
     - Verify if the Stack and the UAF were both built *with* (or both built *without*) HTTPS 
       support (see point 3.).
       
-    - If you're still in trouble, send an e-mail or open an issue on the GitHub page! 
+    - If you're still in trouble, open an issue on the GitHub page! 
 
 
 5. (OPTIONAL) Build and run the C++ examples
