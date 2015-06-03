@@ -12,7 +12,11 @@
  - :mod:`pyuaf.client` for all client related code.
 
  
-It also contains an attribute:
+It also contains these attributes:
+
+    .. attribute:: __version__
+    
+        Version of the UAF/PyUAF.
 
     .. attribute:: initialized
         
