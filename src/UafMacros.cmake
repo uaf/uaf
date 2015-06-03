@@ -429,7 +429,7 @@ MACRO(copyFile _FILE _TO)
 
     if( EXISTS "${_FILE}" )
         MESSAGE(STATUS "Copying ${_FILE} to ${_TO}")
-        configure_file( "${_FILE}" "${_TO}" )
+        file(COPY "${_FILE}" DESTINATION "${_TO}" )
     else( EXISTS "${_FILE}" )
         MESSAGE(FATAL_ERROR "Copying ${_FILE} failed: file not found!")
     endif( EXISTS "${_FILE}" )
