@@ -27,6 +27,8 @@ MACRO(handleOptions)
     ENDIF ( UASTACK_WITH_HTTPS )
     
     OPTION( NO_THIRD_PARTY_MSINTTYPES "Set to ON if you want to avoid msinttypes to be included for certain compilers" OFF)
+    
+    OPTION( COPY_SDK_LIBS  "Set to OFF if you don't want the SDK libraries to be copied to the UAF/lib folder" ON )
 
 ENDMACRO(handleOptions)
 
@@ -417,3 +419,52 @@ MACRO(setPyUafTargetProperties  _PREFIX _NAME _OUTDIR _UAFLINKLIB)
     set_target_properties(  _${_TARGET} PROPERTIES OUTPUT_NAME _${_NAME})
 
 ENDMACRO(setPyUafTargetProperties)
+
+
+# ----------------------------------------------------------------------------
+# copyFile(file, to)
+#    This macro will copy the given file to the given destination.
+# ----------------------------------------------------------------------------
+MACRO(copyFile _FILE _TO)
+
+    if( EXISTS "${_FILE}" )
+        MESSAGE(STATUS "Copying ${_FILE} to ${_TO}")
+        file(COPY "${_FILE}" DESTINATION "${_TO}" )
+    else( EXISTS "${_FILE}" )
+        MESSAGE(FATAL_ERROR "Copying ${_FILE} failed: file not found!")
+    endif( EXISTS "${_FILE}" )
+
+ENDMACRO(copyFile)
+
+# ----------------------------------------------------------------------------
+# copySdkLibraries()
+#    This macro will copy the necessary SDK libraries to the lib folder
+# ----------------------------------------------------------------------------
+MACRO(copySdkLibraries)
+    
+    if (COPY_SDK_LIBS)
+    
+        message(STATUS "Trying to copy the SDK libraries (set COPY_SDK_LIBS to OFF if you dont want this)")
+    
+        if (WIN32)
+        
+            copyFile("${UASDK_DIR}/bin/uastack.dll"  "${PROJECT_OUTPUT_DIR}")
+            copyFile("${UASDK_DIR}/bin/ssleay32.dll" "${PROJECT_OUTPUT_DIR}")
+            copyFile("${UASDK_DIR}/bin/libeay32.dll" "${PROJECT_OUTPUT_DIR}")
+            copyFile("${UASDK_DIR}/bin/libxml2.dll"  "${PROJECT_OUTPUT_DIR}")
+        
+        else(WIN32)
+            
+            copyFile("${UASDK_DIR}/lib/libuastack.so" "${PROJECT_OUTPUT_DIR}")
+            
+        endif(WIN32)
+        
+    else(COPY_SDK_LIBS)
+    
+        message(STATUS "Not trying to copy the SDK libraries (because COPY_SDK_LIBS is OFF)")
+    
+    endif(COPY_SDK_LIBS)
+
+ENDMACRO(copySdkLibraries)
+
+

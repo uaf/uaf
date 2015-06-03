@@ -63,13 +63,14 @@ if (SWIG_FOUND)
         message(STATUS "Including Python include path: ${PYTHON_INCLUDE_PATH}")
         include_directories(${PYTHON_INCLUDE_PATH})
         add_subdirectory(${PROJECT_SOURCE_DIR}/pyuaf)
-        # copy the __init__.py file to the lib directory
-        configure_file("__init__.py" "${PROJECT_SOURCE_DIR}/../lib")
     endif (PYTHONLIBS_FOUND)
 endif (SWIG_FOUND)
 
 # set the output directories
 setUafOutputDirectories()
+
+# copy the necessary SDK libraries
+copySdkLibraries()
 
 # Print the include dirs
 message(STATUS "The following directories are included:")
