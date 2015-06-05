@@ -62,7 +62,7 @@ namespace uaf
     {
         UaString uaString(uaLocalizedText_.text());
 
-        if (uaString.isNull() or uaString.isEmpty())
+        if (uaString.isNull() || uaString.isEmpty())
             return "";
         else
             return string(uaString.toUtf8());
@@ -75,7 +75,7 @@ namespace uaf
     {
         UaString uaString(uaLocalizedText_.locale());
 
-        if (uaString.isNull() or uaString.isEmpty())
+        if (uaString.isNull() || uaString.isEmpty())
             return "";
         else
             return string(uaString.toUtf8());
