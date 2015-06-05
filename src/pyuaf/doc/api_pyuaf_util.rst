@@ -1215,6 +1215,16 @@
                 >>> # strings are assumed to be UTF-8 encoded!
                 >>> unicodeObject = u"40\u00B0 Celsius ist eine hei\u00DFe Temperatur!"
                 >>> lText3 = LocalizedText("de", unicodeObject.encode("UTF-8"))
+    
+    
+        .. automethod:: pyuaf.util.LocalizedText.isNull
+        
+            Check if the localized text has a NULL value.
+            When the localized text has a null value, the :attr:`~pyuaf.util.LocalizedText.text` and
+            :attr:`~pyuaf.util.LocalizedText.locale` methods will return empty strings.
+            
+            :return: True if NULL.
+            :rtype:  ``bool``
 
     
         .. automethod:: pyuaf.util.LocalizedText.text
