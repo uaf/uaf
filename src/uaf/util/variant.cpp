@@ -292,7 +292,18 @@ namespace uaf
     // =============================================================================================
     Status Variant::toString(string &val) const
     {
-        val = uaVariant_.toString().toUtf8();
+        if (uaVariant_.isEmpty())
+            val = string();
+        else
+        {
+            UaString uaString(uaVariant_.toString());
+            if (uaString.isEmpty() or uaString.isNull())
+                val = string();
+            else
+                val = uaVariant_.toString().toUtf8();
+        }
+
+
         return uaf::statuscodes::Good;
     }
 
@@ -305,7 +316,14 @@ namespace uaf
         Status ret = evaluate(uaVariant_.toStringArray(arr), uaVariant_.type(), OpcUaType_String);
         vec.resize(arr.length());
         for (std::size_t i = 0; i < arr.length(); i++)
-            vec[i] = string(UaString(&arr[i]).toUtf8());
+        {
+            UaString uaString(&arr[i]);
+
+            if (uaString.isEmpty() or uaString.isNull())
+                vec[i] = string();
+            else
+                vec[i] = string(uaString.toUtf8());
+        }
         return ret;
     }
 
@@ -512,7 +530,20 @@ namespace uaf
             }
             else
             {
-                ss << string(uaVariant_.toString().toUtf8());
+                if (uaVariant_.isEmpty())
+                {
+                    ss << "";
+                }
+                else
+                {
+                    UaString uaString(uaVariant_.toString());
+                    if (uaString.isNull())
+                        ss << "NULL";
+                    else if (uaString.isEmpty())
+                        ss << "";
+                    else
+                        ss << uaString.toUtf8();
+                }
             }
         }
 
