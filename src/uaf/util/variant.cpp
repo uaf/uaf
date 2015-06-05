@@ -297,7 +297,7 @@ namespace uaf
         else
         {
             UaString uaString(uaVariant_.toString());
-            if (uaString.isEmpty() or uaString.isNull())
+            if (uaString.isEmpty() || uaString.isNull())
                 val = string();
             else
                 val = uaVariant_.toString().toUtf8();
@@ -319,7 +319,7 @@ namespace uaf
         {
             UaString uaString(&arr[i]);
 
-            if (uaString.isEmpty() or uaString.isNull())
+            if (uaString.isEmpty() || uaString.isNull())
                 vec[i] = string();
             else
                 vec[i] = string(uaString.toUtf8());
