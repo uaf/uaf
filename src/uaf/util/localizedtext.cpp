@@ -60,7 +60,12 @@ namespace uaf
     // =============================================================================================
     string LocalizedText::text() const
     {
-        return string(UaString(uaLocalizedText_.text()).toUtf8());
+        UaString uaString(uaLocalizedText_.text());
+
+        if (uaString.isNull() or uaString.isEmpty())
+            return "";
+        else
+            return string(uaString.toUtf8());
     }
 
 
@@ -68,7 +73,12 @@ namespace uaf
     // =============================================================================================
     string LocalizedText::locale() const
     {
-        return string(UaString(uaLocalizedText_.locale()).toUtf8());
+        UaString uaString(uaLocalizedText_.locale());
+
+        if (uaString.isNull() or uaString.isEmpty())
+            return "";
+        else
+            return string(uaString.toUtf8());
     }
 
 

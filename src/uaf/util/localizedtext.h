@@ -81,6 +81,12 @@ namespace uaf
 
 
         /**
+         * Check if the localized text is NULL.
+         */
+        bool isNull() const { return uaLocalizedText_.isNull(); }
+
+
+        /**
          * Get a string representation of the text part of the localized text.
          *
          * @return string representation of the locale part.
