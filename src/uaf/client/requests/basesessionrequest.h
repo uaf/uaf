@@ -37,8 +37,9 @@
 #include "uaf/util/handles.h"
 #include "uaf/client/resolution/resolvable.h"
 #include "uaf/client/requests/basesessionrequesttarget.h"
-#include "uaf/client/configs/baseserviceconfig.h"
-#include "uaf/client/configs/sessionconfig.h"
+#include "uaf/client/settings/sessionsettings.h"
+#include "uaf/client/settings/translatebrowsepathstonodeidssettings.h"
+#include "uaf/client/sessions/sessionpolicies.h"
 
 
 namespace uaf
@@ -124,24 +125,42 @@ namespace uaf
         /** The targets. */
         typename std::vector<_Target> targets;
 
-        /** Pointer to service settings to use (only if clientConnectionId isn't used). */
+
+        /** Service settings to invoke the request, if serviceSettingsGiven is true.
+         *  If serviceSettingsGiven is false, then the default service settings will be used
+         *  (as can be configured by uaf::Client::setClientSettings). */
         _ServiceSettings serviceSettings;
 
+        /** True if the serviceSettings are given, false if not. */
+        bool serviceSettingsGiven;
 
 
-        void setConnectionPolicy();
-        void setConnectionPolicy(uaf::ClientConnectionId clientConnectionId);
-        void setConnectionPolicy(uaf::SessionSettings    sessionSettings);
+        /** If translateSettingsGiven is true, then these TranslateBrowsePathsToNodeIds settings
+         *  will be used by the client to resolve NodeIds, QualifiedNames etc.  of the
+         *  request.
+         *  If translateSettingsGiven is false, then the default translate settings will be used
+         *  (as can be configured by uaf::Client::setClientSettings). */
+        uaf::TranslateBrowsePathsToNodeIdsSettings translateSettings;
+
+        /** True if the translateSettings are given, false if not. */
+        bool translateSettingsGiven;
 
 
-        /** The ClientConnectionId, identifying the session to invoke the request. If the
-         * clientConnectionId equals CLIENTCONNECTIONID_NOT_ASSIGNED (default!) then the
-         * sessionSettings attribute will be used by the Client.
+        /**
+         * The ClientConnectionId, identifying the session to invoke the request.
+         * Only used if connectionPolicy equals uaf::sessionpolicies::KnownClientConnectionId.
          */
         uaf::ClientConnectionId clientConnectionId;
 
-        /** Pointer to service settings to use (only if clientConnectionId isn't used). */
-        uaf::SessionConfig* sessionConfig;
+        bool clientConnectionIdGiven;
+
+        /** Session settings to use, to create new session(s) to invoke the request.
+         * Only used if connectionPolicy equals uaf::sessionpolicies::RequestSessionSettings. */
+        uaf::SessionSettings sessionSettings;
+
+        bool sessionSettingsGiven;
+
+
 
         /** Static attribute: is this an asynchronous request or not. */
         static const bool asynchronous = _Async;
