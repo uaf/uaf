@@ -58,10 +58,10 @@ class ClientKeepAliveTest(unittest.TestCase):
         plcOpenNsUri = "http://PLCopen.org/OpcUa/IEC61131-3/"
         
         # define some nodeids
-        self.id = NodeId(opcuaidentifiers.OpcUaId_Server_Auditing, 0)
+        self.node_id = NodeId(opcuaidentifiers.OpcUaId_Server_Auditing, 0)
         
         # define some addresses
-        self.address = Address(ExpandedNodeId(self.id, self.serverUri))
+        self.address = Address(ExpandedNodeId(self.node_id, self.serverUri))
     
     
     def test_client_Client_register_keepalivecallback_and_monitor_static_node(self):
