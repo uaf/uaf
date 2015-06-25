@@ -39,7 +39,6 @@
 #include "uaf/client/requests/basesessionrequesttarget.h"
 #include "uaf/client/settings/sessionsettings.h"
 #include "uaf/client/settings/translatebrowsepathstonodeidssettings.h"
-#include "uaf/client/sessions/sessionpolicies.h"
 
 
 namespace uaf
@@ -65,7 +64,44 @@ namespace uaf
          * Construct an empty session request.
          */
         BaseSessionRequest()
-        : requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
+        : serviceSettingsGiven(false),
+          translateSettingsGiven(false),
+          clientConnectionId(uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          clientConnectionIdGiven(false),
+          sessionSettingsGiven(false),
+          requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
+        {}
+
+
+        /**
+         * Construct an empty session request.
+         *
+         * @param noOfTargets   The number of targets.
+         */
+        BaseSessionRequest(std::size_t noOfTargets)
+        : targets(noOfTargets),
+          serviceSettingsGiven(false),
+          translateSettingsGiven(false),
+          clientConnectionId(uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          clientConnectionIdGiven(false),
+          sessionSettingsGiven(false),
+          requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
+        {}
+
+
+        /**
+         * Construct an empty session request.
+         *
+         * @param noOfTargets   The number of targets.
+         */
+        BaseSessionRequest(std::size_t noOfTargets, uaf::ClientConnectionId clientConnectionId)
+        : targets(noOfTargets),
+          serviceSettingsGiven(false),
+          translateSettingsGiven(false),
+          clientConnectionId(clientConnectionId),
+          clientConnectionIdGiven(true),
+          sessionSettingsGiven(false),
+          requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
         {}
 
 
@@ -78,17 +114,22 @@ namespace uaf
          */
         BaseSessionRequest(
                 std::size_t                 noOfTargets,
-                const _ServiceSettings*     serviceSettings = NULL,
-                const uaf::SessionSettings* sessionSettings = NULL)
+                const _ServiceSettings&     serviceSettings,
+                const uaf::SessionSettings& sessionSettings)
         : targets(noOfTargets),
           serviceSettings(serviceSettings),
-          sessionConfig(sessionConfig),
+          serviceSettingsGiven(true),
+          translateSettingsGiven(false),
+          clientConnectionId(uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          clientConnectionIdGiven(false),
+          sessionSettings(sessionSettings),
+          sessionSettingsGiven(true),
           requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
         {}
 
 
         /**
-         * Construct a session request with the specified number of targets.
+         * Construct a session request with the specified target.
          *
          * @param target        A single target.
          * @param serviceConfig The service config.
@@ -96,16 +137,21 @@ namespace uaf
          */
         BaseSessionRequest(
                 const _Target&              target,
-                const _ServiceConfig&       serviceConfig = _ServiceConfig(),
-                const uaf::SessionConfig&  sessionConfig = uaf::SessionConfig())
-        : serviceConfig(serviceConfig),
-          sessionConfig(sessionConfig),
+                const _ServiceSettings&     serviceSettings,
+                const uaf::SessionSettings& sessionSettings)
+        : serviceSettings(serviceSettings),
+          serviceSettingsGiven(true),
+          translateSettingsGiven(false),
+          clientConnectionId(uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          clientConnectionIdGiven(false),
+          sessionSettings(sessionSettings),
+          sessionSettingsGiven(true),
           requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
         { targets.push_back(target); }
 
 
         /**
-         * Construct a session request with the specified number of targets.
+         * Construct a session request with the specifiedtargets.
          *
          * @param targets       The targets.
          * @param serviceConfig The service config.
@@ -113,11 +159,16 @@ namespace uaf
          */
         BaseSessionRequest(
                 const typename std::vector<_Target>&    targets,
-                const _ServiceConfig&                   serviceConfig = _ServiceConfig(),
-                const uaf::SessionConfig&              sessionConfig = uaf::SessionConfig())
+                const _ServiceSettings&                 serviceSettings,
+                const uaf::SessionSettings&             sessionSettings)
         : targets(targets),
-          serviceConfig(serviceConfig),
-          sessionConfig(sessionConfig),
+          serviceSettings(serviceSettings),
+          serviceSettingsGiven(true),
+          translateSettingsGiven(false),
+          clientConnectionId(uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          clientConnectionIdGiven(false),
+          sessionSettings(sessionSettings),
+          sessionSettingsGiven(true),
           requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
         {}
 
@@ -145,18 +196,21 @@ namespace uaf
         /** True if the translateSettings are given, false if not. */
         bool translateSettingsGiven;
 
-
         /**
          * The ClientConnectionId, identifying the session to invoke the request.
          * Only used if connectionPolicy equals uaf::sessionpolicies::KnownClientConnectionId.
          */
         uaf::ClientConnectionId clientConnectionId;
 
+
         bool clientConnectionIdGiven;
 
-        /** Session settings to use, to create new session(s) to invoke the request.
-         * Only used if connectionPolicy equals uaf::sessionpolicies::RequestSessionSettings. */
+        /** Session settings to use, to create new session(s) to invoke the request, if
+         * clientConnectionIdGiven is false and sessionSettingsGiven is true.
+         * If clientConnectionIdGiven and sessionSettingsGiven are both false, then the
+         * default session settings will be used (as configured by uaf::Client::setClientSettings). */
         uaf::SessionSettings sessionSettings;
+
 
         bool sessionSettingsGiven;
 
@@ -212,10 +266,45 @@ namespace uaf
                 }
             }
 
-            ss << indent << " - serviceConfig\n";
-            ss << serviceConfig.toString(indent + "   ", colon) << "\n";
-            ss << indent << " - sessionConfig\n";
-            ss << sessionConfig.toString(indent + "   ", colon);
+            ss << indent << " - serviceSettingsGiven";
+            ss << uaf::fillToPos(ss, colon);
+            ss << ": " << (serviceSettingsGiven ? "true" : "false") << "\n";
+
+            ss << indent << " - serviceSettings\n";
+            if (serviceSettingsGiven)
+                ss << "\n" << serviceSettings.toString(indent + "   ", colon) << "\n";
+            else
+                ss << uaf::fillToPos(ss, colon) << ": (not given)\n";
+
+            ss << indent << " - translateSettingsGiven";
+            ss << uaf::fillToPos(ss, colon);
+            ss << ": " << (translateSettingsGiven ? "true" : "false") << "\n";
+
+            ss << indent << " - translateSettings\n";
+            if (translateSettingsGiven)
+                ss << "\n" << translateSettings.toString(indent + "   ", colon) << "\n";
+            else
+                ss << uaf::fillToPos(ss, colon) << ": (not given)\n";
+
+            ss << indent << " - clientConnectionIdGiven";
+            ss << uaf::fillToPos(ss, colon);
+            ss << ": " << (clientConnectionIdGiven ? "true" : "false") << "\n";
+
+            ss << indent << " - clientConnectionId\n";
+            if (clientConnectionId == uaf::CLIENTHANDLE_NOT_ASSIGNED)
+                ss << ": NOT_ASSIGNED\n";
+            else
+                ss << ": " << clientConnectionId << "\n";
+
+            ss << indent << " - sessionSettingsGiven";
+            ss << uaf::fillToPos(ss, colon);
+            ss << ": " << (sessionSettingsGiven ? "true" : "false") << "\n";
+
+            ss << indent << " - sessionSettings";
+            if (sessionSettingsGiven)
+                ss << "\n" << sessionSettings.toString(indent + "   ", colon);
+            else
+                ss << uaf::fillToPos(ss, colon) << ": (not given)";
 
             return ss.str();
         }
@@ -223,8 +312,8 @@ namespace uaf
 
         // comparison operators
         friend bool operator==(
-                const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1,
-                const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2)
+                const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object1,
+                const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object2)
         {
             if (object1.targets.size() != object2.targets.size())
                 return false;
@@ -233,36 +322,47 @@ namespace uaf
                 if (object1.targets[i] != object2.targets[i])
                     return false;
 
-            if (object1.serviceConfig != object2.serviceConfig)
-                return false;
-
-            if (object1.sessionConfig != object2.sessionConfig)
-                return false;
-
-            return true;
+            return    object1.serviceSettingsGiven == object2.serviceSettingsGiven
+                   && object1.serviceSettings == object2.serviceSettings
+                   && object1.translateSettingsGiven == object2.translateSettingsGiven
+                   && object1.translateSettings == object2.translateSettings
+                   && object1.clientConnectionIdGiven == object2.clientConnectionIdGiven
+                   && object1.clientConnectionId == object2.clientConnectionId
+                   && object1.sessionSettingsGiven == object2.sessionSettingsGiven
+                   && object1.sessionSettings == object2.sessionSettings;
         }
 
         friend bool operator!=(
-                const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1,
-                const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2)
+                const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object1,
+                const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object2)
         {
             return !(object1 == object2);
         }
 
         friend bool operator<(
-                const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1,
-                const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2)
+                const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object1,
+                const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object2)
         {
             if (object1.targets.size() != object2.targets.size())
                 return object1.targets.size() < object2.targets.size();
-
-            if (object1.serviceConfig != object2.serviceConfig)
-                return object1.serviceConfig < object2.serviceConfig;
-
-            if (object1.sessionConfig != object2.sessionConfig)
-                return object1.sessionConfig < object2.sessionConfig;
-
-            return false;
+            else if (object1.serviceSettingsGiven != object2.serviceSettingsGiven)
+                return object1.serviceSettingsGiven < object2.serviceSettingsGiven;
+            else if (object1.serviceSettings != object2.serviceSettings)
+                return object1.serviceSettings < object2.serviceSettings;
+            else if (object1.translateSettingsGiven != object2.translateSettingsGiven)
+                return object1.translateSettingsGiven < object2.translateSettingsGiven;
+            else if (object1.translateSettings != object2.translateSettings)
+                return object1.translateSettings < object2.translateSettings;
+            else if (object1.clientConnectionIdGiven != object2.clientConnectionIdGiven)
+                return object1.clientConnectionIdGiven < object2.clientConnectionIdGiven;
+            else if (object1.clientConnectionId != object2.clientConnectionId)
+                return object1.clientConnectionId < object2.clientConnectionId;
+            else if (object1.sessionSettingsGiven != object2.sessionSettingsGiven)
+                return object1.sessionSettingsGiven < object2.sessionSettingsGiven;
+            else if (object1.sessionSettings != object2.sessionSettings)
+                return object1.sessionSettings < object2.sessionSettings;
+            else
+                return false;
         }
 
 
