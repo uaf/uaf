@@ -37,7 +37,7 @@
 #include "uaf/client/clientinterface.h"
 #include "uaf/client/requests/requests.h"
 #include "uaf/client/results/results.h"
-#include "uaf/client/configs/configs.h"
+#include "uaf/client/settings/allsettings.h"
 #include "uaf/client/invocations/invocationfactory.h"
 
 
@@ -263,6 +263,38 @@ namespace uaf
                std::vector<uaf::Status>&               results);
 
 
+        template<typename _Service>
+        typename _Service::Settings getServiceSettings(const typename _Service::Request&  request)
+        {
+            if (request.serviceSettingsGiven)
+                return request.serviceSettings;
+            else
+                return uaf::getDefaultServiceSettings<typename _Service::Settings>(database_->clientSettings);
+        }
+
+
+        template<typename _Service>
+        uaf::SessionSettings getSessionSettings(
+                const typename _Service::Request& request,
+                const std::string& serverUri)
+        {
+            if (request.sessionSettingsGiven)
+            {
+                return request.sessionSettings;
+            }
+            else
+            {
+                std::map<std::string, uaf::SessionSettings>::const_iterator it;
+                it = database_->clientSettings.specificSessionSettings.find(serverUri);
+
+                if (it != database_->clientSettings.specificSessionSettings.end())
+                    return it->second;
+                else
+                    return database_->clientSettings.defaultSessionSettings;
+            }
+        }
+
+
         /**
          * Invoke a request.
          *
@@ -283,11 +315,22 @@ namespace uaf
             logger_->debug("Invoking %sRequest %d", _Service::name().c_str(), request.requestHandle());
             logger_->debug("Mask is %s", mask.toString().c_str());
 
-            // typedef the Invocation
+            // Invocation details
             typedef typename _Service::Invocation Invocation;
+            bool async = _Service::asynchronous;
+            uaf::RequestHandle requestHandle = request.requestHandle();
 
             // declare the return Status
             uaf::Status ret;
+
+            // check the input parameters
+            if (request.targets.size() == mask.size())
+                ret = uaf::statuscodes::Good;
+            else
+            {
+                ret = uaf::UnexpectedError("The mask does not match the number of targets");
+                return ret;
+            }
 
             // resize the result
             result.targets.resize(request.targets.size());
@@ -296,40 +339,103 @@ namespace uaf
             uaf::TransactionId transactionId;
             bool handleStored = storeRequestHandleIfNeeded<_Service>(request, transactionId);
 
-            // create an invocation factory
-            uaf::InvocationFactory<_Service> factory;
+            // create a map to store the invocations that we'll create
+            typedef std::map<uaf::Session*, Invocation*> InvocationMap;
+            InvocationMap invocations;
 
             logger_->debug("Building the invocations");
+            for (std::size_t i = 0; i < request.targets.size() && ret.isGood(); i++)
+            {
+                if (mask.isSet(i))
+                {
+                    if (request.clientConnectionIdGiven)
+                    {
+                        // we'll only have 0 or 1 invocations in this case
+                        if (invocations.size() == 0)
+                        {
+                            Session* session;
+                            ret = acquireExistingSession(request.clientConnectionId, session);
+                            if (ret.isGood())
+                            {
+                                invocations[session] = new Invocation;
+                                invocations[session]->setAsynchronous(async);
+                                invocations[session]->setRequestHandle(requestHandle);
+                                invocations[session]->setServiceSettings(getServiceSettings<_Service>(request));
+                            }
+                        }
 
-            // build the invocations
-            ret = factory.create(request, result, mask);
+                        if (ret.isGood())
+                            invocations[0]->addTarget(i, request.targets[i], result.targets[i]);
+                    }
+                    else
+                    {
+                        // we first need to determine the server which hosts the target
+                        std::string serverUri;
+                        if (getServerUriFromTarget(request.targets[i], serverUri).isGood())
+                        {
+                            Session* session = NULL;
+                            uaf::SessionSettings sessionSettings = getSessionSettings<_Service>(request, serverUri);
 
-            logger_->debug("A total of %d invocations were built", factory.invocations.size());
+                            // check if the session we need is already scheduled for an invocation
+                            for (typename InvocationMap::const_iterator it; it != invocations.end(); ++it)
+                            {
+                                if (   it->first->serverUri() == serverUri
+                                    && it->first->sessionSettings() == sessionSettings)
+                                {
+                                    session = it->first;
+                                }
+                            }
+
+                            // if the session is not already scheduled, we acquire it first
+                            if (session == NULL)
+                            {
+                                ret = acquireSession(serverUri, sessionSettings, session);
+
+                                if (ret.isGood())
+                                {
+                                    invocations[session] = new Invocation;
+                                    invocations[session]->setAsynchronous(async);
+                                    invocations[session]->setRequestHandle(requestHandle);
+                                    invocations[session]->setServiceSettings(getServiceSettings<_Service>(request));
+                                }
+                            }
+
+                            if (ret.isGood())
+                                invocations[session]->addTarget(i, request.targets[i], result.targets[i]);
+                        }
+                        else
+                        {
+                            ret = uaf::InvalidServerUriError(serverUri);
+                        }
+                    }
+                }
+            }
+
+            logger_->debug("A total of %d invocations were built", invocations.size());
 
             // the UAF currently does NOT support asynchronous communication to multiple sessions
             // in one request (because the logic to reconstruct the result from multiple
             // asynchronous invocations is not implemented). Synchronous communication DOES support
             // this however. So we check here if, in case of an asynchronous request, we don't have
             // more than one invocation.
-            if (ret.isGood() && _Service::asynchronous)
+            if (ret.isGood() && async)
             {
-                if (factory.invocations.size() > 1)
+                if (invocations.size() > 1)
                     ret = uaf::AsyncInvocationOnMultipleSessionsNotSupportedError();
             }
 
-            // typedef the map iterator which holds the invocation for each server URI
-            typedef typename std::map<std::string, Invocation*>::iterator Iter;
 
             // loop through the invocations (while the return Status is good)
             int invocationIndex = 0; // index to keep track of the number of processed invocations
-            for (Iter it = factory.invocations.begin();
-                 it != factory.invocations.end() && ret.isGood();
+            for (typename InvocationMap::iterator it = invocations.begin();
+                 it != invocations.end() && ret.isGood();
                  ++it)
             {
                 logger_->debug("Processing invocation %d", invocationIndex);
 
                 // create a pointer to the current invocation
-                Invocation* invocation = it->second;
+                uaf::Session* session = it->first;
+                Invocation*   invocation = it->second;
 
                 // set the transactionId if necessary
                 if (handleStored)
@@ -338,36 +444,28 @@ namespace uaf
                     invocation->setTransactionId(transactionId);
                 }
 
-                // try to acquire a session for the current server URI and session settings
-                uaf::Session* session;
-                ret = acquireSession(it->first, invocation->sessionSettings(), session);
+                // copy the session information to the invocation
+                logger_->debug("Copying the session information to the invocation");
+                invocation->setSessionInformation(session->sessionInformation());
 
-                // check if the session was acquired
-                if (ret.isGood())
+                // if the session is connected, invoke the service
+                if (session->isConnected())
                 {
-                    // copy the session information to the invocation
-                    logger_->debug("Copying the session information to the invocation");
-                    invocation->setSessionInformation(session->sessionInformation());
-
-                    // if the session is connected, invoke the service
-                    if (session->isConnected())
-                    {
-                        logger_->debug("Forwarding the invocation to session %d",
-                                       session->clientConnectionId());
-                        ret = session->invokeService<_Service>(request, *invocation);
-                    }
-                    else
-                        ret = session->sessionInformation().lastConnectionAttemptStatus;
-
-                    // copy all data to the result
-                    if (!_Service::asynchronous && ret.isGood())
-                    {
-                        logger_->debug("Copying the invocation data to the result");
-                        ret = invocation->copyToResult(result);
-                    }
-
-                    releaseSession(session);
+                    logger_->debug("Forwarding the invocation to session %d",
+                                   session->clientConnectionId());
+                    ret = session->invokeService<_Service>(request, *invocation);
                 }
+                else
+                    ret = session->sessionInformation().lastConnectionAttemptStatus;
+
+                // copy all data to the result
+                if (!async && ret.isGood())
+                {
+                    logger_->debug("Copying the invocation data to the result");
+                    ret = invocation->copyToResult(result);
+                }
+
+                releaseSession(session);
 
                 invocationIndex++;
             }
@@ -539,7 +637,7 @@ namespace uaf
          */
         template<typename _Service>
         bool storeRequestHandleIfNeeded(
-                const uaf::BaseSessionRequest<typename _Service::Config,
+                const uaf::BaseSessionRequest<typename _Service::Settings,
                                                typename _Service::RequestTarget,
                                                _Service::asynchronous>& request,
                 uaf::TransactionId& transactionId)
@@ -572,7 +670,7 @@ namespace uaf
          */
         template<typename _Service>
         bool storeRequestHandleIfNeeded(
-                const uaf::BaseSubscriptionRequest<typename _Service::Config,
+                const uaf::BaseSubscriptionRequest<typename _Service::Settings,
                                                     typename _Service::RequestTarget,
                                                     _Service::asynchronous>& request,
                 uaf::TransactionId& transactionId)
