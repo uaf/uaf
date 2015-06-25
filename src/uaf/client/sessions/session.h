@@ -286,7 +286,7 @@ namespace uaf
          */
         template<typename _Service>
         uaf::Status invokeService(
-                const uaf::BaseSessionRequest<typename _Service::Config,
+                const uaf::BaseSessionRequest<typename _Service::Settings,
                                                typename _Service::RequestTarget,
                                                _Service::asynchronous>& request,
                 typename _Service::Invocation& invocation)
@@ -304,7 +304,7 @@ namespace uaf
          */
         template<typename _Service>
         uaf::Status invokeService(
-                const uaf::BaseSubscriptionRequest<typename _Service::Config,
+                const uaf::BaseSubscriptionRequest<typename _Service::Settings,
                                                     typename _Service::RequestTarget,
                                                     _Service::asynchronous>& request,
                 typename _Service::Invocation& invocation)
