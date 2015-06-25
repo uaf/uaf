@@ -188,15 +188,59 @@ namespace uaf
     //==============================================================================================
     Status Client::read(
             const std::vector<uaf::Address>&        addresses,
-            const uaf::attributeids::AttributeId   attributeId,
-            const uaf::ReadConfig&                 serviceConfig,
-            const uaf::SessionConfig&              sessionConfig,
-            uaf::ReadResult&                       result)
+            const uaf::attributeids::AttributeId    attributeId,
+            const uaf::ReadSettings&                serviceSettings,
+            const uaf::SessionSettings&             sessionSettings,
+            uaf::ReadResult&                        result)
     {
         // log read request
         logger_->debug("Reading %d node attributes", addresses.size());
 
-        ReadRequest request(0, serviceConfig, sessionConfig);
+        ReadRequest request(0, serviceSettings, sessionSettings);
+
+        request.targets.reserve(addresses.size());
+
+        for (vector<Address>::const_iterator it = addresses.begin(); it != addresses.end(); ++it)
+            request.targets.push_back(ReadRequestTarget(*it, attributeId));
+
+        // perform the read request
+        return processRequest(request, result);
+    }
+
+
+    // Read a number of node attributes
+    //==============================================================================================
+    Status Client::read(
+            const std::vector<uaf::Address>&        addresses,
+            const uaf::attributeids::AttributeId    attributeId,
+            uaf::ClientConnectionId                 clientConnectionId,
+            uaf::ReadResult&                        result)
+    {
+        // log read request
+        logger_->debug("Reading %d node attributes", addresses.size());
+
+        ReadRequest request(0, clientConnectionId);
+
+        request.targets.reserve(addresses.size());
+
+        for (vector<Address>::const_iterator it = addresses.begin(); it != addresses.end(); ++it)
+            request.targets.push_back(ReadRequestTarget(*it, attributeId));
+
+        // perform the read request
+        return processRequest(request, result);
+    }
+
+    // Read a number of node attributes
+    //==============================================================================================
+    Status Client::read(
+            const std::vector<uaf::Address>&        addresses,
+            const uaf::attributeids::AttributeId    attributeId,
+            uaf::ReadResult&                        result)
+    {
+        // log read request
+        logger_->debug("Reading %d node attributes", addresses.size());
+
+        ReadRequest request(0);
 
         request.targets.reserve(addresses.size());
 
@@ -211,16 +255,16 @@ namespace uaf
     // Read a number of node attributes asynchronously
     //==============================================================================================
     Status Client::beginRead(
-            const std::vector<uaf::Address>&        addresses,
+            const std::vector<uaf::Address>&       addresses,
             const uaf::attributeids::AttributeId   attributeId,
-            const uaf::ReadConfig&                 serviceConfig,
-            const uaf::SessionConfig&              sessionConfig,
+            const uaf::ReadSettings&               serviceSettings,
+            const uaf::SessionSettings&            sessionSettings,
             uaf::AsyncReadResult&                  result)
     {
         // log read request
         logger_->debug("Reading %d node attributes", addresses.size());
 
-        AsyncReadRequest request(0, serviceConfig, sessionConfig);
+        AsyncReadRequest request(0, serviceSettings, sessionSettings);
 
         request.targets.reserve(addresses.size());
 
@@ -237,16 +281,16 @@ namespace uaf
     Status Client::write(
             const std::vector<uaf::Address>&        addresses,
             const std::vector<uaf::Variant>&        data,
-            const uaf::attributeids::AttributeId   attributeId,
-            const uaf::WriteConfig&                serviceConfig,
-            const uaf::SessionConfig&              sessionConfig,
-            uaf::WriteResult&                      result)
+            const uaf::attributeids::AttributeId    attributeId,
+            const uaf::WriteSettings&               serviceSettings,
+            const uaf::SessionSettings&             sessionSettings,
+            uaf::WriteResult&                       result)
     {
         // log write request
         logger_->debug("Writing %d node attributes", addresses.size());
 
         // create a write request
-        WriteRequest request(0, serviceConfig, sessionConfig);
+        WriteRequest request(0, serviceSettings, sessionSettings);
 
         // check if the addresses and the data match
         if (addresses.size() != data.size())
@@ -269,16 +313,16 @@ namespace uaf
     Status Client::beginWrite(
             const std::vector<uaf::Address>&        addresses,
             const std::vector<uaf::Variant>&        data,
-            const uaf::attributeids::AttributeId   attributeId,
-            const uaf::WriteConfig&                serviceConfig,
-            const uaf::SessionConfig&              sessionConfig,
-            uaf::AsyncWriteResult&                 result)
+            const uaf::attributeids::AttributeId    attributeId,
+            const uaf::WriteSettings&               serviceSettings,
+            const uaf::SessionSettings&             sessionSettings,
+            uaf::AsyncWriteResult&                  result)
     {
         // log write request
         logger_->debug("Writing %d node attributes", addresses.size());
 
         // create a write request
-        AsyncWriteRequest request(0, serviceConfig, sessionConfig);
+        AsyncWriteRequest request(0, serviceSettings, sessionSettings);
 
         // check if the addresses and the data match
         if (addresses.size() != data.size())
@@ -302,11 +346,11 @@ namespace uaf
             const uaf::Address&                 objectAddress,
             const uaf::Address&                 methodAddress,
             const std::vector<uaf::Variant>&    inputArguments,
-            const uaf::MethodCallConfig&       serviceConfig,
-            const uaf::SessionConfig&          sessionConfig,
-            uaf::MethodCallResult&             result)
+            const uaf::MethodCallSettings&      serviceSettings,
+            const uaf::SessionSettings&         sessionSettings,
+            uaf::MethodCallResult&              result)
     {
-        MethodCallRequest request(0, serviceConfig, sessionConfig);
+        MethodCallRequest request(0, serviceSettings, sessionSettings);
 
         request.targets.resize(1);
         request.targets[0].objectAddress  = objectAddress;
@@ -326,11 +370,11 @@ namespace uaf
             const uaf::Address&                 objectAddress,
             const uaf::Address&                 methodAddress,
             const std::vector<uaf::Variant>&    inputArguments,
-            const uaf::MethodCallConfig&       serviceConfig,
-            const uaf::SessionConfig&          sessionConfig,
-            uaf::AsyncMethodCallResult&        result)
+            const uaf::MethodCallSettings&      serviceSettings,
+            const uaf::SessionSettings&         sessionSettings,
+            uaf::AsyncMethodCallResult&         result)
     {
-        AsyncMethodCallRequest request(0, serviceConfig, sessionConfig);
+        AsyncMethodCallRequest request(0, serviceSettings, sessionSettings);
 
         request.targets.resize(1);
         request.targets[0].objectAddress  = objectAddress;
@@ -347,18 +391,18 @@ namespace uaf
     uaf::Status Client::browse(
             const std::vector<uaf::Address>&    addresses,
             uint32_t                            maxAutoBrowseNext,
-            const uaf::BrowseConfig&           serviceConfig,
-            const uaf::SessionConfig&          sessionConfig,
-            uaf::BrowseResult&                 result)
+            const uaf::BrowseSettings&          serviceSettings,
+            const uaf::SessionSettings&         sessionSettings,
+            uaf::BrowseResult&                  result)
     {
         // log read request
         logger_->debug("Browsing %d nodes", addresses.size());
 
         // override the maxAutoBrowseNext parameter
-        BrowseConfig serviceConfigCopy(serviceConfig);
-        serviceConfigCopy.serviceSettings.maxAutoBrowseNext = maxAutoBrowseNext;
+        BrowseSettings serviceSettingsCopy(serviceSettings);
+        serviceSettingsCopy.maxAutoBrowseNext = maxAutoBrowseNext;
 
-        BrowseRequest request(0, serviceConfigCopy, sessionConfig);
+        BrowseRequest request(0, serviceSettingsCopy, sessionSettings);
 
         request.targets.reserve(addresses.size());
 
@@ -379,22 +423,22 @@ namespace uaf
             uint32_t                                    numValuesPerNode,
             uint32_t                                    maxAutoReadMore,
             const std::vector<uaf::ByteString>&         continuationPoints,
-            const uaf::HistoryReadRawModifiedConfig&   serviceConfig,
-            const uaf::SessionConfig&                  sessionConfig,
-            uaf::HistoryReadRawModifiedResult&         result)
+            const uaf::HistoryReadRawModifiedSettings&  serviceSettings,
+            const uaf::SessionSettings&                 sessionSettings,
+            uaf::HistoryReadRawModifiedResult&          result)
     {
         // log read request
         logger_->debug("Reading the raw historical data of %d nodes", addresses.size());
 
         // override the necessary parameters
-        HistoryReadRawModifiedConfig serviceConfigCopy(serviceConfig);
-        serviceConfigCopy.serviceSettings.isReadModified    = false;
-        serviceConfigCopy.serviceSettings.numValuesPerNode  = numValuesPerNode;
-        serviceConfigCopy.serviceSettings.maxAutoReadMore   = maxAutoReadMore;
-        serviceConfigCopy.serviceSettings.startTime         = startTime;
-        serviceConfigCopy.serviceSettings.endTime           = endTime;
+        HistoryReadRawModifiedSettings serviceSettingsCopy(serviceSettings);
+        serviceSettingsCopy.isReadModified    = false;
+        serviceSettingsCopy.numValuesPerNode  = numValuesPerNode;
+        serviceSettingsCopy.maxAutoReadMore   = maxAutoReadMore;
+        serviceSettingsCopy.startTime         = startTime;
+        serviceSettingsCopy.endTime           = endTime;
 
-        HistoryReadRawModifiedRequest request(0, serviceConfigCopy, sessionConfig);
+        HistoryReadRawModifiedRequest request(0, serviceSettingsCopy, sessionSettings);
 
         bool noContinuationPoints = (continuationPoints.size() == 0);
 
@@ -421,22 +465,22 @@ namespace uaf
             uint32_t                                    numValuesPerNode,
             uint32_t                                    maxAutoReadMore,
             const std::vector<uaf::ByteString>&         continuationPoints,
-            const uaf::HistoryReadRawModifiedConfig&   serviceConfig,
-            const uaf::SessionConfig&                  sessionConfig,
-            uaf::HistoryReadRawModifiedResult&         result)
+            const uaf::HistoryReadRawModifiedSettings&  serviceSettings,
+            const uaf::SessionSettings&                 sessionSettings,
+            uaf::HistoryReadRawModifiedResult&          result)
     {
         // log read request
         logger_->debug("Reading the historical data modifications of %d nodes", addresses.size());
 
         // override the necessary parameters
-        HistoryReadRawModifiedConfig serviceConfigCopy(serviceConfig);
-        serviceConfigCopy.serviceSettings.isReadModified    = true;
-        serviceConfigCopy.serviceSettings.numValuesPerNode  = numValuesPerNode;
-        serviceConfigCopy.serviceSettings.maxAutoReadMore   = maxAutoReadMore;
-        serviceConfigCopy.serviceSettings.startTime         = startTime;
-        serviceConfigCopy.serviceSettings.endTime           = endTime;
+        HistoryReadRawModifiedSettings serviceSettingsCopy(serviceSettings);
+        serviceSettingsCopy.isReadModified    = true;
+        serviceSettingsCopy.numValuesPerNode  = numValuesPerNode;
+        serviceSettingsCopy.maxAutoReadMore   = maxAutoReadMore;
+        serviceSettingsCopy.startTime         = startTime;
+        serviceSettingsCopy.endTime           = endTime;
 
-        HistoryReadRawModifiedRequest request(0, serviceConfigCopy, sessionConfig);
+        HistoryReadRawModifiedRequest request(0, serviceSettingsCopy, sessionSettings);
 
         bool noContinuationPoints = (continuationPoints.size() == 0);
 
@@ -459,9 +503,9 @@ namespace uaf
     uaf::Status Client::browseNext(
             const std::vector<uaf::Address>&    addresses,
             const std::vector<uaf::ByteString>& continuationPoints,
-            const uaf::BrowseNextConfig&       serviceConfig,
-            const uaf::SessionConfig&          sessionConfig,
-            uaf::BrowseNextResult&             result)
+            const uaf::BrowseNextSettings&      serviceSettings,
+            const uaf::SessionSettings&         sessionSettings,
+            uaf::BrowseNextResult&              result)
     {
         // log read request
         logger_->debug("BrowseNext %d continuation points", continuationPoints.size());
@@ -475,7 +519,7 @@ namespace uaf
 
         if (ret.isGood())
         {
-            BrowseNextRequest request(0, serviceConfig, sessionConfig);
+            BrowseNextRequest request(0, serviceSettings, sessionSettings);
 
             request.targets.reserve(addresses.size());
 
@@ -496,16 +540,16 @@ namespace uaf
     //==============================================================================================
     Status Client::createMonitoredData(
             const std::vector<uaf::Address>&        addresses,
-            const uaf::CreateMonitoredDataConfig&  serviceConfig,
-            const uaf::SessionConfig&              sessionConfig,
-            const uaf::SubscriptionConfig&         subscriptionConfig,
-            uaf::CreateMonitoredDataResult&        result)
+            const uaf::CreateMonitoredDataSettings& serviceSettings,
+            const uaf::SessionSettings&             sessionSettings,
+            const uaf::SubscriptionSettings&        subscriptionSettings,
+            uaf::CreateMonitoredDataResult&         result)
     {
         CreateMonitoredDataRequest request(
                 0,
-                serviceConfig,
-                sessionConfig,
-                subscriptionConfig);
+                serviceSettings,
+                sessionSettings,
+                subscriptionSettings);
 
         for (vector<Address>::const_iterator it = addresses.begin(); it != addresses.end(); ++it)
         {
@@ -523,16 +567,16 @@ namespace uaf
     Status Client::createMonitoredEvents(
             const std::vector<uaf::Address>&            addresses,
             const uaf::EventFilter&                     eventFilter,
-            const uaf::CreateMonitoredEventsConfig&    serviceConfig,
-            const uaf::SessionConfig&                  sessionConfig,
-            const uaf::SubscriptionConfig&             subscriptionConfig,
-            uaf::CreateMonitoredEventsResult&          result)
+            const uaf::CreateMonitoredEventsSettings&   serviceSettings,
+            const uaf::SessionSettings&                 sessionSettings,
+            const uaf::SubscriptionSettings&            subscriptionSettings,
+            uaf::CreateMonitoredEventsResult&           result)
     {
         CreateMonitoredEventsRequest request(
                 0,
-                serviceConfig,
-                sessionConfig,
-                subscriptionConfig);
+                serviceSettings,
+                sessionSettings,
+                subscriptionSettings);
 
         for (size_t i=0; i<addresses.size(); i++)
             request.targets.push_back(CreateMonitoredEventsRequestTarget(addresses[i],

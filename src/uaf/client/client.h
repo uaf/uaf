@@ -159,19 +159,51 @@ namespace uaf
         /**
          * Read a number of node attributes synchronously.
          *
-         * @param addresses     Addresses of the nodes of which the attributes should be read.
-         * @param attributeId   The attribute to be read (e.g. Value or DisplayName).
-         * @param serviceConfig Read config.
-         * @param sessionConfig Session config.
-         * @param result        Result of the request.
-         * @return              Client-side status.
+         * The default session settings and read settings will be used.
+         *
+         * @param addresses         Addresses of the nodes of which the attributes should be read.
+         * @param attributeId       The attribute to be read (e.g. Value or DisplayName).
+         * @param result            Result of the request.
+         * @return                  Client-side status.
          */
         uaf::Status read(
                 const std::vector<uaf::Address>&     addresses,
                 const uaf::attributeids::AttributeId attributeId,
-                const uaf::ReadConfig&              serviceConfig,
-                const uaf::SessionConfig&           sessionConfig,
-                uaf::ReadResult&                    result);
+                uaf::ReadResult&                     result);
+
+        /**
+         * Read a number of node attributes synchronously.
+         *
+         * The default session settings and read settings will be used.
+         *
+         * @param addresses         Addresses of the nodes of which the attributes should be read.
+         * @param attributeId       The attribute to be read (e.g. Value or DisplayName).
+         * @param result            Result of the request.
+         * @return                  Client-side status.
+         */
+        uaf::Status read(
+                const std::vector<uaf::Address>&     addresses,
+                const uaf::attributeids::AttributeId attributeId,
+                uaf::ClientConnectionId              clientConnectionId,
+                uaf::ReadResult&                     result);
+
+        /**
+         * Read a number of node attributes synchronously.
+         *
+         * @param addresses         Addresses of the nodes of which the attributes should be read.
+         * @param attributeId       The attribute to be read (e.g. Value or DisplayName).
+         * @param serviceSettings   Read settings.
+         * @param sessionSettings   Session settings.
+         * @param result            Result of the request.
+         * @return                  Client-side status.
+         */
+        uaf::Status read(
+                const std::vector<uaf::Address>&     addresses,
+                const uaf::attributeids::AttributeId attributeId,
+                const uaf::ReadSettings&             serviceSettings,
+                const uaf::SessionSettings&          sessionSettings,
+                uaf::ReadResult&                     result);
+
 
 
         /**
@@ -182,19 +214,19 @@ namespace uaf
          * belong to the same server (as the UAF can currently not reconstruct an asynchronous
          * request that must be "split up" to be called on multiple servers).
          *
-         * @param addresses     Addresses of the nodes of which the attributes should be read.
-         * @param attributeId   The attribute to be read (e.g. Value or DisplayName).
-         * @param serviceConfig Read config.
-         * @param sessionConfig Session config.
-         * @param result        Result of the request.
-         * @return              Client-side status.
+         * @param addresses       Addresses of the nodes of which the attributes should be read.
+         * @param attributeId     The attribute to be read (e.g. Value or DisplayName).
+         * @param serviceSettings Read settings.
+         * @param sessionSettings Session settings.
+         * @param result          Result of the request.
+         * @return                Client-side status.
          */
         uaf::Status beginRead(
-                const std::vector<uaf::Address>&     addresses,
-                const uaf::attributeids::AttributeId attributeId,
-                const uaf::ReadConfig&              serviceConfig,
-                const uaf::SessionConfig&           sessionConfig,
-                uaf::AsyncReadResult&               result);
+                const std::vector<uaf::Address>&      addresses,
+                const uaf::attributeids::AttributeId  attributeId,
+                const uaf::ReadSettings&              serviceSettings,
+                const uaf::SessionSettings&           sessionSettings,
+                uaf::AsyncReadResult&                 result);
 
 
         /**
@@ -203,18 +235,18 @@ namespace uaf
          * @param addresses         Addresses of the nodes of which the attribute should be written.
          * @param data              Data values that should be written (one data value per address).
          * @param attributeId       Attribute id that should be written for all nodes.
-         * @param serviceConfig     Write config.
-         * @param sessionConfig     Session config.
+         * @param serviceSettings   Write settings.
+         * @param sessionSettings   Session settings.
          * @param result            Result of the request.
          * @return                  Client-side status.
          */
         uaf::Status write(
-                const std::vector<uaf::Address>&     addresses,
-                const std::vector<uaf::Variant>&     data,
+                const std::vector<uaf::Address>&      addresses,
+                const std::vector<uaf::Variant>&      data,
                 const uaf::attributeids::AttributeId attributeId,
-                const uaf::WriteConfig&             serviceConfig,
-                const uaf::SessionConfig&           sessionConfig,
-                uaf::WriteResult&                   result);
+                const uaf::WriteSettings&             serviceSettings,
+                const uaf::SessionSettings&           sessionSettings,
+                uaf::WriteResult&                     result);
 
 
         /**
@@ -228,8 +260,8 @@ namespace uaf
          * @param addresses         Addresses of the nodes of which the attribute should be written.
          * @param data              Data values that should be written (one data value per address).
          * @param attributeId       Attribute id that should be written for all nodes.
-         * @param serviceConfig     Write config.
-         * @param sessionConfig     Session config.
+         * @param serviceSettings   Write settings.
+         * @param sessionSettings   Session settings.
          * @param result            Result of the request.
          * @return                  Client-side status.
          */
@@ -237,9 +269,9 @@ namespace uaf
                 const std::vector<uaf::Address>&     addresses,
                 const std::vector<uaf::Variant>&     data,
                 const uaf::attributeids::AttributeId attributeId,
-                const uaf::WriteConfig&             serviceConfig,
-                const uaf::SessionConfig&           sessionConfig,
-                uaf::AsyncWriteResult&              result);
+                const uaf::WriteSettings&            serviceSettings,
+                const uaf::SessionSettings&          sessionSettings,
+                uaf::AsyncWriteResult&               result);
 
 
         /**
@@ -250,8 +282,8 @@ namespace uaf
          * @param objectAddress     Address of the parent node of the method.
          * @param methodAddress     Address of the method node.
          * @param inputArguments    Input arguments as a vector of variants.
-         * @param serviceConfig     Method call config.
-         * @param sessionConfig     Session config.
+         * @param serviceSettings   Method call settings.
+         * @param sessionSettings   Session settings.
          * @param result            Result of the request.
          * @return                  Client-side status.
          */
@@ -259,9 +291,9 @@ namespace uaf
                 const uaf::Address&                 objectAddress,
                 const uaf::Address&                 methodAddress,
                 const std::vector<uaf::Variant>&    inputArguments,
-                const uaf::MethodCallConfig&       serviceConfig,
-                const uaf::SessionConfig&          sessionConfig,
-                uaf::MethodCallResult&             result);
+                const uaf::MethodCallSettings&      erviceSettings,
+                const uaf::SessionSettings&         sessionSettings,
+                uaf::MethodCallResult&              result);
 
 
         /**
@@ -273,8 +305,8 @@ namespace uaf
          * @param objectAddress     Address of the parent node of the method.
          * @param methodAddress     Address of the method node.
          * @param inputArguments    Input arguments as a vector of variants.
-         * @param serviceConfig     Method call config.
-         * @param sessionConfig     Session config.
+         * @param serviceSettings   Method call settings.
+         * @param sessionSettings   Session settings.
          * @param result            Result of the request.
          * @return                  Client-side status.
          */
@@ -282,9 +314,9 @@ namespace uaf
                 const uaf::Address&                 objectAddress,
                 const uaf::Address&                 methodAddress,
                 const std::vector<uaf::Variant>&    inputArguments,
-                const uaf::MethodCallConfig&       serviceConfig,
-                const uaf::SessionConfig&          sessionConfig,
-                uaf::AsyncMethodCallResult&        result);
+                const uaf::MethodCallSettings&      serviceSettings,
+                const uaf::SessionSettings&         sessionSettings,
+                uaf::AsyncMethodCallResult&         result);
 
 
         /**
@@ -299,18 +331,18 @@ namespace uaf
          *                          BrowseNext for you (if that's needed to fetch all results)?
          *                          This parameter will always be used instead of the
          *                          maxAutoBrowseNext attribute in the serviceSettings attribute of
-         *                          the serviceConfig parameter!
-         * @param serviceConfig     Browse config.
-         * @param sessionConfig     Session config.
+         *                          the serviceSettings parameter!
+         * @param serviceSettings   Browse settings.
+         * @param sessionSettings   Session settings.
          * @param result            Result of the request.
          * @return                  Client-side status.
          */
         uaf::Status browse(
                 const std::vector<uaf::Address>&    addresses,
                 uint32_t                            maxAutoBrowseNext,
-                const uaf::BrowseConfig&           serviceConfig,
-                const uaf::SessionConfig&          sessionConfig,
-                uaf::BrowseResult&                 result);
+                const uaf::BrowseSettings&          serviceSettings,
+                const uaf::SessionSettings&         sessionSettings,
+                uaf::BrowseResult&                  result);
 
 
         /**
@@ -321,7 +353,7 @@ namespace uaf
          * request much more in detail!
          *
          * Since this convenience method is meant to fetch raw historical data, the isReadModified
-         * flag of the serviceSettings attribute of the serviceConfig parameter
+         * flag of the serviceSettings attribute of the serviceSettings parameter
          * will be forced to False!
          *
          * @param addresses             Addresses of the nodes to that provide the historical data.
@@ -329,12 +361,12 @@ namespace uaf
          *                              to see the historical data.
          *                              This parameter will always be used instead of the
          *                              startTime attribute in the serviceSettings attribute
-         *                              of the serviceConfig parameter!
+         *                              of the serviceSettings parameter!
          * @param endTime               The end time of the interval from which you would like
          *                              to see the historical data.
          *                              This parameter will always be used instead of the
          *                              endTime attribute in the serviceSettings attribute
-         *                              of the serviceConfig parameter!
+         *                              of the serviceSettings parameter!
          * @param numValuesPerNode      The maximum number of values that may be returned for each
          *                              node. 0 means no limit, but you may want to put it to a
          *                              "safe" value (e.g. 100 if you expect to receive at most
@@ -350,7 +382,7 @@ namespace uaf
          *                              automatically.
          *                              This parameter will always be used instead of the
          *                              maxAutoReadMore attribute in the serviceSettings attribute
-         *                              of the serviceConfig parameter!
+         *                              of the serviceSettings parameter!
          * @param continuationPoints    Continuation points, in case you're continuing to read the
          *                              historical data of a previous request manually. By
          *                              specifying a sufficiently large number for maxAutoReadMore,
@@ -358,8 +390,8 @@ namespace uaf
          *                              requests", if you want. If you're not using
          *                              continuationPoints manually, you can simply provide an
          *                              empty vector.
-         * @param serviceConfig         HistoryReadRawModifiedConfig config.
-         * @param sessionConfig         Session config.
+         * @param serviceSettings       HistoryReadRawModifiedSettings settings.
+         * @param sessionSettings       Session settings.
          * @param result                Result of the request.
          * @return                      Client-side status.
          */
@@ -370,9 +402,9 @@ namespace uaf
                 uint32_t                                    numValuesPerNode,
                 uint32_t                                    maxAutoReadMore,
                 const std::vector<uaf::ByteString>&         continuationPoints,
-                const uaf::HistoryReadRawModifiedConfig&   serviceConfig,
-                const uaf::SessionConfig&                  sessionConfig,
-                uaf::HistoryReadRawModifiedResult&         result);
+                const uaf::HistoryReadRawModifiedSettings&  serviceSettings,
+                const uaf::SessionSettings&                 sessionSettings,
+                uaf::HistoryReadRawModifiedResult&          result);
 
 
         /**
@@ -385,7 +417,7 @@ namespace uaf
          *
          * Since this convenience method is meant to fetch the modification information of the
          * historical data, the isReadModified flag of the serviceSettings attribute of the
-         * serviceConfig parameter will be forced to True!
+         * serviceSettings parameter will be forced to True!
          *
          * @param addresses             Addresses of the nodes to that provide the historical data.
          *                              continuationPoints manually, you can simply provide an
@@ -394,12 +426,12 @@ namespace uaf
          *                              to see the historical data.
          *                              This parameter will always be used instead of the
          *                              startTime attribute in the serviceSettings attribute
-         *                              of the serviceConfig parameter!
+         *                              of the serviceSettings parameter!
          * @param endTime               The end time of the interval from which you would like
          *                              to see the historical data.
          *                              This parameter will always be used instead of the
          *                              endTime attribute in the serviceSettings attribute
-         *                              of the serviceConfig parameter!
+         *                              of the serviceSettings parameter!
          * @param numValuesPerNode      The maximum number of values that may be returned for each
          *                              node. 0 means no limit, but you may want to put it to a
          *                              "safe" value (e.g. 100 if you expect to receive at most
@@ -415,14 +447,14 @@ namespace uaf
          *                              automatically.
          *                              This parameter will always be used instead of the
          *                              maxAutoReadMore attribute in the serviceSettings attribute
-         *                              of the serviceConfig parameter!
+         *                              of the serviceSettings parameter!
          * @param continuationPoints    Continuation points, in case you're continuing to read the
          *                              historical data of a previous request manually. By
          *                              specifying a sufficiently large number for maxAutoReadMore,
          *                              you can actually let the UAF handle the "continuation
          *                              requests", if you want. If you're not using
-         * @param serviceConfig         HistoryReadRawModifiedConfig config.
-         * @param sessionConfig         Session config.
+         * @param serviceSettings         HistoryReadRawModifiedSettings settings.
+         * @param sessionSettings         Session settings.
          * @param result                Result of the request.
          * @return                      Client-side status.
          */
@@ -433,9 +465,9 @@ namespace uaf
                 uint32_t                                    numValuesPerNode,
                 uint32_t                                    maxAutoReadMore,
                 const std::vector<uaf::ByteString>&         continuationPoints,
-                const uaf::HistoryReadRawModifiedConfig&   serviceConfig,
-                const uaf::SessionConfig&                  sessionConfig,
-                uaf::HistoryReadRawModifiedResult&         result);
+                const uaf::HistoryReadRawModifiedSettings&  serviceSettings,
+                const uaf::SessionSettings&                 sessionSettings,
+                uaf::HistoryReadRawModifiedResult&          result);
 
 
         /**
@@ -457,17 +489,17 @@ namespace uaf
          *                              use these addresses to find out to which server the
          *                              BrowseNext call should be sent.
          * @param continuationPoints    The continuation points.
-         * @param serviceConfig         BrowseNext config.
-         * @param sessionConfig         Session config.
+         * @param serviceSettings       BrowseNext settings.
+         * @param sessionSettings       Session settings.
          * @param result                Result of the request.
          * @return                      Client-side status.
          */
         uaf::Status browseNext(
                 const std::vector<uaf::Address>&    addresses,
                 const std::vector<uaf::ByteString>& continuationPoints,
-                const uaf::BrowseNextConfig&       serviceConfig,
-                const uaf::SessionConfig&          sessionConfig,
-                uaf::BrowseNextResult&             result);
+                const uaf::BrowseNextSettings&      serviceSettings,
+                const uaf::SessionSettings&         sessionSettings,
+                uaf::BrowseNextResult&              result);
 
 
         /**
@@ -484,18 +516,18 @@ namespace uaf
          *
          * @param addresses                 The addresses of the nodes of which the Value
          *                                  attribute should be monitored.
-         * @param serviceConfig             Create monitored data config.
-         * @param sessionConfig             Session config.
-         * @param subscriptionConfig        Subscription config.
+         * @param serviceSettings           Create monitored data settings.
+         * @param sessionSettings           Session settings.
+         * @param subscriptionSettings      Subscription settings.
          * @param result                    Result of the request.
          * @return                          Client-side status.
          */
         uaf::Status createMonitoredData(
-                const std::vector<uaf::Address>&        addresses,
-                const uaf::CreateMonitoredDataConfig&  serviceConfig,
-                const uaf::SessionConfig&              sessionConfig,
-                const uaf::SubscriptionConfig&         subscriptionConfig,
-                uaf::CreateMonitoredDataResult&        result);
+                const std::vector<uaf::Address>&         addresses,
+                const uaf::CreateMonitoredDataSettings&  serviceSettings,
+                const uaf::SessionSettings&              sessionSettings,
+                const uaf::SubscriptionSettings&         subscriptionSettings,
+                uaf::CreateMonitoredDataResult&          result);
 
 
         /**
@@ -513,19 +545,19 @@ namespace uaf
          * @param addresses             The addresses of the nodes that should be monitored
          *                              for events.
          * @param eventFilter           The event filter common to all monitored items.
-         * @param serviceConfig         Create monitored events config.
-         * @param sessionConfig         Session config.
-         * @param subscriptionConfig    Subscription settings.
+         * @param serviceSettings       Create monitored events settings.
+         * @param sessionSettings       Session settings.
+         * @param subscriptionSettings  Subscription settings.
          * @param result                Result of the request.
          * @return                      Client-side status.
          */
         uaf::Status createMonitoredEvents(
                 const std::vector<uaf::Address>&            addresses,
                 const uaf::EventFilter&                     eventFilter,
-                const uaf::CreateMonitoredEventsConfig&    serviceConfig,
-                const uaf::SessionConfig&                  sessionConfig,
-                const uaf::SubscriptionConfig&             subscriptionConfig,
-                uaf::CreateMonitoredEventsResult&          result);
+                const uaf::CreateMonitoredEventsSettings&   serviceSettings,
+                const uaf::SessionSettings&                 sessionSettings,
+                const uaf::SubscriptionSettings&            subscriptionSettings,
+                uaf::CreateMonitoredEventsResult&           result);
 
 
 
