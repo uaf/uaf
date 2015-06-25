@@ -29,6 +29,16 @@ namespace uaf
     using std::stringstream;
     using std::vector;
 
+    template<> uaf::BrowseNextSettings                      getDefaultServiceSettings<uaf::BrowseNextSettings>                      (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultBrowseNextSettings; }
+    template<> uaf::BrowseSettings                          getDefaultServiceSettings<uaf::BrowseSettings>                          (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultBrowseSettings; }
+    template<> uaf::CreateMonitoredDataSettings             getDefaultServiceSettings<uaf::CreateMonitoredDataSettings>             (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultCreateMonitoredDataSettings; }
+    template<> uaf::CreateMonitoredEventsSettings           getDefaultServiceSettings<uaf::CreateMonitoredEventsSettings>           (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultCreateMonitoredEventsSettings; }
+    template<> uaf::HistoryReadRawModifiedSettings          getDefaultServiceSettings<uaf::HistoryReadRawModifiedSettings>          (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultHistoryReadRawModifiedSettings; }
+    template<> uaf::ReadSettings                            getDefaultServiceSettings<uaf::ReadSettings>                            (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultReadSettings; }
+    template<> uaf::TranslateBrowsePathsToNodeIdsSettings   getDefaultServiceSettings<uaf::TranslateBrowsePathsToNodeIdsSettings>   (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultTranslateBrowsePathsToNodeIdsSettings; }
+    template<> uaf::WriteSettings                           getDefaultServiceSettings<uaf::WriteSettings>                           (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultWriteSettings; }
+
+
 
     // Constructor
     // =============================================================================================
@@ -267,6 +277,23 @@ namespace uaf
         ss << indent << " - clientCertificate";
         ss << fillToPos(ss, colon);
         ss << ": " << clientCertificate << "\n";
+
+        ss << indent << " - defaultSessionSettings\n";
+        ss << defaultSessionSettings.toString(indent + "   ", colon) << "\n";
+
+        ss << indent << " - specificSessionSettings[]";
+        if (specificSessionSettings.size() > 0)
+        {
+            for (std::map<std::string, uaf::SessionSettings>::const_iterator it = specificSessionSettings.begin();
+                    it != specificSessionSettings.end();
+                    ++it)
+            {
+                ss << indent << "   " << " - specificSessionSettings['" << it->first << "']\n";
+                ss << it->second.toString(indent + "      ", colon);
+                if (std::distance(it, specificSessionSettings.end()) > 1)
+                    ss << "\n";
+            }
+        }
 
         return ss.str();
     }

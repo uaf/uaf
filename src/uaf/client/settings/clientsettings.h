@@ -33,11 +33,21 @@
 #include "uaf/util/status.h"
 #include "uaf/util/stringifiable.h"
 #include "uaf/client/clientexport.h"
+#include "uaf/client/settings/readsettings.h"
+#include "uaf/client/settings/writesettings.h"
+#include "uaf/client/settings/methodcallsettings.h"
+#include "uaf/client/settings/createmonitoreddatasettings.h"
+#include "uaf/client/settings/createmonitoredeventssettings.h"
+#include "uaf/client/settings/translatebrowsepathstonodeidssettings.h"
+#include "uaf/client/settings/browsesettings.h"
+#include "uaf/client/settings/browsenextsettings.h"
+#include "uaf/client/settings/historyreadrawmodifiedsettings.h"
+#include "uaf/client/settings/sessionsettings.h"
+#include "uaf/client/settings/subscriptionsettings.h"
 
 
 namespace uaf
 {
-
 
     /*******************************************************************************************//**
     * An uaf::ClientSettings instance holds the settings of a uaf::Client instance.
@@ -196,6 +206,30 @@ namespace uaf
         std::string clientCertificate;
 
 
+        uaf::BrowseNextSettings                     defaultBrowseNextSettings;
+        uaf::BrowseSettings                         defaultBrowseSettings;
+        uaf::CreateMonitoredDataSettings            defaultCreateMonitoredDataSettings;
+        uaf::CreateMonitoredEventsSettings          defaultCreateMonitoredEventsSettings;
+        uaf::HistoryReadRawModifiedSettings         defaultHistoryReadRawModifiedSettings;
+        uaf::ReadSettings                           defaultReadSettings;
+        uaf::TranslateBrowsePathsToNodeIdsSettings  defaultTranslateBrowsePathsToNodeIdsSettings;
+        uaf::WriteSettings                          defaultWriteSettings;
+
+        /**
+         * The default session settings.
+         *
+         * These settings will be used to create the sessions to servers that aren't specified in
+         * the 'specificSessionSettings' map (unless 'useOnlySpecificSettings' is true).
+         */
+        uaf::SessionSettings defaultSessionSettings;
+
+
+        /**
+         * The session settings for particular serverURIs.
+         */
+        std::map<std::string, uaf::SessionSettings> specificSessionSettings;
+
+
         /**
          * Create the security locations (directories).
          *
@@ -234,6 +268,19 @@ namespace uaf
                 const ClientSettings& object2);
 
     };
+
+    //must be in header file because the compiler needs to specialize it in different translation units:
+    template<typename _ServiceSettings> _ServiceSettings    getDefaultServiceSettings                                               (const uaf::ClientSettings& clientSettings);
+
+    //must be in header file to make sure the compiler doesn't make an implicit  specialization:
+    template<> uaf::BrowseNextSettings                      getDefaultServiceSettings<uaf::BrowseNextSettings>                      (const uaf::ClientSettings& clientSettings);
+    template<> uaf::BrowseSettings                          getDefaultServiceSettings<uaf::BrowseSettings>                          (const uaf::ClientSettings& clientSettings);
+    template<> uaf::CreateMonitoredDataSettings             getDefaultServiceSettings<uaf::CreateMonitoredDataSettings>             (const uaf::ClientSettings& clientSettings);
+    template<> uaf::CreateMonitoredEventsSettings           getDefaultServiceSettings<uaf::CreateMonitoredEventsSettings>           (const uaf::ClientSettings& clientSettings);
+    template<> uaf::HistoryReadRawModifiedSettings          getDefaultServiceSettings<uaf::HistoryReadRawModifiedSettings>          (const uaf::ClientSettings& clientSettings);
+    template<> uaf::ReadSettings                            getDefaultServiceSettings<uaf::ReadSettings>                            (const uaf::ClientSettings& clientSettings);
+    template<> uaf::TranslateBrowsePathsToNodeIdsSettings   getDefaultServiceSettings<uaf::TranslateBrowsePathsToNodeIdsSettings>   (const uaf::ClientSettings& clientSettings);
+    template<> uaf::WriteSettings                           getDefaultServiceSettings<uaf::WriteSettings>                           (const uaf::ClientSettings& clientSettings);
 
 
 }
