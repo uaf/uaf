@@ -37,7 +37,7 @@
 #include "uaf/client/subscriptions/subscriptioninformation.h"
 #include "uaf/client/requests/requests.h"
 #include "uaf/client/results/results.h"
-#include "uaf/client/configs/configs.h"
+#include "uaf/client/settings/allsettings.h"
 
 
 
@@ -72,24 +72,23 @@ namespace uaf
     public:
 
         // lot's of public typedefs that depend on the template arguments:
-        typedef uaf::BaseServiceConfig<_ServiceSettings>                               ServiceConfigType;
-        typedef uaf::BaseSessionRequest<ServiceConfigType, _RequestTarget, false>      SessionRequestType;
-        typedef uaf::BaseSessionResult<_ResultTarget, false>                           SessionResultType;
-        typedef uaf::BaseSessionRequest<ServiceConfigType, _RequestTarget, true>       AsyncSessionRequestType;
+        typedef uaf::BaseSessionRequest<_ServiceSettings, _RequestTarget, false>      SessionRequestType;
+        typedef uaf::BaseSessionResult<_ResultTarget, false>                          SessionResultType;
+        typedef uaf::BaseSessionRequest<_ServiceSettings, _RequestTarget, true>       AsyncSessionRequestType;
         typedef uaf::BaseSessionResult<uaf::AsyncResultTarget, true>                  AsyncSessionResultType;
-        typedef uaf::BaseSubscriptionRequest<ServiceConfigType, _RequestTarget, false> SubscriptionRequestType;
-        typedef uaf::BaseSubscriptionResult<_ResultTarget, false>                      SubscriptionResultType;
-        typedef uaf::BaseSubscriptionRequest<ServiceConfigType, _RequestTarget, true>  AsyncSubscriptionRequestType;
+        typedef uaf::BaseSubscriptionRequest<_ServiceSettings, _RequestTarget, false> SubscriptionRequestType;
+        typedef uaf::BaseSubscriptionResult<_ResultTarget, false>                     SubscriptionResultType;
+        typedef uaf::BaseSubscriptionRequest<_ServiceSettings, _RequestTarget, true>  AsyncSubscriptionRequestType;
         typedef uaf::BaseSubscriptionResult<uaf::AsyncResultTarget, true>             AsyncSubscriptionResultType;
 
 
         /**
          * Create a service invocation.
          */
-        BaseServiceInvocation()
-        : asynchronous_(false),
+        BaseServiceInvocation(bool async = false, uaf::RequestHandle requestHandle = uaf::REQUESTHANDLE_NOT_ASSIGNED)
+        : asynchronous_(async),
           transactionId_(0),
-          requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED),
+          requestHandle_(requestHandle),
           invocationLevel_(uaf::SessionLevel)
         {}
 
@@ -113,12 +112,6 @@ namespace uaf
 
         /** Get the service settings of the service invocation. */
         const _ServiceSettings&             serviceSettings()       const { return serviceSettings_; }
-
-        /** Get the session settings of the service invocation. */
-        const uaf::SessionSettings&        sessionSettings()       const { return sessionSettings_; }
-
-        /** Get the session settings of the service invocation. */
-        const uaf::SubscriptionSettings&   subscriptionSettings()  const { return subscriptionSettings_; }
 
         /** Get the request handle associated with the request. */
         const uaf::RequestHandle&           requestHandle()         const { return requestHandle_; }
@@ -173,6 +166,14 @@ namespace uaf
         }
 
 
+        /** Set the asynchronous flag. */
+        void setAsynchronous(bool async)
+        { asynchronous_ = async; }
+
+        /** Set the request handle. */
+        void setRequestHandle(uaf::RequestHandle requestHandle)
+        { requestHandle_ = requestHandle; }
+
         /** Set the transaction Id associated with the request (in case of an asynchronous one). */
         void setTransactionId(uaf::TransactionId transactionId)
         { transactionId_ = transactionId; }
@@ -193,35 +194,11 @@ namespace uaf
 
 
         /** Set the relevant settings from the given request, for the given server URI. */
-        void setRequestSettings(const std::string& serverUri, const SessionRequestType& request)
+        void setServiceSettings(const _ServiceSettings& serviceSettings)
         {
-            invocationLevel_ = SessionLevel;
-            setSessionRequestSettings<SessionRequestType>(serverUri, request);
+            serviceSettings_ = serviceSettings;
         }
 
-
-        /** Set the relevant settings from the given request, for the given server URI. */
-        void setRequestSettings(const std::string& serverUri, const AsyncSessionRequestType& request)
-        {
-            invocationLevel_ = SessionLevel;
-            setSessionRequestSettings<AsyncSessionRequestType>(serverUri, request);
-        }
-
-
-        /** Set the relevant settings from the given request, for the given server URI. */
-        void setRequestSettings(const std::string& serverUri, const SubscriptionRequestType& request)
-        {
-            invocationLevel_ = SubscriptionLevel;
-            setSubscriptionRequestSettings<SubscriptionRequestType>(serverUri, request);
-        }
-
-
-        /** Set the relevant settings from the given request, for the given server URI. */
-        void setRequestSettings(const std::string& serverUri, const AsyncSubscriptionRequestType& request)
-        {
-            invocationLevel_ = SubscriptionLevel;
-            setSubscriptionRequestSettings<AsyncSubscriptionRequestType>(serverUri, request);
-        }
 
 
         ///@} //////////////////////////////////////////////////////////////////////////////////////
@@ -509,52 +486,6 @@ namespace uaf
         DISALLOW_COPY_AND_ASSIGN(BaseServiceInvocation);
 
 
-        /**
-         * Set the session request settings.
-         *
-         * @param serverUri The URI of the server that will be used for the service invocation.
-         * @param request   The request from which the session request settings will be
-         *                  extracted.
-         */
-        template<typename _Request>
-        void setSessionRequestSettings(const std::string serverUri, const _Request& request)
-        {
-            std::map<std::string, uaf::SessionSettings>::const_iterator it;
-            it = request.sessionConfig.specificSessionSettings.find(serverUri);
-
-            if (it != request.sessionConfig.specificSessionSettings.end())
-                sessionSettings_ = it->second;
-            else
-                sessionSettings_ = request.sessionConfig.defaultSessionSettings;
-
-            asynchronous_    = _Request::asynchronous;
-            serviceSettings_ = request.serviceConfig.serviceSettings;
-            requestHandle_   = request.requestHandle();
-        }
-
-
-        /**
-         * Set the subscription request settings.
-         *
-         * @param serverUri The URI of the server that will be used for the service invocation.
-         * @param request   The request from which the subscription request settings will be
-         *                  extracted.
-         */
-        template<typename _Request>
-        void setSubscriptionRequestSettings(const std::string serverUri, const _Request& request)
-        {
-            std::map<std::string, uaf::SubscriptionSettings>::const_iterator it;
-            it = request.subscriptionConfig.specificSubscriptionSettings.find(serverUri);
-
-            if (it != request.subscriptionConfig.specificSubscriptionSettings.end())
-                subscriptionSettings_ = it->second;
-            else
-                subscriptionSettings_ = request.subscriptionConfig.defaultSubscriptionSettings;
-
-            setSessionRequestSettings(serverUri, request);
-
-        }
-
 
         /**
          * Copy the synchronous request data from the UAF objects to the SDK objects.
@@ -729,8 +660,6 @@ namespace uaf
         std::vector<std::size_t>    ranks_;
         // the service settings, particular for this service
         _ServiceSettings            serviceSettings_;
-        // the session settings of the session that will invoke the service
-        uaf::SessionSettings       sessionSettings_;
         // the results of the service invocation
         std::vector<_ResultTarget>  resultTargets_;
         // the unique handle of the request (defined by the UAF, not by the OPC UA standard!)
@@ -741,8 +670,6 @@ namespace uaf
         uaf::SubscriptionInformation subscriptionInformation_;
         // the level at which the service should be invoked
         uaf::InvocationLevel       invocationLevel_;
-        // the settings of the subscription that will be used for the service invocation
-        uaf::SubscriptionSettings  subscriptionSettings_;
 
     };
 
