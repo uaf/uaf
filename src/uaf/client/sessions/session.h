@@ -311,6 +311,7 @@ namespace uaf
         {
             return subscriptionFactory_->invokeService<_Service>(
                     invocation,
+                    request,
                     namespaceArray_,
                     serverArray_);
         }
