@@ -89,6 +89,14 @@ namespace uaf
          */
         void toSdk(UaGuid& uaGuid) const { uaGuid = uaGuid_; };
 
+
+        /**
+         * Copy the contents to a stack instance.
+         *
+         * @param opcUaGuid  Stack OpcUa_Guid instance.
+         */
+        void toSdk(OpcUa_Guid *opcUaGuid) const { uaGuid_.copyTo(opcUaGuid); }
+
         // comparison operators
         friend UAF_EXPORT bool operator==(const Guid& object1, const Guid& object2);
         friend UAF_EXPORT bool operator!=(const Guid& object1, const Guid& object2);
