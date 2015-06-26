@@ -66,6 +66,8 @@ namespace uaf
          */
         BaseSubscriptionRequest()
         : uaf::BaseSessionRequest<_ServiceSettings, _Target, _Async>(),
+          clientSubscriptionHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          clientSubscriptionHandleGiven(false),
           subscriptionSettingsGiven(false)
         {}
 
@@ -77,6 +79,8 @@ namespace uaf
          */
         BaseSubscriptionRequest(std::size_t noOfTargets)
         : uaf::BaseSessionRequest<_ServiceSettings, _Target, _Async>(noOfTargets),
+          clientSubscriptionHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          clientSubscriptionHandleGiven(false),
           subscriptionSettingsGiven(false)
         {}
 
@@ -98,6 +102,8 @@ namespace uaf
                 noOfTargets,
                 serviceSettings,
                 sessionSettings),
+          clientSubscriptionHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          clientSubscriptionHandleGiven(false),
           subscriptionSettings(subscriptionSettings),
           subscriptionSettingsGiven(true)
         {}
@@ -120,6 +126,8 @@ namespace uaf
                 target,
                 serviceSettings,
                 sessionSettings),
+          clientSubscriptionHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          clientSubscriptionHandleGiven(false),
           subscriptionSettings(subscriptionSettings),
           subscriptionSettingsGiven(true)
         {}
@@ -142,9 +150,21 @@ namespace uaf
                 targets,
                 serviceSettings,
                 sessionSettings),
-          subscriptionSettings(subscriptionSettings)
+          clientSubscriptionHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          clientSubscriptionHandleGiven(false),
+          subscriptionSettings(subscriptionSettings),
+          subscriptionSettingsGiven(true)
         {}
 
+
+        /**
+         * The ClientConnectionId, identifying the session to invoke the request.
+         * Only used if connectionPolicy equals uaf::sessionpolicies::KnownClientConnectionId.
+         */
+        uaf::ClientSubscriptionHandle clientSubscriptionHandle;
+
+
+        bool clientSubscriptionHandleGiven;
 
 
         /** Session settings to use. */
@@ -163,6 +183,14 @@ namespace uaf
 
             ss << uaf::BaseSessionRequest<_ServiceSettings, _Target, _Async>::toString(indent, colon);
             ss << "\n";
+
+            ss << indent << " - clientSubscriptionHandleGiven";
+            ss << uaf::fillToPos(ss, colon);
+            ss << ": " << (clientSubscriptionHandleGiven ? "true" : "false") << "\n";
+
+            ss << indent << " - clientSubscriptionHandle\n";
+            ss << uaf::fillToPos(ss, colon);
+            ss << ": " << clientSubscriptionHandle << "\n";
 
             ss << indent << " - subscriptionSettingsGiven";
             ss << uaf::fillToPos(ss, colon);
@@ -190,6 +218,13 @@ namespace uaf
             if (object1.subscriptionSettings != object2.subscriptionSettings)
                 return false;
 
+            if (object1.clientSubscriptionHandle != object2.clientSubscriptionHandle)
+                return false;
+
+            if (object1.clientSubscriptionHandleGiven != object2.clientSubscriptionHandleGiven)
+                return false;
+
+
             return true;
         }
 
@@ -215,6 +250,10 @@ namespace uaf
                 return object1.subscriptionSettingsGiven < object2.subscriptionSettingsGiven;
             else if (object1.subscriptionSettings != object2.subscriptionSettings)
                 return object1.subscriptionSettings < object2.subscriptionSettings;
+            else if (object1.clientSubscriptionHandle != object2.clientSubscriptionHandle)
+                return object1.clientSubscriptionHandle < object2.clientSubscriptionHandle;
+            else if (object1.clientSubscriptionHandleGiven != object2.clientSubscriptionHandleGiven)
+                return object1.clientSubscriptionHandleGiven < object2.clientSubscriptionHandleGiven;
 
             return false;
         }
