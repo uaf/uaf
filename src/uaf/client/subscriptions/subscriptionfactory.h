@@ -186,6 +186,9 @@ namespace uaf
          */
         template<typename _Service>
         uaf::Status invokeService(
+                const uaf::BaseSubscriptionRequest<typename _Service::Settings,
+                                                   typename _Service::RequestTarget,
+                                                   _Service::asynchronous>& request,
                 typename _Service::Invocation&  invocation,
                 const uaf::NamespaceArray&      nameSpaceArray,
                 const uaf::ServerArray&         serverArray)
@@ -199,6 +202,11 @@ namespace uaf
             // first and map it to the request handle
             if (invocation.asynchronous())
                 storeRequestHandle(invocation.requestHandle());
+
+            if (request.clientSubscriptionHandleGiven)
+            {
+
+            }
 
             // try to acquire a subscription for the given subscription settings
             uaf::Subscription* subscription = 0;
