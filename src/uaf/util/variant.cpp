@@ -143,6 +143,7 @@ namespace uaf
     }
 
     IMPLEMENT_VARIANT_TOXXX_METHOD_NATIVE_UAF(NodeId          , nodeId_)
+    IMPLEMENT_VARIANT_TOXXX_METHOD_NATIVE_UAF(Guid            , guid_)
     IMPLEMENT_VARIANT_TOXXX_METHOD_NATIVE_UAF(ExpandedNodeId  , expandedNodeId_)
     IMPLEMENT_VARIANT_TOXXX_METHOD_NATIVE_UAF(QualifiedName   , qualifiedName_)
     IMPLEMENT_VARIANT_TOXXX_METHOD_NATIVE_UAF(ExtensionObject , extensionObject_)
@@ -182,6 +183,7 @@ namespace uaf
     }
 
     IMPLEMENT_VARIANT_TOXXXARRAY_METHOD_NATIVE_UAF(NodeId          , nodeId_)
+    IMPLEMENT_VARIANT_TOXXXARRAY_METHOD_NATIVE_UAF(Guid            , guid_)
     IMPLEMENT_VARIANT_TOXXXARRAY_METHOD_NATIVE_UAF(ExpandedNodeId  , expandedNodeId_)
     IMPLEMENT_VARIANT_TOXXXARRAY_METHOD_NATIVE_UAF(QualifiedName   , qualifiedName_)
     IMPLEMENT_VARIANT_TOXXXARRAY_METHOD_NATIVE_UAF(ExtensionObject , extensionObject_)
@@ -439,6 +441,7 @@ namespace uaf
     }
     IMPLEMENT_VARIANT_SETXXX_METHOD_NATIVE_UAF(QualifiedName, qualifiedName_)
     IMPLEMENT_VARIANT_SETXXX_METHOD_NATIVE_UAF(NodeId, nodeId_)
+    IMPLEMENT_VARIANT_SETXXX_METHOD_NATIVE_UAF(Guid, guid_)
     IMPLEMENT_VARIANT_SETXXX_METHOD_NATIVE_UAF(ExpandedNodeId, expandedNodeId_)
     IMPLEMENT_VARIANT_SETXXX_METHOD_NATIVE_UAF(ExtensionObject, extensionObject_)
 
@@ -456,6 +459,7 @@ namespace uaf
     }
     IMPLEMENT_VARIANT_SETXXXARRAY_METHOD_NATIVE_UAF(QualifiedName, qualifiedName_)
     IMPLEMENT_VARIANT_SETXXXARRAY_METHOD_NATIVE_UAF(NodeId, nodeId_)
+    IMPLEMENT_VARIANT_SETXXXARRAY_METHOD_NATIVE_UAF(Guid, guid_)
     IMPLEMENT_VARIANT_SETXXXARRAY_METHOD_NATIVE_UAF(ExpandedNodeId, expandedNodeId_)
     IMPLEMENT_VARIANT_SETXXXARRAY_METHOD_NATIVE_UAF(ExtensionObject, extensionObject_)
 
@@ -489,6 +493,9 @@ namespace uaf
                             case uaf::opcuatypes::NodeId:
                                 ss << nodeId_[i].toString();
                                 break;
+                            case uaf::opcuatypes::Guid:
+                                ss << guid_[i].toString();
+                                break;
                             case uaf::opcuatypes::ExpandedNodeId:
                                 ss << expandedNodeId_[i].toString();
                                 break;
@@ -512,6 +519,9 @@ namespace uaf
                     {
                         case uaf::opcuatypes::NodeId:
                             ss << nodeId_[0].toString();
+                            break;
+                        case uaf::opcuatypes::Guid:
+                            ss << guid_[0].toString();
                             break;
                         case uaf::opcuatypes::ExpandedNodeId:
                             ss << expandedNodeId_[0].toString();
@@ -597,6 +607,10 @@ namespace uaf
             if (type() == uaf::opcuatypes::NodeId)
             {
                 IMPLEMENT_VARIANT_TOSDK_NATIVE_UAF(NodeId, nodeId_)
+            }
+            else if (type() == uaf::opcuatypes::Guid)
+            {
+                IMPLEMENT_VARIANT_TOSDK_NATIVE_UAF(Guid, guid_)
             }
             else if (type() == uaf::opcuatypes::ExpandedNodeId)
             {
@@ -695,6 +709,7 @@ namespace uaf
     {
         uaVariant_.clear();
         nodeId_.clear();
+        guid_.clear();
         expandedNodeId_.clear();
         qualifiedName_.clear();
         extensionObject_.clear();
@@ -736,6 +751,8 @@ namespace uaf
             {
                 case uaf::opcuatypes::NodeId:
                     return nodeId_.size();
+                case uaf::opcuatypes::Guid:
+                    return guid_.size();
                 case uaf::opcuatypes::ExpandedNodeId:
                     return expandedNodeId_.size();
                 case uaf::opcuatypes::QualifiedName:
@@ -769,6 +786,7 @@ namespace uaf
                    && object1.dataTypeIfNativeUaf_ == object2.dataTypeIfNativeUaf_
                    && object1.expandedNodeId_ == object2.expandedNodeId_
                    && object1.nodeId_ == object2.nodeId_
+                   && object1.guid_ == object2.guid_
                    && object1.qualifiedName_ == object2.qualifiedName_;
         }
     }
@@ -797,6 +815,8 @@ namespace uaf
             return object1.expandedNodeId_ < object2.expandedNodeId_;
         else if (object1.nodeId_ != object2.nodeId_)
             return object1.nodeId_ < object2.nodeId_;
+        else if (object1.guid_ != object2.guid_)
+            return object1.guid_ < object2.guid_;
         else
             return object1.qualifiedName_ < object2.qualifiedName_;
     }

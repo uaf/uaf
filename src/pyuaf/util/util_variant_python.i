@@ -24,6 +24,7 @@
 #include "uaf/util/variant.h"
 #include "uaf/util/primitives.h"
 #include "uaf/util/nodeid.h"
+#include "uaf/util/guid.h"
 #include "uaf/util/expandednodeid.h"
 #include "uaf/util/localizedtext.h"
 #include "uaf/util/extensionobject.h"
