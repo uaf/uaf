@@ -505,34 +505,42 @@ namespace uaf
         // lock the mutex to make sure the sessionMap_ is not being manipulated
         UaMutexLocker locker(&sessionMapMutex_);
 
-        // loop trough the sessions ...
-        for (SessionMap::const_iterator it = sessionMap_.begin(); it != sessionMap_.end(); ++it)
+        // first check if we need to create a new session in any case:
+        if (sessionSettings.unique)
         {
-            // ... until a suitable one is found
-            if (    it->second->serverUri() == serverUri
-                &&  it->second->sessionSettings() == sessionSettings )
+            logger_->debug("The session must be unique");
+        }
+        else
+        {
+            // loop trough the sessions ...
+            for (SessionMap::const_iterator it = sessionMap_.begin(); it != sessionMap_.end(); ++it)
             {
-                session = it->second;
-                logger_->debug("A suitable session (ClientConnectionId=%d) already exists",
-                               session->clientConnectionId());
+                // ... until a suitable one is found
+                if (    it->second->serverUri() == serverUri
+                    &&  it->second->sessionSettings() == sessionSettings )
+                {
+                    session = it->second;
+                    logger_->debug("A suitable session (ClientConnectionId=%d) already exists",
+                                   session->clientConnectionId());
 
-                // get the ClientConnectionId of the session
-                ClientConnectionId id = session->clientConnectionId();
+                    // get the ClientConnectionId of the session
+                    ClientConnectionId id = session->clientConnectionId();
 
-                // increment the activity count of the session
-                activityMapMutex_.lock();
-                activityMap_[id] = activityMap_[id] + 1;
-                activityMapMutex_.unlock();
+                    // increment the activity count of the session
+                    activityMapMutex_.lock();
+                    activityMap_[id] = activityMap_[id] + 1;
+                    activityMapMutex_.unlock();
 
-                ret = statuscodes::Good;
+                    ret = statuscodes::Good;
 
-                break;
+                    break;
+                }
             }
         }
 
         // if no session exists (because none was found, or because it was just deleted),
         // then we create a new one
-        if (ret.isUncertain())//session == 0)
+        if (ret.isUncertain())
         {
             ClientConnectionId clientConnectionId = database_->createUniqueClientConnectionId();
 
