@@ -77,84 +77,80 @@ namespace uaf
          *
          * @param noOfTargets           The number of targets.
          */
-        BaseSubscriptionRequest(std::size_t noOfTargets)
-        : uaf::BaseSessionRequest<_ServiceSettings, _Target, _Async>(noOfTargets),
+        BaseSubscriptionRequest(
+                std::size_t                                       noOfTargets,
+                uaf::ClientConnectionId                           clientConnectionId        = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                const _ServiceSettings*                           serviceSettings           = NULL,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings* translationSettings       = NULL,
+                const uaf::SessionSettings*                       sessionSettings           = NULL,
+                uaf::ClientSubscriptionHandle                     clientSubscriptionHandle  = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                const uaf::SubscriptionSettings*                  subscriptionSettings      = NULL)
+        : uaf::BaseSessionRequest<_ServiceSettings, _Target, _Async>(noOfTargets,
+                                                                     clientConnectionId,
+                                                                     serviceSettings,
+                                                                     translationSettings,
+                                                                     sessionSettings),
           clientSubscriptionHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
-          clientSubscriptionHandleGiven(false),
-          subscriptionSettingsGiven(false)
-        {}
+          clientSubscriptionHandleGiven(clientSubscriptionHandle == uaf::REQUESTHANDLE_NOT_ASSIGNED),
+          subscriptionSettingsGiven(subscriptionSettings != NULL)
+        {
+            if (subscriptionSettings != NULL)
+                subscriptionSettings = *subscriptionSettings;
+        }
 
 
         /**
          * Construct a subscription request with the specified number of targets.
          *
-         * @param noOfTargets           The number of targets.
-         * @param serviceSettings         The service settings.
-         * @param sessionSettings         The session settings.
-         * @param subscriptionSettings    The subscription settings.
+         * @param target                The only target of the request.
          */
         BaseSubscriptionRequest(
-                std::size_t                         noOfTargets,
-                const _ServiceSettings&             serviceSettings,
-                const uaf::SessionSettings&         sessionSettings,
-                const uaf::SubscriptionSettings&    subscriptionSettings)
-        : uaf::BaseSessionRequest<_ServiceSettings, _Target, _Async>(
-                noOfTargets,
-                serviceSettings,
-                sessionSettings),
+                const _Target&                                    target,
+                uaf::ClientConnectionId                           clientConnectionId        = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                const _ServiceSettings*                           serviceSettings           = NULL,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings* translationSettings       = NULL,
+                const uaf::SessionSettings*                       sessionSettings           = NULL,
+                uaf::ClientSubscriptionHandle                     clientSubscriptionHandle  = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                const uaf::SubscriptionSettings*                  subscriptionSettings      = NULL)
+        : uaf::BaseSessionRequest<_ServiceSettings, _Target, _Async>(target,
+                                                                     clientConnectionId,
+                                                                     serviceSettings,
+                                                                     translationSettings,
+                                                                     sessionSettings),
           clientSubscriptionHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
-          clientSubscriptionHandleGiven(false),
-          subscriptionSettings(subscriptionSettings),
-          subscriptionSettingsGiven(true)
-        {}
+          clientSubscriptionHandleGiven(clientSubscriptionHandle == uaf::REQUESTHANDLE_NOT_ASSIGNED),
+          subscriptionSettingsGiven(subscriptionSettings != NULL)
+        {
+            if (subscriptionSettings != NULL)
+                subscriptionSettings = *subscriptionSettings;
+        }
 
 
         /**
-         * Construct a subscription request for a single target.
+         * Construct a subscription request with the specified number of targets.
          *
          * @param target                The only target of the request.
-         * @param serviceSettings         The service settings.
-         * @param sessionSettings         The session settings.
-         * @param subscriptionSettings    The subscription settings.
          */
         BaseSubscriptionRequest(
-                const _Target&                      target,
-                const _ServiceSettings&             serviceSettings,
-                const uaf::SessionSettings&         sessionSettings,
-                const uaf::SubscriptionSettings&    subscriptionSettings)
-        : uaf::BaseSessionRequest<_ServiceSettings, _Target, _Async>(
-                target,
-                serviceSettings,
-                sessionSettings),
+                const typename std::vector<_Target>&              targets,
+                uaf::ClientConnectionId                           clientConnectionId        = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                const _ServiceSettings*                           serviceSettings           = NULL,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings* translationSettings       = NULL,
+                const uaf::SessionSettings*                       sessionSettings           = NULL,
+                uaf::ClientSubscriptionHandle                     clientSubscriptionHandle  = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                const uaf::SubscriptionSettings*                  subscriptionSettings      = NULL)
+        : uaf::BaseSessionRequest<_ServiceSettings, _Target, _Async>(targets,
+                                                                     clientConnectionId,
+                                                                     serviceSettings,
+                                                                     translationSettings,
+                                                                     sessionSettings),
           clientSubscriptionHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
-          clientSubscriptionHandleGiven(false),
-          subscriptionSettings(subscriptionSettings),
-          subscriptionSettingsGiven(true)
-        {}
-
-
-        /**
-         * Construct a subscription request for multiple targets.
-         *
-         * @param targets               The targets of the request.
-         * @param serviceSettings         The service settings.
-         * @param sessionSettings         The session settings.
-         * @param subscriptionSettings    The subscription settings.
-         */
-        BaseSubscriptionRequest(
-                const typename std::vector<_Target>&    targets,
-                const _ServiceSettings&                   serviceSettings      = _ServiceSettings(),
-                const uaf::SessionSettings&              sessionSettings       = uaf::SessionSettings(),
-                const uaf::SubscriptionSettings&         subscriptionSettings  = uaf::SubscriptionSettings())
-        : uaf::BaseSessionRequest<_ServiceSettings, _Target, _Async>(
-                targets,
-                serviceSettings,
-                sessionSettings),
-          clientSubscriptionHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
-          clientSubscriptionHandleGiven(false),
-          subscriptionSettings(subscriptionSettings),
-          subscriptionSettingsGiven(true)
-        {}
+          clientSubscriptionHandleGiven(clientSubscriptionHandle == uaf::REQUESTHANDLE_NOT_ASSIGNED),
+          subscriptionSettingsGiven(subscriptionSettings != NULL)
+        {
+            if (subscriptionSettings != NULL)
+                subscriptionSettings = *subscriptionSettings;
+        }
 
 
         /**
