@@ -186,10 +186,10 @@ namespace uaf
          */
         template<typename _Service>
         uaf::Status invokeService(
+                typename _Service::Invocation&  invocation,
                 const uaf::BaseSubscriptionRequest<typename _Service::Settings,
                                                    typename _Service::RequestTarget,
                                                    _Service::asynchronous>& request,
-                typename _Service::Invocation&  invocation,
                 const uaf::NamespaceArray&      nameSpaceArray,
                 const uaf::ServerArray&         serverArray)
         {
@@ -203,14 +203,23 @@ namespace uaf
             if (invocation.asynchronous())
                 storeRequestHandle(invocation.requestHandle());
 
-            if (request.clientSubscriptionHandleGiven)
-            {
-
-            }
-
             // try to acquire a subscription for the given subscription settings
             uaf::Subscription* subscription = 0;
-            ret = acquireSubscription(invocation.subscriptionSettings(), subscription);
+
+            if (request.clientSubscriptionHandleGiven)
+            {
+                ret = acquireExistingSubscription(request.clientSubscriptionHandle, subscription);
+            }
+            else if (request.subscriptionSettingsGiven)
+            {
+                ret = acquireSubscription(request.subscriptionSettings, subscription);
+            }
+            else
+            {
+                ret = acquireSubscription(
+                        database_->clientSettings.defaultSubscriptionSettings,
+                        subscription);
+            }
 
              // check if the subscription was acquired
             if (ret.isGood())
@@ -223,13 +232,12 @@ namespace uaf
                 {
                     logger_->debug("Forwarding the invocation to subscription %d",
                                    subscription->clientSubscriptionHandle());
-                    ret = subscription->invokeService(
-                            invocation,
-                            nameSpaceArray,
-                            serverArray);
+                    ret = subscription->invokeService(invocation, nameSpaceArray, serverArray);
                 }
                 else
+                {
                     ret = uaf::SubscriptionNotCreatedError();
+                }
 
                 releaseSubscription(subscription);
             }
@@ -270,8 +278,8 @@ namespace uaf
          *                              subscription could be provided via the 'session' argument.
          */
         uaf::Status acquireSubscription(
-                const uaf::SubscriptionSettings&   subscriptionSettings,
-                uaf::Subscription*&                subscription);
+                const uaf::SubscriptionSettings&    subscriptionSettings,
+                uaf::Subscription*&                 subscription);
 
 
         /**
