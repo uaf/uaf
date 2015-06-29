@@ -59,6 +59,7 @@
 %import(module="pyuaf.util.browsedirections")   "pyuaf/util/util_browsedirections.i"
 %import(module="pyuaf.util.nodeclasses")        "pyuaf/util/util_nodeclasses.i"
 %import(module="pyuaf.util.timestampstoreturn") "pyuaf/util/util_timestampstoreturn.i"
+%import(module="pyuaf.util.constants")          "pyuaf/util/util_constants.i"
 %import(module="pyuaf.util")                    "uaf/util/stringifiable.h"
 %import(module="pyuaf.util")                    "uaf/util/browsepath.h"
 
@@ -69,9 +70,6 @@
     %include "pyuaf/util/util_variant_python.i"
 #endif
 
-
-// also import the wrapped xxxxConfigs classes
-%import "pyuaf/client/client_configs.i"
 
 
 // before including any classes in a generic way, specify the "special treatments" of certain classes:
@@ -87,12 +85,12 @@ MAKE_NON_DYNAMIC(uaf::BrowseRequestTarget)
 MAKE_NON_DYNAMIC(uaf::BrowseNextRequestTarget)
 MAKE_NON_DYNAMIC(uaf::WriteRequestTarget)
 MAKE_NON_DYNAMIC(uaf::HistoryReadRawModifiedRequestTarget)
-%ignore operator==(const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2);
-%ignore operator!=(const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2);
-%ignore operator< (const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2);
-%ignore operator==(const BaseSubscriptionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSubscriptionRequest<_ServiceConfig, _Target, _Async>& object2);
-%ignore operator!=(const BaseSubscriptionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSubscriptionRequest<_ServiceConfig, _Target, _Async>& object2);
-%ignore operator< (const BaseSubscriptionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSubscriptionRequest<_ServiceConfig, _Target, _Async>& object2);
+%ignore operator==(const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object1, const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object2);
+%ignore operator!=(const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object1, const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object2);
+%ignore operator< (const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object1, const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object2);
+%ignore operator==(const BaseSubscriptionRequest<_ServiceSettings, _Target, _Async>& object1, const BaseSubscriptionRequest<_ServiceSettings, _Target, _Async>& object2);
+%ignore operator!=(const BaseSubscriptionRequest<_ServiceSettings, _Target, _Async>& object1, const BaseSubscriptionRequest<_ServiceSettings, _Target, _Async>& object2);
+%ignore operator< (const BaseSubscriptionRequest<_ServiceSettings, _Target, _Async>& object1, const BaseSubscriptionRequest<_ServiceSettings, _Target, _Async>& object2);
 
 
 // wrap some classes that are not defined by macros:
@@ -113,16 +111,16 @@ UAF_WRAP_CLASS("uaf/client/requests/basesubscriptionrequest.h"                  
 
 // define a macro to create synchronous session requests
 %define CREATE_UAF_SYNC_SESSIONREQUEST(SERVICE)
-    %template(_##SERVICE##Request) uaf::BaseSessionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, false>;
+    %template(_##SERVICE##Request) uaf::BaseSessionRequest< uaf::BaseServiceSettings<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, false>;
     
     %pythoncode %{
     class SERVICE##Request(_##SERVICE##Request):
-        def __init__(self, targets=0, serviceConfig=None, sessionConfig=None):
-            if serviceConfig is None:
-                serviceConfig = configs.SERVICE##Config()
-            if sessionConfig is None:
-                sessionConfig = configs.SessionConfig()
-            _##SERVICE##Request.__init__(self, targets, serviceConfig, sessionConfig)
+        def __init__(self, targets=0, serviceSettings=None, sessionSettings=None):
+            if serviceSettings is None:
+                serviceSettings = configs.SERVICE##Settings()
+            if sessionSettings is None:
+                sessionSettings = configs.SessionSettings()
+            _##SERVICE##Request.__init__(self, targets, serviceSettings, sessionSettings)
         def __repr__(self):
             return pyuaf.util.__get__repr__("pyuaf.client.requests." + #SERVICE + "Request", str(self))
     %}
@@ -133,16 +131,16 @@ UAF_WRAP_CLASS("uaf/client/requests/basesubscriptionrequest.h"                  
 
 // define a macro to create asynchronous session requests
 %define CREATE_UAF_ASYNC_SESSIONREQUEST(SERVICE)
-    %template(_Async##SERVICE##Request) uaf::BaseSessionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, true>;
+    %template(_Async##SERVICE##Request) uaf::BaseSessionRequest< uaf::BaseServiceSettings<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, true>;
     
     %pythoncode %{
     class Async##SERVICE##Request(_Async##SERVICE##Request):
-        def __init__(self, targets=0, serviceConfig=None, sessionConfig=None):
-            if serviceConfig is None:
-                serviceConfig = configs.SERVICE##Config()
-            if sessionConfig is None:
-                sessionConfig = configs.SessionConfig()
-            _Async##SERVICE##Request.__init__(self, targets, serviceConfig, sessionConfig)
+        def __init__(self, targets=0, serviceSettings=None, sessionSettings=None):
+            if serviceSettings is None:
+                serviceSettings = configs.SERVICE##Settings()
+            if sessionSettings is None:
+                sessionSettings = configs.SessionSettings()
+            _Async##SERVICE##Request.__init__(self, targets, serviceSettings, sessionSettings)
         def __repr__(self):
             return pyuaf.util.__get__repr__("pyuaf.client.requests.Async" + #SERVICE + "Request", str(self))
     %}
@@ -168,19 +166,19 @@ CREATE_UAF_ASYNC_SESSIONREQUEST(MethodCall)
 
 // define a macro to create synchronous subscription requests
 %define CREATE_UAF_SYNC_SUBSCRIPTIONREQUEST(SERVICE)
-    %template(Base##SERVICE##Request) uaf::BaseSessionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, false>;
-    %template(_##SERVICE##Request) uaf::BaseSubscriptionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, false>;
+    %template(Base##SERVICE##Request) uaf::BaseSessionRequest< uaf::BaseServiceSettings<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, false>;
+    %template(_##SERVICE##Request) uaf::BaseSubscriptionRequest< uaf::BaseServiceSettings<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, false>;
 
     %pythoncode %{
     class SERVICE##Request(_##SERVICE##Request):
-        def __init__(self, targets=0, serviceConfig=None, sessionConfig=None, subscriptionConfig=None):
-            if serviceConfig is None:
-                serviceConfig = configs.SERVICE##Config()
-            if sessionConfig is None:
-                sessionConfig = configs.SessionConfig()
-            if subscriptionConfig is None:
-                subscriptionConfig = configs.SubscriptionConfig()
-            _##SERVICE##Request.__init__(self, targets, serviceConfig, sessionConfig, subscriptionConfig)
+        def __init__(self, targets=0, serviceSettings=None, sessionSettings=None, subscriptionSettings=None):
+            if serviceSettings is None:
+                serviceSettings = configs.SERVICE##Settings()
+            if sessionSettings is None:
+                sessionSettings = configs.SessionSettings()
+            if subscriptionSettings is None:
+                subscriptionSettings = configs.SubscriptionSettings()
+            _##SERVICE##Request.__init__(self, targets, serviceSettings, sessionSettings, subscriptionSettings)
         def __repr__(self):
             return pyuaf.util.__get__repr__("pyuaf.client.requests." + #SERVICE + "Request", str(self))
     %}
@@ -189,19 +187,19 @@ CREATE_UAF_ASYNC_SESSIONREQUEST(MethodCall)
 
 // define a macro to create asynchronous subscription requests
 %define CREATE_UAF_ASYNC_SUBSCRIPTIONREQUEST(SERVICE)
-    %template(BaseAsync##SERVICE##Request) uaf::BaseSessionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, true>;
-    %template(_Async##SERVICE##Request) uaf::BaseSubscriptionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, true> ;
+    %template(BaseAsync##SERVICE##Request) uaf::BaseSessionRequest< uaf::BaseServiceSettings<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, true>;
+    %template(_Async##SERVICE##Request) uaf::BaseSubscriptionRequest< uaf::BaseServiceSettings<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, true> ;
 
     %pythoncode %{
     class Async##SERVICE##Request(_Async##SERVICE##Request):
-        def __init__(self, targets=0, serviceConfig=None, sessionConfig=None, subscriptionConfig=None):
-            if serviceConfig is None:
-                serviceConfig = configs.SERVICE##Config()
-            if sessionConfig is None:
-                sessionConfig = configs.SessionConfig()
-            if subscriptionConfig is None:
-                subscriptionConfig = configs.SubscriptionConfig()
-            _Async##SERVICE##Request.__init__(self, targets, serviceConfig, sessionConfig, subscriptionConfig)
+        def __init__(self, targets=0, serviceSettings=None, sessionSettings=None, subscriptionSettings=None):
+            if serviceSettings is None:
+                serviceSettings = configs.SERVICE##Settings()
+            if sessionSettings is None:
+                sessionSettings = configs.SessionSettings()
+            if subscriptionSettings is None:
+                subscriptionSettings = configs.SubscriptionSettings()
+            _Async##SERVICE##Request.__init__(self, targets, serviceSettings, sessionSettings, subscriptionSettings)
         def __repr__(self):
             return pyuaf.util.__get__repr__("pyuaf.client.requests.Async" + #SERVICE + "Request", str(self))
     %}
