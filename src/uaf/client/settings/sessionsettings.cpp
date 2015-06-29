@@ -37,6 +37,7 @@ namespace uaf
         connectTimeoutSec          = 2.0;
         watchdogTimeoutSec         = 2.0;
         watchdogTimeSec            = 5.0;
+        unique                     = false;
         securitySettingsList.resize(1);
 
     }
@@ -59,6 +60,9 @@ namespace uaf
         ss << indent << " - watchdogTimeSec";
         ss << fillToPos(ss, colon);
         ss << ": " << watchdogTimeSec;
+        ss << indent << " - unique";
+        ss << fillToPos(ss, colon);
+        ss << ": " << (unique ? "true" : "false");
 
         return ss.str();
     }
@@ -78,6 +82,8 @@ namespace uaf
             return int(object1.watchdogTimeoutSec*1000) < int(object2.watchdogTimeoutSec*1000);
         else if (int(object1.watchdogTimeSec*1000) != int(object2.watchdogTimeSec*1000))
             return int(object1.watchdogTimeSec*1000) < int(object2.watchdogTimeSec*1000);
+        else if (object1.unique != object2.unique)
+            return object1.unique < object2.unique;
         else
             return false;
     }
@@ -92,7 +98,8 @@ namespace uaf
         return ( (int(object1.sessionTimeoutSec*1000)  == int(object2.sessionTimeoutSec*1000))
            &&    (int(object1.connectTimeoutSec*1000)  == int(object2.connectTimeoutSec*1000))
            &&    (int(object1.watchdogTimeoutSec*1000) == int(object2.watchdogTimeoutSec*1000))
-           &&    (int(object1.watchdogTimeSec*1000)    == int(object2.watchdogTimeSec*1000)));
+           &&    (int(object1.watchdogTimeSec*1000)    == int(object2.watchdogTimeSec*1000)))
+           &&    object1.unique == object2.unique;
     }
 
 

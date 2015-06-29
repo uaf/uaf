@@ -56,6 +56,7 @@ namespace uaf
          *   - connectTimeoutSec  = 2.0
          *   - watchdogTimeoutSec = 2.0
          *   - watchdogTimeSec    = 5.0
+         *   - unique             = false
          */
         SessionSettings();
 
@@ -70,6 +71,9 @@ namespace uaf
 
         /** The timeout of watchdog calls. **/
         double      watchdogTimeoutSec;
+
+        /** Should this session that uses these settings be unique, or not? **/
+        bool        unique;
 
         /** The settings to be used to read the namespace array and server array, when the session
          *  is first connected (UAF clients will do this automatically in the background). */
