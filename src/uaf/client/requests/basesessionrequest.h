@@ -78,15 +78,27 @@ namespace uaf
          *
          * @param noOfTargets   The number of targets.
          */
-        BaseSessionRequest(std::size_t noOfTargets)
+        BaseSessionRequest(
+                std::size_t                                       noOfTargets,
+                uaf::ClientConnectionId                           clientConnectionId  = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                const _ServiceSettings*                           serviceSettings     = NULL,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings* translationSettings = NULL,
+                const uaf::SessionSettings*                       sessionSettings     = NULL)
         : targets(noOfTargets),
-          serviceSettingsGiven(false),
-          translateSettingsGiven(false),
-          clientConnectionId(uaf::CLIENTHANDLE_NOT_ASSIGNED),
-          clientConnectionIdGiven(false),
-          sessionSettingsGiven(false),
+          clientConnectionId(clientConnectionId),
+          clientConnectionIdGiven(clientConnectionId != uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          serviceSettingsGiven(serviceSettings != NULL),
+          translateSettingsGiven(translationSettings != NULL),
+          sessionSettingsGiven(sessionSettings != NULL),
           requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
-        {}
+        {
+            if (serviceSettings != NULL)
+                serviceSettings = *serviceSettings;
+            if (translationSettings != NULL)
+                translationSettings = *translationSettings;
+            if (sessionSettings != NULL)
+                sessionSettings = *sessionSettings;
+        }
 
 
         /**
@@ -94,93 +106,77 @@ namespace uaf
          *
          * @param noOfTargets   The number of targets.
          */
-        BaseSessionRequest(std::size_t noOfTargets, uaf::ClientConnectionId clientConnectionId)
-        : targets(noOfTargets),
-          serviceSettingsGiven(false),
-          translateSettingsGiven(false),
-          clientConnectionId(clientConnectionId),
-          clientConnectionIdGiven(true),
-          sessionSettingsGiven(false),
+        BaseSessionRequest(
+                const _Target&                                    target,
+                uaf::ClientConnectionId                           clientConnectionId  = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                const _ServiceSettings*                           serviceSettings     = NULL,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings* translationSettings = NULL,
+                const uaf::SessionSettings*                       sessionSettings     = NULL)
+        : clientConnectionId(clientConnectionId),
+          clientConnectionIdGiven(clientConnectionId != uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          serviceSettingsGiven(serviceSettings != NULL),
+          translateSettingsGiven(translationSettings != NULL),
+          sessionSettingsGiven(sessionSettings != NULL),
           requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
-        {}
+        {
+            targets.push_back(target);
+
+            if (serviceSettings != NULL)
+                serviceSettings = *serviceSettings;
+            if (translationSettings != NULL)
+                translationSettings = *translationSettings;
+            if (sessionSettings != NULL)
+                sessionSettings = *sessionSettings;
+        }
 
 
         /**
-         * Construct a session request with the specified number of targets.
+         * Construct an empty session request.
          *
          * @param noOfTargets   The number of targets.
-         * @param serviceConfig The service config.
-         * @param sessionConfig The session config.
          */
         BaseSessionRequest(
-                std::size_t                 noOfTargets,
-                const _ServiceSettings&     serviceSettings,
-                const uaf::SessionSettings& sessionSettings)
-        : targets(noOfTargets),
-          serviceSettings(serviceSettings),
-          serviceSettingsGiven(true),
-          translateSettingsGiven(false),
-          clientConnectionId(uaf::CLIENTHANDLE_NOT_ASSIGNED),
-          clientConnectionIdGiven(false),
-          sessionSettings(sessionSettings),
-          sessionSettingsGiven(true),
-          requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
-        {}
-
-
-        /**
-         * Construct a session request with the specified target.
-         *
-         * @param target        A single target.
-         * @param serviceConfig The service config.
-         * @param sessionConfig The session config.
-         */
-        BaseSessionRequest(
-                const _Target&              target,
-                const _ServiceSettings&     serviceSettings,
-                const uaf::SessionSettings& sessionSettings)
-        : serviceSettings(serviceSettings),
-          serviceSettingsGiven(true),
-          translateSettingsGiven(false),
-          clientConnectionId(uaf::CLIENTHANDLE_NOT_ASSIGNED),
-          clientConnectionIdGiven(false),
-          sessionSettings(sessionSettings),
-          sessionSettingsGiven(true),
-          requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
-        { targets.push_back(target); }
-
-
-        /**
-         * Construct a session request with the specifiedtargets.
-         *
-         * @param targets       The targets.
-         * @param serviceConfig The service config.
-         * @param sessionConfig The session config.
-         */
-        BaseSessionRequest(
-                const typename std::vector<_Target>&    targets,
-                const _ServiceSettings&                 serviceSettings,
-                const uaf::SessionSettings&             sessionSettings)
+                const typename std::vector<_Target>&              targets,
+                uaf::ClientConnectionId                           clientConnectionId  = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                const _ServiceSettings*                           serviceSettings     = NULL,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings* translationSettings = NULL,
+                const uaf::SessionSettings*                       sessionSettings     = NULL)
         : targets(targets),
-          serviceSettings(serviceSettings),
-          serviceSettingsGiven(true),
-          translateSettingsGiven(false),
-          clientConnectionId(uaf::CLIENTHANDLE_NOT_ASSIGNED),
-          clientConnectionIdGiven(false),
-          sessionSettings(sessionSettings),
-          sessionSettingsGiven(true),
+          clientConnectionId(clientConnectionId),
+          clientConnectionIdGiven(clientConnectionId != uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          serviceSettingsGiven(serviceSettings != NULL),
+          translateSettingsGiven(translationSettings != NULL),
+          sessionSettingsGiven(sessionSettings != NULL),
           requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
-        {}
+        {
+            if (serviceSettings != NULL)
+                serviceSettings = *serviceSettings;
+            if (translationSettings != NULL)
+                translationSettings = *translationSettings;
+            if (sessionSettings != NULL)
+                sessionSettings = *sessionSettings;
+        }
 
 
         /** The targets. */
         typename std::vector<_Target> targets;
 
 
+        /**
+         * The ClientConnectionId, identifying the session to invoke the request.
+         * Only used if connectionPolicy equals uaf::sessionpolicies::KnownClientConnectionId.
+         */
+        uaf::ClientConnectionId clientConnectionId;
+
+
+        bool clientConnectionIdGiven;
+
+
         /** Service settings to invoke the request, if serviceSettingsGiven is true.
          *  If serviceSettingsGiven is false, then the default service settings will be used
          *  (as can be configured by uaf::Client::setClientSettings). */
         _ServiceSettings serviceSettings;
+
 
         /** True if the serviceSettings are given, false if not. */
         bool serviceSettingsGiven;
@@ -195,15 +191,6 @@ namespace uaf
 
         /** True if the translateSettings are given, false if not. */
         bool translateSettingsGiven;
-
-        /**
-         * The ClientConnectionId, identifying the session to invoke the request.
-         * Only used if connectionPolicy equals uaf::sessionpolicies::KnownClientConnectionId.
-         */
-        uaf::ClientConnectionId clientConnectionId;
-
-
-        bool clientConnectionIdGiven;
 
         /** Session settings to use, to create new session(s) to invoke the request, if
          * clientConnectionIdGiven is false and sessionSettingsGiven is true.
@@ -266,6 +253,16 @@ namespace uaf
                 }
             }
 
+            ss << indent << " - clientConnectionIdGiven";
+            ss << uaf::fillToPos(ss, colon);
+            ss << ": " << (clientConnectionIdGiven ? "true" : "false") << "\n";
+
+            ss << indent << " - clientConnectionId\n";
+            if (clientConnectionId == uaf::CLIENTHANDLE_NOT_ASSIGNED)
+                ss << ": NOT_ASSIGNED\n";
+            else
+                ss << ": " << clientConnectionId << "\n";
+
             ss << indent << " - serviceSettingsGiven";
             ss << uaf::fillToPos(ss, colon);
             ss << ": " << (serviceSettingsGiven ? "true" : "false") << "\n";
@@ -285,16 +282,6 @@ namespace uaf
                 ss << "\n" << translateSettings.toString(indent + "   ", colon) << "\n";
             else
                 ss << uaf::fillToPos(ss, colon) << ": (not given)\n";
-
-            ss << indent << " - clientConnectionIdGiven";
-            ss << uaf::fillToPos(ss, colon);
-            ss << ": " << (clientConnectionIdGiven ? "true" : "false") << "\n";
-
-            ss << indent << " - clientConnectionId\n";
-            if (clientConnectionId == uaf::CLIENTHANDLE_NOT_ASSIGNED)
-                ss << ": NOT_ASSIGNED\n";
-            else
-                ss << ": " << clientConnectionId << "\n";
 
             ss << indent << " - sessionSettingsGiven";
             ss << uaf::fillToPos(ss, colon);
