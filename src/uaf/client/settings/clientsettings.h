@@ -219,7 +219,7 @@ namespace uaf
          * The default session settings.
          *
          * These settings will be used to create the sessions to servers that aren't specified in
-         * the 'specificSessionSettings' map (unless 'useOnlySpecificSettings' is true).
+         * the 'specificSessionSettings' map.
          */
         uaf::SessionSettings defaultSessionSettings;
 
@@ -229,6 +229,13 @@ namespace uaf
          */
         std::map<std::string, uaf::SessionSettings> specificSessionSettings;
 
+        /**
+         * The default session settings.
+         *
+         * These settings will be used to create the sessions to servers that aren't specified in
+         * the 'specificSessionSettings' map.
+         */
+        uaf::SubscriptionSettings defaultSubscriptionSettings;
 
         /**
          * Create the security locations (directories).
