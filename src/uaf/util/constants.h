@@ -26,6 +26,7 @@
 #include <vector>
 #include <stdint.h>
 // SDK
+#include "uabase/uaplatformlayer.h"
 // UAF
 
 namespace uaf
@@ -40,6 +41,18 @@ namespace uaf
 
         /** The OPC UA NameSpace ID. */
         static const uint16_t OPCUA_NAMESPACE_ID = 0;
+
+        /** Client handle value when it was not assigned. */
+        static const uint32_t CLIENTHANDLE_NOT_ASSIGNED = OpcUa_UInt32_Max;
+
+        /** Maximum client handle value. */
+        static const uint32_t CLIENTHANDLE_MAX = OpcUa_UInt32_Max - 1;
+
+        /** RequestHandle value when it was not assigned. */
+        static const uaf::RequestHandle REQUESTHANDLE_NOT_ASSIGNED = OpcUa_UInt64_Max;
+
+        /** Maximum RequestHandle value. */
+        static const uaf::RequestHandle REQUESTHANDLE_MAX          = OpcUa_UInt64_Max - 1;
 
     }
 
