@@ -164,6 +164,12 @@ namespace uaf
                 targets[i].fromSdk(UaDataValue(uaDataValues_[i]));
                 nameSpaceArray.fillVariant(targets[i].data);
                 serverArray.fillVariant(targets[i].data);
+
+                // update the status
+                if (OpcUa_IsGood(uaDataValues_[i].StatusCode))
+                    targets[i].status = statuscodes::Good;
+                else
+                    targets[i].status = ServerCouldNotReadError(SdkStatus(uaDataValues_[i].StatusCode));
             }
 
             ret = statuscodes::Good;
