@@ -446,6 +446,11 @@
 
     * Attributes
     
+    
+        .. autoattribute:: pyuaf.client.results.BrowseResultTarget.opcUaStatusCode
+
+            Status, as an OPC UA status code (an ``int``). Compare to those defined in :mod:`pyuaf.util.opcuastatuscodes`.
+    
         .. autoattribute:: pyuaf.client.results.BrowseResultTarget.status
 
             Status of the result target (Good if the request target was browsed, Bad if not), 
@@ -601,7 +606,7 @@
     
         .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.opcUaStatusCode
 
-            OPC UA Status code, as reported by the server (an ``int``).
+            Status, as an OPC UA status code (an ``int``). Compare to those defined in :mod:`pyuaf.util.opcuastatuscodes`.
     
         .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.clientConnectionId
 
@@ -782,9 +787,9 @@
             Status of the result (Good if the monitored item was created, Bad if not), 
             as a :class:`~pyuaf.util.Status` instance.
     
-        .. autoattribute:: pyuaf.client.results.CreateMonitoredDataResultTarget.opcUaStatusCode
+        .. autoattribute:: pyuaf.client.results.CreateMonitoredEventsResultTarget.opcUaStatusCode
 
-            OPC UA Status code, as reported by the server (an ``int``).
+            Status, as an OPC UA status code (an ``int``). Compare to those defined in :mod:`pyuaf.util.opcuastatuscodes`.
     
         .. autoattribute:: pyuaf.client.results.CreateMonitoredEventsResultTarget.clientConnectionId
 
@@ -930,6 +935,10 @@
 
 
     * Attributes
+    
+        .. autoattribute:: pyuaf.client.results.HistoryReadRawModifiedResultTarget.opcUaStatusCode
+
+            Status, as an OPC UA status code (an ``int``). Compare to those defined in :mod:`pyuaf.util.opcuastatuscodes`.
     
         .. autoattribute:: pyuaf.client.results.HistoryReadRawModifiedResultTarget.status
 
@@ -1099,6 +1108,10 @@
 
     * Attributes
     
+        .. autoattribute:: pyuaf.client.results.MethodCallResultTarget.opcUaStatusCode
+
+            Status, as an OPC UA status code (an ``int``). Compare to those defined in :mod:`pyuaf.util.opcuastatuscodes`.
+    
         .. autoattribute:: pyuaf.client.results.MethodCallResultTarget.status
 
             Status of the result target (Good if the request target was called successfully, 
@@ -1251,6 +1264,10 @@
 
     * Attributes inherited from :class:`pyuaf.util.DataValue`
     
+        .. autoattribute:: pyuaf.client.results.ReadResultTarget.opcUaStatusCode
+
+            Status, as an OPC UA status code (an ``int``). Compare to those defined in :mod:`pyuaf.util.opcuastatuscodes`.
+    
     
         .. autoattribute:: pyuaf.client.results.ReadResultTarget.status
         
@@ -1397,6 +1414,10 @@
 
     * Attributes
     
+        .. autoattribute:: pyuaf.client.results.TranslateBrowsePathsToNodeIdsResultTarget.opcUaStatusCode
+
+            Status, as an OPC UA status code (an ``int``). Compare to those defined in :mod:`pyuaf.util.opcuastatuscodes`.
+    
         .. autoattribute:: pyuaf.client.results.TranslateBrowsePathsToNodeIdsResultTarget.status
 
             Status of the result target (Good if the request target was translated, Bad if not), 
@@ -1533,6 +1554,10 @@
 
 
     * Attributes
+    
+        .. autoattribute:: pyuaf.client.results.WriteResultTarget.opcUaStatusCode
+
+            Status, as an OPC UA status code (an ``int``). Compare to those defined in :mod:`pyuaf.util.opcuastatuscodes`.
     
         .. autoattribute:: pyuaf.client.results.WriteResultTarget.status
 

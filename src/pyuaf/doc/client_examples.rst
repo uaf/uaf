@@ -38,23 +38,13 @@ How to read some historical data?
 
 
 
-.. _sessionconfig-example: 
+.. _configure-settings-example: 
 
 
-How to change the default session behavior?
+How to configure all settings?
 ====================================================================================================
 
-.. literalinclude:: ../../../examples/pyuaf/client/how_to_change_the_default_session_behavior.py
-
-
-
-
-.. _subscriptionconfig-example: 
-
-How to change the default subscription_behavior?
-====================================================================================================
-
-.. literalinclude:: ../../../examples/pyuaf/client/how_to_change_the_default_subscription_behavior.py
+.. literalinclude:: ../../../examples/pyuaf/client/how_to_configure_all_settings.py
 
 
 .. _manual-connection-to-endpoint: 

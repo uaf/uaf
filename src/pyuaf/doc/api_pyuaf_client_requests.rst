@@ -103,12 +103,6 @@
                  - a single target (a :class:`~pyuaf.client.requests.BrowseNextRequestTarget`)
                  - a vector of targets (a :class:`~pyuaf.client.requests.BrowseNextRequestTargetVector`)
     
-            :param serviceConfig: The config for the service settings.
-            :type serviceConfig: :class:`~pyuaf.client.configs.BrowseNextConfig`
-    
-            :param sessionConfig: The config containing the session settings.
-            :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
-    
         .. automethod:: pyuaf.client.requests.BrowseNextRequest.__str__
     
             Get a formatted string representation of the request.
@@ -120,13 +114,52 @@
 
             The targets, as a :class:`~pyuaf.client.requests.BrowseNextRequestTargetVector`.
     
-        .. autoattribute:: pyuaf.client.requests.BrowseNextRequest.serviceConfig
-
-            The service config, as a :class:`~pyuaf.client.configs.BrowseNextConfig`.
+        .. autoattribute:: pyuaf.client.requests.BrowseNextRequest.clientConnectionIdGiven
+        
+            True if the clientConnectionId attribute will be used, False if not. 
+            Type is ``bool``.
     
-        .. autoattribute:: pyuaf.client.requests.BrowseNextRequest.sessionConfig
-
-            The session config, as a :class:`~pyuaf.client.configs.SessionConfig`.
+        .. autoattribute:: pyuaf.client.requests.BrowseNextRequest.clientConnectionId
+        
+            If clientConnectionIdGiven is True, then this clientConnectionId should point to an 
+            existing session, which will be used to process the request.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseNextRequest.sessionSettingsGiven
+        
+            True if the sessionSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseNextRequest.sessionSettings
+        
+            If sessionSettingsGiven is True (and clientConnectionIdGiven is False) then this 
+            sessionSettings will be used to create or reuse a session.
+            Type is :class:`~pyuaf.client.settings.SessionSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseNextRequest.serviceSettingsGiven
+        
+            True if the serviceSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseNextRequest.serviceSettings
+        
+            If serviceSettingsGiven is True then this 
+            serviceSettings will be used to process the request.
+            Type is :class:`~pyuaf.client.settings.BrowseNextSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseNextRequest.translateSettingsGiven
+        
+            True if the translateSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseNextRequest.translateSettings
+        
+            If translateSettingsGiven is True then this 
+            translateSettings will be used to translate any browsepaths.
+            Type is :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`.
+            
+    
 
 
 *class* BrowseNextRequestTarget
@@ -247,11 +280,6 @@
                  - a single target (a :class:`~pyuaf.client.requests.BrowseRequestTarget`)
                  - a vector of targets (a :class:`~pyuaf.client.requests.BrowseRequestTargetVector`)
     
-            :param serviceConfig: The config for the service settings.
-            :type serviceConfig: :class:`~pyuaf.client.configs.BrowseConfig`
-    
-            :param sessionConfig: The config containing the session settings.
-            :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
     
         .. method:: __str__()
     
@@ -264,13 +292,50 @@
 
             The targets, as a :class:`~pyuaf.client.requests.BrowseRequestTargetVector`.
     
-        .. autoattribute:: pyuaf.client.requests.BrowseRequest.serviceConfig
-
-            The service config, as a :class:`~pyuaf.client.configs.BrowseConfig`.
+        .. autoattribute:: pyuaf.client.requests.BrowseNextRequest.clientConnectionIdGiven
+        
+            True if the clientConnectionId attribute will be used, False if not. 
+            Type is ``bool``.
     
-        .. autoattribute:: pyuaf.client.requests.BrowseRequest.sessionConfig
-
-            The session config, as a :class:`~pyuaf.client.configs.SessionConfig`.
+        .. autoattribute:: pyuaf.client.requests.BrowseRequest.clientConnectionId
+        
+            If clientConnectionIdGiven is True, then this clientConnectionId should point to an 
+            existing session, which will be used to process the request.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseRequest.sessionSettingsGiven
+        
+            True if the sessionSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseRequest.sessionSettings
+        
+            If sessionSettingsGiven is True (and clientConnectionIdGiven is False) then this 
+            sessionSettings will be used to create or reuse a session.
+            Type is :class:`~pyuaf.client.settings.SessionSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseRequest.serviceSettingsGiven
+        
+            True if the serviceSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseRequest.serviceSettings
+        
+            If serviceSettingsGiven is True then this 
+            serviceSettings will be used to process the request.
+            Type is :class:`~pyuaf.client.settings.BrowseSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseRequest.translateSettingsGiven
+        
+            True if the translateSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.BrowseRequest.translateSettings
+        
+            If translateSettingsGiven is True then this 
+            translateSettings will be used to translate any browsepaths.
+            Type is :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`.
 
 
 
@@ -441,15 +506,6 @@
                              - a single target (a :class:`~pyuaf.client.requests.CreateMonitoredDataRequestTarget`)
                              - a vector of targets (a :class:`~pyuaf.client.requests.CreateMonitoredDataRequestTargetVector`)
     
-            :param serviceConfig: The config for the service settings.
-            :type serviceConfig: :class:`~pyuaf.client.configs.CreateMonitoredDataConfig`
-    
-            :param sessionConfig: The config containing the session settings.
-            :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
-    
-            :param subscriptionConfig: The config containing the subscription settings.
-            :type subscriptionConfig: :class:`~pyuaf.client.configs.SubscriptionConfig`
-    
         .. method:: __str__()
     
             Get a formatted string representation of the request.
@@ -461,17 +517,71 @@
 
             The targets, as a :class:`~pyuaf.client.requests.CreateMonitoredDataRequestTargetVector`.
     
-        .. autoattribute:: pyuaf.client.requests.CreateMonitoredDataRequest.serviceConfig
-
-            The service config, as a :class:`~pyuaf.client.configs.CreateMonitoredDataConfig`.
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredDataRequest.clientConnectionIdGiven
+        
+            True if the clientConnectionId attribute will be used, False if not. 
+            Type is ``bool``.
     
-        .. autoattribute:: pyuaf.client.requests.CreateMonitoredDataRequest.sessionConfig
-
-            The session config, as a :class:`~pyuaf.client.configs.SessionConfig`.
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredDataRequest.clientConnectionId
+        
+            If clientConnectionIdGiven is True, then this clientConnectionId should point to an 
+            existing session, which will be used to process the request.
     
-        .. autoattribute:: pyuaf.client.requests.CreateMonitoredDataRequest.subscriptionConfig
-
-            The subscription config, as a :class:`~pyuaf.client.configs.SubscriptionConfig`.
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredDataRequest.sessionSettingsGiven
+        
+            True if the sessionSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredDataRequest.sessionSettings
+        
+            If sessionSettingsGiven is True (and clientConnectionIdGiven is False) then this 
+            sessionSettings will be used to create or reuse a session.
+            Type is :class:`~pyuaf.client.settings.SessionSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredDataRequest.serviceSettingsGiven
+        
+            True if the serviceSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredDataRequest.serviceSettings
+        
+            If serviceSettingsGiven is True then this 
+            serviceSettings will be used to process the request.
+            Type is :class:`~pyuaf.client.settings.CreateMonitoredEventsSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredDataRequest.translateSettingsGiven
+        
+            True if the translateSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredDataRequest.translateSettings
+        
+            If translateSettingsGiven is True then this 
+            translateSettings will be used to translate any browsepaths.
+            Type is :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`.
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredDataRequest.clientSubscriptionHandleGiven
+        
+            True if the clientSubscriptionHandle attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredDataRequest.clientSubscriptionHandle
+        
+            If clientSubscriptionHandleGiven is True, then this clientSubscriptionHandle should point to an 
+            existing subscription, which will be used to process the request.
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredDataRequest.subscriptionSettingsGiven
+        
+            True if the subscriptionSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredDataRequest.subscriptionSettings
+        
+            If subscriptionSettingsGiven is True (and clientSubscriptionHandleGiven is False) then this 
+            subscriptionSettings will be used to create or reuse a subscription.
+            Type is :class:`~pyuaf.client.settings.SubscriptionSettings`.
 
 
 *class* CreateMonitoredDataRequestTarget
@@ -606,15 +716,6 @@
                              - a single target (a :class:`~pyuaf.client.requests.CreateMonitoredEventsRequestTarget`)
                              - a vector of targets (a :class:`~pyuaf.client.requests.CreateMonitoredEventsRequestTargetVector`)
     
-            :param serviceConfig: The config for the service settings.
-            :type serviceConfig: :class:`~pyuaf.client.configs.CreateMonitoredEventsConfig`
-    
-            :param sessionConfig: The config containing the session settings.
-            :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
-    
-            :param subscriptionConfig: The config containing the subscription settings.
-            :type subscriptionConfig: :class:`~pyuaf.client.configs.SubscriptionConfig`
-    
         .. method:: __str__()
     
             Get a formatted string representation of the request.
@@ -626,17 +727,71 @@
 
             The targets, as a :class:`~pyuaf.client.requests.CreateMonitoredEventsRequestTargetVector`.
     
-        .. autoattribute:: pyuaf.client.requests.CreateMonitoredEventsRequest.serviceConfig
-
-            The service config, as a :class:`~pyuaf.client.configs.CreateMonitoredEventsConfig`.
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredEventsRequest.clientConnectionIdGiven
+        
+            True if the clientConnectionId attribute will be used, False if not. 
+            Type is ``bool``.
     
-        .. autoattribute:: pyuaf.client.requests.CreateMonitoredEventsRequest.sessionConfig
-
-            The session config, as a :class:`~pyuaf.client.configs.SessionConfig`.
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredEventsRequest.clientConnectionId
+        
+            If clientConnectionIdGiven is True, then this clientConnectionId should point to an 
+            existing session, which will be used to process the request.
     
-        .. autoattribute:: pyuaf.client.requests.CreateMonitoredEventsRequest.subscriptionConfig
-
-            The subscription config, as a :class:`~pyuaf.client.configs.SubscriptionConfig`.
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredEventsRequest.sessionSettingsGiven
+        
+            True if the sessionSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredEventsRequest.sessionSettings
+        
+            If sessionSettingsGiven is True (and clientConnectionIdGiven is False) then this 
+            sessionSettings will be used to create or reuse a session.
+            Type is :class:`~pyuaf.client.settings.SessionSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredEventsRequest.serviceSettingsGiven
+        
+            True if the serviceSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredEventsRequest.serviceSettings
+        
+            If serviceSettingsGiven is True then this 
+            serviceSettings will be used to process the request.
+            Type is :class:`~pyuaf.client.settings.CreateMonitoredEventsSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredEventsRequest.translateSettingsGiven
+        
+            True if the translateSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredEventsRequest.translateSettings
+        
+            If translateSettingsGiven is True then this 
+            translateSettings will be used to translate any browsepaths.
+            Type is :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`.
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredEventsRequest.clientSubscriptionHandleGiven
+        
+            True if the clientSubscriptionHandle attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredEventsRequest.clientSubscriptionHandle
+        
+            If clientSubscriptionHandleGiven is True, then this clientSubscriptionHandle should point to an 
+            existing subscription, which will be used to process the request.
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredEventsRequest.subscriptionSettingsGiven
+        
+            True if the subscriptionSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.CreateMonitoredEventsRequest.subscriptionSettings
+        
+            If subscriptionSettingsGiven is True (and clientSubscriptionHandleGiven is False) then this 
+            subscriptionSettings will be used to create or reuse a subscription.
+            Type is :class:`~pyuaf.client.settings.SubscriptionSettings`.
 
 
 *class* CreateMonitoredEventsRequestTarget
@@ -767,12 +922,6 @@
                  - a single target (a :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequestTarget`)
                  - a vector of targets (a :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequestTargetVector`)
     
-            :param serviceConfig: The config for the service settings.
-            :type serviceConfig: :class:`~pyuaf.client.configs.HistoryReadRawModifiedConfig`
-    
-            :param sessionConfig: The config containing the session settings.
-            :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
-    
         .. method:: __str__()
     
             Get a formatted string representation of the request.
@@ -784,13 +933,50 @@
 
             The targets, as a :class:`~pyuaf.client.requests.HistoryReadRawModifiedRequestTargetVector`.
     
-        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequest.serviceConfig
-
-            The service config, as a :class:`~pyuaf.client.configs.HistoryReadRawModifiedConfig`.
+        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequest.clientConnectionIdGiven
+        
+            True if the clientConnectionId attribute will be used, False if not. 
+            Type is ``bool``.
     
-        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequest.sessionConfig
-
-            The session config, as a :class:`~pyuaf.client.configs.SessionConfig`.
+        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequest.clientConnectionId
+        
+            If clientConnectionIdGiven is True, then this clientConnectionId should point to an 
+            existing session, which will be used to process the request.
+    
+        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequest.sessionSettingsGiven
+        
+            True if the sessionSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequest.sessionSettings
+        
+            If sessionSettingsGiven is True (and clientConnectionIdGiven is False) then this 
+            sessionSettings will be used to create or reuse a session.
+            Type is :class:`~pyuaf.client.settings.HistoryReadRawModifiedSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequest.serviceSettingsGiven
+        
+            True if the serviceSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequest.serviceSettings
+        
+            If serviceSettingsGiven is True then this 
+            serviceSettings will be used to process the request.
+            Type is :class:`~pyuaf.client.settings.BrowseSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequest.translateSettingsGiven
+        
+            True if the translateSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.HistoryReadRawModifiedRequest.translateSettings
+        
+            If translateSettingsGiven is True then this 
+            translateSettings will be used to translate any browsepaths.
+            Type is :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`.
 
 
 
@@ -938,12 +1124,6 @@
                              - a single target (a :class:`~pyuaf.client.requests.MethodCallRequestTarget`)
                              - a vector of targets (a :class:`~pyuaf.client.requests.MethodCallRequestTargetVector`)
     
-            :param serviceConfig: The config for the service settings.
-            :type serviceConfig: :class:`~pyuaf.client.configs.MethodCallConfig`
-    
-            :param sessionConfig: The config containing the session settings.
-            :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
-    
         .. method:: __str__()
     
             Get a formatted string representation of the request.
@@ -955,13 +1135,50 @@
 
             The targets, as a :class:`~pyuaf.client.requests.MethodCallRequestTargetVector`.
     
-        .. autoattribute:: pyuaf.client.requests.MethodCallRequest.serviceConfig
-
-            The service config, as a :class:`~pyuaf.client.configs.MethodCallConfig`.
+        .. autoattribute:: pyuaf.client.requests.MethodCallRequest.clientConnectionIdGiven
+        
+            True if the clientConnectionId attribute will be used, False if not. 
+            Type is ``bool``.
     
-        .. autoattribute:: pyuaf.client.requests.MethodCallRequest.sessionConfig
-
-            The session config, as a :class:`~pyuaf.client.configs.SessionConfig`.
+        .. autoattribute:: pyuaf.client.requests.MethodCallRequest.clientConnectionId
+        
+            If clientConnectionIdGiven is True, then this clientConnectionId should point to an 
+            existing session, which will be used to process the request.
+    
+        .. autoattribute:: pyuaf.client.requests.MethodCallRequest.sessionSettingsGiven
+        
+            True if the sessionSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.MethodCallRequest.sessionSettings
+        
+            If sessionSettingsGiven is True (and clientConnectionIdGiven is False) then this 
+            sessionSettings will be used to create or reuse a session.
+            Type is :class:`~pyuaf.client.settings.SessionSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.MethodCallRequest.serviceSettingsGiven
+        
+            True if the serviceSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.MethodCallRequest.serviceSettings
+        
+            If serviceSettingsGiven is True then this 
+            serviceSettings will be used to process the request.
+            Type is :class:`~pyuaf.client.settings.MethodCallSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.MethodCallRequest.translateSettingsGiven
+        
+            True if the translateSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.MethodCallRequest.translateSettings
+        
+            If translateSettingsGiven is True then this 
+            translateSettings will be used to translate any browsepaths.
+            Type is :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`.
 
 
 *class* MethodCallRequestTarget
@@ -1092,12 +1309,6 @@
                              - a single target (a :class:`~pyuaf.client.requests.ReadRequestTarget`)
                              - a vector of targets (a :class:`~pyuaf.client.requests.ReadRequestTargetVector`)
     
-            :param serviceConfig: The config for the service settings.
-            :type serviceConfig: :class:`~pyuaf.client.configs.ReadConfig`
-    
-            :param sessionConfig: The config containing the session settings.
-            :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
-    
         .. method:: __str__()
     
             Get a formatted string representation of the request.
@@ -1109,13 +1320,50 @@
 
             The targets, as a :class:`~pyuaf.client.requests.ReadRequestTargetVector`.
     
-        .. autoattribute:: pyuaf.client.requests.ReadRequest.serviceConfig
-
-            The service config, as a :class:`~pyuaf.client.configs.ReadConfig`.
+        .. autoattribute:: pyuaf.client.requests.ReadRequest.clientConnectionIdGiven
+        
+            True if the clientConnectionId attribute will be used, False if not. 
+            Type is ``bool``.
     
-        .. autoattribute:: pyuaf.client.requests.ReadRequest.sessionConfig
-
-            The session config, as a :class:`~pyuaf.client.configs.SessionConfig`.
+        .. autoattribute:: pyuaf.client.requests.ReadRequest.clientConnectionId
+        
+            If clientConnectionIdGiven is True, then this clientConnectionId should point to an 
+            existing session, which will be used to process the request.
+    
+        .. autoattribute:: pyuaf.client.requests.ReadRequest.sessionSettingsGiven
+        
+            True if the sessionSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.ReadRequest.sessionSettings
+        
+            If sessionSettingsGiven is True (and clientConnectionIdGiven is False) then this 
+            sessionSettings will be used to create or reuse a session.
+            Type is :class:`~pyuaf.client.settings.SessionSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.ReadRequest.serviceSettingsGiven
+        
+            True if the serviceSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.ReadRequest.serviceSettings
+        
+            If serviceSettingsGiven is True then this 
+            serviceSettings will be used to process the request.
+            Type is :class:`~pyuaf.client.settings.ReadSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.ReadRequest.translateSettingsGiven
+        
+            True if the translateSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.ReadRequest.translateSettings
+        
+            If translateSettingsGiven is True then this 
+            translateSettings will be used to translate any browsepaths.
+            Type is :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`.
 
 
 *class* ReadRequestTarget
@@ -1240,12 +1488,6 @@
                              - a single target (a :class:`~pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequestTarget`)
                              - a vector of targets (a :class:`~pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequestTargetVector`)
     
-            :param serviceConfig: The config for the service settings.
-            :type serviceConfig: :class:`~pyuaf.client.configs.TranslateBrowsePathsToNodeIdsConfig`
-    
-            :param sessionConfig: The config containing the session settings.
-            :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
-    
         .. method:: __str__()
     
             Get a formatted string representation of the request.
@@ -1257,13 +1499,50 @@
 
             The targets, as a :class:`~pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequestTargetVector`.
     
-        .. autoattribute:: pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequest.serviceConfig
-
-            The service config, as a :class:`~pyuaf.client.configs.TranslateBrowsePathsToNodeIdsConfig`.
+        .. autoattribute:: pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequest.clientConnectionIdGiven
+        
+            True if the clientConnectionId attribute will be used, False if not. 
+            Type is ``bool``.
     
-        .. autoattribute:: pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequest.sessionConfig
-
-            The session config, as a :class:`~pyuaf.client.configs.SessionConfig`.
+        .. autoattribute:: pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequest.clientConnectionId
+        
+            If clientConnectionIdGiven is True, then this clientConnectionId should point to an 
+            existing session, which will be used to process the request.
+    
+        .. autoattribute:: pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequest.sessionSettingsGiven
+        
+            True if the sessionSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequest.sessionSettings
+        
+            If sessionSettingsGiven is True (and clientConnectionIdGiven is False) then this 
+            sessionSettings will be used to create or reuse a session.
+            Type is :class:`~pyuaf.client.settings.SessionSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequest.serviceSettingsGiven
+        
+            True if the serviceSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequest.serviceSettings
+        
+            If serviceSettingsGiven is True then this 
+            serviceSettings will be used to process the request.
+            Type is :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequest.translateSettingsGiven
+        
+            True if the translateSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequest.translateSettings
+        
+            If translateSettingsGiven is True then this 
+            translateSettings will be used to translate any browsepaths.
+            Type is :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`.
 
 
 *class* TranslateBrowsePathsToNodeIdsRequestTarget
@@ -1381,12 +1660,6 @@
                              - a single target (a :class:`~pyuaf.client.requests.WriteRequestTarget`)
                              - a vector of targets (a :class:`~pyuaf.client.requests.WriteRequestTargetVector`)
     
-            :param serviceConfig: The config for the service settings.
-            :type serviceConfig: :class:`~pyuaf.client.configs.WriteConfig`
-    
-            :param sessionConfig: The config containing the session settings.
-            :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
-    
         .. method:: __str__()
     
             Get a formatted string representation of the request.
@@ -1398,14 +1671,50 @@
 
             The targets, as a :class:`~pyuaf.client.requests.WriteRequestTargetVector`.
     
-        .. autoattribute:: pyuaf.client.requests.WriteRequest.serviceConfig
-
-            The service config, as a :class:`~pyuaf.client.configs.WriteConfig`.
+        .. autoattribute:: pyuaf.client.requests.WriteRequest.clientConnectionIdGiven
+        
+            True if the clientConnectionId attribute will be used, False if not. 
+            Type is ``bool``.
     
-        .. autoattribute:: pyuaf.client.requests.WriteRequest.sessionConfig
-
-            The session config, as a :class:`~pyuaf.client.configs.SessionConfig`.
-
+        .. autoattribute:: pyuaf.client.requests.WriteRequest.clientConnectionId
+        
+            If clientConnectionIdGiven is True, then this clientConnectionId should point to an 
+            existing session, which will be used to process the request.
+    
+        .. autoattribute:: pyuaf.client.requests.WriteRequest.sessionSettingsGiven
+        
+            True if the sessionSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.WriteRequest.sessionSettings
+        
+            If sessionSettingsGiven is True (and clientConnectionIdGiven is False) then this 
+            sessionSettings will be used to create or reuse a session.
+            Type is :class:`~pyuaf.client.settings.SessionSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.WriteRequest.serviceSettingsGiven
+        
+            True if the serviceSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.WriteRequest.serviceSettings
+        
+            If serviceSettingsGiven is True then this 
+            serviceSettings will be used to process the request.
+            Type is :class:`~pyuaf.client.settings.WriteSettings`.
+            
+    
+        .. autoattribute:: pyuaf.client.requests.WriteRequest.translateSettingsGiven
+        
+            True if the translateSettings attribute will be used, False if not. 
+            Type is ``bool``.
+    
+        .. autoattribute:: pyuaf.client.requests.WriteRequest.translateSettings
+        
+            If translateSettingsGiven is True then this 
+            translateSettings will be used to translate any browsepaths.
+            Type is :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`.
 
 
 *class* WriteRequestTarget
