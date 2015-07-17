@@ -34,6 +34,7 @@
 #include "uaf/client/clientexport.h"
 #include "uaf/client/sessions/sessionstates.h"
 #include "uaf/client/sessions/connectionsteps.h"
+#include "uaf/client/settings/sessionsettings.h"
 
 namespace uaf
 {
@@ -69,6 +70,7 @@ namespace uaf
                 uaf::ClientConnectionId                         clientConnectionId,
                 uaf::sessionstates::SessionState                sessionState,
                 const std::string&                              serverUri,
+                const uaf::SessionSettings&                     sessionSettings,
                 const uaf::connectionsteps::ConnectionStep&     lastConnectionAttemptStep,
                 const uaf::Status&                              lastConnectionAttemptStatus);
 
@@ -81,6 +83,9 @@ namespace uaf
 
         /** The URI of the server to which the session should be connected. */
         std::string                         serverUri;
+
+        /** The session settings. */
+        uaf::SessionSettings                sessionSettings;
 
         /** The status of the last connection attempt. */
         uaf::Status                         lastConnectionAttemptStatus;

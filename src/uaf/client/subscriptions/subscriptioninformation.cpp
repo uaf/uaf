@@ -65,7 +65,10 @@ namespace uaf
         ss << indent << " - subscriptionState";
         ss << fillToPos(ss, colon);
         ss << ": " << subscriptionState
-                << " (" << uaf::subscriptionstates::toString(subscriptionState) << ")";
+                << " (" << uaf::subscriptionstates::toString(subscriptionState) << ")\n";
+
+        ss << indent << " - subscriptionSettings\n";
+        ss << subscriptionSettings.toString(indent + "   ", colon);
 
 
         return ss.str();
@@ -78,7 +81,8 @@ namespace uaf
     {
         return    object1.clientConnectionId == object2.clientConnectionId
                && object1.clientSubscriptionHandle == object2.clientSubscriptionHandle
-               && object1.subscriptionState == object2.subscriptionState;
+               && object1.subscriptionState == object2.subscriptionState
+               && object1.subscriptionSettings == object2.subscriptionSettings;
     }
 
 
@@ -98,7 +102,9 @@ namespace uaf
             return object1.clientConnectionId < object2.clientConnectionId;
         else if (object1.clientSubscriptionHandle != object2.clientSubscriptionHandle)
             return object1.clientSubscriptionHandle < object2.clientSubscriptionHandle;
-        else
+        else if (object1.subscriptionState != object2.subscriptionState)
             return object1.subscriptionState < object2.subscriptionState;
+        else
+            return object1.subscriptionSettings < object2.subscriptionSettings;
     }
 }

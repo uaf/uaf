@@ -31,6 +31,7 @@
 #include "uaf/util/handles.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/subscriptions/subscriptionstates.h"
+#include "uaf/client/settings/subscriptionsettings.h"
 
 namespace uaf
 {
@@ -72,8 +73,10 @@ namespace uaf
         uaf::ClientSubscriptionHandle               clientSubscriptionHandle;
 
         /** The state of the subscription. */
-        uaf::subscriptionstates::SubscriptionState subscriptionState;
+        uaf::subscriptionstates::SubscriptionState  subscriptionState;
 
+        /** The SubscriptonSettings of the subscription. */
+        uaf::SubscriptionSettings                   subscriptionSettings;
 
         /**
          * Get a string representation of the information.
