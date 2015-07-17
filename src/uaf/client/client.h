@@ -156,20 +156,6 @@ namespace uaf
          */
         ///@{
 
-        /**
-         * Read a number of node attributes synchronously.
-         *
-         * The default session settings and read settings will be used.
-         *
-         * @param addresses         Addresses of the nodes of which the attributes should be read.
-         * @param attributeId       The attribute to be read (e.g. Value or DisplayName).
-         * @param result            Result of the request.
-         * @return                  Client-side status.
-         */
-        uaf::Status read(
-                const std::vector<uaf::Address>&     addresses,
-                const uaf::attributeids::AttributeId attributeId,
-                uaf::ReadResult&                     result);
 
         /**
          * Read a number of node attributes synchronously.
@@ -182,27 +168,13 @@ namespace uaf
          * @return                  Client-side status.
          */
         uaf::Status read(
-                const std::vector<uaf::Address>&     addresses,
-                const uaf::attributeids::AttributeId attributeId,
-                uaf::ClientConnectionId              clientConnectionId,
-                uaf::ReadResult&                     result);
-
-        /**
-         * Read a number of node attributes synchronously.
-         *
-         * @param addresses         Addresses of the nodes of which the attributes should be read.
-         * @param attributeId       The attribute to be read (e.g. Value or DisplayName).
-         * @param serviceSettings   Read settings.
-         * @param sessionSettings   Session settings.
-         * @param result            Result of the request.
-         * @return                  Client-side status.
-         */
-        uaf::Status read(
-                const std::vector<uaf::Address>&     addresses,
-                const uaf::attributeids::AttributeId attributeId,
-                const uaf::ReadSettings&             serviceSettings,
-                const uaf::SessionSettings&          sessionSettings,
-                uaf::ReadResult&                     result);
+                const std::vector<uaf::Address>&                    addresses,
+                uaf::attributeids::AttributeId                      attributeId,
+                uaf::ClientConnectionId                             clientConnectionId,
+                const uaf::ReadSettings*                            serviceSettings,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings*   translateSettings,
+                const uaf::SessionSettings*                         sessionSettings,
+                uaf::ReadResult&                                    result);
 
 
 
@@ -222,11 +194,13 @@ namespace uaf
          * @return                Client-side status.
          */
         uaf::Status beginRead(
-                const std::vector<uaf::Address>&      addresses,
-                const uaf::attributeids::AttributeId  attributeId,
-                const uaf::ReadSettings&              serviceSettings,
-                const uaf::SessionSettings&           sessionSettings,
-                uaf::AsyncReadResult&                 result);
+                const std::vector<uaf::Address>&                    addresses,
+                const uaf::attributeids::AttributeId                attributeId,
+                uaf::ClientConnectionId                             clientConnectionId,
+                const uaf::ReadSettings*                            serviceSettings,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings*   translateSettings,
+                const uaf::SessionSettings*                         sessionSettings,
+                uaf::AsyncReadResult&                               result);
 
 
         /**
@@ -241,12 +215,14 @@ namespace uaf
          * @return                  Client-side status.
          */
         uaf::Status write(
-                const std::vector<uaf::Address>&      addresses,
-                const std::vector<uaf::Variant>&      data,
-                const uaf::attributeids::AttributeId attributeId,
-                const uaf::WriteSettings&             serviceSettings,
-                const uaf::SessionSettings&           sessionSettings,
-                uaf::WriteResult&                     result);
+                const std::vector<uaf::Address>&                    addresses,
+                const std::vector<uaf::Variant>&                    data,
+                const uaf::attributeids::AttributeId                attributeId,
+                uaf::ClientConnectionId                             clientConnectionId,
+                const uaf::WriteSettings*                           serviceSettings,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings*   translateSettings,
+                const uaf::SessionSettings*                         sessionSettings,
+                uaf::WriteResult&                                   result);
 
 
         /**
@@ -266,12 +242,14 @@ namespace uaf
          * @return                  Client-side status.
          */
         uaf::Status beginWrite(
-                const std::vector<uaf::Address>&     addresses,
-                const std::vector<uaf::Variant>&     data,
-                const uaf::attributeids::AttributeId attributeId,
-                const uaf::WriteSettings&            serviceSettings,
-                const uaf::SessionSettings&          sessionSettings,
-                uaf::AsyncWriteResult&               result);
+                const std::vector<uaf::Address>&                    addresses,
+                const std::vector<uaf::Variant>&                    data,
+                const uaf::attributeids::AttributeId                attributeId,
+                uaf::ClientConnectionId                             clientConnectionId,
+                const uaf::WriteSettings*                           serviceSettings,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings*   translateSettings,
+                const uaf::SessionSettings*                         sessionSettings,
+                uaf::AsyncWriteResult&                              result);
 
 
         /**
@@ -284,16 +262,18 @@ namespace uaf
          * @param inputArguments    Input arguments as a vector of variants.
          * @param serviceSettings   Method call settings.
          * @param sessionSettings   Session settings.
-         * @param result            Result of the request.
+         * @param result            Result of thkme request.
          * @return                  Client-side status.
          */
         uaf::Status call(
-                const uaf::Address&                 objectAddress,
-                const uaf::Address&                 methodAddress,
-                const std::vector<uaf::Variant>&    inputArguments,
-                const uaf::MethodCallSettings&      erviceSettings,
-                const uaf::SessionSettings&         sessionSettings,
-                uaf::MethodCallResult&              result);
+                const uaf::Address&                                 objectAddress,
+                const uaf::Address&                                 methodAddress,
+                const std::vector<uaf::Variant>&                    inputArguments,
+                uaf::ClientConnectionId                             clientConnectionId,
+                const uaf::MethodCallSettings*                      serviceSettings,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings*   translateSettings,
+                const uaf::SessionSettings*                         sessionSettings,
+                uaf::MethodCallResult&                              result);
 
 
         /**
@@ -311,12 +291,14 @@ namespace uaf
          * @return                  Client-side status.
          */
         uaf::Status beginCall(
-                const uaf::Address&                 objectAddress,
-                const uaf::Address&                 methodAddress,
-                const std::vector<uaf::Variant>&    inputArguments,
-                const uaf::MethodCallSettings&      serviceSettings,
-                const uaf::SessionSettings&         sessionSettings,
-                uaf::AsyncMethodCallResult&         result);
+                const uaf::Address&                                 objectAddress,
+                const uaf::Address&                                 methodAddress,
+                const std::vector<uaf::Variant>&                    inputArguments,
+                uaf::ClientConnectionId                             clientConnectionId,
+                const uaf::MethodCallSettings*                      serviceSettings,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings*   translateSettings,
+                const uaf::SessionSettings*                         sessionSettings,
+                uaf::AsyncMethodCallResult&                         result);
 
 
         /**
@@ -338,11 +320,13 @@ namespace uaf
          * @return                  Client-side status.
          */
         uaf::Status browse(
-                const std::vector<uaf::Address>&    addresses,
-                uint32_t                            maxAutoBrowseNext,
-                const uaf::BrowseSettings&          serviceSettings,
-                const uaf::SessionSettings&         sessionSettings,
-                uaf::BrowseResult&                  result);
+                const std::vector<uaf::Address>&                    addresses,
+                uint32_t                                            maxAutoBrowseNext,
+                uaf::ClientConnectionId                             clientConnectionId,
+                const uaf::BrowseSettings*                          serviceSettings,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings*   translateSettings,
+                const uaf::SessionSettings*                         sessionSettings,
+                uaf::BrowseResult&                                  result);
 
 
         /**
@@ -396,15 +380,17 @@ namespace uaf
          * @return                      Client-side status.
          */
         uaf::Status historyReadRaw(
-                const std::vector<uaf::Address>&            addresses,
-                const uaf::DateTime&                        startTime,
-                const uaf::DateTime&                        endTime,
-                uint32_t                                    numValuesPerNode,
-                uint32_t                                    maxAutoReadMore,
-                const std::vector<uaf::ByteString>&         continuationPoints,
-                const uaf::HistoryReadRawModifiedSettings&  serviceSettings,
-                const uaf::SessionSettings&                 sessionSettings,
-                uaf::HistoryReadRawModifiedResult&          result);
+                const std::vector<uaf::Address>&                    addresses,
+                const uaf::DateTime&                                startTime,
+                const uaf::DateTime&                                endTime,
+                uint32_t                                            numValuesPerNode,
+                uint32_t                                            maxAutoReadMore,
+                const std::vector<uaf::ByteString>&                 continuationPoints,
+                uaf::ClientConnectionId                             clientConnectionId,
+                const uaf::HistoryReadRawModifiedSettings*          serviceSettings,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings*   translateSettings,
+                const uaf::SessionSettings*                         sessionSettings,
+                uaf::HistoryReadRawModifiedResult&                  result);
 
 
         /**
@@ -459,15 +445,17 @@ namespace uaf
          * @return                      Client-side status.
          */
         uaf::Status historyReadModified(
-                const std::vector<uaf::Address>&            addresses,
-                const uaf::DateTime&                        startTime,
-                const uaf::DateTime&                        endTime,
-                uint32_t                                    numValuesPerNode,
-                uint32_t                                    maxAutoReadMore,
-                const std::vector<uaf::ByteString>&         continuationPoints,
-                const uaf::HistoryReadRawModifiedSettings&  serviceSettings,
-                const uaf::SessionSettings&                 sessionSettings,
-                uaf::HistoryReadRawModifiedResult&          result);
+                const std::vector<uaf::Address>&                    addresses,
+                const uaf::DateTime&                                startTime,
+                const uaf::DateTime&                                endTime,
+                uint32_t                                            numValuesPerNode,
+                uint32_t                                            maxAutoReadMore,
+                const std::vector<uaf::ByteString>&                 continuationPoints,
+                uaf::ClientConnectionId                             clientConnectionId,
+                const uaf::HistoryReadRawModifiedSettings*          serviceSettings,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings*   translateSettings,
+                const uaf::SessionSettings*                         sessionSettings,
+                uaf::HistoryReadRawModifiedResult&                  result);
 
 
         /**
@@ -495,11 +483,13 @@ namespace uaf
          * @return                      Client-side status.
          */
         uaf::Status browseNext(
-                const std::vector<uaf::Address>&    addresses,
-                const std::vector<uaf::ByteString>& continuationPoints,
-                const uaf::BrowseNextSettings&      serviceSettings,
-                const uaf::SessionSettings&         sessionSettings,
-                uaf::BrowseNextResult&              result);
+                const std::vector<uaf::Address>&                    addresses,
+                const std::vector<uaf::ByteString>&                 continuationPoints,
+                uaf::ClientConnectionId                             clientConnectionId,
+                const uaf::BrowseNextSettings*                      serviceSettings,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings*   translateSettings,
+                const uaf::SessionSettings*                         sessionSettings,
+                uaf::BrowseNextResult&                              result);
 
 
         /**
@@ -523,11 +513,14 @@ namespace uaf
          * @return                          Client-side status.
          */
         uaf::Status createMonitoredData(
-                const std::vector<uaf::Address>&         addresses,
-                const uaf::CreateMonitoredDataSettings&  serviceSettings,
-                const uaf::SessionSettings&              sessionSettings,
-                const uaf::SubscriptionSettings&         subscriptionSettings,
-                uaf::CreateMonitoredDataResult&          result);
+                const std::vector<uaf::Address>&                    addresses,
+                uaf::ClientConnectionId                             clientConnectionId,
+                const uaf::CreateMonitoredDataSettings*             serviceSettings,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings*   translateSettings,
+                const uaf::SessionSettings*                         sessionSettings,
+                uaf::ClientSubscriptionHandle                       clientSubscriptionHandle,
+                const uaf::SubscriptionSettings*                    subscriptionSettings,
+                uaf::CreateMonitoredDataResult&                     result);
 
 
         /**
@@ -552,12 +545,15 @@ namespace uaf
          * @return                      Client-side status.
          */
         uaf::Status createMonitoredEvents(
-                const std::vector<uaf::Address>&            addresses,
-                const uaf::EventFilter&                     eventFilter,
-                const uaf::CreateMonitoredEventsSettings&   serviceSettings,
-                const uaf::SessionSettings&                 sessionSettings,
-                const uaf::SubscriptionSettings&            subscriptionSettings,
-                uaf::CreateMonitoredEventsResult&           result);
+                const std::vector<uaf::Address>&                    addresses,
+                const uaf::EventFilter&                             eventFilter,
+                uaf::ClientConnectionId                             clientConnectionId,
+                const uaf::CreateMonitoredEventsSettings*           serviceSettings,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings*   translateSettings,
+                const uaf::SessionSettings*                         sessionSettings,
+                uaf::ClientSubscriptionHandle                       clientSubscriptionHandle,
+                const uaf::SubscriptionSettings*                    subscriptionSettings,
+                uaf::CreateMonitoredEventsResult&                   result);
 
 
 
@@ -753,13 +749,15 @@ namespace uaf
          *                      by the discovery process (which requires a Discovery URL that you
          *                      must provide via the uaf::Client::setClientSettings method).
          * @param settings      The session settings that you want your session to have.
+         *                      Assign to NULL to use the specificSessionSettings/defaultSessionSettings
+         *                      as configured by the ClientSettings.
          * @param clientConnectionId A return parameter, giving you the id of the session if it
          *                           was created.
          * @return              Good if the session was created, Bad if not.
          */
         uaf::Status manuallyConnect(
                 const std::string&              serverUri,
-                const uaf::SessionSettings&    settings,
+                const uaf::SessionSettings*     settings,
                 uaf::ClientConnectionId&        clientConnectionId);
 
 
@@ -796,15 +794,17 @@ namespace uaf
          * @param endpointUrl   The endpoint URL to which you want to connect
          *                      (e.g. opc.tcp://localhost:48010)
          * @param settings      The session settings that you want your session to have.
+         *                      Assign to NULL to use the defaultSessionSettings
+         *                      as configured by the ClientSettings.
+         * @param serverCertificate The server certificate (assign to NULL for a null certificate).
          * @param clientConnectionId A return parameter, giving you the id of the session if it
          *                           was created.
-         * @param serverCertificate The server certificate.
          * @return              Good if the session was created, Bad if not.
          */
         uaf::Status manuallyConnectToEndpoint(
                 const std::string&              endpointUrl,
-                const uaf::SessionSettings&    settings,
-                const uaf::PkiCertificate&      serverCertificate,
+                const uaf::SessionSettings*     settings,
+                const uaf::PkiCertificate*      serverCertificate,
                 uaf::ClientConnectionId&        clientConnectionId);
 
 
@@ -875,12 +875,14 @@ namespace uaf
          * @param settings              The settings of the subscription you'd like to create.
          * @param clientSubscriptionHandle  Output parameter, giving you the handle of the newly
          *                                  created subscription.
+         *                                  Assign to NULL to use the defaultSubscriptionSettings
+         *                                  as configured by the ClientSettings.
          * @return                      Good if the subscription was successfully created, Bad if
          *                              something went wrong.
          */
         uaf::Status manuallySubscribe(
                 uaf::ClientConnectionId             clientConnectionId,
-                const uaf::SubscriptionSettings&   settings,
+                const uaf::SubscriptionSettings*    settings,
                 uaf::ClientSubscriptionHandle&      clientSubscriptionHandle);
 
 
@@ -974,12 +976,14 @@ namespace uaf
          * @param clientSubscriptionHandle  The handle identifying the subscription.
          * @param publishingEnabled         True to enable the publishing mode, false to disable.
          * @param serviceSettings           The service settings to be used.
+         *                                  Assign to NULL to use the defaultSetPublishingModeSettings
+         *                                  as configurable by the ClientSettings.
          * @return                          The result of the service call.
          */
         uaf::Status setPublishingMode(
                  uaf::ClientSubscriptionHandle  clientSubscriptionHandle,
                  bool                           publishingEnabled,
-                 const uaf::ServiceSettings&   serviceSettings);
+                 const uaf::ServiceSettings*    serviceSettings);
 
 
         /**
@@ -988,13 +992,15 @@ namespace uaf
          * @param clientHandles     The ClientHandles of the monitored items to be affected.
          * @param monitoringMode    The new monitoring mode.
          * @param serviceSettings   The service settings to be used.
+         *                          ssign to NULL to use the defaultSetMonitoringModeSettings
+         *                          as configurable by the ClientSettings.
          * @param results           A vector of statuses (one result for each ClientHandle).
          * @return                  The immediate result of the service call.
          */
         uaf::Status setMonitoringMode(
                 std::vector<uaf::ClientHandle>          clientHandles,
                 uaf::monitoringmodes::MonitoringMode    monitoringMode,
-                const uaf::ServiceSettings&            serviceSettings,
+                const uaf::ServiceSettings*             serviceSettings,
                 std::vector<uaf::Status>&               results);
 
 
