@@ -37,6 +37,13 @@ Informally:
         >>> myClient.read(addresses, clientConnectionId = 3)
         >>> myClient.createMonitoredData(addresses, clientConnectionId = 3, clientSubscriptionHandle = 1)
 
+  Check the examples/pyuaf/client/how_to_configure_all_settings.py example or the API docs for 
+  more detailed information!
+
+  This is a breaking change that may affect existing code!!!
+  Check your code for any occurrences of the word "config" (case insensitive) and check with the API
+  documentation to spot any changes!
+
 - OpenSSL security is now supported. See the example how_to_connect_to_a_secured_endpoint.py.
 
 - Everything related to status/error handling has changed significantly:
@@ -79,7 +86,7 @@ Informally:
 
 - The endpoint descriptions of the discovered servers can now be accessed via Client::getEndpoints().
 
-- SessionInformation contains more diagnostic info.
+- SessionInformation and SubscriptionInformation contains more diagnostic info.
 
 - Bugfixes: see https://github.com/uaf/uaf/issues/62 and https://github.com/uaf/uaf/issues/80
 
@@ -115,6 +122,10 @@ Formally:
 
   - uaf::Client::SessionInformation::lastConnectionAttemptTime
     (pyuaf.client.Client.SessionInformation.lastConnectionAttemptTime)
+  - uaf::Client::SessionInformation::sessionSettings
+    (pyuaf.client.Client.SessionInformation.sessionSettings)
+  - uaf::Client::SessionInformation::subscriptionSettings
+    (pyuaf.client.Client.SessionInformation.subscriptionSettings)
   - uaf::Client::SessionInformation::lastConnectionAttemptStatus
     (pyuaf.client.Client.SessionInformation.lastConnectionAttemptStatus)
   - uaf::ReadResultTarget::opcUaStatusCode 
