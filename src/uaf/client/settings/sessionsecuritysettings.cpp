@@ -145,25 +145,18 @@ namespace uaf
     // Match multiple SessionSecuritySettings with multiple EndpointDescription.
     // =============================================================================================
     uaf::Status match(
-            const vector<SessionSecuritySettings>&  settings,
-            const vector<EndpointDescription>&      endpoints,
-            SessionSecuritySettings&                suitableSettings,
-            EndpointDescription&                    suitableEndpoint)
+            const SessionSecuritySettings&      settings,
+            const vector<EndpointDescription>&  endpoints,
+            EndpointDescription&                suitableEndpoint)
     {
-        vector<SessionSecuritySettings>::const_iterator settingsIter;
-        vector<EndpointDescription>::const_iterator     endpointsIter;
+        vector<EndpointDescription>::const_iterator endpointsIter;
 
-        for (settingsIter = settings.begin(); settingsIter != settings.end(); ++settingsIter)
+        for (endpointsIter = endpoints.begin(); endpointsIter != endpoints.end(); ++endpointsIter)
         {
-            for (endpointsIter = endpoints.begin(); endpointsIter != endpoints.end(); ++endpointsIter)
+            if (match(settings, *endpointsIter).isGood())
             {
-                if (match(*settingsIter, *endpointsIter).isGood())
-                {
-                    suitableSettings = *settingsIter;
-                    suitableEndpoint = *endpointsIter;
-
-                    return statuscodes::Good;
-                }
+                suitableEndpoint = *endpointsIter;
+                return statuscodes::Good;
             }
         }
 
