@@ -79,12 +79,8 @@ namespace uaf
          *  is first connected (UAF clients will do this automatically in the background). */
         uaf::ReadSettings readServerInfoSettings;
 
-        /** The allowed security settings to be used to connect the session, in the order they
-         *  are given in the list.
-         *
-         *  So securitySettingsList[0] will be tried first, then securitySettingsList[1],
-         *  and so on. */
-        std::vector<uaf::SessionSecuritySettings> securitySettingsList;
+        /** The security settings to be used to connect the session */
+        uaf::SessionSecuritySettings securitySettings;
 
 
         /**
@@ -92,7 +88,7 @@ namespace uaf
          *
          * @return  String representation.
          */
-        std::string toString(const std::string& indent="", std::size_t colon=22) const;
+        std::string toString(const std::string& indent="", std::size_t colon=26) const;
 
 
         // comparison operators
