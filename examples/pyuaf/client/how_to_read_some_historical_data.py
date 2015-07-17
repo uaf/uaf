@@ -26,9 +26,8 @@ import time, os, sys
 
 import pyuaf
 from pyuaf.client           import Client
-from pyuaf.client.settings  import ClientSettings
+from pyuaf.client.settings  import ClientSettings, HistoryReadRawModifiedSettings, SessionSettings
 from pyuaf.client.requests  import HistoryReadRawModifiedRequest
-from pyuaf.client.configs   import HistoryReadRawModifiedConfig, SessionConfig
 from pyuaf.util             import Address, NodeId
 from pyuaf.util             import DateTime
 from pyuaf.util             import DataValue
@@ -240,14 +239,21 @@ try:
     request = HistoryReadRawModifiedRequest(1)
     request.targets[0].address = doubleAddress
     
-    # configure the request:
-    request.serviceConfig.serviceSettings.startTime                = DateTime(time.time() - 1)
-    request.serviceConfig.serviceSettings.endTime                  = DateTime(time.time())
-    request.serviceConfig.serviceSettings.callTimeoutSec           = 2.0                        # optional of course
-    request.serviceConfig.serviceSettings.numValuesPerNode         = 100
-    request.serviceConfig.serviceSettings.maxAutoReadMore          = 10
-    request.serviceConfig.serviceSettings.isReadModified           = False                      # we want raw historical data
-    request.sessionConfig.defaultSessionSettings.sessionTimeoutSec = 600.0                      # optional of course
+    # configure the request further:
+    serviceSettings = HistoryReadRawModifiedSettings()
+    serviceSettings.startTime         = DateTime(time.time() - 1)
+    serviceSettings.endTime           = DateTime(time.time())
+    serviceSettings.callTimeoutSec    = 2.0                        # optional of course
+    serviceSettings.numValuesPerNode  = 100
+    serviceSettings.maxAutoReadMore   = 10
+    serviceSettings.isReadModified    = False                      # we want raw historical data
+    request.serviceSettings = serviceSettings
+    request.serviceSettingsGiven = True
+    
+    sessionSettings = SessionSettings()
+    sessionSettings.sessionTimeoutSec = 600.0                      # optional of course
+    request.sessionSettings = sessionSettings
+    request.sessionSettingsGiven = True
     
     # process the request
     result = myClient.processRequest(request)

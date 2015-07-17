@@ -125,7 +125,6 @@ import threading
 %import "pyuaf/client/client_subscriptionstates.i" 
 %import "pyuaf/client/client_monitoreditemstates.i"
 %import "pyuaf/client/client_settings.i"
-%import "pyuaf/client/client_configs.i"
 %import "pyuaf/client/client_requests.i"
 %import "pyuaf/client/client_results.i"
 
@@ -141,19 +140,6 @@ import threading
 %rename(__dispatch_subscriptionStatusChanged__)             uaf::ClientInterface::subscriptionStatusChanged;
 %rename(__dispatch_notificationsMissing__)                  uaf::ClientInterface::notificationsMissing;
 %rename(__dispatch_untrustedServerCertificateReceived__)    uaf::ClientInterface::untrustedServerCertificateReceived;
-
-// add a method test() to the ClientStatus class so that we dynamically raise an exception if needed:
-
-//%extend uaf::Status {
-//%pythoncode {
-//    def test(self):
-//        for member in dir(pyuaf.status.Status):                                           
-//            if member[:9] == "raisedBy_":
-//                if not getattr(self, member).isNull():
-//                    raise getattr(self, member)
-//   }
-//}
-
 
 
 // now include all classes in a generic way

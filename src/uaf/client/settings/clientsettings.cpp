@@ -29,6 +29,17 @@ namespace uaf
     using std::stringstream;
     using std::vector;
 
+    template<> uaf::BrowseNextSettings                      getDefaultServiceSettings<uaf::BrowseNextSettings>                      (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultBrowseNextSettings; }
+    template<> uaf::BrowseSettings                          getDefaultServiceSettings<uaf::BrowseSettings>                          (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultBrowseSettings; }
+    template<> uaf::CreateMonitoredDataSettings             getDefaultServiceSettings<uaf::CreateMonitoredDataSettings>             (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultCreateMonitoredDataSettings; }
+    template<> uaf::CreateMonitoredEventsSettings           getDefaultServiceSettings<uaf::CreateMonitoredEventsSettings>           (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultCreateMonitoredEventsSettings; }
+    template<> uaf::HistoryReadRawModifiedSettings          getDefaultServiceSettings<uaf::HistoryReadRawModifiedSettings>          (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultHistoryReadRawModifiedSettings; }
+    template<> uaf::MethodCallSettings                      getDefaultServiceSettings<uaf::MethodCallSettings>                      (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultMethodCallSettings;; }
+    template<> uaf::ReadSettings                            getDefaultServiceSettings<uaf::ReadSettings>                            (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultReadSettings; }
+    template<> uaf::TranslateBrowsePathsToNodeIdsSettings   getDefaultServiceSettings<uaf::TranslateBrowsePathsToNodeIdsSettings>   (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultTranslateBrowsePathsToNodeIdsSettings; }
+    template<> uaf::WriteSettings                           getDefaultServiceSettings<uaf::WriteSettings>                           (const uaf::ClientSettings& clientSettings) { return clientSettings.defaultWriteSettings; }
+
+
 
     // Constructor
     // =============================================================================================
@@ -267,6 +278,61 @@ namespace uaf
         ss << indent << " - clientCertificate";
         ss << fillToPos(ss, colon);
         ss << ": " << clientCertificate << "\n";
+
+        ss << indent << " - defaultSessionSettings\n";
+        ss << defaultSessionSettings.toString(indent + "   ", colon) << "\n";
+
+        ss << indent << " - specificSessionSettings[]\n";
+        if (specificSessionSettings.size() > 0)
+        {
+            for (std::map<std::string, uaf::SessionSettings>::const_iterator it = specificSessionSettings.begin();
+                    it != specificSessionSettings.end();
+                    ++it)
+            {
+                ss << indent << "   " << " - specificSessionSettings['" << it->first << "']\n";
+                ss << it->second.toString(indent + "      ", colon) << "\n";
+            }
+        }
+
+        ss << indent << " - defaultSubscriptionSettings\n";
+        ss << defaultSubscriptionSettings.toString(indent + "   ", colon) << "\n";
+
+        ss << indent << " - defaultBrowseNextSettings\n";
+        ss << defaultBrowseNextSettings.toString(indent + "   ", colon) << "\n";
+
+        ss << indent << " - defaultBrowseSettings\n";
+        ss << defaultBrowseSettings.toString(indent + "   ", colon) << "\n";
+
+        ss << indent << " - defaultCreateMonitoredDataSettings\n";
+        ss << defaultCreateMonitoredDataSettings.toString(indent + "   ", colon) << "\n";
+
+        ss << indent << " - defaultCreateMonitoredEventsSettings\n";
+        ss << defaultCreateMonitoredEventsSettings.toString(indent + "   ", colon) << "\n";
+
+        ss << indent << " - defaultHistoryReadRawModifiedSettings\n";
+        ss << defaultHistoryReadRawModifiedSettings.toString(indent + "   ", colon) << "\n";
+
+        ss << indent << " - defaultMethodCallSettings\n";
+        ss << defaultMethodCallSettings.toString(indent + "   ", colon) << "\n";
+
+        ss << indent << " - defaultReadSettings\n";
+        ss << defaultReadSettings.toString(indent + "   ", colon) << "\n";
+
+        ss << indent << " - defaultTranslateBrowsePathsToNodeIdsSettings\n";
+        ss << defaultTranslateBrowsePathsToNodeIdsSettings.toString(indent + "   ", colon) << "\n";
+
+        ss << indent << " - defaultWriteSettings\n";
+        ss << defaultWriteSettings.toString(indent + "   ", colon) << "\n";
+
+        ss << indent << " - defaultSetPublishingModeSettings\n";
+        ss << defaultSetPublishingModeSettings.toString(indent + "   ", colon) << "\n";
+
+        ss << indent << " - defaultSetMonitoringModeSettings\n";
+        ss << defaultSetMonitoringModeSettings.toString(indent + "   ", colon) << "\n";
+
+
+
+
 
         return ss.str();
     }

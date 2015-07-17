@@ -10,7 +10,6 @@
 .. autosummary:: 
     
         connectionsteps
-        configs
         monitoreditemstates
         requests
         results
@@ -121,9 +120,7 @@
     
 .. autoclass:: pyuaf.client.Client
     :members:
-
-
-
+    
 
 *class* MonitoredItemInformation
 ----------------------------------------------------------------------------------------------------
@@ -413,6 +410,10 @@
         .. autoattribute:: pyuaf.client.SessionInformation.lastConnectionAttemptStatus
             
             The status of the last connection attempt, as a :class:`~pyuaf.util.Status` instance.
+        
+        .. autoattribute:: pyuaf.client.SessionInformation.sessionSettings
+            
+            The session settings of the session (type: :class:`~pyuaf.client.settings.SessionSettings`).
 
 
 *class* SubscriptionInformation
@@ -451,5 +452,9 @@
             (e.g. :attr:`~pyuaf.client.subscriptionstates.Created`).
             
             The possible states are defined in the :mod:`pyuaf.client.subscriptionstates` module.
+        
+        .. autoattribute:: pyuaf.client.SubscriptionInformation.subscriptionSettings
+            
+            The subscription settings of the subscription (type: :class:`~pyuaf.client.settings.SubscriptionSettings`).
             
             

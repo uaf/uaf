@@ -36,7 +36,12 @@ namespace uaf
     string AsyncResultTarget::toString(const string& indent, size_t colon) const
     {
         stringstream ss;
-        ss << "status: " << status.toString();
+        ss << indent << " - clientConnectionId";
+        ss << fillToPos(ss, colon);
+        ss << ": " << clientConnectionId << "\n";
+        ss << indent << " - status";
+        ss << fillToPos(ss, colon);
+        ss << ": " << status.toString();
         return ss.str();
     }
 

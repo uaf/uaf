@@ -33,11 +33,21 @@
 #include "uaf/util/status.h"
 #include "uaf/util/stringifiable.h"
 #include "uaf/client/clientexport.h"
+#include "uaf/client/settings/readsettings.h"
+#include "uaf/client/settings/writesettings.h"
+#include "uaf/client/settings/methodcallsettings.h"
+#include "uaf/client/settings/createmonitoreddatasettings.h"
+#include "uaf/client/settings/createmonitoredeventssettings.h"
+#include "uaf/client/settings/translatebrowsepathstonodeidssettings.h"
+#include "uaf/client/settings/browsesettings.h"
+#include "uaf/client/settings/browsenextsettings.h"
+#include "uaf/client/settings/historyreadrawmodifiedsettings.h"
+#include "uaf/client/settings/sessionsettings.h"
+#include "uaf/client/settings/subscriptionsettings.h"
 
 
 namespace uaf
 {
-
 
     /*******************************************************************************************//**
     * An uaf::ClientSettings instance holds the settings of a uaf::Client instance.
@@ -195,6 +205,42 @@ namespace uaf
          *  Default: "PKI/client/certs/client.der". */
         std::string clientCertificate;
 
+        /**
+         * The Default service settings
+         */
+        uaf::BrowseNextSettings                     defaultBrowseNextSettings;
+        uaf::BrowseSettings                         defaultBrowseSettings;
+        uaf::CreateMonitoredDataSettings            defaultCreateMonitoredDataSettings;
+        uaf::CreateMonitoredEventsSettings          defaultCreateMonitoredEventsSettings;
+        uaf::HistoryReadRawModifiedSettings         defaultHistoryReadRawModifiedSettings;
+        uaf::MethodCallSettings                     defaultMethodCallSettings;
+        uaf::ReadSettings                           defaultReadSettings;
+        uaf::TranslateBrowsePathsToNodeIdsSettings  defaultTranslateBrowsePathsToNodeIdsSettings;
+        uaf::WriteSettings                          defaultWriteSettings;
+        uaf::ServiceSettings                        defaultSetPublishingModeSettings;
+        uaf::ServiceSettings                        defaultSetMonitoringModeSettings;
+
+        /**
+         * The default session settings.
+         *
+         * These settings will be used to create the sessions to servers that aren't specified in
+         * the 'specificSessionSettings' map.
+         */
+        uaf::SessionSettings defaultSessionSettings;
+
+
+        /**
+         * The session settings for particular serverURIs.
+         */
+        std::map<std::string, uaf::SessionSettings> specificSessionSettings;
+
+        /**
+         * The default session settings.
+         *
+         * These settings will be used to create the sessions to servers that aren't specified in
+         * the 'specificSessionSettings' map.
+         */
+        uaf::SubscriptionSettings defaultSubscriptionSettings;
 
         /**
          * Create the security locations (directories).
@@ -234,6 +280,20 @@ namespace uaf
                 const ClientSettings& object2);
 
     };
+
+    //must be in header file because the compiler needs to specialize it in different translation units:
+    template<typename _ServiceSettings> _ServiceSettings     UAF_EXPORT getDefaultServiceSettings                                               (const uaf::ClientSettings& clientSettings);
+
+    //must be in header file to make sure the compiler doesn't make an implicit  specialization:
+    template<> uaf::BrowseNextSettings                       UAF_EXPORT getDefaultServiceSettings<uaf::BrowseNextSettings>                      (const uaf::ClientSettings& clientSettings);
+    template<> uaf::BrowseSettings                           UAF_EXPORT getDefaultServiceSettings<uaf::BrowseSettings>                          (const uaf::ClientSettings& clientSettings);
+    template<> uaf::CreateMonitoredDataSettings              UAF_EXPORT getDefaultServiceSettings<uaf::CreateMonitoredDataSettings>             (const uaf::ClientSettings& clientSettings);
+    template<> uaf::CreateMonitoredEventsSettings            UAF_EXPORT getDefaultServiceSettings<uaf::CreateMonitoredEventsSettings>           (const uaf::ClientSettings& clientSettings);
+    template<> uaf::HistoryReadRawModifiedSettings           UAF_EXPORT getDefaultServiceSettings<uaf::HistoryReadRawModifiedSettings>          (const uaf::ClientSettings& clientSettings);
+    template<> uaf::MethodCallSettings                       UAF_EXPORT getDefaultServiceSettings<uaf::MethodCallSettings>                      (const uaf::ClientSettings& clientSettings);
+    template<> uaf::ReadSettings                             UAF_EXPORT getDefaultServiceSettings<uaf::ReadSettings>                            (const uaf::ClientSettings& clientSettings);
+    template<> uaf::TranslateBrowsePathsToNodeIdsSettings    UAF_EXPORT getDefaultServiceSettings<uaf::TranslateBrowsePathsToNodeIdsSettings>   (const uaf::ClientSettings& clientSettings);
+    template<> uaf::WriteSettings                            UAF_EXPORT getDefaultServiceSettings<uaf::WriteSettings>                           (const uaf::ClientSettings& clientSettings);
 
 
 }

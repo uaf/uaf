@@ -335,7 +335,99 @@
           
                Default: "PKI/client/certs/client.der".
            
+           
+       * Attributes related to default sessions and subscriptions
+       
 
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.defaultSessionSettings
+               
+               These default settings will be used to create the sessions to servers,
+               unless these servers have their URI mentioned in specificSessionSettings map 
+               (see next attribute).
+               Type is :class:`~pyuaf.client.settings.SessionSettings`.
+               
+               
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.specificSessionSettings
+           
+               A container that maps <server URIs> (of type ``str``) to <session settings> (of 
+               type :class:`~pyuaf.client.settings.SessionSettings`).
+
+               When sessions need to be created to a server, the UAF will first check if the URI of
+               this server is specified by this container. If so, then the corresponding "specific" 
+               session settings will be used. If not, then the 
+               :attr:`~pyuaf.client.settings.ClientSettings.defaultSessionSettings`: will be used.
+               This attribute is a :class:`~pyuaf.client.settings.SpecificSessionSettings` instance.
+               
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.defaultSubscriptionSettings
+               
+               These default settings will be used to create the subscriptions
+               Type is :class:`~pyuaf.client.settings.SubscriptionSettings`.
+               
+
+           
+       * Attributes related to default service settings
+       
+
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.defaultBrowseNextSettings
+           
+               The default service settings to be used by :meth:`~pyuaf.client.Client.browseNext`.
+               Type is :class:`~pyuaf.client.settings.BrowseNextSettings`.
+
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.defaultBrowseSettings
+           
+               The default service settings to be used by :meth:`~pyuaf.client.Client.browse`.
+               Type is :class:`~pyuaf.client.settings.BrowseSettings`.
+
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.defaultCreateMonitoredDataSettings
+           
+               The default service settings to be used by :meth:`~pyuaf.client.Client.createMonitoredData`.
+               Type is :class:`~pyuaf.client.settings.CreateMonitoredDataSettings`.
+
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.defaultCreateMonitoredEventsSettings
+           
+               The default service settings to be used by :meth:`~pyuaf.client.Client.createMonitoredEvents`.
+               Type is :class:`~pyuaf.client.settings.CreateMonitoredEventsSettings`.
+
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.defaultCreateMonitoredEventsSettings
+           
+               The default service settings to be used by :meth:`~pyuaf.client.Client.historyReadRaw`
+               and :meth:`~pyuaf.client.Client.historyReadModified`.
+               Type is :class:`~pyuaf.client.settings.HistoryReadRawModifiedSettings`.
+
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.defaultMethodCallSettings
+           
+               The default service settings to be used by :meth:`~pyuaf.client.Client.call` and 
+               :meth:`~pyuaf.client.Client.beginCall`.
+               Type is :class:`~pyuaf.client.settings.MethodCallSettings`.
+
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.defaultReadSettings
+           
+               The default service settings to be used by :meth:`~pyuaf.client.Client.read` and 
+               :meth:`~pyuaf.client.Client.beginRead`.
+               Type is :class:`~pyuaf.client.settings.ReadSettings`.
+
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.defaultTranslateBrowsePathsToNodeIdsSettings
+           
+               The default service settings to be used by :class:`~pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequest`
+               and most other services for translating the browsepaths of their targets.
+               Type is :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`.
+
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.defaultWriteSettings
+           
+               The default service settings to be used by :meth:`~pyuaf.client.Client.write` and 
+               :meth:`~pyuaf.client.Client.beginWrite`.
+               Type is :class:`~pyuaf.client.settings.WriteSettings`.
+
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.defaultSetPublishingModeSettings
+           
+               The default service settings to be used by :meth:`~pyuaf.client.Client.setPublishingMode`.
+               Type is :class:`~pyuaf.client.settings.ServiceSettings`.
+
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.defaultSetMonitoringModeSettings
+           
+               The default service settings to be used by :meth:`~pyuaf.client.Client.setMonitoringMode`.
+               Type is :class:`~pyuaf.client.settings.ServiceSettings`.
+               
 
 
 *class* CreateMonitoredDataSettings
@@ -680,7 +772,7 @@
               - connectTimeoutSec  = 2.0
               - watchdogTimeoutSec = 2.0
               - watchdogTimeSec    = 5.0
-              - securitySettingsList = a list of 1 instance: a default :class:`~pyuaf.client.settings.SessionSecuritySettings` instance.
+              - securitySettings   = a default :class:`~pyuaf.client.settings.SessionSecuritySettings` instance.
             
     
         .. method:: __str__()
@@ -713,15 +805,19 @@
             is first connected (UAF clients will do this automatically in the background).
             The type of this attribute is :class:`~pyuaf.client.settings.ReadSettings`.
 
-        .. autoattribute:: pyuaf.client.settings.SessionSettings.securitySettingsList
+        .. autoattribute:: pyuaf.client.settings.SessionSettings.securitySettings
         
-            The allowed security settings to be used to connect the session, in the order they
-            are given in the list.
+            The security settings to be used to connect the session.
             
-            So securitySettingsList[0] will be tried first, then securitySettingsList[1],
-            and so on.
+            The type of this attribute is :class:`~pyuaf.client.settings.SessionSecuritySettings`.
+    
+        .. autoattribute:: pyuaf.client.settings.SessionSettings.unique
         
-            The type of this attribute is :class:`~pyuaf.client.settings.SessionSecuritySettingsVector`.
+            Set this flag to True, to force the UAF to create a *new* session. 
+            If you leave this flag False, the UAF may choose to re-use an existing session 
+            (if one is found that has the same properties).
+            
+            The type of this attribute is ``bool``.
         
 
     
@@ -901,55 +997,6 @@
         # ...
 
 
-*class* SpecificSubscriptionSettings
-----------------------------------------------------------------------------------------------------
-
-
-.. autoclass:: pyuaf.client.settings.SpecificSubscriptionSettings
-
-    SpecificSubscriptionSettings is a container that maps serverURIs (of type ``str``) to subscription 
-    settings (of type :class:`~pyuaf.client.settings.SubscriptionSettings`).
-     
-    It is an artifact automatically generated from the C++ UAF code, and has the same functionality
-    as a ``dict`` of :class:`~pyuaf.client.settings.SubscriptionSettings`.
-
-    Usage example::
-    
-        import pyuaf
-        from pyuaf.client.settings import SubscriptionSettings, SpecificSubscriptionSettings
-        
-        # construct an empty SpecificSubscriptionSettings map:
-        specifics = SpecificSubscriptionSettings()
-        
-        noOfPairs = len(vec) # will be 0
-        
-        # add some specific subscription settings for a server with URI "/some/URI/"
-        specifics["/some/URI/"] = SubscriptionSettings()
-        specifics["/some/URI/"].publishingIntervalSec = 2.0
-        
-        noOfPairs = len(vec) # will be 1
-        
-        # add some other specific subscription settings for a server with URI "/some/other/URI/"
-        specifics["/some/other/URI/"] = SubscriptionSettings()
-        specifics["/some/URI/"].publishingIntervalSec = 0.5
-        
-        noOfPairs = len(vec) # will be 2
-        
-        # now remove the first entry
-        specifics.erase("/some/other/URI/")
-        
-        # get the keys, the values, the items
-        keys = specifics.keys()
-        values = specifics.values()
-        items = specifics.items()
-        
-        # clear the whole map
-        specifics.clear()
-        
-        # check if a key is present
-        specifics.has_key("/some/other/URI/")
-        
-        # ...
 
 
 *class* SubscriptionSettings

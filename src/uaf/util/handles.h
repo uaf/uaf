@@ -41,12 +41,6 @@ namespace uaf
      */
     typedef uint64_t RequestHandle;
 
-    /** RequestHandle value when it was not assigned. */
-    static const uaf::RequestHandle REQUESTHANDLE_NOT_ASSIGNED = OpcUa_UInt64_Max;
-
-    /** Maximum RequestHandle value. */
-    static const uaf::RequestHandle REQUESTHANDLE_MAX          = OpcUa_UInt64_Max - 1;
-
     /**
      * A TransactionId is internally assigned and stored by the UAF to keep track of asynchronous
      * requests and their results.
@@ -97,12 +91,6 @@ namespace uaf
      * @ingroup Util
      */
     typedef uint32_t ClientHandle;
-
-    /** Client handle value when it was not assigned. */
-    static const uint32_t CLIENTHANDLE_NOT_ASSIGNED = OpcUa_UInt32_Max;
-
-    /** Maximum client handle value. */
-    static const uint32_t CLIENTHANDLE_MAX = OpcUa_UInt32_Max - 1;
 
     /**
      * A ServerIndex is an unsigned 32-bit integer, identifying a server in a ServerArray.

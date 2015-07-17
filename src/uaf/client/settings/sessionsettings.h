@@ -56,6 +56,7 @@ namespace uaf
          *   - connectTimeoutSec  = 2.0
          *   - watchdogTimeoutSec = 2.0
          *   - watchdogTimeSec    = 5.0
+         *   - unique             = false
          */
         SessionSettings();
 
@@ -71,16 +72,15 @@ namespace uaf
         /** The timeout of watchdog calls. **/
         double      watchdogTimeoutSec;
 
+        /** Should this session that uses these settings be unique, or not? **/
+        bool        unique;
+
         /** The settings to be used to read the namespace array and server array, when the session
          *  is first connected (UAF clients will do this automatically in the background). */
         uaf::ReadSettings readServerInfoSettings;
 
-        /** The allowed security settings to be used to connect the session, in the order they
-         *  are given in the list.
-         *
-         *  So securitySettingsList[0] will be tried first, then securitySettingsList[1],
-         *  and so on. */
-        std::vector<uaf::SessionSecuritySettings> securitySettingsList;
+        /** The security settings to be used to connect the session */
+        uaf::SessionSecuritySettings securitySettings;
 
 
         /**
@@ -88,7 +88,7 @@ namespace uaf
          *
          * @return  String representation.
          */
-        std::string toString(const std::string& indent="", std::size_t colon=22) const;
+        std::string toString(const std::string& indent="", std::size_t colon=26) const;
 
 
         // comparison operators

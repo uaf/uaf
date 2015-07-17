@@ -15,14 +15,13 @@ from pyuaf.util.opcuaidentifiers  import OpcUaId_RootFolder                    #
 from pyuaf.util                   import attributeids
 from pyuaf.util                   import EventFilter
 from pyuaf.util.primitives        import Byte, UInt32, Int32, Float, Double, String
-from pyuaf.util.errors            import ConnectionError, UafError
+from pyuaf.util.errors            import UnknownServerError, UafError
 from pyuaf.util                   import DateTime
 from pyuaf.client                 import Client
 from pyuaf.client                 import DataChangeNotification, EventNotification
-from pyuaf.client.settings        import ClientSettings
+from pyuaf.client.settings        import ClientSettings, SessionSettings, ReadSettings
 from pyuaf.client.requests        import ReadRequest 
 from pyuaf.client.results         import ReadResult
-from pyuaf.client.configs         import ReadConfig, SessionConfig
 
 import time
 
@@ -43,11 +42,11 @@ print("#########################################################################
 print("")
 
 # Define the ClientSettings:
-settings = ClientSettings()
-settings.applicationName = "MyClient"
-settings.discoveryIntervalSec = 20.0 # try to re-discover the servers in the network every 20 seconds
+myClientSettings = ClientSettings()
+myClientSettings.applicationName = "MyClient"
+myClientSettings.discoveryIntervalSec = 20.0 # try to re-discover the servers in the network every 20 seconds
 # ... many more settings
-settings.discoveryUrls.append("opc.tcp://localhost:48010")
+myClientSettings.discoveryUrls.append("opc.tcp://localhost:48010")
 # ... append as many Discovery URLs as you want. 
 #
 # FYI: what are Discovery URLs?
@@ -75,7 +74,7 @@ settings.discoveryUrls.append("opc.tcp://localhost:48010")
 
 
 # create the client
-myClient = Client(settings)
+myClient = Client(myClientSettings)
 
 
 
@@ -201,9 +200,12 @@ try:
         displayName = result.targets[0].data
         print("Display name         = %s (locale='%s')" %(displayName.text(), displayName.locale()))
     
-except ConnectionError, e:
-    print("Oops we have a connection error (%s), did you start the UA Demo Server?" %e)
-    raise
+except UnknownServerError, e:
+    print("Oops we have an unknown server, did you start the UA Demo Server?")
+    print("Error message:")
+    print(e)
+    import sys
+    sys.exit(1)
 except UafError, e:
     print("Other UAF error! %s" %e)
     raise
@@ -308,7 +310,7 @@ time.sleep(5.0)
 
 # delete the client and create a new instance, so we can proceed cleanly with the next step of the tutorial
 del myClient
-myClient = Client(settings)
+myClient = Client(myClientSettings)
 
 
 # =====================================================================================================================
@@ -375,7 +377,7 @@ time.sleep(1.0)
 
 # delete the client and create a new instance, so we can proceed cleanly with the next step of the tutorial
 del myClient
-myClient = Client(settings)
+myClient = Client(myClientSettings)
 
 
 # =====================================================================================================================
@@ -428,7 +430,7 @@ result = myClient.call(address_History, address_StopLogging)
 
 # delete the client and create a new instance, so we can proceed cleanly with the next step of the tutorial
 del myClient
-myClient = Client(settings)
+myClient = Client(myClientSettings)
 
 
 # =====================================================================================================================
@@ -504,30 +506,37 @@ print("")
 result = myClient.read(addresses   = [address_TSetpoint, address_HeaterStatus],
                        attributeId = pyuaf.util.attributeids.DisplayName)
 
-# We may also provide 
-#  - a "service config", which configures the Read/Write/MethodCall/... OPC UA service more in detail
-#  - a "session config", which configures the sessions that the UAF creates more in detail
-#  - in some cases: a "subscription config", which configures the subscriptions that the UAF creates more in detail
+# the ClientSettings we created above (i.e. myClientSettings) contains all "default" session settings,
+# subscription settings, and service settings. These were the settings that have been used above.
+# The hardcoded initial values are fine for most needs, but you can change those initial values very
+# easily:
+myClientSettings.defaultSessionSettings.sessionTimeoutSec = 100.0
+myClientSettings.defaultSessionSettings.connectTimeoutSec = 2.0
+myClientSettings.defaultSubscriptionSettings.publishingIntervalSec = 0.5
+myClientSettings.defaultSubscriptionSettings.lifeTimeCount         = 600
+myClientSettings.defaultReadSettings.callTimeoutSec = 2.0
+myClientSettings.defaultReadSettings.maxAgeSec      = 10.0
+myClientSettings.defaultMethodCallSettings.callTimeoutSec = 2.0
+myClientSettings.defaultWriteSettings.callTimeoutSec = 2.0
+myClientSettings.defaultBrowseSettings.callTimeoutSec = 2.0
+# and so on, and so on ...
 
-# The service config:
-readConfig = ReadConfig()
-readConfig.serviceSettings.maxAgeSec = 10.0
-readConfig.serviceSettings.callTimeoutSec = 0.5
-# ...
+# the clientSettings are in use as soon as you provide them again to the Client:
+myClient.setClientSettings(myClientSettings)
 
-# The session config:
-sessionConfig = SessionConfig()
-sessionConfig.defaultSessionSettings.sessionTimeoutSec = 600.0
-sessionConfig.defaultSessionSettings.connectTimeoutSec = 3.0
-# ...
+# In case you want to choose different settings for specific read/write/... calls, then you can
+# provide them also:
+mySpecialSessionSettings = SessionSettings() 
+mySpecialSessionSettings.sessionTimeoutSec = 500.0
+mySpecialSessionSettings.connectTimeoutSec = 0.5
+mySpecialReadSettings = ReadSettings()
+mySpecialReadSettings.callTimeoutSec = 2.0
+mySpecialReadSettings.maxAgeSec      = 10.0
 
-
-# we can now configure our read request more in detail:
-
-result = myClient.read(addresses     = [address_TSetpoint, address_HeaterStatus],
-                       attributeId   = pyuaf.util.attributeids.DisplayName,
-                       serviceConfig = readConfig,
-                       sessionConfig = sessionConfig)
+result = myClient.read(addresses       = [address_TSetpoint, address_HeaterStatus],
+                       attributeId     = pyuaf.util.attributeids.DisplayName,
+                       sessionSettings = mySpecialSessionSettings,
+                       serviceSettings = mySpecialReadSettings)
 
 
 
@@ -561,39 +570,44 @@ result = myClient.processRequest(request)
 #    |     |
 #    |     |__[0]                                   <ReadRequestTarget>
 #    |     |   |__address     = address_TSetpoint   <Address>
-#    |     |   |__attributeId = attributeids.Value  <int>                     (not specified above, we used the defaults)
+#    |     |   |__attributeId = attributeids.Value  <int>  
 #    |     |   |__ ... more target details
 #    |     |
 #    |     |__[1]
 #    |     |   |__address     = address_HeaterStatus <Address>
-#    |     |   |__attributeId = attributeids.Value   <int>                    (not specified above, we used the defaults)
+#    |     |   |__attributeId = attributeids.Value   <int>   
 #    |     |   |__ ... more target details
 #    |     |
 #    |     |__ ... more targets, if needed
 #    |
+#    |__serviceSettingsGiven                         <bool>                   (True if the given settings should be used)
+#    |__serviceSettings                              <ReadSettings?           (configures the service call)
+#    |     |__maxAgeSec      = 0.0                   <double>
+#    |     |__callTimeoutSec = 1.0                   <double>
+#    |     |__ ... more settings
 #    |
-#    |__serviceConfig                                <ReadConfig>             (configures the service call)
-#    |     |
-#    |     |__serviceSettings                        <ReadSettings>           (not specified above, we used the defaults)
-#    |     |     |__maxAgeSec      = 0.0             <double>                 (not specified above, we used the defaults)
-#    |     |     |__callTimeoutSec = 1.0             <double>                 (not specified above, we used the defaults)
-#    |     |     |__ ... more settings
-#    |     |
-#    |     |__translationSettings                    <TranslateBrowsePathsToNodeIdsSettings> (configures relative path resolution)
-#    |           |__callTimeoutSec = 1.0             <double>                 (not specified above, we used the defaults)
-#    |           |__ ... more settings
+#    |__translateSettingsGiven                       <bool>                   (True if the given settings should be used)
+#    |__translateSettings                            <TranslateBrowsePathsToNodeIdsSettings> (configures relative path resolution)
+#    |     |__callTimeoutSec = 1.0                   <double> 
+#    |     |__ ... more settings
 #    |
-#    |__sessionConfig                                <SessionConfig>          (allows you to configure the behavior of how
-#                                                                              sessions are created in the background. See  
-#                                                                              the how_to_change_the_default_session_behavior.py
-#                                                                              example for more info.)
-
+#    |__sessionSettingsGiven                         <bool>                   (True if the given settings should be used)
+#    |__sessionSettings                              <SessionSettings>        (configures the session)
+#    |
+#    |__clientConnectionIdGiven                      <bool>                   (True if the given id should be used)    
+#    |__clientConnectionId                           <int>                    (to select a specific session)
 
 # All requests have the same structure, so they contain:
 #  - a vector of "request targets" (of type ReadRequestTarget, WriteRequestTarget, BrowseRequestTarget, ...)
-#  - a "service config" to configure the service call (of type ReadConfig, WriteConfig, BrowseConfig, ...)
-#  - a "session config" to specify how the UAF should create the necessary Sessions
-#  - (for certain types of request, also an optional "subscription config", to specify how the UAF should create Subscriptions)
+#  - a "serviceSettings" instance and "serviceSettingsGiven" boolean to configure the service call 
+#    ("serviceSettings" is of type ReadConfig, WriteConfig, BrowseConfig, ...)
+#  - a "sessionSettings" instance and "sessionSettingsGiven" boolean to specify how the UAF should 
+#    create or reuse sessions
+#  - a "clientConnectionId" integer and "clientConnectionIdGiven" boolean, in case you want the 
+#    request to be executed by a specific session 
+#  - (for certain types of request, also an optional "subscriptionSettings", 
+#    "subscriptionSettingsGiven", "clientSubscriptionHandle" and "clientSubscriptionHandleGiven" 
+#    to specify how the UAF should create or reuse Subscriptions)
 
 
 

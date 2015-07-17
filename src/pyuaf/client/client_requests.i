@@ -24,6 +24,7 @@
 #include "uaf/util/primitives.h"
 #include "uaf/util/referencedescription.h"
 #include "uaf/util/modificationinfo.h"
+#include "uaf/util/datavalue.h"
 #include "uaf/client/resolution/resolvable.h"
 #include "uaf/client/settings/clientsettings.h"
 #include "uaf/client/requests/basesessionrequesttarget.h"
@@ -59,8 +60,10 @@
 %import(module="pyuaf.util.browsedirections")   "pyuaf/util/util_browsedirections.i"
 %import(module="pyuaf.util.nodeclasses")        "pyuaf/util/util_nodeclasses.i"
 %import(module="pyuaf.util.timestampstoreturn") "pyuaf/util/util_timestampstoreturn.i"
+%import(module="pyuaf.util.constants")          "pyuaf/util/util_constants.i"
 %import(module="pyuaf.util")                    "uaf/util/stringifiable.h"
 %import(module="pyuaf.util")                    "uaf/util/browsepath.h"
+%import(module="pyuaf.util")                    "uaf/util/datavalue.h"
 
 
 // also include the typemap
@@ -69,9 +72,6 @@
     %include "pyuaf/util/util_variant_python.i"
 #endif
 
-
-// also import the wrapped xxxxConfigs classes
-%import "pyuaf/client/client_configs.i"
 
 
 // before including any classes in a generic way, specify the "special treatments" of certain classes:
@@ -87,12 +87,12 @@ MAKE_NON_DYNAMIC(uaf::BrowseRequestTarget)
 MAKE_NON_DYNAMIC(uaf::BrowseNextRequestTarget)
 MAKE_NON_DYNAMIC(uaf::WriteRequestTarget)
 MAKE_NON_DYNAMIC(uaf::HistoryReadRawModifiedRequestTarget)
-%ignore operator==(const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2);
-%ignore operator!=(const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2);
-%ignore operator< (const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSessionRequest<_ServiceConfig, _Target, _Async>& object2);
-%ignore operator==(const BaseSubscriptionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSubscriptionRequest<_ServiceConfig, _Target, _Async>& object2);
-%ignore operator!=(const BaseSubscriptionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSubscriptionRequest<_ServiceConfig, _Target, _Async>& object2);
-%ignore operator< (const BaseSubscriptionRequest<_ServiceConfig, _Target, _Async>& object1, const BaseSubscriptionRequest<_ServiceConfig, _Target, _Async>& object2);
+%ignore operator==(const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object1, const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object2);
+%ignore operator!=(const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object1, const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object2);
+%ignore operator< (const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object1, const BaseSessionRequest<_ServiceSettings, _Target, _Async>& object2);
+%ignore operator==(const BaseSubscriptionRequest<_ServiceSettings, _Target, _Async>& object1, const BaseSubscriptionRequest<_ServiceSettings, _Target, _Async>& object2);
+%ignore operator!=(const BaseSubscriptionRequest<_ServiceSettings, _Target, _Async>& object1, const BaseSubscriptionRequest<_ServiceSettings, _Target, _Async>& object2);
+%ignore operator< (const BaseSubscriptionRequest<_ServiceSettings, _Target, _Async>& object1, const BaseSubscriptionRequest<_ServiceSettings, _Target, _Async>& object2);
 
 
 // wrap some classes that are not defined by macros:
@@ -110,19 +110,35 @@ UAF_WRAP_CLASS("uaf/client/requests/historyreadrawmodifiedrequesttarget.h"      
 UAF_WRAP_CLASS("uaf/client/requests/basesessionrequest.h"                        , uaf , BaseSessionRequest                         , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client.requests, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/client/requests/basesubscriptionrequest.h"                   , uaf , BaseSubscriptionRequest                    , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.client.requests, VECTOR_NO)
 
+// add some python code to handle the **kwargs of requests:
+%pythoncode %{
+def __checkKwargs__(kwargs, allowedKeys):
+    for key in kwargs.keys():
+        if not key in allowedKeys:
+            raise ValueError("Illegal argument: only use one or more of %s" %allowedKeys) 
+    
+def __getElementFromKwargs__(kwargs, key, default):
+    if kwargs.has_key(key):
+        return kwargs[key]
+    else:
+        return default
+%}
 
 // define a macro to create synchronous session requests
 %define CREATE_UAF_SYNC_SESSIONREQUEST(SERVICE)
-    %template(_##SERVICE##Request) uaf::BaseSessionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, false>;
+    %template(_##SERVICE##Request) uaf::BaseSessionRequest<uaf::SERVICE##Settings, uaf::SERVICE##RequestTarget, false>;
     
     %pythoncode %{
     class SERVICE##Request(_##SERVICE##Request):
-        def __init__(self, targets=0, serviceConfig=None, sessionConfig=None):
-            if serviceConfig is None:
-                serviceConfig = configs.SERVICE##Config()
-            if sessionConfig is None:
-                sessionConfig = configs.SessionConfig()
-            _##SERVICE##Request.__init__(self, targets, serviceConfig, sessionConfig)
+        def __init__(self, targets=0, **kwargs):
+            __checkKwargs__(kwargs, ["serviceSettings", "clientConnectionId", "translateSettings", "sessionSettings"])
+            _##SERVICE##Request.__init__(
+                self, 
+                targets,
+                __getElementFromKwargs__(kwargs, "clientConnectionId"   , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED),
+                __getElementFromKwargs__(kwargs, "serviceSettings"      , None),
+                __getElementFromKwargs__(kwargs, "translateSettings"    , None),
+                __getElementFromKwargs__(kwargs, "sessionSettings"      , None))
         def __repr__(self):
             return pyuaf.util.__get__repr__("pyuaf.client.requests." + #SERVICE + "Request", str(self))
     %}
@@ -133,16 +149,19 @@ UAF_WRAP_CLASS("uaf/client/requests/basesubscriptionrequest.h"                  
 
 // define a macro to create asynchronous session requests
 %define CREATE_UAF_ASYNC_SESSIONREQUEST(SERVICE)
-    %template(_Async##SERVICE##Request) uaf::BaseSessionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, true>;
+    %template(_Async##SERVICE##Request) uaf::BaseSessionRequest<uaf::SERVICE##Settings, uaf::SERVICE##RequestTarget, true>;
     
     %pythoncode %{
     class Async##SERVICE##Request(_Async##SERVICE##Request):
-        def __init__(self, targets=0, serviceConfig=None, sessionConfig=None):
-            if serviceConfig is None:
-                serviceConfig = configs.SERVICE##Config()
-            if sessionConfig is None:
-                sessionConfig = configs.SessionConfig()
-            _Async##SERVICE##Request.__init__(self, targets, serviceConfig, sessionConfig)
+        def __init__(self, targets=0, **kwargs):
+            __checkKwargs__(kwargs, ["serviceSettings", "clientConnectionId", "translateSettings", "sessionSettings"])
+            _Async##SERVICE##Request.__init__(
+                self, 
+                targets,
+                __getElementFromKwargs__(kwargs, "clientConnectionId"   , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED),
+                __getElementFromKwargs__(kwargs, "serviceSettings"      , None),
+                __getElementFromKwargs__(kwargs, "translateSettings"    , None),
+                __getElementFromKwargs__(kwargs, "sessionSettings"      , None))
         def __repr__(self):
             return pyuaf.util.__get__repr__("pyuaf.client.requests.Async" + #SERVICE + "Request", str(self))
     %}
@@ -168,19 +187,22 @@ CREATE_UAF_ASYNC_SESSIONREQUEST(MethodCall)
 
 // define a macro to create synchronous subscription requests
 %define CREATE_UAF_SYNC_SUBSCRIPTIONREQUEST(SERVICE)
-    %template(Base##SERVICE##Request) uaf::BaseSessionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, false>;
-    %template(_##SERVICE##Request) uaf::BaseSubscriptionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, false>;
+    %template(Base##SERVICE##Request) uaf::BaseSessionRequest<uaf::SERVICE##Settings, uaf::SERVICE##RequestTarget, false>;
+    %template(_##SERVICE##Request) uaf::BaseSubscriptionRequest<uaf::SERVICE##Settings, uaf::SERVICE##RequestTarget, false>;
 
     %pythoncode %{
     class SERVICE##Request(_##SERVICE##Request):
-        def __init__(self, targets=0, serviceConfig=None, sessionConfig=None, subscriptionConfig=None):
-            if serviceConfig is None:
-                serviceConfig = configs.SERVICE##Config()
-            if sessionConfig is None:
-                sessionConfig = configs.SessionConfig()
-            if subscriptionConfig is None:
-                subscriptionConfig = configs.SubscriptionConfig()
-            _##SERVICE##Request.__init__(self, targets, serviceConfig, sessionConfig, subscriptionConfig)
+        def __init__(self, targets=0, **kwargs):
+            __checkKwargs__(kwargs, ["serviceSettings", "clientConnectionId", "translateSettings", "sessionSettings", "clientSubscriptionHandle", "subscriptionSettings"])
+            _##SERVICE##Request.__init__(
+                self, 
+                targets,
+                __getElementFromKwargs__(kwargs, "clientConnectionId"       , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED),
+                __getElementFromKwargs__(kwargs, "serviceSettings"          , None),
+                __getElementFromKwargs__(kwargs, "translateSettings"        , None),
+                __getElementFromKwargs__(kwargs, "sessionSettings"          , None),
+                __getElementFromKwargs__(kwargs, "clientSubscriptionHandle" , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED),
+                __getElementFromKwargs__(kwargs, "subscriptionSettings"     , None))
         def __repr__(self):
             return pyuaf.util.__get__repr__("pyuaf.client.requests." + #SERVICE + "Request", str(self))
     %}
@@ -189,19 +211,22 @@ CREATE_UAF_ASYNC_SESSIONREQUEST(MethodCall)
 
 // define a macro to create asynchronous subscription requests
 %define CREATE_UAF_ASYNC_SUBSCRIPTIONREQUEST(SERVICE)
-    %template(BaseAsync##SERVICE##Request) uaf::BaseSessionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, true>;
-    %template(_Async##SERVICE##Request) uaf::BaseSubscriptionRequest< uaf::BaseServiceConfig<uaf::SERVICE##Settings>, uaf::SERVICE##RequestTarget, true> ;
+    %template(BaseAsync##SERVICE##Request) uaf::BaseSessionRequest<uaf::SERVICE##Settings, uaf::SERVICE##RequestTarget, true>;
+    %template(_Async##SERVICE##Request) uaf::BaseSubscriptionRequest<uaf::SERVICE##Settings, uaf::SERVICE##RequestTarget, true> ;
 
     %pythoncode %{
     class Async##SERVICE##Request(_Async##SERVICE##Request):
-        def __init__(self, targets=0, serviceConfig=None, sessionConfig=None, subscriptionConfig=None):
-            if serviceConfig is None:
-                serviceConfig = configs.SERVICE##Config()
-            if sessionConfig is None:
-                sessionConfig = configs.SessionConfig()
-            if subscriptionConfig is None:
-                subscriptionConfig = configs.SubscriptionConfig()
-            _Async##SERVICE##Request.__init__(self, targets, serviceConfig, sessionConfig, subscriptionConfig)
+        def __init__(self, targets=0, **kwargs):
+            __checkKwargs__(kwargs, ["serviceSettings", "clientConnectionId", "translateSettings", "sessionSettings", "clientSubscriptionHandle", "subscriptionSettings"])
+            _Async##SERVICE##Request.__init__(
+                self, 
+                targets,
+                __getElementFromKwargs__(kwargs, "clientConnectionId"       , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED),
+                __getElementFromKwargs__(kwargs, "serviceSettings"          , None),
+                __getElementFromKwargs__(kwargs, "translateSettings"        , None),
+                __getElementFromKwargs__(kwargs, "sessionSettings"          , None),
+                __getElementFromKwargs__(kwargs, "clientSubscriptionHandle" , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED),
+                __getElementFromKwargs__(kwargs, "subscriptionSettings"     , None))
         def __repr__(self):
             return pyuaf.util.__get__repr__("pyuaf.client.requests.Async" + #SERVICE + "Request", str(self))
     %}

@@ -119,22 +119,20 @@ namespace uaf
 
 
     /**
-     * Check if one of the given session security settings (e.g. as specified by the user) match
+     * Check if the given session security settings (e.g. as specified by the user) matches
      * one of the given endpoints of a (e.g. discovered) server.
      *
-     * @param settings          The vector of security settings, e.g. as specified by the user.
+     * @param settings          The security settings, e.g. as specified by the user.
      * @param endpoints         The vector of endpoint description, e.g. as discovered by the
      *                          UAF client.
-     * @param suitableSettings  The settings that matched (if the returned status is Good)!
      * @param suitableEndpoint  The endpoint that matched (if the returned status is Good)!
      * @return                  Good if one of the settings and one of the endpoints match, bad if
      *                          not.
      */
     uaf::Status UAF_EXPORT match(
-            const std::vector<uaf::SessionSecuritySettings>&   settings,
-            const std::vector<uaf::EndpointDescription>&        endpoints,
-            uaf::SessionSecuritySettings&                      suitableSettings,
-            uaf::EndpointDescription&                           suitableEndpoint);
+            const uaf::SessionSecuritySettings&             settings,
+            const std::vector<uaf::EndpointDescription>&    endpoints,
+            uaf::EndpointDescription&                       suitableEndpoint);
 
 
 }

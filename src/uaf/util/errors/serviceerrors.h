@@ -33,6 +33,7 @@
 #include "uaf/util/errors/uaferror.h"
 #include "uaf/util/errors/invalidrequesterror.h"
 #include "uaf/util/util.h"
+#include "uaf/util/constants.h"
 
 namespace uaf
 {
@@ -538,7 +539,7 @@ namespace uaf
     public:
         ServerCouldNotSetMonitoringModeError()
         : uaf::ServiceError("The server could not set the monitoring mode successfully"),
-          clientHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED)
+          clientHandle(uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
         {}
 
         ServerCouldNotSetMonitoringModeError(uaf::ClientHandle clientHandle, uaf::SdkStatus sdkStatus)

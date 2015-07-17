@@ -87,12 +87,12 @@ class ClientSetPublishingModeTest(unittest.TestCase):
         # Now we want to create some monitored items, of which we want to control the subscription mode.
         # We explicitly request the subscription to be unique (if we don't, then the subscription 
         # we previously created will be re-used!).
-        subConfig = pyuaf.client.configs.SubscriptionConfig()
-        subConfig.defaultSubscriptionSettings.unique = True
+        subSettings = pyuaf.client.settings.SubscriptionSettings()
+        subSettings.unique = True
         
         t1 = TestClass()
         res = self.client.createMonitoredData([self.address_Byte, self.address_Int32, self.address_Float],
-                                              subscriptionConfig = subConfig,
+                                              subscriptionSettings = subSettings,
                                               notificationCallbacks=[t1.myCallback, t1.myCallback, t1.myCallback])
         
         # make sure there was no error

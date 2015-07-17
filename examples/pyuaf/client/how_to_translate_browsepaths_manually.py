@@ -17,7 +17,6 @@ import pyuaf
 from pyuaf.client                import Client
 from pyuaf.client.settings       import ClientSettings
 from pyuaf.client.requests       import TranslateBrowsePathsToNodeIdsRequest
-from pyuaf.client.configs        import TranslateBrowsePathsToNodeIdsConfig
 from pyuaf.util                  import Address, NodeId, RelativePathElement, QualifiedName, BrowsePath, ExpandedNodeId
 from pyuaf.util                  import primitives
 from pyuaf.util.errors           import UafError

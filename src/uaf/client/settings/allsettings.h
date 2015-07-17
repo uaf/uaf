@@ -18,14 +18,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef UAF_CONFIGS_H_
-#define UAF_CONFIGS_H_
+#ifndef UAF_ALLSETTINGS_H_
+#define UAF_ALLSETTINGS_H_
 
-// STD
-// SDK
-// UAF
 #include "uaf/client/clientexport.h"
-#include "uaf/client/configs/baseserviceconfig.h"
 #include "uaf/client/settings/readsettings.h"
 #include "uaf/client/settings/writesettings.h"
 #include "uaf/client/settings/methodcallsettings.h"
@@ -35,31 +31,8 @@
 #include "uaf/client/settings/browsesettings.h"
 #include "uaf/client/settings/browsenextsettings.h"
 #include "uaf/client/settings/historyreadrawmodifiedsettings.h"
+#include "uaf/client/settings/sessionsettings.h"
+#include "uaf/client/settings/subscriptionsettings.h"
+#include "uaf/client/settings/clientsettings.h"
 
-
-
-
-
-#define DEFINE_CONFIG(NAME)                                                         \
-/** Config class holding the service settings and the address resolution settings.  \
- *                                                                                  \
- * @ingroup ClientConfigs */ \
-typedef UAF_EXPORT uaf::BaseServiceConfig< uaf::NAME##Settings > NAME##Config;
-
-
-namespace uaf
-{
-    DEFINE_CONFIG(Read)
-    DEFINE_CONFIG(Write)
-    DEFINE_CONFIG(MethodCall)
-    DEFINE_CONFIG(Browse)
-    DEFINE_CONFIG(BrowseNext)
-    DEFINE_CONFIG(HistoryReadRawModified)
-    DEFINE_CONFIG(TranslateBrowsePathsToNodeIds)
-    DEFINE_CONFIG(CreateMonitoredData)
-    DEFINE_CONFIG(CreateMonitoredEvents)
-
-}
-
-
-#endif /* UAF_CONFIGS_H_ */
+#endif /* UAF_ALLSETTINGS_H_ */

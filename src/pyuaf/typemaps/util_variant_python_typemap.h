@@ -42,6 +42,7 @@
     || PRIMITIVE_CONDITION(IN, String)          \
     || PRIMITIVE_CONDITION(IN, ByteString)      \
     || UAFTYPE_CONDITION(IN, NodeId)            \
+    || UAFTYPE_CONDITION(IN, Guid)              \
     || UAFTYPE_CONDITION(IN, ExpandedNodeId)    \
     || UAFTYPE_CONDITION(IN, LocalizedText)     \
     || UAFTYPE_CONDITION(IN, DateTime)          \
@@ -228,6 +229,7 @@
     else if (PRIMITIVE_CONDITION(FIRSTOBJECT, String))       { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, String,     std::string,       length,   VARIANT) } \
     else if (PRIMITIVE_CONDITION(FIRSTOBJECT, ByteString))   { CONVERT_PRIMITIVE_ARRAY(PYOBJECT, ByteString, uaf::ByteString,   length,   VARIANT) } \
     else if (UAFTYPE_CONDITION(FIRSTOBJECT, NodeId))         { PYUAF_CONVERT_UAFTYPE_ARRAY(PYOBJECT, NodeId,         length,   VARIANT) } \
+    else if (UAFTYPE_CONDITION(FIRSTOBJECT, Guid))           { PYUAF_CONVERT_UAFTYPE_ARRAY(PYOBJECT, Guid,           length,   VARIANT) } \
     else if (UAFTYPE_CONDITION(FIRSTOBJECT, ExpandedNodeId)) { PYUAF_CONVERT_UAFTYPE_ARRAY(PYOBJECT, ExpandedNodeId, length,   VARIANT) } \
     else if (UAFTYPE_CONDITION(FIRSTOBJECT, LocalizedText))  { PYUAF_CONVERT_UAFTYPE_ARRAY(PYOBJECT, LocalizedText,  length,   VARIANT) } \
     else if (UAFTYPE_CONDITION(FIRSTOBJECT, QualifiedName))  { PYUAF_CONVERT_UAFTYPE_ARRAY(PYOBJECT, QualifiedName,  length,   VARIANT) } \
@@ -252,6 +254,7 @@
     else if (PRIMITIVE_CONDITION(PYOBJECT, String))       { CONVERT_PRIMITIVE(PYOBJECT, String,         VARIANT) } \
     else if (PRIMITIVE_CONDITION(PYOBJECT, ByteString))   { CONVERT_PRIMITIVE(PYOBJECT, ByteString,     VARIANT) } \
     else if (UAFTYPE_CONDITION(PYOBJECT, NodeId))         { PYUAF_CONVERT_UAFTYPE(PYOBJECT, NodeId,           VARIANT) } \
+    else if (UAFTYPE_CONDITION(PYOBJECT, Guid))           { PYUAF_CONVERT_UAFTYPE(PYOBJECT, Guid,             VARIANT) } \
     else if (UAFTYPE_CONDITION(PYOBJECT, ExpandedNodeId)) { PYUAF_CONVERT_UAFTYPE(PYOBJECT, ExpandedNodeId,   VARIANT) } \
     else if (UAFTYPE_CONDITION(PYOBJECT, LocalizedText))  { PYUAF_CONVERT_UAFTYPE(PYOBJECT, LocalizedText,    VARIANT) } \
     else if (UAFTYPE_CONDITION(PYOBJECT, QualifiedName))  { PYUAF_CONVERT_UAFTYPE(PYOBJECT, QualifiedName,    VARIANT) } \
@@ -375,6 +378,7 @@
     else if (VARIANT.type() == uaf::opcuatypes::String)          { CREATE_PRIMITIVE_ARRAY(String,     std::string, VARIANT, PYOBJECT)   } \
     else if (VARIANT.type() == uaf::opcuatypes::ByteString)      { CREATE_PRIMITIVE_ARRAY(ByteString, uaf::ByteString, VARIANT, PYOBJECT)   } \
     else if (VARIANT.type() == uaf::opcuatypes::NodeId)          { CREATE_UAFTYPE_ARRAY(NodeId, VARIANT, PYOBJECT)         } \
+    else if (VARIANT.type() == uaf::opcuatypes::Guid)            { CREATE_UAFTYPE_ARRAY(Guid, VARIANT, PYOBJECT)         } \
     else if (VARIANT.type() == uaf::opcuatypes::ExpandedNodeId)  { CREATE_UAFTYPE_ARRAY(ExpandedNodeId, VARIANT, PYOBJECT) } \
     else if (VARIANT.type() == uaf::opcuatypes::LocalizedText)   { CREATE_UAFTYPE_ARRAY(LocalizedText, VARIANT, PYOBJECT)  } \
     else if (VARIANT.type() == uaf::opcuatypes::QualifiedName)   { CREATE_UAFTYPE_ARRAY(QualifiedName, VARIANT, PYOBJECT)  } \
@@ -403,6 +407,7 @@
     else if (VARIANT.type() == uaf::opcuatypes::String)          { CREATE_PRIMITIVE(String, VARIANT, PYOBJECT)       }  \
     else if (VARIANT.type() == uaf::opcuatypes::ByteString)      { CREATE_PRIMITIVE(ByteString, VARIANT, PYOBJECT)   }  \
     else if (VARIANT.type() == uaf::opcuatypes::NodeId)          { CREATE_UAFTYPE(NodeId, VARIANT, PYOBJECT)         }  \
+    else if (VARIANT.type() == uaf::opcuatypes::Guid)            { CREATE_UAFTYPE(Guid, VARIANT, PYOBJECT)           }  \
     else if (VARIANT.type() == uaf::opcuatypes::ExpandedNodeId)  { CREATE_UAFTYPE(ExpandedNodeId, VARIANT, PYOBJECT) }  \
     else if (VARIANT.type() == uaf::opcuatypes::LocalizedText)   { CREATE_UAFTYPE(LocalizedText, VARIANT, PYOBJECT)  }  \
     else if (VARIANT.type() == uaf::opcuatypes::QualifiedName)   { CREATE_UAFTYPE(QualifiedName, VARIANT, PYOBJECT)  }  \

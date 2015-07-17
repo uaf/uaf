@@ -71,12 +71,11 @@ class ClientKeepAliveTest(unittest.TestCase):
         # create a request that will certainly result in KeepAlive notifications
         # It seems that we cannot force the UaServerCpp demo server to send KeepAlive messages
         # faster than once every 5 seconds, so we keep it at that: 
-        request = pyuaf.client.requests.CreateMonitoredDataRequest(1)
-        request.targets[0].address = self.address
-        request.subscriptionConfig.defaultSubscriptionSettings.publishingIntervalSec = 1.0
-        request.subscriptionConfig.defaultSubscriptionSettings.maxKeepAliveCount = 5
+        subSettings = pyuaf.client.settings.SubscriptionSettings()
+        subSettings.publishingIntervalSec = 1.0
+        subSettings.maxKeepAliveCount = 5
         
-        result = self.client.processRequest(request)
+        result = self.client.createMonitoredData([self.address], subscriptionSettings = subSettings)
         self.assertTrue( result.targets[0].status.isGood() )
         
         # wait some time

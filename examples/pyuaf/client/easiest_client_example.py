@@ -18,5 +18,5 @@ someAddress = Address(NodeId("Demo.SimulationSpeed",                         # N
 
 # read the Value attribute of the node that we just addressed:
 result = myClient.read( [someAddress] )
-
+print type(result.targets[0].data)
 print("The value is %d" %result.targets[0].data.value)

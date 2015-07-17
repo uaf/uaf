@@ -56,7 +56,7 @@ namespace uaf
          */
         CreateMonitoredEventsResultTarget()
         : opcUaStatusCode(OpcUa_Uncertain),
-          clientHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          clientHandle(uaf::constants::CLIENTHANDLE_NOT_ASSIGNED),
           monitoredItemId(0),
           revisedSamplingIntervalSec(0.0),
           revisedQueueSize(0)

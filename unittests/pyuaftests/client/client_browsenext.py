@@ -52,11 +52,13 @@ class BrowseNextTest(unittest.TestCase):
         originalRequest = BrowseRequest(1) 
         
         originalRequest.targets[0].address = self.address_StaticScalar
-        originalRequest.serviceConfig.serviceSettings.maxReferencesToReturn = 3 # ridiculously low, to force continuationPoints
-        originalRequest.serviceConfig.serviceSettings.maxAutoBrowseNext = 0     # meaning: no automatic BrowseNext
-        
+        originalRequest.serviceSettingsGiven = True
+        browseSettings = pyuaf.client.settings.BrowseSettings()
+        browseSettings.maxReferencesToReturn = 3 # ridiculously low, to force automatic BrowseNext calls
+        browseSettings.maxAutoBrowseNext = 0     # meaning: no automatic BrowseNext
+        originalRequest.serviceSettings = browseSettings
+        #print originalRequest.serviceSettings
         result = self.client.processRequest(originalRequest)
-        
         self.assertTrue( result.overallStatus.isGood() )
         
         self.assertTrue( len(result.targets[0].continuationPoint) > 0 )
@@ -79,8 +81,11 @@ class BrowseNextTest(unittest.TestCase):
         originalRequest = BrowseRequest(1) 
         
         originalRequest.targets[0].address = self.address_StaticScalar
-        originalRequest.serviceConfig.serviceSettings.maxReferencesToReturn = 3 # ridiculously low, to force continuationPoints
-        originalRequest.serviceConfig.serviceSettings.maxAutoBrowseNext = 0     # meaning: no automatic BrowseNext
+        originalRequest.serviceSettingsGiven = True
+        browseSettings = pyuaf.client.settings.BrowseSettings()
+        browseSettings.maxReferencesToReturn = 3 # ridiculously low, to force automatic BrowseNext calls
+        browseSettings.maxAutoBrowseNext = 0     # meaning: no automatic BrowseNext
+        originalRequest.serviceSettings = browseSettings
         
         result = self.client.processRequest(originalRequest)
         

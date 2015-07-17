@@ -25,7 +25,6 @@
 // SDK
 // UAF
 #include "uaf/client/clientexport.h"
-#include "uaf/client/configs/configs.h"
 #include "uaf/client/results/basesessionresult.h"
 #include "uaf/client/results/basesubscriptionresult.h"
 #include "uaf/client/results/asyncresulttarget.h"

@@ -47,7 +47,7 @@ namespace uaf
     * @ingroup ClientRequests
     ***********************************************************************************************/
     class UAF_EXPORT WriteRequestTarget : public uaf::BaseSessionRequestTarget,
-                                           public uaf::DataValue
+                                          public uaf::DataValue
     {
     public:
 

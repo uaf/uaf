@@ -63,8 +63,11 @@ class BrowseTest(unittest.TestCase):
         request.targets[0].address = self.address_Demo
         request.targets[1].address = self.address_StaticScalar
         request.targets[2].address = self.address_DynamicScalar
-        request.serviceConfig.serviceSettings.maxReferencesToReturn = 3 # ridiculously low, to force automatic BrowseNext calls
-        request.serviceConfig.serviceSettings.maxAutoBrowseNext = 100
+        request.serviceSettingsGiven = True
+        browseSettings = pyuaf.client.settings.BrowseSettings()
+        browseSettings.maxReferencesToReturn = 3 # ridiculously low, to force automatic BrowseNext calls
+        browseSettings.maxAutoBrowseNext = 100
+        request.serviceSettings = browseSettings 
         
         result = self.client.processRequest(request)
         

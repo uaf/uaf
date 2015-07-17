@@ -43,11 +43,13 @@ namespace uaf
             ClientConnectionId                      clientConnectionId,
             uaf::sessionstates::SessionState        sessionState,
             const string&                           serverUri,
+            const SessionSettings&                  sessionSettings,
             const connectionsteps::ConnectionStep&  lastConnectionAttemptStep,
             const Status&                           lastConnectionAttemptStatus)
       : sessionState(sessionState),
         clientConnectionId(clientConnectionId),
         serverUri(serverUri),
+        sessionSettings(sessionSettings),
         lastConnectionAttemptStatus(lastConnectionAttemptStatus),
         lastConnectionAttemptStep(lastConnectionAttemptStep)
     {}
@@ -70,6 +72,9 @@ namespace uaf
         ss << indent << " - serverUri";
         ss << fillToPos(ss, colon);
         ss << ": " << serverUri << "\n";
+
+        ss << indent << " - sessionSettings\n";
+        ss << sessionSettings.toString(indent + "   ", colon) << "\n";
 
         ss << indent << " - lastConnectionAttemptStep";
         ss << fillToPos(ss, colon);

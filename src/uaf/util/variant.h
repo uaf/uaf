@@ -38,6 +38,7 @@
 #include "uaf/util/datetime.h"
 #include "uaf/util/bytestring.h"
 #include "uaf/util/opcuatypes.h"
+#include "uaf/util/guid.h"
 #include "uaf/util/nodeid.h"
 #include "uaf/util/expandednodeid.h"
 #include "uaf/util/localizedtext.h"
@@ -159,6 +160,7 @@ namespace uaf
         DECLARE_VARIANT_METHODS(Double          , double              , double)
         DECLARE_VARIANT_METHODS(ByteString      , uaf::ByteString     , const uaf::ByteString&)
         DECLARE_VARIANT_METHODS(NodeId          , uaf::NodeId         , const uaf::NodeId&)
+        DECLARE_VARIANT_METHODS(Guid            , uaf::Guid           , const uaf::Guid&)
         DECLARE_VARIANT_METHODS(ExpandedNodeId  , uaf::ExpandedNodeId , const uaf::ExpandedNodeId&)
         DECLARE_VARIANT_METHODS(QualifiedName   , uaf::QualifiedName  , const uaf::QualifiedName&)
         DECLARE_VARIANT_METHODS(LocalizedText   , uaf::LocalizedText  , const uaf::LocalizedText&)
@@ -231,6 +233,7 @@ namespace uaf
         //  namespace IDs and/or server IDs)
         // We store them as vectors, so that they can also represent array types if necessary.
         std::vector<uaf::NodeId> nodeId_;
+        std::vector<uaf::Guid> guid_;
         std::vector<uaf::ExpandedNodeId> expandedNodeId_;
         std::vector<uaf::QualifiedName> qualifiedName_;
         std::vector<uaf::ExtensionObject> extensionObject_;

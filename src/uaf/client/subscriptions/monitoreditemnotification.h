@@ -34,6 +34,7 @@
 #include "uaf/util/address.h"
 #include "uaf/util/stringifiable.h"
 #include "uaf/util/handles.h"
+#include "uaf/util/constants.h"
 #include "uaf/client/clientexport.h"
 
 

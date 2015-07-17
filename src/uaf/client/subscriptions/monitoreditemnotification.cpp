@@ -37,7 +37,7 @@ namespace uaf
     // Constructor
     // =============================================================================================
     MonitoredItemNotification::MonitoredItemNotification()
-    : clientHandle(CLIENTHANDLE_NOT_ASSIGNED)
+    : clientHandle(uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
     {}
 
 
@@ -48,7 +48,7 @@ namespace uaf
         stringstream ss;
         ss << indent << " - clientHandle";
         ss << fillToPos(ss, colon);
-        if (clientHandle == CLIENTHANDLE_NOT_ASSIGNED)
+        if (clientHandle == uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
             ss << ": 0xFFFFFFFF (CLIENTHANDLE_NOT_ASSIGNED)";
         else
             ss << ": " << clientHandle;

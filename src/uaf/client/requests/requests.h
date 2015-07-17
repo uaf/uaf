@@ -27,7 +27,7 @@
 #include "uaf/client/clientexport.h"
 #include "uaf/client/requests/basesessionrequest.h"
 #include "uaf/client/requests/basesubscriptionrequest.h"
-#include "uaf/client/configs/configs.h"
+#include "uaf/client/settings/allsettings.h"
 #include "uaf/client/requests/readrequesttarget.h"
 #include "uaf/client/requests/writerequesttarget.h"
 #include "uaf/client/requests/methodcallrequesttarget.h"
@@ -44,20 +44,20 @@
 
 #define DEFINE_SYNC_SESSIONREQUEST(name) \
 /** This is a synchronous service request handled at the session level.  @ingroup ClientRequests */ \
-typedef UAF_EXPORT uaf::BaseSessionRequest<uaf::name##Config, uaf::name##RequestTarget, false> name##Request;
+typedef UAF_EXPORT uaf::BaseSessionRequest<uaf::name##Settings, uaf::name##RequestTarget, false> name##Request;
 
 #define DEFINE_ASYNC_SESSIONREQUEST(name) \
 /** This is an asynchronous service request handled at the session level.  @ingroup ClientRequests */ \
-typedef UAF_EXPORT uaf::BaseSessionRequest<uaf::name##Config, uaf::name##RequestTarget, true> Async##name##Request;
+typedef UAF_EXPORT uaf::BaseSessionRequest<uaf::name##Settings, uaf::name##RequestTarget, true> Async##name##Request;
 
 
 #define DEFINE_SYNC_SUBSCRIPTIONREQUEST(name) \
 /** This is a synchronous service request handled at the subscription level.  @ingroup ClientRequests */ \
-typedef UAF_EXPORT uaf::BaseSubscriptionRequest<uaf::name##Config, uaf::name##RequestTarget, false> name##Request;
+typedef UAF_EXPORT uaf::BaseSubscriptionRequest<uaf::name##Settings, uaf::name##RequestTarget, false> name##Request;
 
 #define DEFINE_ASYNC_SUBSCRIPTIONREQUEST(name) \
 /** This is an asynchronous service request handled at the subscription level.  @ingroup ClientRequests */ \
-typedef UAF_EXPORT uaf::BaseSubscriptionRequest<uaf::name##Config, uaf::name##RequestTarget, true> Async##name##Request;
+typedef UAF_EXPORT uaf::BaseSubscriptionRequest<uaf::name##Settings, uaf::name##RequestTarget, true> Async##name##Request;
 
 
 

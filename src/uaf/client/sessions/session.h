@@ -250,7 +250,7 @@ namespace uaf
         uaf::Status setPublishingMode(
                 uaf::ClientSubscriptionHandle  clientSubscriptionHandle,
                 bool                           publishingEnabled,
-                const uaf::ServiceSettings&   serviceSettings,
+                const uaf::ServiceSettings*   serviceSettings,
                 bool&                          subscriptionFound);
 
 
@@ -266,7 +266,7 @@ namespace uaf
         uaf::Status setMonitoringModeIfNeeded(
                std::vector<uaf::ClientHandle>          clientHandles,
                uaf::monitoringmodes::MonitoringMode    monitoringMode,
-               const uaf::ServiceSettings&            serviceSettings,
+               const uaf::ServiceSettings*            serviceSettings,
                std::vector<uaf::Status>&               results);
 
 
@@ -286,7 +286,7 @@ namespace uaf
          */
         template<typename _Service>
         uaf::Status invokeService(
-                const uaf::BaseSessionRequest<typename _Service::Config,
+                const uaf::BaseSessionRequest<typename _Service::Settings,
                                                typename _Service::RequestTarget,
                                                _Service::asynchronous>& request,
                 typename _Service::Invocation& invocation)
@@ -304,13 +304,14 @@ namespace uaf
          */
         template<typename _Service>
         uaf::Status invokeService(
-                const uaf::BaseSubscriptionRequest<typename _Service::Config,
+                const uaf::BaseSubscriptionRequest<typename _Service::Settings,
                                                     typename _Service::RequestTarget,
                                                     _Service::asynchronous>& request,
                 typename _Service::Invocation& invocation)
         {
             return subscriptionFactory_->invokeService<_Service>(
                     invocation,
+                    request,
                     namespaceArray_,
                     serverArray_);
         }

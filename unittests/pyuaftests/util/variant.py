@@ -128,6 +128,10 @@ class VariantTest(unittest.TestCase):
         v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.ExtensionObject)
         self.assertEqual( type(v) , pyuaf.util.ExtensionObject )
         
+    def test_util_Guid_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Guid)
+        self.assertEqual( v , pyuaf.util.Guid("{cecf86f6-cad5-48d5-9b22-989f848acc9d}") )
+        
     def test_util_primitives_Boolean_array_outputtypemap(self):
         v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Boolean, True)
         self.assertEqual( v , [ pyuaf.util.primitives.Boolean(True), 
@@ -236,6 +240,11 @@ class VariantTest(unittest.TestCase):
         self.assertEqual( type(v[1]) , pyuaf.util.ExtensionObject )
         self.assertEqual( type(v[2]) , pyuaf.util.ExtensionObject )
         
+    def test_util_Guid_array_outputtypemap(self):
+        v = self.tester.testVariantTypemap_out(pyuaf.util.opcuatypes.Guid, True)
+        self.assertEqual( v , [pyuaf.util.Guid("{cecf86f6-cad5-48d5-9b22-989f848acc9d}"), 
+                               pyuaf.util.Guid("{cecf86f6-cad5-48d5-9b22-989f848acc9e}")] )
+        
         ######## input typemaps ########
         
         
@@ -330,6 +339,10 @@ class VariantTest(unittest.TestCase):
     def test_util_ExtensionObject_inputtypemap(self):
         v = self.tester.testVariantTypemap_in(pyuaf.util.ExtensionObject())
         self.assertEqual( type(v) , pyuaf.util.ExtensionObject )
+        
+    def test_util_Guid_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in(pyuaf.util.Guid("{cecf86f6-cad5-48d5-9b22-989f848acc9d}"))
+        self.assertEqual( v , pyuaf.util.Guid("{cecf86f6-cad5-48d5-9b22-989f848acc9d}") )
     
     def test_util_primitives_Boolean_array_inputtypemap(self):
         v = self.tester.testVariantTypemap_in( [pyuaf.util.primitives.Boolean(True),
@@ -481,6 +494,12 @@ class VariantTest(unittest.TestCase):
         self.assertEqual( type(v[0]) , pyuaf.util.ExtensionObject )
         self.assertEqual( type(v[1]) , pyuaf.util.ExtensionObject )
         self.assertEqual( type(v[2]) , pyuaf.util.ExtensionObject )
+    
+    def test_util_DateTime_array_inputtypemap(self):
+        v = self.tester.testVariantTypemap_in( [pyuaf.util.Guid("{cecf86f6-cad5-48d5-9b22-989f848acc9d}"), 
+                                                pyuaf.util.Guid("{cecf86f6-cad5-48d5-9b22-989f848acc9e}")] )
+        self.assertEqual( v , [pyuaf.util.Guid("{cecf86f6-cad5-48d5-9b22-989f848acc9d}"), 
+                               pyuaf.util.Guid("{cecf86f6-cad5-48d5-9b22-989f848acc9e}")] )
 
     def test_util_VariantVector(self):
         testVector(self, pyuaf.util.VariantVector, [ pyuaf.util.primitives.UInt64(123132),

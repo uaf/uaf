@@ -37,7 +37,7 @@ namespace uaf
         connectTimeoutSec          = 2.0;
         watchdogTimeoutSec         = 2.0;
         watchdogTimeSec            = 5.0;
-        securitySettingsList.resize(1);
+        unique                     = false;
 
     }
 
@@ -59,6 +59,13 @@ namespace uaf
         ss << indent << " - watchdogTimeSec";
         ss << fillToPos(ss, colon);
         ss << ": " << watchdogTimeSec;
+        ss << indent << " - unique";
+        ss << fillToPos(ss, colon);
+        ss << ": " << (unique ? "true" : "false") << "\n";
+        ss << indent << " - readServerInfoSettings\n";
+        ss << readServerInfoSettings.toString(indent + "   ", colon).c_str() << '\n';
+        ss << indent << " - securitySettings\n";
+        ss << securitySettings.toString(indent + "   ", colon).c_str();
 
         return ss.str();
     }
@@ -78,6 +85,12 @@ namespace uaf
             return int(object1.watchdogTimeoutSec*1000) < int(object2.watchdogTimeoutSec*1000);
         else if (int(object1.watchdogTimeSec*1000) != int(object2.watchdogTimeSec*1000))
             return int(object1.watchdogTimeSec*1000) < int(object2.watchdogTimeSec*1000);
+        else if (object1.unique != object2.unique)
+            return object1.unique < object2.unique;
+        else if (object1.readServerInfoSettings != object2.readServerInfoSettings)
+            return object1.readServerInfoSettings < object2.readServerInfoSettings;
+        else if (object1.securitySettings != object2.securitySettings)
+            return object1.securitySettings < object2.securitySettings;
         else
             return false;
     }
@@ -92,7 +105,10 @@ namespace uaf
         return ( (int(object1.sessionTimeoutSec*1000)  == int(object2.sessionTimeoutSec*1000))
            &&    (int(object1.connectTimeoutSec*1000)  == int(object2.connectTimeoutSec*1000))
            &&    (int(object1.watchdogTimeoutSec*1000) == int(object2.watchdogTimeoutSec*1000))
-           &&    (int(object1.watchdogTimeSec*1000)    == int(object2.watchdogTimeSec*1000)));
+           &&    (int(object1.watchdogTimeSec*1000)    == int(object2.watchdogTimeSec*1000)))
+           &&    object1.unique == object2.unique
+           &&    object1.readServerInfoSettings == object2.readServerInfoSettings
+           &&    object1.securitySettings == object2.securitySettings;
     }
 
 

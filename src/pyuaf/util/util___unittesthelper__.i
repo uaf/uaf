@@ -66,6 +66,8 @@
         uaf::LocalizedText someLocalizedText;
         uaf::DateTime someDateTime;
         uaf::ExtensionObject someExtensionObject;
+        uaf::Guid someGuid1;
+        uaf::Guid someGuid2;
         
         UnitTestHelper() 
         {
@@ -88,6 +90,8 @@
             someQualifiedName2 = uaf::QualifiedName("SomeName", "nsUri", 42);
             someLocalizedText = uaf::LocalizedText("en", "SomeText");
             someDateTime = uaf::DateTime::fromString("2013-05-21T12:34:56.789Z");
+            someGuid1 = uaf::Guid("{cecf86f6-cad5-48d5-9b22-989f848acc9d}");
+            someGuid2 = uaf::Guid("{cecf86f6-cad5-48d5-9b22-989f848acc9e}");
         }
 
         virtual ~UnitTestHelper()
@@ -268,6 +272,14 @@
                         v.setExtensionObjectArray(array);
                         break;
                     }
+                    case uaf::opcuatypes::Guid:
+                    {
+                        std::vector<uaf::Guid> array;
+                        array.push_back(someGuid1);
+                        array.push_back(someGuid2);
+                        v.setGuidArray(array);
+                        break;
+                    }
                     default:
                     {
                         v.clear();
@@ -298,6 +310,7 @@
                     case uaf::opcuatypes::QualifiedName:   { v.setQualifiedName(someQualifiedName2);    break; }
                     case uaf::opcuatypes::DateTime:        { v.setDateTime(someDateTime);               break; }
                     case uaf::opcuatypes::ExtensionObject: { v.setExtensionObject(someExtensionObject); break; }
+                    case uaf::opcuatypes::Guid:            { v.setGuid(someGuid1);                      break; }
                     default:                               { v.clear();                                 break; }
                 }
             }

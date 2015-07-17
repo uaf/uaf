@@ -27,7 +27,7 @@
 #include "uaf/client/clientexport.h"
 #include "uaf/client/requests/requests.h"
 #include "uaf/client/results/results.h"
-#include "uaf/client/configs/configs.h"
+#include "uaf/client/settings/allsettings.h"
 #include "uaf/client/invocations/invocations.h"
 
 
@@ -46,8 +46,6 @@ struct UAF_EXPORT NAME##Service                                                 
     /** The type of the service ResultTarget. */                                                \
     typedef uaf::NAME##ResultTarget    ResultTarget;                                           \
     /** The type of the service Config. */                                                      \
-    typedef uaf::NAME##Config          Config;                                                 \
-    /** The type of the service Settings. */                                                    \
     typedef uaf::NAME##Settings        Settings;                                               \
     /** The type of the service Invocation. */                                                  \
     typedef uaf::NAME##Invocation      Invocation;                                             \
@@ -71,8 +69,6 @@ struct UAF_EXPORT Async##NAME##Service                                          
     typedef uaf::NAME##RequestTarget     RequestTarget;                                        \
     /** The type of the service ResultTarget. */                                                \
     typedef uaf::NAME##ResultTarget      ResultTarget;                                         \
-    /** The type of the service Config. */                                                      \
-    typedef uaf::NAME##Config            Config;                                               \
     /** The type of the service Settings. */                                                    \
     typedef uaf::NAME##Settings          Settings;                                             \
     /** The type of the service Invocation. */                                                  \
