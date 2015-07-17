@@ -24,12 +24,12 @@ Informally:
   - easily configure SessionSettings, SubscriptionSettings, ReadSettings, etc. per service call:
    
     >>> myClient.read(addresses       = myAddresses, 
-    ...               serviceSettings = myServiceSettings, # optional **kwarg
+    ...               serviceSettings = myReadSettings,    # optional **kwarg
     ...               sessionSettings = mySessionSettings) # optional **kwarg
     >>> myClient.createMonitoredData(addresses            = myAddresses, 
-    ...                              serviceSettings      = myServiceSettings, # optional **kwarg
-    ...                              sessionSettings      = mySessionSettings, # optional **kwarg
-    ...                              subscriptionSettings = mySessionSettings) # optional **kwarg
+    ...                              serviceSettings      = myCreateMonitoredDataSettings, # optional **kwarg
+    ...                              sessionSettings      = mySessionSettings,             # optional **kwarg
+    ...                              subscriptionSettings = mySubscriptionSettings)        # optional **kwarg
 
   - easily keep full control over sessions, subscriptions and services (only if you know
     what you're doing):
