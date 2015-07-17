@@ -28,6 +28,7 @@
 // UAF
 #include "uaf/util/status.h"
 #include "uaf/util/handles.h"
+#include "uaf/util/constants.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/results/basesubscriptionresulttarget.h"
 
@@ -57,7 +58,7 @@ namespace uaf
          */
         CreateMonitoredDataResultTarget()
         : opcUaStatusCode(OpcUa_Uncertain),
-          clientHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          clientHandle(uaf::constants::CLIENTHANDLE_NOT_ASSIGNED),
           monitoredItemId(0),
           revisedSamplingIntervalSec(0.0),
           revisedQueueSize(0)
