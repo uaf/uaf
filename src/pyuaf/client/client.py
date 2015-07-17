@@ -22,6 +22,7 @@
 %pythoncode %{
 #### BEGINNING OF INCLUDED PYTHON FILE
 
+from pyuaf.client.requests import __getElementFromKwargs__
 
 class Client(ClientBase):
     
@@ -1015,13 +1016,9 @@ class Client(ClientBase):
         the discovery services provided by the server. A server should be identified by
         a serverURI, not by an endpointURL! 
         
-        The :attr:`~pyuaf.client.settings.SessionSettings.securitySettingsList` attribute of the 
-        sessionSettings argument (in other words: sessionSettings.securitySettingsList) defines 
-        how you want to connect to the server. It is a list of 
-        :class:`~pyuaf.client.settings.SessionSecuritySettings` instances. 
-        The first item of the list will be attempted first, if that fails then the second item 
-        will be attempted, and so on. By default, this list has one item:
-        a default :class:`~pyuaf.client.settings.SessionSecuritySettings` instance.
+        The :attr:`~pyuaf.client.settings.SessionSettings.securitySettings` attribute of the 
+        sessionSettings argument (in other words: sessionSettings.securitySettings) defines 
+        how you want to connect to the server.
         
         This default instance has 
          - no security policy (:attr:`pyuaf.util.securitypolicies.UA_None`)
@@ -1240,7 +1237,7 @@ class Client(ClientBase):
         return info
     
     
-    def read(self, addresses, attributeId=pyuaf.util.attributeids.Value, serviceConfig=None, sessionConfig=None):
+    def read(self, addresses, attributeId=pyuaf.util.attributeids.Value, **kwargs):
         """
         Read a number of node attributes synchronously.
         
@@ -1254,12 +1251,13 @@ class Client(ClientBase):
         :param attributeId: The id of the attribute to be read (e.g. :attr:`pyuaf.util.attributeids.Value`
                             or :attr:`pyuaf.util.attributeids.DisplayName`).
         :type attributeId: ``int``
-        :param serviceConfig: Additional settings for processing the read request.
-                              Leave None for defaults.
-        :type serviceConfig: :class:`~pyuaf.client.configs.ReadConfig`
-        :param sessionConfig: A config holding settings for the session creation.
-                              Leave None for defaults.
-        :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
+        :param kwargs: The following \*\*kwargs are available (see :ref:`note-client-kwargs`):
+        
+           - clientConnectionId: (type: ``int``)
+           - sessionSettings (type: :class:`~pyuaf.client.settings.SessionSettings`)
+           - serviceSettings (type: :class:`~pyuaf.client.settings.ReadSettings`)
+           - translateSettings (type: :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`)
+           
         :return: The result of the read request.
         :rtype:  :class:`~pyuaf.client.results.ReadResult`
         :raise pyuaf.util.errors.UafError:
@@ -1274,24 +1272,19 @@ class Client(ClientBase):
         # make sure the arguments are valid (to avoid the ugly SWIG error output)
         pyuaf.util.errors.evaluateArg(attributeId, "attributeId", 
                                       int, [pyuaf.util.attributeids.Value])
-        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
-                                      pyuaf.client.configs.ReadConfig, [None])
-        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
-                                      pyuaf.client.configs.SessionConfig, [None])
-        
-        if serviceConfig is None:
-            serviceConfig = pyuaf.client.configs.ReadConfig()
-        
-        if sessionConfig is None:
-            sessionConfig = pyuaf.client.configs.SessionConfig()
-        
-        ClientBase.read(self, addressVector, attributeId, serviceConfig, sessionConfig, result).test()
+        ClientBase.read(self, 
+                        addressVector, 
+                        attributeId, 
+                        __getElementFromKwargs__(kwargs, "clientConnectionId"   , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED), 
+                        __getElementFromKwargs__(kwargs, "serviceSettings"      , None), 
+                        __getElementFromKwargs__(kwargs, "translateSettings"    , None), 
+                        __getElementFromKwargs__(kwargs, "sessionSettings"      , None),
+                        result).test()
         
         return result
     
     
-    def beginRead(self, addresses, attributeId=pyuaf.util.attributeids.Value, serviceConfig=None, 
-                  sessionConfig=None, callback=None):
+    def beginRead(self, addresses, attributeId=pyuaf.util.attributeids.Value, callback=None, **kwargs):
         """
         Read a number of node attributes asynchronously.
         
@@ -1326,14 +1319,15 @@ class Client(ClientBase):
         :param attributeId: The id of the attribute to be read (e.g. :attr:`pyuaf.util.attributeids.Value`
                             or :attr:`pyuaf.util.attributeids.DisplayName`).
         :type attributeId: ``int``
-        :param serviceConfig: Additional settings for processing the read request.
-                              Leave None for defaults.
-        :type serviceConfig: :class:`~pyuaf.client.configs.ReadConfig`
-        :param sessionConfig: A config holding settings for the session creation.
-                              Leave None for defaults.
-        :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
         :param callback: A callback function to receive the asynchronous result. This function 
                          should have one argument (which will be of type :class:`~pyuaf.client.results.ReadResult`).
+        :param kwargs: The following \*\*kwargs are available (see :ref:`note-client-kwargs`):
+        
+           - clientConnectionId: (type: ``int``)
+           - sessionSettings (type: :class:`~pyuaf.client.settings.SessionSettings`)
+           - serviceSettings (type: :class:`~pyuaf.client.settings.ReadSettings`)
+           - translateSettings (type: :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`)
+           
         :return: The "immediate" result of the asynchronous read request.
         :rtype:  :class:`~pyuaf.client.results.AsyncReadResult`
         :raise pyuaf.util.errors.UafError:
@@ -1347,10 +1341,6 @@ class Client(ClientBase):
             
         pyuaf.util.errors.evaluateArg(attributeId, "attributeId", 
                                       int, [pyuaf.util.attributeids.Value])
-        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
-                                      pyuaf.client.configs.ReadConfig, [None])
-        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
-                                      pyuaf.client.configs.SessionConfig, [None])
         
         # put the address(es) in a vector
         if type(addresses) == pyuaf.util.Address: # the user has called read(someAddress)
@@ -1360,16 +1350,17 @@ class Client(ClientBase):
             
         result = pyuaf.client.results.AsyncReadResult()
         
-        if serviceConfig is None:
-            serviceConfig = pyuaf.client.configs.ReadConfig()
-        
-        if sessionConfig is None:
-            sessionConfig = pyuaf.client.configs.SessionConfig()
-        
         try:
             self.__asyncReadLock__.acquire()
         
-            ClientBase.beginRead(self, addressVector, attributeId, serviceConfig, sessionConfig, result).test()
+            ClientBase.beginRead(self, 
+                                 addressVector, 
+                                 attributeId,
+                                 __getElementFromKwargs__(kwargs, "clientConnectionId"   , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED), 
+                                 __getElementFromKwargs__(kwargs, "serviceSettings"      , None), 
+                                 __getElementFromKwargs__(kwargs, "translateSettings"    , None), 
+                                 __getElementFromKwargs__(kwargs, "sessionSettings"      , None),
+                                 result).test()
             
             # register the callback function if necessary
             if callback is not None:
@@ -1381,7 +1372,7 @@ class Client(ClientBase):
 
     
     
-    def write(self, addresses, data, attributeId=pyuaf.util.attributeids.Value, serviceConfig=None, sessionConfig=None):
+    def write(self, addresses, data, attributeId=pyuaf.util.attributeids.Value, **kwargs):
         """
         Write a number of node attributes synchronously.
         
@@ -1398,12 +1389,13 @@ class Client(ClientBase):
         :param attributeId: The id of the attribute to be written (e.g. :attr:`pyuaf.util.attributeids.Value`
                             or :attr:`pyuaf.util.attributeids.DisplayName`) for all addresses.
         :type attributeId: ``int``
-        :param serviceConfig: Additional settings for processing the write request.
-                              Leave None for defaults.
-        :type serviceConfig: :class:`~pyuaf.client.configs.WriteConfig`
-        :param sessionConfig: A config holding settings for the session creation.
-                              Leave None for defaults.
-        :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
+        :param kwargs: The following \*\*kwargs are available (see :ref:`note-client-kwargs`):
+        
+           - clientConnectionId: (type: ``int``)
+           - sessionSettings (type: :class:`~pyuaf.client.settings.SessionSettings`)
+           - serviceSettings (type: :class:`~pyuaf.client.settings.WriteSettings`)
+           - translateSettings (type: :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`)
+           
         :return: The result of the write request.
         :rtype:  :class:`~pyuaf.client.results.WriteResult`
         :raise pyuaf.util.errors.UafError:
@@ -1430,25 +1422,22 @@ class Client(ClientBase):
         # make sure the arguments are valid (to avoid the ugly SWIG error output)
         pyuaf.util.errors.evaluateArg(attributeId, "attributeId", int, 
                                       [pyuaf.util.attributeids.Value])
-        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
-                                      pyuaf.client.configs.WriteConfig, [None])
-        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
-                                      pyuaf.client.configs.SessionConfig, [None])
         
-        
-        if serviceConfig is None:
-            serviceConfig = pyuaf.client.configs.WriteConfig()
-        
-        if sessionConfig is None:
-            sessionConfig = pyuaf.client.configs.SessionConfig()
-        
-        ClientBase.write(self, addressVector, dataVector, attributeId, serviceConfig, sessionConfig, result).test()
+        ClientBase.write(self, 
+                         addressVector, 
+                         dataVector, 
+                         attributeId, 
+                         __getElementFromKwargs__(kwargs, "clientConnectionId"   , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED), 
+                         __getElementFromKwargs__(kwargs, "serviceSettings"      , None), 
+                         __getElementFromKwargs__(kwargs, "translateSettings"    , None), 
+                         __getElementFromKwargs__(kwargs, "sessionSettings"      , None),
+                         result).test()
         
         return result
 
     
     def beginWrite(self, addresses, data, attributeId=pyuaf.util.attributeids.Value, 
-                   serviceConfig=None, sessionConfig=None, callback=None):
+                   callback=None, **kwargs):
         """
         Write a number of node attributes asynchronously.
         
@@ -1486,14 +1475,15 @@ class Client(ClientBase):
         :param attributeId: The id of the attribute to be written (e.g. :attr:`pyuaf.util.attributeids.Value`
                             or :attr:`pyuaf.util.attributeids.DisplayName`) for all addresses.
         :type attributeId: ``int``
-        :param serviceConfig: Additional settings for processing the write request.
-                              Leave None for defaults.
-        :type serviceConfig: :class:`~pyuaf.client.configs.WriteConfig`
-        :param sessionConfig: A config holding settings for the session creation.
-                              Leave None for defaults.
-        :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
         :param callback: A callback function to receive the asynchronous result. This function 
                          should have one argument (which will be of type :class:`~pyuaf.client.results.WriteResult`).
+        :param kwargs: The following \*\*kwargs are available (see :ref:`note-client-kwargs`):
+        
+           - clientConnectionId: (type: ``int``)
+           - sessionSettings (type: :class:`~pyuaf.client.settings.SessionSettings`)
+           - serviceSettings (type: :class:`~pyuaf.client.settings.WriteSettings`)
+           - translateSettings (type: :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`)
+           
         :return: The "immediate" result of the asynchronous write request.
         :rtype:  :class:`~pyuaf.client.results.AsyncWriteResult`
         :raise pyuaf.util.errors.UafError:
@@ -1507,10 +1497,6 @@ class Client(ClientBase):
             
         pyuaf.util.errors.evaluateArg(attributeId, "attributeId", 
                                       int, [pyuaf.util.attributeids.Value])
-        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
-                                      pyuaf.client.configs.WriteConfig, [None])
-        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
-                                      pyuaf.client.configs.SessionConfig, [None])
         
         if len(addresses) != len(data):
             raise TypeError("The 'addresses' and 'data' arguments must either be both a " 
@@ -1530,16 +1516,18 @@ class Client(ClientBase):
         
         result = pyuaf.client.results.AsyncWriteResult()
         
-        if serviceConfig is None:
-            serviceConfig = pyuaf.client.configs.WriteConfig()
-        
-        if sessionConfig is None:
-            sessionConfig = pyuaf.client.configs.SessionConfig()
-        
         try:
             self.__asyncWriteLock__.acquire()
         
-            ClientBase.beginWrite(self, addressVector, dataVector, attributeId, serviceConfig, sessionConfig, result).test()
+            ClientBase.beginWrite(self, 
+                                  addressVector, 
+                                  dataVector, 
+                                  attributeId, 
+                                  __getElementFromKwargs__(kwargs, "clientConnectionId"   , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED), 
+                                  __getElementFromKwargs__(kwargs, "serviceSettings"      , None), 
+                                  __getElementFromKwargs__(kwargs, "translateSettings"    , None), 
+                                  __getElementFromKwargs__(kwargs, "sessionSettings"      , None),
+                                  result).test()
             
             # register the callback function if necessary
             if callback is not None:
@@ -1550,7 +1538,7 @@ class Client(ClientBase):
             self.__asyncWriteLock__.release()
     
         
-    def call(self, objectAddress, methodAddress, inputArgs=[], serviceConfig=None, sessionConfig=None):
+    def call(self, objectAddress, methodAddress, inputArgs=[], **kwargs):
         """
         Invoke a remote method call.
         
@@ -1576,12 +1564,13 @@ class Client(ClientBase):
         :param inputArgs: A list of input arguments.
         :type  inputArgs: ``list`` of :class:`~pyuaf.util.primitives.UInt32`,
                           or ``list`` of any other supported data type.
-        :param serviceConfig: Additional settings for processing the method call request.
-                              Leave None for defaults.
-        :type serviceConfig: :class:`~pyuaf.client.configs.MethodCallConfig`
-        :param sessionConfig: A config holding settings for the session creation.
-                              Leave None for defaults.
-        :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
+        :param kwargs: The following \*\*kwargs are available (see :ref:`note-client-kwargs`):
+        
+           - clientConnectionId: (type: ``int``)
+           - sessionSettings (type: :class:`~pyuaf.client.settings.SessionSettings`)
+           - serviceSettings (type: :class:`~pyuaf.client.settings.MethodCallSettings`)
+           - translateSettings (type: :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`)
+           
         :return: The result of the method call request.
         :rtype:  :class:`~pyuaf.client.results.MethodCallResult`
         :raise pyuaf.util.errors.UafError:
@@ -1592,31 +1581,26 @@ class Client(ClientBase):
         elif type(inputArgs) != list:
             raise TypeError("The inputArgs parameter must be a list of input arguments")
         
-        # make sure the arguments are valid (to avoid the ugly SWIG error output)
-        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
-                                      pyuaf.client.configs.MethodCallConfig, [None])
-        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
-                                      pyuaf.client.configs.SessionConfig, [None])
-        
         inputArgsVector = pyuaf.util.VariantVector()
         for item in inputArgs:
             inputArgsVector.append(item)
         
         result = pyuaf.client.results.MethodCallResult()
         
-        if serviceConfig is None:
-            serviceConfig = pyuaf.client.configs.MethodCallConfig()
-        
-        if sessionConfig is None:
-            sessionConfig = pyuaf.client.configs.SessionConfig()
-        
-        ClientBase.call(self, objectAddress, methodAddress, inputArgsVector, serviceConfig, sessionConfig, result).test()
+        ClientBase.call(self, 
+                        objectAddress, 
+                        methodAddress, 
+                        inputArgsVector, 
+                        __getElementFromKwargs__(kwargs, "clientConnectionId"   , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED), 
+                        __getElementFromKwargs__(kwargs, "serviceSettings"      , None), 
+                        __getElementFromKwargs__(kwargs, "translateSettings"    , None), 
+                        __getElementFromKwargs__(kwargs, "sessionSettings"      , None),
+                        result).test()
         
         return result
     
     
-    def beginCall(self, objectAddress, methodAddress, inputArgs=[], serviceConfig=None, 
-                  sessionConfig=None, callback=None):
+    def beginCall(self, objectAddress, methodAddress, inputArgs=[], callback=None, **kwargs):
         """
         Invoke a remote method call asynchronously.
         
@@ -1647,15 +1631,16 @@ class Client(ClientBase):
         :param inputArgs: A list of input arguments.
         :type  inputArgs: ``list`` of :class:`~pyuaf.util.primitives.UInt32`,
                           or ``list`` of any other supported data type.
-        :param serviceConfig: Additional settings for processing the method call request.
-                              Leave None for defaults.
-        :type serviceConfig: :class:`~pyuaf.client.configs.MethodCallConfig`
-        :param sessionConfig: A config holding settings for the session creation.
-                              Leave None for defaults.
-        :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
         :param callback: A callback function to receive the result. This function should have one
                          argument (which will be of type :class:`~pyuaf.client.results.MethodCallResult`).
         :return: The result of the asynchronous method call request.
+        :param kwargs: The following \*\*kwargs are available (see :ref:`note-client-kwargs`):
+        
+           - clientConnectionId: (type: ``int``)
+           - sessionSettings (type: :class:`~pyuaf.client.settings.SessionSettings`)
+           - serviceSettings (type: :class:`~pyuaf.client.settings.MethodCallSettings`)
+           - translateSettings (type: :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`)
+           
         :rtype:  :class:`~pyuaf.client.results.AsyncMethodCallResult`
         :raise pyuaf.util.errors.UafError:
              Base exception, catch this to handle any UAF errors.
@@ -1671,27 +1656,24 @@ class Client(ClientBase):
         elif type(inputArgs) != list:
             raise TypeError("The inputArgs parameter must be a list of input arguments")
         
-        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
-                                      pyuaf.client.configs.MethodCallConfig, [None])
-        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
-                                      pyuaf.client.configs.SessionConfig, [None])
-        
         inputArgsVector = pyuaf.util.VariantVector()
         for item in inputArgs:
             inputArgsVector.append(item)
         
         result = pyuaf.client.results.AsyncMethodCallResult()
         
-        if serviceConfig is None:
-            serviceConfig = pyuaf.client.configs.MethodCallConfig()
-        
-        if sessionConfig is None:
-            sessionConfig = pyuaf.client.configs.SessionConfig()
-        
         try:
             self.__asyncCallLock__.acquire()
             
-            ClientBase.beginCall(self, objectAddress, methodAddress, inputArgsVector, serviceConfig, sessionConfig, result).test()
+            ClientBase.beginCall(self, 
+                                 objectAddress, 
+                                 methodAddress, 
+                                 inputArgsVector, 
+                                 __getElementFromKwargs__(kwargs, "clientConnectionId"   , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED), 
+                                 __getElementFromKwargs__(kwargs, "serviceSettings"      , None), 
+                                 __getElementFromKwargs__(kwargs, "translateSettings"    , None), 
+                                 __getElementFromKwargs__(kwargs, "sessionSettings"      , None),
+                                 result).test()
             
             # register the callback function if necessary
             if callback is not None:
@@ -1702,7 +1684,7 @@ class Client(ClientBase):
             self.__asyncCallLock__.release()
     
     
-    def browse(self, addresses, maxAutoBrowseNext=100, serviceConfig=None, sessionConfig=None):
+    def browse(self, addresses, maxAutoBrowseNext=100, **kwargs):
         """
         Browse a number of nodes synchronously.
         
@@ -1724,15 +1706,15 @@ class Client(ClientBase):
         :param maxAutoBrowseNext:  How many times do you allow the UAF to automatically invoke a
                                    BrowseNext for you (if that's needed to fetch all results)? 
                                    This parameter will always be used instead of the 
-                                   maxAutoBrowseNext attribute in the serviceSettings attribute of 
-                                   the serviceConfig parameter!
+                                   maxAutoBrowseNext attribute of the serviceSettings!
         :type maxAutoBrowseNext:   ``int``
-        :param serviceConfig:      Additional settings for processing the browse request.
-                                   Leave None for defaults.
-        :type serviceConfig:       :class:`~pyuaf.client.configs.BrowseConfig`
-        :param sessionConfig:      A config holding settings for the session creation.
-                                   Leave None for defaults.
-        :type sessionConfig:       :class:`~pyuaf.client.configs.SessionConfig`
+        :param kwargs: The following \*\*kwargs are available (see :ref:`note-client-kwargs`):
+        
+           - clientConnectionId: (type: ``int``)
+           - sessionSettings (type: :class:`~pyuaf.client.settings.SessionSettings`)
+           - serviceSettings (type: :class:`~pyuaf.client.settings.BrowseSettings`)
+           - translateSettings (type: :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`)
+           
         :return:                   The result of the browse request.
         :rtype:                    :class:`~pyuaf.client.results.BrowseResult`
         :raise pyuaf.util.errors.UafError:
@@ -1746,25 +1728,21 @@ class Client(ClientBase):
         
         # make sure the arguments are valid (to avoid the ugly SWIG error output)
         pyuaf.util.errors.evaluateArg(maxAutoBrowseNext, "maxAutoBrowseNext", int, [])
-        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
-                                      pyuaf.client.configs.BrowseConfig, [None])
-        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
-                                      pyuaf.client.configs.SessionConfig, [None])
         
-        if serviceConfig is None:
-            serviceConfig = pyuaf.client.configs.BrowseConfig()
-        
-        if sessionConfig is None:
-            sessionConfig = pyuaf.client.configs.SessionConfig()
-        
-        ClientBase.browse(self, addressVector, maxAutoBrowseNext, serviceConfig, 
-                                   sessionConfig, result).test()
+        ClientBase.browse(self, 
+                          addressVector, 
+                          maxAutoBrowseNext, 
+                          __getElementFromKwargs__(kwargs, "clientConnectionId"   , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED), 
+                          __getElementFromKwargs__(kwargs, "serviceSettings"      , None), 
+                          __getElementFromKwargs__(kwargs, "translateSettings"    , None), 
+                          __getElementFromKwargs__(kwargs, "sessionSettings"      , None),
+                          result).test()
         
         return result
     
     
     
-    def browseNext(self, addresses, continuationPoints, serviceConfig=None, sessionConfig=None):
+    def browseNext(self, addresses, continuationPoints, **kwargs):
         """
         Continue a previous synchronous Browse request, in case you didn't use the automatic
         BrowseNext feature of the UAF.
@@ -1790,12 +1768,13 @@ class Client(ClientBase):
                                    Python ``bytearray`` objects).
         :type  continuationPoints: :class:`~pyuaf.util.ByteStringVector` or a ``list`` of 
                                    Python ``bytearray`` objects.
-        :param serviceConfig:      Additional settings for processing the BrowseNext request.
-                                   Leave None for defaults.
-        :type serviceConfig:       :class:`~pyuaf.client.configs.BrowseNextConfig`
-        :param sessionConfig:      A config holding settings for the session creation.
-                                   Leave None for defaults.
-        :type sessionConfig:       :class:`~pyuaf.client.configs.SessionConfig`
+        :param kwargs: The following \*\*kwargs are available (see :ref:`note-client-kwargs`):
+        
+           - clientConnectionId: (type: ``int``)
+           - sessionSettings (type: :class:`~pyuaf.client.settings.SessionSettings`)
+           - serviceSettings (type: :class:`~pyuaf.client.settings.BrowseNextSettings`)
+           - translateSettings (type: :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`)
+           
         :return:                   The result of the BrowseNext request.
         :rtype:                    :class:`~pyuaf.client.results.BrowseNextResult`
         :raise pyuaf.util.errors.UafError:
@@ -1821,26 +1800,20 @@ class Client(ClientBase):
             
         result = pyuaf.client.results.BrowseNextResult()
         
-        # make sure the arguments are valid (to avoid the ugly SWIG error output)
-        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
-                                      pyuaf.client.configs.BrowseConfig, [None])
-        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
-                                      pyuaf.client.configs.SessionConfig, [None])
-        
-        if serviceConfig is None:
-            serviceConfig = pyuaf.client.configs.BrowseNextConfig()
-        
-        if sessionConfig is None:
-            sessionConfig = pyuaf.client.configs.SessionConfig()
-        
-        ClientBase.browseNext(self, addressVector, byteStringVector, serviceConfig, 
-                              sessionConfig, result).test()
+        ClientBase.browseNext(self, 
+                              addressVector, 
+                              byteStringVector, 
+                              __getElementFromKwargs__(kwargs, "clientConnectionId"   , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED), 
+                              __getElementFromKwargs__(kwargs, "serviceSettings"      , None), 
+                              __getElementFromKwargs__(kwargs, "translateSettings"    , None), 
+                              __getElementFromKwargs__(kwargs, "sessionSettings"      , None),
+                              result).test()
         
         return result
     
     
     def historyReadRaw(self, addresses, startTime, endTime, numValuesPerNode=0, maxAutoReadMore=0, 
-                       continuationPoints=[], serviceConfig=None, sessionConfig=None):
+                       continuationPoints=[], **kwargs):
         """
         Read the raw historical data from one or more nodes synchronously.
         
@@ -1850,8 +1823,7 @@ class Client(ClientBase):
         
         Since this convenience method is meant to fetch raw historical data, the 
         :attr:`~pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified`
-        flag of the serviceSettings attribute of the serviceConfig parameter
-        will be forced to False!
+        flag of the serviceSettings will be forced to False!
         
         :param addresses:          A single address or a list of addresses of nodes of which the 
                                    historical data should be retrieved.
@@ -1859,13 +1831,11 @@ class Client(ClientBase):
                                    :class:`~pyuaf.util.Address` 
         :param startTime:          The start time of the interval from which you would like
                                    to see the historical data. This parameter will always be used 
-                                   instead of the startTime attribute in the serviceSettings 
-                                   attribute of the serviceConfig parameter!
+                                   instead of the startTime attribute of the serviceSettings.
         :type startTime:           :class:`~pyuaf.util.DateTime`
         :param endTime:            The end time of the interval from which you would like
                                    to see the historical data. This parameter will always be used 
-                                   instead of the startTime attribute in the serviceSettings 
-                                   attribute of the serviceConfig parameter!
+                                   instead of the startTime attribute of the serviceSettings.
         :type endTime:             :class:`~pyuaf.util.DateTime`
         :param numValuesPerNode:   The maximum number of values that may be returned for each
                                    node. 0 means no limit, but you may want to put it to a
@@ -1883,8 +1853,7 @@ class Client(ClientBase):
                                    until 10 additional requests have been invoked
                                    automatically.
                                    This parameter will always be used instead of the
-                                   maxAutoReadMore attribute in the serviceSettings attribute
-                                   of the serviceConfig parameter!
+                                   maxAutoReadMore attribute of the serviceSettings.
                                    Default = 0, which means that no "automatic" continuation 
                                    requests will be invoked by the UAF (so if you leave this
                                    parameter as 0 and you see that the 
@@ -1902,12 +1871,13 @@ class Client(ClientBase):
                                    Default = empty list.
         :type  continuationPoints: :class:`~pyuaf.util.ByteStringVector` or a ``list`` of 
                                    Python ``bytearray`` objects.
-        :param serviceConfig:      Additional settings for processing the historical read request.
-                                   Leave None for defaults.
-        :type serviceConfig:       :class:`~pyuaf.client.configs.HistoryReadRawModifiedConfig`
-        :param sessionConfig:      A config holding settings for the session creation.
-                                   Leave None for defaults.
-        :type sessionConfig:       :class:`~pyuaf.client.configs.SessionConfig`
+        :param kwargs: The following \*\*kwargs are available (see :ref:`note-client-kwargs`):
+        
+           - clientConnectionId: (type: ``int``)
+           - sessionSettings (type: :class:`~pyuaf.client.settings.SessionSettings`)
+           - serviceSettings (type: :class:`~pyuaf.client.settings.HistoryReadRawModifiedSettings`)
+           - translateSettings (type: :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`)
+           
         :return:                   The result of the history read request.
         :rtype:                    :class:`~pyuaf.client.results.HistoryReadRawModifiedResult`
         :raise pyuaf.util.errors.UafError:
@@ -1938,27 +1908,25 @@ class Client(ClientBase):
         pyuaf.util.errors.evaluateArg(endTime, "endTime", pyuaf.util.DateTime, [])
         pyuaf.util.errors.evaluateArg(numValuesPerNode, "numValuesPerNode", int, [])
         pyuaf.util.errors.evaluateArg(numValuesPerNode, "maxAutoReadMore", int, [])
-        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
-                                      pyuaf.client.configs.HistoryReadRawModifiedConfig, [None])
-        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
-                                      pyuaf.client.configs.SessionConfig, [None])
         
-        if serviceConfig is None:
-            serviceConfig = pyuaf.client.configs.HistoryReadRawModifiedConfig()
-        
-        if sessionConfig is None:
-            sessionConfig = pyuaf.client.configs.SessionConfig()
-        
-        ClientBase.historyReadRaw(self, addressVector, startTime, 
-                                       endTime, numValuesPerNode, maxAutoReadMore, 
-                                       byteStringVector, serviceConfig, sessionConfig, result).test()
+        ClientBase.historyReadRaw(self, 
+                                  addressVector, 
+                                  startTime, 
+                                  endTime, 
+                                  numValuesPerNode, 
+                                  maxAutoReadMore, 
+                                  byteStringVector, 
+                                  __getElementFromKwargs__(kwargs, "clientConnectionId"   , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED), 
+                                  __getElementFromKwargs__(kwargs, "serviceSettings"      , None), 
+                                  __getElementFromKwargs__(kwargs, "translateSettings"    , None), 
+                                  __getElementFromKwargs__(kwargs, "sessionSettings"      , None),
+                                  result).test()
         
         return result
     
     
     def historyReadModified(self, addresses, startTime, endTime, numValuesPerNode=0, 
-                            maxAutoReadMore=0, continuationPoints=[], serviceConfig=None, 
-                            sessionConfig=None):
+                            maxAutoReadMore=0, continuationPoints=[], **kwargs):
         """
         Read the modification information of the historical data from one or more nodes
         synchronously.
@@ -1969,8 +1937,7 @@ class Client(ClientBase):
         
         Since this convenience method is meant to fetch the modification info of historical data, 
         the :attr:`~pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified`
-        flag of the serviceSettings attribute of the serviceConfig parameter
-        will be forced to True!
+        flag of the serviceSettings will be forced to True!
         
         :param addresses:          A single address or a list of addresses of nodes of which the 
                                    historical data should be retrieved.
@@ -1978,13 +1945,11 @@ class Client(ClientBase):
                                    :class:`~pyuaf.util.Address` 
         :param startTime:          The start time of the interval from which you would like
                                    to see the historical data. This parameter will always be used 
-                                   instead of the startTime attribute in the serviceSettings 
-                                   attribute of the serviceConfig parameter!
+                                   instead of the startTime attribute of the serviceSettings .
         :type startTime:           :class:`~pyuaf.util.DateTime`
         :param endTime:            The end time of the interval from which you would like
                                    to see the historical data. This parameter will always be used 
-                                   instead of the startTime attribute in the serviceSettings 
-                                   attribute of the serviceConfig parameter!
+                                   instead of the startTime attribute of the serviceSettings .
         :type endTime:             :class:`~pyuaf.util.DateTime`
         :param numValuesPerNode:   The maximum number of values that may be returned for each
                                    node. 0 means no limit, but you may want to put it to a
@@ -2002,8 +1967,7 @@ class Client(ClientBase):
                                    until 10 additional requests have been invoked
                                    automatically.
                                    This parameter will always be used instead of the
-                                   maxAutoReadMore attribute in the serviceSettings attribute
-                                   of the serviceConfig parameter!
+                                   maxAutoReadMore attribute of the serviceSettings.
                                    Default = 0, which means that no "automatic" continuation 
                                    requests will be invoked by the UAF (so if you leave this
                                    parameter as 0 and you see that the 
@@ -2021,12 +1985,13 @@ class Client(ClientBase):
                                    Default = empty list.
         :type  continuationPoints: :class:`~pyuaf.util.ByteStringVector` or a ``list`` of 
                                    Python ``bytearray`` objects.
-        :param serviceConfig:      Additional settings for processing the historical read request.
-                                   Leave None for defaults.
-        :type serviceConfig:       :class:`~pyuaf.client.configs.HistoryReadRawModifiedConfig`
-        :param sessionConfig:      A config holding settings for the session creation.
-                                   Leave None for defaults.
-        :type sessionConfig:       :class:`~pyuaf.client.configs.SessionConfig`
+        :param kwargs: The following \*\*kwargs are available (see :ref:`note-client-kwargs`):
+        
+           - clientConnectionId: (type: ``int``)
+           - sessionSettings (type: :class:`~pyuaf.client.settings.SessionSettings`)
+           - serviceSettings (type: :class:`~pyuaf.client.settings.HistoryReadRawModifiedSettings`)
+           - translateSettings (type: :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`)
+           
         :return:                   The result of the history read request.
         :rtype:                    :class:`~pyuaf.client.results.HistoryReadRawModifiedResult`
         :raise pyuaf.util.errors.UafError:
@@ -2057,29 +2022,26 @@ class Client(ClientBase):
         pyuaf.util.errors.evaluateArg(endTime, "endTime", pyuaf.util.DateTime, [])
         pyuaf.util.errors.evaluateArg(numValuesPerNode, "numValuesPerNode", int, [])
         pyuaf.util.errors.evaluateArg(numValuesPerNode, "maxAutoReadMore", int, [])
-        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
-                                      pyuaf.client.configs.HistoryReadRawModifiedConfig, [None])
-        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
-                                      pyuaf.client.configs.SessionConfig, [None])
         
-        if serviceConfig is None:
-            serviceConfig = pyuaf.client.configs.HistoryReadRawModifiedConfig()
-        
-        if sessionConfig is None:
-            sessionConfig = pyuaf.client.configs.SessionConfig()
-        
-        ClientBase.historyReadModified(self, addressVector, startTime, 
-                                                endTime, numValuesPerNode, maxAutoReadMore, 
-                                                byteStringVector, serviceConfig, sessionConfig, 
-                                                result).test()
+        ClientBase.historyReadModified(self, 
+                                       addressVector, 
+                                       startTime, 
+                                       endTime, 
+                                       numValuesPerNode, 
+                                       maxAutoReadMore, 
+                                       byteStringVector, 
+                                       __getElementFromKwargs__(kwargs, "clientConnectionId"   , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED), 
+                                       __getElementFromKwargs__(kwargs, "serviceSettings"      , None), 
+                                       __getElementFromKwargs__(kwargs, "translateSettings"    , None), 
+                                       __getElementFromKwargs__(kwargs, "sessionSettings"      , None),
+                                       result).test()
         
         return result
     
     
     
     
-    def createMonitoredData(self, addresses, serviceConfig=None, sessionConfig=None, 
-                            subscriptionConfig=None, notificationCallbacks=[]):
+    def createMonitoredData(self, addresses, notificationCallbacks=[], **kwargs):
         """
         Create one or more monitored data items.
         
@@ -2118,15 +2080,6 @@ class Client(ClientBase):
         
         :param addresses: A single address or a list of addresses, identifying the nodes to be monitored.
         :type  addresses: :class:`~pyuaf.util.Address` or a ``list`` of :class:`~pyuaf.util.Address` 
-        :param serviceConfig: Additional settings for processing the request.
-                              Leave None for defaults.
-        :type serviceConfig: :class:`~pyuaf.client.configs.CreateMonitoredDataConfig`
-        :param sessionConfig: A config holding settings for the session creation.
-                              Leave None for defaults.
-        :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
-        :param subscriptionConfig: A config holding settings for the subscription creation.
-                                   Leave None for defaults.
-        :type subscriptionConfig: :class:`~pyuaf.client.configs.SubscriptionConfig`
         :param notificationCallbacks: A list of callback functions (one for each node to be monitored).
                                       These callback functions should have a single argument, which
                                       will be of type :class:`~pyuaf.client.DataChangeNotification`.
@@ -2134,6 +2087,15 @@ class Client(ClientBase):
                                       to override :meth:`~pyuaf.client.Client.dataChangesReceived` 
                                       in order to receive the notifications.
         :type notificationCallbacks: ``list`` of functions
+        :param kwargs: The following \*\*kwargs are available (see :ref:`note-client-kwargs`):
+        
+           - clientConnectionId: (type: ``int``)
+           - sessionSettings (type: :class:`~pyuaf.client.settings.SessionSettings`)
+           - clientSubscriptionHandle (type: ``int``)
+           - subscriptionSettings (type: :class:`~pyuaf.client.settings.SubscriptionSettings`)
+           - serviceSettings (type: :class:`~pyuaf.client.settings.CreateMonitoredDataSettings`)
+           - translateSettings (type: :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`)
+           
         :return: The result of the CreateMonitoredData request.
         :rtype:  :class:`~pyuaf.client.results.CreateMonitoredDataResult`
         :raise pyuaf.util.errors.UafError:
@@ -2148,12 +2110,6 @@ class Client(ClientBase):
             raise TypeError("addresses should be a list of pyuaf.util.Address")
         
         # make sure the arguments are valid (to avoid the ugly SWIG error output)
-        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
-                                      pyuaf.client.configs.CreateMonitoredDataConfig, [None])
-        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
-                                      pyuaf.client.configs.SessionConfig, [None])
-        pyuaf.util.errors.evaluateArg(subscriptionConfig, "subscriptionConfig",
-                                      pyuaf.client.configs.SubscriptionConfig, [None])
         pyuaf.util.errors.evaluateArg(notificationCallbacks, "notificationCallbacks",
                                       list, [])
         
@@ -2170,20 +2126,18 @@ class Client(ClientBase):
         
         result = pyuaf.client.results.CreateMonitoredDataResult()
         
-        if serviceConfig is None:
-            serviceConfig = pyuaf.client.configs.CreateMonitoredDataConfig()
-        
-        if sessionConfig is None:
-            sessionConfig = pyuaf.client.configs.SessionConfig()
-        
-        if subscriptionConfig is None:
-            subscriptionConfig = pyuaf.client.configs.SubscriptionConfig()
-        
         try:
             self.__dataNotificationLock__.acquire()
             
-            status = ClientBase.createMonitoredData(self, addressVector, serviceConfig, 
-                                                    sessionConfig, subscriptionConfig, result)
+            status = ClientBase.createMonitoredData(self, 
+                                                    addressVector, 
+                                                    __getElementFromKwargs__(kwargs, "clientConnectionId"       , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED), 
+                                                    __getElementFromKwargs__(kwargs, "serviceSettings"          , None), 
+                                                    __getElementFromKwargs__(kwargs, "translateSettings"        , None), 
+                                                    __getElementFromKwargs__(kwargs, "sessionSettings"          , None),
+                                                    __getElementFromKwargs__(kwargs, "clientSubscriptionHandle" , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED), 
+                                                    __getElementFromKwargs__(kwargs, "subscriptionSettings"     , None),
+                                                    result)
             
             # register the callback functions if necessary
             if len(notificationCallbacks) > 0:
@@ -2205,9 +2159,7 @@ class Client(ClientBase):
 
 
     
-    def createMonitoredEvents(self, addresses, eventFilter=None, serviceConfig=None, 
-                              sessionConfig=None, subscriptionConfig=None, 
-                              notificationCallbacks=[]):
+    def createMonitoredEvents(self, addresses, eventFilter=None, notificationCallbacks=[], **kwargs):
         """
         Create one or more monitored event items.
         
@@ -2252,15 +2204,6 @@ class Client(ClientBase):
                             with a :class:`~pyuaf.client.requests.CreateMonitoredEventsRequest` as 
                             argument. Leave None for defaults.
         :type  eventFilter: :class:`~pyuaf.util.EventFilter` 
-        :param serviceConfig: Additional settings for processing the request.
-                              Leave None for defaults.
-        :type serviceConfig: :class:`~pyuaf.client.configs.CreateMonitoredEventsConfig`
-        :param sessionConfig: A config holding settings for the session creation.
-                              Leave None for defaults.
-        :type sessionConfig: :class:`~pyuaf.client.configs.SessionConfig`
-        :param subscriptionConfig: A config holding settings for the subscription creation.
-                                   Leave None for defaults.
-        :type subscriptionConfig: :class:`~pyuaf.client.configs.SubscriptionConfig`
         :param notificationCallbacks: A list of callback functions (one for each node to be monitored).
                                       These callback functions should have a single argument, which
                                       will be of type :class:`~pyuaf.client.EventNotification`.
@@ -2268,6 +2211,15 @@ class Client(ClientBase):
                                       to override :meth:`~pyuaf.client.Client.eventsReceived` 
                                       in order to receive the notifications.
         :type notificationCallbacks: ``list`` of functions
+        :param kwargs: The following \*\*kwargs are available (see :ref:`note-client-kwargs`):
+        
+           - clientConnectionId: (type: ``int``)
+           - sessionSettings (type: :class:`~pyuaf.client.settings.SessionSettings`)
+           - clientSubscriptionHandle (type: ``int``)
+           - subscriptionSettings (type: :class:`~pyuaf.client.settings.SubscriptionSettings`)
+           - serviceSettings (type: :class:`~pyuaf.client.settings.CreateMonitoredEventsSettings`)
+           - translateSettings (type: :class:`~pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings`)
+           
         :return: The result of the CreateMonitoredEvents request.
         :rtype:  :class:`~pyuaf.client.results.CreateMonitoredEventsResult`
         :raise pyuaf.util.errors.UafError:
@@ -2284,12 +2236,6 @@ class Client(ClientBase):
         # make sure the other arguments are valid (to avoid the ugly SWIG error output)
         pyuaf.util.errors.evaluateArg(eventFilter, "eventFilter",   
                                       pyuaf.util.EventFilter, [None])
-        pyuaf.util.errors.evaluateArg(serviceConfig, "serviceConfig",   
-                                      pyuaf.client.configs.CreateMonitoredEventsConfig, [None])
-        pyuaf.util.errors.evaluateArg(sessionConfig, "sessionConfig",
-                                      pyuaf.client.configs.SessionConfig, [None])
-        pyuaf.util.errors.evaluateArg(subscriptionConfig, "subscriptionConfig",
-                                      pyuaf.client.configs.SubscriptionConfig, [None])
         pyuaf.util.errors.evaluateArg(notificationCallbacks, "notificationCallbacks",
                                       list, [])
         
@@ -2309,21 +2255,19 @@ class Client(ClientBase):
         if eventFilter is None:
             eventFilter = pyuaf.util.EventFilter()
         
-        if serviceConfig is None:
-            serviceConfig = pyuaf.client.configs.CreateMonitoredEventsConfig()
-        
-        if sessionConfig is None:
-            sessionConfig = pyuaf.client.configs.SessionConfig()
-        
-        if subscriptionConfig is None:
-            subscriptionConfig = pyuaf.client.configs.SubscriptionConfig()
-        
         try:
             self.__eventNotificationLock__.acquire()
             
-            status = ClientBase.createMonitoredEvents(self, addressVector, eventFilter, 
-                                                      serviceConfig, sessionConfig, 
-                                                      subscriptionConfig, result)
+            status = ClientBase.createMonitoredEvents(self, 
+                                                      addressVector, 
+                                                      eventFilter, 
+                                                      __getElementFromKwargs__(kwargs, "clientConnectionId"       , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED), 
+                                                      __getElementFromKwargs__(kwargs, "serviceSettings"          , None), 
+                                                      __getElementFromKwargs__(kwargs, "translateSettings"        , None), 
+                                                      __getElementFromKwargs__(kwargs, "sessionSettings"          , None),
+                                                      __getElementFromKwargs__(kwargs, "clientSubscriptionHandle" , pyuaf.util.constants.CLIENTHANDLE_NOT_ASSIGNED), 
+                                                      __getElementFromKwargs__(kwargs, "subscriptionSettings"     , None),
+                                                      result)
             
             # register the callback functions if necessary
             if len(notificationCallbacks) > 0:

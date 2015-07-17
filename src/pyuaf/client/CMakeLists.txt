@@ -23,7 +23,6 @@ set(  PYUAF_CLIENT_TARGETS
       subscriptionstates
       monitoreditemstates
       settings
-      configs
       requests
       results
    )
