@@ -3,28 +3,39 @@ UAF changelog
 ====================================================================================================
 
 
-Version = X.Y with
-
-- X : major version number
-   - incremented only when major functionality has been added
-   - e.g. when a Server implementation has been added
-- Y : minor version number 
-   - incremented every time some minor functionality has been added
-   - e.g. when the Client implementation supports another OPC UA service
-
-
-Bugfixes (which do not have any implications on the API) can only be tracked 
-via the GIT version control system.
-
-
-
-Version under development (will become 2.0.0)
+Version 2.0.0
 ----------------------------------------------------------------------------------------------------
 
-Version still under development! Polished and tested, but not all foreseen features for v2.0.0 have 
-been implemented yet.
-
 Informally:
+
+- Sessions, subscriptions and service calls can now be configured and controlled more easily.
+  Basically, all Config classes (like SessionConfig, SubscriptionConfig, ReadConfig, ...)
+  have disappeared. This means that the config arguments (e.g. read(..., sessionConfig=None, ...))
+  have disappeared as well! Instead of using configs, you can now:
+   
+   - easily configure default SessionSettings, SubscriptionSettings, ReadSettings, etc.:
+     
+        >>> clientSettings = ClientSettings()
+        >>> clientSettings.defaultSessionSettings.sessionTimeoutSec = 100.0
+        >>> clientSettings.defaultReadSettings.callTimeoutSec = 2.0
+        >>> myClient.setClientSettings(clientSettings)
+        >>> myClient.read(addresses) # this will use the above defaults
+
+   - easily configure SessionSettings, SubscriptionSettings, ReadSettings, etc. per service call:
+   
+        >>> myClient.read(addresses       = myAddresses, 
+        ...               serviceSettings = myServiceSettings, # optional **kwarg
+        ...               sessionSettings = mySessionSettings) # optional **kwarg
+        >>> myClient.createMonitoredData(addresses            = myAddresses, 
+        ...                              serviceSettings      = myServiceSettings, # optional **kwarg
+        ...                              sessionSettings      = mySessionSettings, # optional **kwarg
+        ...                              subscriptionSettings = mySessionSettings) # optional **kwarg
+
+   - easily keep full control over sessions, subscriptions and services (only if you know
+     what you're doing):
+   
+        >>> myClient.read(addresses, clientConnectionId = 3)
+        >>> myClient.createMonitoredData(addresses, clientConnectionId = 3, clientSubscriptionHandle = 1)
 
 - OpenSSL security is now supported. See the example how_to_connect_to_a_secured_endpoint.py.
 
@@ -63,14 +74,14 @@ Informally:
   cases (e.g. subclasses of an abstract class of another namespace may give problems when used in
   wrapped vectors).
 
-- ExtensionObjects are now supported, and model change events. 
+- ExtensionObjects are now supported, and so are model change events. 
   See example how_to_monitor_model_changes.py. 
 
 - The endpoint descriptions of the discovered servers can now be accessed via Client::getEndpoints().
 
 - SessionInformation contains more diagnostic info.
 
-- Bugfixes: see https://github.com/uaf/uaf/issues/62
+- Bugfixes: see https://github.com/uaf/uaf/issues/62 and https://github.com/uaf/uaf/issues/80
 
 
 Formally:
@@ -82,6 +93,8 @@ Formally:
     (pyuaf.util.statuscodes)
   - uaf::*Error
     (pyuaf.util.errors)
+  - uaf::Client::read(), write(), ... basically all service calls with 'config' argument(s)
+    (pyuaf.client.Client.read, write, ...)
 
 - The following classes were added:
 
