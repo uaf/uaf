@@ -27,9 +27,8 @@ import time, os
 
 import pyuaf
 from pyuaf.client           import Client
-from pyuaf.client.settings  import ClientSettings
+from pyuaf.client.settings  import ClientSettings, ReadSettings, SessionSettings
 from pyuaf.client.requests  import ReadRequest, AsyncReadRequest, ReadRequestTarget 
-from pyuaf.client.configs   import ReadConfig, SessionConfig
 from pyuaf.util             import Address, NodeId, RelativePathElement, QualifiedName, LocalizedText
 from pyuaf.util             import primitives
 from pyuaf.util.errors      import UafError
@@ -101,24 +100,24 @@ print("")
 print("First option: use the convenience function read() to read data synchronously")
 print("============================================================================")
     
-# OPTIONAL: You could also provide a ReadConfig to configure a call timeout, 
+# OPTIONAL: You could also provide a ReadSettings to configure a call timeout, 
 #           or maximum age of the values, or ... 
-serviceConfig = ReadConfig()
-serviceConfig.serviceSettings.callTimeoutSec = 0.5
-serviceConfig.serviceSettings.maxAgeSec = 1.0
+serviceSettings = ReadSettings()
+serviceSettings.callTimeoutSec = 0.5
+serviceSettings.maxAgeSec = 1.0
 
 # OPTIONAL: And you could also provide a SessionConfig to configure the sessions 
 #           (e.g. set the timeout to 600.0 seconds)
 #           For more info about SessionConfigs, see the sessionconfig_example
-sessionConfig = SessionConfig()
-sessionConfig.defaultSessionSettings.sessionTimeoutSec = 600.0
+sessionSettings = SessionSettings()
+sessionSettings.sessionTimeoutSec = 600.0
 
 try:
     # now read the node attributes
     readResult = myClient.read( addresses     = [someDoubleNode, someUInt32Node, someStringNode, 
                                                  someLocalizedTextNode, someSByteArrayNode],
-                                serviceConfig = serviceConfig, # optional argument
-                                sessionConfig = sessionConfig) # optional argument
+                                serviceSettings = serviceSettings, # optional argument
+                                sessionSettings = sessionSettings) # optional argument
     
     # print the result using the function we defined before
     printResult(readResult)
@@ -143,15 +142,8 @@ readRequest.targets[4].address = someSByteArrayNode
 readRequest.targets.append(ReadRequestTarget()) # or readRequest.targets.resize(6)
 readRequest.targets[5].address     = someDoubleNode
 readRequest.targets[5].attributeId = pyuaf.util.attributeids.DisplayName
-
-# OPTIONAL: let's also specify a small call timeout, since the UaDemoServer is running 
-#           on the local machine anyway
-readRequest.serviceConfig.serviceSettings.callTimeoutSec = 0.5
-# OPTIONAL: let's also specify that the values cannot be older than 1 second
-readRequest.serviceConfig.serviceSettings.maxAgeSec = 1.0
-# OPTIONAL: and finally let's also specify that sessions should have a timeout of 600 seconds
-#           For more info about SessionConfigs, see the sessionconfig_example
-readRequest.sessionConfig.defaultSessionSettings.sessionTimeoutSec = 600.0
+readRequest.serviceSettings        = serviceSettings # optional
+readRequest.sessionSettings        = sessionSettings # optional
 
 try:    
     # process the request
@@ -178,12 +170,12 @@ print("=========================================================================
 # a callback function!
 
 try:
-    asyncReadResult = myClient.beginRead(addresses     = [someDoubleNode, someUInt32Node, 
-                                                          someStringNode, someLocalizedTextNode, 
-                                                          someSByteArrayNode],
-                                         serviceConfig = serviceConfig, # optional argument
-                                         sessionConfig = sessionConfig, # optional argument
-                                         callback      = printResult) # callback function!
+    asyncReadResult = myClient.beginRead(addresses       = [someDoubleNode, someUInt32Node, 
+                                                            someStringNode, someLocalizedTextNode, 
+                                                            someSByteArrayNode],
+                                         serviceSettings = serviceSettings, # optional argument
+                                         sessionSettings = sessionSettings, # optional argument
+                                         callback        = printResult)     # callback function!
     
     # check if there was an "immediate" error on the client side when executing the asynchronous 
     # service call:
@@ -214,8 +206,8 @@ for i in xrange(5):
     asyncReadRequest.targets[i] = readRequest.targets[i]
     
 # OPTIONAL: also copy the service config and session config:
-asyncReadRequest.serviceConfig = readRequest.serviceConfig
-asyncReadRequest.sessionConfig = readRequest.sessionConfig
+asyncReadRequest.serviceSettings = serviceSettings
+asyncReadRequest.sessionSettings = sessionSettings
 
 try:
     # process the request
@@ -262,11 +254,11 @@ mySubClassedClient = MySubClasssedClient(settings)
     
 try:
     asyncReadResult = mySubClassedClient.beginRead(
-                                         addresses     = [someDoubleNode, someUInt32Node, 
-                                                          someStringNode, someLocalizedTextNode, 
-                                                          someSByteArrayNode],
-                                         serviceConfig = serviceConfig, # optional argument
-                                         sessionConfig = sessionConfig) # optional argument!
+                                         addresses       = [someDoubleNode, someUInt32Node, 
+                                                            someStringNode, someLocalizedTextNode, 
+                                                            someSByteArrayNode],
+                                         serviceSettings = serviceSettings, # optional argument
+                                         sessionSettings = sessionSettings) # optional argument!
     # note: the 'callback' argument is not used in the above call!
     
     # check if there was an "immediate" error on the client side when executing the asynchronous 

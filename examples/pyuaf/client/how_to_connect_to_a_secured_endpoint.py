@@ -102,28 +102,28 @@ print("=========================================================================
 print("")
 
 
-# define the settings
-settings = ClientSettings()
-settings.applicationName  = "MyClient"
-settings.applicationUri   = info.uri # Certificate info URI and application URI must be the same !!!
-#settings.logToStdOutLevel = pyuaf.util.loglevels.Debug # uncomment if needed
-settings.discoveryUrls.append(DISCOVERY_URL)
+# define the clientSettings
+clientSettings = ClientSettings()
+clientSettings.applicationName  = "MyClient"
+clientSettings.applicationUri   = info.uri # Certificate info URI and application URI must be the same !!!
+#clientSettings.logToStdOutLevel = pyuaf.util.loglevels.Debug # uncomment if needed
+clientSettings.discoveryUrls.append(DISCOVERY_URL)
 
 # We configure the PKI folder structure (set the PKI_FOLDER to 'PKI' and you get the defaults).
 # Note that paths must ALWAYS be specified using '/', also on Windows! 
 # You cannot use os.path.join or similar, since these will introduce platform-dependent separators!
-settings.clientCertificate                 = PKI_FOLDER + '/client/certs/client.der'
-settings.clientPrivateKey                  = PKI_FOLDER + '/client/private/client.pem'
-settings.certificateTrustListLocation      = PKI_FOLDER + '/trusted/certs/'
-settings.certificateRevocationListLocation = PKI_FOLDER + '/trusted/crl/'
-settings.issuersCertificatesLocation       = PKI_FOLDER + '/issuers/certs/'
-settings.issuersRevocationListLocation     = PKI_FOLDER + '/issuers/crl/'
+clientSettings.clientCertificate                 = PKI_FOLDER + '/client/certs/client.der'
+clientSettings.clientPrivateKey                  = PKI_FOLDER + '/client/private/client.pem'
+clientSettings.certificateTrustListLocation      = PKI_FOLDER + '/trusted/certs/'
+clientSettings.certificateRevocationListLocation = PKI_FOLDER + '/trusted/crl/'
+clientSettings.issuersCertificatesLocation       = PKI_FOLDER + '/issuers/certs/'
+clientSettings.issuersRevocationListLocation     = PKI_FOLDER + '/issuers/crl/'
 
 # make sure the above directories are created
-settings.createSecurityLocations()
+clientSettings.createSecurityLocations()
 
 # create the client
-myClient = Client(settings)
+myClient = Client(clientSettings)
 
 print("")
 print("===========================================================================================")
@@ -132,12 +132,12 @@ print("=========================================================================
 print("")
 
 # store the certificate 
-result = certificate.toDERFile(settings.clientCertificate)
+result = certificate.toDERFile(clientSettings.clientCertificate)
 if result == -1:
     raise Exception("Could not save the client certificate!")
 
 # store the private key:
-result = keyPair.toPEMFile(settings.clientPrivateKey)
+result = keyPair.toPEMFile(clientSettings.clientPrivateKey)
 if result == -1:
     raise Exception("Could not save the client private key!")
 
@@ -183,12 +183,10 @@ print("STEP 5: Configure the session to be created")
 print("===========================================================================================")
 print("")
 
-# WARNING: THIS API MAY CHANGE WHEN UAF v2.0.0 WILL BE RELEASED !!!
-
 # suppose we want Basic128Rsa15 encryption + signed communication:
 sessionSettings = SessionSettings()
-sessionSettings.securitySettingsList[0].securityPolicy      = securitypolicies.UA_Basic128Rsa15
-sessionSettings.securitySettingsList[0].messageSecurityMode = messagesecuritymodes.Mode_Sign
+sessionSettings.securitySettings.securityPolicy      = securitypolicies.UA_Basic128Rsa15
+sessionSettings.securitySettings.messageSecurityMode = messagesecuritymodes.Mode_Sign
 
 
 print("")
@@ -233,10 +231,13 @@ print("")
 # define the address of a node which we would like to read:
 someAddress = Address(NodeId("Demo.SimulationSpeed", DEMOSERVER_NS_URI), SERVER_URI)
 
-cfg = pyuaf.client.configs.SessionConfig()
-cfg.defaultSessionSettings = sessionSettings
+result = myClient.read( [someAddress], sessionSettings = sessionSettings )
 
-result = myClient.read( [someAddress], sessionConfig = cfg )
+# Note that instead of explicitly providing the sessionSettings **kwarg argument, we could also
+# have done the following:
+#  clientSettings.defaultSessionSettings = sessionSettings
+#  myClient.setClientSettings(clientSettings)
+#  result = myClient.read( [someAddress] )
 
 print("")
 print("Read result:")

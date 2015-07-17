@@ -25,9 +25,8 @@ import time, os, sys
 
 import pyuaf
 from pyuaf.client           import Client
-from pyuaf.client.settings  import ClientSettings
+from pyuaf.client.settings  import ClientSettings, BrowseSettings, SessionSettings
 from pyuaf.client.requests  import BrowseRequest, BrowseRequestTarget
-from pyuaf.client.configs   import BrowseConfig, SessionConfig
 from pyuaf.util             import Address, NodeId
 from pyuaf.util             import primitives
 from pyuaf.util             import opcuaidentifiers
@@ -59,9 +58,19 @@ try:
     # (notice that there is also an argument called 'maxAutoBrowseNext', which we don't mention
     #  here because we can leave it at the default value (100), to make sure that BrowseNext is 
     # automatically being called for us as much as needed!)
-    # (notice too that you can optionally provide a BrowseConfig and a SessionConfig for 
-    #  more detailed configuration)
     firstLevelBrowseResult = myClient.browse([rootNode])
+    
+    # Notice too that you can optionally provide a BrowseSettings and/or a SessionSettings argument
+    # for more detailed configuration, like this:
+    # OPTIONAL: let's specify a small call timeout, since the UaDemoServer is running 
+    #           on the local machine anyway:
+    browseSettings = BrowseSettings()
+    browseSettings.callTimeoutSec = 2.0
+    # OPTIONAL: and finally let's also specify that sessions should have a timeout of 600 seconds:
+    sessionSettings = SessionSettings()
+    sessionSettings.sessionTimeoutSec = 600.0
+    # now call the browse() function:
+    myClient.browse([rootNode], browseSettings = browseSettings, sessionSettings = sessionSettings)
     
     # print the result
     print(" - Browse result of the first level:")
@@ -91,17 +100,12 @@ try:
     print("Second option: use the generic function \"processRequest()\"")
     print("==========================================================")
     
-    # create a request with 1 target
+    # create a request with 1 target, and re-use the browseSettings and sessionSettings 
+    # which we created earlier:
     firstLevelBrowseRequest = BrowseRequest(1)
     firstLevelBrowseRequest.targets[0].address = rootNode
-    
-    # OPTIONAL: let's also specify a small call timeout, since the UaDemoServer is running 
-    #           on the local machine anyway
-    firstLevelBrowseRequest.serviceConfig.serviceSettings.callTimeoutSec = 2.0
-    
-    # OPTIONAL: and finally let's also specify that sessions should have a timeout of 600 seconds
-    #           For more info about SessionConfigs, see the sessionconfig example
-    firstLevelBrowseRequest.sessionConfig.defaultSessionSettings.sessionTimeoutSec = 600.0
+    firstLevelBrowseRequest.serviceSettings = browseSettings
+    firstLevelBrowseRequest.sessionSettings = sessionSettings
     
     # process the request
     firstLevelBrowseResult = myClient.processRequest(firstLevelBrowseRequest)
