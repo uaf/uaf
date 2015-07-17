@@ -25,6 +25,7 @@
 // STD
 // SDK
 // UAF
+#include "uaf/util/constants.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/clientservices.h"
 #include "uaf/client/database/requeststore.h"
@@ -294,7 +295,7 @@ namespace uaf
             {
                 if (mask.isSet(i))
                 {
-                    if (result.targets[i].clientHandle == uaf::CLIENTHANDLE_NOT_ASSIGNED)
+                    if (result.targets[i].clientHandle == uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
                     {
                         result.targets[i].clientHandle = database->createUniqueClientHandle();
                     }
@@ -347,7 +348,7 @@ namespace uaf
             {
                 if (mask.isSet(i))
                 {
-                    if (result.targets[i].clientHandle == uaf::CLIENTHANDLE_NOT_ASSIGNED)
+                    if (result.targets[i].clientHandle == uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
                     {
                         result.targets[i].clientHandle = database->createUniqueClientHandle();
                     }
