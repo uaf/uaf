@@ -28,6 +28,7 @@
 // SDK
 #include "uabase/uaplatformlayer.h"
 // UAF
+#include "uaf/util/handles.h"
 
 namespace uaf
 {
