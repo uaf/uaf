@@ -15,27 +15,27 @@ Informally:
    
   - easily configure default SessionSettings, SubscriptionSettings, ReadSettings, etc.:
      
-     >>> clientSettings = ClientSettings()
-     >>> clientSettings.defaultSessionSettings.sessionTimeoutSec = 100.0
-     >>> clientSettings.defaultReadSettings.callTimeoutSec = 2.0
-     >>> myClient.setClientSettings(clientSettings)
-     >>> myClient.read(addresses) # this will use the above defaults
+    >>> clientSettings = ClientSettings()
+    >>> clientSettings.defaultSessionSettings.sessionTimeoutSec = 100.0
+    >>> clientSettings.defaultReadSettings.callTimeoutSec = 2.0
+    >>> myClient.setClientSettings(clientSettings)
+    >>> myClient.read(addresses) # this will use the above defaults
 
   - easily configure SessionSettings, SubscriptionSettings, ReadSettings, etc. per service call:
    
-     >>> myClient.read(addresses       = myAddresses, 
-     ...               serviceSettings = myServiceSettings, # optional **kwarg
-     ...               sessionSettings = mySessionSettings) # optional **kwarg
-     >>> myClient.createMonitoredData(addresses            = myAddresses, 
-     ...                              serviceSettings      = myServiceSettings, # optional **kwarg
-     ...                              sessionSettings      = mySessionSettings, # optional **kwarg
-     ...                              subscriptionSettings = mySessionSettings) # optional **kwarg
+    >>> myClient.read(addresses       = myAddresses, 
+    ...               serviceSettings = myServiceSettings, # optional **kwarg
+    ...               sessionSettings = mySessionSettings) # optional **kwarg
+    >>> myClient.createMonitoredData(addresses            = myAddresses, 
+    ...                              serviceSettings      = myServiceSettings, # optional **kwarg
+    ...                              sessionSettings      = mySessionSettings, # optional **kwarg
+    ...                              subscriptionSettings = mySessionSettings) # optional **kwarg
 
   - easily keep full control over sessions, subscriptions and services (only if you know
     what you're doing):
    
-     >>> myClient.read(addresses, clientConnectionId = 3)
-     >>> myClient.createMonitoredData(addresses, clientConnectionId = 3, clientSubscriptionHandle = 1)
+    >>> myClient.read(addresses, clientConnectionId = 3)
+    >>> myClient.createMonitoredData(addresses, clientConnectionId = 3, clientSubscriptionHandle = 1)
 
   Check the examples/pyuaf/client/how_to_configure_all_settings.py example or the API docs for 
   more detailed information!
