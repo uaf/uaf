@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -7,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Client examples &mdash; PyUAF pre-2.0.0 documentation</title>
+    <title>Client examples &mdash; PyUAF 2.0.0 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
-        VERSION:     'pre-2.0.0',
+        URL_ROOT:    './',
+        VERSION:     '2.0.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -24,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF pre-2.0.0 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.0.0 documentation" href="index.html" />
     <link rel="next" title="pyuaf" href="api_pyuaf.html" />
     <link rel="prev" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)" href="index.html" /> 
   </head>
@@ -44,7 +43,7 @@
         <li class="right" >
           <a href="index.html" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF pre-2.0.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 2.0.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -77,7 +76,7 @@
 
 <span class="c"># read the Value attribute of the node that we just addressed:</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="p">[</span><span class="n">someAddress</span><span class="p">]</span> <span class="p">)</span>
-
+<span class="k">print</span> <span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;The value is </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -221,9 +220,8 @@
 
 <span class="kn">import</span> <span class="nn">pyuaf</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client</span>           <span class="kn">import</span> <span class="n">Client</span>
-<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span><span class="p">,</span> <span class="n">ReadSettings</span><span class="p">,</span> <span class="n">SessionSettings</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>  <span class="kn">import</span> <span class="n">ReadRequest</span><span class="p">,</span> <span class="n">AsyncReadRequest</span><span class="p">,</span> <span class="n">ReadRequestTarget</span> 
-<span class="kn">from</span> <span class="nn">pyuaf.client.configs</span>   <span class="kn">import</span> <span class="n">ReadConfig</span><span class="p">,</span> <span class="n">SessionConfig</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span><span class="p">,</span> <span class="n">RelativePathElement</span><span class="p">,</span> <span class="n">QualifiedName</span><span class="p">,</span> <span class="n">LocalizedText</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">primitives</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util.errors</span>      <span class="kn">import</span> <span class="n">UafError</span>
@@ -295,24 +293,24 @@
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;First option: use the convenience function read() to read data synchronously&quot;</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;============================================================================&quot;</span><span class="p">)</span>
     
-<span class="c"># OPTIONAL: You could also provide a ReadConfig to configure a call timeout, </span>
+<span class="c"># OPTIONAL: You could also provide a ReadSettings to configure a call timeout, </span>
 <span class="c">#           or maximum age of the values, or ... </span>
-<span class="n">serviceConfig</span> <span class="o">=</span> <span class="n">ReadConfig</span><span class="p">()</span>
-<span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">0.5</span>
-<span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">maxAgeSec</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">serviceSettings</span> <span class="o">=</span> <span class="n">ReadSettings</span><span class="p">()</span>
+<span class="n">serviceSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">serviceSettings</span><span class="o">.</span><span class="n">maxAgeSec</span> <span class="o">=</span> <span class="mf">1.0</span>
 
 <span class="c"># OPTIONAL: And you could also provide a SessionConfig to configure the sessions </span>
 <span class="c">#           (e.g. set the timeout to 600.0 seconds)</span>
 <span class="c">#           For more info about SessionConfigs, see the sessionconfig_example</span>
-<span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">SessionConfig</span><span class="p">()</span>
-<span class="n">sessionConfig</span><span class="o">.</span><span class="n">defaultSessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">600.0</span>
+<span class="n">sessionSettings</span> <span class="o">=</span> <span class="n">SessionSettings</span><span class="p">()</span>
+<span class="n">sessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">600.0</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="c"># now read the node attributes</span>
     <span class="n">readResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="n">addresses</span>     <span class="o">=</span> <span class="p">[</span><span class="n">someDoubleNode</span><span class="p">,</span> <span class="n">someUInt32Node</span><span class="p">,</span> <span class="n">someStringNode</span><span class="p">,</span> 
                                                  <span class="n">someLocalizedTextNode</span><span class="p">,</span> <span class="n">someSByteArrayNode</span><span class="p">],</span>
-                                <span class="n">serviceConfig</span> <span class="o">=</span> <span class="n">serviceConfig</span><span class="p">,</span> <span class="c"># optional argument</span>
-                                <span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">sessionConfig</span><span class="p">)</span> <span class="c"># optional argument</span>
+                                <span class="n">serviceSettings</span> <span class="o">=</span> <span class="n">serviceSettings</span><span class="p">,</span> <span class="c"># optional argument</span>
+                                <span class="n">sessionSettings</span> <span class="o">=</span> <span class="n">sessionSettings</span><span class="p">)</span> <span class="c"># optional argument</span>
     
     <span class="c"># print the result using the function we defined before</span>
     <span class="n">printResult</span><span class="p">(</span><span class="n">readResult</span><span class="p">)</span>
@@ -337,15 +335,8 @@
 <span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReadRequestTarget</span><span class="p">())</span> <span class="c"># or readRequest.targets.resize(6)</span>
 <span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">address</span>     <span class="o">=</span> <span class="n">someDoubleNode</span>
 <span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">attributeId</span> <span class="o">=</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">attributeids</span><span class="o">.</span><span class="n">DisplayName</span>
-
-<span class="c"># OPTIONAL: let&#39;s also specify a small call timeout, since the UaDemoServer is running </span>
-<span class="c">#           on the local machine anyway</span>
-<span class="n">readRequest</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">0.5</span>
-<span class="c"># OPTIONAL: let&#39;s also specify that the values cannot be older than 1 second</span>
-<span class="n">readRequest</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">maxAgeSec</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="c"># OPTIONAL: and finally let&#39;s also specify that sessions should have a timeout of 600 seconds</span>
-<span class="c">#           For more info about SessionConfigs, see the sessionconfig_example</span>
-<span class="n">readRequest</span><span class="o">.</span><span class="n">sessionConfig</span><span class="o">.</span><span class="n">defaultSessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">600.0</span>
+<span class="n">readRequest</span><span class="o">.</span><span class="n">serviceSettings</span>        <span class="o">=</span> <span class="n">serviceSettings</span> <span class="c"># optional</span>
+<span class="n">readRequest</span><span class="o">.</span><span class="n">sessionSettings</span>        <span class="o">=</span> <span class="n">sessionSettings</span> <span class="c"># optional</span>
 
 <span class="k">try</span><span class="p">:</span>    
     <span class="c"># process the request</span>
@@ -372,12 +363,12 @@
 <span class="c"># a callback function!</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">asyncReadResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">beginRead</span><span class="p">(</span><span class="n">addresses</span>     <span class="o">=</span> <span class="p">[</span><span class="n">someDoubleNode</span><span class="p">,</span> <span class="n">someUInt32Node</span><span class="p">,</span> 
-                                                          <span class="n">someStringNode</span><span class="p">,</span> <span class="n">someLocalizedTextNode</span><span class="p">,</span> 
-                                                          <span class="n">someSByteArrayNode</span><span class="p">],</span>
-                                         <span class="n">serviceConfig</span> <span class="o">=</span> <span class="n">serviceConfig</span><span class="p">,</span> <span class="c"># optional argument</span>
-                                         <span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">sessionConfig</span><span class="p">,</span> <span class="c"># optional argument</span>
-                                         <span class="n">callback</span>      <span class="o">=</span> <span class="n">printResult</span><span class="p">)</span> <span class="c"># callback function!</span>
+    <span class="n">asyncReadResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">beginRead</span><span class="p">(</span><span class="n">addresses</span>       <span class="o">=</span> <span class="p">[</span><span class="n">someDoubleNode</span><span class="p">,</span> <span class="n">someUInt32Node</span><span class="p">,</span> 
+                                                            <span class="n">someStringNode</span><span class="p">,</span> <span class="n">someLocalizedTextNode</span><span class="p">,</span> 
+                                                            <span class="n">someSByteArrayNode</span><span class="p">],</span>
+                                         <span class="n">serviceSettings</span> <span class="o">=</span> <span class="n">serviceSettings</span><span class="p">,</span> <span class="c"># optional argument</span>
+                                         <span class="n">sessionSettings</span> <span class="o">=</span> <span class="n">sessionSettings</span><span class="p">,</span> <span class="c"># optional argument</span>
+                                         <span class="n">callback</span>        <span class="o">=</span> <span class="n">printResult</span><span class="p">)</span>     <span class="c"># callback function!</span>
     
     <span class="c"># check if there was an &quot;immediate&quot; error on the client side when executing the asynchronous </span>
     <span class="c"># service call:</span>
@@ -408,8 +399,8 @@
     <span class="n">asyncReadRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">readRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
     
 <span class="c"># OPTIONAL: also copy the service config and session config:</span>
-<span class="n">asyncReadRequest</span><span class="o">.</span><span class="n">serviceConfig</span> <span class="o">=</span> <span class="n">readRequest</span><span class="o">.</span><span class="n">serviceConfig</span>
-<span class="n">asyncReadRequest</span><span class="o">.</span><span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">readRequest</span><span class="o">.</span><span class="n">sessionConfig</span>
+<span class="n">asyncReadRequest</span><span class="o">.</span><span class="n">serviceSettings</span> <span class="o">=</span> <span class="n">serviceSettings</span>
+<span class="n">asyncReadRequest</span><span class="o">.</span><span class="n">sessionSettings</span> <span class="o">=</span> <span class="n">sessionSettings</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="c"># process the request</span>
@@ -456,11 +447,11 @@
     
 <span class="k">try</span><span class="p">:</span>
     <span class="n">asyncReadResult</span> <span class="o">=</span> <span class="n">mySubClassedClient</span><span class="o">.</span><span class="n">beginRead</span><span class="p">(</span>
-                                         <span class="n">addresses</span>     <span class="o">=</span> <span class="p">[</span><span class="n">someDoubleNode</span><span class="p">,</span> <span class="n">someUInt32Node</span><span class="p">,</span> 
-                                                          <span class="n">someStringNode</span><span class="p">,</span> <span class="n">someLocalizedTextNode</span><span class="p">,</span> 
-                                                          <span class="n">someSByteArrayNode</span><span class="p">],</span>
-                                         <span class="n">serviceConfig</span> <span class="o">=</span> <span class="n">serviceConfig</span><span class="p">,</span> <span class="c"># optional argument</span>
-                                         <span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">sessionConfig</span><span class="p">)</span> <span class="c"># optional argument!</span>
+                                         <span class="n">addresses</span>       <span class="o">=</span> <span class="p">[</span><span class="n">someDoubleNode</span><span class="p">,</span> <span class="n">someUInt32Node</span><span class="p">,</span> 
+                                                            <span class="n">someStringNode</span><span class="p">,</span> <span class="n">someLocalizedTextNode</span><span class="p">,</span> 
+                                                            <span class="n">someSByteArrayNode</span><span class="p">],</span>
+                                         <span class="n">serviceSettings</span> <span class="o">=</span> <span class="n">serviceSettings</span><span class="p">,</span> <span class="c"># optional argument</span>
+                                         <span class="n">sessionSettings</span> <span class="o">=</span> <span class="n">sessionSettings</span><span class="p">)</span> <span class="c"># optional argument!</span>
     <span class="c"># note: the &#39;callback&#39; argument is not used in the above call!</span>
     
     <span class="c"># check if there was an &quot;immediate&quot; error on the client side when executing the asynchronous </span>
@@ -532,9 +523,8 @@
 
 <span class="kn">import</span> <span class="nn">pyuaf</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client</span>           <span class="kn">import</span> <span class="n">Client</span>
-<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span><span class="p">,</span> <span class="n">BrowseSettings</span><span class="p">,</span> <span class="n">SessionSettings</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>  <span class="kn">import</span> <span class="n">BrowseRequest</span><span class="p">,</span> <span class="n">BrowseRequestTarget</span>
-<span class="kn">from</span> <span class="nn">pyuaf.client.configs</span>   <span class="kn">import</span> <span class="n">BrowseConfig</span><span class="p">,</span> <span class="n">SessionConfig</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">primitives</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">opcuaidentifiers</span>
@@ -566,9 +556,19 @@
     <span class="c"># (notice that there is also an argument called &#39;maxAutoBrowseNext&#39;, which we don&#39;t mention</span>
     <span class="c">#  here because we can leave it at the default value (100), to make sure that BrowseNext is </span>
     <span class="c"># automatically being called for us as much as needed!)</span>
-    <span class="c"># (notice too that you can optionally provide a BrowseConfig and a SessionConfig for </span>
-    <span class="c">#  more detailed configuration)</span>
     <span class="n">firstLevelBrowseResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">browse</span><span class="p">([</span><span class="n">rootNode</span><span class="p">])</span>
+    
+    <span class="c"># Notice too that you can optionally provide a BrowseSettings and/or a SessionSettings argument</span>
+    <span class="c"># for more detailed configuration, like this:</span>
+    <span class="c"># OPTIONAL: let&#39;s specify a small call timeout, since the UaDemoServer is running </span>
+    <span class="c">#           on the local machine anyway:</span>
+    <span class="n">browseSettings</span> <span class="o">=</span> <span class="n">BrowseSettings</span><span class="p">()</span>
+    <span class="n">browseSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">2.0</span>
+    <span class="c"># OPTIONAL: and finally let&#39;s also specify that sessions should have a timeout of 600 seconds:</span>
+    <span class="n">sessionSettings</span> <span class="o">=</span> <span class="n">SessionSettings</span><span class="p">()</span>
+    <span class="n">sessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">600.0</span>
+    <span class="c"># now call the browse() function:</span>
+    <span class="n">myClient</span><span class="o">.</span><span class="n">browse</span><span class="p">([</span><span class="n">rootNode</span><span class="p">],</span> <span class="n">browseSettings</span> <span class="o">=</span> <span class="n">browseSettings</span><span class="p">,</span> <span class="n">sessionSettings</span> <span class="o">=</span> <span class="n">sessionSettings</span><span class="p">)</span>
     
     <span class="c"># print the result</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot; - Browse result of the first level:&quot;</span><span class="p">)</span>
@@ -598,17 +598,12 @@
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;Second option: use the generic function </span><span class="se">\&quot;</span><span class="s">processRequest()</span><span class="se">\&quot;</span><span class="s">&quot;</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;==========================================================&quot;</span><span class="p">)</span>
     
-    <span class="c"># create a request with 1 target</span>
+    <span class="c"># create a request with 1 target, and re-use the browseSettings and sessionSettings </span>
+    <span class="c"># which we created earlier:</span>
     <span class="n">firstLevelBrowseRequest</span> <span class="o">=</span> <span class="n">BrowseRequest</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">firstLevelBrowseRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">rootNode</span>
-    
-    <span class="c"># OPTIONAL: let&#39;s also specify a small call timeout, since the UaDemoServer is running </span>
-    <span class="c">#           on the local machine anyway</span>
-    <span class="n">firstLevelBrowseRequest</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">2.0</span>
-    
-    <span class="c"># OPTIONAL: and finally let&#39;s also specify that sessions should have a timeout of 600 seconds</span>
-    <span class="c">#           For more info about SessionConfigs, see the sessionconfig example</span>
-    <span class="n">firstLevelBrowseRequest</span><span class="o">.</span><span class="n">sessionConfig</span><span class="o">.</span><span class="n">defaultSessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">600.0</span>
+    <span class="n">firstLevelBrowseRequest</span><span class="o">.</span><span class="n">serviceSettings</span> <span class="o">=</span> <span class="n">browseSettings</span>
+    <span class="n">firstLevelBrowseRequest</span><span class="o">.</span><span class="n">sessionSettings</span> <span class="o">=</span> <span class="n">sessionSettings</span>
     
     <span class="c"># process the request</span>
     <span class="n">firstLevelBrowseResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">processRequest</span><span class="p">(</span><span class="n">firstLevelBrowseRequest</span><span class="p">)</span>
@@ -673,9 +668,8 @@
 
 <span class="kn">import</span> <span class="nn">pyuaf</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client</span>           <span class="kn">import</span> <span class="n">Client</span>
-<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span><span class="p">,</span> <span class="n">HistoryReadRawModifiedSettings</span><span class="p">,</span> <span class="n">SessionSettings</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>  <span class="kn">import</span> <span class="n">HistoryReadRawModifiedRequest</span>
-<span class="kn">from</span> <span class="nn">pyuaf.client.configs</span>   <span class="kn">import</span> <span class="n">HistoryReadRawModifiedConfig</span><span class="p">,</span> <span class="n">SessionConfig</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">DateTime</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">DataValue</span>
@@ -887,14 +881,21 @@
     <span class="n">request</span> <span class="o">=</span> <span class="n">HistoryReadRawModifiedRequest</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">request</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">doubleAddress</span>
     
-    <span class="c"># configure the request:</span>
-    <span class="n">request</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">startTime</span>                <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="n">request</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">endTime</span>                  <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
-    <span class="n">request</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span>           <span class="o">=</span> <span class="mf">2.0</span>                        <span class="c"># optional of course</span>
-    <span class="n">request</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">numValuesPerNode</span>         <span class="o">=</span> <span class="mi">100</span>
-    <span class="n">request</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">maxAutoReadMore</span>          <span class="o">=</span> <span class="mi">10</span>
-    <span class="n">request</span><span class="o">.</span><span class="n">serviceConfig</span><span class="o">.</span><span class="n">serviceSettings</span><span class="o">.</span><span class="n">isReadModified</span>           <span class="o">=</span> <span class="bp">False</span>                      <span class="c"># we want raw historical data</span>
-    <span class="n">request</span><span class="o">.</span><span class="n">sessionConfig</span><span class="o">.</span><span class="n">defaultSessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">600.0</span>                      <span class="c"># optional of course</span>
+    <span class="c"># configure the request further:</span>
+    <span class="n">serviceSettings</span> <span class="o">=</span> <span class="n">HistoryReadRawModifiedSettings</span><span class="p">()</span>
+    <span class="n">serviceSettings</span><span class="o">.</span><span class="n">startTime</span>         <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">serviceSettings</span><span class="o">.</span><span class="n">endTime</span>           <span class="o">=</span> <span class="n">DateTime</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+    <span class="n">serviceSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span>    <span class="o">=</span> <span class="mf">2.0</span>                        <span class="c"># optional of course</span>
+    <span class="n">serviceSettings</span><span class="o">.</span><span class="n">numValuesPerNode</span>  <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">serviceSettings</span><span class="o">.</span><span class="n">maxAutoReadMore</span>   <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">serviceSettings</span><span class="o">.</span><span class="n">isReadModified</span>    <span class="o">=</span> <span class="bp">False</span>                      <span class="c"># we want raw historical data</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">serviceSettings</span> <span class="o">=</span> <span class="n">serviceSettings</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">serviceSettingsGiven</span> <span class="o">=</span> <span class="bp">True</span>
+    
+    <span class="n">sessionSettings</span> <span class="o">=</span> <span class="n">SessionSettings</span><span class="p">()</span>
+    <span class="n">sessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">600.0</span>                      <span class="c"># optional of course</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">sessionSettings</span> <span class="o">=</span> <span class="n">sessionSettings</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">sessionSettingsGiven</span> <span class="o">=</span> <span class="bp">True</span>
     
     <span class="c"># process the request</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">processRequest</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
@@ -913,193 +914,188 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="how-to-change-the-default-session-behavior">
-<span id="sessionconfig-example"></span><h2>How to change the default session behavior?<a class="headerlink" href="#how-to-change-the-default-session-behavior" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># examples/pyuaf/client/how_to_change_the_default_session_behavior.py</span>
+<div class="section" id="how-to-configure-all-settings">
+<span id="configure-settings-example"></span><h2>How to configure all settings?<a class="headerlink" href="#how-to-configure-all-settings" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># examples/pyuaf/client/how_to_configure_all_settings.py</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">EXAMPLE: how to change the default session behavior</span>
+<span class="sd">EXAMPLE: how to configure the client/session/subscription/service settings</span>
 <span class="sd">=================================================================================================</span>
 
-<span class="sd">A SessionConfig instance can be used to configure one or more sessions that need to be created,</span>
-<span class="sd">in order to successfully invoke an OPC UA service.</span>
+<span class="sd">With PyUAF you can configure sessions, subscriptions and services (like read, write, ...) in</span>
+<span class="sd">great detail. This example shows how to change them. </span>
 
 <span class="sd">This is an example to show you some more advanced feature of the UAF, you can skip it if you&#39;re </span>
-<span class="sd">happy with the default session behavior of the UAF!</span>
-
-<span class="sd">As always, in the UAF terminology, a &quot;config&quot; object holds one or more &quot;settings&quot; objects.</span>
-
-<span class="sd">In this case, a SessionConfig holds</span>
-<span class="sd">  - one SessionSettings object to specify &quot;default&quot; settings for sessions that need to be created</span>
-<span class="sd">    during the service call</span>
-<span class="sd">  - and optionally some particular SessionSettings objects for sessions to particular servers.</span>
-
-<span class="sd">Because a SessionConfig can contain settings for many different servers, you can create and</span>
-<span class="sd">configure one SessionConfig, and then re-use this SessionConfig for multiple service calls.</span>
+<span class="sd">happy with the default session/subscription/service settings of the UAF!</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">pyuaf</span>
 <span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
-<span class="kn">from</span> <span class="nn">pyuaf.util.primitives</span>  <span class="kn">import</span> <span class="n">Byte</span><span class="p">,</span> <span class="n">Double</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util.primitives</span>  <span class="kn">import</span> <span class="n">UInt32</span><span class="p">,</span> <span class="n">Boolean</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client</span>           <span class="kn">import</span> <span class="n">Client</span>
-<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span><span class="p">,</span> <span class="n">SessionSettings</span>
-<span class="kn">from</span> <span class="nn">pyuaf.client.configs</span>   <span class="kn">import</span> <span class="n">SessionConfig</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span><span class="p">,</span> <span class="n">SessionSettings</span><span class="p">,</span> <span class="n">SubscriptionSettings</span><span class="p">,</span> \
+                                   <span class="n">ReadSettings</span>
 
 
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;This example will fail when executed, since it tries to connect to non-existing servers&quot;</span><span class="p">)</span>
+<span class="c"># Some constants needed during the rest of this example:</span>
+<span class="n">NAMESPACE_URI</span> <span class="o">=</span> <span class="s">&quot;http://www.unifiedautomation.com/DemoServer&quot;</span>
+<span class="n">SERVER_URI</span> <span class="o">=</span> <span class="s">&quot;urn:UnifiedAutomation:UaServerCpp&quot;</span>
 
+<span class="c"># ==================================================================================================</span>
+<span class="c"># 1) Setting the defaults</span>
+<span class="c"># ==================================================================================================</span>
 
-<span class="c"># create a single SessionConfig object that we will use for all our service calls</span>
-<span class="n">cfg</span> <span class="o">=</span> <span class="n">SessionConfig</span><span class="p">()</span>
-
-<span class="c"># configure the default settings for the sessions that will be created</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">defaultSessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">100.0</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">defaultSessionSettings</span><span class="o">.</span><span class="n">connectTimeoutSec</span> <span class="o">=</span> <span class="mf">2.0</span>
-
-<span class="c"># for a particular server (an embedded device) we expect an unreliable connection,</span>
-<span class="c"># so we specify some settings that are more suitable for this particular server</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">specificSessionSettings</span><span class="p">[</span><span class="s">&quot;My/Unreliable/Device/Server&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SessionSettings</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">specificSessionSettings</span><span class="p">[</span><span class="s">&quot;My/Unreliable/Device/Server&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">200.0</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">specificSessionSettings</span><span class="p">[</span><span class="s">&quot;My/Unreliable/Device/Server&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">connectTimeoutSec</span> <span class="o">=</span> <span class="mf">5.0</span>
-
-<span class="c"># we also have a particular very reliable and fast server (some PLC), for which we want to</span>
-<span class="c"># specify other settings:</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">specificSessionSettings</span><span class="p">[</span><span class="s">&quot;My/Reliable/PLC/Server&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SessionSettings</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">specificSessionSettings</span><span class="p">[</span><span class="s">&quot;My/Reliable/PLC/Server&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">connectTimeoutSec</span> <span class="o">=</span> <span class="mf">0.5</span>
-
-<span class="c"># Now we can use the same config for many different service calls.</span>
-<span class="c"># Sessions will be created silently in the background by the UAF, based on the</span>
-<span class="c"># settings we provided via the &#39;cfg&#39; object.</span>
-<span class="c"># If sessions need to be created to the &quot;My/Unreliable/Device/Uri&quot; or &quot;My/Reliable/PLC/Uri&quot;</span>
-<span class="c"># servers, they will be created according to the specified settings.</span>
-<span class="c"># If sessions need to be created to other servers, they will be created according to the</span>
-<span class="c"># defaultSessionSettings settings.</span>
-
-<span class="c"># configure a client ...</span>
-<span class="n">clientSettings</span> <span class="o">=</span> <span class="n">ClientSettings</span><span class="p">()</span> 
-<span class="n">clientSettings</span><span class="o">.</span><span class="n">applicationName</span> <span class="o">=</span> <span class="s">&quot;MyClient&quot;</span><span class="p">;</span>
-<span class="n">clientSettings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://10.133.78.42&quot;</span><span class="p">)</span>
-<span class="n">clientSettings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://10.133.78.81&quot;</span><span class="p">)</span>
-<span class="n">clientSettings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://10.134.25.16&quot;</span><span class="p">)</span>
-
-<span class="c"># ... and create the client</span>
-<span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">clientSettings</span><span class="p">)</span>
-
-<span class="c"># define some addresses</span>
-<span class="n">temperature1</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;temperature1&quot;</span> <span class="p">,</span> <span class="s">&quot;MyCompanyNamespace&quot;</span><span class="p">),</span> <span class="s">&quot;Some/OPCUA/Server&quot;</span><span class="p">)</span>
-<span class="n">temperature2</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;temperature2&quot;</span> <span class="p">,</span> <span class="s">&quot;MyCompanyNamespace&quot;</span><span class="p">),</span> <span class="s">&quot;Some/OPCUA/Server&quot;</span><span class="p">)</span>
-<span class="n">pressure0005</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;pressure0005&quot;</span> <span class="p">,</span> <span class="s">&quot;MyCompanyNamespace&quot;</span><span class="p">),</span> <span class="s">&quot;My/Unreliable/Device/Server&quot;</span><span class="p">)</span>
-<span class="n">motorStatus3</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;motorStatus3&quot;</span> <span class="p">,</span> <span class="s">&quot;MyCompanyNamespace&quot;</span><span class="p">),</span> <span class="s">&quot;My/Reliable/PLC/Server&quot;</span><span class="p">)</span>
-
-<span class="c"># now we can read, write, ... any address(es) without worrying about the settings of the sessions!</span>
-
-<span class="c"># read the Value attribute of the 4 nodes</span>
-<span class="n">myReadResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">([</span><span class="n">temperature1</span><span class="p">,</span> <span class="n">temperature2</span><span class="p">,</span> <span class="n">pressure0005</span><span class="p">,</span> <span class="n">motorStatus3</span><span class="p">],</span> <span class="n">sessionConfig</span><span class="o">=</span><span class="n">cfg</span><span class="p">)</span>
-
-<span class="c"># write a new motor status</span>
-<span class="n">myWriteResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">write</span><span class="p">([</span><span class="n">motorStatus3</span><span class="p">],</span> <span class="p">[</span><span class="n">Byte</span><span class="p">(</span><span class="mh">0x3</span><span class="p">)],</span> <span class="n">sessionConfig</span><span class="o">=</span><span class="n">cfg</span><span class="p">)</span>
-                             
-<span class="c"># do some other stuff like monitoring variables, calling methods, ... all using</span>
-<span class="c"># the same SessionConfig object (&#39;cfg&#39;)</span>
-<span class="c"># ...</span>
-
-<span class="c"># don&#39;t worry about disconnecting sessions etc., these things will be done automatically</span>
-<span class="c"># when the client is destroyed.</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="how-to-change-the-default-subscription-behavior">
-<span id="subscriptionconfig-example"></span><h2>How to change the default subscription_behavior?<a class="headerlink" href="#how-to-change-the-default-subscription-behavior" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># examples/pyuaf/client/how_to_change_the_default_subscription_behavior.py</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">EXAMPLE: how to change the default subscription behavior.</span>
-<span class="sd">=================================================================================================</span>
-
-<span class="sd">A SubscriptionConfig instance can be used to configure one or more subscriptions that need to be</span>
-<span class="sd">created, e.g. in order to successfully create some MonitoredItems.</span>
-
-<span class="sd">This is an example to show you some more advanced feature of the UAF, you can skip it if you&#39;re </span>
-<span class="sd">happy with the default subscription behavior of the UAF!</span>
-
-<span class="sd">As always, in the UAF terminology, a &quot;config&quot; object holds one or more &quot;settings&quot; objects.</span>
-
-<span class="sd">In this case, a SubscriptionConfig holds</span>
-<span class="sd"> - one SubscriptionSettings object to specify &quot;default&quot; settings for subscriptions that need to</span>
-<span class="sd">   be created</span>
-<span class="sd"> - and optionally some particular SubscriptionSettings objects for subscriptions to particular</span>
-<span class="sd">   servers.</span>
-
-<span class="sd">Because a SubscriptionConfig can contain settings for many different servers, you can create and</span>
-<span class="sd">configure one SubscriptionConfig, and then re-use this SubscriptionConfig for multiple service</span>
-<span class="sd">calls.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
-<span class="kn">from</span> <span class="nn">pyuaf.util.primitives</span>  <span class="kn">import</span> <span class="n">Byte</span><span class="p">,</span> <span class="n">Double</span>
-<span class="kn">from</span> <span class="nn">pyuaf.client</span>           <span class="kn">import</span> <span class="n">Client</span>
-<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span><span class="p">,</span> <span class="n">SubscriptionSettings</span>
-<span class="kn">from</span> <span class="nn">pyuaf.client.configs</span>   <span class="kn">import</span> <span class="n">SubscriptionConfig</span>
-
-
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;This example will fail when executed, since it tries to connect to non-existing servers&quot;</span><span class="p">)</span>
-
-
-<span class="c"># create a single SubscriptionConfig object that we will use for all our service calls</span>
-<span class="n">cfg</span> <span class="o">=</span> <span class="n">SubscriptionConfig</span><span class="p">()</span>
-
-<span class="c"># configure the default settings for the sessions that will be created</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">defaultSubscriptionSettings</span><span class="o">.</span><span class="n">publishingIntervalSec</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">defaultSubscriptionSettings</span><span class="o">.</span><span class="n">priority</span> <span class="o">=</span> <span class="mi">50</span>
-
-<span class="c"># for a particular server (a small embedded device) we want to create a subscription with a</span>
-<span class="c"># slow publishing interval, so that we don&#39;t require too much resources from the device:</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">specificSubscriptionSettings</span><span class="p">[</span><span class="s">&quot;My/Slow/Device/Server&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SubscriptionSettings</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">specificSubscriptionSettings</span><span class="p">[</span><span class="s">&quot;My/Slow/Device/Server&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">publishingIntervalSec</span> <span class="o">=</span> <span class="mf">2.0</span>
-
-<span class="c"># we also have a very fast server (some high-end PLC), from which we want to receive updates</span>
-<span class="c"># much faster (4 times per second!):</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">specificSubscriptionSettings</span><span class="p">[</span><span class="s">&quot;My/Fast/PLC/Server&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SubscriptionSettings</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">specificSubscriptionSettings</span><span class="p">[</span><span class="s">&quot;My/Fast/PLC/Server&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">publishingIntervalSec</span> <span class="o">=</span> <span class="mf">0.25</span>
-
-<span class="c"># Now we can use the same config for many different service calls.</span>
-<span class="c"># Subscriptions will be created silently in the background by the UAF, based on the</span>
-<span class="c"># settings we provided via the &#39;cfg&#39; object.</span>
-<span class="c"># If subscriptions need to be created to the embedded device or the fast PLC, they will be</span>
-<span class="c"># created according to the specified settings.</span>
-<span class="c"># If subscriptions need to be created to other servers, they will be created according to the</span>
-<span class="c"># defaultSubscriptionSettings settings.</span>
-
-<span class="c"># First of all, configure a client ...</span>
+<span class="c"># using ClientSettings, you can configure all default session/subscription and service settings:</span>
 <span class="n">clientSettings</span> <span class="o">=</span> <span class="n">ClientSettings</span><span class="p">()</span>
-<span class="n">clientSettings</span><span class="o">.</span><span class="n">applicationName</span> <span class="o">=</span> <span class="s">&quot;MyClient&quot;</span>
-<span class="n">clientSettings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://10.133.78.42&quot;</span><span class="p">)</span>
-<span class="n">clientSettings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://10.133.78.81&quot;</span><span class="p">)</span>
-<span class="n">clientSettings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://10.134.25.16&quot;</span><span class="p">)</span>
 
-<span class="c"># ... and create the client</span>
+<span class="c"># first configure some general client settings:</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">applicationName</span> <span class="o">=</span> <span class="s">&quot;MyClient&quot;</span><span class="p">;</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://localhost:48010&quot;</span><span class="p">)</span>
+<span class="c"># etc. ...</span>
+
+<span class="c"># now configure the default session settings:</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">defaultSessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">100.0</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">defaultSessionSettings</span><span class="o">.</span><span class="n">connectTimeoutSec</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="c"># etc. ...</span>
+
+<span class="c"># now configure the default subscription settings:</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">defaultSubscriptionSettings</span><span class="o">.</span><span class="n">publishingIntervalSec</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">defaultSubscriptionSettings</span><span class="o">.</span><span class="n">lifeTimeCount</span>         <span class="o">=</span> <span class="mi">600</span>
+<span class="c"># etc. ...</span>
+
+<span class="c"># now configure the default settings for the Read service:</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">defaultReadSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">defaultReadSettings</span><span class="o">.</span><span class="n">maxAgeSec</span>      <span class="o">=</span> <span class="mf">10.0</span>
+
+<span class="c"># same for the writeSettings, methodCallSettings, ...</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">defaultMethodCallSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">defaultWriteSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">defaultBrowseSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="c"># and so on, and so on ...</span>
+
+<span class="c"># NOTE: for clientSettings, you may also configure SessionSettings for specific servers:</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">specificSessionSettings</span><span class="p">[</span><span class="s">&quot;My/Unreliable/Device/Server/URI&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SessionSettings</span><span class="p">()</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">specificSessionSettings</span><span class="p">[</span><span class="s">&quot;My/Unreliable/Device/Server/URI&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">200.0</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">specificSessionSettings</span><span class="p">[</span><span class="s">&quot;My/Unreliable/Device/Server/URI&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">connectTimeoutSec</span> <span class="o">=</span> <span class="mf">5.0</span>
+<span class="c"># If the client connects to the server with ServerUri = &quot;My/Unreliable/Device/Server/URI&quot;,</span>
+<span class="c"># then it will use these settings instead of the defaultSessionSettings!</span>
+
+<span class="c"># Now you can simply create a client that uses these settings:</span>
 <span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">clientSettings</span><span class="p">)</span>
+<span class="c"># or alternatively:</span>
+<span class="c"># myClient = Client()</span>
+<span class="c"># myClient.setClientSettings(clientSettings)</span>
 
-<span class="c"># define some node addresses</span>
-<span class="n">temperature1</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;temperature1&quot;</span> <span class="p">,</span> <span class="s">&quot;MyCompanyNamespace&quot;</span><span class="p">),</span> <span class="s">&quot;Some/OPCUA/Server&quot;</span><span class="p">)</span>
-<span class="n">temperature2</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;temperature2&quot;</span> <span class="p">,</span> <span class="s">&quot;MyCompanyNamespace&quot;</span><span class="p">),</span> <span class="s">&quot;Some/OPCUA/Server&quot;</span><span class="p">)</span>
-<span class="n">pressure0005</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;pressure0005&quot;</span> <span class="p">,</span> <span class="s">&quot;MyCompanyNamespace&quot;</span><span class="p">),</span> <span class="s">&quot;My/Slow/Device/Server&quot;</span><span class="p">)</span>
-<span class="n">motorStatus3</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;motorStatus3&quot;</span> <span class="p">,</span> <span class="s">&quot;MyCompanyNamespace&quot;</span><span class="p">),</span> <span class="s">&quot;My/Fast/PLC/Server&quot;</span><span class="p">)</span>
-<span class="n">safetyValve5</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;safetyValve5&quot;</span> <span class="p">,</span> <span class="s">&quot;MyCompanyNamespace&quot;</span><span class="p">),</span> <span class="s">&quot;My/Fast/PLC/Server&quot;</span><span class="p">)</span>
+<span class="c"># let&#39;s read 2 nodes:</span>
+<span class="n">address0</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;Demo.SimulationSpeed&quot;</span> <span class="p">,</span> <span class="n">NAMESPACE_URI</span><span class="p">),</span> <span class="n">SERVER_URI</span><span class="p">)</span>
+<span class="n">address1</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;Demo.SimulationActive&quot;</span><span class="p">,</span> <span class="n">NAMESPACE_URI</span><span class="p">),</span> <span class="n">SERVER_URI</span><span class="p">)</span>
 
-<span class="c"># now we can monitor any variables or events without worrying about the settings of the subscriptions!</span>
+<span class="c"># the next line will result in </span>
+<span class="c">#  - a session being created, with the defaultSessionSettings which we configured before</span>
+<span class="c">#  - the Read service being invoked, with the defaultReadSettings we configured before</span>
+<span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="p">[</span><span class="n">address0</span><span class="p">,</span> <span class="n">address1</span><span class="p">]</span> <span class="p">)</span> 
 
-<span class="c"># monitor the 4 variables</span>
-<span class="n">myCreateMonitoredDataResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">createMonitoredData</span><span class="p">([</span><span class="n">temperature1</span><span class="p">,</span> <span class="n">temperature2</span><span class="p">,</span> <span class="n">pressure0005</span><span class="p">,</span> <span class="n">motorStatus3</span><span class="p">],</span> 
-                                                           <span class="n">subscriptionConfig</span><span class="o">=</span><span class="n">cfg</span><span class="p">)</span>
+<span class="c"># when the next line is executed, then:</span>
+<span class="c">#  - the session we created before will be reused (as we&#39;re requesting a session with the</span>
+<span class="c">#    defaultSessionSettings, but such a session exists already, so it can be reused!)</span>
+<span class="c">#  - the Write service will be invoked, with the defaultWriteSettings we configured before</span>
+<span class="n">myClient</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="p">[</span><span class="n">address0</span><span class="p">,</span> <span class="n">address1</span><span class="p">]</span> <span class="p">,</span> <span class="p">[</span> <span class="n">UInt32</span><span class="p">(</span><span class="mi">60</span><span class="p">),</span> <span class="n">Boolean</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span> <span class="p">]</span> <span class="p">)</span>
 
-<span class="c"># monitor the valve object that may send events</span>
-<span class="c"># Note that the previous call already resulted in the creation of a &quot;fast&quot; subscription to</span>
-<span class="c"># our fast PLC server. So in the next call, this subscription will be re-used (so no new</span>
-<span class="c"># subscription will be created).</span>
-<span class="n">myCreateMonitoredEventsResult</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">createMonitoredEvents</span><span class="p">([</span><span class="n">safetyValve5</span><span class="p">],</span> <span class="n">subscriptionConfig</span><span class="o">=</span><span class="n">cfg</span><span class="p">)</span>
 
-<span class="c"># do some other stuff, each time using the same SubscriptionConfig object (&#39;cfg&#39;)</span>
-<span class="c"># ...</span>
+<span class="c"># ==================================================================================================</span>
+<span class="c"># 2) Overriding the defaults</span>
+<span class="c"># ==================================================================================================</span>
+
+<span class="c"># If needed, you can also configure the settings for each service call, using the **kwargs arguments</span>
+<span class="c"># of read/write/call/...</span>
+
+<span class="c"># e.g. set some special session settings for a specific read() call:</span>
+<span class="n">mySessionSettings</span> <span class="o">=</span> <span class="n">SessionSettings</span><span class="p">()</span>
+<span class="n">mySessionSettings</span><span class="o">.</span><span class="n">connectTimeoutSec</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">mySessionSettings</span><span class="o">.</span><span class="n">sessionTimeoutSec</span> <span class="o">=</span> <span class="mf">100.0</span>
+<span class="c"># simply mention &#39;sessionSettings = ...&#39; to use these settings as a **kwarg:</span>
+<span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="p">[</span><span class="n">address0</span><span class="p">,</span> <span class="n">address1</span><span class="p">],</span> <span class="n">sessionSettings</span> <span class="o">=</span> <span class="n">mySessionSettings</span> <span class="p">)</span> 
+
+<span class="c"># e.g. set some special service settings for a specific read() call:</span>
+<span class="n">myReadSettings</span> <span class="o">=</span> <span class="n">ReadSettings</span><span class="p">()</span>
+<span class="n">myReadSettings</span><span class="o">.</span><span class="n">callTimeoutSec</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">myReadSettings</span><span class="o">.</span><span class="n">maxAgeSec</span>      <span class="o">=</span> <span class="mf">1.0</span>
+<span class="c"># simply mention &#39;serviceSettings = ...&#39; to use these settings as a **kwarg:</span>
+<span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="p">[</span><span class="n">address0</span><span class="p">,</span> <span class="n">address1</span><span class="p">],</span> <span class="n">serviceSettings</span> <span class="o">=</span> <span class="n">myReadSettings</span> <span class="p">)</span> 
+<span class="c"># or combine them:</span>
+<span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="p">[</span><span class="n">address0</span><span class="p">,</span> <span class="n">address1</span><span class="p">],</span> <span class="n">serviceSettings</span> <span class="o">=</span> <span class="n">myReadSettings</span><span class="p">,</span> <span class="n">sessionSettings</span> <span class="o">=</span> <span class="n">mySessionSettings</span> <span class="p">)</span> 
+
+<span class="c"># e.g. set some special subscription settings for a specific createMonitoredData() call:</span>
+<span class="n">mySubscriptionSettings</span> <span class="o">=</span> <span class="n">SubscriptionSettings</span><span class="p">()</span>
+<span class="n">mySubscriptionSettings</span><span class="o">.</span><span class="n">publishingIntervalSec</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="n">mySubscriptionSettings</span><span class="o">.</span><span class="n">priority</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">myClient</span><span class="o">.</span><span class="n">createMonitoredData</span><span class="p">(</span> <span class="p">[</span><span class="n">address0</span><span class="p">,</span> <span class="n">address1</span><span class="p">],</span> <span class="n">subscriptionSettings</span> <span class="o">=</span> <span class="n">mySubscriptionSettings</span> <span class="p">)</span>
+
+<span class="c"># Both the SessionSettings and SubscriptionSettings have a special &#39;unique&#39; attribute, which </span>
+<span class="c"># can be True or False.</span>
+<span class="c"># By default it is False, which tells the PyUAF Client that it may re-use a session (or subscription)</span>
+<span class="c"># if there exists one with the same SessionSettings (or SubscriptionSettings).</span>
+<span class="c"># However, if you set the unique attribute to True, then the PyUAF Client will ignore any existing</span>
+<span class="c"># sessions (or subscriptions) and create a new unique one.</span>
+<span class="c"># This is useful, e.g. if your HMI (Human Machine Interface) has several tabs, then you can create</span>
+<span class="c"># a subscription for each tab (to hold all monitored items for that specific tab). Using the</span>
+<span class="c"># setPublishingMode() service, you can then temporarily enable the subscription for a visible</span>
+<span class="c"># tab, and temporarily disable the subscription for a hidden one. Like this: </span>
+<span class="c"># tab 1:  </span>
+<span class="n">tab1SubscriptionSettings</span> <span class="o">=</span> <span class="n">SubscriptionSettings</span><span class="p">()</span>
+<span class="n">tab1SubscriptionSettings</span><span class="o">.</span><span class="n">unique</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">tab1SubscriptionSettings</span><span class="o">.</span><span class="n">publishingIntervalSec</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="c"># tab 2:</span>
+<span class="n">tab2SubscriptionSettings</span> <span class="o">=</span> <span class="n">SubscriptionSettings</span><span class="p">()</span>
+<span class="n">tab2SubscriptionSettings</span><span class="o">.</span><span class="n">unique</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">tab2SubscriptionSettings</span><span class="o">.</span><span class="n">publishingIntervalSec</span> <span class="o">=</span> <span class="mf">2.0</span>
+<span class="c"># create the subscriptions and monitored items:</span>
+<span class="n">tab1Result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">createMonitoredData</span><span class="p">(</span> <span class="p">[</span><span class="n">address0</span><span class="p">]</span> <span class="p">,</span> <span class="n">subscriptionSettings</span> <span class="o">=</span> <span class="n">tab1SubscriptionSettings</span> <span class="p">)</span>
+<span class="n">tab2Result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">createMonitoredData</span><span class="p">(</span> <span class="p">[</span><span class="n">address0</span><span class="p">]</span> <span class="p">,</span> <span class="n">subscriptionSettings</span> <span class="o">=</span> <span class="n">tab2SubscriptionSettings</span> <span class="p">)</span>
+<span class="c"># disable the subscription for tab 2:</span>
+<span class="n">myClient</span><span class="o">.</span><span class="n">setPublishingMode</span><span class="p">(</span><span class="n">clientSubscriptionHandle</span> <span class="o">=</span> <span class="n">tab2Result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">clientSubscriptionHandle</span><span class="p">,</span> 
+                           <span class="n">publishingEnabled</span>        <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+
+
+<span class="c"># ==================================================================================================</span>
+<span class="c"># Keeping full control over the sessions and subscriptions</span>
+<span class="c"># ==================================================================================================</span>
+
+<span class="c"># By manually creating and configuring sessions and subscriptions, you can keep full control over </span>
+<span class="c"># them. You&#39;ll have to take care of some things yourself (e.g. re-create monitored items in case</span>
+<span class="c"># a session or subscription dies due to a restart of the server), but you can still benefit from</span>
+<span class="c"># may of PyUAF&#39;s features such as automatic browsepath translation, discovery etc.</span>
+
+<span class="c"># create a Session and remember its clientConnectionId:</span>
+<span class="n">myClientConnectionId</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">manuallyConnect</span><span class="p">(</span><span class="n">serverUri</span>       <span class="o">=</span> <span class="n">SERVER_URI</span><span class="p">,</span> 
+                                                <span class="n">sessionSettings</span> <span class="o">=</span> <span class="n">mySessionSettings</span><span class="p">)</span>
+
+<span class="c"># use this clientConnectionId to read/write/call/...:</span>
+<span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="n">addresses</span>          <span class="o">=</span> <span class="p">[</span><span class="n">address0</span><span class="p">,</span> <span class="n">address1</span><span class="p">],</span> 
+               <span class="n">clientConnectionId</span> <span class="o">=</span> <span class="n">myClientConnectionId</span> <span class="p">)</span>
+
+<span class="c"># of course if you don&#39;t want to use the defaultReadSettings of the ClientSettings (see above)</span>
+<span class="c"># then you can provide the service settings as well:</span>
+<span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="n">addresses</span>          <span class="o">=</span> <span class="p">[</span><span class="n">address0</span><span class="p">,</span> <span class="n">address1</span><span class="p">],</span> 
+               <span class="n">clientConnectionId</span> <span class="o">=</span> <span class="n">myClientConnectionId</span><span class="p">,</span> 
+               <span class="n">serviceSettings</span>    <span class="o">=</span> <span class="n">myReadSettings</span> <span class="p">)</span>
+
+<span class="c"># you can also create a subscription &quot;within&quot; the session created before:</span>
+<span class="n">myClientSubscriptionHandle</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">manuallySubscribe</span><span class="p">(</span><span class="n">clientConnectionId</span>   <span class="o">=</span> <span class="n">myClientConnectionId</span><span class="p">,</span> 
+                                                        <span class="n">subscriptionSettings</span> <span class="o">=</span> <span class="n">mySubscriptionSettings</span><span class="p">)</span>
+
+<span class="c"># now you can add monitored items to this specific subscription of this specific session:</span>
+<span class="k">def</span> <span class="nf">myCallback</span><span class="p">(</span><span class="n">notification</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">&quot;new notification received:&quot;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">notification</span><span class="p">)</span>
+    
+<span class="n">myClient</span><span class="o">.</span><span class="n">createMonitoredData</span><span class="p">(</span> <span class="n">addresses</span>                <span class="o">=</span> <span class="p">[</span><span class="n">address0</span><span class="p">],</span> 
+                              <span class="n">notificationCallbacks</span>    <span class="o">=</span> <span class="p">[</span><span class="n">myCallback</span><span class="p">],</span>
+                              <span class="n">clientConnectionId</span>       <span class="o">=</span> <span class="n">myClientConnectionId</span><span class="p">,</span>
+                              <span class="n">clientSubscriptionHandle</span> <span class="o">=</span> <span class="n">myClientSubscriptionHandle</span> <span class="p">)</span>
+
+<span class="c"># allow some time to receive a notification:</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 
 <span class="c"># don&#39;t worry about disconnecting sessions etc., these things will be done automatically</span>
 <span class="c"># when the client is destroyed.</span>
@@ -1318,28 +1314,28 @@
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
 
 
-<span class="c"># define the settings</span>
-<span class="n">settings</span> <span class="o">=</span> <span class="n">ClientSettings</span><span class="p">()</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">applicationName</span>  <span class="o">=</span> <span class="s">&quot;MyClient&quot;</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">applicationUri</span>   <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">uri</span> <span class="c"># Certificate info URI and application URI must be the same !!!</span>
-<span class="c">#settings.logToStdOutLevel = pyuaf.util.loglevels.Debug # uncomment if needed</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DISCOVERY_URL</span><span class="p">)</span>
+<span class="c"># define the clientSettings</span>
+<span class="n">clientSettings</span> <span class="o">=</span> <span class="n">ClientSettings</span><span class="p">()</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">applicationName</span>  <span class="o">=</span> <span class="s">&quot;MyClient&quot;</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">applicationUri</span>   <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">uri</span> <span class="c"># Certificate info URI and application URI must be the same !!!</span>
+<span class="c">#clientSettings.logToStdOutLevel = pyuaf.util.loglevels.Debug # uncomment if needed</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">DISCOVERY_URL</span><span class="p">)</span>
 
 <span class="c"># We configure the PKI folder structure (set the PKI_FOLDER to &#39;PKI&#39; and you get the defaults).</span>
 <span class="c"># Note that paths must ALWAYS be specified using &#39;/&#39;, also on Windows! </span>
 <span class="c"># You cannot use os.path.join or similar, since these will introduce platform-dependent separators!</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">clientCertificate</span>                 <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/client/certs/client.der&#39;</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">clientPrivateKey</span>                  <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/client/private/client.pem&#39;</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">certificateTrustListLocation</span>      <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/trusted/certs/&#39;</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">certificateRevocationListLocation</span> <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/trusted/crl/&#39;</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">issuersCertificatesLocation</span>       <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/issuers/certs/&#39;</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">issuersRevocationListLocation</span>     <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/issuers/crl/&#39;</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">clientCertificate</span>                 <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/client/certs/client.der&#39;</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">clientPrivateKey</span>                  <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/client/private/client.pem&#39;</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">certificateTrustListLocation</span>      <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/trusted/certs/&#39;</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">certificateRevocationListLocation</span> <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/trusted/crl/&#39;</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">issuersCertificatesLocation</span>       <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/issuers/certs/&#39;</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">issuersRevocationListLocation</span>     <span class="o">=</span> <span class="n">PKI_FOLDER</span> <span class="o">+</span> <span class="s">&#39;/issuers/crl/&#39;</span>
 
 <span class="c"># make sure the above directories are created</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">createSecurityLocations</span><span class="p">()</span>
+<span class="n">clientSettings</span><span class="o">.</span><span class="n">createSecurityLocations</span><span class="p">()</span>
 
 <span class="c"># create the client</span>
-<span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
+<span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">clientSettings</span><span class="p">)</span>
 
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
@@ -1348,12 +1344,12 @@
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
 
 <span class="c"># store the certificate </span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">certificate</span><span class="o">.</span><span class="n">toDERFile</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">clientCertificate</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">certificate</span><span class="o">.</span><span class="n">toDERFile</span><span class="p">(</span><span class="n">clientSettings</span><span class="o">.</span><span class="n">clientCertificate</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Could not save the client certificate!&quot;</span><span class="p">)</span>
 
 <span class="c"># store the private key:</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">keyPair</span><span class="o">.</span><span class="n">toPEMFile</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">clientPrivateKey</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">keyPair</span><span class="o">.</span><span class="n">toPEMFile</span><span class="p">(</span><span class="n">clientSettings</span><span class="o">.</span><span class="n">clientPrivateKey</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
     <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Could not save the client private key!&quot;</span><span class="p">)</span>
 
@@ -1399,12 +1395,10 @@
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;===========================================================================================&quot;</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
 
-<span class="c"># WARNING: THIS API MAY CHANGE WHEN UAF v2.0.0 WILL BE RELEASED !!!</span>
-
 <span class="c"># suppose we want Basic128Rsa15 encryption + signed communication:</span>
 <span class="n">sessionSettings</span> <span class="o">=</span> <span class="n">SessionSettings</span><span class="p">()</span>
-<span class="n">sessionSettings</span><span class="o">.</span><span class="n">securitySettingsList</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">securityPolicy</span>      <span class="o">=</span> <span class="n">securitypolicies</span><span class="o">.</span><span class="n">UA_Basic128Rsa15</span>
-<span class="n">sessionSettings</span><span class="o">.</span><span class="n">securitySettingsList</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">messageSecurityMode</span> <span class="o">=</span> <span class="n">messagesecuritymodes</span><span class="o">.</span><span class="n">Mode_Sign</span>
+<span class="n">sessionSettings</span><span class="o">.</span><span class="n">securitySettings</span><span class="o">.</span><span class="n">securityPolicy</span>      <span class="o">=</span> <span class="n">securitypolicies</span><span class="o">.</span><span class="n">UA_Basic128Rsa15</span>
+<span class="n">sessionSettings</span><span class="o">.</span><span class="n">securitySettings</span><span class="o">.</span><span class="n">messageSecurityMode</span> <span class="o">=</span> <span class="n">messagesecuritymodes</span><span class="o">.</span><span class="n">Mode_Sign</span>
 
 
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
@@ -1449,10 +1443,13 @@
 <span class="c"># define the address of a node which we would like to read:</span>
 <span class="n">someAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;Demo.SimulationSpeed&quot;</span><span class="p">,</span> <span class="n">DEMOSERVER_NS_URI</span><span class="p">),</span> <span class="n">SERVER_URI</span><span class="p">)</span>
 
-<span class="n">cfg</span> <span class="o">=</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">configs</span><span class="o">.</span><span class="n">SessionConfig</span><span class="p">()</span>
-<span class="n">cfg</span><span class="o">.</span><span class="n">defaultSessionSettings</span> <span class="o">=</span> <span class="n">sessionSettings</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="p">[</span><span class="n">someAddress</span><span class="p">],</span> <span class="n">sessionSettings</span> <span class="o">=</span> <span class="n">sessionSettings</span> <span class="p">)</span>
 
-<span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="p">[</span><span class="n">someAddress</span><span class="p">],</span> <span class="n">sessionConfig</span> <span class="o">=</span> <span class="n">cfg</span> <span class="p">)</span>
+<span class="c"># Note that instead of explicitly providing the sessionSettings **kwarg argument, we could also</span>
+<span class="c"># have done the following:</span>
+<span class="c">#  clientSettings.defaultSessionSettings = sessionSettings</span>
+<span class="c">#  myClient.setClientSettings(clientSettings)</span>
+<span class="c">#  result = myClient.read( [someAddress] )</span>
 
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;Read result:&quot;</span><span class="p">)</span>
@@ -1486,8 +1483,7 @@
 <li><a class="reference internal" href="#how-to-read-some-data">How to read some data?</a></li>
 <li><a class="reference internal" href="#how-to-browse-some-nodes">How to browse some nodes?</a></li>
 <li><a class="reference internal" href="#how-to-read-some-historical-data">How to read some historical data?</a></li>
-<li><a class="reference internal" href="#how-to-change-the-default-session-behavior">How to change the default session behavior?</a></li>
-<li><a class="reference internal" href="#how-to-change-the-default-subscription-behavior">How to change the default subscription_behavior?</a></li>
+<li><a class="reference internal" href="#how-to-configure-all-settings">How to configure all settings?</a></li>
 <li><a class="reference internal" href="#how-to-manually-connect-to-an-endpoint-without-discovery">How to manually connect to an endpoint without discovery?</a></li>
 <li><a class="reference internal" href="#how-to-connect-to-a-secured-endpoint">How to connect to a secured endpoint?</a></li>
 </ul>
@@ -1537,7 +1533,7 @@
         <li class="right" >
           <a href="index.html" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF pre-2.0.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">PyUAF 2.0.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
