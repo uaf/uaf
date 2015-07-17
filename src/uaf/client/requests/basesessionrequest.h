@@ -35,6 +35,7 @@
 #include "uaf/util/stringifiable.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/util/handles.h"
+#include "uaf/util/constants.h"
 #include "uaf/client/resolution/resolvable.h"
 #include "uaf/client/requests/basesessionrequesttarget.h"
 #include "uaf/client/settings/sessionsettings.h"
@@ -64,12 +65,12 @@ namespace uaf
          * Construct an empty session request.
          */
         BaseSessionRequest()
-        : serviceSettingsGiven(false),
+        : clientConnectionIdGiven(false),
+          serviceSettingsGiven(false),
           translateSettingsGiven(false),
-          clientConnectionId(uaf::CLIENTHANDLE_NOT_ASSIGNED),
-          clientConnectionIdGiven(false),
           sessionSettingsGiven(false),
-          requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
+          clientConnectionId(uaf::constants::CLIENTHANDLE_NOT_ASSIGNED),
+          requestHandle_(uaf::constants::REQUESTHANDLE_NOT_ASSIGNED)
         {}
 
 
@@ -80,24 +81,25 @@ namespace uaf
          */
         BaseSessionRequest(
                 std::size_t                                       noOfTargets,
-                uaf::ClientConnectionId                           clientConnectionId  = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                uaf::ClientConnectionId                           clientConnectionId  = uaf::constants::CLIENTHANDLE_NOT_ASSIGNED,
                 const _ServiceSettings*                           serviceSettings     = NULL,
-                const uaf::TranslateBrowsePathsToNodeIdsSettings* translationSettings = NULL,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings* translateSettings   = NULL,
                 const uaf::SessionSettings*                       sessionSettings     = NULL)
         : targets(noOfTargets),
-          clientConnectionId(clientConnectionId),
-          clientConnectionIdGiven(clientConnectionId != uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          clientConnectionIdGiven(clientConnectionId != uaf::constants::CLIENTHANDLE_NOT_ASSIGNED),
           serviceSettingsGiven(serviceSettings != NULL),
-          translateSettingsGiven(translationSettings != NULL),
+          translateSettingsGiven(translateSettings != NULL),
           sessionSettingsGiven(sessionSettings != NULL),
-          requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
+          requestHandle_(uaf::constants::REQUESTHANDLE_NOT_ASSIGNED)
         {
+            if (clientConnectionId != uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
+                this->clientConnectionId = clientConnectionId;
             if (serviceSettings != NULL)
-                serviceSettings = *serviceSettings;
-            if (translationSettings != NULL)
-                translationSettings = *translationSettings;
+                this->serviceSettings = *serviceSettings;
+            if (translateSettings != NULL)
+                this->translateSettings = *translateSettings;
             if (sessionSettings != NULL)
-                sessionSettings = *sessionSettings;
+                this->sessionSettings = *sessionSettings;
         }
 
 
@@ -108,25 +110,26 @@ namespace uaf
          */
         BaseSessionRequest(
                 const _Target&                                    target,
-                uaf::ClientConnectionId                           clientConnectionId  = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                uaf::ClientConnectionId                           clientConnectionId  = uaf::constants::CLIENTHANDLE_NOT_ASSIGNED,
                 const _ServiceSettings*                           serviceSettings     = NULL,
-                const uaf::TranslateBrowsePathsToNodeIdsSettings* translationSettings = NULL,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings* translateSettings   = NULL,
                 const uaf::SessionSettings*                       sessionSettings     = NULL)
-        : clientConnectionId(clientConnectionId),
-          clientConnectionIdGiven(clientConnectionId != uaf::CLIENTHANDLE_NOT_ASSIGNED),
+        : clientConnectionIdGiven(clientConnectionId != uaf::constants::CLIENTHANDLE_NOT_ASSIGNED),
           serviceSettingsGiven(serviceSettings != NULL),
-          translateSettingsGiven(translationSettings != NULL),
+          translateSettingsGiven(translateSettings != NULL),
           sessionSettingsGiven(sessionSettings != NULL),
-          requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
+          requestHandle_(uaf::constants::REQUESTHANDLE_NOT_ASSIGNED)
         {
             targets.push_back(target);
 
+            if (clientConnectionId != uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
+                this->clientConnectionId = clientConnectionId;
             if (serviceSettings != NULL)
-                serviceSettings = *serviceSettings;
-            if (translationSettings != NULL)
-                translationSettings = *translationSettings;
+                this->serviceSettings = *serviceSettings;
+            if (translateSettings != NULL)
+                this->translateSettings = *translateSettings;
             if (sessionSettings != NULL)
-                sessionSettings = *sessionSettings;
+                this->sessionSettings = *sessionSettings;
         }
 
 
@@ -137,30 +140,40 @@ namespace uaf
          */
         BaseSessionRequest(
                 const typename std::vector<_Target>&              targets,
-                uaf::ClientConnectionId                           clientConnectionId  = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                uaf::ClientConnectionId                           clientConnectionId  = uaf::constants::CLIENTHANDLE_NOT_ASSIGNED,
                 const _ServiceSettings*                           serviceSettings     = NULL,
-                const uaf::TranslateBrowsePathsToNodeIdsSettings* translationSettings = NULL,
+                const uaf::TranslateBrowsePathsToNodeIdsSettings* translateSettings   = NULL,
                 const uaf::SessionSettings*                       sessionSettings     = NULL)
         : targets(targets),
-          clientConnectionId(clientConnectionId),
-          clientConnectionIdGiven(clientConnectionId != uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          clientConnectionIdGiven(clientConnectionId != uaf::constants::CLIENTHANDLE_NOT_ASSIGNED),
           serviceSettingsGiven(serviceSettings != NULL),
-          translateSettingsGiven(translationSettings != NULL),
+          translateSettingsGiven(translateSettings != NULL),
           sessionSettingsGiven(sessionSettings != NULL),
-          requestHandle_(uaf::REQUESTHANDLE_NOT_ASSIGNED)
+          requestHandle_(uaf::constants::REQUESTHANDLE_NOT_ASSIGNED)
         {
+            if (clientConnectionId != uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
+                this->clientConnectionId = clientConnectionId;
             if (serviceSettings != NULL)
-                serviceSettings = *serviceSettings;
-            if (translationSettings != NULL)
-                translationSettings = *translationSettings;
+                this->serviceSettings = *serviceSettings;
+            if (translateSettings != NULL)
+                this->translateSettings = *translateSettings;
             if (sessionSettings != NULL)
-                sessionSettings = *sessionSettings;
+                this->sessionSettings = *sessionSettings;
         }
 
 
         /** The targets. */
         typename std::vector<_Target> targets;
 
+        bool clientConnectionIdGiven;
+
+        /** True if the serviceSettings are given, false if not. */
+        bool serviceSettingsGiven;
+
+        /** True if the translateSettings are given, false if not. */
+        bool translateSettingsGiven;
+
+        bool sessionSettingsGiven;
 
         /**
          * The ClientConnectionId, identifying the session to invoke the request.
@@ -169,18 +182,10 @@ namespace uaf
         uaf::ClientConnectionId clientConnectionId;
 
 
-        bool clientConnectionIdGiven;
-
-
         /** Service settings to invoke the request, if serviceSettingsGiven is true.
          *  If serviceSettingsGiven is false, then the default service settings will be used
          *  (as can be configured by uaf::Client::setClientSettings). */
         _ServiceSettings serviceSettings;
-
-
-        /** True if the serviceSettings are given, false if not. */
-        bool serviceSettingsGiven;
-
 
         /** If translateSettingsGiven is true, then these TranslateBrowsePathsToNodeIds settings
          *  will be used by the client to resolve NodeIds, QualifiedNames etc.  of the
@@ -189,18 +194,12 @@ namespace uaf
          *  (as can be configured by uaf::Client::setClientSettings). */
         uaf::TranslateBrowsePathsToNodeIdsSettings translateSettings;
 
-        /** True if the translateSettings are given, false if not. */
-        bool translateSettingsGiven;
 
         /** Session settings to use, to create new session(s) to invoke the request, if
          * clientConnectionIdGiven is false and sessionSettingsGiven is true.
          * If clientConnectionIdGiven and sessionSettingsGiven are both false, then the
          * default session settings will be used (as configured by uaf::Client::setClientSettings). */
         uaf::SessionSettings sessionSettings;
-
-
-        bool sessionSettingsGiven;
-
 
 
         /** Static attribute: is this an asynchronous request or not. */
@@ -229,45 +228,59 @@ namespace uaf
 
             ss << indent << " - requestHandle";
             ss << uaf::fillToPos(ss, colon);
-            if (requestHandle_ == uaf::REQUESTHANDLE_NOT_ASSIGNED)
-                ss << ": NOT_ASSIGNED\n";
+            if (requestHandle_ == uaf::constants::REQUESTHANDLE_NOT_ASSIGNED)
+                ss << ": REQUESTHANDLE_NOT_ASSIGNED\n";
             else
                 ss << ": " << requestHandle_ << "\n";
 
-            ss << indent << " - targets[]\n";
-            for (std::size_t i = 0; i < targets.size(); i++)
+            ss << indent << " - targets[]";
+            if (targets.size() > 0)
             {
-                ss << indent << "    - targets[" << i << "]";
+                ss << "\n";
+                for (std::size_t i = 0; i < targets.size(); i++)
+                {
+                    ss << indent << "    - targets[" << i << "]";
 
-                // append the target description in a nice way
-                // (both for single and multi line strings)
-                if (uaf::isMultiLine(targets[i].toString()))
-                {
-                    ss << "\n";
-                    ss << targets[i].toString(indent + "      ", colon) << "\n";
+                    // append the target description in a nice way
+                    // (both for single and multi line strings)
+                    if (uaf::isMultiLine(targets[i].toString()))
+                    {
+                        ss << "\n";
+                        ss << targets[i].toString(indent + "      ", colon) << "\n";
+                    }
+                    else
+                    {
+                        ss << uaf::fillToPos(ss, colon);
+                        ss << ": " << targets[i].toString() << "\n";
+                    }
                 }
-                else
-                {
-                    ss << uaf::fillToPos(ss, colon);
-                    ss << ": " << targets[i].toString() << "\n";
-                }
+            }
+            else
+            {
+                ss << uaf::fillToPos(ss, colon);
+                ss << ": []\n";
             }
 
             ss << indent << " - clientConnectionIdGiven";
             ss << uaf::fillToPos(ss, colon);
             ss << ": " << (clientConnectionIdGiven ? "true" : "false") << "\n";
 
-            ss << indent << " - clientConnectionId\n";
-            if (clientConnectionId == uaf::CLIENTHANDLE_NOT_ASSIGNED)
-                ss << ": NOT_ASSIGNED\n";
+            ss << indent << " - clientConnectionId";
+            if (clientConnectionIdGiven)
+            {
+                if (clientConnectionId == uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
+                    ss << uaf::fillToPos(ss, colon) << ": CLIENTHANDLE_NOT_ASSIGNED\n";
+                else
+                    ss << uaf::fillToPos(ss, colon) << ": " << clientConnectionId << "\n";
+            }
             else
-                ss << ": " << clientConnectionId << "\n";
+                ss << uaf::fillToPos(ss, colon) << ": (not given)\n";
 
             ss << indent << " - serviceSettingsGiven";
             ss << uaf::fillToPos(ss, colon);
             ss << ": " << (serviceSettingsGiven ? "true" : "false") << "\n";
 
-            ss << indent << " - serviceSettings\n";
+            ss << indent << " - serviceSettings";
             if (serviceSettingsGiven)
                 ss << "\n" << serviceSettings.toString(indent + "   ", colon) << "\n";
             else
@@ -277,7 +290,7 @@ namespace uaf
             ss << uaf::fillToPos(ss, colon);
             ss << ": " << (translateSettingsGiven ? "true" : "false") << "\n";
 
-            ss << indent << " - translateSettings\n";
+            ss << indent << " - translateSettings";
             if (translateSettingsGiven)
                 ss << "\n" << translateSettings.toString(indent + "   ", colon) << "\n";
             else

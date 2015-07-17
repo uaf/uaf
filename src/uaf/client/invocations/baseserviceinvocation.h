@@ -32,6 +32,7 @@
 #include "uaf/util/logger.h"
 #include "uaf/util/namespacearray.h"
 #include "uaf/util/serverarray.h"
+#include "uaf/util/constants.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/sessions/sessioninformation.h"
 #include "uaf/client/subscriptions/subscriptioninformation.h"
@@ -85,7 +86,7 @@ namespace uaf
         /**
          * Create a service invocation.
          */
-        BaseServiceInvocation(bool async = false, uaf::RequestHandle requestHandle = uaf::REQUESTHANDLE_NOT_ASSIGNED)
+        BaseServiceInvocation(bool async = false, uaf::RequestHandle requestHandle = uaf::constants::REQUESTHANDLE_NOT_ASSIGNED)
         : asynchronous_(async),
           transactionId_(0),
           requestHandle_(requestHandle),
@@ -163,6 +164,7 @@ namespace uaf
         {
             ranks_.push_back(rank);
             requestTargets_.push_back(requestTarget);
+            asyncResultTargets_.push_back(asyncResultTarget);
         }
 
 
@@ -439,9 +441,27 @@ namespace uaf
         {
             uaf::Status ret;
 
-            if (ranks_.size() == resultTargets_.size())
+            if (ranks_.size() == asyncResultTargets_.size())
             {
                 ret = uaf::statuscodes::Good;
+
+                for (std::size_t i = 0; i < asyncResultTargets_.size() && ret.isGood(); i++)
+                {
+                    std::size_t rank = ranks_[i];
+
+                    if (rank < result.targets.size())
+                    {
+                        result.targets[rank].clientConnectionId
+                            = sessionInformation_.clientConnectionId;
+                    }
+                    else
+                    {
+                        ret = uaf::UnexpectedError(
+                                uaf::format(
+                                      "Bug in BaseServiceInvocation: rank (%d) > targets.size() (%d)",
+                                      rank, result.targets.size()));
+                    }
+                }
             }
             else
             {
@@ -464,9 +484,30 @@ namespace uaf
         {
             uaf::Status ret;
 
-            if (ranks_.size() == resultTargets_.size())
+            if (ranks_.size() == asyncResultTargets_.size())
             {
                 ret = uaf::statuscodes::Good;
+
+                for (std::size_t i = 0; i < asyncResultTargets_.size() && ret.isGood(); i++)
+                {
+                    std::size_t rank = ranks_[i];
+
+                    if (rank < result.targets.size())
+                    {
+                        result.targets[rank] = asyncResultTargets_[i];
+                        result.targets[rank].clientConnectionId
+                            = sessionInformation_.clientConnectionId;
+//                        result.targets[rank].clientSubscriptionHandle
+//                            = subscriptionInformation_.clientSubscriptionHandle;
+                    }
+                    else
+                    {
+                        ret = uaf::UnexpectedError(
+                                uaf::format(
+                                      "Bug in BaseServiceInvocation: rank (%d) > targets.size() (%d)",
+                                      rank, result.targets.size()));
+                    }
+                }
             }
             else
             {
@@ -662,6 +703,8 @@ namespace uaf
         _ServiceSettings            serviceSettings_;
         // the results of the service invocation
         std::vector<_ResultTarget>  resultTargets_;
+        // the results of the service invocation
+        std::vector<uaf::AsyncResultTarget>  asyncResultTargets_;
         // the unique handle of the request (defined by the UAF, not by the OPC UA standard!)
         uaf::RequestHandle          requestHandle_;
         // some details about the session
