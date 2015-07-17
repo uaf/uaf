@@ -94,6 +94,7 @@ Informally:
 Formally:
 
 - The following code has changed quite radically, check out their documentation!
+
   - uaf::Status
     (pyuaf.util.Status)
   - uaf::statuscodes
@@ -145,6 +146,7 @@ Formally:
     (pyuaf.util.DataValue::status --> opcUaStatusCode
 
 - The following classes have been removed:
+
   - uaf::StatusDiagnostics
     (pyuaf.util.StatusDiagnostics)
 
