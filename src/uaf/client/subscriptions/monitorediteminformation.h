@@ -29,6 +29,7 @@
 // UAF
 #include "uaf/util/stringifiable.h"
 #include "uaf/util/handles.h"
+#include "uaf/util/constants.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/settings/monitoreditemsettings.h"
 #include "uaf/client/subscriptions/monitoreditemstates.h"

@@ -34,7 +34,7 @@ namespace uaf
     : monitoredItemState(uaf::monitoreditemstates::NotCreated),
       clientConnectionId(0),
       clientSubscriptionHandle(0),
-      clientHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED)
+      clientHandle(uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
     {}
 
 
@@ -73,7 +73,7 @@ namespace uaf
 
         ss << indent << " - clientHandle";
         ss << fillToPos(ss, colon) << ": ";
-        if (clientHandle == uaf::CLIENTHANDLE_NOT_ASSIGNED)
+        if (clientHandle == uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
             ss << "0xFFFFFFFF (CLIENTHANDLE_NOT_ASSIGNED)\n";
         else
             ss << clientHandle << "\n";
