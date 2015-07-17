@@ -78,9 +78,11 @@ class HistoryReadRawModifiedTest(unittest.TestCase):
          
         request.targets[0].address = self.address_byte
         request.targets[1].address = self.address_double
-        request.serviceConfig.serviceSettings.startTime = DateTime(time.time() - 1.0)
-        request.serviceConfig.serviceSettings.endTime   = DateTime(time.time())
-         
+        request.serviceSettingsGiven = True
+        serviceSettings = pyuaf.client.settings.HistoryReadRawModifiedSettings()
+        serviceSettings.startTime = DateTime(time.time() - 1.0)
+        serviceSettings.endTime   = DateTime(time.time())
+        request.serviceSettings = serviceSettings
         result = self.client.processRequest(request)
          
         self.assertTrue( result.overallStatus.isGood() )
@@ -94,11 +96,15 @@ class HistoryReadRawModifiedTest(unittest.TestCase):
          
         request.targets[0].address = self.address_byte
         request.targets[1].address = self.address_double
-        request.serviceConfig.serviceSettings.startTime        = DateTime(self.startTime)
-        request.serviceConfig.serviceSettings.endTime          = DateTime(time.time())
-        request.serviceConfig.serviceSettings.maxAutoReadMore  = 20
-        request.serviceConfig.serviceSettings.numValuesPerNode = 1   # ridiculously low, to force automatic calls
-         
+        
+        request.serviceSettingsGiven = True
+        serviceSettings = pyuaf.client.settings.HistoryReadRawModifiedSettings()
+        serviceSettings.startTime        = DateTime(self.startTime)
+        serviceSettings.endTime          = DateTime(time.time())
+        serviceSettings.maxAutoReadMore  = 20
+        serviceSettings.numValuesPerNode = 1   # ridiculously low, to force automatic calls
+        request.serviceSettings = serviceSettings
+        
         result = self.client.processRequest(request)
          
         self.assertTrue( result.overallStatus.isGood() )
@@ -112,10 +118,14 @@ class HistoryReadRawModifiedTest(unittest.TestCase):
         request = HistoryReadRawModifiedRequest(1) 
         
         request.targets[0].address = self.address_byte
-        request.serviceConfig.serviceSettings.startTime        = DateTime(self.startTime)
-        request.serviceConfig.serviceSettings.endTime          = DateTime(time.time())
-        request.serviceConfig.serviceSettings.maxAutoReadMore  = 0   # force no automatic calls by the UAF
-        request.serviceConfig.serviceSettings.numValuesPerNode = 1   # ridiculously low, to force automatic calls
+        serviceSettings = pyuaf.client.settings.HistoryReadRawModifiedSettings()
+        serviceSettings.startTime        = DateTime(self.startTime)
+        serviceSettings.endTime          = DateTime(time.time())
+        serviceSettings.maxAutoReadMore  = 0   # force no automatic calls by the UAF
+        serviceSettings.numValuesPerNode = 1   # ridiculously low, to force automatic calls
+        
+        request.serviceSettingsGiven = True
+        request.serviceSettings = serviceSettings
         
         noOfManualBrowseNext = 0
         allData = pyuaf.util.DataValueVector()
