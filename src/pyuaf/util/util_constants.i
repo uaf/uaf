@@ -32,6 +32,9 @@
 // import the EXPORT macro
 %import "uaf/util/util.h"
 
+// inclde the handles definition
+%include "uaf/util/handles.h"
+
 
 // include the constants
 %include "uaf/util/constants.h"
