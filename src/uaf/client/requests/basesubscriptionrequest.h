@@ -66,7 +66,7 @@ namespace uaf
          */
         BaseSubscriptionRequest()
         : uaf::BaseSessionRequest<_ServiceSettings, _Target, _Async>(),
-          clientSubscriptionHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
+          clientSubscriptionHandle(uaf::constants::CLIENTHANDLE_NOT_ASSIGNED),
           clientSubscriptionHandleGiven(false),
           subscriptionSettingsGiven(false)
         {}
@@ -79,23 +79,24 @@ namespace uaf
          */
         BaseSubscriptionRequest(
                 std::size_t                                       noOfTargets,
-                uaf::ClientConnectionId                           clientConnectionId        = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                uaf::ClientConnectionId                           clientConnectionId        = uaf::constants::CLIENTHANDLE_NOT_ASSIGNED,
                 const _ServiceSettings*                           serviceSettings           = NULL,
                 const uaf::TranslateBrowsePathsToNodeIdsSettings* translationSettings       = NULL,
                 const uaf::SessionSettings*                       sessionSettings           = NULL,
-                uaf::ClientSubscriptionHandle                     clientSubscriptionHandle  = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                uaf::ClientSubscriptionHandle                     clientSubscriptionHandle  = uaf::constants::CLIENTHANDLE_NOT_ASSIGNED,
                 const uaf::SubscriptionSettings*                  subscriptionSettings      = NULL)
         : uaf::BaseSessionRequest<_ServiceSettings, _Target, _Async>(noOfTargets,
                                                                      clientConnectionId,
                                                                      serviceSettings,
                                                                      translationSettings,
                                                                      sessionSettings),
-          clientSubscriptionHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
-          clientSubscriptionHandleGiven(clientSubscriptionHandle == uaf::REQUESTHANDLE_NOT_ASSIGNED),
+          clientSubscriptionHandleGiven(clientSubscriptionHandle != uaf::constants::CLIENTHANDLE_NOT_ASSIGNED),
           subscriptionSettingsGiven(subscriptionSettings != NULL)
         {
+            if (clientSubscriptionHandle != uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
+                this->clientSubscriptionHandle = clientSubscriptionHandle;
             if (subscriptionSettings != NULL)
-                subscriptionSettings = *subscriptionSettings;
+                this->subscriptionSettings = *subscriptionSettings;
         }
 
 
@@ -106,23 +107,24 @@ namespace uaf
          */
         BaseSubscriptionRequest(
                 const _Target&                                    target,
-                uaf::ClientConnectionId                           clientConnectionId        = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                uaf::ClientConnectionId                           clientConnectionId        = uaf::constants::CLIENTHANDLE_NOT_ASSIGNED,
                 const _ServiceSettings*                           serviceSettings           = NULL,
                 const uaf::TranslateBrowsePathsToNodeIdsSettings* translationSettings       = NULL,
                 const uaf::SessionSettings*                       sessionSettings           = NULL,
-                uaf::ClientSubscriptionHandle                     clientSubscriptionHandle  = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                uaf::ClientSubscriptionHandle                     clientSubscriptionHandle  = uaf::constants::CLIENTHANDLE_NOT_ASSIGNED,
                 const uaf::SubscriptionSettings*                  subscriptionSettings      = NULL)
         : uaf::BaseSessionRequest<_ServiceSettings, _Target, _Async>(target,
                                                                      clientConnectionId,
                                                                      serviceSettings,
                                                                      translationSettings,
                                                                      sessionSettings),
-          clientSubscriptionHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
-          clientSubscriptionHandleGiven(clientSubscriptionHandle == uaf::REQUESTHANDLE_NOT_ASSIGNED),
+          clientSubscriptionHandleGiven(clientSubscriptionHandle != uaf::constants::CLIENTHANDLE_NOT_ASSIGNED),
           subscriptionSettingsGiven(subscriptionSettings != NULL)
         {
+            if (clientSubscriptionHandle != uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
+                this->clientSubscriptionHandle = clientSubscriptionHandle;
             if (subscriptionSettings != NULL)
-                subscriptionSettings = *subscriptionSettings;
+                this->subscriptionSettings = *subscriptionSettings;
         }
 
 
@@ -133,23 +135,24 @@ namespace uaf
          */
         BaseSubscriptionRequest(
                 const typename std::vector<_Target>&              targets,
-                uaf::ClientConnectionId                           clientConnectionId        = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                uaf::ClientConnectionId                           clientConnectionId        = uaf::constants::CLIENTHANDLE_NOT_ASSIGNED,
                 const _ServiceSettings*                           serviceSettings           = NULL,
                 const uaf::TranslateBrowsePathsToNodeIdsSettings* translationSettings       = NULL,
                 const uaf::SessionSettings*                       sessionSettings           = NULL,
-                uaf::ClientSubscriptionHandle                     clientSubscriptionHandle  = uaf::REQUESTHANDLE_NOT_ASSIGNED,
+                uaf::ClientSubscriptionHandle                     clientSubscriptionHandle  = uaf::constants::CLIENTHANDLE_NOT_ASSIGNED,
                 const uaf::SubscriptionSettings*                  subscriptionSettings      = NULL)
         : uaf::BaseSessionRequest<_ServiceSettings, _Target, _Async>(targets,
                                                                      clientConnectionId,
                                                                      serviceSettings,
                                                                      translationSettings,
                                                                      sessionSettings),
-          clientSubscriptionHandle(uaf::CLIENTHANDLE_NOT_ASSIGNED),
-          clientSubscriptionHandleGiven(clientSubscriptionHandle == uaf::REQUESTHANDLE_NOT_ASSIGNED),
+          clientSubscriptionHandleGiven(clientSubscriptionHandle != uaf::constants::CLIENTHANDLE_NOT_ASSIGNED),
           subscriptionSettingsGiven(subscriptionSettings != NULL)
         {
+            if (clientSubscriptionHandle != uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
+                this->clientSubscriptionHandle = clientSubscriptionHandle;
             if (subscriptionSettings != NULL)
-                subscriptionSettings = *subscriptionSettings;
+                this->subscriptionSettings = *subscriptionSettings;
         }
 
 
@@ -184,16 +187,26 @@ namespace uaf
             ss << uaf::fillToPos(ss, colon);
             ss << ": " << (clientSubscriptionHandleGiven ? "true" : "false") << "\n";
 
-            ss << indent << " - clientSubscriptionHandle\n";
-            ss << uaf::fillToPos(ss, colon);
-            ss << ": " << clientSubscriptionHandle << "\n";
+            ss << indent << " - clientSubscriptionHandle";
+            if (clientSubscriptionHandleGiven)
+            {
+                if (clientSubscriptionHandle == uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
+                    ss << uaf::fillToPos(ss, colon) << ": CLIENTHANDLE_NOT_ASSIGNED\n";
+                else
+                    ss << uaf::fillToPos(ss, colon) << ": " << clientSubscriptionHandle << "\n";
+            }
+            else
+                ss << uaf::fillToPos(ss, colon) << ": (not given)\n";
 
             ss << indent << " - subscriptionSettingsGiven";
             ss << uaf::fillToPos(ss, colon);
             ss << ": " << (subscriptionSettingsGiven ? "true" : "false") << "\n";
 
-            ss << indent << " - subscriptionSettings\n";
-            ss << subscriptionSettings.toString(indent + "   ", colon);
+            ss << indent << " - subscriptionSettings";
+            if (subscriptionSettingsGiven)
+                ss << "\n" << subscriptionSettings.toString(indent + "   ", colon);
+            else
+                ss << uaf::fillToPos(ss, colon) << ": (not given)";
 
             return ss.str();
         }
