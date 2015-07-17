@@ -225,9 +225,16 @@ namespace uaf
     Status SubscriptionFactory::setPublishingMode(
             ClientSubscriptionHandle    clientSubscriptionHandle,
             bool                        publishingEnabled,
-            const ServiceSettings&      serviceSettings,
+            const ServiceSettings*      serviceSettingsPtr,
             bool&                       subscriptionFound)
     {
+
+        ServiceSettings serviceSettings;
+        if (serviceSettingsPtr == NULL)
+            serviceSettings = database_->clientSettings.defaultSetPublishingModeSettings;
+        else
+            serviceSettings = *serviceSettingsPtr;
+
         // lock the mutex to make sure the sessionMap_ is not being manipulated
         UaMutexLocker locker(&subscriptionMapMutex_);
 
@@ -252,10 +259,16 @@ namespace uaf
     Status SubscriptionFactory::setMonitoringModeIfNeeded(
             vector<ClientHandle>            clientHandles,
             monitoringmodes::MonitoringMode monitoringMode,
-            const ServiceSettings&          serviceSettings,
+            const ServiceSettings*          serviceSettingsPtr,
             vector<Status>&                 results)
     {
         Status ret;
+
+        ServiceSettings serviceSettings;
+        if (serviceSettingsPtr == NULL)
+            serviceSettings = database_->clientSettings.defaultSetMonitoringModeSettings;
+        else
+            serviceSettings = *serviceSettingsPtr;
 
         // lock the mutex to make sure the sessionMap_ is not being manipulated
         UaMutexLocker locker(&subscriptionMapMutex_);

@@ -321,6 +321,7 @@ namespace uaf
         info.clientConnectionId = clientConnectionId_;
         info.clientSubscriptionHandle = clientSubscriptionHandle_;
         info.subscriptionState = subscriptionState_;
+        info.subscriptionSettings = subscriptionSettings_;
         return info;
     }
 

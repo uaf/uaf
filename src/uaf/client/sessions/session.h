@@ -250,7 +250,7 @@ namespace uaf
         uaf::Status setPublishingMode(
                 uaf::ClientSubscriptionHandle  clientSubscriptionHandle,
                 bool                           publishingEnabled,
-                const uaf::ServiceSettings&   serviceSettings,
+                const uaf::ServiceSettings*   serviceSettings,
                 bool&                          subscriptionFound);
 
 
@@ -266,7 +266,7 @@ namespace uaf
         uaf::Status setMonitoringModeIfNeeded(
                std::vector<uaf::ClientHandle>          clientHandles,
                uaf::monitoringmodes::MonitoringMode    monitoringMode,
-               const uaf::ServiceSettings&            serviceSettings,
+               const uaf::ServiceSettings*            serviceSettings,
                std::vector<uaf::Status>&               results);
 
 

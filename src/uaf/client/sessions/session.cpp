@@ -430,7 +430,6 @@ namespace uaf
         vector<EndpointDescription> discoveredEndpoints;
 
         // declare a suitable SessionSecuritySettings and suitable Endpoint
-        SessionSecuritySettings suitableSettings;
         EndpointDescription     suitableEndpoint;
 
         // get the discovery URL(s) for this server URI
@@ -458,15 +457,14 @@ namespace uaf
         // if the endpoints were gotten, match the endpoints with the given SessionSecuritySettings
         if (ret.isGood())
             ret = match(
-                  sessionSettings_.securitySettingsList,
+                  sessionSettings_.securitySettings,
                   discoveredEndpoints,
-                  suitableSettings,
                   suitableEndpoint);
 
         if (ret.isGood())
         {
-            logger_->debug("The following SessionSecuritySettings were found suitable:");
-            logger_->debug(suitableSettings.toString());
+            logger_->debug("The following SessionSecuritySettings will be used:");
+            logger_->debug(sessionSettings_.securitySettings.toString());
             logger_->debug("The following endpoint was found suitable:");
             logger_->debug(suitableEndpoint.toString());
         }
@@ -486,8 +484,8 @@ namespace uaf
         // only load the client certificate if we need to sign or encrypt the data!
         if (ret.isGood())
         {
-            if (   suitableSettings.messageSecurityMode == messagesecuritymodes::Mode_Sign
-                || suitableSettings.messageSecurityMode == messagesecuritymodes::Mode_SignAndEncrypt)
+            if (   sessionSettings_.securitySettings.messageSecurityMode == messagesecuritymodes::Mode_Sign
+                || sessionSettings_.securitySettings.messageSecurityMode == messagesecuritymodes::Mode_SignAndEncrypt)
                 ret = loadClientCertificate(uaSecurity);
             else
                 logger_->debug("Security is not needed so we don't need to initialize the PKI store");
@@ -496,10 +494,10 @@ namespace uaf
         // try to set the user identity, security policy and message security mode
         if (ret.isGood())
         {
-            setUserIdentity(uaSecurity, suitableSettings);
-            uaSecurity.sSecurityPolicy     = UaString(suitableSettings.securityPolicy.c_str());
+            setUserIdentity(uaSecurity, sessionSettings_.securitySettings);
+            uaSecurity.sSecurityPolicy     = UaString(sessionSettings_.securitySettings.securityPolicy.c_str());
             uaSecurity.messageSecurityMode = messagesecuritymodes::fromUafToSdk(
-                                                        suitableSettings.messageSecurityMode);
+                    sessionSettings_.securitySettings.messageSecurityMode);
         }
 
         // if everything is OK, we can try to connect!
@@ -555,84 +553,75 @@ namespace uaf
 
         logger_->debug("Connecting the session to endpoint %s", endpointUrl.c_str());
 
-        if (sessionSettings_.securitySettingsList.size() == 0)
-            ret = NoSecuritySettingsGivenError();
 
-        // try to connect to the endpoint URL for each of SessionSecuritySettings that are
-        // given by the SessionSettings
-        typedef vector<SessionSecuritySettings>::const_iterator Iter;
-        for(Iter securitySettings = sessionSettings_.securitySettingsList.begin();
-            securitySettings != sessionSettings_.securitySettingsList.end() && ret.isNotGood();
-            ++securitySettings)
+        // try to connect to the endpoint URL
+        logger_->debug("Trying to connect with the following security settings:");
+        logger_->debug(sessionSettings_.securitySettings.toString());
+
+        Status connectionAttemptStatus = statuscodes::Good;
+
+        // declare the SDK SessionSecurityInfo
+        UaClientSdk::SessionSecurityInfo uaSecurity;
+
+        // ============
+
+        // initialize the PKI store so that we can verify the server certificate
+        if (ret.isGood())
+            ret = initializePkiStore(uaSecurity);
+
+        // load the server certificate
+        if (ret.isGood())
+            serverCertificate.toDER().toSdk(uaSecurity.serverCertificate);
+
+        // always verify the server certificate
+        if (ret.isGood())
+            ret = verifyServerCertificate(uaSecurity);
+
+        // only load the client certificate if we need to sign or encrypt the data!
+        if (ret.isGood())
         {
-            logger_->debug("Trying to connect with the following security settings:");
-            logger_->debug(securitySettings->toString());
-
-            Status connectionAttemptStatus = statuscodes::Good;
-
-            // declare the SDK SessionSecurityInfo
-            UaClientSdk::SessionSecurityInfo uaSecurity;
-
-            // ============
-
-            // initialize the PKI store so that we can verify the server certificate
-            if (ret.isGood())
-                ret = initializePkiStore(uaSecurity);
-
-            // load the server certificate
-            if (ret.isGood())
-                serverCertificate.toDER().toSdk(uaSecurity.serverCertificate);
-
-            // always verify the server certificate
-            if (ret.isGood())
-                ret = verifyServerCertificate(uaSecurity);
-
-            // only load the client certificate if we need to sign or encrypt the data!
-            if (ret.isGood())
-            {
-                if (   securitySettings->messageSecurityMode == messagesecuritymodes::Mode_Sign
-                    || securitySettings->messageSecurityMode == messagesecuritymodes::Mode_SignAndEncrypt)
-                    ret = loadClientCertificate(uaSecurity);
-                else
-                    logger_->debug("Security is not needed so we don't need to initialize the PKI store");
-            }
-
-            // try to set the user identity, security policy and message security mode
-            if (ret.isGood())
-            {
-                setUserIdentity(uaSecurity, *securitySettings);
-                uaSecurity.sSecurityPolicy     = UaString(securitySettings->securityPolicy.c_str());
-                uaSecurity.messageSecurityMode = messagesecuritymodes::fromUafToSdk(
-                        securitySettings->messageSecurityMode);
-            }
-
-            // if everything is OK, we can try to connect!
-            if (connectionAttemptStatus.isGood())
-            {
-                logger_->debug("Now connecting the session at the SDK level");
-
-                SdkStatus sdkStatus = uaSession_->connect(
-                        endpointUrl.c_str(),
-                        uaSessionConnectInfoNoInitialRetry_,
-                        uaSecurity,
-                        uaSessionCallback_);
-
-
-                if (sdkStatus.isGood())
-                {
-                    ret = uaf::statuscodes::Good;
-                    logger_->debug("The session was connected successfully (SDK status: %s)",
-                                   sdkStatus.toString().c_str());
-                }
-                else
-                {
-                    ret = ConnectionFailedError(endpointUrl, sdkStatus);
-                    logger_->error(ret.toString());
-                }
-            }
-
-            ret = connectionAttemptStatus;
+            if (   sessionSettings_.securitySettings.messageSecurityMode == messagesecuritymodes::Mode_Sign
+                || sessionSettings_.securitySettings.messageSecurityMode == messagesecuritymodes::Mode_SignAndEncrypt)
+                ret = loadClientCertificate(uaSecurity);
+            else
+                logger_->debug("Security is not needed so we don't need to initialize the PKI store");
         }
+
+        // try to set the user identity, security policy and message security mode
+        if (ret.isGood())
+        {
+            setUserIdentity(uaSecurity, sessionSettings_.securitySettings);
+            uaSecurity.sSecurityPolicy     = UaString(sessionSettings_.securitySettings.securityPolicy.c_str());
+            uaSecurity.messageSecurityMode = messagesecuritymodes::fromUafToSdk(
+                    sessionSettings_.securitySettings.messageSecurityMode);
+        }
+
+        // if everything is OK, we can try to connect!
+        if (connectionAttemptStatus.isGood())
+        {
+            logger_->debug("Now connecting the session at the SDK level");
+
+            SdkStatus sdkStatus = uaSession_->connect(
+                    endpointUrl.c_str(),
+                    uaSessionConnectInfoNoInitialRetry_,
+                    uaSecurity,
+                    uaSessionCallback_);
+
+
+            if (sdkStatus.isGood())
+            {
+                ret = uaf::statuscodes::Good;
+                logger_->debug("The session was connected successfully (SDK status: %s)",
+                               sdkStatus.toString().c_str());
+            }
+            else
+            {
+                ret = ConnectionFailedError(endpointUrl, sdkStatus);
+                logger_->error(ret.toString());
+            }
+        }
+
+        ret = connectionAttemptStatus;
 
         // log the result
         if (ret.isGood())
@@ -694,6 +683,7 @@ namespace uaf
                 clientConnectionId_,
                 sessionState_,
                 serverUri_,
+                sessionSettings_,
                 lastConnectionAttemptStep_,
                 lastConnectionAttemptStatus_);
         logger_->debug("Fetching session information:");
@@ -955,7 +945,7 @@ namespace uaf
     Status Session::setPublishingMode(
             ClientSubscriptionHandle    clientSubscriptionHandle,
             bool                        publishingEnabled,
-            const ServiceSettings&      serviceSettings,
+            const ServiceSettings*      serviceSettings,
             bool&                       subscriptionFound)
     {
         return subscriptionFactory_->setPublishingMode(clientSubscriptionHandle,
@@ -970,7 +960,7 @@ namespace uaf
     Status Session::setMonitoringModeIfNeeded(
             vector<ClientHandle>            clientHandles,
             monitoringmodes::MonitoringMode monitoringMode,
-            const ServiceSettings&          serviceSettings,
+            const ServiceSettings*          serviceSettings,
             vector<Status>&                 results)
     {
         return subscriptionFactory_->setMonitoringModeIfNeeded(clientHandles,

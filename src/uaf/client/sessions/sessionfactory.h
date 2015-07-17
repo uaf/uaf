@@ -101,7 +101,7 @@ namespace uaf
          */
         uaf::Status manuallyConnect(
                 const std::string&              serverUri,
-                const uaf::SessionSettings&    settings,
+                const uaf::SessionSettings*    settings,
                 uaf::ClientConnectionId&        clientConnectionId);
 
 
@@ -120,8 +120,8 @@ namespace uaf
          */
         uaf::Status manuallyConnectToEndpoint(
                 const std::string&              endpointUrl,
-                const uaf::SessionSettings&    settings,
-                const uaf::PkiCertificate&      serverCertificate,
+                const uaf::SessionSettings*    settings,
+                const uaf::PkiCertificate*      serverCertificate,
                 uaf::ClientConnectionId&        clientConnectionId);
 
 
@@ -183,7 +183,7 @@ namespace uaf
          */
         uaf::Status manuallySubscribe(
                 uaf::ClientConnectionId             clientConnectionId,
-                const uaf::SubscriptionSettings&   settings,
+                const uaf::SubscriptionSettings*   settings,
                 uaf::ClientSubscriptionHandle&      clientSubscriptionHandle);
 
 
@@ -245,7 +245,7 @@ namespace uaf
         uaf::Status setPublishingMode(
                  uaf::ClientSubscriptionHandle  clientSubscriptionHandle,
                  bool                           publishingEnabled,
-                 const uaf::ServiceSettings&   serviceSettings);
+                 const uaf::ServiceSettings*    serviceSettings);
 
         /**
         * Set the monitoring mode for the specified monitored items.
@@ -259,7 +259,7 @@ namespace uaf
         uaf::Status setMonitoringMode(
                std::vector<uaf::ClientHandle>          clientHandles,
                uaf::monitoringmodes::MonitoringMode    monitoringMode,
-               const uaf::ServiceSettings&            serviceSettings,
+               const uaf::ServiceSettings*            serviceSettings,
                std::vector<uaf::Status>&               results);
 
 
@@ -280,6 +280,7 @@ namespace uaf
         {
             if (request.sessionSettingsGiven)
             {
+                logger_->debug("Using the SessionSettings from the request");
                 return request.sessionSettings;
             }
             else
@@ -288,9 +289,15 @@ namespace uaf
                 it = database_->clientSettings.specificSessionSettings.find(serverUri);
 
                 if (it != database_->clientSettings.specificSessionSettings.end())
+                {
+                    logger_->debug("Using clientSettings::specificSessionSettings[%s]", serverUri.c_str());
                     return it->second;
+                }
                 else
+                {
+                    logger_->debug("Using clientSettings::defaultSessionSettings");
                     return database_->clientSettings.defaultSessionSettings;
+                }
             }
         }
 
@@ -350,6 +357,8 @@ namespace uaf
                 {
                     if (request.clientConnectionIdGiven)
                     {
+                        logger_->debug("ClientConnectionId %d is given", request.clientConnectionId);
+
                         // we'll only have 0 or 1 invocations in this case
                         if (invocations.size() == 0)
                         {
@@ -364,24 +373,43 @@ namespace uaf
                             }
                         }
 
+                        // check if we're indeed having just one invocation scheduled
+                        if (ret.isGood() && invocations.size() != 1)
+                            ret = UnexpectedError("Bug in SessionFactory::invokeRequest: #invocations != 1");
+
                         if (ret.isGood())
-                            invocations[0]->addTarget(i, request.targets[i], result.targets[i]);
+                        {
+                            for (typename InvocationMap::const_iterator it = invocations.begin(); it != invocations.end(); ++it)
+                            {
+                                logger_->debug("Adding target %d", i);
+                                it->second->addTarget(i, request.targets[i], result.targets[i]);
+                            }
+                        }
+
                     }
                     else
                     {
+                        logger_->debug("Trying to get the serverUri from the target");
+
                         // we first need to determine the server which hosts the target
                         std::string serverUri;
                         if (getServerUriFromTarget(request.targets[i], serverUri).isGood())
                         {
+                            logger_->debug("ServerUri was found: %s", serverUri.c_str());
+
                             Session* session = NULL;
                             uaf::SessionSettings sessionSettings = getSessionSettings<_Service>(request, serverUri);
 
+                            logger_->debug("Trying to find a scheduled session");
+
                             // check if the session we need is already scheduled for an invocation
-                            for (typename InvocationMap::const_iterator it; it != invocations.end(); ++it)
+                            for (typename InvocationMap::const_iterator it = invocations.begin();
+                                    it != invocations.end(); ++it)
                             {
                                 if (   it->first->serverUri() == serverUri
                                     && it->first->sessionSettings() == sessionSettings)
                                 {
+                                    logger_->debug("Found a scheduled session");
                                     session = it->first;
                                 }
                             }
@@ -389,10 +417,13 @@ namespace uaf
                             // if the session is not already scheduled, we acquire it first
                             if (session == NULL)
                             {
+                                logger_->debug("No session was scheduled, so we acquire one");
+
                                 ret = acquireSession(serverUri, sessionSettings, session);
 
                                 if (ret.isGood())
                                 {
+                                    logger_->debug("Scheduling an invocation for this session");
                                     invocations[session] = new Invocation;
                                     invocations[session]->setAsynchronous(async);
                                     invocations[session]->setRequestHandle(requestHandle);
@@ -401,7 +432,10 @@ namespace uaf
                             }
 
                             if (ret.isGood())
+                            {
+                                logger_->debug("Adding the target");
                                 invocations[session]->addTarget(i, request.targets[i], result.targets[i]);
+                            }
                         }
                         else
                         {
@@ -459,7 +493,7 @@ namespace uaf
                     ret = session->sessionInformation().lastConnectionAttemptStatus;
 
                 // copy all data to the result
-                if (!async && ret.isGood())
+                if (ret.isGood())
                 {
                     logger_->debug("Copying the invocation data to the result");
                     ret = invocation->copyToResult(result);

@@ -100,11 +100,27 @@ namespace uaf
     // =============================================================================================
     Status SessionFactory::manuallyConnect(
             const string&           serverUri,
-            const SessionSettings&  settings,
+            const SessionSettings*  settingsPtr,
             ClientConnectionId&     clientConnectionId)
     {
         Status ret;
         Session* session = 0;
+        SessionSettings settings;
+
+        if (settingsPtr == NULL)
+        {
+            std::map<std::string, uaf::SessionSettings>::const_iterator it;
+            it = database_->clientSettings.specificSessionSettings.find(serverUri);
+
+            if (it != database_->clientSettings.specificSessionSettings.end())
+                settings = it->second;
+            else
+                settings = database_->clientSettings.defaultSessionSettings;
+        }
+        else
+        {
+            settings = *settingsPtr;
+        }
 
         ret = acquireSession(serverUri, settings, session);
 
@@ -140,13 +156,23 @@ namespace uaf
     // =============================================================================================
     Status SessionFactory::manuallyConnectToEndpoint(
             const string&           endpointUrl,
-            const SessionSettings&  settings,
-            const PkiCertificate&   serverCertificate,
+            const SessionSettings*  settingsPtr,
+            const PkiCertificate*   serverCertificatePtr,
             ClientConnectionId&     clientConnectionId)
     {
         Status ret;
 
         logger_->debug("Manually connecting to endpoint %s", endpointUrl.c_str());
+
+        SessionSettings settings;
+        if (settingsPtr == NULL)
+        {
+            settings = database_->clientSettings.defaultSessionSettings;
+        }
+        else
+        {
+            settings = *settingsPtr;
+        }
 
         // lock the mutex to make sure the sessionMap_ is not being manipulated
         UaMutexLocker locker(&sessionMapMutex_);
@@ -169,7 +195,10 @@ namespace uaf
         sessionMap_[clientConnectionId] = session;
 
         // connect to the session to the specific endpoint
-        ret = session->connectToSpecificEndpoint(endpointUrl, serverCertificate);
+        if (serverCertificatePtr != NULL)
+            ret = session->connectToSpecificEndpoint(endpointUrl, *serverCertificatePtr);
+        else
+            ret = session->connectToSpecificEndpoint(endpointUrl, PkiCertificate()); // NULL certificate
 
         // add some diagnostics
         if (ret.isGood())
@@ -343,10 +372,16 @@ namespace uaf
     //==============================================================================================
     Status SessionFactory::manuallySubscribe(
             ClientConnectionId          clientConnectionId,
-            const SubscriptionSettings& settings,
+            const SubscriptionSettings* settingsPtr,
             ClientSubscriptionHandle&   clientSubscriptionHandle)
     {
         Status ret;
+
+        SubscriptionSettings settings;
+        if (settingsPtr == NULL)
+            settings = database_->clientSettings.defaultSubscriptionSettings;
+        else
+            settings = *settingsPtr;
 
         Session* session = 0;
         ret = acquireExistingSession(clientConnectionId, session);
@@ -427,7 +462,7 @@ namespace uaf
     Status SessionFactory::setPublishingMode(
             ClientSubscriptionHandle    clientSubscriptionHandle,
             bool                        publishingEnabled,
-            const ServiceSettings&      serviceSettings)
+            const ServiceSettings*      serviceSettings)
     {
         Status ret;
 
@@ -458,7 +493,7 @@ namespace uaf
     Status SessionFactory::setMonitoringMode(
             vector<ClientHandle>            clientHandles,
             monitoringmodes::MonitoringMode monitoringMode,
-            const ServiceSettings&          serviceSettings,
+            const ServiceSettings*          serviceSettings,
             vector<Status>&                 results)
     {
         Status ret;

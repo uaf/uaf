@@ -34,6 +34,7 @@
 #include "uaf/util/status.h"
 #include "uaf/util/logger.h"
 #include "uaf/util/handles.h"
+#include "uaf/util/constants.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/clientinterface.h"
 #include "uaf/client/settings/subscriptionsettings.h"
@@ -210,7 +211,7 @@ namespace uaf
                 uaf::ClientHandle clientHandle = invocation.resultTargets()[i].clientHandle;
 
                 // create a new unique client handle if necessary
-                if (clientHandle == uaf::CLIENTHANDLE_NOT_ASSIGNED)
+                if (clientHandle == uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
                     clientHandle = database_->createUniqueClientHandle();
 
                 // store the monitored item
@@ -273,7 +274,7 @@ namespace uaf
                 uaf::ClientHandle clientHandle = invocation.resultTargets()[i].clientHandle;
 
                 // create a new unique client handle if necessary
-                if (clientHandle == uaf::CLIENTHANDLE_NOT_ASSIGNED)
+                if (clientHandle == uaf::constants::CLIENTHANDLE_NOT_ASSIGNED)
                     clientHandle = database_->createUniqueClientHandle();
 
                 // store the monitored item
