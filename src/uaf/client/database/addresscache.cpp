@@ -143,11 +143,12 @@ namespace uaf
     // =============================================================================================
     bool AddressCache::find(const Address& address, uaf::ExpandedNodeId& expandedNodeId)
     {
-        logger_->debug("Trying to find the address in the cache");
+        logger_->debug("Trying to find the following address in the cache (size=%d)", cache_.size());
+        logger_->debug(address.toString());
 
         UaMutexLocker locker(&mutex_); // unlocks when locker goes out of scope
 
-        Cache::iterator iter = cache_.find(address);
+        Cache::const_iterator iter = cache_.find(address);
 
         bool found = (iter != cache_.end());
 

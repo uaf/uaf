@@ -3,6 +3,20 @@ UAF changelog
 ====================================================================================================
 
 
+Version 2.0.1 @ 2015/08/21
+----------------------------------------------------------------------------------------------------
+
+- bugfix (https://github.com/uaf/uaf/issues/85): 
+  Relative addresses are now fully stored in memory (instead of using pointers to refer to the
+  'startingAddress' of a relative address). This consumes a bit more memory, but it avoids segfaults
+  when the Python garbage collector deletes a 'startingAddress' which is still in use by another
+  relative address.
+  
+- bugfix (https://github.com/uaf/uaf/issues/86):
+  Fixed a severe memory leak in the C++ SessionFactory class (credits to jorrita @ GitHub).
+  
+
+
 Version 2.0.0 @ 2015/07/17
 ----------------------------------------------------------------------------------------------------
 

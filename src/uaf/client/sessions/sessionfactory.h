@@ -38,7 +38,6 @@
 #include "uaf/client/requests/requests.h"
 #include "uaf/client/results/results.h"
 #include "uaf/client/settings/allsettings.h"
-#include "uaf/client/invocations/invocationfactory.h"
 
 
 namespace uaf
@@ -501,8 +500,15 @@ namespace uaf
 
                 releaseSession(session);
 
+                // don't forget to delete the invocation!!!
+                // (see bugfix https://github.com/uaf/uaf/issues/86)
+                delete invocation;
+
                 invocationIndex++;
             }
+
+            // clear the InvocationMap
+            invocations.clear();
 
             // remove the handle if one was stored, and if there was an unexpected error
             if (ret.isNotGood() && handleStored)
