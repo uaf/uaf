@@ -45,9 +45,9 @@ namespace uaf
     // =============================================================================================
     Address::Address(Address* startingAddress, const vector<RelativePathElement>& relativePath)
     : isRelativePath_(true),
-      isStartingAddressOwned_(false),
+      isStartingAddressOwned_(true),
       relativePath_(new vector<RelativePathElement>(relativePath)),
-      startingAddress_(startingAddress),
+      startingAddress_(new Address(*startingAddress)),
       expandedNodeId_(0)
     {}
 
@@ -56,8 +56,8 @@ namespace uaf
     // =============================================================================================
     Address::Address(Address* startingAddress, const RelativePathElement& relativePath)
     : isRelativePath_(true),
-      isStartingAddressOwned_(false),
-      startingAddress_(startingAddress),
+      isStartingAddressOwned_(true),
+      startingAddress_(new Address(*startingAddress)),
       expandedNodeId_(0)
     {
         relativePath_ = new vector<RelativePathElement>();
