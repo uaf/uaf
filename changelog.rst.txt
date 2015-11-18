@@ -3,6 +3,13 @@ UAF changelog
 ====================================================================================================
 
 
+Version 2.0.2 @ 2015/11/18
+----------------------------------------------------------------------------------------------------
+
+- The UAF is now compatible with the SDK v1.5.0. Thanks to jorrita and gitcyc for providing patches.
+  No API changes, but the PkiCertificate constructor has become deprecated (see SDK docs).
+
+
 Version 2.0.1 @ 2015/08/21
 ----------------------------------------------------------------------------------------------------
 

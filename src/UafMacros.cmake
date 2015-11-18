@@ -180,6 +180,18 @@ MACRO(handleUnifiedAutomationSdk)
         message(FATAL_ERROR "The Unified Automation SDK must be at least version 1.4.0")
     endif (EXISTS "${UASDK_INCLUDE_DIR}/uabase/uafile.h")
     
+    # figure out if the SDK version is 1.5 or 1.4 by checking if include/uastack/opcua_p_config.h exists
+    if (EXISTS "${UASDK_INCLUDE_DIR}/uastack/opcua_p_config.h")
+        set(UASDK_VERSION 15)
+        message(STATUS "OK, the SDK has version 1.5 or higher")
+    else (EXISTS "${UASDK_INCLUDE_DIR}/uastack/opcua_p_config.h")
+        set(UASDK_VERSION 14)
+        message(STATUS "The SDK has version 1.4")
+    endif (EXISTS "${UASDK_INCLUDE_DIR}/uastack/opcua_p_config.h")
+    
+    # add the version number as a definition
+    add_definitions( -DUASDK_VERSION=${UASDK_VERSION} )
+    
     # store the path to the UaServerCPP executable, since it is required for the unit tests
     if (WIN32)
         set(DEMOSERVER_COMMAND "${UASDK_DIR}/bin/uaservercpp.exe")
