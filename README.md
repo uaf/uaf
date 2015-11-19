@@ -234,7 +234,6 @@ Status?
 
 Currently only the OPC UA client-side is implemented. Many services are fully implemented
 (see list below) but some less-frequently used services are still pending. 
-Support for security is already partly implemented but not functional yet.  
 
  - Supported services on the Client side:
    - read (synchronous + asynchronous)
