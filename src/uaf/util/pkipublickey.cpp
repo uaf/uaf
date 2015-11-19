@@ -74,12 +74,23 @@ namespace uaf
     // =============================================================================================
     PkiPublicKey::KeyType PkiPublicKey::keyType() const
     {
+#if UASDK_VERSION > 14
+        if (uaPkiPublicKey_.keyType() == UaPkiKeyType_DSA)
+            return DSA;
+        else if (uaPkiPublicKey_.keyType() == UaPkiKeyType_RSA)
+            return RSA;
+        else
+            return Unknown;
+#elif UASDK_VERSION > 13
         if (uaPkiPublicKey_.keyType() == UaPkiPublicKey::DSA)
             return DSA;
         else if (uaPkiPublicKey_.keyType() == UaPkiPublicKey::RSA)
             return RSA;
         else
             return Unknown;
+#else
+#error UASDK_VERSION is not defined!
+#endif
     }
 
 
