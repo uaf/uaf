@@ -169,7 +169,6 @@ UAF_WRAP_CLASS("uaf/util/pkicertificate.h"         , uaf , PkiCertificate       
 UAF_WRAP_CLASS("uaf/util/sdkstatus.h"              , uaf , SdkStatus               , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 
 
-
 // also include the Variant typemap(s)
 #if defined(SWIGPYTHON)
     %include "pyuaf/util/util_variant_python.i"
@@ -220,3 +219,5 @@ class VectorIterator(object):
 // now include the classes that make use of the Variant typemap
 UAF_WRAP_CLASS("uaf/util/datavalue.h"              , uaf , DataValue               , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, DataValueVector)
 
+
+UAF_WRAP_CLASS("uaf/util/variant.h"          , uaf , Variant           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)

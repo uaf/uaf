@@ -45,6 +45,7 @@
 #include "uaf/util/qualifiedname.h"
 #include "uaf/util/extensionobject.h"
 
+#include "uaf/util/primitives.h"
 
 
 
@@ -167,6 +168,37 @@ namespace uaf
         DECLARE_VARIANT_METHODS(DateTime        , uaf::DateTime       , const uaf::DateTime&)
         DECLARE_VARIANT_METHODS(String          , std::string         , const std::string&)
         DECLARE_VARIANT_METHODS(ExtensionObject , uaf::ExtensionObject, const uaf::ExtensionObject&)
+
+        #define DECLARE_VARIANT_PRIMITIVE_ARRAY_METHODS(UAFTYPE, UATYPE)                            \
+        void set##UAFTYPE##Array(const std::vector<uaf::primitives::UAFTYPE>& arr)                  \
+        {                                                                                           \
+            clear();                                                                                \
+            Ua##UATYPE##Array uaArr;                                                                \
+            uaArr.create(arr.size());                                                               \
+            for (std::size_t i = 0; i < arr.size(); i++) { uaArr[i] = arr[i].value; }               \
+            uaVariant_.set##UATYPE##Array(uaArr);                                                   \
+        }
+
+        DECLARE_VARIANT_PRIMITIVE_ARRAY_METHODS(Boolean, Bool)
+        DECLARE_VARIANT_PRIMITIVE_ARRAY_METHODS(SByte  , SByte)
+//        DECLARE_VARIANT_PRIMITIVE_ARRAY_METHODS(Byte   , Byte)
+        DECLARE_VARIANT_PRIMITIVE_ARRAY_METHODS(Int16  , Int16)
+        DECLARE_VARIANT_PRIMITIVE_ARRAY_METHODS(UInt16 , UInt16)
+        DECLARE_VARIANT_PRIMITIVE_ARRAY_METHODS(Int32  , Int32)
+        DECLARE_VARIANT_PRIMITIVE_ARRAY_METHODS(UInt32 , UInt32)
+        DECLARE_VARIANT_PRIMITIVE_ARRAY_METHODS(Int64  , Int64)
+        DECLARE_VARIANT_PRIMITIVE_ARRAY_METHODS(UInt64 , UInt64)
+        DECLARE_VARIANT_PRIMITIVE_ARRAY_METHODS(Float  , Float)
+        DECLARE_VARIANT_PRIMITIVE_ARRAY_METHODS(Double , Double)
+//        void setUInt64Array(const std::vector<uaf::primitives::UInt64>& arr)
+//        {
+//
+//            clear();                                                                                   \
+//            UaUInt64Array uaArr;
+//            uaArr.create(arr.size());
+//            for (std::size_t i = 0; i < arr.size(); i++) { uaArr[i] = arr[i].value; }
+//            uaVariant_.setUInt64Array(uaArr);
+//        }
 
         /**
          * Set the variant to a bytestring.

@@ -85,7 +85,10 @@ namespace uaf
                 else                                                                        \
                     return object1.value < object2.value;                                   \
             }                                                                               \
-        };
+        };                                                                                  \
+                                                                                            \
+        typedef std::vector<uaf::primitives::NAME> NAME##Array;
+
 
         // define some primitives:
         DEFINE_PRIMITIVE(Boolean    , false             , bool              , value)
@@ -101,6 +104,8 @@ namespace uaf
         DEFINE_PRIMITIVE(Double     , 0.0               , double            , value)
         DEFINE_PRIMITIVE(String     , ""                , std::string       , value)
         DEFINE_PRIMITIVE(ByteString , uaf::ByteString() , uaf::ByteString   , value.toString())
+
+
 
     }
 

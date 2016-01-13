@@ -26,6 +26,10 @@
 
 #define UAFTYPE_CONDITION(IN, TYPE)   SWIG_ConvertPtr(IN, (void **) &ptr, SWIGTYPE_p_uaf__##TYPE,             SWIG_POINTER_EXCEPTION) == 0
 #define PRIMITIVE_CONDITION(IN, TYPE) SWIG_ConvertPtr(IN, (void **) &ptr, SWIGTYPE_p_uaf__primitives__##TYPE, SWIG_POINTER_EXCEPTION) == 0
+#define VECTOR_PRIMTIVE_CONDITION(IN, TYPE) SWIG_ConvertPtr(IN, (void **) &ptr, $descriptor(std::vector<uaf::primitives::##TYPE>), SWIG_POINTER_EXCEPTION) == 0
+
+#define VECTOR_PRIMTIVE_CONDITION(IN, TYPE) SWIG_ConvertPtr(IN, (void **) &ptr, $descriptor(std::vector<uaf::primitives::##TYPE>), SWIG_POINTER_EXCEPTION) == 0
+
 
 #define CONVERTIBLE_CONDITION(IN)               \
     PRIMITIVE_CONDITION(IN, Boolean)            \
@@ -98,6 +102,15 @@
                     SWIG_POINTER_EXCEPTION);                \
     OBJECT.set##TYPE(primitive->value);
 
+
+
+#define CONVERT_VECTOR_PRIMITIVE(IN, TYPE, OBJECT)                 \
+    std::vector<uaf::primitives::TYPE>* array;                       \
+    SWIG_ConvertPtr(IN,                                     \
+                    (void **) &array,                   \
+                    $descriptor(std::vector<uaf::primitives::TYPE> *),   \
+                    SWIG_POINTER_EXCEPTION);                \
+    OBJECT.set##TYPE##Array(*array);
 
 
 #define PYUAF_CONVERT_UAFTYPE(IN, TYPE, OBJECT)             \
@@ -268,6 +281,7 @@
 
 
 #define PYOBJECT_TO_UAF_VARIANT(PYOBJECT, VARIANT)                                                 \
+            void *ptr;                                                                             \
     if (PYOBJECT == Py_None)                                                                       \
     {    VARIANT.clear();    }                                                                     \
     else if (PyBool_Check(PYOBJECT))                                                               \
@@ -290,12 +304,21 @@
         Py_ssize_t length = PyByteArray_Size(PYOBJECT);                                            \
         VARIANT.setByteString((uint8_t*)data, length);                                             \
     }                                                                                              \
+    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, Boolean)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, Boolean, VARIANT) } \
+    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, SByte)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, SByte, VARIANT) } \
+    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, Int16)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, Int16, VARIANT) } \
+    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, UInt16)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, UInt16, VARIANT) } \
+    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, Int32)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, Int32, VARIANT) } \
+    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, UInt32)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, UInt32, VARIANT) } \
+    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, Int64)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, Int64, VARIANT) } \
+    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, UInt64)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, UInt64, VARIANT) } \
+    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, Float)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, Float, VARIANT) } \
+    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, Double)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, Double, VARIANT) } \
     else if (PySequence_Check(PYOBJECT))                                                           \
     {                                                                                              \
         Py_ssize_t length = PySequence_Size(PYOBJECT);                                             \
         if (length > 0)                                                                            \
         {                                                                                          \
-            void *ptr;                                                                             \
             PyObject* firstPyObject = PySequence_GetItem(PYOBJECT, 0);                             \
             PYUAF_CONVERT_ARRAYOBJECT(firstPyObject, PYOBJECT, length, VARIANT)                    \
         }                                                                                          \
