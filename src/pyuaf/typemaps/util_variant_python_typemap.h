@@ -26,10 +26,6 @@
 
 #define UAFTYPE_CONDITION(IN, TYPE)   SWIG_ConvertPtr(IN, (void **) &ptr, SWIGTYPE_p_uaf__##TYPE,             SWIG_POINTER_EXCEPTION) == 0
 #define PRIMITIVE_CONDITION(IN, TYPE) SWIG_ConvertPtr(IN, (void **) &ptr, SWIGTYPE_p_uaf__primitives__##TYPE, SWIG_POINTER_EXCEPTION) == 0
-#define VECTOR_PRIMTIVE_CONDITION(IN, TYPE) SWIG_ConvertPtr(IN, (void **) &ptr, $descriptor(std::vector<uaf::primitives::##TYPE>), SWIG_POINTER_EXCEPTION) == 0
-
-#define VECTOR_PRIMTIVE_CONDITION(IN, TYPE) SWIG_ConvertPtr(IN, (void **) &ptr, $descriptor(std::vector<uaf::primitives::##TYPE>), SWIG_POINTER_EXCEPTION) == 0
-
 
 #define CONVERTIBLE_CONDITION(IN)               \
     PRIMITIVE_CONDITION(IN, Boolean)            \
@@ -104,13 +100,21 @@
 
 
 
-#define CONVERT_VECTOR_PRIMITIVE(IN, TYPE, OBJECT)                 \
-    std::vector<uaf::primitives::TYPE>* array;                       \
+#define CONVERT_VECTOR_PRIMITIVE(IN, CTYPE, UAFTYPE, OBJECT)                 \
+    std::vector<uaf::primitives::UAFTYPE>* vec;                       \
     SWIG_ConvertPtr(IN,                                     \
-                    (void **) &array,                   \
-                    $descriptor(std::vector<uaf::primitives::TYPE> *),   \
+                    (void **) &vec,                   \
+                    $descriptor(std::vector<uaf::primitives::UAFTYPE> *),   \
                     SWIG_POINTER_EXCEPTION);                \
-    OBJECT.set##TYPE##Array(*array);
+    OBJECT.set##UAFTYPE##Array(*vec);
+
+#define CONVERT_VECTOR_PRIMITIVE2(IN, CTYPE, UAFTYPE, OBJECT)                 \
+    uaf::primitives::UAFTYPE##Array* vec;                       \
+    SWIG_ConvertPtr(IN,                                     \
+                    (void **) &vec,                   \
+                    $descriptor(uaf::primitives::UAFTYPE##Array *),   \
+                    SWIG_POINTER_EXCEPTION);                \
+    OBJECT.set##UAFTYPE##Array(*vec);
 
 
 #define PYUAF_CONVERT_UAFTYPE(IN, TYPE, OBJECT)             \
@@ -304,16 +308,6 @@
         Py_ssize_t length = PyByteArray_Size(PYOBJECT);                                            \
         VARIANT.setByteString((uint8_t*)data, length);                                             \
     }                                                                                              \
-    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, Boolean)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, Boolean, VARIANT) } \
-    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, SByte)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, SByte, VARIANT) } \
-    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, Int16)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, Int16, VARIANT) } \
-    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, UInt16)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, UInt16, VARIANT) } \
-    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, Int32)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, Int32, VARIANT) } \
-    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, UInt32)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, UInt32, VARIANT) } \
-    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, Int64)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, Int64, VARIANT) } \
-    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, UInt64)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, UInt64, VARIANT) } \
-    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, Float)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, Float, VARIANT) } \
-    else if (VECTOR_PRIMTIVE_CONDITION(PYOBJECT, Double)) { CONVERT_VECTOR_PRIMITIVE(PYOBJECT, Double, VARIANT) } \
     else if (PySequence_Check(PYOBJECT))                                                           \
     {                                                                                              \
         Py_ssize_t length = PySequence_Size(PYOBJECT);                                             \
@@ -322,10 +316,28 @@
             PyObject* firstPyObject = PySequence_GetItem(PYOBJECT, 0);                             \
             PYUAF_CONVERT_ARRAYOBJECT(firstPyObject, PYOBJECT, length, VARIANT)                    \
         }                                                                                          \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "BooleanArray")) { VARIANT.setBooleanArray(std::vector<bool>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "SByteArray")) { VARIANT.setSByteArray(std::vector<int8_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "UInt16Array")) { VARIANT.setUInt16Array(std::vector<uint16_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "Int16Array")) { VARIANT.setInt16Array(std::vector<int16_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "UInt32Array")) { VARIANT.setUInt32Array(std::vector<uint32_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "Int32Array")) { VARIANT.setInt32Array(std::vector<int32_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "UInt64Array")) { VARIANT.setUInt64Array(std::vector<uint64_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "Int64Array")) { VARIANT.setInt64Array(std::vector<int64_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "FloatArray")) { VARIANT.setFloatArray(std::vector<float_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "DoubleArray")) { VARIANT.setDoubleArray(std::vector<double_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "StringArray")) { VARIANT.setStringArray(std::vector<std::string>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "ByteStringArray")) { VARIANT.setByteStringArray(std::vector<uaf::ByteString>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "DateTimeVector")) { VARIANT.setDateTimeArray(std::vector<uaf::DateTime>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "LocalizedTextVector")) { VARIANT.setLocalizedTextArray(std::vector<uaf::LocalizedText>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "NodeIdVector")) { VARIANT.setNodeIdArray(std::vector<uaf::NodeId>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "GuidVector")) { VARIANT.setGuidArray(std::vector<uaf::Guid>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "ExpandedNodeIdVector")) { VARIANT.setExpandedNodeIdArray(std::vector<uaf::ExpandedNodeId>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "QualifiedNameVector")) { VARIANT.setQualifiedNameArray(std::vector<uaf::QualifiedName>()); } \
         else                                                                                       \
-        {                                                                                          \
-            PyErr_SetString(PyExc_TypeError, "Could not determine the array type, empty array!");  \
-            return NULL;                                                                           \
+        {  \
+            PyErr_SetString(PyExc_TypeError, "Could not determine the array type, empty array! $type $*ltype $ltype");  \
+            return NULL;                                                                            \
         }                                                                                          \
     }                                                                                              \
     else                                                                                           \
