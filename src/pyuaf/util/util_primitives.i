@@ -72,7 +72,7 @@
 // setup the primitives
 SETUP_PRIMITIVE(Boolean    , bool)
 SETUP_PRIMITIVE(SByte      , int)
-//  SETUP_PRIMITIVE(Byte       , int)
+SETUP_PRIMITIVE(Byte       , int)
 SETUP_PRIMITIVE(Int16      , int)
 SETUP_PRIMITIVE(UInt16     , int)
 SETUP_PRIMITIVE(Int32      , int)
@@ -81,8 +81,8 @@ SETUP_PRIMITIVE(Int64      , long)
 SETUP_PRIMITIVE(UInt64     , long)
 SETUP_PRIMITIVE(Float      , float)
 SETUP_PRIMITIVE(Double     , float)
-//SETUP_PRIMITIVE(String     , str)
-//SETUP_PRIMITIVE(ByteString , bytearray)
+SETUP_PRIMITIVE(String     , str)
+SETUP_PRIMITIVE(ByteString , bytearray)
 
 
 %include "uaf/util/primitives.h"
