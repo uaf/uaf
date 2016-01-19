@@ -274,9 +274,9 @@ namespace uaf
                 uaStatusCodes);
 
         if (sdkStatus.isGood())
-            return statuscodes::Good;
+            ret = statuscodes::Good;
         else
-            return SetMonitoringModeInvocationError(sdkStatus);
+            ret = SetMonitoringModeInvocationError(sdkStatus);
 
 
         logger_->debug("Result of OPC UA service call: %s", ret.toString().c_str());
