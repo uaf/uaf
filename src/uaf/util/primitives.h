@@ -85,9 +85,7 @@ namespace uaf
                 else                                                                        \
                     return object1.value < object2.value;                                   \
             }                                                                               \
-        };                                                                                  \
-                                                                                            \
-        typedef std::vector<uaf::primitives::NAME> NAME##Array;
+        };
 
 
         // define some primitives:
