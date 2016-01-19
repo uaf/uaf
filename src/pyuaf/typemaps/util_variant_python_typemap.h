@@ -316,24 +316,24 @@
             PyObject* firstPyObject = PySequence_GetItem(PYOBJECT, 0);                             \
             PYUAF_CONVERT_ARRAYOBJECT(firstPyObject, PYOBJECT, length, VARIANT)                    \
         }                                                                                          \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "BooleanArray")) { VARIANT.setBooleanArray(std::vector<bool>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "SByteArray")) { VARIANT.setSByteArray(std::vector<int8_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "UInt16Array")) { VARIANT.setUInt16Array(std::vector<uint16_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "Int16Array")) { VARIANT.setInt16Array(std::vector<int16_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "UInt32Array")) { VARIANT.setUInt32Array(std::vector<uint32_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "Int32Array")) { VARIANT.setInt32Array(std::vector<int32_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "UInt64Array")) { VARIANT.setUInt64Array(std::vector<uint64_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "Int64Array")) { VARIANT.setInt64Array(std::vector<int64_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "FloatArray")) { VARIANT.setFloatArray(std::vector<float_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "DoubleArray")) { VARIANT.setDoubleArray(std::vector<double_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "StringArray")) { VARIANT.setStringArray(std::vector<std::string>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "ByteStringArray")) { VARIANT.setByteStringArray(std::vector<uaf::ByteString>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "DateTimeVector")) { VARIANT.setDateTimeArray(std::vector<uaf::DateTime>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "LocalizedTextVector")) { VARIANT.setLocalizedTextArray(std::vector<uaf::LocalizedText>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "NodeIdVector")) { VARIANT.setNodeIdArray(std::vector<uaf::NodeId>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "GuidVector")) { VARIANT.setGuidArray(std::vector<uaf::Guid>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "ExpandedNodeIdVector")) { VARIANT.setExpandedNodeIdArray(std::vector<uaf::ExpandedNodeId>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "QualifiedNameVector")) { VARIANT.setQualifiedNameArray(std::vector<uaf::QualifiedName>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "BooleanArray") == 0) { VARIANT.setBooleanArray(std::vector<bool>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "SByteArray") == 0) { VARIANT.setSByteArray(std::vector<int8_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "UInt16Array") == 0) { VARIANT.setUInt16Array(std::vector<uint16_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "Int16Array") == 0) { VARIANT.setInt16Array(std::vector<int16_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "UInt32Array") == 0) { VARIANT.setUInt32Array(std::vector<uint32_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "Int32Array") == 0) { VARIANT.setInt32Array(std::vector<int32_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "UInt64Array") == 0) { VARIANT.setUInt64Array(std::vector<uint64_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "Int64Array") == 0) { VARIANT.setInt64Array(std::vector<int64_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "FloatArray") == 0) { VARIANT.setFloatArray(std::vector<float_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "DoubleArray") == 0) { VARIANT.setDoubleArray(std::vector<double_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "StringArray") == 0) { VARIANT.setStringArray(std::vector<std::string>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "ByteStringArray") == 0) { VARIANT.setByteStringArray(std::vector<uaf::ByteString>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "DateTimeVector") == 0) { VARIANT.setDateTimeArray(std::vector<uaf::DateTime>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "LocalizedTextVector") == 0) { VARIANT.setLocalizedTextArray(std::vector<uaf::LocalizedText>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "NodeIdVector") == 0) { VARIANT.setNodeIdArray(std::vector<uaf::NodeId>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "GuidVector") == 0) { VARIANT.setGuidArray(std::vector<uaf::Guid>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "ExpandedNodeIdVector") == 0) { VARIANT.setExpandedNodeIdArray(std::vector<uaf::ExpandedNodeId>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "QualifiedNameVector") == 0) { VARIANT.setQualifiedNameArray(std::vector<uaf::QualifiedName>()); } \
         else                                                                                       \
         {  \
             PyErr_SetString(PyExc_TypeError, "Could not determine the array type, empty array! $type $*ltype $ltype");  \
