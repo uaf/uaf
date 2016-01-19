@@ -132,18 +132,17 @@
 }
 
 // now include all classes in a generic way
-UAF_WRAP_CLASS("uaf/util/localizedtext.h"          , uaf , LocalizedText           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/localizedtext.h"          , uaf , LocalizedText           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, LocalizedTextVector)
 UAF_WRAP_CLASS("uaf/util/applicationdescription.h" , uaf , ApplicationDescription  , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ApplicationDescriptionVector)
-UAF_WRAP_CLASS("uaf/util/guid.h"                   , uaf , Guid                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/guid.h"                   , uaf , Guid                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, GuidVector)
 UAF_WRAP_CLASS("uaf/util/datetime.h"               , uaf , DateTime                , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, DateTimeVector)
 UAF_WRAP_CLASS("uaf/util/mask.h"                   , uaf , Mask                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/modificationinfo.h"       , uaf , ModificationInfo        , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ModificationInfoVector)
 UAF_WRAP_CLASS("uaf/util/status.h"                 , uaf , Status                  , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, StatusVector)
 UAF_WRAP_CLASS("uaf/util/logmessage.h"             , uaf , LogMessage              , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/logginginterface.h"       , uaf , LoggingInterface        , COPY_NO,  TOSTRING_NO,  COMP_NO,  pyuaf.util, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/util/guid.h"                   , uaf , Guid                    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/nodeididentifier.h"       , uaf , NodeIdIdentifier        , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/util/nodeid.h"                 , uaf , NodeId                  , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/nodeid.h"                 , uaf , NodeId                  , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, NodeIdVector)
 UAF_WRAP_CLASS("uaf/util/expandednodeid.h"         , uaf , ExpandedNodeId          , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ExpandedNodeIdVector)
 UAF_WRAP_CLASS("uaf/util/qualifiedname.h"          , uaf , QualifiedName           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, QualifiedNameVector)
 UAF_WRAP_CLASS("uaf/util/relativepathelement.h"    , uaf , RelativePathElement     , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, RelativePath)
@@ -159,7 +158,7 @@ UAF_WRAP_CLASS("uaf/util/viewdescription.h"        , uaf , ViewDescription      
 UAF_WRAP_CLASS("uaf/util/referencedescription.h"   , uaf , ReferenceDescription    , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ReferenceDescriptionVector)
 UAF_WRAP_CLASS("uaf/util/pkiidentity.h"            , uaf , PkiIdentity             , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/enumvalue.h"              , uaf , EnumValue               , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
-UAF_WRAP_CLASS("uaf/util/extensionobject.h"        , uaf , ExtensionObject         , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/extensionobject.h"        , uaf , ExtensionObject         , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, ExtensionObjectVector)
 UAF_WRAP_CLASS("uaf/util/modelchangestructuredatatype.h", uaf , ModelChangeStructureDataType, COPY_YES, TOSTRING_YES, COMP_YES,  pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/pkipublickey.h"           , uaf , PkiPublicKey            , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/pkiprivatekey.h"          , uaf , PkiPrivateKey           , COPY_YES, TOSTRING_NO,  COMP_NO,  pyuaf.util, VECTOR_NO)
@@ -218,6 +217,3 @@ class VectorIterator(object):
 
 // now include the classes that make use of the Variant typemap
 UAF_WRAP_CLASS("uaf/util/datavalue.h"              , uaf , DataValue               , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, DataValueVector)
-
-
-UAF_WRAP_CLASS("uaf/util/variant.h"          , uaf , Variant           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
