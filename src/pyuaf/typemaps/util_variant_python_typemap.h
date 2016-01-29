@@ -324,8 +324,8 @@
         else if (strcmp(PYOBJECT->ob_type->tp_name, "Int32Array") == 0) { VARIANT.setInt32Array(std::vector<int32_t>()); } \
         else if (strcmp(PYOBJECT->ob_type->tp_name, "UInt64Array") == 0) { VARIANT.setUInt64Array(std::vector<uint64_t>()); } \
         else if (strcmp(PYOBJECT->ob_type->tp_name, "Int64Array") == 0) { VARIANT.setInt64Array(std::vector<int64_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "FloatArray") == 0) { VARIANT.setFloatArray(std::vector<float_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "DoubleArray") == 0) { VARIANT.setDoubleArray(std::vector<double_t>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "FloatArray") == 0) { VARIANT.setFloatArray(std::vector<float>()); } \
+        else if (strcmp(PYOBJECT->ob_type->tp_name, "DoubleArray") == 0) { VARIANT.setDoubleArray(std::vector<double>()); } \
         else if (strcmp(PYOBJECT->ob_type->tp_name, "StringArray") == 0) { VARIANT.setStringArray(std::vector<std::string>()); } \
         else if (strcmp(PYOBJECT->ob_type->tp_name, "ByteStringArray") == 0) { VARIANT.setByteStringArray(std::vector<uaf::ByteString>()); } \
         else if (strcmp(PYOBJECT->ob_type->tp_name, "DateTimeVector") == 0) { VARIANT.setDateTimeArray(std::vector<uaf::DateTime>()); } \
