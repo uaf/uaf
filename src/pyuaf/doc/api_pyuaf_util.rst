@@ -27,6 +27,7 @@
         opcuatypes
         primitives
         securitypolicies
+        serverstates
         statuscodes
         timestampstoreturn
         usertokentypes
