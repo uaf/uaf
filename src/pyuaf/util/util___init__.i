@@ -60,6 +60,8 @@
 #include "uaf/util/pkirsakeypair.h"
 #include "uaf/util/pkicertificate.h"
 #include "uaf/util/sdkstatus.h"
+#include "uaf/util/structurefield.h"
+#include "uaf/util/structuredefinition.h"
 %}
 
 
@@ -109,6 +111,7 @@
 %import "pyuaf/util/util_browsedirections.i" 
 %import "pyuaf/util/util_nodeclasses.i" 
 %import "pyuaf/util/util_timestampstoreturn.i" 
+%import "pyuaf/util/util_serverstates.i" 
 
 
 // before including any classes in a generic way, specify the "special treatments" of certain classes:
@@ -166,6 +169,8 @@ UAF_WRAP_CLASS("uaf/util/pkicertificateinfo.h"     , uaf , PkiCertificateInfo   
 UAF_WRAP_CLASS("uaf/util/pkirsakeypair.h"          , uaf , PkiRsaKeyPair           , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/pkicertificate.h"         , uaf , PkiCertificate          , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/sdkstatus.h"              , uaf , SdkStatus               , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/structurefield.h"         , uaf , StructureField          , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/structuredefinition.h"    , uaf , StructureDefinition     , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 
 
 // also include the Variant typemap(s)
