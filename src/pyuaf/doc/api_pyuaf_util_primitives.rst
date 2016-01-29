@@ -458,5 +458,132 @@
             A built-in Python ``bytearray`` value.
 
 
+*class* BooleanArray
+----------------------------------------------------------------------------------------------------
+
+An array of :class:`~pyuaf.util.primitives.Boolean` instances.
+
+You can also specify an array of Booleans with a python ``list`` of :class:`~pyuaf.util.primitives.Boolean` instances.
+But, in case you want an empty list, then you need to use :class:`~pyuaf.util.primitives.BooleanArray` because
+an empty python ``list`` does not contain any type information of the contents of the list.
+
+
+*class* SByteArray
+----------------------------------------------------------------------------------------------------
+
+An array of :class:`~pyuaf.util.primitives.SByte` instances.
+
+You can also specify an array of SBytes with a python ``list`` of :class:`~pyuaf.util.primitives.SByte` instances.
+But, in case you want an empty list, then you need to use :class:`~pyuaf.util.primitives.SByteArray` because
+an empty python ``list`` does not contain any type information of the contents of the list.
+
+
+*class* ByteArray
+----------------------------------------------------------------------------------------------------
+
+An array of :class:`~pyuaf.util.primitives.Byte` instances.
+
+You can also specify an array of Bytes with a python ``list`` of :class:`~pyuaf.util.primitives.Byte` instances.
+But, in case you want an empty list, then you need to use :class:`~pyuaf.util.primitives.ByteArray` because
+an empty python ``list`` does not contain any type information of the contents of the list.
+
+
+*class* Int16Array
+----------------------------------------------------------------------------------------------------
+
+An array of :class:`~pyuaf.util.primitives.Int16` instances.
+
+You can also specify an array of Int16s with a python ``list`` of :class:`~pyuaf.util.primitives.Int16` instances.
+But, in case you want an empty list, then you need to use :class:`~pyuaf.util.primitives.Int16Array` because
+an empty python ``list`` does not contain any type information of the contents of the list.
+
+*class* UInt16Array
+----------------------------------------------------------------------------------------------------
+
+An array of :class:`~pyuaf.util.primitives.UInt16` instances.
+
+You can also specify an array of UInt16s with a python ``list`` of :class:`~pyuaf.util.primitives.UInt16` instances.
+But, in case you want an empty list, then you need to use :class:`~pyuaf.util.primitives.UInt16Array` because
+an empty python ``list`` does not contain any type information of the contents of the list.
+
+
+*class* Int32Array
+----------------------------------------------------------------------------------------------------
+
+An array of :class:`~pyuaf.util.primitives.Int32` instances.
+
+You can also specify an array of Int32s with a python ``list`` of :class:`~pyuaf.util.primitives.Int32` instances.
+But, in case you want an empty list, then you need to use :class:`~pyuaf.util.primitives.Int32Array` because
+an empty python ``list`` does not contain any type information of the contents of the list.
+
+*class* UInt32Array
+----------------------------------------------------------------------------------------------------
+
+An array of :class:`~pyuaf.util.primitives.UInt32` instances.
+
+You can also specify an array of UInt32s with a python ``list`` of :class:`~pyuaf.util.primitives.UInt32` instances.
+But, in case you want an empty list, then you need to use :class:`~pyuaf.util.primitives.UInt32Array` because
+an empty python ``list`` does not contain any type information of the contents of the list.
+
+
+*class* Int64Array
+----------------------------------------------------------------------------------------------------
+
+An array of :class:`~pyuaf.util.primitives.Int16` instances.
+
+You can also specify an array of Int64s with a python ``list`` of :class:`~pyuaf.util.primitives.Int64` instances.
+But, in case you want an empty list, then you need to use :class:`~pyuaf.util.primitives.Int64Array` because
+an empty python ``list`` does not contain any type information of the contents of the list.
+
+*class* UInt64Array
+----------------------------------------------------------------------------------------------------
+
+An array of :class:`~pyuaf.util.primitives.UInt64` instances.
+
+You can also specify an array of UInt64s with a python ``list`` of :class:`~pyuaf.util.primitives.UInt64` instances.
+But, in case you want an empty list, then you need to use :class:`~pyuaf.util.primitives.UInt64Array` because
+an empty python ``list`` does not contain any type information of the contents of the list.
+
+
+*class* FloatArray
+----------------------------------------------------------------------------------------------------
+
+An array of :class:`~pyuaf.util.primitives.Float` instances.
+
+You can also specify an array of Floats with a python ``list`` of :class:`~pyuaf.util.primitives.Float` instances.
+But, in case you want an empty list, then you need to use :class:`~pyuaf.util.primitives.FloatArray` because
+an empty python ``list`` does not contain any type information of the contents of the list.
+
+
+
+*class* DoubleArray
+----------------------------------------------------------------------------------------------------
+
+An array of :class:`~pyuaf.util.primitives.Double` instances.
+
+You can also specify an array of Doubles with a python ``list`` of :class:`~pyuaf.util.primitives.Double` instances.
+But, in case you want an empty list, then you need to use :class:`~pyuaf.util.primitives.DoubleArray` because
+an empty python ``list`` does not contain any type information of the contents of the list.
+
+
+
+*class* StringArray
+----------------------------------------------------------------------------------------------------
+
+An array of :class:`~pyuaf.util.primitives.String` instances.
+
+You can also specify an array of Strings with a python ``list`` of :class:`~pyuaf.util.primitives.String` instances.
+But, in case you want an empty list, then you need to use :class:`~pyuaf.util.primitives.StringArray` because
+an empty python ``list`` does not contain any type information of the contents of the list.
+
+*class* ByteStringArray
+----------------------------------------------------------------------------------------------------
+
+An array of :class:`~pyuaf.util.primitives.ByteString` instances.
+
+You can also specify an array of ByteStrings with a python ``list`` of :class:`~pyuaf.util.primitives.ByteString` instances.
+But, in case you want an empty list, then you need to use :class:`~pyuaf.util.primitives.ByteStringArray` because
+an empty python ``list`` does not contain any type information of the contents of the list.
+
 
 

@@ -34,6 +34,7 @@ set(  PYUAF_UTIL_TARGETS
       opcuastatuscodes
       securitypolicies
       messagesecuritymodes
+      serverstates
       timestampstoreturn
       monitoringmodes
       browsedirections

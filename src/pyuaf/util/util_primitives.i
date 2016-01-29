@@ -64,6 +64,8 @@
     %}
     HANDLE_COMPARISON_OPERATORS(uaf::primitives, TYPE)
     HANDLE_TOSTRING(uaf::primitives, TYPE, pyuaf.util.primitives)
+    
+    %template(TYPE##Array) std::vector<uaf::primitives::TYPE>;
 %enddef
 
 

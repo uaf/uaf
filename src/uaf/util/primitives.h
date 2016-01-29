@@ -87,6 +87,7 @@ namespace uaf
             }                                                                               \
         };
 
+
         // define some primitives:
         DEFINE_PRIMITIVE(Boolean    , false             , bool              , value)
         DEFINE_PRIMITIVE(SByte      , 0                 , int8_t            , value)
@@ -101,6 +102,8 @@ namespace uaf
         DEFINE_PRIMITIVE(Double     , 0.0               , double            , value)
         DEFINE_PRIMITIVE(String     , ""                , std::string       , value)
         DEFINE_PRIMITIVE(ByteString , uaf::ByteString() , uaf::ByteString   , value.toString())
+
+
 
     }
 

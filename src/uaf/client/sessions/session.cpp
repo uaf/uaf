@@ -682,6 +682,7 @@ namespace uaf
         uaf::SessionInformation info(
                 clientConnectionId_,
                 sessionState_,
+                uaf::serverstates::fromSdkToUaf(uaSession_->serverState()),
                 serverUri_,
                 sessionSettings_,
                 lastConnectionAttemptStep_,

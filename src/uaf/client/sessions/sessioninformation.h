@@ -31,6 +31,7 @@
 #include "uaf/util/handles.h"
 #include "uaf/util/datetime.h"
 #include "uaf/util/status.h"
+#include "uaf/util/serverstates.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/sessions/sessionstates.h"
 #include "uaf/client/sessions/connectionsteps.h"
@@ -69,6 +70,7 @@ namespace uaf
         SessionInformation(
                 uaf::ClientConnectionId                         clientConnectionId,
                 uaf::sessionstates::SessionState                sessionState,
+                uaf::serverstates::ServerState                  serverState,
                 const std::string&                              serverUri,
                 const uaf::SessionSettings&                     sessionSettings,
                 const uaf::connectionsteps::ConnectionStep&     lastConnectionAttemptStep,
@@ -77,6 +79,9 @@ namespace uaf
 
         /** The state of the session. */
         uaf::sessionstates::SessionState   sessionState;
+
+        /** The state of the server. */
+        uaf::serverstates::ServerState      serverState;
 
         /** The id of the session. */
         uaf::ClientConnectionId             clientConnectionId;

@@ -244,6 +244,7 @@ namespace uaf
         ranks.resize(maxSize);
         ids.resize(maxSize);
         MonitoredItemsMap::const_iterator it;
+        vector<ClientHandle> handlesToChange;
         for (uint32_t i = 0; i < maxSize; i++)
         {
             it = monitoredItemsMap_.find(clientHandles[i]);
@@ -254,44 +255,58 @@ namespace uaf
 
                 ranks[realSize-1] = i;
                 ids[realSize-1]   = it->second.monitoredItemId;
+
+                handlesToChange.push_back(clientHandles[i]);
             }
         }
 
-        // don't forget to resize the ranks and ids now to their real size:
-        ranks.resize(realSize);
-        ids.resize(realSize);
-
-        // now invoke the service
-        OpcUa_MonitoringMode opcUaMonitoringMode = fromUafToSdk(monitoringMode);
-        UaClientSdk::ServiceSettings uaServiceSettings;
-        serviceSettings.toSdk(uaServiceSettings);
-        UaStatusCodeArray uaStatusCodes;
-
-        SdkStatus sdkStatus = uaSubscription_->setMonitoringMode(
-                uaServiceSettings,
-                opcUaMonitoringMode,
-                ids,
-                uaStatusCodes);
-
-        if (sdkStatus.isGood())
-            return statuscodes::Good;
-        else
-            return SetMonitoringModeInvocationError(sdkStatus);
-
-
-        logger_->debug("Result of OPC UA service call: %s", ret.toString().c_str());
-
-        if (ret.isGood())
+        if (realSize > 0)
         {
-            for (uint32_t i = 0; i < realSize; i++)
+            logger_->debug("The following client handles were found: [%s]",
+                           uaf::uint32ArrayToString(handlesToChange).c_str());
+
+            // don't forget to resize the ranks and ids now to their real size:
+            ranks.resize(realSize);
+            ids.resize(realSize);
+
+            // now invoke the service
+            OpcUa_MonitoringMode opcUaMonitoringMode = fromUafToSdk(monitoringMode);
+            UaClientSdk::ServiceSettings uaServiceSettings;
+            serviceSettings.toSdk(uaServiceSettings);
+            UaStatusCodeArray uaStatusCodes;
+
+            SdkStatus sdkStatus = uaSubscription_->setMonitoringMode(
+                    uaServiceSettings,
+                    opcUaMonitoringMode,
+                    ids,
+                    uaStatusCodes);
+
+            if (sdkStatus.isGood())
+                ret = statuscodes::Good;
+            else
+                ret = SetMonitoringModeInvocationError(sdkStatus);
+
+
+            logger_->debug("Result of OPC UA service call: %s", ret.toString().c_str());
+
+            if (ret.isGood())
             {
-                if (OpcUa_IsGood(uaStatusCodes[i]))
-                    results[ranks[i]] = statuscodes::Good;
-                else
-                    results[ranks[i]] = ServerCouldNotSetMonitoringModeError(
-                            clientHandles[ranks[i]],
-                            SdkStatus(uaStatusCodes[i]));
+                for (uint32_t i = 0; i < realSize; i++)
+                {
+                    if (OpcUa_IsGood(uaStatusCodes[i]))
+                        results[ranks[i]] = statuscodes::Good;
+                    else
+                        results[ranks[i]] = ServerCouldNotSetMonitoringModeError(
+                                clientHandles[ranks[i]],
+                                SdkStatus(uaStatusCodes[i]));
+                }
             }
+
+        }
+        else
+        {
+            logger_->debug("The client handles do not belong to this subscription, skipping");
+            // ret remains Uncertain
         }
 
         return ret;

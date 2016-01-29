@@ -58,7 +58,7 @@ namespace uaf
         ss << ": " << watchdogTimeoutSec << "\n";
         ss << indent << " - watchdogTimeSec";
         ss << fillToPos(ss, colon);
-        ss << ": " << watchdogTimeSec;
+        ss << ": " << watchdogTimeSec << "\n";
         ss << indent << " - unique";
         ss << fillToPos(ss, colon);
         ss << ": " << (unique ? "true" : "false") << "\n";

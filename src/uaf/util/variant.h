@@ -45,6 +45,7 @@
 #include "uaf/util/qualifiedname.h"
 #include "uaf/util/extensionobject.h"
 
+#include "uaf/util/primitives.h"
 
 
 
@@ -167,6 +168,7 @@ namespace uaf
         DECLARE_VARIANT_METHODS(DateTime        , uaf::DateTime       , const uaf::DateTime&)
         DECLARE_VARIANT_METHODS(String          , std::string         , const std::string&)
         DECLARE_VARIANT_METHODS(ExtensionObject , uaf::ExtensionObject, const uaf::ExtensionObject&)
+
 
         /**
          * Set the variant to a bytestring.
