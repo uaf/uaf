@@ -3,6 +3,26 @@ UAF changelog
 ====================================================================================================
 
 
+Version 2.0.3 @ 2016/01/29
+----------------------------------------------------------------------------------------------------
+
+- bugfix/new feature (https://github.com/uaf/uaf/issues/95):
+  PyUAF did not handle empty arrays well (or not at all, depending on the datatype).
+  Empty arrays are now supported.
+
+- bugfix (https://github.com/uaf/uaf/issues/96):
+  The status codes of uaf::Client::setMonitoringMode were not updated correctly.
+  
+- bugfix (https://github.com/uaf/uaf/issues/97):
+  uaf::Client::setMonitoringMode of monitored items on multiple subscriptions only succeeded
+  for the first subscription, not for subsequent subscriptions.
+
+- new feature (https://github.com/uaf/uaf/issues/98):
+  Server states are now supported. They are defined by pyuaf.util.serverstates. The server state is
+  an attribute of pyuaf.client.SessionInformation, which can be retrieved by the method
+  pyuaf.client.Client.sessionInformation().
+
+
 Version 2.0.2 @ 2015/11/18
 ----------------------------------------------------------------------------------------------------
 
