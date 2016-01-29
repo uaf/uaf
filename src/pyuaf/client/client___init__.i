@@ -105,6 +105,7 @@ import threading
 %import(module="pyuaf.util.opcuaidentifiers")       "pyuaf/util/util_opcuaidentifiers.i"
 %import(module="pyuaf.util.opcuaidentifiers")       "pyuaf/util/util_opcuastatuscodes.i"
 %import(module="pyuaf.util.securitypolicies")       "pyuaf/util/util_securitypolicies.i"
+%import(module="pyuaf.util.serverstates")           "pyuaf/util/util_serverstates.i"
 %import(module="pyuaf.util.messagesecuritymodes")   "pyuaf/util/util_messagesecuritymodes.i"
 %import(module="pyuaf.util.monitoringmodes")        "pyuaf/util/util_monitoringmodes.i"
 %import(module="pyuaf.util.browsedirections")       "pyuaf/util/util_browsedirections.i"
