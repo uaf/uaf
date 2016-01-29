@@ -26,6 +26,7 @@ class SessionInformationTest(unittest.TestCase):
         self.info1.clientConnectionId = 123
         self.info1.serverUri = "test"
         self.info1.sessionState = pyuaf.client.sessionstates.NewSessionCreated
+        self.info1.serverState = pyuaf.util.serverstates.Running
         self.info1.lastConnectionAttemptStatus.setGood();
         self.info1.lastConnectionAttemptTime = self.now
     
@@ -37,6 +38,9 @@ class SessionInformationTest(unittest.TestCase):
     
     def test_client_SessionInformation_sessionState(self):
         self.assertEqual( self.info1.sessionState , pyuaf.client.sessionstates.NewSessionCreated )
+    
+    def test_client_SessionInformation_serverState(self):
+        self.assertEqual( self.info1.serverState , pyuaf.client.serverstates.Running )
     
     def test_client_SessionInformation_lastConnectionAttemptTime(self):
         self.assertEqual( self.info1.lastConnectionAttemptTime , self.now )

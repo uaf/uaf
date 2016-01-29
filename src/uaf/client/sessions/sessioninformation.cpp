@@ -32,6 +32,7 @@ namespace uaf
     // =============================================================================================
     SessionInformation::SessionInformation()
     : sessionState(uaf::sessionstates::Disconnected),
+      serverState(uaf::serverstates::Unknown),
       clientConnectionId(0),
       lastConnectionAttemptStep(uaf::connectionsteps::ActivateSession)
     {}
@@ -42,11 +43,13 @@ namespace uaf
     SessionInformation::SessionInformation(
             ClientConnectionId                      clientConnectionId,
             uaf::sessionstates::SessionState        sessionState,
+            uaf::serverstates::ServerState          serverState,
             const string&                           serverUri,
             const SessionSettings&                  sessionSettings,
             const connectionsteps::ConnectionStep&  lastConnectionAttemptStep,
             const Status&                           lastConnectionAttemptStatus)
       : sessionState(sessionState),
+        serverState(serverState),
         clientConnectionId(clientConnectionId),
         serverUri(serverUri),
         sessionSettings(sessionSettings),
@@ -68,6 +71,10 @@ namespace uaf
         ss << indent << " - sessionState";
         ss << fillToPos(ss, colon);
         ss << ": " << sessionState << " (" << uaf::sessionstates::toString(sessionState) << ")\n";
+
+        ss << indent << " - serverState";
+        ss << fillToPos(ss, colon);
+        ss << ": " << serverState << " (" << uaf::serverstates::toString(serverState) << ")\n";
 
         ss << indent << " - serverUri";
         ss << fillToPos(ss, colon);
@@ -95,6 +102,7 @@ namespace uaf
         return    object1.clientConnectionId == object2.clientConnectionId
                && object1.serverUri == object2.serverUri
                && object1.sessionState == object2.sessionState
+               && object1.serverState == object2.serverState
                && object1.lastConnectionAttemptStep == object2.lastConnectionAttemptStep
                && object1.lastConnectionAttemptStatus == object2.lastConnectionAttemptStatus;
     }
@@ -120,7 +128,9 @@ namespace uaf
             return object1.lastConnectionAttemptStep < object2.lastConnectionAttemptStep;
         else if (object1.lastConnectionAttemptStatus != object2.lastConnectionAttemptStatus)
             return object1.lastConnectionAttemptStatus < object2.lastConnectionAttemptStatus;
-        else
+        else if (object1.sessionState != object2.sessionState)
             return object1.sessionState < object2.sessionState;
+        else
+            return object1.serverState < object2.serverState;
     }
 }
