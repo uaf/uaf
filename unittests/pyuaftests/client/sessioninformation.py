@@ -40,7 +40,7 @@ class SessionInformationTest(unittest.TestCase):
         self.assertEqual( self.info1.sessionState , pyuaf.client.sessionstates.NewSessionCreated )
     
     def test_client_SessionInformation_serverState(self):
-        self.assertEqual( self.info1.serverState , pyuaf.client.serverstates.Running )
+        self.assertEqual( self.info1.serverState , pyuaf.util.serverstates.Running )
     
     def test_client_SessionInformation_lastConnectionAttemptTime(self):
         self.assertEqual( self.info1.lastConnectionAttemptTime , self.now )
