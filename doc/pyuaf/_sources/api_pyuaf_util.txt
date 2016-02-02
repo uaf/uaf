@@ -27,6 +27,7 @@
         opcuatypes
         primitives
         securitypolicies
+        serverstates
         statuscodes
         timestampstoreturn
         usertokentypes
@@ -95,7 +96,7 @@
             
             :return: True if the address is based on an :class:`~pyuaf.util.ExpandedNodeId` 
                      (and you're allowed to call :meth:`~pyuaf.util.Address.getExpandedNodeId`), False if not.
-            :rtype:  bool
+            :rtype:  ``bool``
 
 
         .. automethod:: pyuaf.util.Address.isRelativePath
@@ -106,7 +107,7 @@
                      and another :class:`~pyuaf.util.Address`  
                      (and you're allowed to call :meth:`~pyuaf.util.Address.getStartingAddress` 
                      and :meth:`~pyuaf.util.Address.getRelativePath`), False if not.
-            :rtype:  bool
+            :rtype:  ``bool``
 
             
         .. automethod:: pyuaf.util.Address.getExpandedNodeId
@@ -2747,7 +2748,7 @@
             Check if the status has a "good" status code.
             
             :return: True if the status is Good.
-            :rtype:  bool
+            :rtype:  ``bool``
     
     
         .. automethod:: pyuaf.util.SdkStatus.isNotGood
@@ -2755,7 +2756,7 @@
             Check if the status does not have a "good" status code.
             
             :return: True if the status is not Good.
-            :rtype:  bool
+            :rtype:  ``bool``
     
     
         .. automethod:: pyuaf.util.SdkStatus.isUncertain
@@ -2763,7 +2764,7 @@
             Check if the status has an "uncertain" status code.
             
             :return: True if the status is Uncertain.
-            :rtype:  bool
+            :rtype:  ``bool``
     
     
         .. automethod:: pyuaf.util.SdkStatus.isNotUncertain
@@ -2771,7 +2772,7 @@
             Check if the status does not have a "uncertain" status code.
             
             :return: True if the status is not Uncertain.
-            :rtype:  bool
+            :rtype:  ``bool``
     
     
         .. automethod:: pyuaf.util.SdkStatus.isBad
@@ -2779,7 +2780,7 @@
             Check if the status has a "bad" status code.
             
             :return: True if the status is Bad.
-            :rtype:  bool
+            :rtype:  ``bool``
     
     
         .. automethod:: pyuaf.util.SdkStatus.isNotBad
@@ -2787,7 +2788,7 @@
             Check if the status does not have a "bad" status code.
             
             :return: True if the status is not Bad.
-            :rtype:  bool
+            :rtype:  ``bool``
 
 
     * Attributes:
@@ -2972,7 +2973,7 @@
             Check if the status has a "good" status code.
             
             :return: True if the status is Good.
-            :rtype:  bool
+            :rtype:  ``bool``
     
     
         .. automethod:: pyuaf.util.Status.isNotGood
@@ -2980,7 +2981,7 @@
             Check if the status does not have a "good" status code.
             
             :return: True if the status is not Good.
-            :rtype:  bool
+            :rtype:  ``bool``
     
     
         .. automethod:: pyuaf.util.Status.isUncertain
@@ -2988,7 +2989,7 @@
             Check if the status has an "uncertain" status code.
             
             :return: True if the status is Uncertain.
-            :rtype:  bool
+            :rtype:  ``bool``
     
     
         .. automethod:: pyuaf.util.Status.isNotUncertain
@@ -2996,7 +2997,7 @@
             Check if the status does not have a "uncertain" status code.
             
             :return: True if the status is not Uncertain.
-            :rtype:  bool
+            :rtype:  ``bool``
     
     
         .. automethod:: pyuaf.util.Status.isBad
@@ -3004,7 +3005,7 @@
             Check if the status has a "bad" status code.
             
             :return: True if the status is Bad.
-            :rtype:  bool
+            :rtype:  ``bool``
     
     
         .. automethod:: pyuaf.util.Status.isNotBad
@@ -3012,7 +3013,7 @@
             Check if the status does not have a "bad" status code.
             
             :return: True if the status is not Bad.
-            :rtype:  bool
+            :rtype:  ``bool``
     
         
         .. automethod:: pyuaf.util.Status.statusCodeName
@@ -3044,7 +3045,7 @@
             Check if this (bad!) status is raised by some other status.
             
             :return: True if this status was raised by some other status.
-            :rtype:  bool
+            :rtype:  ``bool``
 
     
         .. automethod:: pyuaf.util.Status.raisedBy
@@ -3053,7 +3054,7 @@
             It only make sense to call this method when `~pyuaf.util.Status.isRaisedBy` returns True.
             
             :return: Get a copy of the status that raised this status.
-            :rtype:  `~pyuaf.util.Status`
+            :rtype:  :class:`~pyuaf.util.Status`
 
 
         .. automethod:: pyuaf.util.Status.setRaisedBy
@@ -3061,7 +3062,7 @@
             Store the status that caused this status (i.e. the current instance).
             
             :param status: The status that caused this (bad!) status.
-            :type status: `~pyuaf.util.Status`
+            :type status: :class:`~pyuaf.util.Status`
             
             
 

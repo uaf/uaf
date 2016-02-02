@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util.browsedirections &mdash; PyUAF 2.0.2 documentation</title>
+    <title>pyuaf.util.browsedirections &mdash; PyUAF 2.0.3 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.2',
+        VERSION:     '2.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,12 +23,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.0.2 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.0.3 documentation" href="index.html" />
     <link rel="next" title="pyuaf.util.constants" href="api_pyuaf_util_constants.html" />
     <link rel="prev" title="pyuaf.util.applicationtypes" href="api_pyuaf_util_applicationtypes.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,34 +43,34 @@
         <li class="right" >
           <a href="api_pyuaf_util_applicationtypes.html" title="pyuaf.util.applicationtypes"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 2.0.2 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="module-pyuaf.util.browsedirections">
-<span id="pyuaf-util-browsedirections"></span><h1><tt class="docutils literal"><span class="pre">pyuaf.util.browsedirections</span></tt><a class="headerlink" href="#module-pyuaf.util.browsedirections" title="Permalink to this headline">¶</a></h1>
+<span id="pyuaf-util-browsedirections"></span><h1><code class="docutils literal"><span class="pre">pyuaf.util.browsedirections</span></code><a class="headerlink" href="#module-pyuaf.util.browsedirections" title="Permalink to this headline">¶</a></h1>
 <p>This module defines the different browse directions.</p>
 <ul>
 <li><p class="first">Attributes:</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.browsedirections.Forward">
-<tt class="descclassname">browsedirections.</tt><tt class="descname">Forward</tt><em class="property"> = 0</em><a class="headerlink" href="#pyuaf.util.browsedirections.Forward" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">browsedirections.</code><code class="descname">Forward</code><em class="property"> = 0</em><a class="headerlink" href="#pyuaf.util.browsedirections.Forward" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.browsedirections.Inverse">
-<tt class="descclassname">browsedirections.</tt><tt class="descname">Inverse</tt><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.util.browsedirections.Inverse" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">browsedirections.</code><code class="descname">Inverse</code><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.util.browsedirections.Inverse" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.browsedirections.Both">
-<tt class="descclassname">browsedirections.</tt><tt class="descname">Both</tt><em class="property"> = 2</em><a class="headerlink" href="#pyuaf.util.browsedirections.Both" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">browsedirections.</code><code class="descname">Both</code><em class="property"> = 2</em><a class="headerlink" href="#pyuaf.util.browsedirections.Both" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div></blockquote>
@@ -79,17 +79,17 @@
 <blockquote>
 <div><dl class="function">
 <dt id="pyuaf.util.browsedirections.toString">
-<tt class="descclassname">pyuaf.util.browsedirections.</tt><tt class="descname">toString</tt><big>(</big><em>direction</em><big>)</big><a class="headerlink" href="#pyuaf.util.browsedirections.toString" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyuaf.util.browsedirections.</code><code class="descname">toString</code><span class="sig-paren">(</span><em>direction</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.browsedirections.toString" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a string representation of the direction.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>direction</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The node class, e.g. <a class="reference internal" href="#pyuaf.util.browsedirections.Forward" title="pyuaf.util.browsedirections.Forward"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.browsedirections.Forward</span></tt></a>.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>direction</strong> (<code class="docutils literal"><span class="pre">int</span></code>) &#8211; The node class, e.g. <a class="reference internal" href="#pyuaf.util.browsedirections.Forward" title="pyuaf.util.browsedirections.Forward"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.browsedirections.Forward</span></code></a>.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The name of the node class, e.g. &#8216;Forward&#8217;.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">str</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -104,23 +104,25 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/uaf_logo_200x67_transparent.png" alt="Logo"/>
             </a></p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="api_pyuaf_util_applicationtypes.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">pyuaf.util.applicationtypes</span></tt></a></p>
+                        title="previous chapter"><code class="docutils literal"><span class="pre">pyuaf.util.applicationtypes</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="api_pyuaf_util_constants.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.util.constants</span></tt></a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/api_pyuaf_util_browsedirections.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+                        title="next chapter"><code class="docutils literal"><span class="pre">pyuaf.util.constants</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api_pyuaf_util_browsedirections.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -137,7 +139,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -152,10 +154,10 @@
         <li class="right" >
           <a href="api_pyuaf_util_applicationtypes.html" title="pyuaf.util.applicationtypes"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 2.0.2 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Wim Pessemier (Institute for Astronomy, KU Leuven) - http://github.com/uaf.
     </div>
   </body>

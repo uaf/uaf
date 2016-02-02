@@ -393,8 +393,13 @@
         
             An ``int`` representing the state of the session 
             (e.g. :attr:`~pyuaf.client.sessionstates.Connected`).
+  
+        .. autoattribute:: pyuaf.client.SessionInformation.serverState
+        
+            An ``int`` representing the state of the server 
+            (e.g. :attr:`~pyuaf.util.serverstates.Running`).
             
-            The possible states are defined in the :mod:`pyuaf.client.sessionstates` module.
+            The possible states are defined in the :mod:`pyuaf.util.serverstates` module.
          
         .. autoattribute:: pyuaf.client.SessionInformation.serverUri
             

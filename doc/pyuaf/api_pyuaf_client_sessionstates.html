@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client.sessionstates &mdash; PyUAF 2.0.2 documentation</title>
+    <title>pyuaf.client.sessionstates &mdash; PyUAF 2.0.3 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.2',
+        VERSION:     '2.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,12 +23,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.0.2 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.0.3 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.subscriptionstates" href="api_pyuaf_client_subscriptionstates.html" />
     <link rel="prev" title="pyuaf.client.settings" href="api_pyuaf_client_settings.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,56 +43,56 @@
         <li class="right" >
           <a href="api_pyuaf_client_settings.html" title="pyuaf.client.settings"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 2.0.2 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="module-pyuaf.client.sessionstates">
-<span id="pyuaf-client-sessionstates"></span><h1><tt class="docutils literal"><span class="pre">pyuaf.client.sessionstates</span></tt><a class="headerlink" href="#module-pyuaf.client.sessionstates" title="Permalink to this headline">¶</a></h1>
+<span id="pyuaf-client-sessionstates"></span><h1><code class="docutils literal"><span class="pre">pyuaf.client.sessionstates</span></code><a class="headerlink" href="#module-pyuaf.client.sessionstates" title="Permalink to this headline">¶</a></h1>
 <p>This module defines the session states, from the point of view of the client.</p>
 <ul>
 <li><p class="first">Attributes:</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.sessionstates.Disconnected">
-<tt class="descclassname">sessionstates.</tt><tt class="descname">Disconnected</tt><em class="property"> = 0</em><a class="headerlink" href="#pyuaf.client.sessionstates.Disconnected" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">sessionstates.</code><code class="descname">Disconnected</code><em class="property"> = 0</em><a class="headerlink" href="#pyuaf.client.sessionstates.Disconnected" title="Permalink to this definition">¶</a></dt>
 <dd><p>The session was disconnected by the user on the client side. A disconnected session
 may be &#8220;cleaned up&#8221; automatically by the UAF.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.sessionstates.Connected">
-<tt class="descclassname">sessionstates.</tt><tt class="descname">Connected</tt><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.client.sessionstates.Connected" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">sessionstates.</code><code class="descname">Connected</code><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.client.sessionstates.Connected" title="Permalink to this definition">¶</a></dt>
 <dd><p>The session is established, and is in a healthy state.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.sessionstates.ConnectionWarningWatchdogTimeout">
-<tt class="descclassname">sessionstates.</tt><tt class="descname">ConnectionWarningWatchdogTimeout</tt><em class="property"> = 2</em><a class="headerlink" href="#pyuaf.client.sessionstates.ConnectionWarningWatchdogTimeout" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">sessionstates.</code><code class="descname">ConnectionWarningWatchdogTimeout</code><em class="property"> = 2</em><a class="headerlink" href="#pyuaf.client.sessionstates.ConnectionWarningWatchdogTimeout" title="Permalink to this definition">¶</a></dt>
 <dd><p>There was a watchdog timeout, indicating a potential connection problem.
 When this state is active, the UAF will try to re-establish the connection.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.sessionstates.ConnectionErrorApiReconnect">
-<tt class="descclassname">sessionstates.</tt><tt class="descname">ConnectionErrorApiReconnect</tt><em class="property"> = 3</em><a class="headerlink" href="#pyuaf.client.sessionstates.ConnectionErrorApiReconnect" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">sessionstates.</code><code class="descname">ConnectionErrorApiReconnect</code><em class="property"> = 3</em><a class="headerlink" href="#pyuaf.client.sessionstates.ConnectionErrorApiReconnect" title="Permalink to this definition">¶</a></dt>
 <dd><p>The UAF client is trying to reconnect after a connection problem.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.sessionstates.ServerShutdown">
-<tt class="descclassname">sessionstates.</tt><tt class="descname">ServerShutdown</tt><em class="property"> = 4</em><a class="headerlink" href="#pyuaf.client.sessionstates.ServerShutdown" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">sessionstates.</code><code class="descname">ServerShutdown</code><em class="property"> = 4</em><a class="headerlink" href="#pyuaf.client.sessionstates.ServerShutdown" title="Permalink to this definition">¶</a></dt>
 <dd><p>The UAF client is trying to reconnect after the server announced its shutdown.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.sessionstates.NewSessionCreated">
-<tt class="descclassname">sessionstates.</tt><tt class="descname">NewSessionCreated</tt><em class="property"> = 5</em><a class="headerlink" href="#pyuaf.client.sessionstates.NewSessionCreated" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">sessionstates.</code><code class="descname">NewSessionCreated</code><em class="property"> = 5</em><a class="headerlink" href="#pyuaf.client.sessionstates.NewSessionCreated" title="Permalink to this definition">¶</a></dt>
 <dd><p>A new session has been created since the old one could not be reused.</p>
 </dd></dl>
 
@@ -102,17 +102,17 @@ When this state is active, the UAF will try to re-establish the connection.</p>
 <blockquote>
 <div><dl class="function">
 <dt id="pyuaf.client.sessionstates.toString">
-<tt class="descclassname">pyuaf.client.sessionstates.</tt><tt class="descname">toString</tt><big>(</big><em>sessionState</em><big>)</big><a class="headerlink" href="#pyuaf.client.sessionstates.toString" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyuaf.client.sessionstates.</code><code class="descname">toString</code><span class="sig-paren">(</span><em>sessionState</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.sessionstates.toString" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a string representation of the session state.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sessionState</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The session state, e.g. <a class="reference internal" href="#pyuaf.client.sessionstates.ServerShutdown" title="pyuaf.client.sessionstates.ServerShutdown"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.sessionstates.ServerShutdown</span></tt></a>.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sessionState</strong> (<code class="docutils literal"><span class="pre">int</span></code>) &#8211; The session state, e.g. <a class="reference internal" href="#pyuaf.client.sessionstates.ServerShutdown" title="pyuaf.client.sessionstates.ServerShutdown"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.sessionstates.ServerShutdown</span></code></a>.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The name of the session state, e.g. &#8216;ServerShutdown&#8217;.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">str</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -127,23 +127,25 @@ When this state is active, the UAF will try to re-establish the connection.</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/uaf_logo_200x67_transparent.png" alt="Logo"/>
             </a></p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="api_pyuaf_client_settings.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">pyuaf.client.settings</span></tt></a></p>
+                        title="previous chapter"><code class="docutils literal"><span class="pre">pyuaf.client.settings</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="api_pyuaf_client_subscriptionstates.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.client.subscriptionstates</span></tt></a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/api_pyuaf_client_sessionstates.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+                        title="next chapter"><code class="docutils literal"><span class="pre">pyuaf.client.subscriptionstates</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api_pyuaf_client_sessionstates.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -160,7 +162,7 @@ When this state is active, the UAF will try to re-establish the connection.</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -175,10 +177,10 @@ When this state is active, the UAF will try to re-establish the connection.</p>
         <li class="right" >
           <a href="api_pyuaf_client_settings.html" title="pyuaf.client.settings"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 2.0.2 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Wim Pessemier (Institute for Astronomy, KU Leuven) - http://github.com/uaf.
     </div>
   </body>

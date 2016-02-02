@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util.errors &mdash; PyUAF 2.0.2 documentation</title>
+    <title>pyuaf.util.errors &mdash; PyUAF 2.0.3 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.2',
+        VERSION:     '2.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,12 +23,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.0.2 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.0.3 documentation" href="index.html" />
     <link rel="next" title="pyuaf.util.loglevels" href="api_pyuaf_util_loglevels.html" />
     <link rel="prev" title="pyuaf.util.constants" href="api_pyuaf_util_constants.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,24 +43,24 @@
         <li class="right" >
           <a href="api_pyuaf_util_constants.html" title="pyuaf.util.constants"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 2.0.2 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="module-pyuaf.util.errors">
-<span id="pyuaf-util-errors"></span><h1><tt class="docutils literal"><span class="pre">pyuaf.util.errors</span></tt><a class="headerlink" href="#module-pyuaf.util.errors" title="Permalink to this headline">¶</a></h1>
+<span id="pyuaf-util-errors"></span><h1><code class="docutils literal"><span class="pre">pyuaf.util.errors</span></code><a class="headerlink" href="#module-pyuaf.util.errors" title="Permalink to this headline">¶</a></h1>
 <p>This module defines the exceptions (errors) that may be raised by the UAF.</p>
 <p>PyuAF defines an error for each situation that may go wrong. The errors are subclasses of
-the python <tt class="docutils literal"><span class="pre">Exception</span></tt> class, so they can be raised, and they contain a <tt class="docutils literal"><span class="pre">message</span></tt> attribute.
+the python <code class="docutils literal"><span class="pre">Exception</span></code> class, so they can be raised, and they contain a <code class="docutils literal"><span class="pre">message</span></code> attribute.
 In other words, they are normal python exceptions.</p>
 <p>Many many errors are defined, so based on their type, you (the user) have a good idea of what&#8217;s
 going wrong. In some cases the errors have additional attributes for more diagnostics.
-Since they are normal python exceptions, all pyuaf errors also have a <tt class="docutils literal"><span class="pre">message</span></tt> attribute
+Since they are normal python exceptions, all pyuaf errors also have a <code class="docutils literal"><span class="pre">message</span></code> attribute
 that conveys the error information in a human readable way.</p>
 <p>The UAF defines one &#8220;root&#8221; error, i.e. a superclass of all other errors: <cite>~pyuaf.util.errors.UafError</cite>.
 Further below this documentation, you&#8217;ll see the whole subclassing hierarchy of all errors.
@@ -300,15 +300,15 @@ When an error has attributes, these attributes (name and type) are displayed too
 <h2><em>class</em> UafError<a class="headerlink" href="#class-uaferror" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.util.errors.UafError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UafError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UafError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">UafError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.UafError" title="Permalink to this definition">¶</a></dt>
 <dd><p>A UafError is the superclass of all UAF related exceptions.</p>
 <p>Catch this error to catch all errors raised by the UAF.</p>
 <ul>
-<li><p class="first">Attributes inherited from the built-in class <tt class="docutils literal"><span class="pre">Exception</span></tt>:</p>
+<li><p class="first">Attributes inherited from the built-in class <code class="docutils literal"><span class="pre">Exception</span></code>:</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.UafError.message">
-<tt class="descname">message</tt><a class="headerlink" href="#pyuaf.util.errors.UafError.message" title="Permalink to this definition">¶</a></dt>
+<code class="descname">message</code><a class="headerlink" href="#pyuaf.util.errors.UafError.message" title="Permalink to this definition">¶</a></dt>
 <dd><p>The message of the error.</p>
 </dd></dl>
 
@@ -322,7 +322,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 <h2><em>Subclasses of UafError</em><a class="headerlink" href="#subclasses-of-uaferror" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.util.errors.AsyncConnectionFailedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">AsyncConnectionFailedError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.AsyncConnectionFailedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">AsyncConnectionFailedError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.AsyncConnectionFailedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -330,17 +330,17 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.AsyncConnectionFailedError.sdkStatus">
-<tt class="descclassname">AsyncConnectionFailedError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.AsyncConnectionFailedError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">AsyncConnectionFailedError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.AsyncConnectionFailedError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.errors.AsyncConnectionFailedError.serverUri">
-<tt class="descclassname">AsyncConnectionFailedError.</tt><tt class="descname">serverUri</tt><a class="headerlink" href="#pyuaf.util.errors.AsyncConnectionFailedError.serverUri" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">AsyncConnectionFailedError.</code><code class="descname">serverUri</code><a class="headerlink" href="#pyuaf.util.errors.AsyncConnectionFailedError.serverUri" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">str</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">str</span></code></li>
 </ul>
 </dd></dl>
 
@@ -349,17 +349,17 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.AsyncInvocationNotSupportedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">AsyncInvocationNotSupportedError</tt><a class="headerlink" href="#pyuaf.util.errors.AsyncInvocationNotSupportedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">AsyncInvocationNotSupportedError</code><a class="headerlink" href="#pyuaf.util.errors.AsyncInvocationNotSupportedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.AsyncInvocationOnMultipleSessionsNotSupportedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">AsyncInvocationOnMultipleSessionsNotSupportedError</tt><a class="headerlink" href="#pyuaf.util.errors.AsyncInvocationOnMultipleSessionsNotSupportedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">AsyncInvocationOnMultipleSessionsNotSupportedError</code><a class="headerlink" href="#pyuaf.util.errors.AsyncInvocationOnMultipleSessionsNotSupportedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.AsyncMethodCallInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">AsyncMethodCallInvocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.AsyncMethodCallInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">AsyncMethodCallInvocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.AsyncMethodCallInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -367,9 +367,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.AsyncMethodCallInvocationError.sdkStatus">
-<tt class="descclassname">AsyncMethodCallInvocationError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.AsyncMethodCallInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">AsyncMethodCallInvocationError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.AsyncMethodCallInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -378,12 +378,12 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.AsyncMultiMethodCallNotSupportedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">AsyncMultiMethodCallNotSupportedError</tt><a class="headerlink" href="#pyuaf.util.errors.AsyncMultiMethodCallNotSupportedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">AsyncMultiMethodCallNotSupportedError</code><a class="headerlink" href="#pyuaf.util.errors.AsyncMultiMethodCallNotSupportedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.AsyncWriteInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">AsyncWriteInvocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.AsyncWriteInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">AsyncWriteInvocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.AsyncWriteInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -391,9 +391,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.AsyncWriteInvocationError.sdkStatus">
-<tt class="descclassname">AsyncWriteInvocationError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.AsyncWriteInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">AsyncWriteInvocationError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.AsyncWriteInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -402,12 +402,12 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.BackwardsCompatibilityError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">BackwardsCompatibilityError</tt><a class="headerlink" href="#pyuaf.util.errors.BackwardsCompatibilityError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">BackwardsCompatibilityError</code><a class="headerlink" href="#pyuaf.util.errors.BackwardsCompatibilityError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.BadDataReceivedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">BadDataReceivedError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.BadDataReceivedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">BadDataReceivedError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.BadDataReceivedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -415,9 +415,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.BadDataReceivedError.sdkStatus">
-<tt class="descclassname">BadDataReceivedError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.BadDataReceivedError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">BadDataReceivedError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.BadDataReceivedError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -426,17 +426,17 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.BadNamespaceArrayError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">BadNamespaceArrayError</tt><a class="headerlink" href="#pyuaf.util.errors.BadNamespaceArrayError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">BadNamespaceArrayError</code><a class="headerlink" href="#pyuaf.util.errors.BadNamespaceArrayError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.BadServerArrayError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">BadServerArrayError</tt><a class="headerlink" href="#pyuaf.util.errors.BadServerArrayError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">BadServerArrayError</code><a class="headerlink" href="#pyuaf.util.errors.BadServerArrayError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.BadStatusesPresentError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">BadStatusesPresentError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.BadStatusesPresentError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">BadStatusesPresentError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.BadStatusesPresentError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -444,25 +444,25 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.BadStatusesPresentError.noOfBad">
-<tt class="descclassname">BadStatusesPresentError.</tt><tt class="descname">noOfBad</tt><a class="headerlink" href="#pyuaf.util.errors.BadStatusesPresentError.noOfBad" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">BadStatusesPresentError.</code><code class="descname">noOfBad</code><a class="headerlink" href="#pyuaf.util.errors.BadStatusesPresentError.noOfBad" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">int</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">int</span></code></li>
 </ul>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.errors.BadStatusesPresentError.noOfGood">
-<tt class="descclassname">BadStatusesPresentError.</tt><tt class="descname">noOfGood</tt><a class="headerlink" href="#pyuaf.util.errors.BadStatusesPresentError.noOfGood" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">BadStatusesPresentError.</code><code class="descname">noOfGood</code><a class="headerlink" href="#pyuaf.util.errors.BadStatusesPresentError.noOfGood" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">int</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">int</span></code></li>
 </ul>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.errors.BadStatusesPresentError.noOfUncertain">
-<tt class="descclassname">BadStatusesPresentError.</tt><tt class="descname">noOfUncertain</tt><a class="headerlink" href="#pyuaf.util.errors.BadStatusesPresentError.noOfUncertain" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">BadStatusesPresentError.</code><code class="descname">noOfUncertain</code><a class="headerlink" href="#pyuaf.util.errors.BadStatusesPresentError.noOfUncertain" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">int</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">int</span></code></li>
 </ul>
 </dd></dl>
 
@@ -471,7 +471,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.BeginCreateMonitoredItemsInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">BeginCreateMonitoredItemsInvocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.BeginCreateMonitoredItemsInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">BeginCreateMonitoredItemsInvocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.BeginCreateMonitoredItemsInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -479,9 +479,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.BeginCreateMonitoredItemsInvocationError.sdkStatus">
-<tt class="descclassname">BeginCreateMonitoredItemsInvocationError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.BeginCreateMonitoredItemsInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">BeginCreateMonitoredItemsInvocationError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.BeginCreateMonitoredItemsInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -490,7 +490,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.BeginReadInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">BeginReadInvocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.BeginReadInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">BeginReadInvocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.BeginReadInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -498,9 +498,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.BeginReadInvocationError.sdkStatus">
-<tt class="descclassname">BeginReadInvocationError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.BeginReadInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">BeginReadInvocationError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.BeginReadInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -509,7 +509,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.BrowseInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">BrowseInvocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.BrowseInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">BrowseInvocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.BrowseInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -517,9 +517,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.BrowseInvocationError.sdkStatus">
-<tt class="descclassname">BrowseInvocationError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.BrowseInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">BrowseInvocationError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.BrowseInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -528,7 +528,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.BrowseNextInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">BrowseNextInvocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.BrowseNextInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">BrowseNextInvocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.BrowseNextInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -536,9 +536,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.BrowseNextInvocationError.sdkStatus">
-<tt class="descclassname">BrowseNextInvocationError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.BrowseNextInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">BrowseNextInvocationError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.BrowseNextInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -547,7 +547,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.CallCompleteError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">CallCompleteError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.CallCompleteError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">CallCompleteError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.CallCompleteError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -555,9 +555,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.CallCompleteError.sdkStatus">
-<tt class="descclassname">CallCompleteError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.CallCompleteError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">CallCompleteError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.CallCompleteError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -566,7 +566,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ClientCertificateLoadingError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ClientCertificateLoadingError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ClientCertificateLoadingError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ClientCertificateLoadingError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ClientCertificateLoadingError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -574,9 +574,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.ClientCertificateLoadingError.sdkStatus">
-<tt class="descclassname">ClientCertificateLoadingError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.ClientCertificateLoadingError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ClientCertificateLoadingError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.ClientCertificateLoadingError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -585,17 +585,17 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ConfigurationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ConfigurationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ConfigurationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ConfigurationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ConfigurationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.ConnectionError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ConnectionError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ConnectionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ConnectionError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ConnectionError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.ConnectionFailedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ConnectionFailedError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ConnectionFailedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ConnectionFailedError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ConnectionFailedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -603,17 +603,17 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.ConnectionFailedError.endpointUrl">
-<tt class="descclassname">ConnectionFailedError.</tt><tt class="descname">endpointUrl</tt><a class="headerlink" href="#pyuaf.util.errors.ConnectionFailedError.endpointUrl" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ConnectionFailedError.</code><code class="descname">endpointUrl</code><a class="headerlink" href="#pyuaf.util.errors.ConnectionFailedError.endpointUrl" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">str</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">str</span></code></li>
 </ul>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.errors.ConnectionFailedError.sdkStatus">
-<tt class="descclassname">ConnectionFailedError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.ConnectionFailedError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ConnectionFailedError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.ConnectionFailedError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -622,12 +622,12 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ContinuationPointsDontMatchAddressesError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ContinuationPointsDontMatchAddressesError</tt><a class="headerlink" href="#pyuaf.util.errors.ContinuationPointsDontMatchAddressesError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ContinuationPointsDontMatchAddressesError</code><a class="headerlink" href="#pyuaf.util.errors.ContinuationPointsDontMatchAddressesError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.CouldNotCreateCertificateRevocationListLocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">CouldNotCreateCertificateRevocationListLocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateCertificateRevocationListLocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">CouldNotCreateCertificateRevocationListLocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateCertificateRevocationListLocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -635,9 +635,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.CouldNotCreateCertificateRevocationListLocationError.certificateRevocationListLocation">
-<tt class="descclassname">CouldNotCreateCertificateRevocationListLocationError.</tt><tt class="descname">certificateRevocationListLocation</tt><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateCertificateRevocationListLocationError.certificateRevocationListLocation" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">CouldNotCreateCertificateRevocationListLocationError.</code><code class="descname">certificateRevocationListLocation</code><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateCertificateRevocationListLocationError.certificateRevocationListLocation" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">str</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">str</span></code></li>
 </ul>
 </dd></dl>
 
@@ -646,7 +646,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.CouldNotCreateCertificateTrustListLocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">CouldNotCreateCertificateTrustListLocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateCertificateTrustListLocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">CouldNotCreateCertificateTrustListLocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateCertificateTrustListLocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -654,9 +654,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.CouldNotCreateCertificateTrustListLocationError.certificateTrustListLocation">
-<tt class="descclassname">CouldNotCreateCertificateTrustListLocationError.</tt><tt class="descname">certificateTrustListLocation</tt><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateCertificateTrustListLocationError.certificateTrustListLocation" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">CouldNotCreateCertificateTrustListLocationError.</code><code class="descname">certificateTrustListLocation</code><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateCertificateTrustListLocationError.certificateTrustListLocation" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">str</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">str</span></code></li>
 </ul>
 </dd></dl>
 
@@ -665,7 +665,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.CouldNotCreateClientCertificateLocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">CouldNotCreateClientCertificateLocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateClientCertificateLocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">CouldNotCreateClientCertificateLocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateClientCertificateLocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -673,9 +673,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.CouldNotCreateClientCertificateLocationError.clientCertificate">
-<tt class="descclassname">CouldNotCreateClientCertificateLocationError.</tt><tt class="descname">clientCertificate</tt><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateClientCertificateLocationError.clientCertificate" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">CouldNotCreateClientCertificateLocationError.</code><code class="descname">clientCertificate</code><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateClientCertificateLocationError.clientCertificate" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">str</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">str</span></code></li>
 </ul>
 </dd></dl>
 
@@ -684,7 +684,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.CouldNotCreateClientPrivateKeyLocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">CouldNotCreateClientPrivateKeyLocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateClientPrivateKeyLocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">CouldNotCreateClientPrivateKeyLocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateClientPrivateKeyLocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -692,9 +692,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.CouldNotCreateClientPrivateKeyLocationError.clientPrivateKey">
-<tt class="descclassname">CouldNotCreateClientPrivateKeyLocationError.</tt><tt class="descname">clientPrivateKey</tt><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateClientPrivateKeyLocationError.clientPrivateKey" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">CouldNotCreateClientPrivateKeyLocationError.</code><code class="descname">clientPrivateKey</code><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateClientPrivateKeyLocationError.clientPrivateKey" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">str</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">str</span></code></li>
 </ul>
 </dd></dl>
 
@@ -703,7 +703,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.CouldNotCreateIssuersCertificateLocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">CouldNotCreateIssuersCertificateLocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateIssuersCertificateLocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">CouldNotCreateIssuersCertificateLocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateIssuersCertificateLocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -711,9 +711,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.CouldNotCreateIssuersCertificateLocationError.issuersCertificatesLocation">
-<tt class="descclassname">CouldNotCreateIssuersCertificateLocationError.</tt><tt class="descname">issuersCertificatesLocation</tt><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateIssuersCertificateLocationError.issuersCertificatesLocation" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">CouldNotCreateIssuersCertificateLocationError.</code><code class="descname">issuersCertificatesLocation</code><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateIssuersCertificateLocationError.issuersCertificatesLocation" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">str</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">str</span></code></li>
 </ul>
 </dd></dl>
 
@@ -722,7 +722,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.CouldNotCreateIssuersRevocationListLocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">CouldNotCreateIssuersRevocationListLocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateIssuersRevocationListLocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">CouldNotCreateIssuersRevocationListLocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateIssuersRevocationListLocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -730,9 +730,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.CouldNotCreateIssuersRevocationListLocationError.issuersRevocationListLocation">
-<tt class="descclassname">CouldNotCreateIssuersRevocationListLocationError.</tt><tt class="descname">issuersRevocationListLocation</tt><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateIssuersRevocationListLocationError.issuersRevocationListLocation" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">CouldNotCreateIssuersRevocationListLocationError.</code><code class="descname">issuersRevocationListLocation</code><a class="headerlink" href="#pyuaf.util.errors.CouldNotCreateIssuersRevocationListLocationError.issuersRevocationListLocation" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">str</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">str</span></code></li>
 </ul>
 </dd></dl>
 
@@ -741,17 +741,17 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.CouldNotManuallySubscribeError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">CouldNotManuallySubscribeError</tt><a class="headerlink" href="#pyuaf.util.errors.CouldNotManuallySubscribeError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">CouldNotManuallySubscribeError</code><a class="headerlink" href="#pyuaf.util.errors.CouldNotManuallySubscribeError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.CouldNotManuallyUnsubscribeError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">CouldNotManuallyUnsubscribeError</tt><a class="headerlink" href="#pyuaf.util.errors.CouldNotManuallyUnsubscribeError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">CouldNotManuallyUnsubscribeError</code><a class="headerlink" href="#pyuaf.util.errors.CouldNotManuallyUnsubscribeError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.CouldNotReadArraysError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">CouldNotReadArraysError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.CouldNotReadArraysError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">CouldNotReadArraysError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.CouldNotReadArraysError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -759,9 +759,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.CouldNotReadArraysError.sdkStatus">
-<tt class="descclassname">CouldNotReadArraysError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.CouldNotReadArraysError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">CouldNotReadArraysError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.CouldNotReadArraysError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -770,7 +770,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.CreateMonitoredItemsError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">CreateMonitoredItemsError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.CreateMonitoredItemsError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">CreateMonitoredItemsError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.CreateMonitoredItemsError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -778,9 +778,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.CreateMonitoredItemsError.assignedClientHandles">
-<tt class="descclassname">CreateMonitoredItemsError.</tt><tt class="descname">assignedClientHandles</tt><a class="headerlink" href="#pyuaf.util.errors.CreateMonitoredItemsError.assignedClientHandles" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">CreateMonitoredItemsError.</code><code class="descname">assignedClientHandles</code><a class="headerlink" href="#pyuaf.util.errors.CreateMonitoredItemsError.assignedClientHandles" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.UInt32Vector" title="pyuaf.util.UInt32Vector"><tt class="xref py py-class docutils literal"><span class="pre">UInt32Vector</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.UInt32Vector" title="pyuaf.util.UInt32Vector"><code class="xref py py-class docutils literal"><span class="pre">UInt32Vector</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -789,7 +789,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.CreateMonitoredItemsInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">CreateMonitoredItemsInvocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.CreateMonitoredItemsInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">CreateMonitoredItemsInvocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.CreateMonitoredItemsInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -797,9 +797,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.CreateMonitoredItemsInvocationError.sdkStatus">
-<tt class="descclassname">CreateMonitoredItemsInvocationError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.CreateMonitoredItemsInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">CreateMonitoredItemsInvocationError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.CreateMonitoredItemsInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -808,7 +808,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.CreateSubscriptionError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">CreateSubscriptionError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.CreateSubscriptionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">CreateSubscriptionError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.CreateSubscriptionError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -816,9 +816,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.CreateSubscriptionError.sdkStatus">
-<tt class="descclassname">CreateSubscriptionError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.CreateSubscriptionError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">CreateSubscriptionError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.CreateSubscriptionError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -827,27 +827,27 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.DataDontMatchAddressesError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">DataDontMatchAddressesError</tt><a class="headerlink" href="#pyuaf.util.errors.DataDontMatchAddressesError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">DataDontMatchAddressesError</code><a class="headerlink" href="#pyuaf.util.errors.DataDontMatchAddressesError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.DataFormatError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">DataFormatError</tt><a class="headerlink" href="#pyuaf.util.errors.DataFormatError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">DataFormatError</code><a class="headerlink" href="#pyuaf.util.errors.DataFormatError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.DataSizeError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">DataSizeError</tt><a class="headerlink" href="#pyuaf.util.errors.DataSizeError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">DataSizeError</code><a class="headerlink" href="#pyuaf.util.errors.DataSizeError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.DataSourceError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">DataSourceError</tt><a class="headerlink" href="#pyuaf.util.errors.DataSourceError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">DataSourceError</code><a class="headerlink" href="#pyuaf.util.errors.DataSourceError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.DeleteSubscriptionError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">DeleteSubscriptionError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.DeleteSubscriptionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">DeleteSubscriptionError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.DeleteSubscriptionError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -855,9 +855,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.DeleteSubscriptionError.sdkStatus">
-<tt class="descclassname">DeleteSubscriptionError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.DeleteSubscriptionError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">DeleteSubscriptionError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.DeleteSubscriptionError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -866,12 +866,12 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.DisconnectionError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">DisconnectionError</tt><a class="headerlink" href="#pyuaf.util.errors.DisconnectionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">DisconnectionError</code><a class="headerlink" href="#pyuaf.util.errors.DisconnectionError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.DisconnectionFailedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">DisconnectionFailedError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.DisconnectionFailedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">DisconnectionFailedError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.DisconnectionFailedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -879,17 +879,17 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.DisconnectionFailedError.endpointUrl">
-<tt class="descclassname">DisconnectionFailedError.</tt><tt class="descname">endpointUrl</tt><a class="headerlink" href="#pyuaf.util.errors.DisconnectionFailedError.endpointUrl" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">DisconnectionFailedError.</code><code class="descname">endpointUrl</code><a class="headerlink" href="#pyuaf.util.errors.DisconnectionFailedError.endpointUrl" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">str</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">str</span></code></li>
 </ul>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.errors.DisconnectionFailedError.sdkStatus">
-<tt class="descclassname">DisconnectionFailedError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.DisconnectionFailedError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">DisconnectionFailedError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.DisconnectionFailedError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -898,17 +898,17 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.DiscoveryError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">DiscoveryError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.DiscoveryError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">DiscoveryError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.DiscoveryError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.EmptyAddressError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">EmptyAddressError</tt><a class="headerlink" href="#pyuaf.util.errors.EmptyAddressError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">EmptyAddressError</code><a class="headerlink" href="#pyuaf.util.errors.EmptyAddressError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.EmptyServerUriAndUnknownNamespaceIndexError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">EmptyServerUriAndUnknownNamespaceIndexError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.EmptyServerUriAndUnknownNamespaceIndexError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">EmptyServerUriAndUnknownNamespaceIndexError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.EmptyServerUriAndUnknownNamespaceIndexError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -916,9 +916,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.EmptyServerUriAndUnknownNamespaceIndexError.unknownNamespaceIndex">
-<tt class="descclassname">EmptyServerUriAndUnknownNamespaceIndexError.</tt><tt class="descname">unknownNamespaceIndex</tt><a class="headerlink" href="#pyuaf.util.errors.EmptyServerUriAndUnknownNamespaceIndexError.unknownNamespaceIndex" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">EmptyServerUriAndUnknownNamespaceIndexError.</code><code class="descname">unknownNamespaceIndex</code><a class="headerlink" href="#pyuaf.util.errors.EmptyServerUriAndUnknownNamespaceIndexError.unknownNamespaceIndex" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">long</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">long</span></code></li>
 </ul>
 </dd></dl>
 
@@ -927,17 +927,17 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.EmptyServerUriError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">EmptyServerUriError</tt><a class="headerlink" href="#pyuaf.util.errors.EmptyServerUriError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">EmptyServerUriError</code><a class="headerlink" href="#pyuaf.util.errors.EmptyServerUriError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.EmptyUrlError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">EmptyUrlError</tt><a class="headerlink" href="#pyuaf.util.errors.EmptyUrlError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">EmptyUrlError</code><a class="headerlink" href="#pyuaf.util.errors.EmptyUrlError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.EmptyUserCertificateError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">EmptyUserCertificateError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.EmptyUserCertificateError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">EmptyUserCertificateError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.EmptyUserCertificateError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -945,9 +945,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.EmptyUserCertificateError.certificate">
-<tt class="descclassname">EmptyUserCertificateError.</tt><tt class="descname">certificate</tt><a class="headerlink" href="#pyuaf.util.errors.EmptyUserCertificateError.certificate" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">EmptyUserCertificateError.</code><code class="descname">certificate</code><a class="headerlink" href="#pyuaf.util.errors.EmptyUserCertificateError.certificate" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">str</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">str</span></code></li>
 </ul>
 </dd></dl>
 
@@ -956,12 +956,12 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ExpandedNodeIdAddressExpectedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ExpandedNodeIdAddressExpectedError</tt><a class="headerlink" href="#pyuaf.util.errors.ExpandedNodeIdAddressExpectedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ExpandedNodeIdAddressExpectedError</code><a class="headerlink" href="#pyuaf.util.errors.ExpandedNodeIdAddressExpectedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.FindServersError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">FindServersError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.FindServersError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">FindServersError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.FindServersError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -969,9 +969,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.FindServersError.sdkStatuses">
-<tt class="descclassname">FindServersError.</tt><tt class="descname">sdkStatuses</tt><a class="headerlink" href="#pyuaf.util.errors.FindServersError.sdkStatuses" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">FindServersError.</code><code class="descname">sdkStatuses</code><a class="headerlink" href="#pyuaf.util.errors.FindServersError.sdkStatuses" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">SwigPyObject</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">SwigPyObject</span></code></li>
 </ul>
 </dd></dl>
 
@@ -980,12 +980,12 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.GeneralError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">GeneralError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.GeneralError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">GeneralError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.GeneralError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.GetEndpointsError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">GetEndpointsError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.GetEndpointsError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">GetEndpointsError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.GetEndpointsError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -993,9 +993,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.GetEndpointsError.sdkStatus">
-<tt class="descclassname">GetEndpointsError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.GetEndpointsError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">GetEndpointsError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.GetEndpointsError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1004,7 +1004,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.HistoryReadInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">HistoryReadInvocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.HistoryReadInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">HistoryReadInvocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.HistoryReadInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1012,9 +1012,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.HistoryReadInvocationError.sdkStatus">
-<tt class="descclassname">HistoryReadInvocationError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.HistoryReadInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">HistoryReadInvocationError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.HistoryReadInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1023,7 +1023,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.HistoryReadRawModifiedInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">HistoryReadRawModifiedInvocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.HistoryReadRawModifiedInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">HistoryReadRawModifiedInvocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.HistoryReadRawModifiedInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1031,9 +1031,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.HistoryReadRawModifiedInvocationError.sdkStatus">
-<tt class="descclassname">HistoryReadRawModifiedInvocationError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.HistoryReadRawModifiedInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">HistoryReadRawModifiedInvocationError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.HistoryReadRawModifiedInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1042,7 +1042,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.InputArgumentError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">InputArgumentError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.InputArgumentError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">InputArgumentError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.InputArgumentError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1050,9 +1050,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.InputArgumentError.sdkStatus">
-<tt class="descclassname">InputArgumentError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.InputArgumentError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">InputArgumentError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.InputArgumentError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1061,12 +1061,12 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.InvalidAddressError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">InvalidAddressError</tt><a class="headerlink" href="#pyuaf.util.errors.InvalidAddressError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">InvalidAddressError</code><a class="headerlink" href="#pyuaf.util.errors.InvalidAddressError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.InvalidPrivateKeyError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">InvalidPrivateKeyError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.InvalidPrivateKeyError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">InvalidPrivateKeyError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.InvalidPrivateKeyError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1074,9 +1074,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.InvalidPrivateKeyError.privateKey">
-<tt class="descclassname">InvalidPrivateKeyError.</tt><tt class="descname">privateKey</tt><a class="headerlink" href="#pyuaf.util.errors.InvalidPrivateKeyError.privateKey" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">InvalidPrivateKeyError.</code><code class="descname">privateKey</code><a class="headerlink" href="#pyuaf.util.errors.InvalidPrivateKeyError.privateKey" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">str</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">str</span></code></li>
 </ul>
 </dd></dl>
 
@@ -1085,12 +1085,12 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.InvalidRequestError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">InvalidRequestError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.InvalidRequestError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">InvalidRequestError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.InvalidRequestError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.InvalidServerUriError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">InvalidServerUriError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.InvalidServerUriError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">InvalidServerUriError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.InvalidServerUriError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1098,9 +1098,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.InvalidServerUriError.invalidServerUri">
-<tt class="descclassname">InvalidServerUriError.</tt><tt class="descname">invalidServerUri</tt><a class="headerlink" href="#pyuaf.util.errors.InvalidServerUriError.invalidServerUri" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">InvalidServerUriError.</code><code class="descname">invalidServerUri</code><a class="headerlink" href="#pyuaf.util.errors.InvalidServerUriError.invalidServerUri" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">str</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">str</span></code></li>
 </ul>
 </dd></dl>
 
@@ -1109,17 +1109,17 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ItemNotFoundForTheGivenHandleError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ItemNotFoundForTheGivenHandleError</tt><a class="headerlink" href="#pyuaf.util.errors.ItemNotFoundForTheGivenHandleError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ItemNotFoundForTheGivenHandleError</code><a class="headerlink" href="#pyuaf.util.errors.ItemNotFoundForTheGivenHandleError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.LowLevelError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">LowLevelError</tt><a class="headerlink" href="#pyuaf.util.errors.LowLevelError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">LowLevelError</code><a class="headerlink" href="#pyuaf.util.errors.LowLevelError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.MethodCallInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">MethodCallInvocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.MethodCallInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">MethodCallInvocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.MethodCallInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1127,9 +1127,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.MethodCallInvocationError.sdkStatus">
-<tt class="descclassname">MethodCallInvocationError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.MethodCallInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">MethodCallInvocationError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.MethodCallInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1138,37 +1138,37 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.MultipleTranslationResultsError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">MultipleTranslationResultsError</tt><a class="headerlink" href="#pyuaf.util.errors.MultipleTranslationResultsError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">MultipleTranslationResultsError</code><a class="headerlink" href="#pyuaf.util.errors.MultipleTranslationResultsError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.NamespaceArrayConversionError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">NamespaceArrayConversionError</tt><a class="headerlink" href="#pyuaf.util.errors.NamespaceArrayConversionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">NamespaceArrayConversionError</code><a class="headerlink" href="#pyuaf.util.errors.NamespaceArrayConversionError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.NoConnectedSessionToUpdateArraysError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">NoConnectedSessionToUpdateArraysError</tt><a class="headerlink" href="#pyuaf.util.errors.NoConnectedSessionToUpdateArraysError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">NoConnectedSessionToUpdateArraysError</code><a class="headerlink" href="#pyuaf.util.errors.NoConnectedSessionToUpdateArraysError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.NoDiscoveryUrlsExposedByServerError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">NoDiscoveryUrlsExposedByServerError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.NoDiscoveryUrlsExposedByServerError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">NoDiscoveryUrlsExposedByServerError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.NoDiscoveryUrlsExposedByServerError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.NoDiscoveryUrlsFoundError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">NoDiscoveryUrlsFoundError</tt><a class="headerlink" href="#pyuaf.util.errors.NoDiscoveryUrlsFoundError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">NoDiscoveryUrlsFoundError</code><a class="headerlink" href="#pyuaf.util.errors.NoDiscoveryUrlsFoundError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.NoEndpointsProvidedByServerError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">NoEndpointsProvidedByServerError</tt><a class="headerlink" href="#pyuaf.util.errors.NoEndpointsProvidedByServerError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">NoEndpointsProvidedByServerError</code><a class="headerlink" href="#pyuaf.util.errors.NoEndpointsProvidedByServerError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.NoItemFoundForTheGivenRequestHandleError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">NoItemFoundForTheGivenRequestHandleError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.NoItemFoundForTheGivenRequestHandleError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">NoItemFoundForTheGivenRequestHandleError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.NoItemFoundForTheGivenRequestHandleError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1176,9 +1176,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.NoItemFoundForTheGivenRequestHandleError.requestHandle">
-<tt class="descclassname">NoItemFoundForTheGivenRequestHandleError.</tt><tt class="descname">requestHandle</tt><a class="headerlink" href="#pyuaf.util.errors.NoItemFoundForTheGivenRequestHandleError.requestHandle" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">NoItemFoundForTheGivenRequestHandleError.</code><code class="descname">requestHandle</code><a class="headerlink" href="#pyuaf.util.errors.NoItemFoundForTheGivenRequestHandleError.requestHandle" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">long</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">long</span></code></li>
 </ul>
 </dd></dl>
 
@@ -1187,37 +1187,37 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.NoNamespaceIndexOrUriGivenError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">NoNamespaceIndexOrUriGivenError</tt><a class="headerlink" href="#pyuaf.util.errors.NoNamespaceIndexOrUriGivenError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">NoNamespaceIndexOrUriGivenError</code><a class="headerlink" href="#pyuaf.util.errors.NoNamespaceIndexOrUriGivenError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.NoParallelFindServersAllowedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">NoParallelFindServersAllowedError</tt><a class="headerlink" href="#pyuaf.util.errors.NoParallelFindServersAllowedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">NoParallelFindServersAllowedError</code><a class="headerlink" href="#pyuaf.util.errors.NoParallelFindServersAllowedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.NoResultReceivedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">NoResultReceivedError</tt><a class="headerlink" href="#pyuaf.util.errors.NoResultReceivedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">NoResultReceivedError</code><a class="headerlink" href="#pyuaf.util.errors.NoResultReceivedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.NoSecuritySettingsGivenError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">NoSecuritySettingsGivenError</tt><a class="headerlink" href="#pyuaf.util.errors.NoSecuritySettingsGivenError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">NoSecuritySettingsGivenError</code><a class="headerlink" href="#pyuaf.util.errors.NoSecuritySettingsGivenError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.NoStatusesGivenError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">NoStatusesGivenError</tt><a class="headerlink" href="#pyuaf.util.errors.NoStatusesGivenError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">NoStatusesGivenError</code><a class="headerlink" href="#pyuaf.util.errors.NoStatusesGivenError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.NoTargetsGivenError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">NoTargetsGivenError</tt><a class="headerlink" href="#pyuaf.util.errors.NoTargetsGivenError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">NoTargetsGivenError</code><a class="headerlink" href="#pyuaf.util.errors.NoTargetsGivenError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.NotAllTargetsCouldBeResolvedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">NotAllTargetsCouldBeResolvedError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.NotAllTargetsCouldBeResolvedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">NotAllTargetsCouldBeResolvedError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.NotAllTargetsCouldBeResolvedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1225,9 +1225,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.NotAllTargetsCouldBeResolvedError.unresolvedTargetNumbers">
-<tt class="descclassname">NotAllTargetsCouldBeResolvedError.</tt><tt class="descname">unresolvedTargetNumbers</tt><a class="headerlink" href="#pyuaf.util.errors.NotAllTargetsCouldBeResolvedError.unresolvedTargetNumbers" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">NotAllTargetsCouldBeResolvedError.</code><code class="descname">unresolvedTargetNumbers</code><a class="headerlink" href="#pyuaf.util.errors.NotAllTargetsCouldBeResolvedError.unresolvedTargetNumbers" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.UInt32Vector" title="pyuaf.util.UInt32Vector"><tt class="xref py py-class docutils literal"><span class="pre">UInt32Vector</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.UInt32Vector" title="pyuaf.util.UInt32Vector"><code class="xref py py-class docutils literal"><span class="pre">UInt32Vector</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1236,7 +1236,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.OpenSSLStoreInitializationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">OpenSSLStoreInitializationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.OpenSSLStoreInitializationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">OpenSSLStoreInitializationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.OpenSSLStoreInitializationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1244,9 +1244,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.OpenSSLStoreInitializationError.sdkStatus">
-<tt class="descclassname">OpenSSLStoreInitializationError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.OpenSSLStoreInitializationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">OpenSSLStoreInitializationError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.OpenSSLStoreInitializationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1255,22 +1255,22 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.OtherError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">OtherError</tt><a class="headerlink" href="#pyuaf.util.errors.OtherError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">OtherError</code><a class="headerlink" href="#pyuaf.util.errors.OtherError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.PathCreationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">PathCreationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.PathCreationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">PathCreationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.PathCreationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.PathNotExistsError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">PathNotExistsError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.PathNotExistsError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">PathNotExistsError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.PathNotExistsError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.ReadCompleteError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ReadCompleteError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ReadCompleteError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ReadCompleteError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ReadCompleteError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1278,9 +1278,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.ReadCompleteError.sdkStatus">
-<tt class="descclassname">ReadCompleteError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.ReadCompleteError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ReadCompleteError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.ReadCompleteError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1289,7 +1289,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ReadInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ReadInvocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ReadInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ReadInvocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ReadInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1297,9 +1297,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.ReadInvocationError.sdkStatus">
-<tt class="descclassname">ReadInvocationError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.ReadInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ReadInvocationError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.ReadInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1308,32 +1308,32 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ResolutionError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ResolutionError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ResolutionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ResolutionError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ResolutionError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.SecurityError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">SecurityError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.SecurityError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">SecurityError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.SecurityError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.SecuritySettingsMatchError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">SecuritySettingsMatchError</tt><a class="headerlink" href="#pyuaf.util.errors.SecuritySettingsMatchError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">SecuritySettingsMatchError</code><a class="headerlink" href="#pyuaf.util.errors.SecuritySettingsMatchError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.ServerArrayConversionError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ServerArrayConversionError</tt><a class="headerlink" href="#pyuaf.util.errors.ServerArrayConversionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ServerArrayConversionError</code><a class="headerlink" href="#pyuaf.util.errors.ServerArrayConversionError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.ServerCertificateRejectedByUserError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ServerCertificateRejectedByUserError</tt><a class="headerlink" href="#pyuaf.util.errors.ServerCertificateRejectedByUserError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ServerCertificateRejectedByUserError</code><a class="headerlink" href="#pyuaf.util.errors.ServerCertificateRejectedByUserError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.ServerCertificateSavingError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ServerCertificateSavingError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ServerCertificateSavingError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ServerCertificateSavingError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ServerCertificateSavingError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1341,9 +1341,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.ServerCertificateSavingError.sdkStatus">
-<tt class="descclassname">ServerCertificateSavingError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.ServerCertificateSavingError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServerCertificateSavingError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.ServerCertificateSavingError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1352,7 +1352,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ServerCouldNotBrowseError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ServerCouldNotBrowseError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotBrowseError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ServerCouldNotBrowseError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotBrowseError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1360,9 +1360,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.ServerCouldNotBrowseError.sdkStatus">
-<tt class="descclassname">ServerCouldNotBrowseError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotBrowseError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServerCouldNotBrowseError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotBrowseError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1371,7 +1371,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ServerCouldNotBrowseNextError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ServerCouldNotBrowseNextError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotBrowseNextError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ServerCouldNotBrowseNextError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotBrowseNextError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1379,9 +1379,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.ServerCouldNotBrowseNextError.sdkStatus">
-<tt class="descclassname">ServerCouldNotBrowseNextError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotBrowseNextError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServerCouldNotBrowseNextError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotBrowseNextError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1390,7 +1390,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ServerCouldNotCallMethodError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ServerCouldNotCallMethodError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotCallMethodError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ServerCouldNotCallMethodError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotCallMethodError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1398,9 +1398,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.ServerCouldNotCallMethodError.sdkStatus">
-<tt class="descclassname">ServerCouldNotCallMethodError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotCallMethodError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServerCouldNotCallMethodError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotCallMethodError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1409,7 +1409,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ServerCouldNotCreateMonitoredItemsError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ServerCouldNotCreateMonitoredItemsError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotCreateMonitoredItemsError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ServerCouldNotCreateMonitoredItemsError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotCreateMonitoredItemsError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1417,9 +1417,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.ServerCouldNotCreateMonitoredItemsError.sdkStatus">
-<tt class="descclassname">ServerCouldNotCreateMonitoredItemsError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotCreateMonitoredItemsError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServerCouldNotCreateMonitoredItemsError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotCreateMonitoredItemsError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1428,7 +1428,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ServerCouldNotHistoryReadError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ServerCouldNotHistoryReadError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotHistoryReadError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ServerCouldNotHistoryReadError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotHistoryReadError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1436,9 +1436,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.ServerCouldNotHistoryReadError.sdkStatus">
-<tt class="descclassname">ServerCouldNotHistoryReadError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotHistoryReadError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServerCouldNotHistoryReadError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotHistoryReadError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1447,7 +1447,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ServerCouldNotReadError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ServerCouldNotReadError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotReadError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ServerCouldNotReadError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotReadError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1455,9 +1455,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.ServerCouldNotReadError.sdkStatus">
-<tt class="descclassname">ServerCouldNotReadError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotReadError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServerCouldNotReadError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotReadError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1466,7 +1466,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ServerCouldNotSetMonitoringModeError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ServerCouldNotSetMonitoringModeError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotSetMonitoringModeError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ServerCouldNotSetMonitoringModeError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotSetMonitoringModeError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1474,17 +1474,17 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.ServerCouldNotSetMonitoringModeError.clientHandle">
-<tt class="descclassname">ServerCouldNotSetMonitoringModeError.</tt><tt class="descname">clientHandle</tt><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotSetMonitoringModeError.clientHandle" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServerCouldNotSetMonitoringModeError.</code><code class="descname">clientHandle</code><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotSetMonitoringModeError.clientHandle" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">int</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">int</span></code></li>
 </ul>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.errors.ServerCouldNotSetMonitoringModeError.sdkStatus">
-<tt class="descclassname">ServerCouldNotSetMonitoringModeError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotSetMonitoringModeError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServerCouldNotSetMonitoringModeError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotSetMonitoringModeError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1493,7 +1493,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ServerCouldNotTranslateBrowsePathsToNodeIdsError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ServerCouldNotTranslateBrowsePathsToNodeIdsError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotTranslateBrowsePathsToNodeIdsError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ServerCouldNotTranslateBrowsePathsToNodeIdsError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotTranslateBrowsePathsToNodeIdsError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1501,9 +1501,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.ServerCouldNotTranslateBrowsePathsToNodeIdsError.sdkStatus">
-<tt class="descclassname">ServerCouldNotTranslateBrowsePathsToNodeIdsError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotTranslateBrowsePathsToNodeIdsError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServerCouldNotTranslateBrowsePathsToNodeIdsError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotTranslateBrowsePathsToNodeIdsError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1512,7 +1512,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ServerCouldNotWriteError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ServerCouldNotWriteError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotWriteError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ServerCouldNotWriteError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotWriteError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1520,9 +1520,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.ServerCouldNotWriteError.sdkStatus">
-<tt class="descclassname">ServerCouldNotWriteError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotWriteError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServerCouldNotWriteError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.ServerCouldNotWriteError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1531,27 +1531,27 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.ServerDidNotProvideCertificateError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ServerDidNotProvideCertificateError</tt><a class="headerlink" href="#pyuaf.util.errors.ServerDidNotProvideCertificateError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ServerDidNotProvideCertificateError</code><a class="headerlink" href="#pyuaf.util.errors.ServerDidNotProvideCertificateError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.ServiceError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">ServiceError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.ServiceError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">ServiceError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.ServiceError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.SessionNotConnectedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">SessionNotConnectedError</tt><a class="headerlink" href="#pyuaf.util.errors.SessionNotConnectedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">SessionNotConnectedError</code><a class="headerlink" href="#pyuaf.util.errors.SessionNotConnectedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.SessionSecuritySettingsDontMatchEndpointError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">SessionSecuritySettingsDontMatchEndpointError</tt><a class="headerlink" href="#pyuaf.util.errors.SessionSecuritySettingsDontMatchEndpointError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">SessionSecuritySettingsDontMatchEndpointError</code><a class="headerlink" href="#pyuaf.util.errors.SessionSecuritySettingsDontMatchEndpointError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.SetMonitoringModeInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">SetMonitoringModeInvocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.SetMonitoringModeInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">SetMonitoringModeInvocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.SetMonitoringModeInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1559,9 +1559,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.SetMonitoringModeInvocationError.sdkStatus">
-<tt class="descclassname">SetMonitoringModeInvocationError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.SetMonitoringModeInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">SetMonitoringModeInvocationError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.SetMonitoringModeInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1570,7 +1570,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.SetPublishingModeInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">SetPublishingModeInvocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.SetPublishingModeInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">SetPublishingModeInvocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.SetPublishingModeInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1578,9 +1578,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.SetPublishingModeInvocationError.sdkStatus">
-<tt class="descclassname">SetPublishingModeInvocationError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.SetPublishingModeInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">SetPublishingModeInvocationError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.SetPublishingModeInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1589,27 +1589,27 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.SubscriptionError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">SubscriptionError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.SubscriptionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">SubscriptionError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.SubscriptionError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.SubscriptionHasBeenDeletedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">SubscriptionHasBeenDeletedError</tt><a class="headerlink" href="#pyuaf.util.errors.SubscriptionHasBeenDeletedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">SubscriptionHasBeenDeletedError</code><a class="headerlink" href="#pyuaf.util.errors.SubscriptionHasBeenDeletedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.SubscriptionNotCreatedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">SubscriptionNotCreatedError</tt><a class="headerlink" href="#pyuaf.util.errors.SubscriptionNotCreatedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">SubscriptionNotCreatedError</code><a class="headerlink" href="#pyuaf.util.errors.SubscriptionNotCreatedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.SyncInvocationNotSupportedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">SyncInvocationNotSupportedError</tt><a class="headerlink" href="#pyuaf.util.errors.SyncInvocationNotSupportedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">SyncInvocationNotSupportedError</code><a class="headerlink" href="#pyuaf.util.errors.SyncInvocationNotSupportedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.TargetRankOutOfBoundsError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">TargetRankOutOfBoundsError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.TargetRankOutOfBoundsError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">TargetRankOutOfBoundsError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.TargetRankOutOfBoundsError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1617,17 +1617,17 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.TargetRankOutOfBoundsError.noOfTargets">
-<tt class="descclassname">TargetRankOutOfBoundsError.</tt><tt class="descname">noOfTargets</tt><a class="headerlink" href="#pyuaf.util.errors.TargetRankOutOfBoundsError.noOfTargets" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">TargetRankOutOfBoundsError.</code><code class="descname">noOfTargets</code><a class="headerlink" href="#pyuaf.util.errors.TargetRankOutOfBoundsError.noOfTargets" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">int</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">int</span></code></li>
 </ul>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.errors.TargetRankOutOfBoundsError.targetRank">
-<tt class="descclassname">TargetRankOutOfBoundsError.</tt><tt class="descname">targetRank</tt><a class="headerlink" href="#pyuaf.util.errors.TargetRankOutOfBoundsError.targetRank" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">TargetRankOutOfBoundsError.</code><code class="descname">targetRank</code><a class="headerlink" href="#pyuaf.util.errors.TargetRankOutOfBoundsError.targetRank" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">int</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">int</span></code></li>
 </ul>
 </dd></dl>
 
@@ -1636,12 +1636,12 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.TimeoutError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">TimeoutError</tt><a class="headerlink" href="#pyuaf.util.errors.TimeoutError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">TimeoutError</code><a class="headerlink" href="#pyuaf.util.errors.TimeoutError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.TranslateBrowsePathsToNodeIdsInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">TranslateBrowsePathsToNodeIdsInvocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.TranslateBrowsePathsToNodeIdsInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">TranslateBrowsePathsToNodeIdsInvocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.TranslateBrowsePathsToNodeIdsInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1649,9 +1649,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.TranslateBrowsePathsToNodeIdsInvocationError.sdkStatus">
-<tt class="descclassname">TranslateBrowsePathsToNodeIdsInvocationError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.TranslateBrowsePathsToNodeIdsInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">TranslateBrowsePathsToNodeIdsInvocationError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.TranslateBrowsePathsToNodeIdsInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1660,17 +1660,17 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt>
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UafError</tt><big>(</big><em>*args</em><big>)</big></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">UafError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.UnexpectedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UnexpectedError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UnexpectedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">UnexpectedError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.UnexpectedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.UnknownClientConnectionIdError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UnknownClientConnectionIdError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UnknownClientConnectionIdError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">UnknownClientConnectionIdError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.UnknownClientConnectionIdError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1678,9 +1678,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.UnknownClientConnectionIdError.unknownClientConnectionId">
-<tt class="descclassname">UnknownClientConnectionIdError.</tt><tt class="descname">unknownClientConnectionId</tt><a class="headerlink" href="#pyuaf.util.errors.UnknownClientConnectionIdError.unknownClientConnectionId" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">UnknownClientConnectionIdError.</code><code class="descname">unknownClientConnectionId</code><a class="headerlink" href="#pyuaf.util.errors.UnknownClientConnectionIdError.unknownClientConnectionId" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">int</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">int</span></code></li>
 </ul>
 </dd></dl>
 
@@ -1689,7 +1689,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.UnknownClientHandleError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UnknownClientHandleError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UnknownClientHandleError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">UnknownClientHandleError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.UnknownClientHandleError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1697,9 +1697,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.UnknownClientHandleError.unknownClientHandle">
-<tt class="descclassname">UnknownClientHandleError.</tt><tt class="descname">unknownClientHandle</tt><a class="headerlink" href="#pyuaf.util.errors.UnknownClientHandleError.unknownClientHandle" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">UnknownClientHandleError.</code><code class="descname">unknownClientHandle</code><a class="headerlink" href="#pyuaf.util.errors.UnknownClientHandleError.unknownClientHandle" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">int</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">int</span></code></li>
 </ul>
 </dd></dl>
 
@@ -1708,7 +1708,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.UnknownClientSubscriptionHandleError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UnknownClientSubscriptionHandleError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UnknownClientSubscriptionHandleError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">UnknownClientSubscriptionHandleError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.UnknownClientSubscriptionHandleError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1716,9 +1716,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.UnknownClientSubscriptionHandleError.unknownClientSubscriptionHandle">
-<tt class="descclassname">UnknownClientSubscriptionHandleError.</tt><tt class="descname">unknownClientSubscriptionHandle</tt><a class="headerlink" href="#pyuaf.util.errors.UnknownClientSubscriptionHandleError.unknownClientSubscriptionHandle" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">UnknownClientSubscriptionHandleError.</code><code class="descname">unknownClientSubscriptionHandle</code><a class="headerlink" href="#pyuaf.util.errors.UnknownClientSubscriptionHandleError.unknownClientSubscriptionHandle" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">int</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">int</span></code></li>
 </ul>
 </dd></dl>
 
@@ -1727,12 +1727,12 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.UnknownHandleError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UnknownHandleError</tt><a class="headerlink" href="#pyuaf.util.errors.UnknownHandleError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">UnknownHandleError</code><a class="headerlink" href="#pyuaf.util.errors.UnknownHandleError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.UnknownNamespaceIndexAndServerIndexError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UnknownNamespaceIndexAndServerIndexError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceIndexAndServerIndexError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">UnknownNamespaceIndexAndServerIndexError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceIndexAndServerIndexError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1740,17 +1740,17 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.UnknownNamespaceIndexAndServerIndexError.unknownNamespaceIndex">
-<tt class="descclassname">UnknownNamespaceIndexAndServerIndexError.</tt><tt class="descname">unknownNamespaceIndex</tt><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceIndexAndServerIndexError.unknownNamespaceIndex" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">UnknownNamespaceIndexAndServerIndexError.</code><code class="descname">unknownNamespaceIndex</code><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceIndexAndServerIndexError.unknownNamespaceIndex" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">long</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">long</span></code></li>
 </ul>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.errors.UnknownNamespaceIndexAndServerIndexError.unknownServerIndex">
-<tt class="descclassname">UnknownNamespaceIndexAndServerIndexError.</tt><tt class="descname">unknownServerIndex</tt><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceIndexAndServerIndexError.unknownServerIndex" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">UnknownNamespaceIndexAndServerIndexError.</code><code class="descname">unknownServerIndex</code><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceIndexAndServerIndexError.unknownServerIndex" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">int</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">int</span></code></li>
 </ul>
 </dd></dl>
 
@@ -1759,7 +1759,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.UnknownNamespaceIndexError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UnknownNamespaceIndexError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceIndexError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">UnknownNamespaceIndexError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceIndexError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1767,9 +1767,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.UnknownNamespaceIndexError.unknownNamespaceIndex">
-<tt class="descclassname">UnknownNamespaceIndexError.</tt><tt class="descname">unknownNamespaceIndex</tt><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceIndexError.unknownNamespaceIndex" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">UnknownNamespaceIndexError.</code><code class="descname">unknownNamespaceIndex</code><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceIndexError.unknownNamespaceIndex" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">long</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">long</span></code></li>
 </ul>
 </dd></dl>
 
@@ -1778,7 +1778,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.UnknownNamespaceUriError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UnknownNamespaceUriError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceUriError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">UnknownNamespaceUriError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceUriError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1786,25 +1786,25 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.UnknownNamespaceUriError.nameSpaceMap">
-<tt class="descclassname">UnknownNamespaceUriError.</tt><tt class="descname">nameSpaceMap</tt><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceUriError.nameSpaceMap" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">UnknownNamespaceUriError.</code><code class="descname">nameSpaceMap</code><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceUriError.nameSpaceMap" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">SwigPyObject</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">SwigPyObject</span></code></li>
 </ul>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.errors.UnknownNamespaceUriError.nameSpaceMapString">
-<tt class="descclassname">UnknownNamespaceUriError.</tt><tt class="descname">nameSpaceMapString</tt><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceUriError.nameSpaceMapString" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">UnknownNamespaceUriError.</code><code class="descname">nameSpaceMapString</code><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceUriError.nameSpaceMapString" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">str</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">str</span></code></li>
 </ul>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.errors.UnknownNamespaceUriError.unknownNamespaceUri">
-<tt class="descclassname">UnknownNamespaceUriError.</tt><tt class="descname">unknownNamespaceUri</tt><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceUriError.unknownNamespaceUri" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">UnknownNamespaceUriError.</code><code class="descname">unknownNamespaceUri</code><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceUriError.unknownNamespaceUri" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">str</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">str</span></code></li>
 </ul>
 </dd></dl>
 
@@ -1813,7 +1813,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.UnknownServerError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UnknownServerError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UnknownServerError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">UnknownServerError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.UnknownServerError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1821,17 +1821,17 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.UnknownServerError.knownServerUris">
-<tt class="descclassname">UnknownServerError.</tt><tt class="descname">knownServerUris</tt><a class="headerlink" href="#pyuaf.util.errors.UnknownServerError.knownServerUris" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">UnknownServerError.</code><code class="descname">knownServerUris</code><a class="headerlink" href="#pyuaf.util.errors.UnknownServerError.knownServerUris" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.StringVector" title="pyuaf.util.StringVector"><tt class="xref py py-class docutils literal"><span class="pre">StringVector</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.StringVector" title="pyuaf.util.StringVector"><code class="xref py py-class docutils literal"><span class="pre">StringVector</span></code></a></li>
 </ul>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.errors.UnknownServerError.unknownServerUri">
-<tt class="descclassname">UnknownServerError.</tt><tt class="descname">unknownServerUri</tt><a class="headerlink" href="#pyuaf.util.errors.UnknownServerError.unknownServerUri" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">UnknownServerError.</code><code class="descname">unknownServerUri</code><a class="headerlink" href="#pyuaf.util.errors.UnknownServerError.unknownServerUri" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">str</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">str</span></code></li>
 </ul>
 </dd></dl>
 
@@ -1840,7 +1840,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.UnknownServerIndexError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UnknownServerIndexError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UnknownServerIndexError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">UnknownServerIndexError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.UnknownServerIndexError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1848,9 +1848,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.UnknownServerIndexError.unknownServerIndex">
-<tt class="descclassname">UnknownServerIndexError.</tt><tt class="descname">unknownServerIndex</tt><a class="headerlink" href="#pyuaf.util.errors.UnknownServerIndexError.unknownServerIndex" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">UnknownServerIndexError.</code><code class="descname">unknownServerIndex</code><a class="headerlink" href="#pyuaf.util.errors.UnknownServerIndexError.unknownServerIndex" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <tt class="docutils literal"><span class="pre">int</span></tt></li>
+<li>type: <code class="docutils literal"><span class="pre">int</span></code></li>
 </ul>
 </dd></dl>
 
@@ -1859,17 +1859,17 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.UnsupportedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UnsupportedError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.UnsupportedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">UnsupportedError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.UnsupportedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.UnsupportedNodeIdIdentifierTypeError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">UnsupportedNodeIdIdentifierTypeError</tt><a class="headerlink" href="#pyuaf.util.errors.UnsupportedNodeIdIdentifierTypeError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">UnsupportedNodeIdIdentifierTypeError</code><a class="headerlink" href="#pyuaf.util.errors.UnsupportedNodeIdIdentifierTypeError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.errors.WriteCompleteError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">WriteCompleteError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.WriteCompleteError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">WriteCompleteError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.WriteCompleteError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1877,9 +1877,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.WriteCompleteError.sdkStatus">
-<tt class="descclassname">WriteCompleteError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.WriteCompleteError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">WriteCompleteError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.WriteCompleteError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1888,7 +1888,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.WriteInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">WriteInvocationError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.WriteInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">WriteInvocationError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.WriteInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <ul>
@@ -1896,9 +1896,9 @@ When an error has attributes, these attributes (name and type) are displayed too
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.errors.WriteInvocationError.sdkStatus">
-<tt class="descclassname">WriteInvocationError.</tt><tt class="descname">sdkStatus</tt><a class="headerlink" href="#pyuaf.util.errors.WriteInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">WriteInvocationError.</code><code class="descname">sdkStatus</code><a class="headerlink" href="#pyuaf.util.errors.WriteInvocationError.sdkStatus" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><tt class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></tt></a></li>
+<li>type: <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></li>
 </ul>
 </dd></dl>
 
@@ -1907,7 +1907,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 </ul>
 <dl class="class">
 <dt id="pyuaf.util.errors.WrongTypeError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.errors.</tt><tt class="descname">WrongTypeError</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.util.errors.WrongTypeError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.errors.</code><code class="descname">WrongTypeError</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.errors.WrongTypeError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -1917,14 +1917,14 @@ When an error has attributes, these attributes (name and type) are displayed too
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/uaf_logo_200x67_transparent.png" alt="Logo"/>
             </a></p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">pyuaf.util.errors</span></tt></a><ul>
+<li><a class="reference internal" href="#"><code class="docutils literal"><span class="pre">pyuaf.util.errors</span></code></a><ul>
 <li><a class="reference internal" href="#inheritance-tree-of-all-uaf-errors">Inheritance tree of all UAF errors</a></li>
 <li><a class="reference internal" href="#class-uaferror"><em>class</em> UafError</a></li>
 <li><a class="reference internal" href="#subclasses-of-uaferror"><em>Subclasses of UafError</em></a></li>
@@ -1934,16 +1934,18 @@ When an error has attributes, these attributes (name and type) are displayed too
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="api_pyuaf_util_constants.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">pyuaf.util.constants</span></tt></a></p>
+                        title="previous chapter"><code class="docutils literal"><span class="pre">pyuaf.util.constants</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="api_pyuaf_util_loglevels.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.util.loglevels</span></tt></a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/api_pyuaf_util_errors.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+                        title="next chapter"><code class="docutils literal"><span class="pre">pyuaf.util.loglevels</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api_pyuaf_util_errors.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -1960,7 +1962,7 @@ When an error has attributes, these attributes (name and type) are displayed too
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -1975,10 +1977,10 @@ When an error has attributes, these attributes (name and type) are displayed too
         <li class="right" >
           <a href="api_pyuaf_util_constants.html" title="pyuaf.util.constants"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 2.0.2 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Wim Pessemier (Institute for Astronomy, KU Leuven) - http://github.com/uaf.
     </div>
   </body>

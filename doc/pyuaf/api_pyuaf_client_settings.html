@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client.settings &mdash; PyUAF 2.0.2 documentation</title>
+    <title>pyuaf.client.settings &mdash; PyUAF 2.0.3 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.2',
+        VERSION:     '2.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,12 +23,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.0.2 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.0.3 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.sessionstates" href="api_pyuaf_client_sessionstates.html" />
     <link rel="prev" title="pyuaf.client.results" href="api_pyuaf_client_results.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,37 +43,37 @@
         <li class="right" >
           <a href="api_pyuaf_client_results.html" title="pyuaf.client.results"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 2.0.2 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="module-pyuaf.client.settings">
-<span id="pyuaf-client-settings"></span><h1><tt class="docutils literal"><span class="pre">pyuaf.client.settings</span></tt><a class="headerlink" href="#module-pyuaf.client.settings" title="Permalink to this headline">¶</a></h1>
+<span id="pyuaf-client-settings"></span><h1><code class="docutils literal"><span class="pre">pyuaf.client.settings</span></code><a class="headerlink" href="#module-pyuaf.client.settings" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="class-servicesettings">
 <h2><em>class</em> ServiceSettings<a class="headerlink" href="#class-servicesettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.ServiceSettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">ServiceSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.ServiceSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A ServiceSettings object is the superclass of <a class="reference internal" href="#pyuaf.client.settings.ReadSettings" title="pyuaf.client.settings.ReadSettings"><tt class="xref py py-class docutils literal"><span class="pre">ReadSettings</span></tt></a>,
-<a class="reference internal" href="#pyuaf.client.settings.WriteSettings" title="pyuaf.client.settings.WriteSettings"><tt class="xref py py-class docutils literal"><span class="pre">WriteSettings</span></tt></a>, etc.</p>
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">ServiceSettings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.ServiceSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A ServiceSettings object is the superclass of <a class="reference internal" href="#pyuaf.client.settings.ReadSettings" title="pyuaf.client.settings.ReadSettings"><code class="xref py py-class docutils literal"><span class="pre">ReadSettings</span></code></a>,
+<a class="reference internal" href="#pyuaf.client.settings.WriteSettings" title="pyuaf.client.settings.WriteSettings"><code class="xref py py-class docutils literal"><span class="pre">WriteSettings</span></code></a>, etc.</p>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.client.settings.ServiceSettings.__init__">
-<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.ServiceSettings.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.ServiceSettings.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new ServiceSettings object.</p>
 <p>The default callTimeoutSec is 1 second.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyuaf.client.settings.ServiceSettings.__str__">
-<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.ServiceSettings.__str__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.ServiceSettings.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the settings.</p>
 </dd></dl>
 
@@ -83,9 +83,9 @@
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.ServiceSettings.callTimeoutSec">
-<tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<code class="descname">callTimeoutSec</code><a class="headerlink" href="#pyuaf.client.settings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
-in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -98,33 +98,33 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
 <h2><em>class</em> BrowseNextSettings<a class="headerlink" href="#class-browsenextsettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.BrowseNextSettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">BrowseNextSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.BrowseNextSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A BrowseNextSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">BrowseNextSettings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.BrowseNextSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A BrowseNextSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a> and
 defines some properties of an OPC UA BrowseNext service invocation.</p>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.client.settings.BrowseNextSettings.__init__">
-<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.BrowseNextSettings.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.BrowseNextSettings.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new BrowseNextSettings object.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyuaf.client.settings.BrowseNextSettings.pyuaf.client.settings.BrowseNextSettings.__str__">
-<tt class="descclassname">pyuaf.client.settings.BrowseNextSettings.</tt><tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.BrowseNextSettings.pyuaf.client.settings.BrowseNextSettings.__str__" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyuaf.client.settings.BrowseNextSettings.</code><code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.BrowseNextSettings.pyuaf.client.settings.BrowseNextSettings.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the settings.</p>
 </dd></dl>
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a>:</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.BrowseNextSettings.ServiceSettings.callTimeoutSec">
-<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.BrowseNextSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServiceSettings.</code><code class="descname">callTimeoutSec</code><a class="headerlink" href="#pyuaf.client.settings.BrowseNextSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
-in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -133,9 +133,9 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.BrowseNextSettings.releaseContinuationPoints">
-<tt class="descname">releaseContinuationPoints</tt><a class="headerlink" href="#pyuaf.client.settings.BrowseNextSettings.releaseContinuationPoints" title="Permalink to this definition">¶</a></dt>
-<dd><p>A <tt class="docutils literal"><span class="pre">bool</span></tt> indicating if the memory associated with the continuation point in the
-server should be released (<tt class="docutils literal"><span class="pre">True</span></tt>) or not (<tt class="docutils literal"><span class="pre">False</span></tt>).</p>
+<code class="descname">releaseContinuationPoints</code><a class="headerlink" href="#pyuaf.client.settings.BrowseNextSettings.releaseContinuationPoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <code class="docutils literal"><span class="pre">bool</span></code> indicating if the memory associated with the continuation point in the
+server should be released (<code class="docutils literal"><span class="pre">True</span></code>) or not (<code class="docutils literal"><span class="pre">False</span></code>).</p>
 </dd></dl>
 
 </div></blockquote>
@@ -148,33 +148,33 @@ server should be released (<tt class="docutils literal"><span class="pre">True</
 <h2><em>class</em> BrowseSettings<a class="headerlink" href="#class-browsesettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.BrowseSettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">BrowseSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A BrowseSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">BrowseSettings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A BrowseSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a> and
 defines some properties of an OPC UA Browse service invocation.</p>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.client.settings.BrowseSettings.__init__">
-<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new BrowseSettings object.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyuaf.client.settings.BrowseSettings.pyuaf.client.settings.BrowseSettings.__str__">
-<tt class="descclassname">pyuaf.client.settings.BrowseSettings.</tt><tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings.pyuaf.client.settings.BrowseSettings.__str__" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyuaf.client.settings.BrowseSettings.</code><code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings.pyuaf.client.settings.BrowseSettings.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the settings.</p>
 </dd></dl>
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a>:</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.BrowseSettings.ServiceSettings.callTimeoutSec">
-<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServiceSettings.</code><code class="descname">callTimeoutSec</code><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
-in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -183,23 +183,23 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.BrowseSettings.maxReferencesToReturn">
-<tt class="descname">maxReferencesToReturn</tt><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings.maxReferencesToReturn" title="Permalink to this definition">¶</a></dt>
-<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt>: the maximum number of references to return. Default is 0,
+<code class="descname">maxReferencesToReturn</code><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings.maxReferencesToReturn" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <code class="docutils literal"><span class="pre">int</span></code>: the maximum number of references to return. Default is 0,
 which means that the client is not imposing a limitation.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.BrowseSettings.view">
-<tt class="descname">view</tt><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings.view" title="Permalink to this definition">¶</a></dt>
-<dd><p>Attribute of type <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.ViewDescription" title="pyuaf.util.ViewDescription"><tt class="xref py py-class docutils literal"><span class="pre">ViewDescription</span></tt></a> that specifies
+<code class="descname">view</code><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings.view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attribute of type <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.ViewDescription" title="pyuaf.util.ViewDescription"><code class="xref py py-class docutils literal"><span class="pre">ViewDescription</span></code></a> that specifies
 the View to browse. Don&#8217;t touch if you want to browse the whole address
 space without restrictions.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.BrowseSettings.maxAutoBrowseNext">
-<tt class="descname">maxAutoBrowseNext</tt><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings.maxAutoBrowseNext" title="Permalink to this definition">¶</a></dt>
-<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> defined by the UAF, to indicate how many times the UAF may automatically
+<code class="descname">maxAutoBrowseNext</code><a class="headerlink" href="#pyuaf.client.settings.BrowseSettings.maxAutoBrowseNext" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <code class="docutils literal"><span class="pre">int</span></code> defined by the UAF, to indicate how many times the UAF may automatically
 call the BrowseNext service. Default = 0, which means that there will be no
 BrowseNext being called automatically. But if you put this value to e.g. 10, then you
 can very easily browse large address spaces since you don&#8217;t have to call BrowseNext
@@ -217,8 +217,8 @@ UAF client will stop processing the request after 10 BrowseNext calls).</p>
 <h2><em>class</em> ClientSettings<a class="headerlink" href="#class-clientsettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.ClientSettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">ClientSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.ClientSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A ClientSettings object stores the settings of a <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client" title="pyuaf.client.Client"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.Client</span></tt></a>.</p>
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">ClientSettings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.ClientSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A ClientSettings object stores the settings of a <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client" title="pyuaf.client.Client"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.Client</span></code></a>.</p>
 <p>Usage example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pyuaf</span>
 
@@ -245,19 +245,19 @@ UAF client will stop processing the request after 10 BrowseNext calls).</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.client.settings.ClientSettings.__init__">
-<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct a new ClientSettings object.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyuaf.client.settings.ClientSettings.__str__">
-<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.__str__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the settings.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyuaf.client.settings.ClientSettings.createSecurityLocations">
-<tt class="descname">createSecurityLocations</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.createSecurityLocations" title="Permalink to this definition">¶</a></dt>
+<code class="descname">createSecurityLocations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.createSecurityLocations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create the security locations (directories).</p>
 <p>These locations will be created (if they don&#8217;t exist already):</p>
 <ul class="simple">
@@ -276,7 +276,7 @@ UAF client will stop processing the request after 10 BrowseNext calls).</p>
 A Bad status if some location could not be created (e.g. due to wrong
 permissions).</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">Status</span></tt></a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><code class="xref py py-class docutils literal"><span class="pre">Status</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -291,26 +291,26 @@ permissions).</td>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.applicationName">
-<tt class="descname">applicationName</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.applicationName" title="Permalink to this definition">¶</a></dt>
-<dd><p>The application name of the client (as a <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+<code class="descname">applicationName</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.applicationName" title="Permalink to this definition">¶</a></dt>
+<dd><p>The application name of the client (as a <code class="docutils literal"><span class="pre">str</span></code>).</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.applicationUri">
-<tt class="descname">applicationUri</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.applicationUri" title="Permalink to this definition">¶</a></dt>
-<dd><p>The unique application URI of the client (as a <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+<code class="descname">applicationUri</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.applicationUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>The unique application URI of the client (as a <code class="docutils literal"><span class="pre">str</span></code>).</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.productUri">
-<tt class="descname">productUri</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.productUri" title="Permalink to this definition">¶</a></dt>
-<dd><p>The unique product URI of the client (as a <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+<code class="descname">productUri</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.productUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>The unique product URI of the client (as a <code class="docutils literal"><span class="pre">str</span></code>).</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.localeId">
-<tt class="descname">localeId</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.localeId" title="Permalink to this definition">¶</a></dt>
-<dd><p>The Locale identifier (e.g. &#8220;en&#8221;, &#8220;de&#8221;, &#8220;en-US&#8221;, ...) (as a <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+<code class="descname">localeId</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.localeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Locale identifier (e.g. &#8220;en&#8221;, &#8220;de&#8221;, &#8220;en-US&#8221;, ...) (as a <code class="docutils literal"><span class="pre">str</span></code>).</p>
 </dd></dl>
 
 </div></blockquote>
@@ -319,16 +319,16 @@ permissions).</td>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.logToStdOutLevel">
-<tt class="descname">logToStdOutLevel</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.logToStdOutLevel" title="Permalink to this definition">¶</a></dt>
+<code class="descname">logToStdOutLevel</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.logToStdOutLevel" title="Permalink to this definition">¶</a></dt>
 <dd><p>When logging to the stdout, only log messages from at least this loglevel.
-The loglevels are of type <tt class="docutils literal"><span class="pre">int</span></tt>, as defined in <a class="reference internal" href="api_pyuaf_util_loglevels.html#module-pyuaf.util.loglevels" title="pyuaf.util.loglevels"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.loglevels</span></tt></a>.</p>
+The loglevels are of type <code class="docutils literal"><span class="pre">int</span></code>, as defined in <a class="reference internal" href="api_pyuaf_util_loglevels.html#module-pyuaf.util.loglevels" title="pyuaf.util.loglevels"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.loglevels</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.logToCallbackLevel">
-<tt class="descname">logToCallbackLevel</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.logToCallbackLevel" title="Permalink to this definition">¶</a></dt>
+<code class="descname">logToCallbackLevel</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.logToCallbackLevel" title="Permalink to this definition">¶</a></dt>
 <dd><p>When logging to the callback interface, only log messages from at least this loglevel.
-The loglevels are of type <tt class="docutils literal"><span class="pre">int</span></tt>, as defined in <a class="reference internal" href="api_pyuaf_util_loglevels.html#module-pyuaf.util.loglevels" title="pyuaf.util.loglevels"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.loglevels</span></tt></a>.</p>
+The loglevels are of type <code class="docutils literal"><span class="pre">int</span></code>, as defined in <a class="reference internal" href="api_pyuaf_util_loglevels.html#module-pyuaf.util.loglevels" title="pyuaf.util.loglevels"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.loglevels</span></code></a>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -337,29 +337,29 @@ The loglevels are of type <tt class="docutils literal"><span class="pre">int</sp
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.discoveryUrls">
-<tt class="descname">discoveryUrls</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.discoveryUrls" title="Permalink to this definition">¶</a></dt>
+<code class="descname">discoveryUrls</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.discoveryUrls" title="Permalink to this definition">¶</a></dt>
 <dd><p>The list of URLs to be used by the client to discover servers
-(as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.StringVector" title="pyuaf.util.StringVector"><tt class="xref py py-class docutils literal"><span class="pre">StringVector</span></tt></a>, which can be treated more or less
-as a <tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">str</span></tt>).</p>
+(as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.StringVector" title="pyuaf.util.StringVector"><code class="xref py py-class docutils literal"><span class="pre">StringVector</span></code></a>, which can be treated more or less
+as a <code class="docutils literal"><span class="pre">list</span></code> of <code class="docutils literal"><span class="pre">str</span></code>).</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.discoveryFindServersTimeoutSec">
-<tt class="descname">discoveryFindServersTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.discoveryFindServersTimeoutSec" title="Permalink to this definition">¶</a></dt>
-<dd><p>The timeout value for the FindServers discovery service, in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+<code class="descname">discoveryFindServersTimeoutSec</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.discoveryFindServersTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<dd><p>The timeout value for the FindServers discovery service, in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.discoveryGetEndpointsTimeoutSec">
-<tt class="descname">discoveryGetEndpointsTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.discoveryGetEndpointsTimeoutSec" title="Permalink to this definition">¶</a></dt>
-<dd><p>The timeout value for the GetEndpoints discovery service, in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+<code class="descname">discoveryGetEndpointsTimeoutSec</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.discoveryGetEndpointsTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<dd><p>The timeout value for the GetEndpoints discovery service, in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.discoveryIntervalSec">
-<tt class="descname">discoveryIntervalSec</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.discoveryIntervalSec" title="Permalink to this definition">¶</a></dt>
+<code class="descname">discoveryIntervalSec</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.discoveryIntervalSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The interval between discovery attempts which are continuously running in the
-background, in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+background, in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -368,8 +368,8 @@ background, in seconds, as a <tt class="docutils literal"><span class="pre">floa
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.certificateTrustListLocation">
-<tt class="descname">certificateTrustListLocation</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.certificateTrustListLocation" title="Permalink to this definition">¶</a></dt>
-<dd><p>The trust list location as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+<code class="descname">certificateTrustListLocation</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.certificateTrustListLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The trust list location as a <code class="docutils literal"><span class="pre">str</span></code>.</p>
 <p>This directory can be specified either as an absolute path, or as a path relative to
 the application path.</p>
 <p>Default: &#8220;PKI/trusted/certs/&#8221;.</p>
@@ -377,8 +377,8 @@ the application path.</p>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.certificateRevocationListLocation">
-<tt class="descname">certificateRevocationListLocation</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.certificateRevocationListLocation" title="Permalink to this definition">¶</a></dt>
-<dd><p>The revocation list location as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+<code class="descname">certificateRevocationListLocation</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.certificateRevocationListLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The revocation list location as a <code class="docutils literal"><span class="pre">str</span></code>.</p>
 <p>This directory can be specified either as an absolute path, or as a path relative to
 the application path.</p>
 <p>Default: &#8220;PKI/trusted/crl/&#8221;.</p>
@@ -386,8 +386,8 @@ the application path.</p>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.issuersCertificatesLocation">
-<tt class="descname">issuersCertificatesLocation</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.issuersCertificatesLocation" title="Permalink to this definition">¶</a></dt>
-<dd><p>The issuers certificates location as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+<code class="descname">issuersCertificatesLocation</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.issuersCertificatesLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The issuers certificates location as a <code class="docutils literal"><span class="pre">str</span></code>.</p>
 <p>This directory can be specified either as an absolute path, or as a path relative to
 the application path.</p>
 <p>Default: &#8220;PKI/issuers/certs/&#8221;.</p>
@@ -395,8 +395,8 @@ the application path.</p>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.issuersRevocationListLocation">
-<tt class="descname">issuersRevocationListLocation</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.issuersRevocationListLocation" title="Permalink to this definition">¶</a></dt>
-<dd><p>The issuers revocation list location as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+<code class="descname">issuersRevocationListLocation</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.issuersRevocationListLocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>The issuers revocation list location as a <code class="docutils literal"><span class="pre">str</span></code>.</p>
 <p>This directory can be specified either as an absolute path, or as a path relative to
 the application path.</p>
 <p>Default: &#8220;PKI/issuers/crl/&#8221;.</p>
@@ -404,17 +404,17 @@ the application path.</p>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.createSecurityLocationsIfNeeded">
-<tt class="descname">createSecurityLocationsIfNeeded</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.createSecurityLocationsIfNeeded" title="Permalink to this definition">¶</a></dt>
-<dd><p>A <tt class="docutils literal"><span class="pre">bool</span></tt> to automatically create the security-related directories if they don&#8217;t
+<code class="descname">createSecurityLocationsIfNeeded</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.createSecurityLocationsIfNeeded" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <code class="docutils literal"><span class="pre">bool</span></code> to automatically create the security-related directories if they don&#8217;t
 exist yet, or not.</p>
-<p>The following directories will be created <em>if</em> this boolean is <tt class="docutils literal"><span class="pre">True</span></tt> and <em>if</em>
+<p>The following directories will be created <em>if</em> this boolean is <code class="docutils literal"><span class="pre">True</span></code> and <em>if</em>
 the UAF needs to connect to a secured endpoint and <em>if</em> these directories don&#8217;t
 exist already:
 - certificateTrustListLocation
 - certificateRevocationListLocation
 - issuersCertificatesLocation
 - issuersRevocationListLocation</p>
-<p>If this boolean is <tt class="docutils literal"><span class="pre">False</span></tt> and the UAF needs to connect to a secured endpoint,
+<p>If this boolean is <code class="docutils literal"><span class="pre">False</span></code> and the UAF needs to connect to a secured endpoint,
 the UAF will simply check if the above directories exist. If they don&#8217;t exist,
 the connection will fail and you&#8217;ll get an exception.</p>
 <p>Default: True</p>
@@ -422,8 +422,8 @@ the connection will fail and you&#8217;ll get an exception.</p>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.clientPrivateKey">
-<tt class="descname">clientPrivateKey</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.clientPrivateKey" title="Permalink to this definition">¶</a></dt>
-<dd><p>The private key of this client application as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+<code class="descname">clientPrivateKey</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.clientPrivateKey" title="Permalink to this definition">¶</a></dt>
+<dd><p>The private key of this client application as a <code class="docutils literal"><span class="pre">str</span></code>.</p>
 <p>This file can be specified either as an absolute path, or as a path relative to
 the application path.</p>
 <p>Default: &#8220;PKI/client/private/client.pem&#8221;.</p>
@@ -431,8 +431,8 @@ the application path.</p>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.clientCertificate">
-<tt class="descname">clientCertificate</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.clientCertificate" title="Permalink to this definition">¶</a></dt>
-<dd><p>The certificate of this client application as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+<code class="descname">clientCertificate</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.clientCertificate" title="Permalink to this definition">¶</a></dt>
+<dd><p>The certificate of this client application as a <code class="docutils literal"><span class="pre">str</span></code>.</p>
 <p>This file can be specified either as an absolute path, or as a path relative to
 the application path.</p>
 <p>Default: &#8220;PKI/client/certs/client.der&#8221;.</p>
@@ -444,30 +444,30 @@ the application path.</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.defaultSessionSettings">
-<tt class="descname">defaultSessionSettings</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultSessionSettings" title="Permalink to this definition">¶</a></dt>
+<code class="descname">defaultSessionSettings</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultSessionSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>These default settings will be used to create the sessions to servers,
 unless these servers have their URI mentioned in specificSessionSettings map
 (see next attribute).
-Type is <a class="reference internal" href="#pyuaf.client.settings.SessionSettings" title="pyuaf.client.settings.SessionSettings"><tt class="xref py py-class docutils literal"><span class="pre">SessionSettings</span></tt></a>.</p>
+Type is <a class="reference internal" href="#pyuaf.client.settings.SessionSettings" title="pyuaf.client.settings.SessionSettings"><code class="xref py py-class docutils literal"><span class="pre">SessionSettings</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.specificSessionSettings">
-<tt class="descname">specificSessionSettings</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.specificSessionSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A container that maps &lt;server URIs&gt; (of type <tt class="docutils literal"><span class="pre">str</span></tt>) to &lt;session settings&gt; (of
-type <a class="reference internal" href="#pyuaf.client.settings.SessionSettings" title="pyuaf.client.settings.SessionSettings"><tt class="xref py py-class docutils literal"><span class="pre">SessionSettings</span></tt></a>).</p>
+<code class="descname">specificSessionSettings</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.specificSessionSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A container that maps &lt;server URIs&gt; (of type <code class="docutils literal"><span class="pre">str</span></code>) to &lt;session settings&gt; (of
+type <a class="reference internal" href="#pyuaf.client.settings.SessionSettings" title="pyuaf.client.settings.SessionSettings"><code class="xref py py-class docutils literal"><span class="pre">SessionSettings</span></code></a>).</p>
 <p>When sessions need to be created to a server, the UAF will first check if the URI of
 this server is specified by this container. If so, then the corresponding &#8220;specific&#8221;
 session settings will be used. If not, then the
-<a class="reference internal" href="#pyuaf.client.settings.ClientSettings.defaultSessionSettings" title="pyuaf.client.settings.ClientSettings.defaultSessionSettings"><tt class="xref py py-attr docutils literal"><span class="pre">defaultSessionSettings</span></tt></a>: will be used.
-This attribute is a <a class="reference internal" href="#pyuaf.client.settings.SpecificSessionSettings" title="pyuaf.client.settings.SpecificSessionSettings"><tt class="xref py py-class docutils literal"><span class="pre">SpecificSessionSettings</span></tt></a> instance.</p>
+<a class="reference internal" href="#pyuaf.client.settings.ClientSettings.defaultSessionSettings" title="pyuaf.client.settings.ClientSettings.defaultSessionSettings"><code class="xref py py-attr docutils literal"><span class="pre">defaultSessionSettings</span></code></a>: will be used.
+This attribute is a <a class="reference internal" href="#pyuaf.client.settings.SpecificSessionSettings" title="pyuaf.client.settings.SpecificSessionSettings"><code class="xref py py-class docutils literal"><span class="pre">SpecificSessionSettings</span></code></a> instance.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.defaultSubscriptionSettings">
-<tt class="descname">defaultSubscriptionSettings</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultSubscriptionSettings" title="Permalink to this definition">¶</a></dt>
+<code class="descname">defaultSubscriptionSettings</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultSubscriptionSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>These default settings will be used to create the subscriptions
-Type is <a class="reference internal" href="#pyuaf.client.settings.SubscriptionSettings" title="pyuaf.client.settings.SubscriptionSettings"><tt class="xref py py-class docutils literal"><span class="pre">SubscriptionSettings</span></tt></a>.</p>
+Type is <a class="reference internal" href="#pyuaf.client.settings.SubscriptionSettings" title="pyuaf.client.settings.SubscriptionSettings"><code class="xref py py-class docutils literal"><span class="pre">SubscriptionSettings</span></code></a>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -476,84 +476,84 @@ Type is <a class="reference internal" href="#pyuaf.client.settings.SubscriptionS
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.defaultBrowseNextSettings">
-<tt class="descname">defaultBrowseNextSettings</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultBrowseNextSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.browseNext" title="pyuaf.client.Client.browseNext"><tt class="xref py py-meth docutils literal"><span class="pre">browseNext()</span></tt></a>.
-Type is <a class="reference internal" href="#pyuaf.client.settings.BrowseNextSettings" title="pyuaf.client.settings.BrowseNextSettings"><tt class="xref py py-class docutils literal"><span class="pre">BrowseNextSettings</span></tt></a>.</p>
+<code class="descname">defaultBrowseNextSettings</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultBrowseNextSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.browseNext" title="pyuaf.client.Client.browseNext"><code class="xref py py-meth docutils literal"><span class="pre">browseNext()</span></code></a>.
+Type is <a class="reference internal" href="#pyuaf.client.settings.BrowseNextSettings" title="pyuaf.client.settings.BrowseNextSettings"><code class="xref py py-class docutils literal"><span class="pre">BrowseNextSettings</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.defaultBrowseSettings">
-<tt class="descname">defaultBrowseSettings</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultBrowseSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.browse" title="pyuaf.client.Client.browse"><tt class="xref py py-meth docutils literal"><span class="pre">browse()</span></tt></a>.
-Type is <a class="reference internal" href="#pyuaf.client.settings.BrowseSettings" title="pyuaf.client.settings.BrowseSettings"><tt class="xref py py-class docutils literal"><span class="pre">BrowseSettings</span></tt></a>.</p>
+<code class="descname">defaultBrowseSettings</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultBrowseSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.browse" title="pyuaf.client.Client.browse"><code class="xref py py-meth docutils literal"><span class="pre">browse()</span></code></a>.
+Type is <a class="reference internal" href="#pyuaf.client.settings.BrowseSettings" title="pyuaf.client.settings.BrowseSettings"><code class="xref py py-class docutils literal"><span class="pre">BrowseSettings</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.defaultCreateMonitoredDataSettings">
-<tt class="descname">defaultCreateMonitoredDataSettings</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultCreateMonitoredDataSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.createMonitoredData" title="pyuaf.client.Client.createMonitoredData"><tt class="xref py py-meth docutils literal"><span class="pre">createMonitoredData()</span></tt></a>.
-Type is <a class="reference internal" href="#pyuaf.client.settings.CreateMonitoredDataSettings" title="pyuaf.client.settings.CreateMonitoredDataSettings"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredDataSettings</span></tt></a>.</p>
+<code class="descname">defaultCreateMonitoredDataSettings</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultCreateMonitoredDataSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.createMonitoredData" title="pyuaf.client.Client.createMonitoredData"><code class="xref py py-meth docutils literal"><span class="pre">createMonitoredData()</span></code></a>.
+Type is <a class="reference internal" href="#pyuaf.client.settings.CreateMonitoredDataSettings" title="pyuaf.client.settings.CreateMonitoredDataSettings"><code class="xref py py-class docutils literal"><span class="pre">CreateMonitoredDataSettings</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.defaultCreateMonitoredEventsSettings">
-<tt class="descname">defaultCreateMonitoredEventsSettings</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultCreateMonitoredEventsSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.createMonitoredEvents" title="pyuaf.client.Client.createMonitoredEvents"><tt class="xref py py-meth docutils literal"><span class="pre">createMonitoredEvents()</span></tt></a>.
-Type is <a class="reference internal" href="#pyuaf.client.settings.CreateMonitoredEventsSettings" title="pyuaf.client.settings.CreateMonitoredEventsSettings"><tt class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsSettings</span></tt></a>.</p>
+<code class="descname">defaultCreateMonitoredEventsSettings</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultCreateMonitoredEventsSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.createMonitoredEvents" title="pyuaf.client.Client.createMonitoredEvents"><code class="xref py py-meth docutils literal"><span class="pre">createMonitoredEvents()</span></code></a>.
+Type is <a class="reference internal" href="#pyuaf.client.settings.CreateMonitoredEventsSettings" title="pyuaf.client.settings.CreateMonitoredEventsSettings"><code class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsSettings</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt>
-<tt class="descname">defaultCreateMonitoredEventsSettings</tt></dt>
-<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.historyReadRaw" title="pyuaf.client.Client.historyReadRaw"><tt class="xref py py-meth docutils literal"><span class="pre">historyReadRaw()</span></tt></a>
-and <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.historyReadModified" title="pyuaf.client.Client.historyReadModified"><tt class="xref py py-meth docutils literal"><span class="pre">historyReadModified()</span></tt></a>.
-Type is <a class="reference internal" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings" title="pyuaf.client.settings.HistoryReadRawModifiedSettings"><tt class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedSettings</span></tt></a>.</p>
+<code class="descname">defaultCreateMonitoredEventsSettings</code></dt>
+<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.historyReadRaw" title="pyuaf.client.Client.historyReadRaw"><code class="xref py py-meth docutils literal"><span class="pre">historyReadRaw()</span></code></a>
+and <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.historyReadModified" title="pyuaf.client.Client.historyReadModified"><code class="xref py py-meth docutils literal"><span class="pre">historyReadModified()</span></code></a>.
+Type is <a class="reference internal" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings" title="pyuaf.client.settings.HistoryReadRawModifiedSettings"><code class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedSettings</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.defaultMethodCallSettings">
-<tt class="descname">defaultMethodCallSettings</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultMethodCallSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.call" title="pyuaf.client.Client.call"><tt class="xref py py-meth docutils literal"><span class="pre">call()</span></tt></a> and
-<a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.beginCall" title="pyuaf.client.Client.beginCall"><tt class="xref py py-meth docutils literal"><span class="pre">beginCall()</span></tt></a>.
-Type is <a class="reference internal" href="#pyuaf.client.settings.MethodCallSettings" title="pyuaf.client.settings.MethodCallSettings"><tt class="xref py py-class docutils literal"><span class="pre">MethodCallSettings</span></tt></a>.</p>
+<code class="descname">defaultMethodCallSettings</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultMethodCallSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.call" title="pyuaf.client.Client.call"><code class="xref py py-meth docutils literal"><span class="pre">call()</span></code></a> and
+<a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.beginCall" title="pyuaf.client.Client.beginCall"><code class="xref py py-meth docutils literal"><span class="pre">beginCall()</span></code></a>.
+Type is <a class="reference internal" href="#pyuaf.client.settings.MethodCallSettings" title="pyuaf.client.settings.MethodCallSettings"><code class="xref py py-class docutils literal"><span class="pre">MethodCallSettings</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.defaultReadSettings">
-<tt class="descname">defaultReadSettings</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultReadSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.read" title="pyuaf.client.Client.read"><tt class="xref py py-meth docutils literal"><span class="pre">read()</span></tt></a> and
-<a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.beginRead" title="pyuaf.client.Client.beginRead"><tt class="xref py py-meth docutils literal"><span class="pre">beginRead()</span></tt></a>.
-Type is <a class="reference internal" href="#pyuaf.client.settings.ReadSettings" title="pyuaf.client.settings.ReadSettings"><tt class="xref py py-class docutils literal"><span class="pre">ReadSettings</span></tt></a>.</p>
+<code class="descname">defaultReadSettings</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultReadSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.read" title="pyuaf.client.Client.read"><code class="xref py py-meth docutils literal"><span class="pre">read()</span></code></a> and
+<a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.beginRead" title="pyuaf.client.Client.beginRead"><code class="xref py py-meth docutils literal"><span class="pre">beginRead()</span></code></a>.
+Type is <a class="reference internal" href="#pyuaf.client.settings.ReadSettings" title="pyuaf.client.settings.ReadSettings"><code class="xref py py-class docutils literal"><span class="pre">ReadSettings</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.defaultTranslateBrowsePathsToNodeIdsSettings">
-<tt class="descname">defaultTranslateBrowsePathsToNodeIdsSettings</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultTranslateBrowsePathsToNodeIdsSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequest" title="pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequest"><tt class="xref py py-class docutils literal"><span class="pre">TranslateBrowsePathsToNodeIdsRequest</span></tt></a>
+<code class="descname">defaultTranslateBrowsePathsToNodeIdsSettings</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultTranslateBrowsePathsToNodeIdsSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client_requests.html#pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequest" title="pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequest"><code class="xref py py-class docutils literal"><span class="pre">TranslateBrowsePathsToNodeIdsRequest</span></code></a>
 and most other services for translating the browsepaths of their targets.
-Type is <a class="reference internal" href="#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings" title="pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings"><tt class="xref py py-class docutils literal"><span class="pre">TranslateBrowsePathsToNodeIdsSettings</span></tt></a>.</p>
+Type is <a class="reference internal" href="#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings" title="pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings"><code class="xref py py-class docutils literal"><span class="pre">TranslateBrowsePathsToNodeIdsSettings</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.defaultWriteSettings">
-<tt class="descname">defaultWriteSettings</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultWriteSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.write" title="pyuaf.client.Client.write"><tt class="xref py py-meth docutils literal"><span class="pre">write()</span></tt></a> and
-<a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.beginWrite" title="pyuaf.client.Client.beginWrite"><tt class="xref py py-meth docutils literal"><span class="pre">beginWrite()</span></tt></a>.
-Type is <a class="reference internal" href="#pyuaf.client.settings.WriteSettings" title="pyuaf.client.settings.WriteSettings"><tt class="xref py py-class docutils literal"><span class="pre">WriteSettings</span></tt></a>.</p>
+<code class="descname">defaultWriteSettings</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultWriteSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.write" title="pyuaf.client.Client.write"><code class="xref py py-meth docutils literal"><span class="pre">write()</span></code></a> and
+<a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.beginWrite" title="pyuaf.client.Client.beginWrite"><code class="xref py py-meth docutils literal"><span class="pre">beginWrite()</span></code></a>.
+Type is <a class="reference internal" href="#pyuaf.client.settings.WriteSettings" title="pyuaf.client.settings.WriteSettings"><code class="xref py py-class docutils literal"><span class="pre">WriteSettings</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.defaultSetPublishingModeSettings">
-<tt class="descname">defaultSetPublishingModeSettings</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultSetPublishingModeSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.setPublishingMode" title="pyuaf.client.Client.setPublishingMode"><tt class="xref py py-meth docutils literal"><span class="pre">setPublishingMode()</span></tt></a>.
-Type is <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">ServiceSettings</span></tt></a>.</p>
+<code class="descname">defaultSetPublishingModeSettings</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultSetPublishingModeSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.setPublishingMode" title="pyuaf.client.Client.setPublishingMode"><code class="xref py py-meth docutils literal"><span class="pre">setPublishingMode()</span></code></a>.
+Type is <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">ServiceSettings</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.ClientSettings.defaultSetMonitoringModeSettings">
-<tt class="descname">defaultSetMonitoringModeSettings</tt><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultSetMonitoringModeSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.setMonitoringMode" title="pyuaf.client.Client.setMonitoringMode"><tt class="xref py py-meth docutils literal"><span class="pre">setMonitoringMode()</span></tt></a>.
-Type is <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">ServiceSettings</span></tt></a>.</p>
+<code class="descname">defaultSetMonitoringModeSettings</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.defaultSetMonitoringModeSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default service settings to be used by <a class="reference internal" href="api_pyuaf_client.html#pyuaf.client.Client.setMonitoringMode" title="pyuaf.client.Client.setMonitoringMode"><code class="xref py py-meth docutils literal"><span class="pre">setMonitoringMode()</span></code></a>.
+Type is <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">ServiceSettings</span></code></a>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -569,33 +569,33 @@ Type is <a class="reference internal" href="#pyuaf.client.settings.ServiceSettin
 <h2><em>class</em> CreateMonitoredDataSettings<a class="headerlink" href="#class-createmonitoreddatasettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.CreateMonitoredDataSettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">CreateMonitoredDataSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredDataSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A CreateMonitoredDataSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">CreateMonitoredDataSettings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredDataSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A CreateMonitoredDataSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a> and
 defines some properties of an OPC UA CreateMonitoredItems service invocation for data changes.</p>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.client.settings.CreateMonitoredDataSettings.__init__">
-<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredDataSettings.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredDataSettings.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new CreateMonitoredDataSettings object.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyuaf.client.settings.CreateMonitoredDataSettings.__str__">
-<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredDataSettings.__str__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredDataSettings.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the settings.</p>
 </dd></dl>
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a>:</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.CreateMonitoredDataSettings.ServiceSettings.callTimeoutSec">
-<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredDataSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServiceSettings.</code><code class="descname">callTimeoutSec</code><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredDataSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
-in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -608,33 +608,33 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
 <h2><em>class</em> CreateMonitoredEventsSettings<a class="headerlink" href="#class-createmonitoredeventssettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.CreateMonitoredEventsSettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">CreateMonitoredEventsSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredEventsSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A CreateMonitoredEventsSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">CreateMonitoredEventsSettings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredEventsSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A CreateMonitoredEventsSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a> and
 defines some properties of an OPC UA CreateMonitoredItems service invocation for events.</p>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.client.settings.CreateMonitoredEventsSettings.__init__">
-<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredEventsSettings.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredEventsSettings.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new CreateMonitoredEventsSettings object.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyuaf.client.settings.CreateMonitoredEventsSettings.__str__">
-<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredEventsSettings.__str__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredEventsSettings.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the settings.</p>
 </dd></dl>
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a>:</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.CreateMonitoredEventsSettings.ServiceSettings.callTimeoutSec">
-<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredEventsSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServiceSettings.</code><code class="descname">callTimeoutSec</code><a class="headerlink" href="#pyuaf.client.settings.CreateMonitoredEventsSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
-in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -647,34 +647,34 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
 <h2><em>class</em> HistoryReadRawModifiedSettings<a class="headerlink" href="#class-historyreadrawmodifiedsettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">HistoryReadRawModifiedSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">HistoryReadRawModifiedSettings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>A HistoryReadRawModifiedSettings is a subclass of
-<a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
+<a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a> and
 defines some properties of an OPC UA HistoryReadRawModified service invocation.</p>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.__init__">
-<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new HistoryReadRawModifiedSettings object.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.__str__">
-<tt class="descname">__str__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.__str__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__str__</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the settings.</p>
 </dd></dl>
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a>:</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.ServiceSettings.callTimeoutSec">
-<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServiceSettings.</code><code class="descname">callTimeoutSec</code><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
-in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -683,28 +683,28 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.startTime">
-<tt class="descname">startTime</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.startTime" title="Permalink to this definition">¶</a></dt>
-<dd><p>Begin of the time interval to read, as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.DateTime</span></tt></a> instance.</p>
+<code class="descname">startTime</code><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.startTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Begin of the time interval to read, as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.util.DateTime</span></code></a> instance.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.endTime">
-<tt class="descname">endTime</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.endTime" title="Permalink to this definition">¶</a></dt>
-<dd><p>End of the time interval to read, as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.DateTime</span></tt></a> instance.</p>
+<code class="descname">endTime</code><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.endTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>End of the time interval to read, as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.util.DateTime</span></code></a> instance.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified">
-<tt class="descname">isReadModified</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified" title="Permalink to this definition">¶</a></dt>
-<dd><p><tt class="docutils literal"><span class="pre">bool</span></tt> flag: False if the values stored in the history database should be returned
+<code class="descname">isReadModified</code><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.isReadModified" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">bool</span></code> flag: False if the values stored in the history database should be returned
 directly, True if the values that are replaced by other values (with the same
 timestamps) should be returned. Default is False.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.maxAutoReadMore">
-<tt class="descname">maxAutoReadMore</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.maxAutoReadMore" title="Permalink to this definition">¶</a></dt>
-<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> defined by the UAF, to indicate how many times the UAF may automatically
+<code class="descname">maxAutoReadMore</code><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.maxAutoReadMore" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <code class="docutils literal"><span class="pre">int</span></code> defined by the UAF, to indicate how many times the UAF may automatically
 call the history read OPC UA service <strong>additionally</strong> to the original request,
 in order to get more data.
 Default = 0, which means that there will be no extra service calls being invoked
@@ -717,34 +717,34 @@ but it can make your life easier!</p>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.numValuesPerNode">
-<tt class="descname">numValuesPerNode</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.numValuesPerNode" title="Permalink to this definition">¶</a></dt>
-<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> specifying the maximum number of values that may be returned for each node.
+<code class="descname">numValuesPerNode</code><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.numValuesPerNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <code class="docutils literal"><span class="pre">int</span></code> specifying the maximum number of values that may be returned for each node.
 Default = 0 = no limit.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.returnBounds">
-<tt class="descname">returnBounds</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.returnBounds" title="Permalink to this definition">¶</a></dt>
-<dd><p><tt class="docutils literal"><span class="pre">bool</span></tt> flag: True if the bounds (a value at or just before the start time and a value
+<code class="descname">returnBounds</code><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.returnBounds" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">bool</span></code> flag: True if the bounds (a value at or just before the start time and a value
 at or just after the end time) should be returned, False if not.
 Default is False.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.timestampsToReturn">
-<tt class="descname">timestampsToReturn</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.timestampsToReturn" title="Permalink to this definition">¶</a></dt>
-<dd><p>Select and return the timestamps as specified by this <tt class="docutils literal"><span class="pre">int</span></tt> attribute (as defined
-in the <a class="reference internal" href="api_pyuaf_util_timestampstoreturn.html#module-pyuaf.util.timestampstoreturn" title="pyuaf.util.timestampstoreturn"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.timestampstoreturn</span></tt></a> module).
-If <a class="reference internal" href="api_pyuaf_util_timestampstoreturn.html#pyuaf.util.timestampstoreturn.Both" title="pyuaf.util.timestampstoreturn.Both"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.timestampstoreturn.Both</span></tt></a> is specified, the Source timestamp
+<code class="descname">timestampsToReturn</code><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.timestampsToReturn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select and return the timestamps as specified by this <code class="docutils literal"><span class="pre">int</span></code> attribute (as defined
+in the <a class="reference internal" href="api_pyuaf_util_timestampstoreturn.html#module-pyuaf.util.timestampstoreturn" title="pyuaf.util.timestampstoreturn"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.timestampstoreturn</span></code></a> module).
+If <a class="reference internal" href="api_pyuaf_util_timestampstoreturn.html#pyuaf.util.timestampstoreturn.Both" title="pyuaf.util.timestampstoreturn.Both"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.timestampstoreturn.Both</span></code></a> is specified, the Source timestamp
 will be used for selection.
-Default is <a class="reference internal" href="api_pyuaf_util_timestampstoreturn.html#pyuaf.util.timestampstoreturn.Source" title="pyuaf.util.timestampstoreturn.Source"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.timestampstoreturn.Source</span></tt></a>.
+Default is <a class="reference internal" href="api_pyuaf_util_timestampstoreturn.html#pyuaf.util.timestampstoreturn.Source" title="pyuaf.util.timestampstoreturn.Source"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.timestampstoreturn.Source</span></code></a>.
 Default = 0 = no limit.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.HistoryReadRawModifiedSettings.releaseContinuationPoints">
-<tt class="descname">releaseContinuationPoints</tt><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.releaseContinuationPoints" title="Permalink to this definition">¶</a></dt>
-<dd><p><tt class="docutils literal"><span class="pre">bool</span></tt> flag: True to let the Server know that no more historical data is needed,
+<code class="descname">releaseContinuationPoints</code><a class="headerlink" href="#pyuaf.client.settings.HistoryReadRawModifiedSettings.releaseContinuationPoints" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">bool</span></code> flag: True to let the Server know that no more historical data is needed,
 and so the server may release any resources associated with the call.
 Default is False.</p>
 </dd></dl>
@@ -759,33 +759,33 @@ Default is False.</p>
 <h2><em>class</em> MethodCallSettings<a class="headerlink" href="#class-methodcallsettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.MethodCallSettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">MethodCallSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.MethodCallSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A MethodCallSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">MethodCallSettings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.MethodCallSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A MethodCallSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a> and
 defines some properties of an OPC UA MethodCall service invocation.</p>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.client.settings.MethodCallSettings.__init__">
-<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.MethodCallSettings.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.MethodCallSettings.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new MethodCallSettings object.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyuaf.client.settings.MethodCallSettings.__str__">
-<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.MethodCallSettings.__str__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.MethodCallSettings.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the settings.</p>
 </dd></dl>
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a>:</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.MethodCallSettings.ServiceSettings.callTimeoutSec">
-<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.MethodCallSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServiceSettings.</code><code class="descname">callTimeoutSec</code><a class="headerlink" href="#pyuaf.client.settings.MethodCallSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
-in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -798,7 +798,7 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
 <h2><em>class</em> MonitoredItemSettings<a class="headerlink" href="#class-monitoreditemsettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.MonitoredItemSettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">MonitoredItemSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">MonitoredItemSettings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>A MonitoredItemSettings object holds the properties of monitored items (both for monitoring
 data, and monitoring events).</p>
 <ul>
@@ -806,7 +806,7 @@ data, and monitoring events).</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.client.settings.MonitoredItemSettings.__init__">
-<tt class="descname">__init__</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new MonitoredItemSettings object, by default for monitoring data.</p>
 <p>Usage example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pyuaf</span>
@@ -835,16 +835,16 @@ data, and monitoring events).</p>
 
 <dl class="method">
 <dt id="pyuaf.client.settings.MonitoredItemSettings.kind">
-<tt class="descname">kind</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.kind" title="Permalink to this definition">¶</a></dt>
+<code class="descname">kind</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.kind" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the kind of monitored item settings: is it to monitor data changes, or events?</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Either <a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSettings.Data" title="pyuaf.client.settings.MonitoredItemSettings.Data"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.settings.MonitoredItemSettings.Data</span></tt></a>
-or <a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSettings.Event" title="pyuaf.client.settings.MonitoredItemSettings.Event"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.settings.MonitoredItemSettings.Event</span></tt></a>.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Either <a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSettings.Data" title="pyuaf.client.settings.MonitoredItemSettings.Data"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.settings.MonitoredItemSettings.Data</span></code></a>
+or <a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSettings.Event" title="pyuaf.client.settings.MonitoredItemSettings.Event"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.settings.MonitoredItemSettings.Event</span></code></a>.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">int</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -852,7 +852,7 @@ or <a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSetti
 
 <dl class="method">
 <dt id="pyuaf.client.settings.MonitoredItemSettings.__str__">
-<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.__str__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the settings.</p>
 </dd></dl>
 
@@ -862,14 +862,14 @@ or <a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSetti
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.MonitoredItemSettings.Data">
-<tt class="descname">Data</tt><em class="property"> = 0</em><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.Data" title="Permalink to this definition">¶</a></dt>
-<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> identifying the kind of MonitoredItemSettings as to monitor data changes.</p>
+<code class="descname">Data</code><em class="property"> = 0</em><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.Data" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <code class="docutils literal"><span class="pre">int</span></code> identifying the kind of MonitoredItemSettings as to monitor data changes.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.MonitoredItemSettings.Event">
-<tt class="descname">Event</tt><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.Event" title="Permalink to this definition">¶</a></dt>
-<dd><p>An <tt class="docutils literal"><span class="pre">int</span></tt> identifying the kind of MonitoredItemSettings as to monitor events.</p>
+<code class="descname">Event</code><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.Event" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <code class="docutils literal"><span class="pre">int</span></code> identifying the kind of MonitoredItemSettings as to monitor events.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -878,39 +878,39 @@ or <a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSetti
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.MonitoredItemSettings.samplingIntervalSec">
-<tt class="descname">samplingIntervalSec</tt><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.samplingIntervalSec" title="Permalink to this definition">¶</a></dt>
-<dd><p>The sampling interval of the monitored item, in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+<code class="descname">samplingIntervalSec</code><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.samplingIntervalSec" title="Permalink to this definition">¶</a></dt>
+<dd><p>The sampling interval of the monitored item, in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.MonitoredItemSettings.queueSize">
-<tt class="descname">queueSize</tt><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.queueSize" title="Permalink to this definition">¶</a></dt>
-<dd><p>The queue size on the server side, as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
+<code class="descname">queueSize</code><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.queueSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>The queue size on the server side, as an <code class="docutils literal"><span class="pre">int</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.MonitoredItemSettings.discardOldest">
-<tt class="descname">discardOldest</tt><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.discardOldest" title="Permalink to this definition">¶</a></dt>
+<code class="descname">discardOldest</code><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.discardOldest" title="Permalink to this definition">¶</a></dt>
 <dd><p>True to discard the oldest item in the queue.</p>
-<p>Type of the attribute: <tt class="docutils literal"><span class="pre">bool</span></tt>.</p>
+<p>Type of the attribute: <code class="docutils literal"><span class="pre">bool</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.MonitoredItemSettings.dataChangeFilter">
-<tt class="descname">dataChangeFilter</tt><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.dataChangeFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DataChangeFilter" title="pyuaf.util.DataChangeFilter"><tt class="xref py py-class docutils literal"><span class="pre">DataChangeFilter</span></tt></a> in case the
-<a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSettings.kind" title="pyuaf.client.settings.MonitoredItemSettings.kind"><tt class="xref py py-meth docutils literal"><span class="pre">kind()</span></tt></a>
-is <a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSettings.Data" title="pyuaf.client.settings.MonitoredItemSettings.Data"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.settings.MonitoredItemSettings.Data</span></tt></a>.</p>
-<p><tt class="docutils literal"><span class="pre">None</span></tt> otherwise!</p>
+<code class="descname">dataChangeFilter</code><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.dataChangeFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.DataChangeFilter" title="pyuaf.util.DataChangeFilter"><code class="xref py py-class docutils literal"><span class="pre">DataChangeFilter</span></code></a> in case the
+<a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSettings.kind" title="pyuaf.client.settings.MonitoredItemSettings.kind"><code class="xref py py-meth docutils literal"><span class="pre">kind()</span></code></a>
+is <a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSettings.Data" title="pyuaf.client.settings.MonitoredItemSettings.Data"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.settings.MonitoredItemSettings.Data</span></code></a>.</p>
+<p><code class="docutils literal"><span class="pre">None</span></code> otherwise!</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.MonitoredItemSettings.eventFilter">
-<tt class="descname">eventFilter</tt><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.eventFilter" title="Permalink to this definition">¶</a></dt>
-<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.EventFilter" title="pyuaf.util.EventFilter"><tt class="xref py py-class docutils literal"><span class="pre">EventFilter</span></tt></a> in case the
-<a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSettings.kind" title="pyuaf.client.settings.MonitoredItemSettings.kind"><tt class="xref py py-meth docutils literal"><span class="pre">kind()</span></tt></a>
-is <a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSettings.Event" title="pyuaf.client.settings.MonitoredItemSettings.Event"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.settings.MonitoredItemSettings.Event</span></tt></a>.</p>
-<p><tt class="docutils literal"><span class="pre">None</span></tt> otherwise!</p>
+<code class="descname">eventFilter</code><a class="headerlink" href="#pyuaf.client.settings.MonitoredItemSettings.eventFilter" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.EventFilter" title="pyuaf.util.EventFilter"><code class="xref py py-class docutils literal"><span class="pre">EventFilter</span></code></a> in case the
+<a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSettings.kind" title="pyuaf.client.settings.MonitoredItemSettings.kind"><code class="xref py py-meth docutils literal"><span class="pre">kind()</span></code></a>
+is <a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSettings.Event" title="pyuaf.client.settings.MonitoredItemSettings.Event"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.settings.MonitoredItemSettings.Event</span></code></a>.</p>
+<p><code class="docutils literal"><span class="pre">None</span></code> otherwise!</p>
 </dd></dl>
 
 </div></blockquote>
@@ -923,33 +923,33 @@ is <a class="reference internal" href="#pyuaf.client.settings.MonitoredItemSetti
 <h2><em>class</em> ReadSettings<a class="headerlink" href="#class-readsettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.ReadSettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">ReadSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.ReadSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A ReadSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">ReadSettings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.ReadSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A ReadSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a> and
 defines some properties of an OPC UA Read service invocation.</p>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.client.settings.ReadSettings.__init__">
-<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.ReadSettings.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.ReadSettings.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new ReadSettings object.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyuaf.client.settings.ReadSettings.__str__">
-<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.ReadSettings.__str__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.ReadSettings.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the settings.</p>
 </dd></dl>
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a>:</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.ReadSettings.ServiceSettings.callTimeoutSec">
-<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.ReadSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServiceSettings.</code><code class="descname">callTimeoutSec</code><a class="headerlink" href="#pyuaf.client.settings.ReadSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
-in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -958,9 +958,9 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.ReadSettings.maxAgeSec">
-<tt class="descname">maxAgeSec</tt><a class="headerlink" href="#pyuaf.client.settings.ReadSettings.maxAgeSec" title="Permalink to this definition">¶</a></dt>
+<code class="descname">maxAgeSec</code><a class="headerlink" href="#pyuaf.client.settings.ReadSettings.maxAgeSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum age (in seconds) that the attribute that is read, should have,
-as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -973,14 +973,14 @@ as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
 <h2><em>class</em> SessionSettings<a class="headerlink" href="#class-sessionsettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.SessionSettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">SessionSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.SessionSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">SessionSettings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.SessionSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>A SessionSettings object stores the settings of an OPC UA session.</p>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.client.settings.SessionSettings.__init__">
-<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct a new SessionSettings object with the following default values:</p>
 <blockquote>
 <div><ul class="simple">
@@ -988,14 +988,14 @@ as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
 <li>connectTimeoutSec  = 2.0</li>
 <li>watchdogTimeoutSec = 2.0</li>
 <li>watchdogTimeSec    = 5.0</li>
-<li>securitySettings   = a default <a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySettings" title="pyuaf.client.settings.SessionSecuritySettings"><tt class="xref py py-class docutils literal"><span class="pre">SessionSecuritySettings</span></tt></a> instance.</li>
+<li>securitySettings   = a default <a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySettings" title="pyuaf.client.settings.SessionSecuritySettings"><code class="xref py py-class docutils literal"><span class="pre">SessionSecuritySettings</span></code></a> instance.</li>
 </ul>
 </div></blockquote>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyuaf.client.settings.SessionSettings.__str__">
-<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.__str__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the settings.</p>
 </dd></dl>
 
@@ -1005,51 +1005,51 @@ as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.SessionSettings.sessionTimeoutSec">
-<tt class="descname">sessionTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.sessionTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<code class="descname">sessionTimeoutSec</code><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.sessionTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The time a session should remain valid on the server after a connection error,
-as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SessionSettings.connectTimeoutSec">
-<tt class="descname">connectTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.connectTimeoutSec" title="Permalink to this definition">¶</a></dt>
-<dd><p>The timeout for the connect call, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+<code class="descname">connectTimeoutSec</code><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.connectTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<dd><p>The timeout for the connect call, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SessionSettings.watchdogTimeSec">
-<tt class="descname">watchdogTimeSec</tt><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.watchdogTimeSec" title="Permalink to this definition">¶</a></dt>
-<dd><p>The time between watchdog calls, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+<code class="descname">watchdogTimeSec</code><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.watchdogTimeSec" title="Permalink to this definition">¶</a></dt>
+<dd><p>The time between watchdog calls, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SessionSettings.watchdogTimeoutSec">
-<tt class="descname">watchdogTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.watchdogTimeoutSec" title="Permalink to this definition">¶</a></dt>
-<dd><p>The timeout of watchdog calls, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+<code class="descname">watchdogTimeoutSec</code><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.watchdogTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<dd><p>The timeout of watchdog calls, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SessionSettings.readServerInfoSettings">
-<tt class="descname">readServerInfoSettings</tt><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.readServerInfoSettings" title="Permalink to this definition">¶</a></dt>
+<code class="descname">readServerInfoSettings</code><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.readServerInfoSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>The settings to be used to read the namespace array and server array, when the session
 is first connected (UAF clients will do this automatically in the background).
-The type of this attribute is <a class="reference internal" href="#pyuaf.client.settings.ReadSettings" title="pyuaf.client.settings.ReadSettings"><tt class="xref py py-class docutils literal"><span class="pre">ReadSettings</span></tt></a>.</p>
+The type of this attribute is <a class="reference internal" href="#pyuaf.client.settings.ReadSettings" title="pyuaf.client.settings.ReadSettings"><code class="xref py py-class docutils literal"><span class="pre">ReadSettings</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SessionSettings.securitySettings">
-<tt class="descname">securitySettings</tt><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.securitySettings" title="Permalink to this definition">¶</a></dt>
+<code class="descname">securitySettings</code><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.securitySettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>The security settings to be used to connect the session.</p>
-<p>The type of this attribute is <a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySettings" title="pyuaf.client.settings.SessionSecuritySettings"><tt class="xref py py-class docutils literal"><span class="pre">SessionSecuritySettings</span></tt></a>.</p>
+<p>The type of this attribute is <a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySettings" title="pyuaf.client.settings.SessionSecuritySettings"><code class="xref py py-class docutils literal"><span class="pre">SessionSecuritySettings</span></code></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SessionSettings.unique">
-<tt class="descname">unique</tt><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.unique" title="Permalink to this definition">¶</a></dt>
+<code class="descname">unique</code><a class="headerlink" href="#pyuaf.client.settings.SessionSettings.unique" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set this flag to True, to force the UAF to create a <em>new</em> session.
 If you leave this flag False, the UAF may choose to re-use an existing session
 (if one is found that has the same properties).</p>
-<p>The type of this attribute is <tt class="docutils literal"><span class="pre">bool</span></tt>.</p>
+<p>The type of this attribute is <code class="docutils literal"><span class="pre">bool</span></code>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -1062,21 +1062,21 @@ If you leave this flag False, the UAF may choose to re-use an existing session
 <h2><em>class</em> SessionSecuritySettings<a class="headerlink" href="#class-sessionsecuritysettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.SessionSecuritySettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">SessionSecuritySettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">SessionSecuritySettings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>A SessionSecuritySettings object stores the security settings of an OPC UA session.</p>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.client.settings.SessionSecuritySettings.__init__">
-<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a default SessionSecuritySettings object.</p>
 <dl class="docutils">
 <dt>A default instance has</dt>
 <dd><ul class="first last simple">
-<li>no security policy (<a class="reference internal" href="api_pyuaf_util_securitypolicies.html#pyuaf.util.securitypolicies.UA_None" title="pyuaf.util.securitypolicies.UA_None"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.securitypolicies.UA_None</span></tt></a>)</li>
-<li>no security mode (<a class="reference internal" href="api_pyuaf_util_messagesecuritymodes.html#pyuaf.util.messagesecuritymodes.Mode_None" title="pyuaf.util.messagesecuritymodes.Mode_None"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.messagesecuritymodes.Mode_None</span></tt></a>)</li>
-<li>no authentication (<a class="reference internal" href="api_pyuaf_util_usertokentypes.html#pyuaf.util.usertokentypes.Anonymous" title="pyuaf.util.usertokentypes.Anonymous"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.usertokentypes.Anonymous</span></tt></a>)</li>
+<li>no security policy (<a class="reference internal" href="api_pyuaf_util_securitypolicies.html#pyuaf.util.securitypolicies.UA_None" title="pyuaf.util.securitypolicies.UA_None"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.securitypolicies.UA_None</span></code></a>)</li>
+<li>no security mode (<a class="reference internal" href="api_pyuaf_util_messagesecuritymodes.html#pyuaf.util.messagesecuritymodes.Mode_None" title="pyuaf.util.messagesecuritymodes.Mode_None"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.messagesecuritymodes.Mode_None</span></code></a>)</li>
+<li>no authentication (<a class="reference internal" href="api_pyuaf_util_usertokentypes.html#pyuaf.util.usertokentypes.Anonymous" title="pyuaf.util.usertokentypes.Anonymous"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.usertokentypes.Anonymous</span></code></a>)</li>
 </ul>
 </dd>
 </dl>
@@ -1084,7 +1084,7 @@ If you leave this flag False, the UAF may choose to re-use an existing session
 
 <dl class="method">
 <dt id="pyuaf.client.settings.SessionSecuritySettings.__str__">
-<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.__str__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the settings.</p>
 </dd></dl>
 
@@ -1094,59 +1094,59 @@ If you leave this flag False, the UAF may choose to re-use an existing session
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.SessionSecuritySettings.securityPolicy">
-<tt class="descname">securityPolicy</tt><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.securityPolicy" title="Permalink to this definition">¶</a></dt>
-<dd><p>The security policy to be used (e.g. <a class="reference internal" href="api_pyuaf_util_securitypolicies.html#pyuaf.util.securitypolicies.UA_Basic128" title="pyuaf.util.securitypolicies.UA_Basic128"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.securitypolicies.UA_Basic128</span></tt></a>),
-as a <tt class="docutils literal"><span class="pre">str</span></tt>.</p>
+<code class="descname">securityPolicy</code><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.securityPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>The security policy to be used (e.g. <a class="reference internal" href="api_pyuaf_util_securitypolicies.html#pyuaf.util.securitypolicies.UA_Basic128" title="pyuaf.util.securitypolicies.UA_Basic128"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.securitypolicies.UA_Basic128</span></code></a>),
+as a <code class="docutils literal"><span class="pre">str</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SessionSecuritySettings.messageSecurityMode">
-<tt class="descname">messageSecurityMode</tt><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.messageSecurityMode" title="Permalink to this definition">¶</a></dt>
+<code class="descname">messageSecurityMode</code><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.messageSecurityMode" title="Permalink to this definition">¶</a></dt>
 <dd><p>The message security mode to be used
-(e.g. <a class="reference internal" href="api_pyuaf_util_messagesecuritymodes.html#pyuaf.util.messagesecuritymodes.Mode_SignAndEncrypt" title="pyuaf.util.messagesecuritymodes.Mode_SignAndEncrypt"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.messagesecuritymodes.Mode_SignAndEncrypt</span></tt></a>), as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
+(e.g. <a class="reference internal" href="api_pyuaf_util_messagesecuritymodes.html#pyuaf.util.messagesecuritymodes.Mode_SignAndEncrypt" title="pyuaf.util.messagesecuritymodes.Mode_SignAndEncrypt"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.messagesecuritymodes.Mode_SignAndEncrypt</span></code></a>), as an <code class="docutils literal"><span class="pre">int</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SessionSecuritySettings.userTokenType">
-<tt class="descname">userTokenType</tt><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.userTokenType" title="Permalink to this definition">¶</a></dt>
+<code class="descname">userTokenType</code><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.userTokenType" title="Permalink to this definition">¶</a></dt>
 <dd><p>The type of the User token, to be used
-(e.g. <a class="reference internal" href="api_pyuaf_util_usertokentypes.html#pyuaf.util.usertokentypes.Anonymous" title="pyuaf.util.usertokentypes.Anonymous"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.usertokentypes.Anonymous</span></tt></a>), as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
+(e.g. <a class="reference internal" href="api_pyuaf_util_usertokentypes.html#pyuaf.util.usertokentypes.Anonymous" title="pyuaf.util.usertokentypes.Anonymous"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.usertokentypes.Anonymous</span></code></a>), as an <code class="docutils literal"><span class="pre">int</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SessionSecuritySettings.userName">
-<tt class="descname">userName</tt><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.userName" title="Permalink to this definition">¶</a></dt>
-<dd><p>The user name, as a <tt class="docutils literal"><span class="pre">str</span></tt>
+<code class="descname">userName</code><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.userName" title="Permalink to this definition">¶</a></dt>
+<dd><p>The user name, as a <code class="docutils literal"><span class="pre">str</span></code>
 (only relevant if
-the <a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySettings.userTokenType" title="pyuaf.client.settings.SessionSecuritySettings.userTokenType"><tt class="xref py py-attr docutils literal"><span class="pre">userTokenType</span></tt></a>
-== <a class="reference internal" href="api_pyuaf_util_usertokentypes.html#pyuaf.util.usertokentypes.UserName" title="pyuaf.util.usertokentypes.UserName"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.usertokentypes.UserName</span></tt></a>).</p>
+the <a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySettings.userTokenType" title="pyuaf.client.settings.SessionSecuritySettings.userTokenType"><code class="xref py py-attr docutils literal"><span class="pre">userTokenType</span></code></a>
+== <a class="reference internal" href="api_pyuaf_util_usertokentypes.html#pyuaf.util.usertokentypes.UserName" title="pyuaf.util.usertokentypes.UserName"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.usertokentypes.UserName</span></code></a>).</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SessionSecuritySettings.userPassword">
-<tt class="descname">userPassword</tt><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.userPassword" title="Permalink to this definition">¶</a></dt>
-<dd><p>The user password, as a <tt class="docutils literal"><span class="pre">str</span></tt>
+<code class="descname">userPassword</code><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.userPassword" title="Permalink to this definition">¶</a></dt>
+<dd><p>The user password, as a <code class="docutils literal"><span class="pre">str</span></code>
 (only relevant if
-the <a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySettings.userTokenType" title="pyuaf.client.settings.SessionSecuritySettings.userTokenType"><tt class="xref py py-attr docutils literal"><span class="pre">userTokenType</span></tt></a>
-== <a class="reference internal" href="api_pyuaf_util_usertokentypes.html#pyuaf.util.usertokentypes.UserName" title="pyuaf.util.usertokentypes.UserName"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.usertokentypes.UserName</span></tt></a>).</p>
+the <a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySettings.userTokenType" title="pyuaf.client.settings.SessionSecuritySettings.userTokenType"><code class="xref py py-attr docutils literal"><span class="pre">userTokenType</span></code></a>
+== <a class="reference internal" href="api_pyuaf_util_usertokentypes.html#pyuaf.util.usertokentypes.UserName" title="pyuaf.util.usertokentypes.UserName"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.usertokentypes.UserName</span></code></a>).</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SessionSecuritySettings.userCertificateFileName">
-<tt class="descname">userCertificateFileName</tt><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.userCertificateFileName" title="Permalink to this definition">¶</a></dt>
-<dd><p>The user certificate file name, as a <tt class="docutils literal"><span class="pre">str</span></tt>
+<code class="descname">userCertificateFileName</code><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.userCertificateFileName" title="Permalink to this definition">¶</a></dt>
+<dd><p>The user certificate file name, as a <code class="docutils literal"><span class="pre">str</span></code>
 (only relevant if
-the <a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySettings.userTokenType" title="pyuaf.client.settings.SessionSecuritySettings.userTokenType"><tt class="xref py py-attr docutils literal"><span class="pre">userTokenType</span></tt></a>
-== <a class="reference internal" href="api_pyuaf_util_usertokentypes.html#pyuaf.util.usertokentypes.Certificate" title="pyuaf.util.usertokentypes.Certificate"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.usertokentypes.Certificate</span></tt></a>).</p>
+the <a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySettings.userTokenType" title="pyuaf.client.settings.SessionSecuritySettings.userTokenType"><code class="xref py py-attr docutils literal"><span class="pre">userTokenType</span></code></a>
+== <a class="reference internal" href="api_pyuaf_util_usertokentypes.html#pyuaf.util.usertokentypes.Certificate" title="pyuaf.util.usertokentypes.Certificate"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.usertokentypes.Certificate</span></code></a>).</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SessionSecuritySettings.userPrivateKeyFileName">
-<tt class="descname">userPrivateKeyFileName</tt><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.userPrivateKeyFileName" title="Permalink to this definition">¶</a></dt>
-<dd><p>The user certificate private key file name, as a <tt class="docutils literal"><span class="pre">str</span></tt>
+<code class="descname">userPrivateKeyFileName</code><a class="headerlink" href="#pyuaf.client.settings.SessionSecuritySettings.userPrivateKeyFileName" title="Permalink to this definition">¶</a></dt>
+<dd><p>The user certificate private key file name, as a <code class="docutils literal"><span class="pre">str</span></code>
 (only relevant if
-the <a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySettings.userTokenType" title="pyuaf.client.settings.SessionSecuritySettings.userTokenType"><tt class="xref py py-attr docutils literal"><span class="pre">userTokenType</span></tt></a>
-== <a class="reference internal" href="api_pyuaf_util_usertokentypes.html#pyuaf.util.usertokentypes.Certificate" title="pyuaf.util.usertokentypes.Certificate"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.usertokentypes.Certificate</span></tt></a>).</p>
+the <a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySettings.userTokenType" title="pyuaf.client.settings.SessionSecuritySettings.userTokenType"><code class="xref py py-attr docutils literal"><span class="pre">userTokenType</span></code></a>
+== <a class="reference internal" href="api_pyuaf_util_usertokentypes.html#pyuaf.util.usertokentypes.Certificate" title="pyuaf.util.usertokentypes.Certificate"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.usertokentypes.Certificate</span></code></a>).</p>
 </dd></dl>
 
 </div></blockquote>
@@ -1159,11 +1159,11 @@ the <a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySe
 <h2><em>class</em> SessionSecuritySettingsVector<a class="headerlink" href="#class-sessionsecuritysettingsvector" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.pyuaf.client.settings.SessionSecuritySettingsVector">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">SessionSecuritySettingsVector</tt><a class="headerlink" href="#pyuaf.client.settings.pyuaf.client.settings.SessionSecuritySettingsVector" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">SessionSecuritySettingsVector</code><a class="headerlink" href="#pyuaf.client.settings.pyuaf.client.settings.SessionSecuritySettingsVector" title="Permalink to this definition">¶</a></dt>
 <dd><p>A SessionSecuritySettingsVector is a container that holds elements of type
-<a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySettings" title="pyuaf.client.settings.SessionSecuritySettings"><tt class="xref py py-class docutils literal"><span class="pre">SessionSecuritySettings</span></tt></a>.
+<a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySettings" title="pyuaf.client.settings.SessionSecuritySettings"><code class="xref py py-class docutils literal"><span class="pre">SessionSecuritySettings</span></code></a>.
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
-as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySettings" title="pyuaf.client.settings.SessionSecuritySettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.SessionSecuritySettings</span></tt></a>.</p>
+as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.settings.SessionSecuritySettings" title="pyuaf.client.settings.SessionSecuritySettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.SessionSecuritySettings</span></code></a>.</p>
 <p>Usage example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pyuaf</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client.settings</span> <span class="kn">import</span> <span class="n">SessionSecuritySettings</span><span class="p">,</span> <span class="n">SessionSecuritySettingsVector</span>
@@ -1207,11 +1207,11 @@ as a <tt class="docutils literal"><span class="pre">list</span></tt> of <a class
 <h2><em>class</em> SpecificSessionSettings<a class="headerlink" href="#class-specificsessionsettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.SpecificSessionSettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">SpecificSessionSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.SpecificSessionSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>SpecificSessionSettings is a container that maps serverURIs (of type <tt class="docutils literal"><span class="pre">str</span></tt>) to session
-settings (of type <a class="reference internal" href="#pyuaf.client.settings.SessionSettings" title="pyuaf.client.settings.SessionSettings"><tt class="xref py py-class docutils literal"><span class="pre">SessionSettings</span></tt></a>).</p>
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">SpecificSessionSettings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.SpecificSessionSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>SpecificSessionSettings is a container that maps serverURIs (of type <code class="docutils literal"><span class="pre">str</span></code>) to session
+settings (of type <a class="reference internal" href="#pyuaf.client.settings.SessionSettings" title="pyuaf.client.settings.SessionSettings"><code class="xref py py-class docutils literal"><span class="pre">SessionSettings</span></code></a>).</p>
 <p>It is an artifact automatically generated from the C++ UAF code, and has the same functionality
-as a <tt class="docutils literal"><span class="pre">dict</span></tt> of <a class="reference internal" href="#pyuaf.client.settings.SessionSettings" title="pyuaf.client.settings.SessionSettings"><tt class="xref py py-class docutils literal"><span class="pre">SessionSettings</span></tt></a>.</p>
+as a <code class="docutils literal"><span class="pre">dict</span></code> of <a class="reference internal" href="#pyuaf.client.settings.SessionSettings" title="pyuaf.client.settings.SessionSettings"><code class="xref py py-class docutils literal"><span class="pre">SessionSettings</span></code></a>.</p>
 <p>Usage example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pyuaf</span>
 <span class="kn">from</span> <span class="nn">pyuaf.client.settings</span> <span class="kn">import</span> <span class="n">SessionSettings</span><span class="p">,</span> <span class="n">SpecificSessionSettings</span>
@@ -1259,14 +1259,14 @@ as a <tt class="docutils literal"><span class="pre">dict</span></tt> of <a class
 <h2><em>class</em> SubscriptionSettings<a class="headerlink" href="#class-subscriptionsettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.SubscriptionSettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">SubscriptionSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">SubscriptionSettings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings" title="Permalink to this definition">¶</a></dt>
 <dd><p>A SubscriptionSettings object stores the settings of an OPC UA subscription.</p>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.client.settings.SubscriptionSettings.__init__">
-<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct a new SubscriptionSettings object with the following default values:</p>
 <blockquote>
 <div><ul class="simple">
@@ -1282,7 +1282,7 @@ as a <tt class="docutils literal"><span class="pre">dict</span></tt> of <a class
 
 <dl class="method">
 <dt id="pyuaf.client.settings.SubscriptionSettings.__str__">
-<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.__str__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the settings.</p>
 </dd></dl>
 
@@ -1292,41 +1292,41 @@ as a <tt class="docutils literal"><span class="pre">dict</span></tt> of <a class
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.SubscriptionSettings.unique">
-<tt class="descname">unique</tt><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.unique" title="Permalink to this definition">¶</a></dt>
+<code class="descname">unique</code><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.unique" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set this flag to True, to force the UAF to create a <em>new</em> subscription.
 If you leave this flag False, the UAF may choose to re-use an existing subscription
 (if one is found that has the same properties).</p>
-<p>The type of this attribute is <tt class="docutils literal"><span class="pre">bool</span></tt>.</p>
+<p>The type of this attribute is <code class="docutils literal"><span class="pre">bool</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SubscriptionSettings.publishingIntervalSec">
-<tt class="descname">publishingIntervalSec</tt><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.publishingIntervalSec" title="Permalink to this definition">¶</a></dt>
-<dd><p>The publishing interval in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+<code class="descname">publishingIntervalSec</code><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.publishingIntervalSec" title="Permalink to this definition">¶</a></dt>
+<dd><p>The publishing interval in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SubscriptionSettings.lifeTimeCount">
-<tt class="descname">lifeTimeCount</tt><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.lifeTimeCount" title="Permalink to this definition">¶</a></dt>
-<dd><p>The life time count, as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
+<code class="descname">lifeTimeCount</code><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.lifeTimeCount" title="Permalink to this definition">¶</a></dt>
+<dd><p>The life time count, as an <code class="docutils literal"><span class="pre">int</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SubscriptionSettings.maxKeepAliveCount">
-<tt class="descname">maxKeepAliveCount</tt><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.maxKeepAliveCount" title="Permalink to this definition">¶</a></dt>
-<dd><p>The max keep alive count, as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
+<code class="descname">maxKeepAliveCount</code><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.maxKeepAliveCount" title="Permalink to this definition">¶</a></dt>
+<dd><p>The max keep alive count, as an <code class="docutils literal"><span class="pre">int</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SubscriptionSettings.maxNotificationsPerPublish">
-<tt class="descname">maxNotificationsPerPublish</tt><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.maxNotificationsPerPublish" title="Permalink to this definition">¶</a></dt>
-<dd><p>The max number of notifications per publish, as an <tt class="docutils literal"><span class="pre">int</span></tt>.</p>
+<code class="descname">maxNotificationsPerPublish</code><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.maxNotificationsPerPublish" title="Permalink to this definition">¶</a></dt>
+<dd><p>The max number of notifications per publish, as an <code class="docutils literal"><span class="pre">int</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.client.settings.SubscriptionSettings.priority">
-<tt class="descname">priority</tt><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.priority" title="Permalink to this definition">¶</a></dt>
-<dd><p>The priority of the subscription, as an <tt class="docutils literal"><span class="pre">int</span></tt>.
+<code class="descname">priority</code><a class="headerlink" href="#pyuaf.client.settings.SubscriptionSettings.priority" title="Permalink to this definition">¶</a></dt>
+<dd><p>The priority of the subscription, as an <code class="docutils literal"><span class="pre">int</span></code>.
 Since this value is only 8-bit, the maximum priority is 255.</p>
 </dd></dl>
 
@@ -1340,33 +1340,33 @@ Since this value is only 8-bit, the maximum priority is 255.</p>
 <h2><em>class</em> TranslateBrowsePathsToNodeIdsSettings<a class="headerlink" href="#class-translatebrowsepathstonodeidssettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">TranslateBrowsePathsToNodeIdsSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A TranslateBrowsePathsToNodeIdsSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">TranslateBrowsePathsToNodeIdsSettings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A TranslateBrowsePathsToNodeIdsSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a> and
 defines some properties of an OPC UA TranslateBrowsePathsToNodeIds service invocation.</p>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings.__init__">
-<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new TranslateBrowsePathsToNodeIdsSettings object.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings.__str__">
-<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings.__str__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the settings.</p>
 </dd></dl>
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a>:</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings.ServiceSettings.callTimeoutSec">
-<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServiceSettings.</code><code class="descname">callTimeoutSec</code><a class="headerlink" href="#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
-in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -1379,33 +1379,33 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
 <h2><em>class</em> WriteSettings<a class="headerlink" href="#class-writesettings" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="pyuaf.client.settings.WriteSettings">
-<em class="property">class </em><tt class="descclassname">pyuaf.client.settings.</tt><tt class="descname">WriteSettings</tt><big>(</big><em>*args</em><big>)</big><a class="headerlink" href="#pyuaf.client.settings.WriteSettings" title="Permalink to this definition">¶</a></dt>
-<dd><p>A WriteSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a> and
+<em class="property">class </em><code class="descclassname">pyuaf.client.settings.</code><code class="descname">WriteSettings</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.WriteSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A WriteSettings is a subclass of <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a> and
 defines some properties of an OPC UA Write service invocation.</p>
 <ul>
 <li><p class="first">Methods:</p>
 <blockquote>
 <div><dl class="method">
 <dt id="pyuaf.client.settings.WriteSettings.__init__">
-<tt class="descname">__init__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.WriteSettings.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.WriteSettings.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new WriteSettings object.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyuaf.client.settings.WriteSettings.__str__">
-<tt class="descname">__str__</tt><big>(</big><big>)</big><a class="headerlink" href="#pyuaf.client.settings.WriteSettings.__str__" title="Permalink to this definition">¶</a></dt>
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.settings.WriteSettings.__str__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a formatted string representation of the settings.</p>
 </dd></dl>
 
 </div></blockquote>
 </li>
-<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></tt></a>:</p>
+<li><p class="first">Attributes inherited from <a class="reference internal" href="#pyuaf.client.settings.ServiceSettings" title="pyuaf.client.settings.ServiceSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ServiceSettings</span></code></a>:</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.client.settings.WriteSettings.ServiceSettings.callTimeoutSec">
-<tt class="descclassname">ServiceSettings.</tt><tt class="descname">callTimeoutSec</tt><a class="headerlink" href="#pyuaf.client.settings.WriteSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">ServiceSettings.</code><code class="descname">callTimeoutSec</code><a class="headerlink" href="#pyuaf.client.settings.WriteSettings.ServiceSettings.callTimeoutSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The maximum time allowed for each service communication between client and server,
-in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt>.</p>
+in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -1420,14 +1420,14 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/uaf_logo_200x67_transparent.png" alt="Logo"/>
             </a></p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">pyuaf.client.settings</span></tt></a><ul>
+<li><a class="reference internal" href="#"><code class="docutils literal"><span class="pre">pyuaf.client.settings</span></code></a><ul>
 <li><a class="reference internal" href="#class-servicesettings"><em>class</em> ServiceSettings</a></li>
 <li><a class="reference internal" href="#class-browsenextsettings"><em>class</em> BrowseNextSettings</a></li>
 <li><a class="reference internal" href="#class-browsesettings"><em>class</em> BrowseSettings</a></li>
@@ -1451,16 +1451,18 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="api_pyuaf_client_results.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">pyuaf.client.results</span></tt></a></p>
+                        title="previous chapter"><code class="docutils literal"><span class="pre">pyuaf.client.results</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="api_pyuaf_client_sessionstates.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.client.sessionstates</span></tt></a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/api_pyuaf_client_settings.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+                        title="next chapter"><code class="docutils literal"><span class="pre">pyuaf.client.sessionstates</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api_pyuaf_client_settings.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -1477,7 +1479,7 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -1492,10 +1494,10 @@ in seconds, as a <tt class="docutils literal"><span class="pre">float</span></tt
         <li class="right" >
           <a href="api_pyuaf_client_results.html" title="pyuaf.client.results"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 2.0.2 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Wim Pessemier (Institute for Astronomy, KU Leuven) - http://github.com/uaf.
     </div>
   </body>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util.usertokentypes &mdash; PyUAF 2.0.2 documentation</title>
+    <title>pyuaf.util.usertokentypes &mdash; PyUAF 2.0.3 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.2',
+        VERSION:     '2.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,12 +23,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.0.2 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.0.3 documentation" href="index.html" />
     <link rel="next" title="A note on dynamic data types" href="api_variants.html" />
     <link rel="prev" title="pyuaf.util.timestampstoreturn" href="api_pyuaf_util_timestampstoreturn.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,42 +43,42 @@
         <li class="right" >
           <a href="api_pyuaf_util_timestampstoreturn.html" title="pyuaf.util.timestampstoreturn"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 2.0.2 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="module-pyuaf.util.usertokentypes">
-<span id="pyuaf-util-usertokentypes"></span><h1><tt class="docutils literal"><span class="pre">pyuaf.util.usertokentypes</span></tt><a class="headerlink" href="#module-pyuaf.util.usertokentypes" title="Permalink to this headline">¶</a></h1>
+<span id="pyuaf-util-usertokentypes"></span><h1><code class="docutils literal"><span class="pre">pyuaf.util.usertokentypes</span></code><a class="headerlink" href="#module-pyuaf.util.usertokentypes" title="Permalink to this headline">¶</a></h1>
 <p>This module defines the types user tokens, i.e. the ways how users can identify themselves.</p>
 <ul>
 <li><p class="first">Attributes:</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.util.usertokentypes.Anonymous">
-<tt class="descclassname">usertokentypes.</tt><tt class="descname">Anonymous</tt><em class="property"> = 0</em><a class="headerlink" href="#pyuaf.util.usertokentypes.Anonymous" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">usertokentypes.</code><code class="descname">Anonymous</code><em class="property"> = 0</em><a class="headerlink" href="#pyuaf.util.usertokentypes.Anonymous" title="Permalink to this definition">¶</a></dt>
 <dd><p>No token is required.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.usertokentypes.UserName">
-<tt class="descclassname">usertokentypes.</tt><tt class="descname">UserName</tt><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.util.usertokentypes.UserName" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">usertokentypes.</code><code class="descname">UserName</code><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.util.usertokentypes.UserName" title="Permalink to this definition">¶</a></dt>
 <dd><p>Username/password token is required.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.usertokentypes.Certificate">
-<tt class="descclassname">usertokentypes.</tt><tt class="descname">Certificate</tt><em class="property"> = 2</em><a class="headerlink" href="#pyuaf.util.usertokentypes.Certificate" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">usertokentypes.</code><code class="descname">Certificate</code><em class="property"> = 2</em><a class="headerlink" href="#pyuaf.util.usertokentypes.Certificate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Certificate token is required.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.util.usertokentypes.IssuedToken">
-<tt class="descclassname">usertokentypes.</tt><tt class="descname">IssuedToken</tt><em class="property"> = 3</em><a class="headerlink" href="#pyuaf.util.usertokentypes.IssuedToken" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">usertokentypes.</code><code class="descname">IssuedToken</code><em class="property"> = 3</em><a class="headerlink" href="#pyuaf.util.usertokentypes.IssuedToken" title="Permalink to this definition">¶</a></dt>
 <dd><p>A WS-Security token is required.</p>
 </dd></dl>
 
@@ -88,17 +88,17 @@
 <blockquote>
 <div><dl class="function">
 <dt id="pyuaf.util.usertokentypes.toString">
-<tt class="descclassname">pyuaf.util.usertokentypes.</tt><tt class="descname">toString</tt><big>(</big><em>type</em><big>)</big><a class="headerlink" href="#pyuaf.util.usertokentypes.toString" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyuaf.util.usertokentypes.</code><code class="descname">toString</code><span class="sig-paren">(</span><em>type</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.usertokentypes.toString" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a string representation of the user token type type.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>type</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The type, e.g. <a class="reference internal" href="#pyuaf.util.usertokentypes.UserName" title="pyuaf.util.usertokentypes.UserName"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.usertokentypes.UserName</span></tt></a>.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>type</strong> (<code class="docutils literal"><span class="pre">int</span></code>) &#8211; The type, e.g. <a class="reference internal" href="#pyuaf.util.usertokentypes.UserName" title="pyuaf.util.usertokentypes.UserName"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.usertokentypes.UserName</span></code></a>.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The name of the type, e.g. &#8216;UserName&#8217;.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">str</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -113,23 +113,25 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/uaf_logo_200x67_transparent.png" alt="Logo"/>
             </a></p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="api_pyuaf_util_timestampstoreturn.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">pyuaf.util.timestampstoreturn</span></tt></a></p>
+                        title="previous chapter"><code class="docutils literal"><span class="pre">pyuaf.util.timestampstoreturn</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="api_variants.html"
                         title="next chapter">A note on dynamic data types</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/api_pyuaf_util_usertokentypes.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api_pyuaf_util_usertokentypes.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -146,7 +148,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -161,10 +163,10 @@
         <li class="right" >
           <a href="api_pyuaf_util_timestampstoreturn.html" title="pyuaf.util.timestampstoreturn"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 2.0.2 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Wim Pessemier (Institute for Astronomy, KU Leuven) - http://github.com/uaf.
     </div>
   </body>

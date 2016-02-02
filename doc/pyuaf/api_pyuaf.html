@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf &mdash; PyUAF 2.0.2 documentation</title>
+    <title>pyuaf &mdash; PyUAF 2.0.3 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.2',
+        VERSION:     '2.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,12 +23,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.0.2 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.0.3 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client" href="api_pyuaf_client.html" />
     <link rel="prev" title="Client examples" href="client_examples.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,42 +43,42 @@
         <li class="right" >
           <a href="client_examples.html" title="Client examples"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 2.0.2 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="module-pyuaf">
-<span id="pyuaf"></span><h1><tt class="docutils literal"><span class="pre">pyuaf</span></tt><a class="headerlink" href="#module-pyuaf" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference internal" href="#module-pyuaf" title="pyuaf"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf</span></tt></a> currently contains two modules:</p>
+<span id="pyuaf"></span><h1><code class="docutils literal"><span class="pre">pyuaf</span></code><a class="headerlink" href="#module-pyuaf" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference internal" href="#module-pyuaf" title="pyuaf"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf</span></code></a> currently contains two modules:</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference internal" href="api_pyuaf_util.html#module-pyuaf.util" title="pyuaf.util"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util</span></tt></a> for common utility code</li>
-<li><a class="reference internal" href="api_pyuaf_client.html#module-pyuaf.client" title="pyuaf.client"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.client</span></tt></a> for all client related code.</li>
+<li><a class="reference internal" href="api_pyuaf_util.html#module-pyuaf.util" title="pyuaf.util"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util</span></code></a> for common utility code</li>
+<li><a class="reference internal" href="api_pyuaf_client.html#module-pyuaf.client" title="pyuaf.client"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.client</span></code></a> for all client related code.</li>
 </ul>
 </div></blockquote>
 <p>It also contains these attributes:</p>
 <blockquote>
 <div><dl class="attribute">
 <dt id="pyuaf.__version__">
-<tt class="descclassname">pyuaf.</tt><tt class="descname">__version__</tt><a class="headerlink" href="#pyuaf.__version__" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyuaf.</code><code class="descname">__version__</code><a class="headerlink" href="#pyuaf.__version__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Version of the UAF/PyUAF.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="pyuaf.initialized">
-<tt class="descclassname">pyuaf.</tt><tt class="descname">initialized</tt><a class="headerlink" href="#pyuaf.initialized" title="Permalink to this definition">¶</a></dt>
-<dd><p>A <tt class="docutils literal"><span class="pre">bool</span></tt>, telling you if the stack is initialized.</p>
+<code class="descclassname">pyuaf.</code><code class="descname">initialized</code><a class="headerlink" href="#pyuaf.initialized" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <code class="docutils literal"><span class="pre">bool</span></code>, telling you if the stack is initialized.</p>
 <p>The underlying OPC UA stack needs to be initialized before you use it. When you do:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pyuaf</span>
 </pre></div>
 </div>
-<p>then the stack is automatically initialized, and this attribute will be <tt class="docutils literal"><span class="pre">True</span></tt>.
-If some error happens instead, the attribute will be <tt class="docutils literal"><span class="pre">False</span></tt>.</p>
+<p>then the stack is automatically initialized, and this attribute will be <code class="docutils literal"><span class="pre">True</span></code>.
+If some error happens instead, the attribute will be <code class="docutils literal"><span class="pre">False</span></code>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -88,7 +88,7 @@ If some error happens instead, the attribute will be <tt class="docutils literal
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/uaf_logo_200x67_transparent.png" alt="Logo"/>
@@ -98,13 +98,15 @@ If some error happens instead, the attribute will be <tt class="docutils literal
                         title="previous chapter">Client examples</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="api_pyuaf_client.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.client</span></tt></a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/api_pyuaf.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+                        title="next chapter"><code class="docutils literal"><span class="pre">pyuaf.client</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api_pyuaf.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -121,7 +123,7 @@ If some error happens instead, the attribute will be <tt class="docutils literal
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -136,10 +138,10 @@ If some error happens instead, the attribute will be <tt class="docutils literal
         <li class="right" >
           <a href="client_examples.html" title="Client examples"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 2.0.2 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Wim Pessemier (Institute for Astronomy, KU Leuven) - http://github.com/uaf.
     </div>
   </body>

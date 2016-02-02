@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util.statuscodes &mdash; PyUAF 2.0.2 documentation</title>
+    <title>pyuaf.util.statuscodes &mdash; PyUAF 2.0.3 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.2',
+        VERSION:     '2.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,12 +23,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.0.2 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.0.3 documentation" href="index.html" />
     <link rel="next" title="pyuaf.util.timestampstoreturn" href="api_pyuaf_util_timestampstoreturn.html" />
     <link rel="prev" title="pyuaf.util.securitypolicies" href="api_pyuaf_util_securitypolicies.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,37 +43,37 @@
         <li class="right" >
           <a href="api_pyuaf_util_securitypolicies.html" title="pyuaf.util.securitypolicies"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 2.0.2 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="module-pyuaf.util.statuscodes">
-<span id="pyuaf-util-statuscodes"></span><h1><tt class="docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt><a class="headerlink" href="#module-pyuaf.util.statuscodes" title="Permalink to this headline">¶</a></h1>
+<span id="pyuaf-util-statuscodes"></span><h1><code class="docutils literal"><span class="pre">pyuaf.util.statuscodes</span></code><a class="headerlink" href="#module-pyuaf.util.statuscodes" title="Permalink to this headline">¶</a></h1>
 <p>This module defines the status codes as specified by the UAF.</p>
 <p>The <em>UAF status codes</em>
-(which are defined in the <a class="reference internal" href="#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></tt></a> module)
+(which are defined in the <a class="reference internal" href="#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></code></a> module)
 are not to be confused with the <em>OPC UA status codes</em>
-(which are defined in the <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></tt></a> module).</p>
+(which are defined in the <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></code></a> module).</p>
 <ul>
 <li><p class="first">The <em>OPC UA status codes</em> are 32-bit integers defined by the OPC UA standard. They provide
 low-level information about the OPC UA communication. Whenever
-you see an OPC UA status code (often as an attribute called <tt class="docutils literal"><span class="pre">opcUaStatusCode</span></tt>), it is
+you see an OPC UA status code (often as an attribute called <code class="docutils literal"><span class="pre">opcUaStatusCode</span></code>), it is
 produced by the SDK or the Stack (in other words, not by the UAF).</p>
 </li>
 <li><p class="first">The <em>UAF status codes</em> are 32-bit integers defined by the UAF.
-They provide high-level information. For all &#8220;bad&#8221; status codes (those ending with <tt class="docutils literal"><span class="pre">Error</span></tt>),
-there is a corresponding error defined in <a class="reference internal" href="api_pyuaf_util_errors.html#module-pyuaf.util.errors" title="pyuaf.util.errors"><tt class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.errors</span></tt></a>.
-For instance, a <a class="reference internal" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidServerUriError" title="pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidServerUriError"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.statuscodes.InvalidServerUriError</span></tt></a> corresponds to a
-<a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.InvalidServerUriError" title="pyuaf.util.errors.InvalidServerUriError"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.errors.InvalidServerUriError</span></tt></a>. UAF status codes are used exclusively to
-determine which error is held by a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.Status</span></tt></a> object.
-For instance, if the <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status.statusCode" title="pyuaf.util.Status.statusCode"><tt class="xref py py-attr docutils literal"><span class="pre">statusCode</span></tt></a> attribute of a
-<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.Status</span></tt></a> instance is equal to <a class="reference internal" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidServerUriError" title="pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidServerUriError"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.statuscodes.InvalidServerUriError</span></tt></a>,
-then the Status object in fact holds a <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.InvalidServerUriError" title="pyuaf.util.errors.InvalidServerUriError"><tt class="xref py py-class docutils literal"><span class="pre">pyuaf.util.errors.InvalidServerUriError</span></tt></a> instance.
+They provide high-level information. For all &#8220;bad&#8221; status codes (those ending with <code class="docutils literal"><span class="pre">Error</span></code>),
+there is a corresponding error defined in <a class="reference internal" href="api_pyuaf_util_errors.html#module-pyuaf.util.errors" title="pyuaf.util.errors"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.errors</span></code></a>.
+For instance, a <a class="reference internal" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidServerUriError" title="pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidServerUriError"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.statuscodes.InvalidServerUriError</span></code></a> corresponds to a
+<a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.InvalidServerUriError" title="pyuaf.util.errors.InvalidServerUriError"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.util.errors.InvalidServerUriError</span></code></a>. UAF status codes are used exclusively to
+determine which error is held by a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.util.Status</span></code></a> object.
+For instance, if the <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status.statusCode" title="pyuaf.util.Status.statusCode"><code class="xref py py-attr docutils literal"><span class="pre">statusCode</span></code></a> attribute of a
+<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" title="pyuaf.util.Status"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.util.Status</span></code></a> instance is equal to <a class="reference internal" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidServerUriError" title="pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidServerUriError"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.statuscodes.InvalidServerUriError</span></code></a>,
+then the Status object in fact holds a <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.InvalidServerUriError" title="pyuaf.util.errors.InvalidServerUriError"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.util.errors.InvalidServerUriError</span></code></a> instance.
 See the example below:</p>
 <blockquote>
 <div><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
@@ -101,612 +101,612 @@ See the example below:</p>
 <blockquote>
 <div><dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.Good">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">Good</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.Good" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">Good</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.Good" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.Uncertain">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">Uncertain</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.Uncertain" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">Uncertain</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.Uncertain" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.DiscoveryError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">DiscoveryError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.DiscoveryError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">DiscoveryError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.DiscoveryError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ResolutionError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ResolutionError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ResolutionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ResolutionError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ResolutionError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidRequestError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">InvalidRequestError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidRequestError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">InvalidRequestError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidRequestError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.FindServersError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">FindServersError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.FindServersError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">FindServersError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.FindServersError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownServerError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">UnknownServerError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownServerError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">UnknownServerError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownServerError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.EmptyUrlError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">EmptyUrlError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.EmptyUrlError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">EmptyUrlError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.EmptyUrlError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoParallelFindServersAllowedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">NoParallelFindServersAllowedError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoParallelFindServersAllowedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">NoParallelFindServersAllowedError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoParallelFindServersAllowedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoDiscoveryUrlsFoundError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">NoDiscoveryUrlsFoundError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoDiscoveryUrlsFoundError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">NoDiscoveryUrlsFoundError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoDiscoveryUrlsFoundError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCertificateRejectedByUserError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ServerCertificateRejectedByUserError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCertificateRejectedByUserError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ServerCertificateRejectedByUserError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCertificateRejectedByUserError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCertificateSavingError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ServerCertificateSavingError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCertificateSavingError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ServerCertificateSavingError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCertificateSavingError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.OpenSSLStoreInitializationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">OpenSSLStoreInitializationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.OpenSSLStoreInitializationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">OpenSSLStoreInitializationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.OpenSSLStoreInitializationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ClientCertificateLoadingError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ClientCertificateLoadingError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ClientCertificateLoadingError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ClientCertificateLoadingError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ClientCertificateLoadingError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerDidNotProvideCertificateError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ServerDidNotProvideCertificateError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerDidNotProvideCertificateError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ServerDidNotProvideCertificateError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerDidNotProvideCertificateError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ConnectionError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ConnectionError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ConnectionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ConnectionError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ConnectionError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.PathNotExistsError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">PathNotExistsError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.PathNotExistsError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">PathNotExistsError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.PathNotExistsError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.SecurityError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">SecurityError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SecurityError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">SecurityError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SecurityError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoSecuritySettingsGivenError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">NoSecuritySettingsGivenError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoSecuritySettingsGivenError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">NoSecuritySettingsGivenError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoSecuritySettingsGivenError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.PathCreationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">PathCreationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.PathCreationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">PathCreationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.PathCreationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.SecuritySettingsMatchError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">SecuritySettingsMatchError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SecuritySettingsMatchError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">SecuritySettingsMatchError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SecuritySettingsMatchError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.WrongTypeError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">WrongTypeError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.WrongTypeError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">WrongTypeError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.WrongTypeError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnexpectedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">UnexpectedError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnexpectedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">UnexpectedError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnexpectedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerArrayConversionError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ServerArrayConversionError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerArrayConversionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ServerArrayConversionError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerArrayConversionError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.NamespaceArrayConversionError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">NamespaceArrayConversionError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NamespaceArrayConversionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">NamespaceArrayConversionError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NamespaceArrayConversionError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.BadNamespaceArrayError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">BadNamespaceArrayError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.BadNamespaceArrayError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">BadNamespaceArrayError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.BadNamespaceArrayError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.BadServerArrayError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">BadServerArrayError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.BadServerArrayError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">BadServerArrayError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.BadServerArrayError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownServerIndexError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">UnknownServerIndexError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownServerIndexError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">UnknownServerIndexError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownServerIndexError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidAddressError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">InvalidAddressError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidAddressError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">InvalidAddressError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidAddressError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownNamespaceUriError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">UnknownNamespaceUriError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownNamespaceUriError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">UnknownNamespaceUriError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownNamespaceUriError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoNamespaceIndexOrUriGivenError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">NoNamespaceIndexOrUriGivenError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoNamespaceIndexOrUriGivenError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">NoNamespaceIndexOrUriGivenError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoNamespaceIndexOrUriGivenError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownNamespaceIndexError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">UnknownNamespaceIndexError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownNamespaceIndexError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">UnknownNamespaceIndexError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownNamespaceIndexError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.EmptyServerUriAndUnknownNamespaceIndexError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">EmptyServerUriAndUnknownNamespaceIndexError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.EmptyServerUriAndUnknownNamespaceIndexError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">EmptyServerUriAndUnknownNamespaceIndexError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.EmptyServerUriAndUnknownNamespaceIndexError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ExpandedNodeIdAddressExpectedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ExpandedNodeIdAddressExpectedError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ExpandedNodeIdAddressExpectedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ExpandedNodeIdAddressExpectedError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ExpandedNodeIdAddressExpectedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.EmptyServerUriError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">EmptyServerUriError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.EmptyServerUriError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">EmptyServerUriError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.EmptyServerUriError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnsupportedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">UnsupportedError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnsupportedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">UnsupportedError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnsupportedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnsupportedNodeIdIdentifierTypeError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">UnsupportedNodeIdIdentifierTypeError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnsupportedNodeIdIdentifierTypeError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">UnsupportedNodeIdIdentifierTypeError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnsupportedNodeIdIdentifierTypeError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.SyncInvocationNotSupportedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">SyncInvocationNotSupportedError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SyncInvocationNotSupportedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">SyncInvocationNotSupportedError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SyncInvocationNotSupportedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.AsyncInvocationNotSupportedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">AsyncInvocationNotSupportedError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.AsyncInvocationNotSupportedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">AsyncInvocationNotSupportedError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.AsyncInvocationNotSupportedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoStatusesGivenError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">NoStatusesGivenError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoStatusesGivenError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">NoStatusesGivenError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoStatusesGivenError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.BadStatusesPresentError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">BadStatusesPresentError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.BadStatusesPresentError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">BadStatusesPresentError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.BadStatusesPresentError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.NotAllTargetsCouldBeResolvedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">NotAllTargetsCouldBeResolvedError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NotAllTargetsCouldBeResolvedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">NotAllTargetsCouldBeResolvedError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NotAllTargetsCouldBeResolvedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidServerUriError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">InvalidServerUriError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidServerUriError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">InvalidServerUriError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidServerUriError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.SubscriptionNotCreatedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">SubscriptionNotCreatedError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SubscriptionNotCreatedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">SubscriptionNotCreatedError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SubscriptionNotCreatedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoTargetsGivenError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">NoTargetsGivenError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoTargetsGivenError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">NoTargetsGivenError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoTargetsGivenError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.DataDontMatchAddressesError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">DataDontMatchAddressesError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.DataDontMatchAddressesError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">DataDontMatchAddressesError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.DataDontMatchAddressesError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ItemNotFoundForTheGivenHandleError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ItemNotFoundForTheGivenHandleError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ItemNotFoundForTheGivenHandleError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ItemNotFoundForTheGivenHandleError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ItemNotFoundForTheGivenHandleError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.TargetRankOutOfBoundsError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">TargetRankOutOfBoundsError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.TargetRankOutOfBoundsError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">TargetRankOutOfBoundsError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.TargetRankOutOfBoundsError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoItemFoundForTheGivenRequestHandleError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">NoItemFoundForTheGivenRequestHandleError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoItemFoundForTheGivenRequestHandleError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">NoItemFoundForTheGivenRequestHandleError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoItemFoundForTheGivenRequestHandleError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ContinuationPointsDontMatchAddressesError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ContinuationPointsDontMatchAddressesError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ContinuationPointsDontMatchAddressesError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ContinuationPointsDontMatchAddressesError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ContinuationPointsDontMatchAddressesError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownNamespaceIndexAndServerIndexError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">UnknownNamespaceIndexAndServerIndexError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownNamespaceIndexAndServerIndexError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">UnknownNamespaceIndexAndServerIndexError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownNamespaceIndexAndServerIndexError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.AsyncMultiMethodCallNotSupportedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">AsyncMultiMethodCallNotSupportedError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.AsyncMultiMethodCallNotSupportedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">AsyncMultiMethodCallNotSupportedError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.AsyncMultiMethodCallNotSupportedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.EmptyAddressError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">EmptyAddressError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.EmptyAddressError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">EmptyAddressError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.EmptyAddressError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.MultipleTranslationResultsError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">MultipleTranslationResultsError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.MultipleTranslationResultsError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">MultipleTranslationResultsError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.MultipleTranslationResultsError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownClientSubscriptionHandleError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">UnknownClientSubscriptionHandleError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownClientSubscriptionHandleError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">UnknownClientSubscriptionHandleError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownClientSubscriptionHandleError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownClientHandleError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">UnknownClientHandleError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownClientHandleError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">UnknownClientHandleError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownClientHandleError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownClientConnectionIdError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">UnknownClientConnectionIdError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownClientConnectionIdError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">UnknownClientConnectionIdError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownClientConnectionIdError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.AsyncConnectionFailedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">AsyncConnectionFailedError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.AsyncConnectionFailedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">AsyncConnectionFailedError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.AsyncConnectionFailedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ConnectionFailedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ConnectionFailedError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ConnectionFailedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ConnectionFailedError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ConnectionFailedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.EmptyUserCertificateError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">EmptyUserCertificateError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.EmptyUserCertificateError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">EmptyUserCertificateError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.EmptyUserCertificateError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidPrivateKeyError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">InvalidPrivateKeyError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidPrivateKeyError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">InvalidPrivateKeyError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidPrivateKeyError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.SessionSecuritySettingsDontMatchEndpointError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">SessionSecuritySettingsDontMatchEndpointError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SessionSecuritySettingsDontMatchEndpointError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">SessionSecuritySettingsDontMatchEndpointError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SessionSecuritySettingsDontMatchEndpointError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotManuallyUnsubscribeError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">CouldNotManuallyUnsubscribeError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotManuallyUnsubscribeError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">CouldNotManuallyUnsubscribeError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotManuallyUnsubscribeError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotManuallySubscribeError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">CouldNotManuallySubscribeError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotManuallySubscribeError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">CouldNotManuallySubscribeError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotManuallySubscribeError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.SessionNotConnectedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">SessionNotConnectedError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SessionNotConnectedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">SessionNotConnectedError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SessionNotConnectedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.SubscriptionHasBeenDeletedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">SubscriptionHasBeenDeletedError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SubscriptionHasBeenDeletedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">SubscriptionHasBeenDeletedError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SubscriptionHasBeenDeletedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoDiscoveryUrlsExposedByServerError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">NoDiscoveryUrlsExposedByServerError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoDiscoveryUrlsExposedByServerError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">NoDiscoveryUrlsExposedByServerError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoDiscoveryUrlsExposedByServerError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.GetEndpointsError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">GetEndpointsError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.GetEndpointsError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">GetEndpointsError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.GetEndpointsError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoEndpointsProvidedByServerError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">NoEndpointsProvidedByServerError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoEndpointsProvidedByServerError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">NoEndpointsProvidedByServerError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoEndpointsProvidedByServerError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.DisconnectionFailedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">DisconnectionFailedError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.DisconnectionFailedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">DisconnectionFailedError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.DisconnectionFailedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoConnectedSessionToUpdateArraysError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">NoConnectedSessionToUpdateArraysError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoConnectedSessionToUpdateArraysError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">NoConnectedSessionToUpdateArraysError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoConnectedSessionToUpdateArraysError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.BadDataReceivedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">BadDataReceivedError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.BadDataReceivedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">BadDataReceivedError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.BadDataReceivedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServiceError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ServiceError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServiceError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ServiceError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServiceError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotReadArraysError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">CouldNotReadArraysError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotReadArraysError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">CouldNotReadArraysError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotReadArraysError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.CreateMonitoredItemsError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">CreateMonitoredItemsError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CreateMonitoredItemsError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">CreateMonitoredItemsError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CreateMonitoredItemsError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.CreateMonitoredItemsInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">CreateMonitoredItemsInvocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CreateMonitoredItemsInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">CreateMonitoredItemsInvocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CreateMonitoredItemsInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.BeginCreateMonitoredItemsInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">BeginCreateMonitoredItemsInvocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.BeginCreateMonitoredItemsInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">BeginCreateMonitoredItemsInvocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.BeginCreateMonitoredItemsInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotCreateMonitoredItemsError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ServerCouldNotCreateMonitoredItemsError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotCreateMonitoredItemsError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ServerCouldNotCreateMonitoredItemsError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotCreateMonitoredItemsError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotBrowseNextError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ServerCouldNotBrowseNextError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotBrowseNextError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ServerCouldNotBrowseNextError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotBrowseNextError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.BrowseNextInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">BrowseNextInvocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.BrowseNextInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">BrowseNextInvocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.BrowseNextInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ReadInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ReadInvocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ReadInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ReadInvocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ReadInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.BeginReadInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">BeginReadInvocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.BeginReadInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">BeginReadInvocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.BeginReadInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotReadError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ServerCouldNotReadError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotReadError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ServerCouldNotReadError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotReadError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.TranslateBrowsePathsToNodeIdsInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">TranslateBrowsePathsToNodeIdsInvocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.TranslateBrowsePathsToNodeIdsInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">TranslateBrowsePathsToNodeIdsInvocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.TranslateBrowsePathsToNodeIdsInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotTranslateBrowsePathsToNodeIdsError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ServerCouldNotTranslateBrowsePathsToNodeIdsError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotTranslateBrowsePathsToNodeIdsError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ServerCouldNotTranslateBrowsePathsToNodeIdsError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotTranslateBrowsePathsToNodeIdsError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.HistoryReadInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">HistoryReadInvocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.HistoryReadInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">HistoryReadInvocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.HistoryReadInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.HistoryReadRawModifiedInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">HistoryReadRawModifiedInvocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.HistoryReadRawModifiedInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">HistoryReadRawModifiedInvocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.HistoryReadRawModifiedInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotHistoryReadError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ServerCouldNotHistoryReadError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotHistoryReadError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ServerCouldNotHistoryReadError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotHistoryReadError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.MethodCallInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">MethodCallInvocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.MethodCallInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">MethodCallInvocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.MethodCallInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.AsyncMethodCallInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">AsyncMethodCallInvocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.AsyncMethodCallInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">AsyncMethodCallInvocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.AsyncMethodCallInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotCallMethodError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ServerCouldNotCallMethodError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotCallMethodError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ServerCouldNotCallMethodError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotCallMethodError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotBrowseError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ServerCouldNotBrowseError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotBrowseError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ServerCouldNotBrowseError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotBrowseError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.BrowseInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">BrowseInvocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.BrowseInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">BrowseInvocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.BrowseInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.WriteInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">WriteInvocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.WriteInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">WriteInvocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.WriteInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.AsyncWriteInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">AsyncWriteInvocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.AsyncWriteInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">AsyncWriteInvocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.AsyncWriteInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotWriteError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ServerCouldNotWriteError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotWriteError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ServerCouldNotWriteError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotWriteError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.CallCompleteError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">CallCompleteError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CallCompleteError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">CallCompleteError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CallCompleteError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.InputArgumentError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">InputArgumentError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.InputArgumentError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">InputArgumentError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.InputArgumentError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ReadCompleteError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ReadCompleteError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ReadCompleteError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ReadCompleteError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ReadCompleteError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.WriteCompleteError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">WriteCompleteError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.WriteCompleteError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">WriteCompleteError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.WriteCompleteError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.SubscriptionError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">SubscriptionError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SubscriptionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">SubscriptionError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SubscriptionError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.SetPublishingModeInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">SetPublishingModeInvocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SetPublishingModeInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">SetPublishingModeInvocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SetPublishingModeInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotSetMonitoringModeError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ServerCouldNotSetMonitoringModeError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotSetMonitoringModeError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ServerCouldNotSetMonitoringModeError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ServerCouldNotSetMonitoringModeError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.CreateSubscriptionError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">CreateSubscriptionError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CreateSubscriptionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">CreateSubscriptionError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CreateSubscriptionError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.DeleteSubscriptionError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">DeleteSubscriptionError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.DeleteSubscriptionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">DeleteSubscriptionError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.DeleteSubscriptionError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.SetMonitoringModeInvocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">SetMonitoringModeInvocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SetMonitoringModeInvocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">SetMonitoringModeInvocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.SetMonitoringModeInvocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.ConfigurationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">ConfigurationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ConfigurationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">ConfigurationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.ConfigurationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateCertificateTrustListLocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">CouldNotCreateCertificateTrustListLocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateCertificateTrustListLocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">CouldNotCreateCertificateTrustListLocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateCertificateTrustListLocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateCertificateRevocationListLocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">CouldNotCreateCertificateRevocationListLocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateCertificateRevocationListLocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">CouldNotCreateCertificateRevocationListLocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateCertificateRevocationListLocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateIssuersCertificateLocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">CouldNotCreateIssuersCertificateLocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateIssuersCertificateLocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">CouldNotCreateIssuersCertificateLocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateIssuersCertificateLocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateIssuersRevocationListLocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">CouldNotCreateIssuersRevocationListLocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateIssuersRevocationListLocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">CouldNotCreateIssuersRevocationListLocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateIssuersRevocationListLocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateClientPrivateKeyLocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">CouldNotCreateClientPrivateKeyLocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateClientPrivateKeyLocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">CouldNotCreateClientPrivateKeyLocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateClientPrivateKeyLocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateClientCertificateLocationError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">CouldNotCreateClientCertificateLocationError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateClientCertificateLocationError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">CouldNotCreateClientCertificateLocationError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.CouldNotCreateClientCertificateLocationError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.DataFormatError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">DataFormatError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.DataFormatError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">DataFormatError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.DataFormatError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.DataSizeError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">DataSizeError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.DataSizeError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">DataSizeError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.DataSizeError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.DataSourceError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">DataSourceError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.DataSourceError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">DataSourceError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.DataSourceError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.DisconnectionError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">DisconnectionError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.DisconnectionError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">DisconnectionError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.DisconnectionError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.LowLevelError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">LowLevelError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.LowLevelError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">LowLevelError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.LowLevelError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.OtherError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">OtherError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.OtherError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">OtherError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.OtherError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.TimeoutError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">TimeoutError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.TimeoutError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">TimeoutError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.TimeoutError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoResultReceivedError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">NoResultReceivedError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoResultReceivedError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">NoResultReceivedError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.NoResultReceivedError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownHandleError">
-<em class="property">class </em><tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">UnknownHandleError</tt><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownHandleError" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">UnknownHandleError</code><a class="headerlink" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.UnknownHandleError" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div></blockquote>
@@ -715,17 +715,17 @@ See the example below:</p>
 <blockquote>
 <div><dl class="function">
 <dt id="pyuaf.util.statuscodes.toString">
-<tt class="descclassname">pyuaf.util.statuscodes.</tt><tt class="descname">toString</tt><big>(</big><em>code</em><big>)</big><a class="headerlink" href="#pyuaf.util.statuscodes.toString" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyuaf.util.statuscodes.</code><code class="descname">toString</code><span class="sig-paren">(</span><em>code</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.statuscodes.toString" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a string representation of the UAF status code.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>code</strong> (<tt class="docutils literal"><span class="pre">int</span></tt>) &#8211; The code, e.g. <a class="reference internal" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidServerUriError" title="pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidServerUriError"><tt class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.statuscodes.InvalidServerUriError</span></tt></a>.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>code</strong> (<code class="docutils literal"><span class="pre">int</span></code>) &#8211; The code, e.g. <a class="reference internal" href="#pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidServerUriError" title="pyuaf.util.statuscodes.pyuaf.util.statuscodes.InvalidServerUriError"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.statuscodes.InvalidServerUriError</span></code></a>.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The name of the type, e.g. &#8216;InvalidServerUriError&#8217;.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">str</span></code></td>
 </tr>
 </tbody>
 </table>
@@ -740,23 +740,25 @@ See the example below:</p>
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/uaf_logo_200x67_transparent.png" alt="Logo"/>
             </a></p>
   <h4>Previous topic</h4>
   <p class="topless"><a href="api_pyuaf_util_securitypolicies.html"
-                        title="previous chapter"><tt class="docutils literal"><span class="pre">pyuaf.util.securitypolicies</span></tt></a></p>
+                        title="previous chapter"><code class="docutils literal"><span class="pre">pyuaf.util.securitypolicies</span></code></a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="api_pyuaf_util_timestampstoreturn.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf.util.timestampstoreturn</span></tt></a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/api_pyuaf_util_statuscodes.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+                        title="next chapter"><code class="docutils literal"><span class="pre">pyuaf.util.timestampstoreturn</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api_pyuaf_util_statuscodes.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -773,7 +775,7 @@ See the example below:</p>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -788,10 +790,10 @@ See the example below:</p>
         <li class="right" >
           <a href="api_pyuaf_util_securitypolicies.html" title="pyuaf.util.securitypolicies"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 2.0.2 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Wim Pessemier (Institute for Astronomy, KU Leuven) - http://github.com/uaf.
     </div>
   </body>

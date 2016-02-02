@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Client examples &mdash; PyUAF 2.0.2 documentation</title>
+    <title>Client examples &mdash; PyUAF 2.0.3 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.2',
+        VERSION:     '2.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,12 +23,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.0.2 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.0.3 documentation" href="index.html" />
     <link rel="next" title="pyuaf" href="api_pyuaf.html" />
     <link rel="prev" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)" href="index.html" /> 
   </head>
-  <body>
-    <div class="related">
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -43,14 +43,14 @@
         <li class="right" >
           <a href="index.html" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">PyUAF 2.0.2 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          <div class="body">
+          <div class="body" role="main">
             
   <div class="section" id="client-examples">
 <h1>Client examples<a class="headerlink" href="#client-examples" title="Permalink to this headline">¶</a></h1>
@@ -76,7 +76,6 @@
 
 <span class="c"># read the Value attribute of the node that we just addressed:</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="p">[</span><span class="n">someAddress</span><span class="p">]</span> <span class="p">)</span>
-<span class="k">print</span> <span class="nb">type</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="s">&quot;The value is </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -186,6 +185,9 @@
 <span class="n">Server_Node</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">Objects_Node</span><span class="p">,</span> <span class="p">[</span> <span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;Server&quot;</span> <span class="p">,</span> <span class="n">OPCUA_NAMESPACE_ID</span><span class="p">))</span> <span class="p">]</span> <span class="p">)</span>
 <span class="c"># note that all Server_Node instances are equally valid, even the last one </span>
 <span class="c"># (which is a &quot;relative path to a relative path to an ExpandedNodeId&quot;) </span>
+
+
+
 </pre></div>
 </div>
 </div>
@@ -491,6 +493,7 @@
 <span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;Some error occurred: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
     
+
 </pre></div>
 </div>
 </div>
@@ -635,6 +638,9 @@
 <span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;Some error occurred: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
     <span class="k">raise</span>
+
+
+
 </pre></div>
 </div>
 </div>
@@ -911,6 +917,8 @@
 
 <span class="c"># don&#39;t worry about closing sessions etc., the UAF client will cleanup everything</span>
 <span class="c"># when it&#39;s garbage collected</span>
+
+
 </pre></div>
 </div>
 </div>
@@ -1205,6 +1213,8 @@
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t read some variables: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;Exiting...&quot;</span><span class="p">)</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+
 </pre></div>
 </div>
 </div>
@@ -1461,6 +1471,8 @@
 <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">overallStatus</span><span class="o">.</span><span class="n">isGood</span><span class="p">():</span>
     <span class="k">print</span><span class="p">(</span><span class="s">&quot;Information about the session:&quot;</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">myClient</span><span class="o">.</span><span class="n">sessionInformation</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">clientConnectionId</span><span class="p">))</span>
+
+
 </pre></div>
 </div>
 </div>
@@ -1470,7 +1482,7 @@
           </div>
         </div>
       </div>
-      <div class="sphinxsidebar">
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
             <p class="logo"><a href="index.html">
               <img class="logo" src="_static/uaf_logo_200x67_transparent.png" alt="Logo"/>
@@ -1495,13 +1507,15 @@
                         title="previous chapter">PyUAF - Python bindings for the UAF (Unified Architecture Framework)</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="api_pyuaf.html"
-                        title="next chapter"><tt class="docutils literal"><span class="pre">pyuaf</span></tt></a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/client_examples.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
+                        title="next chapter"><code class="docutils literal"><span class="pre">pyuaf</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/client_examples.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
       <input type="text" name="q" />
@@ -1518,7 +1532,7 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="related">
+    <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
       <ul>
         <li class="right" style="margin-right: 10px">
@@ -1533,10 +1547,10 @@
         <li class="right" >
           <a href="index.html" title="PyUAF - Python bindings for the UAF (Unified Architecture Framework)"
              >previous</a> |</li>
-        <li><a href="index.html">PyUAF 2.0.2 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
       </ul>
     </div>
-    <div class="footer">
+    <div class="footer" role="contentinfo">
         &copy; Copyright 2013, Wim Pessemier (Institute for Astronomy, KU Leuven) - http://github.com/uaf.
     </div>
   </body>
