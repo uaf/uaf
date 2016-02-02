@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>A note on **kwargs for Client services &mdash; PyUAF 2.0.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyUAF 2.0.3 documentation" href="index.html" />
+    <link rel="prev" title="A note on dynamic data types" href="api_variants.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_variants.html" title="A note on dynamic data types"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="a-note-on-kwargs-for-client-services">
+<span id="note-client-kwargs"></span><h1>A note on **kwargs for Client services<a class="headerlink" href="#a-note-on-kwargs-for-client-services" title="Permalink to this headline">¶</a></h1>
+<p>Most Client methods (such as read, write, createMonitoredData, ...) have a special **kwargs
+attribute. Similar to a Python dictionary, the **kwargs attribute allows you to provide
+additional key:value pairs, in order to configure the read/write/... call more in detail.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">See the <a class="reference internal" href="client_examples.html#configure-settings-example"><span class="std std-ref">How to configure all settings?</span></a> example for more info!</p>
+</div>
+<ol class="arabic">
+<li><p class="first">Session-related</p>
+<p>The following kwargs are available to configure session(s). If neither of them is given, then
+the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings.defaultSessionSettings" title="pyuaf.client.settings.ClientSettings.defaultSessionSettings"><code class="xref py py-attr docutils literal"><span class="pre">defaultSessionSettings</span></code></a> of the client will be used instead.</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><strong>clientConnectionId</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Type: <code class="docutils literal"><span class="pre">int</span></code></li>
+<li>Example: <code class="docutils literal"><span class="pre">myClient.read([address],</span> <span class="pre">clientConnectionId</span> <span class="pre">=</span> <span class="pre">2)</span></code></li>
+<li>Meaning: If provided, the client will use the existing session with the given clientConnectionId,
+to process the service call.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>sessionSettings</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Type: <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.SessionSettings" title="pyuaf.client.settings.SessionSettings"><code class="xref py py-class docutils literal"><span class="pre">SessionSettings</span></code></a></li>
+<li>Example: <code class="docutils literal"><span class="pre">myClient.read([address],</span> <span class="pre">sessionSettings</span> <span class="pre">=</span> <span class="pre">mySessionSettings)</span></code></li>
+<li>Meaning: If provided, then a session will be created with the given session settings,
+in order to process the service call. If a session with these settings exists already,
+then this session will be reused (unless <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.SessionSettings.unique" title="pyuaf.client.settings.SessionSettings.unique"><code class="xref py py-attr docutils literal"><span class="pre">unique</span></code></a>
+is set to True). If <code class="docutils literal"><span class="pre">clientConnectionId</span></code> was provided, then the <code class="docutils literal"><span class="pre">sessionSettings</span></code> kwarg
+will be ignored.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Subscription-related</p>
+<p>The following kwargs are available to configure session(s). If neither of them is given, then
+the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings.defaultSubscriptionSettings" title="pyuaf.client.settings.ClientSettings.defaultSubscriptionSettings"><code class="xref py py-attr docutils literal"><span class="pre">defaultSubscriptionSettings</span></code></a> of the client will be used
+instead. Naturally, these kwargs are only available for subscription-level requests (such
+as CreateMonitoredData).</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><strong>clientSubscriptionHandle</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Type: <code class="docutils literal"><span class="pre">int</span></code></li>
+<li>Example: <code class="docutils literal"><span class="pre">myClient.createMonitoredData([address],</span> <span class="pre">clientConnectionId</span> <span class="pre">=</span> <span class="pre">2,</span> <span class="pre">clientSubscriptionHandle</span> <span class="pre">=</span> <span class="pre">1)</span></code></li>
+<li>Meaning: If provided, the client will use the existing session with the given clientConnectionId,
+and the existing subscription with the given clientSubscriptionHandle, to process the service call.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>subscriptionSettings</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Type: <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.SubscriptionSettings" title="pyuaf.client.settings.SubscriptionSettings"><code class="xref py py-class docutils literal"><span class="pre">SubscriptionSettings</span></code></a></li>
+<li>Example: <code class="docutils literal"><span class="pre">myClient.createMonitoredData([address],</span> <span class="pre">subscriptionSettings</span> <span class="pre">=</span> <span class="pre">mySubscriptionSettings)</span></code></li>
+<li>Meaning: If provided, then a subscription will be created with the given subscription settings,
+in order to process the service call. If a subscription with these settings exists already,
+then this subscription will be reused (unless <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.SubscriptionSettings.unique" title="pyuaf.client.settings.SubscriptionSettings.unique"><code class="xref py py-attr docutils literal"><span class="pre">unique</span></code></a>
+is set to True). If <code class="docutils literal"><span class="pre">clientSubscriptionHandle</span></code> was provided, then the <code class="docutils literal"><span class="pre">subscriptionSettings</span></code> kwarg
+will be ignored.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Service-related</p>
+<p>The following kwarg is available to configure the service call. If it is not given, then
+the default service settings (e.g. <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings.defaultReadSettings" title="pyuaf.client.settings.ClientSettings.defaultReadSettings"><code class="xref py py-attr docutils literal"><span class="pre">defaultReadSettings</span></code></a>)
+of the client will be used instead.</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><strong>serviceSettings</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Type: <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ReadSettings" title="pyuaf.client.settings.ReadSettings"><code class="xref py py-class docutils literal"><span class="pre">ReadSettings</span></code></a>, <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.WriteSettings" title="pyuaf.client.settings.WriteSettings"><code class="xref py py-class docutils literal"><span class="pre">WriteSettings</span></code></a>, etc.</li>
+<li>Example: <code class="docutils literal"><span class="pre">myClient.read([address],</span> <span class="pre">serviceSettings</span> <span class="pre">=</span> <span class="pre">myReadSettings)</span></code></li>
+<li>Meaning: If provided, the client will use these settings to process the service call.
+If not provided, the client will use the defaults as configured by the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings" title="pyuaf.client.settings.ClientSettings"><code class="xref py py-class docutils literal"><span class="pre">ClientSettings</span></code></a>.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Node resolution related</p>
+<p>Most services also accept a <code class="docutils literal"><span class="pre">translateSettings</span></code> kwarg to configure the TranslateBrowsePathToNodeIds service,
+which may be needed to automatically resolve any browsepaths:</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><strong>translateSettings</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>Type: <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings" title="pyuaf.client.settings.TranslateBrowsePathsToNodeIdsSettings"><code class="xref py py-class docutils literal"><span class="pre">TranslateBrowsePathsToNodeIdsSettings</span></code></a></li>
+<li>Example: <code class="docutils literal"><span class="pre">myClient.read([address],</span> <span class="pre">translateSettings</span> <span class="pre">=</span> <span class="pre">myTranslateSettings)</span></code></li>
+<li>Meaning: If provided, these settings will be used to resolve any relative addresses into
+absolute addresses. If not provided, then the
+<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings.defaultTranslateBrowsePathsToNodeIdsSettings" title="pyuaf.client.settings.ClientSettings.defaultTranslateBrowsePathsToNodeIdsSettings"><code class="xref py py-attr docutils literal"><span class="pre">defaultTranslateBrowsePathsToNodeIdsSettings</span></code></a> will be
+used instead.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/uaf_logo_200x67_transparent.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api_variants.html"
+                        title="previous chapter">A note on dynamic data types</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api_client_kwargs.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_variants.html" title="A note on dynamic data types"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Wim Pessemier (Institute for Astronomy, KU Leuven) - http://github.com/uaf.
+    </div>
+  </body>
+</html>

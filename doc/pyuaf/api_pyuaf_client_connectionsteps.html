@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyuaf.client.connectionsteps &mdash; PyUAF 2.0.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2.0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PyUAF 2.0.3 documentation" href="index.html" />
+    <link rel="next" title="pyuaf.client.monitoreditemstates" href="api_pyuaf_client_monitoreditemstates.html" />
+    <link rel="prev" title="pyuaf.client" href="api_pyuaf_client.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_client_monitoreditemstates.html" title="pyuaf.client.monitoreditemstates"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_client.html" title="pyuaf.client"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-pyuaf.client.connectionsteps">
+<span id="pyuaf-client-connectionsteps"></span><h1><code class="docutils literal"><span class="pre">pyuaf.client.connectionsteps</span></code><a class="headerlink" href="#module-pyuaf.client.connectionsteps" title="Permalink to this headline">¶</a></h1>
+<p>This module defines the steps during the connection process.</p>
+<ul>
+<li><p class="first">Attributes:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.connectionsteps.NoAttemptYet">
+<code class="descclassname">connectionsteps.</code><code class="descname">NoAttemptYet</code><em class="property"> = 0</em><a class="headerlink" href="#pyuaf.client.connectionsteps.NoAttemptYet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connection has not started yet.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.connectionsteps.CertificateValidation">
+<code class="descclassname">connectionsteps.</code><code class="descname">CertificateValidation</code><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.client.connectionsteps.CertificateValidation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Certificate validation step.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.connectionsteps.OpenSecureChannel">
+<code class="descclassname">connectionsteps.</code><code class="descname">OpenSecureChannel</code><em class="property"> = 2</em><a class="headerlink" href="#pyuaf.client.connectionsteps.OpenSecureChannel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opening a secure channel.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.connectionsteps.CreateSession">
+<code class="descclassname">connectionsteps.</code><code class="descname">CreateSession</code><em class="property"> = 3</em><a class="headerlink" href="#pyuaf.client.connectionsteps.CreateSession" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creating the session.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.connectionsteps.ActivateSession">
+<code class="descclassname">connectionsteps.</code><code class="descname">ActivateSession</code><em class="property"> = 4</em><a class="headerlink" href="#pyuaf.client.connectionsteps.ActivateSession" title="Permalink to this definition">¶</a></dt>
+<dd><p>Activating the session.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.connectionsteps.Unknown">
+<code class="descclassname">connectionsteps.</code><code class="descname">Unknown</code><em class="property"> = 5</em><a class="headerlink" href="#pyuaf.client.connectionsteps.Unknown" title="Permalink to this definition">¶</a></dt>
+<dd><p>This connection step is unknown.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Functions:</p>
+<blockquote>
+<div><dl class="function">
+<dt id="pyuaf.client.connectionsteps.toString">
+<code class="descclassname">pyuaf.client.connectionsteps.</code><code class="descname">toString</code><span class="sig-paren">(</span><em>step</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.connectionsteps.toString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation of the connection step.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>step</strong> (<code class="docutils literal"><span class="pre">int</span></code>) &#8211; The connection step, e.g. <a class="reference internal" href="#pyuaf.client.connectionsteps.OpenSecureChannel" title="pyuaf.client.connectionsteps.OpenSecureChannel"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.client.connectionsteps.OpenSecureChannel</span></code></a>.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The name of the connection step, e.g. &#8216;OpenSecureChannel&#8217;.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">str</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="index.html">
+              <img class="logo" src="_static/uaf_logo_200x67_transparent.png" alt="Logo"/>
+            </a></p>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api_pyuaf_client.html"
+                        title="previous chapter"><code class="docutils literal"><span class="pre">pyuaf.client</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api_pyuaf_client_monitoreditemstates.html"
+                        title="next chapter"><code class="docutils literal"><span class="pre">pyuaf.client.monitoreditemstates</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/api_pyuaf_client_connectionsteps.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_client_monitoreditemstates.html" title="pyuaf.client.monitoreditemstates"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="api_pyuaf_client.html" title="pyuaf.client"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2013, Wim Pessemier (Institute for Astronomy, KU Leuven) - http://github.com/uaf.
+    </div>
+  </body>
+</html>
