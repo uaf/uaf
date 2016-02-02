@@ -813,7 +813,7 @@ class Client(ClientBase):
                  :attr:`~pyuaf.util.PkiCertificate.Action_Reject` or 
                  :attr:`~pyuaf.util.PkiCertificate.Action_AcceptTemporarily` or 
                  :attr:`~pyuaf.util.PkiCertificate.Action_AcceptPermanently`.
-        :rtype: int
+        :rtype: ``int``
         """
         return pyuaf.util.PkiCertificate.Action_AcceptTemporarily
         
