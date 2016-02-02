@@ -75,6 +75,7 @@ API
    api_pyuaf_util_opcuastatuscodes
    api_pyuaf_util_opcuatypes
    api_pyuaf_util_primitives
+   api_pyuaf_util_serverstates
    api_pyuaf_util_securitypolicies
    api_pyuaf_util_statuscodes
    api_pyuaf_util_timestampstoreturn
