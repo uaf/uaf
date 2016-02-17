@@ -39,6 +39,7 @@
 #include "uaf/util/nodeid.h"
 #include "uaf/util/browsepath.h"
 #include "uaf/util/status.h"
+#include "uaf/util/structuredefinition.h"
 #include "uaf/util/helperfunctions.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/sessions/sessionstates.h"
@@ -268,6 +269,18 @@ namespace uaf
                uaf::monitoringmodes::MonitoringMode    monitoringMode,
                const uaf::ServiceSettings*            serviceSettings,
                std::vector<uaf::Status>&               results);
+
+        /**
+         * Get the definition of a structured datatype.
+         *
+         * @param dataTypeId	The NodeId of the structured datatype.
+         * @param definition    Output parameter, the definition (if found).
+         * @return				DefinitionNotFoundError if no definition was found,
+         * 						Good otherwise.
+         */
+         uaf::Status structureDefinition(
+        		 const uaf::NodeId& 		dataTypeId,
+				 uaf::StructureDefinition& 	definition);
 
 
 

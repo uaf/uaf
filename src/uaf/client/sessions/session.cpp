@@ -971,6 +971,32 @@ namespace uaf
     }
 
 
+    // Get a structure definition
+    // =============================================================================================
+    Status Session::structureDefinition(
+    		const NodeId& 			dataTypeId,
+			StructureDefinition& 	definition)
+    {
+        Status ret;
+
+        UaNodeId uaNodeId;
+        UaStructureDefinition uaDef;
+
+        dataTypeId.toSdk(uaNodeId);
+
+        uaDef = uaSession_->structureDefinition(uaNodeId);
+
+        definition.fromSdk(uaDef);
+
+        if (definition.isNull())
+        	ret = DefinitionNotFoundError();
+        else
+        	ret = uaf::statuscodes::Good;
+
+        return ret;
+    }
+
+
     // Set the publishing mode.
     // =============================================================================================
     Status Session::checkOrCreatePath(
