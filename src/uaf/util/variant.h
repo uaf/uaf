@@ -193,11 +193,35 @@ namespace uaf
 
 
         /**
+         * Update an UaVariant SDK object.
+         *
+         * @param uaVariant SDK object to modify.
+         */
+        void toSdk(UaVariant& uaVariant) const;
+
+
+        /**
+         * Update the internal UaVariant SDK object.
+         *
+         * @param uaVariant SDK object to copy the contents from.
+         */
+        void fromSdk(const UaVariant& uaVariant);
+
+
+        /**
          * Get a UTF-8 encoded string representation of the variant.
          *
          * @return  String representation.
          */
         std::string toString() const;
+
+
+        /**
+         * Get a UTF-8 encoded string representation of the variant.
+         *
+         * @return  String representation.
+         */
+        std::string toString(const std::string& indent, std::size_t colon) const;
 
 
         /**
