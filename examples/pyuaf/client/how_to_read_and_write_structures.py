@@ -1,4 +1,4 @@
-# examples/pyuaf/client/how_to_browse_some_nodes.py
+# examples/pyuaf/client/how_to_read_and_write_structures.py
 """
 EXAMPLE: how to read and write structures
 ====================================================================================================
