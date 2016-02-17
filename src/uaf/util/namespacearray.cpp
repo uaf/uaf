@@ -48,19 +48,18 @@ namespace uaf
         // check if the status of the value is good:
         if (OpcUa_IsGood(value.StatusCode))
         {
-            UaStringArray    stringArray;
             OpcUa_StatusCode uaConversionStatusCode;
 
             // convert the value to a StringArray
-            uaConversionStatusCode = UaVariant(value.Value).toStringArray(stringArray);
+            uaConversionStatusCode = UaVariant(value.Value).toStringArray(namespaceArray_);
 
             // if the conversion succeeded, fill the map with simplified URIs
             if (OpcUa_IsGood(uaConversionStatusCode))
             {
-                for (uint16_t i=0; i<stringArray.length(); i++)
+                for (uint16_t i=0; i<namespaceArray_.length(); i++)
                 {
                     nameSpaceMap_[i] = NamespaceArray::getSimplifiedUri(
-                            string(UaString(&stringArray[i]).toUtf8()));
+                            string(UaString(&namespaceArray_[i]).toUtf8()));
                 }
             }
             else
@@ -445,9 +444,17 @@ namespace uaf
 
         UaExtensionObject uaExtensionObject(opcUaExtensionObject);
 
-        OpcUa_NodeId opcUaNodeId;\
+        OpcUa_NodeId opcUaNodeId;
 
-        uaExtensionObject.dataTypeId().copyTo(&opcUaNodeId);
+        if (uaExtensionObject.dataTypeId().isNull())
+        {
+        	uaExtensionObject.dataTypeId(namespaceArray_).copyTo(&opcUaNodeId);
+        }
+        else
+        {
+        	uaExtensionObject.dataTypeId().copyTo(&opcUaNodeId);
+        }
+
         ret = fillNodeId(opcUaNodeId, extensionObject.dataTypeId);
 
         if (ret.isGood())

@@ -264,6 +264,8 @@ namespace uaf
         // the internal NameSpaceIndex:NameSpaceURI map
         NameSpaceMap nameSpaceMap_;
 
+        // the original array
+        UaStringArray namespaceArray_;
 
         /**
          * A static function to convert the URI to a "plain" one (no trailing forward slash,
