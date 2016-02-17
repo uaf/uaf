@@ -151,7 +151,7 @@ namespace uaf
 
             ss << indent << " - valueType";
             ss << fillToPos(ss, colon);
-            ss << ": " << typeId().toString() << "\n";
+            ss << ": " << valueType() << " (" << uaf::opcuatypes::toString(valueType()) << ")" << "\n";
 
             ss << indent << " - arrayType";
             ss << fillToPos(ss, colon);

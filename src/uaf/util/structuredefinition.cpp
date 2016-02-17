@@ -269,10 +269,6 @@ namespace uaf
             ss << fillToPos(ss, colon);
             ss << ": " << dataTypeId().toString() << "\n";
 
-            ss << indent << " - name";
-            ss << fillToPos(ss, colon);
-            ss << ": " << name() << "\n";
-
             ss << indent << " - namespace";
             ss << fillToPos(ss, colon);
             ss << ": " << getNamespace() << "\n";
