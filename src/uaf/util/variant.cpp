@@ -468,6 +468,13 @@ namespace uaf
     // =============================================================================================
     string Variant::toString() const
     {
+    	return toString("", 18);
+    }
+
+    // Get a string representation
+    // =============================================================================================
+    string Variant::toString(const string& indent, size_t colon) const
+    {
         uaf::opcuatypes::OpcUaType t = type();
 
         stringstream ss;
@@ -503,7 +510,7 @@ namespace uaf
                                 ss << qualifiedName_[i].toString();
                                 break;
                             case uaf::opcuatypes::ExtensionObject:
-                                ss << extensionObject_[i].toString();
+                                ss << '\n' << extensionObject_[i].toString(indent, colon);
                                 break;
                             default:
                                 ss << "INVALID";
@@ -530,7 +537,7 @@ namespace uaf
                             ss << qualifiedName_[0].toString();
                             break;
                         case uaf::opcuatypes::ExtensionObject:
-                            ss << extensionObject_[0].toString();
+                            ss << '\n' << extensionObject_[0].toString(indent, colon);
                             break;
                         default:
                             ss << "INVALID";
@@ -630,6 +637,22 @@ namespace uaf
         {
             uaVariant_.copyTo(destination);
         }
+    }
+
+
+    // toSdk
+    // =============================================================================================
+    void Variant::toSdk(UaVariant& uaVariant) const
+    {
+    	uaVariant = uaVariant_;
+    }
+
+
+    // fromSdk
+    // =============================================================================================
+    void Variant::fromSdk(const UaVariant& uaVariant)
+    {
+    	uaVariant_ = uaVariant;
     }
 
 
