@@ -63,6 +63,7 @@
 #include "uaf/util/structurefield.h"
 #include "uaf/util/structuredefinition.h"
 #include "uaf/util/genericstructurevalue.h"
+#include "uaf/util/genericstructurearray.h"
 %}
 
 
@@ -224,4 +225,5 @@ class VectorIterator(object):
 // now include the classes that make use of the Variant typemap
 UAF_WRAP_CLASS("uaf/util/datavalue.h"              , uaf , DataValue               , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, DataValueVector)
 UAF_WRAP_CLASS("uaf/util/genericstructurevalue.h"  , uaf , GenericStructureValue   , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/genericstructurearray.h"  , uaf , GenericStructureArray   , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 

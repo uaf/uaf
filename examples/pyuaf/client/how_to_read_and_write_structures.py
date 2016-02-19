@@ -12,7 +12,8 @@ import time, os, sys
 import pyuaf
 from pyuaf.client           import Client
 from pyuaf.client.settings  import ClientSettings, SessionSettings
-from pyuaf.util             import Address, NodeId, ExtensionObject, GenericStructureValue
+from pyuaf.util             import Address, NodeId, ExtensionObject
+from pyuaf.util             import GenericStructureValue, GenericStructureArray
 from pyuaf.util             import primitives
 from pyuaf.util             import opcuaidentifiers, attributeids, opcuatypes
 from pyuaf.util.errors      import UafError
@@ -91,6 +92,75 @@ try:
     if result.overallStatus.isGood():
         print("OK, the new structure value has been written successfully")
         print("Run this example again to verify that the .X and .Y fields have indeed changed")
+    else:
+        print("Oops, some OPC UA problem occurred. Here's the result:\n%s" %result)
+except UafError, e:
+    print("Oops, some error occurred on the client side. Here's the error message: %s" %e)
+
+# let's now read an array (or "vector") of structures
+arrayAddress = Address( NodeId("Demo.Static.Arrays.Vector", demoNamespaceUri), demoServerUri )
+
+# try to read a structure
+result = myClient.read( [arrayAddress] )
+
+# we're expecting a list of ExtensionObjects. Let's check this:
+if isinstance(result.targets[0].data, list) and isinstance(result.targets[0].data[0], ExtensionObject):
+    print("We received a list of ExtensionObjects")
+    print("")
+else:
+    raise Exception("Oops, we were expecting a list of ExtensionObjects, but we received a: %s" %result.targets[0].data)
+
+extensionObjectList = result.targets[0].data
+
+# get the datatype
+result = myClient.read( [arrayAddress] , attributeId = attributeids.DataType)
+
+arrayDataTypeId = result.targets[0].data # data represents a NodeId
+
+
+print("The datatype of the ExtensionObjects of this array is: NodeId: %s" %dataTypeId)
+print("")
+
+# using the datatypeId, get the definition of the structure
+definition = myClient.structureDefinition(dataTypeId)
+
+print("The definition of the structures is:")
+print(str(definition))
+print("")
+
+print("Now let's loop through the list:")
+
+for i in xrange(len(extensionObjectList)):
+    
+    extensionObject = extensionObjectList[i]
+    
+    # using the original ExtensionObject the StructureDefinition, we can now create the GenericStructureValue:
+    structureValue = GenericStructureValue(extensionObject, definition)
+    
+    # print the structure in one line:
+    stringToPrint = " item[" + str(i) + "]: "
+    for i in xrange(definition.childrenCount()):
+        child = definition.child(i)
+        stringToPrint += "%s=%s, " %(child.name(), structureValue.value(i))
+    print(stringToPrint)
+    
+print("")
+
+# now change the values of the first child of the first array item:
+firstItem = GenericStructureValue(extensionObjectList[0], definition)
+firstItem.setField(0, primitives.Double(0.1))
+firstItem.setField("Y", primitives.Double(0.2))
+
+# write back the structure
+firstItem.toExtensionObject(extensionObjectList[0])
+ 
+print("Now writing the modified structure array")
+print("")
+try:
+    result = myClient.write( [arrayAddress], [extensionObjectList] )
+    if result.overallStatus.isGood():
+        print("OK, the new structure array has been written successfully")
+        print("Run this example again to verify that the .X and .Y fields of the first array item have indeed changed")
     else:
         print("Oops, some OPC UA problem occurred. Here's the result:\n%s" %result)
 except UafError, e:
