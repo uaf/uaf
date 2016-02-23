@@ -65,11 +65,8 @@ namespace uaf
 	{
 		UaByteString uaData;
 		UaStructureDefinition uaDef;
-		UaAbstractGenericValue::Encoding uaEnc;
+		UaAbstractGenericValue::Encoding uaEnc = static_cast<UaAbstractGenericValue::Encoding>(encoding);
 		data.toSdk(uaData);
-		if (encoding == GenericStructureValue::Binary)
-			uaEnc = UaAbstractGenericValue::Encoding_Binary;
-
 		structureDefinition.toSdk(uaDef);
 		return SdkStatus( uaGenericStructureValue_.setGenericValue(uaData, uaEnc, uaDef) );
 	}
@@ -136,6 +133,49 @@ namespace uaf
 		return SdkStatus( uaGenericStructureValue_.setField(index, uaValue) );
 	}
 
+
+    // Set a field
+	// =============================================================================================
+	SdkStatus GenericStructureValue::setField(
+			const std::string& fieldName,
+			const std::vector<uaf::GenericStructureValue>& array)
+	{
+		UaString uaFieldName(fieldName.c_str());
+		int index;
+		bool found;
+		for(index=0; index<uaGenericStructureValue_.definition().childrenCount() and !found; index++)
+		{
+			if (uaGenericStructureValue_.definition().child(index).name() == uaFieldName)
+				found = true;
+		}
+
+		if (found)
+		{
+			return setField(index, array);
+		}
+		else
+		{
+			return SdkStatus(OpcUa_BadInvalidArgument);
+		}
+	}
+
+
+    // Set a field
+	// =============================================================================================
+	SdkStatus GenericStructureValue::setField(
+			int index,
+			const std::vector<uaf::GenericStructureValue>& array)
+	{
+		UaGenericStructureArray uaArray(uaGenericStructureValue_.definition().child(index).structureDefinition());
+		uaArray.create(array.size());
+		for (std::size_t i = 0; i < array.size(); i++)
+		{
+			array[i].toSdk(uaArray[i]);
+		}
+		return SdkStatus( uaGenericStructureValue_.setField(index, uaArray) );
+	}
+
+
 	// Get the value
 	// =============================================================================================
 	Variant GenericStructureValue::value(const std::string& fieldName) const
@@ -146,12 +186,63 @@ namespace uaf
 		return ret;
 	}
 
+
 	// Get the value
 	// =============================================================================================
 	Variant GenericStructureValue::value(int i) const
 	{
 		Variant ret;
 		ret.fromSdk( uaGenericStructureValue_.value(i) );
+		return ret;
+	}
+
+
+	// Get the generic structure value
+	// =============================================================================================
+	GenericStructureValue GenericStructureValue::genericStructureValue(const std::string& fieldName) const
+	{
+		UaString uaFieldName(fieldName.c_str());
+		GenericStructureValue ret;
+		ret.fromSdk( uaGenericStructureValue_.genericStructure(uaFieldName) );
+		return ret;
+	}
+
+
+	// Get the generic structure value
+	// =============================================================================================
+	GenericStructureValue GenericStructureValue::genericStructureValue(int i) const
+	{
+		GenericStructureValue ret;
+		ret.fromSdk( uaGenericStructureValue_.genericStructure(i) );
+		return ret;
+	}
+
+
+	// Get the generic structure value
+	// =============================================================================================
+	std::vector<GenericStructureValue> GenericStructureValue::genericStructureArray(const std::string& fieldName) const
+	{
+		UaString uaFieldName(fieldName.c_str());
+		UaGenericStructureArray uaArr = uaGenericStructureValue_.genericStructureArray(uaFieldName);
+		std::vector<GenericStructureValue> ret(uaArr.length());
+		for (uint32_t i=0; i<uaArr.length(); i++)
+		{
+			ret[i].fromSdk(uaArr[i]);
+		}
+		return ret;
+	}
+
+
+	// Get the generic structure value
+	// =============================================================================================
+	std::vector<GenericStructureValue> GenericStructureValue::genericStructureArray(int i) const
+	{
+		UaGenericStructureArray uaArr = uaGenericStructureValue_.genericStructureArray(i);
+		std::vector<GenericStructureValue> ret(uaArr.length());
+		for (uint32_t i=0; i<uaArr.length(); i++)
+		{
+			ret[i].fromSdk(uaArr[i]);
+		}
 		return ret;
 	}
 
@@ -206,6 +297,25 @@ namespace uaf
 		return SdkStatus( uaGenericStructureValue_.unsetField(i) );
 	}
 
+	//  Get the datatype
+	// =============================================================================================
+	uaf::structurefielddatatypes::StructureFieldDataType GenericStructureValue::valueType(int index, SdkStatus& status) const
+	{
+		OpcUa_StatusCode uaStatusCode;
+		UaStructureFieldDataType uaDataType = uaGenericStructureValue_.valueType(index, &uaStatusCode);
+
+		status = SdkStatus(uaStatusCode);
+		return uaf::structurefielddatatypes::fromSdkToUaf(uaDataType);
+	}
+
+	//  Get the datatype
+	// =============================================================================================
+	uaf::structurefielddatatypes::StructureFieldDataType GenericStructureValue::valueType(int index) const
+	{
+		UaStructureFieldDataType uaDataType = uaGenericStructureValue_.valueType(index);
+		return uaf::structurefielddatatypes::fromSdkToUaf(uaDataType);
+	}
+
 	//  Convert to an extension object
 	// =============================================================================================
 	void GenericStructureValue::toExtensionObject(
@@ -213,9 +323,8 @@ namespace uaf
 			Encoding valueEncoding) const
 	{
 		UaExtensionObject uaExt;
-		if (valueEncoding == GenericStructureValue::Binary)
-			uaGenericStructureValue_.toExtensionObject(uaExt, UaAbstractGenericValue::Encoding_Binary);
-
+		UaAbstractGenericValue::Encoding uaEnc = static_cast<UaAbstractGenericValue::Encoding>(valueEncoding);
+		uaGenericStructureValue_.toExtensionObject(uaExt, uaEnc);
 		extensionObject.fromSdk(uaExt);
 	}
 
@@ -245,15 +354,38 @@ namespace uaf
 				for (int i=0; i<def.childrenCount(); i++)
 				{
 					ss << '\n';
-					ss << indent << "   - field(" << i << ")";
+					ss << indent << "   - field(" << i << ")\n";
+
+					ss << indent << "      - valueType";
 					ss << fillToPos(ss, colon) << ": ";
+					ss << valueType(i) << " (" << uaf::structurefielddatatypes::toString(valueType(i)) << ")\n";
+
 					if (isFieldSet(i))
 					{
-						ss << value(i).toString();
+						if (valueType(i) == uaf::structurefielddatatypes::Variant)
+						{
+							ss << indent << "      - value";
+							ss << fillToPos(ss, colon) << ": ";
+							ss << value(i).toString();
+						}
+						else if (valueType(i) == uaf::structurefielddatatypes::GenericStructure)
+						{
+							ss << indent << "      - genericStructureValue:";
+							ss << genericStructureValue(i).toString(indent + string("         "));
+						}
+						else if (valueType(i) == uaf::structurefielddatatypes::GenericStructureArray)
+						{
+							ss << indent << "      - genericStructureArray:";
+							std::vector<GenericStructureValue> array = genericStructureArray(i);
+							for (int j=0; uint32_t(j)<array.size(); j++)
+							{
+								ss << genericStructureValue(i).toString(indent + string("         "), colon);
+							}
+						}
 					}
 					else
 					{
-						ss << "(This field is not set!)";
+						ss << "      (This field is not set!)";
 					}
 				}
 			}

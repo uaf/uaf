@@ -29,6 +29,7 @@
 
 // SDK
 #include "uabase/uagenericstructurevalue.h"
+#include "uabase/uastructurefielddata.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/localizedtext.h"
@@ -37,6 +38,7 @@
 #include "uaf/util/extensionobject.h"
 #include "uaf/util/variant.h"
 #include "uaf/util/structuredefinition.h"
+#include "uaf/util/structurefielddatatypes.h"
 
 
 namespace uaf
@@ -60,10 +62,9 @@ namespace uaf
          */
         enum Encoding
         {
-            Binary = OpcUa_ExtensionObjectEncoding_Binary,
-            Xml    = OpcUa_ExtensionObjectEncoding_Xml
+            Encoding_Binary = OpcUa_ExtensionObjectEncoding_Binary,
+			Encoding_Xml    = OpcUa_ExtensionObjectEncoding_Xml
         };
-
 
         /**
          * Construct a GenericValue.
@@ -103,8 +104,17 @@ namespace uaf
         uaf::SdkStatus setField(const std::string& sfieldName, const uaf::GenericStructureValue& value);
         uaf::SdkStatus setField(int index, const uaf::GenericStructureValue& value);
 
+        uaf::SdkStatus setField(const std::string& sfieldName, const std::vector<uaf::GenericStructureValue>& array);
+        uaf::SdkStatus setField(int index, const std::vector<uaf::GenericStructureValue>& array);
+
         uaf::Variant value(const std::string& fieldName) const;
         uaf::Variant value(int index) const;
+
+        uaf::GenericStructureValue genericStructureValue(const std::string& fieldName) const;
+        uaf::GenericStructureValue genericStructureValue(int index) const;
+
+        std::vector<uaf::GenericStructureValue> genericStructureArray(const std::string& fieldName) const;
+        std::vector<uaf::GenericStructureValue> genericStructureArray(int index) const;
 
         uaf::StructureDefinition definition() const;
         void setDefinition(const uaf::StructureDefinition& definition, bool createDefaultValues = false);
@@ -116,7 +126,13 @@ namespace uaf
         uaf::SdkStatus unsetField(int index);
 
 
-        void toExtensionObject(uaf::ExtensionObject& extensionObject, Encoding valueEncoding = GenericStructureValue::Binary) const;
+        uaf::structurefielddatatypes::StructureFieldDataType valueType(int index, SdkStatus& status) const;
+        uaf::structurefielddatatypes::StructureFieldDataType valueType(int index) const;
+
+
+        void toExtensionObject(
+        		uaf::ExtensionObject& extensionObject,
+        		Encoding valueEncoding = GenericStructureValue::Encoding_Binary) const;
 
 
         /**
@@ -137,6 +153,7 @@ namespace uaf
          * Copy the instance to an SDK instance.
          */
         void toSdk(UaGenericStructureValue& uaGenericStructureValue) const { uaGenericStructureValue = uaGenericStructureValue_; };
+
 
 
     private:
