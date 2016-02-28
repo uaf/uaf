@@ -73,6 +73,7 @@
 %import(module="pyuaf.util.browsedirections")       "pyuaf/util/util_browsedirections.i"
 %import(module="pyuaf.util.nodeclasses")            "pyuaf/util/util_nodeclasses.i"
 %import(module="pyuaf.util.timestampstoreturn")     "pyuaf/util/util_timestampstoreturn.i"
+%import(module="pyuaf.util.structurefielddatatypes") "pyuaf/util/util_structurefielddatatypes.i"
 %import(module="pyuaf.util.__unittesthelper__")     "pyuaf/util/util___unittesthelper__.i"
 %import(module="pyuaf.util")                        "pyuaf/util/util___init__.i"
 

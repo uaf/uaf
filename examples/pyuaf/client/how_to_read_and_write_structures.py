@@ -13,7 +13,7 @@ import pyuaf
 from pyuaf.client           import Client
 from pyuaf.client.settings  import ClientSettings, SessionSettings
 from pyuaf.util             import Address, NodeId, ExtensionObject
-from pyuaf.util             import GenericStructureValue, GenericStructureVector
+from pyuaf.util             import GenericStructureValue, GenericStructureVector, GenericUnionValue
 from pyuaf.util             import primitives
 from pyuaf.util             import opcuaidentifiers, attributeids, opcuatypes, structurefielddatatypes
 from pyuaf.util.errors      import UafError
@@ -287,5 +287,119 @@ try:
         print("Oops, some OPC UA problem occurred. Here's the result:\n%s" %result)
 except UafError, e:
     print("Oops, some error occurred on the client side. Here's the error message: %s" %e)
+
+
+#*************************************************************************************************#
+#                                                                                                 #
+# 4) How to read and write a union                                                                #                                        *
+#                                                                                                 #
+#*************************************************************************************************#
+
+def printUnion(union, indentation=""):
+    """
+    Print a structure.
+    
+    Parameters:
+      union:       a pyuaf.util.GenericUnionValue instance. 
+      indentation: a string to print at the beginning of each line (to add indentation when
+                   this function is called recursively).
+    """
+    # get the definition of the structure:
+    definition = union.definition()
+    
+    # we'll print the contents of the structure
+    print(indentation + "Union contents:")
+    
+    if not definition.isUnion():
+        raise Exception("The given union is no union!")
+    
+    # loop through the fields of the structure, by looking at the definition:
+    for i in xrange(definition.childrenCount()):
+        
+        # retrieve information both from the definition and from the structure itself:
+        child = definition.child(i)
+        childName  = child.name()           # a string
+        childType  = child.valueType()      # datatype, e.g. Double
+        
+        
+        print(indentation + "  * child number %d:"         %i)
+        print(indentation + "     - child name = %s"       %childName)
+        print(indentation + "     - child type = %d (%s)"  %(childType, opcuatypes.toString(childType)))
+        
+        if fieldType == structurefielddatatypes.Variant:
+            print(indentation + "     - value      = %s" %structure.value(i))
+        elif fieldType == structurefielddatatypes.GenericStructure:
+            print(indentation + "     - value:")
+            # recursive call
+            printStructure(structureValue.genericStructureValue(i), indentation + "   ")
+        elif fieldType == structurefielddatatypes.GenericStructureArray:
+            array = structureValue.genericStructureArray(i)
+            print(indentation + "     - value:")
+            # recursive calls to all array items:
+            for j in xrange(len(array)):
+                print(indentation + "        array[%d]:" %j)
+                printStructure(array[j], indentation + "          ")
+        
+    print("") # empty line
+
+
+# define the address of the Union
+address = Address( NodeId("Demo.Static.Scalar.Structures.AnalogMeasurement", demoNamespaceUri), demoServerUri )
+
+# try to read a structure
+result = myClient.read( [address] )
+
+assert type(result.targets[0].data) == ExtensionObject
+extensionObject = result.targets[0].data
+
+# now let's find out the datatype of the ExtensionObject
+result = myClient.read( [address] , attributeId = attributeids.DataType)
+dataTypeId = result.targets[0].data # data represents a NodeId
+
+# using the datatypeId, get the definition of the structure
+definition = myClient.structureDefinition(dataTypeId)
+
+print("The definition of the union:")
+print(str(definition))
+print("")
+
+# we can now create the union:
+union = GenericUnionValue(extensionObject, definition)
+
+# print the union:
+print("So we can now print the full union:")
+printUnion(union)
+
+asdasdasd
+
+# now change the value of the first child (i = 0):
+structureValue.setField(0, primitives.Double(0.1))
+
+# we can also change a field via its name:
+structureValue.setField("Y", primitives.Double(0.2))
+
+# write back the structure
+newExtensionObject = ExtensionObject()
+structureValue.toExtensionObject(newExtensionObject)
+
+print("Now writing {structure}.X = 0.1 and {structure}.Y = 0.2")
+print("")
+try:
+    result = myClient.write( [address], [newExtensionObject] )
+    if result.overallStatus.isGood():
+        print("OK, the new structure value has been written successfully")
+    else:
+        print("Oops, some OPC UA problem occurred. Here's the result:\n%s" %result)
+except UafError, e:
+    print("Oops, some error occurred on the client side. Here's the error message: %s" %e)
+
+print("")
+print("Let's read the same structure again, to verify that the values have changed:")
+result          = myClient.read( [address] )
+extensionObject = result.targets[0].data
+structureValue  = GenericStructureValue(extensionObject, definition)
+printStructure(structureValue)
+
+
 
 
