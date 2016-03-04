@@ -33,11 +33,11 @@ myClient = Client(settings)
 
 
 
-#**************************************************************************************************#
-#                                                                                                  #
-# 1) To understand a GenericStructureValue instance, let's define the function below to print one: #
-#                                                                                                  #
-#**************************************************************************************************#
+print("#**************************************************************************************************#")
+print("#                                                                                                  #")
+print("# 1) To understand a GenericStructureValue instance, let's define the function below to print one: #")
+print("#                                                                                                  #")
+print("#**************************************************************************************************#")
 
 def printStructure(structure, indentation=""):
     """
@@ -87,11 +87,11 @@ def printStructure(structure, indentation=""):
 
 
 
-#******************************************************************************************#
-#                                                                                          #
-# 2) How to read and write a scalar structure (i.e. a single structure, not an array)      #
-#                                                                                          #
-#******************************************************************************************#
+print("#******************************************************************************************#")
+print("#                                                                                          #")
+print("# 2) How to read and write a scalar structure (i.e. a single structure, not an array)      #")
+print("#                                                                                          #")
+print("#******************************************************************************************#")
 
 # define the address of the Structure which we would like to read
 address = Address( NodeId("Demo.Static.Scalar.Vector", demoNamespaceUri), demoServerUri )
@@ -160,11 +160,11 @@ printStructure(structureValue)
 
 
 
-#******************************************************************************************#
-#                                                                                          #
-# 3) How to read and write an array of structures                                          #
-#                                                                                          #
-#******************************************************************************************#
+print("#******************************************************************************************#")
+print("#                                                                                          #")
+print("# 3) How to read and write an array of structures                                          #")
+print("#                                                                                          #")
+print("#******************************************************************************************#")
 
 # let's now read an array of structures
 arrayAddress = Address( NodeId("Demo.Static.Arrays.Vector", demoNamespaceUri), demoServerUri )
@@ -234,11 +234,11 @@ except UafError, e:
 
 
 
-#*************************************************************************************************#
-#                                                                                                 #
-# 4) How to read and write a structure which contains an array of structures as one of its fields #                                        *
-#                                                                                                 #
-#*************************************************************************************************#
+print("#*************************************************************************************************#")
+print("#                                                                                                 #")
+print("# 4) How to read and write a structure which contains an array of structures as one of its fields #")
+print("#                                                                                                 #")
+print("#*************************************************************************************************#")
 
 # define the address of the Structure which has an array of structure as one of its fields 
 address = Address( NodeId("Demo.Static.Scalar.WorkOrder", demoNamespaceUri), demoServerUri )
@@ -287,6 +287,106 @@ try:
         print("Oops, some OPC UA problem occurred. Here's the result:\n%s" %result)
 except UafError, e:
     print("Oops, some error occurred on the client side. Here's the error message: %s" %e)
+
+
+
+print("#*************************************************************************************************#")
+print("#                                                                                                 #")
+print("# 4) How to read and write a union                                                                #")
+print("#                                                                                                 #")
+print("#*************************************************************************************************#")
+
+def printUnion(union, indentation=""):
+    """
+    Print a structure.
+    
+    Parameters:
+      union:       a pyuaf.util.GenericUnionValue instance. 
+      indentation: a string to print at the beginning of each line (to add indentation when
+                   this function is called recursively).
+    """
+    # get the definition of the structure:
+    definition = union.definition()
+    
+    # we'll print the contents of the structure
+    print(indentation + "Union contents:")
+    
+    if not definition.isUnion():
+        raise Exception("The given union is no union!")
+    
+    # let's show the possible values by looking at the definition:
+    for i in xrange(definition.childrenCount()):
+        
+        # retrieve information both from the definition and from the structure itself:
+        child = definition.child(i)
+        childName   = child.name()           # a string
+        childType   = child.valueType()      # datatype, e.g. Double
+        
+        print(indentation + "  * child number %d:"         %i)
+        print(indentation + "     - child name = %s"       %childName)
+        print(indentation + "     - child type = %d (%s)"  %(childType, opcuatypes.toString(childType)))
+        
+    # show the active value (the "switchValue")    
+    switchValue = union.switchValue()
+    field       = union.field()
+    
+    print(indentation + "Switch value: %d" %switchValue)
+    print(indentation + "Field name: %s" %union.field().name())
+    print(indentation + "Value: %s" %union.value())
+    print("") # empty line
+
+
+# define the address of the Union
+address = Address( NodeId("Demo.Static.Scalar.Structures.AnalogMeasurement", demoNamespaceUri), demoServerUri )
+
+# try to read a structure
+result = myClient.read( [address] )
+
+assert type(result.targets[0].data) == ExtensionObject
+extensionObject = result.targets[0].data
+
+# now let's find out the datatype of the ExtensionObject
+result = myClient.read( [address] , attributeId = attributeids.DataType)
+dataTypeId = result.targets[0].data # data represents a NodeId
+
+# using the datatypeId, get the definition of the structure
+definition = myClient.structureDefinition(dataTypeId)
+
+print("The definition of the union:")
+print(str(definition))
+print("")
+
+# we can now create the union:
+union = GenericUnionValue(extensionObject, definition)
+
+# print the union:
+print("So we can now print the full union:")
+printUnion(union)
+
+# now change the active value
+union.setValue(union.field().name(), primitives.Float(111.222))
+
+# write back the union
+newExtensionObject = ExtensionObject()
+union.toExtensionObject(newExtensionObject)
+
+print("Now writing union['%s'] = 111.222333" %union.field().name())
+print("")
+try:
+    result = myClient.write( [address], [newExtensionObject] )
+    if result.overallStatus.isGood():
+        print("OK, the new structure value has been written successfully")
+    else:
+        print("Oops, some OPC UA problem occurred. Here's the result:\n%s" %result)
+except UafError, e:
+    print("Oops, some error occurred on the client side. Here's the error message: %s" %e)
+
+print("")
+print("Let's read the same union again, to verify that the active value have changed:")
+result          = myClient.read( [address] )
+extensionObject = result.targets[0].data
+union           = GenericUnionValue(extensionObject, definition)
+printUnion(union)
 
 
 
