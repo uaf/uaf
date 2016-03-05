@@ -118,13 +118,13 @@ namespace uaf
 
         uaf::Variant value() const;
 
-        uaf::GenericStructureValue genericStructureValue() const;
+        uaf::GenericStructureValue genericStructureValue(uint32_t* opcUaStatusCode) const;
 
-        std::vector<uaf::GenericStructureValue> genericStructureArray() const;
+        std::vector<uaf::GenericStructureValue> genericStructureArray(uint32_t* opcUaStatusCode) const;
 
-        uaf::GenericUnionValue genericUnionValue() const;
+        uaf::GenericUnionValue genericUnionValue(uint32_t* opcUaStatusCode) const;
 
-        std::vector<uaf::GenericUnionValue> genericUnionArray() const;
+        std::vector<uaf::GenericUnionValue> genericUnionArray(uint32_t* opcUaStatusCode) const;
 
 
         uaf::StructureDefinition definition() const;

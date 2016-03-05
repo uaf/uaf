@@ -107,14 +107,14 @@ namespace uaf
         uaf::SdkStatus setField(const std::string& sfieldName, const std::vector<uaf::GenericStructureValue>& array);
         uaf::SdkStatus setField(int index, const std::vector<uaf::GenericStructureValue>& array);
 
-        uaf::Variant value(const std::string& fieldName) const;
-        uaf::Variant value(int index) const;
+        uaf::Variant value(const std::string& fieldName, uint32_t* opcUaStatusCode) const;
+        uaf::Variant value(int index, uint32_t* opcUaStatusCode) const;
 
-        uaf::GenericStructureValue genericStructureValue(const std::string& fieldName) const;
-        uaf::GenericStructureValue genericStructureValue(int index) const;
+        uaf::GenericStructureValue genericStructureValue(const std::string& fieldName, uint32_t* opcUaStatusCode) const;
+        uaf::GenericStructureValue genericStructureValue(int index, uint32_t* opcUaStatusCode) const;
 
-        std::vector<uaf::GenericStructureValue> genericStructureArray(const std::string& fieldName) const;
-        std::vector<uaf::GenericStructureValue> genericStructureArray(int index) const;
+        std::vector<uaf::GenericStructureValue> genericStructureArray(const std::string& fieldName, uint32_t* opcUaStatusCode) const;
+        std::vector<uaf::GenericStructureValue> genericStructureArray(int index, uint32_t* opcUaStatusCode) const;
 
         uaf::StructureDefinition definition() const;
         void setDefinition(const uaf::StructureDefinition& definition, bool createDefaultValues = false);
@@ -126,8 +126,7 @@ namespace uaf
         uaf::SdkStatus unsetField(int index);
 
 
-        uaf::structurefielddatatypes::StructureFieldDataType valueType(int index, SdkStatus& status) const;
-        uaf::structurefielddatatypes::StructureFieldDataType valueType(int index) const;
+        uaf::structurefielddatatypes::StructureFieldDataType valueType(int index, uint32_t* opcUaStatusCode) const;
 
 
         void toExtensionObject(

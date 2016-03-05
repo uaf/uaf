@@ -257,10 +257,10 @@ namespace uaf
 
     // Get the generic structure value
     // =============================================================================================
-    GenericStructureValue GenericUnionValue::genericStructureValue() const
+    GenericStructureValue GenericUnionValue::genericStructureValue(uint32_t* opcUaStatusCode) const
     {
         GenericStructureValue ret;
-        ret.fromSdk( uaGenericUnionValue_.genericStructure() );
+        ret.fromSdk( uaGenericUnionValue_.genericStructure(opcUaStatusCode) );
         return ret;
     }
 
@@ -268,9 +268,9 @@ namespace uaf
 
     // Get the generic structure value
     // =============================================================================================
-    std::vector<GenericStructureValue> GenericUnionValue::genericStructureArray() const
+    std::vector<GenericStructureValue> GenericUnionValue::genericStructureArray(uint32_t* opcUaStatusCode) const
     {
-        UaGenericStructureArray uaArr = uaGenericUnionValue_.genericStructureArray();
+        UaGenericStructureArray uaArr = uaGenericUnionValue_.genericStructureArray(opcUaStatusCode);
         std::vector<GenericStructureValue> ret(uaArr.length());
         for (uint32_t i=0; i<uaArr.length(); i++)
         {
@@ -284,10 +284,10 @@ namespace uaf
 
 	// Get the generic structure value
 	// =============================================================================================
-	GenericUnionValue GenericUnionValue::genericUnionValue() const
+	GenericUnionValue GenericUnionValue::genericUnionValue(uint32_t* opcUaStatusCode) const
 	{
 		GenericUnionValue ret;
-		ret.fromSdk( uaGenericUnionValue_.genericUnion() );
+		ret.fromSdk( uaGenericUnionValue_.genericUnion(opcUaStatusCode) );
 		return ret;
 	}
 
@@ -295,9 +295,9 @@ namespace uaf
 
 	// Get the generic structure value
 	// =============================================================================================
-	std::vector<GenericUnionValue> GenericUnionValue::genericUnionArray() const
+	std::vector<GenericUnionValue> GenericUnionValue::genericUnionArray(uint32_t* opcUaStatusCode) const
 	{
-		UaGenericUnionArray uaArr = uaGenericUnionValue_.genericUnionArray();
+		UaGenericUnionArray uaArr = uaGenericUnionValue_.genericUnionArray(opcUaStatusCode);
 		std::vector<GenericUnionValue> ret(uaArr.length());
 		for (uint32_t i=0; i<uaArr.length(); i++)
 		{

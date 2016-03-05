@@ -12,7 +12,7 @@ import time, os, sys
 import pyuaf
 from pyuaf.client           import Client
 from pyuaf.client.settings  import ClientSettings, SessionSettings
-from pyuaf.util             import Address, NodeId, ExtensionObject
+from pyuaf.util             import Address, NodeId, ExtensionObject, SdkStatus
 from pyuaf.util             import GenericStructureValue, GenericStructureVector, GenericUnionValue
 from pyuaf.util             import primitives
 from pyuaf.util             import opcuaidentifiers, attributeids, opcuatypes, structurefielddatatypes
@@ -62,7 +62,10 @@ def printStructure(structure, indentation=""):
         child = definition.child(i)
         childName  = child.name()           # a string
         childType  = child.valueType()      # datatype, e.g. Double
-        fieldType  = structure.valueType(i) # e.g. Variant, GenericStructure, GenericStructureArray...
+        fieldType, opcUaStatusCode  = structure.valueType(i) # e.g. Variant, GenericStructure, GenericStructureArray...
+        
+        if not SdkStatus(opcUaStatusCode).isGood():
+            raise Exception("Oops, we could not get the valueType due to: %s" %SdkStatus(opcUaStatusCode))
         
         print(indentation + "  * child number %d:"         %i)
         print(indentation + "     - child name = %s"       %childName)
@@ -76,7 +79,11 @@ def printStructure(structure, indentation=""):
             # recursive call
             printStructure(structureValue.genericStructureValue(i), indentation + "   ")
         elif fieldType == structurefielddatatypes.GenericStructureArray:
-            array = structureValue.genericStructureArray(i)
+            array, opcUaStatusCode = structureValue.genericStructureArray(i)
+            
+            if not SdkStatus(opcUaStatusCode).isGood():
+                raise Exception("Oops, we could not get the structure due to: %s" %SdkStatus(opcUaStatusCode))
+            
             print(indentation + "     - value:")
             # recursive calls to all array items:
             for j in xrange(len(array)):
@@ -266,7 +273,10 @@ printStructure(structureValue)
 
 print("")
 print("Let's change one of the array items")
-array = structureValue.genericStructureArray(3) # child number 3 of the main structure
+array, opcUaStatusCode = structureValue.genericStructureArray(3) # child number 3 of the main structure
+
+if not SdkStatus(opcUaStatusCode).isGood():
+    raise Exception("Oops, we could not get the structure array due to: %s" %SdkStatus(opcUaStatusCode))
 
 status = array[1].setField(2, pyuaf.util.LocalizedText("en", "THIS FIELD WAS CHANGED!!!"))
 assert status.isGood()
@@ -387,6 +397,4 @@ result          = myClient.read( [address] )
 extensionObject = result.targets[0].data
 union           = GenericUnionValue(extensionObject, definition)
 printUnion(union)
-
-
 

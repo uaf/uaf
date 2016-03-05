@@ -52,3 +52,8 @@
 
 // SWIG ignores all operator= methods, so to avoid warnings we ignore them explicitly:
 %ignore *::operator=;
+
+// Make uint32_t *opcUaStatusCode an output value
+%apply unsigned int *OUTPUT { uint32_t *opcUaStatusCode };
+
+

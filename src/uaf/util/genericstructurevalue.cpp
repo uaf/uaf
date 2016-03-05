@@ -178,52 +178,52 @@ namespace uaf
 
 	// Get the value
 	// =============================================================================================
-	Variant GenericStructureValue::value(const std::string& fieldName) const
+	Variant GenericStructureValue::value(const std::string& fieldName, uint32_t* opcUaStatusCode) const
 	{
 		UaString uaFieldName(fieldName.c_str());
 		Variant ret;
-		ret.fromSdk( uaGenericStructureValue_.value(uaFieldName) );
+		ret.fromSdk( uaGenericStructureValue_.value(uaFieldName, opcUaStatusCode) );
 		return ret;
 	}
 
 
 	// Get the value
 	// =============================================================================================
-	Variant GenericStructureValue::value(int i) const
+	Variant GenericStructureValue::value(int i, uint32_t* opcUaStatusCode) const
 	{
 		Variant ret;
-		ret.fromSdk( uaGenericStructureValue_.value(i) );
+		ret.fromSdk( uaGenericStructureValue_.value(i, opcUaStatusCode) );
 		return ret;
 	}
 
 
 	// Get the generic structure value
 	// =============================================================================================
-	GenericStructureValue GenericStructureValue::genericStructureValue(const std::string& fieldName) const
+	GenericStructureValue GenericStructureValue::genericStructureValue(const std::string& fieldName, uint32_t* opcUaStatusCode) const
 	{
 		UaString uaFieldName(fieldName.c_str());
 		GenericStructureValue ret;
-		ret.fromSdk( uaGenericStructureValue_.genericStructure(uaFieldName) );
+		ret.fromSdk( uaGenericStructureValue_.genericStructure(uaFieldName, opcUaStatusCode) );
 		return ret;
 	}
 
 
 	// Get the generic structure value
 	// =============================================================================================
-	GenericStructureValue GenericStructureValue::genericStructureValue(int i) const
+	GenericStructureValue GenericStructureValue::genericStructureValue(int i, uint32_t* opcUaStatusCode) const
 	{
 		GenericStructureValue ret;
-		ret.fromSdk( uaGenericStructureValue_.genericStructure(i) );
+		ret.fromSdk( uaGenericStructureValue_.genericStructure(i, opcUaStatusCode) );
 		return ret;
 	}
 
 
 	// Get the generic structure value
 	// =============================================================================================
-	std::vector<GenericStructureValue> GenericStructureValue::genericStructureArray(const std::string& fieldName) const
+	std::vector<GenericStructureValue> GenericStructureValue::genericStructureArray(const std::string& fieldName, uint32_t* opcUaStatusCode) const
 	{
 		UaString uaFieldName(fieldName.c_str());
-		UaGenericStructureArray uaArr = uaGenericStructureValue_.genericStructureArray(uaFieldName);
+		UaGenericStructureArray uaArr = uaGenericStructureValue_.genericStructureArray(uaFieldName, opcUaStatusCode);
 		std::vector<GenericStructureValue> ret(uaArr.length());
 		for (uint32_t i=0; i<uaArr.length(); i++)
 		{
@@ -235,9 +235,9 @@ namespace uaf
 
 	// Get the generic structure value
 	// =============================================================================================
-	std::vector<GenericStructureValue> GenericStructureValue::genericStructureArray(int i) const
+	std::vector<GenericStructureValue> GenericStructureValue::genericStructureArray(int i, uint32_t* opcUaStatusCode) const
 	{
-		UaGenericStructureArray uaArr = uaGenericStructureValue_.genericStructureArray(i);
+		UaGenericStructureArray uaArr = uaGenericStructureValue_.genericStructureArray(i, opcUaStatusCode);
 		std::vector<GenericStructureValue> ret(uaArr.length());
 		for (uint32_t i=0; i<uaArr.length(); i++)
 		{
@@ -297,22 +297,12 @@ namespace uaf
 		return SdkStatus( uaGenericStructureValue_.unsetField(i) );
 	}
 
-	//  Get the datatype
-	// =============================================================================================
-	uaf::structurefielddatatypes::StructureFieldDataType GenericStructureValue::valueType(int index, SdkStatus& status) const
-	{
-		OpcUa_StatusCode uaStatusCode;
-		UaStructureFieldDataType uaDataType = uaGenericStructureValue_.valueType(index, &uaStatusCode);
-
-		status = SdkStatus(uaStatusCode);
-		return uaf::structurefielddatatypes::fromSdkToUaf(uaDataType);
-	}
 
 	//  Get the datatype
 	// =============================================================================================
-	uaf::structurefielddatatypes::StructureFieldDataType GenericStructureValue::valueType(int index) const
+	uaf::structurefielddatatypes::StructureFieldDataType GenericStructureValue::valueType(int index, uint32_t* opcUaStatusCode) const
 	{
-		UaStructureFieldDataType uaDataType = uaGenericStructureValue_.valueType(index);
+		UaStructureFieldDataType uaDataType = uaGenericStructureValue_.valueType(index, opcUaStatusCode);
 		return uaf::structurefielddatatypes::fromSdkToUaf(uaDataType);
 	}
 
@@ -336,6 +326,7 @@ namespace uaf
 		stringstream ss;
 
 		StructureDefinition def(definition());
+		uint32_t* opcUaStatusCode;
 
 		ss << indent << " - definition\n";
 		ss << def.toString(indent + "   ", colon) << "\n";
@@ -356,31 +347,41 @@ namespace uaf
 					ss << '\n';
 					ss << indent << "   - field(" << i << ")\n";
 
+					uaf::structurefielddatatypes::StructureFieldDataType theValueType = valueType(i, opcUaStatusCode);
 					ss << indent << "      - valueType";
 					ss << fillToPos(ss, colon) << ": ";
-					ss << valueType(i) << " (" << uaf::structurefielddatatypes::toString(valueType(i)) << ")\n";
+					ss << theValueType
+					        << " ("
+					        << uaf::structurefielddatatypes::toString(theValueType)
+                            << ", opcUaStatusCode="
+                            << UaStatusCode(*opcUaStatusCode).toString().toUtf8()
+					        << ")\n";
 
 					if (isFieldSet(i))
 					{
-						if (valueType(i) == uaf::structurefielddatatypes::Variant)
+						if (theValueType == uaf::structurefielddatatypes::Variant)
 						{
 							ss << indent << "      - value";
 							ss << fillToPos(ss, colon) << ": ";
-							ss << value(i).toString();
+							ss << value(i, opcUaStatusCode).toString();
+							ss << " (opcUaStatusCode=" << UaStatusCode(*opcUaStatusCode).toString().toUtf8() << ")\n";
 						}
-						else if (valueType(i) == uaf::structurefielddatatypes::GenericStructure)
+						else if (theValueType == uaf::structurefielddatatypes::GenericStructure)
 						{
 							ss << indent << "      - genericStructureValue:";
-							ss << genericStructureValue(i).toString(indent + string("         "));
+							ss << genericStructureValue(i, opcUaStatusCode).toString(indent + string("         "));
+							ss << indent << "        (opcUaStatusCode=" <<  UaStatusCode(*opcUaStatusCode).toString().toUtf8() << ")\n";
 						}
-						else if (valueType(i) == uaf::structurefielddatatypes::GenericStructureArray)
+						else if (theValueType == uaf::structurefielddatatypes::GenericStructureArray)
 						{
 							ss << indent << "      - genericStructureArray:";
-							std::vector<GenericStructureValue> array = genericStructureArray(i);
+							std::vector<GenericStructureValue> array = genericStructureArray(i, opcUaStatusCode);
 							for (int j=0; uint32_t(j)<array.size(); j++)
 							{
-								ss << genericStructureValue(i).toString(indent + string("         "), colon);
+								ss << genericStructureValue(i, opcUaStatusCode).toString(indent + string("         "), colon);
 							}
+							ss << "\n";
+                            ss << indent << "        (opcUaStatusCode=" <<  UaStatusCode(*opcUaStatusCode).toString().toUtf8() << ")\n";
 						}
 					}
 					else
