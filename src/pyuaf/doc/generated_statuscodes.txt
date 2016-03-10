@@ -111,6 +111,7 @@
 .. class:: pyuaf.util.statuscodes.CouldNotCreateIssuersRevocationListLocationError
 .. class:: pyuaf.util.statuscodes.CouldNotCreateClientPrivateKeyLocationError
 .. class:: pyuaf.util.statuscodes.CouldNotCreateClientCertificateLocationError
+.. class:: pyuaf.util.statuscodes.DefinitionNotFoundError
 .. class:: pyuaf.util.statuscodes.DataFormatError
 .. class:: pyuaf.util.statuscodes.DataSizeError
 .. class:: pyuaf.util.statuscodes.DataSourceError
