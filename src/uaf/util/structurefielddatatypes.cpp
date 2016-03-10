@@ -40,8 +40,8 @@ namespace uaf
                 case GenericUnionArray:     return "GenericUnionArray";
                 case GenericOptionSet:      return "GenericOptionSet";
                 case GenericOptionSetArray: return "GenericOptionSetArray";
-                case Empty:               	return "Empty";
-                default:                    return "INVALID";
+                case Empty:                 return "Empty";
+                default:                                           return "INVALID";
             }
         }
 
