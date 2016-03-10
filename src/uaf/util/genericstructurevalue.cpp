@@ -19,6 +19,7 @@
  */
 
 #include "uaf/util/genericstructurevalue.h"
+#include "uaf/util/genericunionvalue.h"
 
 namespace uaf
 {
@@ -55,7 +56,6 @@ namespace uaf
     }
 
 
-
     // Set a generic value
 	// =============================================================================================
 	SdkStatus GenericStructureValue::setGenericValue(
@@ -71,6 +71,7 @@ namespace uaf
 		return SdkStatus( uaGenericStructureValue_.setGenericValue(uaData, uaEnc, uaDef) );
 	}
 
+
     // Set a generic value
 	// =============================================================================================
 	SdkStatus GenericStructureValue::setGenericValue(
@@ -83,6 +84,7 @@ namespace uaf
 		structureDefinition.toSdk(uaDef);
 		return SdkStatus( uaGenericStructureValue_.setGenericValue(uaExt, uaDef) );
 	}
+
 
     // Set a field
 	// =============================================================================================
@@ -199,7 +201,7 @@ namespace uaf
 
 	// Get the generic structure value
 	// =============================================================================================
-	GenericStructureValue GenericStructureValue::genericStructureValue(const std::string& fieldName, uint32_t* opcUaStatusCode) const
+	GenericStructureValue GenericStructureValue::genericStructure(const std::string& fieldName, uint32_t* opcUaStatusCode) const
 	{
 		UaString uaFieldName(fieldName.c_str());
 		GenericStructureValue ret;
@@ -210,7 +212,7 @@ namespace uaf
 
 	// Get the generic structure value
 	// =============================================================================================
-	GenericStructureValue GenericStructureValue::genericStructureValue(int i, uint32_t* opcUaStatusCode) const
+	GenericStructureValue GenericStructureValue::genericStructure(int i, uint32_t* opcUaStatusCode) const
 	{
 		GenericStructureValue ret;
 		ret.fromSdk( uaGenericStructureValue_.genericStructure(i, opcUaStatusCode) );
@@ -247,6 +249,58 @@ namespace uaf
 	}
 
 
+
+    // Get the generic union value
+    // =============================================================================================
+    GenericUnionValue GenericStructureValue::genericUnion(const std::string& fieldName, uint32_t* opcUaStatusCode) const
+    {
+        UaString uaFieldName(fieldName.c_str());
+        GenericUnionValue ret;
+        ret.fromSdk( uaGenericStructureValue_.genericUnion(uaFieldName, opcUaStatusCode) );
+        return ret;
+    }
+
+
+    // Get the generic structure value
+    // =============================================================================================
+    GenericUnionValue GenericStructureValue::genericUnion(int i, uint32_t* opcUaStatusCode) const
+    {
+        GenericUnionValue ret;
+        ret.fromSdk( uaGenericStructureValue_.genericUnion(i, opcUaStatusCode) );
+        return ret;
+    }
+
+
+    // Get the generic structure value
+    // =============================================================================================
+    std::vector<GenericUnionValue> GenericStructureValue::genericUnionArray(const std::string& fieldName, uint32_t* opcUaStatusCode) const
+    {
+        UaString uaFieldName(fieldName.c_str());
+        UaGenericUnionArray uaArr = uaGenericStructureValue_.genericUnionArray(uaFieldName, opcUaStatusCode);
+        std::vector<GenericUnionValue> ret(uaArr.length());
+        for (uint32_t i=0; i<uaArr.length(); i++)
+        {
+            ret[i].fromSdk(uaArr[i]);
+        }
+        return ret;
+    }
+
+
+    // Get the generic structure value
+    // =============================================================================================
+    std::vector<GenericUnionValue> GenericStructureValue::genericUnionArray(int i, uint32_t* opcUaStatusCode) const
+    {
+        UaGenericUnionArray uaArr = uaGenericStructureValue_.genericUnionArray(i, opcUaStatusCode);
+        std::vector<GenericUnionValue> ret(uaArr.length());
+        for (uint32_t i=0; i<uaArr.length(); i++)
+        {
+            ret[i].fromSdk(uaArr[i]);
+        }
+        return ret;
+    }
+
+
+
 	// Get the definition
 	// =============================================================================================
 	StructureDefinition GenericStructureValue::definition() const
@@ -255,6 +309,7 @@ namespace uaf
 		ret.fromSdk( uaGenericStructureValue_.definition() );
 		return ret;
 	}
+
 
     // Set a definition
 	// =============================================================================================
@@ -267,6 +322,7 @@ namespace uaf
 		uaGenericStructureValue_.setDefinition(uaDef, createDefaultValues);
 	}
 
+
 	// Is a field set?
 	// =============================================================================================
 	bool GenericStructureValue::isFieldSet(const std::string& fieldName) const
@@ -274,6 +330,7 @@ namespace uaf
 		UaString uaFieldName(fieldName.c_str());
 		return uaGenericStructureValue_.isFieldSet(uaFieldName);
 	}
+
 
 	// Is a field set?
 	// =============================================================================================
@@ -290,6 +347,7 @@ namespace uaf
 		return SdkStatus( uaGenericStructureValue_.unsetField(uaFieldName) );
 	}
 
+
 	//  Unset a field
 	// =============================================================================================
 	SdkStatus GenericStructureValue::unsetField(int i)
@@ -305,6 +363,7 @@ namespace uaf
 		UaStructureFieldDataType uaDataType = uaGenericStructureValue_.valueType(index, opcUaStatusCode);
 		return uaf::structurefielddatatypes::fromSdkToUaf(uaDataType);
 	}
+
 
 	//  Convert to an extension object
 	// =============================================================================================
@@ -368,8 +427,8 @@ namespace uaf
 						}
 						else if (theValueType == uaf::structurefielddatatypes::GenericStructure)
 						{
-							ss << indent << "      - genericStructureValue:";
-							ss << genericStructureValue(i, opcUaStatusCode).toString(indent + string("         "));
+							ss << indent << "      - genericStructure:";
+							ss << genericStructure(i, opcUaStatusCode).toString(indent + string("         "));
 							ss << indent << "        (opcUaStatusCode=" <<  UaStatusCode(*opcUaStatusCode).toString().toUtf8() << ")\n";
 						}
 						else if (theValueType == uaf::structurefielddatatypes::GenericStructureArray)
@@ -378,11 +437,28 @@ namespace uaf
 							std::vector<GenericStructureValue> array = genericStructureArray(i, opcUaStatusCode);
 							for (int j=0; uint32_t(j)<array.size(); j++)
 							{
-								ss << genericStructureValue(i, opcUaStatusCode).toString(indent + string("         "), colon);
+								ss << genericStructure(i, opcUaStatusCode).toString(indent + string("         "), colon);
 							}
 							ss << "\n";
                             ss << indent << "        (opcUaStatusCode=" <<  UaStatusCode(*opcUaStatusCode).toString().toUtf8() << ")\n";
 						}
+                        else if (theValueType == uaf::structurefielddatatypes::GenericUnion)
+                        {
+                            ss << indent << "      - genericUnion:";
+                            ss << genericUnion(i, opcUaStatusCode).toString(indent + string("         "));
+                            ss << indent << "        (opcUaStatusCode=" <<  UaStatusCode(*opcUaStatusCode).toString().toUtf8() << ")\n";
+                        }
+                        else if (theValueType == uaf::structurefielddatatypes::GenericUnionArray)
+                        {
+                            ss << indent << "      - genericUnionArray:";
+                            std::vector<GenericUnionValue> array = genericUnionArray(i, opcUaStatusCode);
+                            for (int j=0; uint32_t(j)<array.size(); j++)
+                            {
+                                ss << genericUnion(i, opcUaStatusCode).toString(indent + string("         "), colon);
+                            }
+                            ss << "\n";
+                            ss << indent << "        (opcUaStatusCode=" <<  UaStatusCode(*opcUaStatusCode).toString().toUtf8() << ")\n";
+                        }
 					}
 					else
 					{
@@ -396,7 +472,6 @@ namespace uaf
 				ss << ": (No fields to display: definition has 0 children)";
 			}
 		}
-
 
 		return ss.str();
     }

@@ -44,9 +44,12 @@
 namespace uaf
 {
 
+    // forward declarations
+    class UAF_EXPORT GenericUnionValue;
+
 
     /*******************************************************************************************//**
-     * A GenericValue may represent a Structure or Enumeration.
+     * A GenericStructureValue may represent a Structure.
      *
      * @ingroup Util
      **********************************************************************************************/
@@ -97,38 +100,91 @@ namespace uaf
                 const uaf::ExtensionObject&     extensionObject,
                 const uaf::StructureDefinition& structureDefinition);
 
-
+        /**
+         * Change a field to a Variant value.
+         */
         uaf::SdkStatus setField(const std::string& fieldName, const uaf::Variant& value);
         uaf::SdkStatus setField(int index, const uaf::Variant& value);
 
+        /**
+         * Change a field to a Variant value.
+         */
         uaf::SdkStatus setField(const std::string& sfieldName, const uaf::GenericStructureValue& value);
         uaf::SdkStatus setField(int index, const uaf::GenericStructureValue& value);
 
+        /**
+         * Change a field to a GenericStructureValue.
+         */
         uaf::SdkStatus setField(const std::string& sfieldName, const std::vector<uaf::GenericStructureValue>& array);
         uaf::SdkStatus setField(int index, const std::vector<uaf::GenericStructureValue>& array);
 
+        /**
+         * Get the value of a field.
+         * The OpcUaStatusCode will be Good if the field corresponds indeed to a Variant.
+         */
         uaf::Variant value(const std::string& fieldName, uint32_t* opcUaStatusCode) const;
         uaf::Variant value(int index, uint32_t* opcUaStatusCode) const;
 
-        uaf::GenericStructureValue genericStructureValue(const std::string& fieldName, uint32_t* opcUaStatusCode) const;
-        uaf::GenericStructureValue genericStructureValue(int index, uint32_t* opcUaStatusCode) const;
+        /**
+         * Get the GenericStructureValue of a field.
+         * The OpcUaStatusCode will be Good if the field corresponds indeed to a GenericStructureValue.
+         */
+        uaf::GenericStructureValue genericStructure(const std::string& fieldName, uint32_t* opcUaStatusCode) const;
+        uaf::GenericStructureValue genericStructure(int index, uint32_t* opcUaStatusCode) const;
 
+        /**
+         * Get the GenericStructureArray of a field.
+         * The OpcUaStatusCode will be Good if the field corresponds indeed to a GenericStructureArray.
+         */
         std::vector<uaf::GenericStructureValue> genericStructureArray(const std::string& fieldName, uint32_t* opcUaStatusCode) const;
         std::vector<uaf::GenericStructureValue> genericStructureArray(int index, uint32_t* opcUaStatusCode) const;
 
+        /**
+         * Get the GenericUnionValue of a field.
+         * The OpcUaStatusCode will be Good if the field corresponds indeed to a GenericStructureValue.
+         */
+        uaf::GenericUnionValue genericUnion(const std::string& fieldName, uint32_t* opcUaStatusCode) const;
+        uaf::GenericUnionValue genericUnion(int index, uint32_t* opcUaStatusCode) const;
+
+        /**
+         * Get the GenericUnionArray of a field.
+         * The OpcUaStatusCode will be Good if the field corresponds indeed to a GenericStructureArray.
+         */
+        std::vector<uaf::GenericUnionValue> genericUnionArray(const std::string& fieldName, uint32_t* opcUaStatusCode) const;
+        std::vector<uaf::GenericUnionValue> genericUnionArray(int index, uint32_t* opcUaStatusCode) const;
+
+        /**
+         * Get the definition of the structure.
+         */
         uaf::StructureDefinition definition() const;
+
+        /**
+         * Set the definition of the structure (and optionally create default values for the fields).
+         */
         void setDefinition(const uaf::StructureDefinition& definition, bool createDefaultValues = false);
 
+
+        /**
+         * Check if a certain field is set.
+         */
         bool isFieldSet(const std::string& name) const;
         bool isFieldSet(int index) const;
 
+        /**
+         * Unset a field.
+         */
         uaf::SdkStatus unsetField(const std::string& sname);
         uaf::SdkStatus unsetField(int index);
 
-
+        /**
+         * Get the value type.
+         * The OpcUaStatusCode will be Good only when the index is valid (i.e. between [0, numberOfChildren])
+         */
         uaf::structurefielddatatypes::StructureFieldDataType valueType(int index, uint32_t* opcUaStatusCode) const;
 
-
+        /**
+         * Convert the GenericStructureValue to an ExtensionObject.
+         */
         void toExtensionObject(
         		uaf::ExtensionObject& extensionObject,
         		Encoding valueEncoding = GenericStructureValue::Encoding_Binary) const;
@@ -152,7 +208,6 @@ namespace uaf
          * Copy the instance to an SDK instance.
          */
         void toSdk(UaGenericStructureValue& uaGenericStructureValue) const { uaGenericStructureValue = uaGenericStructureValue_; };
-
 
 
     private:
