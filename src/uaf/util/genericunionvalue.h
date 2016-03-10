@@ -49,7 +49,7 @@ namespace uaf
 
 
     /*******************************************************************************************//**
-     * A GenericValue may represent a Structure or Enumeration.
+     * A GenericUnionValue may represent a Union.
      *
      * @ingroup Util
      **********************************************************************************************/
@@ -59,7 +59,7 @@ namespace uaf
 
 
         /**
-         * This enum defines the encoding of the generic value.
+         * This enum defines the encoding of the generic union value.
          *
          * @ingroup Util
          */
@@ -70,10 +70,9 @@ namespace uaf
         };
 
         /**
-         * Construct a GenericValue.
+         * Construct a GenericUnionValue.
          */
         GenericUnionValue();
-
 
         /**
          * Construct a GenericValue.
@@ -82,12 +81,10 @@ namespace uaf
         		const uaf::ExtensionObject& extensionObject,
         		const uaf::StructureDefinition& definition);
 
-
         /**
          * Clear the generic value.
          */
         void clear();
-
 
         /**
          * Set a value.
@@ -100,43 +97,82 @@ namespace uaf
                 const uaf::ExtensionObject&     extensionObject,
                 const uaf::StructureDefinition& structureDefinition);
 
-
+        /**
+         * Set a new value (Variant) for the specified field.
+         */
         uaf::SdkStatus setValue(const std::string& fieldName, const uaf::Variant& value);
         uaf::SdkStatus setValue(int index, const uaf::Variant& value);
 
-        uaf::SdkStatus setValue(const std::string& sfieldName, const uaf::GenericStructureValue& value);
+        /**
+         * Set a new value (GenericStructureValue) for the specified field.
+         */
+        uaf::SdkStatus setValue(const std::string& fieldName, const uaf::GenericStructureValue& value);
         uaf::SdkStatus setValue(int index, const uaf::GenericStructureValue& value);
 
+        /**
+         * Set a new value (vector of GenericStructureValue) for the specified field.
+         */
         uaf::SdkStatus setValue(const std::string& sfieldName, const std::vector<uaf::GenericStructureValue>& array);
         uaf::SdkStatus setValue(int index, const std::vector<uaf::GenericStructureValue>& array);
 
+        /**
+         * Set a new value (GenericUnionValue) for the specified field.
+         */
         uaf::SdkStatus setValue(const std::string& sfieldName, const uaf::GenericUnionValue& value);
         uaf::SdkStatus setValue(int index, const uaf::GenericUnionValue& value);
 
+        /**
+         * Set a new value (vector of GenericUnionValue) for the specified field.
+         */
         uaf::SdkStatus setValue(const std::string& sfieldName, const std::vector<uaf::GenericUnionValue>& array);
         uaf::SdkStatus setValue(int index, const std::vector<uaf::GenericUnionValue>& array);
 
+        /**
+         * Get the value of the active field if it is a Variant.
+         */
         uaf::Variant value() const;
 
-        uaf::GenericStructureValue genericStructureValue(uint32_t* opcUaStatusCode) const;
+        /**
+         * Get the value of the active field if it is a GenericStructureValue.
+         */
+        uaf::GenericStructureValue genericStructure(uint32_t* opcUaStatusCode) const;
 
+        /**
+         * Get the value of the active field if it is a vector of GenericStructureValues.
+         */
         std::vector<uaf::GenericStructureValue> genericStructureArray(uint32_t* opcUaStatusCode) const;
 
-        uaf::GenericUnionValue genericUnionValue(uint32_t* opcUaStatusCode) const;
+        /**
+         * Get the value of the active field if it is a GenericUnionValue.
+         */
+        uaf::GenericUnionValue genericUnion(uint32_t* opcUaStatusCode) const;
 
+        /**
+         * Get the value of the active field if it is a vector of GenericUnionValues.
+         */
         std::vector<uaf::GenericUnionValue> genericUnionArray(uint32_t* opcUaStatusCode) const;
 
-
+        /**
+         * Get the definition.
+         */
         uaf::StructureDefinition definition() const;
 
+        /**
+         * Get the index of the active value.
+         */
         int switchValue() const;
+
+        /**
+         * Get the currently used field.
+         */
         uaf::StructureField field() const;
 
-
+        /**
+         * Convert the GenericStructureValue to an ExtensionObject.
+         */
         void toExtensionObject(
         		uaf::ExtensionObject& extensionObject,
         		Encoding valueEncoding = GenericUnionValue::Encoding_Binary) const;
-
 
         /**
          * Get a string representation.
@@ -144,7 +180,6 @@ namespace uaf
          * @return The string representation.
          */
         std::string toString(const std::string& indent="", std::size_t colon=26) const;
-
 
         /**
          * Fill the instance from an SDK instance.
@@ -156,7 +191,6 @@ namespace uaf
          * Copy the instance to an SDK instance.
          */
         void toSdk(UaGenericUnionValue& uaGenericUnionValue) const { uaGenericUnionValue = uaGenericUnionValue_; };
-
 
 
     private:

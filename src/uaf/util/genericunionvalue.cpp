@@ -257,7 +257,7 @@ namespace uaf
 
     // Get the generic structure value
     // =============================================================================================
-    GenericStructureValue GenericUnionValue::genericStructureValue(uint32_t* opcUaStatusCode) const
+    GenericStructureValue GenericUnionValue::genericStructure(uint32_t* opcUaStatusCode) const
     {
         GenericStructureValue ret;
         ret.fromSdk( uaGenericUnionValue_.genericStructure(opcUaStatusCode) );
@@ -284,7 +284,7 @@ namespace uaf
 
 	// Get the generic structure value
 	// =============================================================================================
-	GenericUnionValue GenericUnionValue::genericUnionValue(uint32_t* opcUaStatusCode) const
+	GenericUnionValue GenericUnionValue::genericUnion(uint32_t* opcUaStatusCode) const
 	{
 		GenericUnionValue ret;
 		ret.fromSdk( uaGenericUnionValue_.genericUnion(opcUaStatusCode) );
@@ -369,32 +369,15 @@ namespace uaf
 		{
 			if (def.childrenCount() > 0)
 			{
-//				for (int i=0; i<def.childrenCount(); i++)
-//				{
-//					ss << '\n';
-//					ss << indent << "   - field(" << i << ")\n";
-//
-//					if (valueType(i) == uaf::structurefielddatatypes::Variant)
-//					{
-//						ss << indent << "      - value";
-//						ss << fillToPos(ss, colon) << ": ";
-//						ss << value(i).toString();
-//					}
-//					else if (valueType(i) == uaf::structurefielddatatypes::GenericUnion)
-//					{
-//						ss << indent << "      - genericUnionValue:";
-//						ss << genericUnionValue(i).toString(indent + string("         "));
-//					}
-//					else if (valueType(i) == uaf::structurefielddatatypes::GenericUnionArray)
-//					{
-//						ss << indent << "      - genericUnionArray:";
-//						std::vector<GenericUnionValue> array = genericUnionArray(i);
-//						for (int j=0; uint32_t(j)<array.size(); j++)
-//						{
-//							ss << genericUnionValue(i).toString(indent + string("         "), colon);
-//						}
-//					}
-//				}
+		        ss << indent << " - switchValue";
+	            ss << fillToPos(ss, colon);
+	            ss << ": " << switchValue() << "\n";
+
+                ss << indent << " - field\n";
+                ss << field().toString(indent + "   ", colon) << "\n";
+
+                ss << indent << " - value\n";
+                ss << value().toString(indent + "   ", colon) << "\n";
 			}
 			else
 			{
