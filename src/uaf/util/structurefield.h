@@ -58,8 +58,8 @@ namespace uaf
          */
         enum ArrayType
         {
-            Scalar   = OpcUa_VariantArrayType_Scalar,
-            Array    = OpcUa_VariantArrayType_Array
+            ArrayType_Scalar   = OpcUa_VariantArrayType_Scalar,
+            ArrayType_Array    = OpcUa_VariantArrayType_Array
         };
 
 
