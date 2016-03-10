@@ -49,14 +49,14 @@ namespace uaf
 		enum StructureFieldDataType
 		{
 
-			Variant                 = DataVariant,
-			GenericStructure        = DataGenericStructure,
-			GenericStructureArray   = DataGenericStructureArray,
-			GenericUnion        	= DataGenericUnion,
-			GenericUnionArray       = DataGenericUnionArray,
-			GenericOptionSet        = DataGenericOptionSet,
-			GenericOptionSetArray   = DataGenericOptionSetArray,
-			Empty        			= DataEmpty
+		    Variant                 = DataVariant,
+		    GenericStructure        = DataGenericStructure,
+		    GenericStructureArray   = DataGenericStructureArray,
+		    GenericUnion            = DataGenericUnion,
+		    GenericUnionArray       = DataGenericUnionArray,
+		    GenericOptionSet        = DataGenericOptionSet,
+		    GenericOptionSetArray   = DataGenericOptionSetArray,
+		    Empty        		    = DataEmpty
 		};
 
 
