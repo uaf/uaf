@@ -3,6 +3,17 @@ UAF changelog
 ====================================================================================================
 
 
+Version 2.1.0 @ 2016/03/11
+----------------------------------------------------------------------------------------------------
+
+- New feature (https://github.com/uaf/uaf/issues/94)
+  Added support for Structures, Unions, and arrays of Structures and Unions.
+  See examples/pyuaf/client/how_to_read_and_write_structures.py
+
+- bugfix in the CMake file of examples/uaf/src/client/CMakeLists.txt, which prevented the C++ 
+  examples from building correctly. (Reported and fixed by Hoang N.)
+
+
 Version 2.0.3 @ 2016/01/29
 ----------------------------------------------------------------------------------------------------
 
