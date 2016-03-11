@@ -73,7 +73,8 @@ def printStructure(structure, indentation=""):
         print(indentation + "     - field type = %s (%s)"  %(fieldType, structurefielddatatypes.toString(fieldType)))
         
         if fieldType == structurefielddatatypes.Variant:
-            print(indentation + "     - value      = %s" %structure.value(i))
+            value, opcUaStatusCode = structure.value(i)
+            print(indentation + "     - value      = %s" %value)
         elif fieldType == structurefielddatatypes.GenericStructure:
             print(indentation + "     - value:")
             # recursive call
