@@ -184,9 +184,9 @@ namespace uaf
 	{
 		UaString uaFieldName(fieldName.c_str());
 		Variant ret;
-        OpcUa_StatusCode* pUaCode = NULL;
-		ret.fromSdk( uaGenericStructureValue_.value(uaFieldName, pUaCode) );
-        opcUaStatusCode = static_cast<uint32_t*>(pUaCode);
+        OpcUa_StatusCode uaCode;
+		ret.fromSdk( uaGenericStructureValue_.value(uaFieldName, &uaCode) );
+        *opcUaStatusCode = static_cast<uint32_t>(uaCode);
 		return ret;
 	}
 
@@ -196,9 +196,9 @@ namespace uaf
 	Variant GenericStructureValue::value(int i, uint32_t* opcUaStatusCode) const
 	{
 		Variant ret;
-        OpcUa_StatusCode* pUaCode = NULL;
-		ret.fromSdk( uaGenericStructureValue_.value(i, pUaCode) );
-        opcUaStatusCode = static_cast<uint32_t*>(pUaCode);
+        OpcUa_StatusCode uaCode;
+		ret.fromSdk( uaGenericStructureValue_.value(i, &uaCode) );
+        *opcUaStatusCode = static_cast<uint32_t>(uaCode);
 		return ret;
 	}
 
@@ -209,9 +209,9 @@ namespace uaf
 	{
 		UaString uaFieldName(fieldName.c_str());
 		GenericStructureValue ret;
-        OpcUa_StatusCode* pUaCode = NULL;
-		ret.fromSdk( uaGenericStructureValue_.genericStructure(uaFieldName, pUaCode) );
-        opcUaStatusCode = static_cast<uint32_t*>(pUaCode);
+        OpcUa_StatusCode uaCode;
+		ret.fromSdk( uaGenericStructureValue_.genericStructure(uaFieldName, &uaCode) );
+        *opcUaStatusCode = static_cast<uint32_t>(uaCode);
         return ret;
 		return ret;
 	}
@@ -222,9 +222,9 @@ namespace uaf
 	GenericStructureValue GenericStructureValue::genericStructure(int i, uint32_t* opcUaStatusCode) const
 	{
 		GenericStructureValue ret;
-        OpcUa_StatusCode* pUaCode = NULL;
-		ret.fromSdk( uaGenericStructureValue_.genericStructure(i, pUaCode) );
-        opcUaStatusCode = static_cast<uint32_t*>(pUaCode);
+        OpcUa_StatusCode uaCode;
+		ret.fromSdk( uaGenericStructureValue_.genericStructure(i, &uaCode) );
+        *opcUaStatusCode = static_cast<uint32_t>(uaCode);
 		return ret;
 	}
 
@@ -234,9 +234,9 @@ namespace uaf
 	std::vector<GenericStructureValue> GenericStructureValue::genericStructureArray(const std::string& fieldName, uint32_t* opcUaStatusCode) const
 	{
 		UaString uaFieldName(fieldName.c_str());
-        OpcUa_StatusCode* pUaCode = NULL;
-		UaGenericStructureArray uaArr = uaGenericStructureValue_.genericStructureArray(uaFieldName, pUaCode);
-        opcUaStatusCode = static_cast<uint32_t*>(pUaCode);
+        OpcUa_StatusCode uaCode;
+		UaGenericStructureArray uaArr = uaGenericStructureValue_.genericStructureArray(uaFieldName, &uaCode);
+        *opcUaStatusCode = static_cast<uint32_t>(uaCode);
 		std::vector<GenericStructureValue> ret(uaArr.length());
 		for (uint32_t i=0; i<uaArr.length(); i++)
 		{
@@ -250,9 +250,9 @@ namespace uaf
 	// =============================================================================================
 	std::vector<GenericStructureValue> GenericStructureValue::genericStructureArray(int i, uint32_t* opcUaStatusCode) const
 	{
-        OpcUa_StatusCode* pUaCode = NULL;
-		UaGenericStructureArray uaArr = uaGenericStructureValue_.genericStructureArray(i, pUaCode);
-		opcUaStatusCode = static_cast<uint32_t*>(pUaCode);
+        OpcUa_StatusCode uaCode;
+		UaGenericStructureArray uaArr = uaGenericStructureValue_.genericStructureArray(i, &uaCode);
+        *opcUaStatusCode = static_cast<uint32_t>(uaCode);
 		std::vector<GenericStructureValue> ret(uaArr.length());
 		for (uint32_t i=0; i<uaArr.length(); i++)
 		{
@@ -269,9 +269,9 @@ namespace uaf
     {
         UaString uaFieldName(fieldName.c_str());
         GenericUnionValue ret;
-        OpcUa_StatusCode* pUaCode = NULL;
-        ret.fromSdk( uaGenericStructureValue_.genericUnion(uaFieldName, pUaCode) );
-        opcUaStatusCode = static_cast<uint32_t*>(pUaCode);
+        OpcUa_StatusCode uaCode;
+        ret.fromSdk( uaGenericStructureValue_.genericUnion(uaFieldName, &uaCode) );
+        *opcUaStatusCode = static_cast<uint32_t>(uaCode);
         return ret;
     }
 
@@ -281,9 +281,9 @@ namespace uaf
     GenericUnionValue GenericStructureValue::genericUnion(int i, uint32_t* opcUaStatusCode) const
     {
         GenericUnionValue ret;
-        OpcUa_StatusCode* pUaCode = NULL;
-        ret.fromSdk( uaGenericStructureValue_.genericUnion(i, pUaCode) );
-        opcUaStatusCode = static_cast<uint32_t*>(pUaCode);
+        OpcUa_StatusCode uaCode;
+        ret.fromSdk( uaGenericStructureValue_.genericUnion(i, &uaCode) );
+        *opcUaStatusCode = static_cast<uint32_t>(uaCode);
         return ret;
     }
 
@@ -293,9 +293,9 @@ namespace uaf
     std::vector<GenericUnionValue> GenericStructureValue::genericUnionArray(const std::string& fieldName, uint32_t* opcUaStatusCode) const
     {
         UaString uaFieldName(fieldName.c_str());
-        OpcUa_StatusCode* pUaCode = NULL;
-        UaGenericUnionArray uaArr = uaGenericStructureValue_.genericUnionArray(uaFieldName, pUaCode);
-        opcUaStatusCode = static_cast<uint32_t*>(pUaCode);
+        OpcUa_StatusCode uaCode;
+        UaGenericUnionArray uaArr = uaGenericStructureValue_.genericUnionArray(uaFieldName, &uaCode);
+        *opcUaStatusCode = static_cast<uint32_t>(uaCode);
         std::vector<GenericUnionValue> ret(uaArr.length());
         for (uint32_t i=0; i<uaArr.length(); i++)
         {
@@ -309,9 +309,9 @@ namespace uaf
     // =============================================================================================
     std::vector<GenericUnionValue> GenericStructureValue::genericUnionArray(int i, uint32_t* opcUaStatusCode) const
     {
-        OpcUa_StatusCode* pUaCode = NULL;
-        UaGenericUnionArray uaArr = uaGenericStructureValue_.genericUnionArray(i, pUaCode);
-        opcUaStatusCode = static_cast<uint32_t*>(pUaCode);
+        OpcUa_StatusCode uaCode;
+        UaGenericUnionArray uaArr = uaGenericStructureValue_.genericUnionArray(i, &uaCode);
+        *opcUaStatusCode = static_cast<uint32_t>(uaCode);
         std::vector<GenericUnionValue> ret(uaArr.length());
         for (uint32_t i=0; i<uaArr.length(); i++)
         {
@@ -381,9 +381,9 @@ namespace uaf
 	// =============================================================================================
 	uaf::structurefielddatatypes::StructureFieldDataType GenericStructureValue::valueType(int index, uint32_t* opcUaStatusCode) const
 	{
-        OpcUa_StatusCode* pUaCode = NULL;
-		UaStructureFieldDataType uaDataType = uaGenericStructureValue_.valueType(index, pUaCode);
-        opcUaStatusCode = static_cast<uint32_t*>(pUaCode);
+        OpcUa_StatusCode uaCode;
+		UaStructureFieldDataType uaDataType = uaGenericStructureValue_.valueType(index, &uaCode);
+        *opcUaStatusCode = static_cast<uint32_t>(uaCode);
 		return uaf::structurefielddatatypes::fromSdkToUaf(uaDataType);
 	}
 
