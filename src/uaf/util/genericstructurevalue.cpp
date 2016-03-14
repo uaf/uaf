@@ -408,7 +408,7 @@ namespace uaf
 		stringstream ss;
 
 		StructureDefinition def(definition());
-		uint32_t* opcUaStatusCode;
+		uint32_t* opcUaStatusCode = 0;
 
 		ss << indent << " - definition\n";
 		ss << def.toString(indent + "   ", colon) << "\n";
