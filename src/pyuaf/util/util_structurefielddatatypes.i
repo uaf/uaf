@@ -17,43 +17,20 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+ 
+%module structurefielddatatypes
+%{
+#define SWIG_FILE_WITH_INIT
+#include "uaf/util/structurefielddatatypes.h"
+%}
+
+// include common definitions
+%include "../pyuaf.i"
 
 
-// include some standard interface files:
-#if defined(SWIGPYTHON)
-    %include "python/typemaps.i"
-#endif
+// import the EXPORT macro
+%import "uaf/util/util.h"
 
 
-
-%include "std_string.i"
-%include "std_vector.i"
-%include "std_pair.i"
-%include "std_map.i"
-%include "stdint.i"
-%include "std_except.i"
-
-
-
-// don't wrap the following methods, since they only make sense for the (internal) C++ UAF code:
-%ignore fromSdkToUaf;
-%ignore fromUafToSdk;
-%ignore fromSdk;
-%ignore toSdk;
-
-
-// import some macros
-%import "pyuaf_macros.i"
-
-
-// typemap for time_t
-%typemap(in)  time_t { $1 = (time_t) PyLong_AsLong($input); }
-%typemap(out) time_t { $result = PyLong_FromLong((long)$1); }
-
-// SWIG ignores all operator= methods, so to avoid warnings we ignore them explicitly:
-%ignore *::operator=;
-
-// Make uint32_t *opcUaStatusCode an output value
-%apply unsigned int *OUTPUT { uint32_t *opcUaStatusCode };
-
-
+// include the status codes
+%include "uaf/util/structurefielddatatypes.h"

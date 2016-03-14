@@ -108,21 +108,21 @@ namespace uaf
     uaf::StructureField::ArrayType StructureField::arrayType() const
     {
         if (uaStructureField_.arrayType() == UaStructureField::ArrayType_Scalar)
-            return uaf::StructureField::Scalar;
+            return uaf::StructureField::ArrayType_Scalar;
         else if (uaStructureField_.arrayType() == UaStructureField::ArrayType_Array)
-            return uaf::StructureField::Array;
+            return uaf::StructureField::ArrayType_Array;
         else
             // not possible, but return Scalar to avoid segfaults
-            return uaf::StructureField::Scalar;
+            return uaf::StructureField::ArrayType_Scalar;
     }
 
     // Set the value type
     // =============================================================================================
     void StructureField::setArrayType(uaf::StructureField::ArrayType arrayType)
     {
-        if (arrayType == uaf::StructureField::Scalar)
+        if (arrayType == uaf::StructureField::ArrayType_Scalar)
             uaStructureField_.setArrayType(UaStructureField::ArrayType_Scalar);
-        else if (arrayType == uaf::StructureField::Array)
+        else if (arrayType == uaf::StructureField::ArrayType_Array)
             uaStructureField_.setArrayType(UaStructureField::ArrayType_Array);
     }
 
@@ -151,14 +151,14 @@ namespace uaf
 
             ss << indent << " - valueType";
             ss << fillToPos(ss, colon);
-            ss << ": " << typeId().toString() << "\n";
+            ss << ": " << valueType() << " (" << uaf::opcuatypes::toString(valueType()) << ")" << "\n";
 
             ss << indent << " - arrayType";
             ss << fillToPos(ss, colon);
-            if (arrayType() == uaf::StructureField::Scalar)
-                ss << ": Scalar";
-            else if (arrayType() == uaf::StructureField::Array)
-                ss << ": Array";
+            if (arrayType() == uaf::StructureField::ArrayType_Scalar)
+                ss << ": ArrayType_Scalar";
+            else if (arrayType() == uaf::StructureField::ArrayType_Array)
+                ss << ": ArrayType_Array";
             else
                 ss << ": UNKNOWN";
 

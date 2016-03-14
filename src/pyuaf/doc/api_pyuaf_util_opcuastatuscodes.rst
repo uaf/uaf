@@ -54,7 +54,8 @@
         .. autoattribute:: pyuaf.util.opcuastatuscodes.OpcUa_BadCertificateUntrusted
         .. autoattribute:: pyuaf.util.opcuastatuscodes.OpcUa_BadUserAccessDenied
         .. autoattribute:: pyuaf.util.opcuastatuscodes.OpcUa_BadMaxAgeInvalid
-
+        .. autoattribute:: pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument
+        .. autoattribute:: pyuaf.util.opcuastatuscodes.OpcUa_BadNoData
 
     And here's a little script you can use to print all status codes to the standard out ("stdout",
     e.g. the Windows DOS Prompt or the Linux shell) or write them to a file:

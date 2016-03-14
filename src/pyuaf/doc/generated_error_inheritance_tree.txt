@@ -23,6 +23,7 @@ UafError..............................................................
           +unknownClientHandle                                        Attribute of type: int
       UnknownClientConnectionIdError..................................Unknown client connection id
           +unknownClientConnectionId                                  Attribute of type: int
+      DefinitionNotFoundError.........................................No valid definition was found
       ConnectionError.................................................Connection error
          ConnectionFailedError........................................Connection failed
              +endpointUrl                                             Attribute of type: str

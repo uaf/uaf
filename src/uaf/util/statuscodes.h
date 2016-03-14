@@ -159,6 +159,7 @@ namespace uaf
             CouldNotCreateIssuersRevocationListLocationError,
             CouldNotCreateClientPrivateKeyLocationError,
             CouldNotCreateClientCertificateLocationError,
+            DefinitionNotFoundError,
             // status codes kept for backwards compatibility:
             DataFormatError,
             DataSizeError,

@@ -274,6 +274,7 @@ namespace uaf
         UAF_STATUS_COPY_ERROR(EmptyUserCertificateError)
         UAF_STATUS_COPY_ERROR(InvalidPrivateKeyError)
         UAF_STATUS_COPY_ERROR(SetPublishingModeInvocationError)
+        UAF_STATUS_COPY_ERROR(DefinitionNotFoundError)
 
         // configuration errors
         UAF_STATUS_COPY_ERROR(ConfigurationError)
@@ -395,6 +396,7 @@ namespace uaf
         UAF_STATUS_TOSTRING_ELSE_IF(EmptyUserCertificateError)
         UAF_STATUS_TOSTRING_ELSE_IF(InvalidPrivateKeyError)
         UAF_STATUS_TOSTRING_ELSE_IF(SetPublishingModeInvocationError)
+        UAF_STATUS_TOSTRING_ELSE_IF(DefinitionNotFoundError)
 
         // configuration errors
         UAF_STATUS_TOSTRING_ELSE_IF(ConfigurationError)

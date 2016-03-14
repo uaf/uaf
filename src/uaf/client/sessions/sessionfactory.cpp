@@ -521,6 +521,28 @@ namespace uaf
     }
 
 
+    // Get a structure definition
+    // =============================================================================================
+    Status SessionFactory::structureDefinition(
+    		const NodeId& 			dataTypeId,
+			StructureDefinition& 	definition)
+    {
+        Status ret;
+
+        // lock the mutex to make sure the sessionMap_ is not being manipulated
+        UaMutexLocker locker(&sessionMapMutex_);
+
+        // loop trough the sessions and let structureDefinition be called (if needed!) on each of them
+        for (SessionMap::const_iterator it = sessionMap_.begin();
+                it != sessionMap_.end() && ret.isNotGood();
+                ++it)
+        {
+            ret = it->second->structureDefinition(dataTypeId, definition);
+        }
+
+        return ret;
+    }
+
 
 
     // Construct a session if needed, without connecting

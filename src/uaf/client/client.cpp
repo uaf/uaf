@@ -915,6 +915,13 @@ namespace uaf
     }
 
 
+    // Get a structure definition
+    // =============================================================================================
+    Status Client::structureDefinition(const uaf::NodeId &dataTypeId, uaf::StructureDefinition& definition)
+    {
+        return sessionFactory_->structureDefinition(dataTypeId, definition);
+    }
+
 
     // Private template function implementation: assign a UAF handle
     // =============================================================================================

@@ -1111,7 +1111,7 @@
         ...                                        ExpandedNodeId("id 1", "MyNamespace", "serverY") ] )
 
 
-    
+
 
 
 
@@ -1141,6 +1141,578 @@
         .. autoattribute:: pyuaf.util.ExtensionObject.dataTypeId
         
             The NodeId that describes the datatype (type :class:`~pyuaf.util.NodeId`).
+    
+
+*class* GenericStructureValue
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.GenericStructureValue
+
+    A GenericStructureValue instance holds a structure of fields. The fields may represent
+    values (Double, LocalizedText, ...) or other GenericStructureValue instances or
+    arrays of GenericStructureValue.
+    
+    .. seealso:: Check out example :ref:`read-and-write-structures` for more information.
+
+    * Class attributes:
+
+        * Possible Encoding types:
+
+            .. autoattribute:: pyuaf.util.GenericStructureValue.Encoding_Binary
+    
+                An ``int`` identifying the type of Encoding: in this case Binary!
+
+            .. autoattribute:: pyuaf.util.GenericStructureValue.Encoding_Xml
+    
+                An ``int`` identifying the type of Encoding: in this case XML!
+    
+    
+    * Methods:
+
+        .. automethod:: pyuaf.util.GenericStructureValue.__init__
+            
+            Construct a new GenericStructureValue in one of the following ways:
+            
+            .. doctest::
+            
+                >>> import pyuaf
+                >>> from pyuaf.util import GenericStructureValue, ExtensionObject, StructureDefinition
+                >>> struct1 = GenericStructureValue()
+                >>> struct2 = GenericStructureValue(ExtensionObject(), StructureDefinition())
+        
+        .. automethod:: pyuaf.util.GenericStructureValue.clear
+            
+            Clear the structure.
+        
+        .. automethod:: pyuaf.util.GenericStructureValue.setGenericValue
+            
+            Fill the generic structure value.
+            
+            Either you can provide a ByteString, Encoding and StructureDefinition as arguments:
+            
+             - :class:`~pyuaf.util.primitives.ByteString` data
+             - ``int`` representing the encoding, such as :attr:`~pyuaf.util.GenericStructureValue.Encoding_Binary`
+             - :class:`~pyuaf.util.StructureDefinition` structureDefinition
+            
+            Or you can provide an ExtensionObject and a StructureDefinition:
+            
+             - :class:`~pyuaf.util.ExtensionObject` extensionObject
+             - :class:`~pyuaf.util.StructureDefinition` structureDefinition
+        
+        .. automethod:: pyuaf.util.GenericStructureValue.setField
+        
+        	Change the value of a field.
+        	
+        	This method has two arguments.
+        	
+        	The first argument identifies the field. It can either be:
+        	
+        	 - the number of the field (an ``int``)
+        	 - or the name of the field (a ``str``).
+        	 
+        	The second argument sets the new value. It can either be:
+        	 
+        	 - a value such as :class:`~pyuaf.util.primitives.UInt32`, 
+        	   :class:`~pyuaf.util.primitives.Double`, :class:`~pyuaf.util.primitives.String`,
+        	   :class:`~pyuaf.util.DateTime`, :class:`~pyuaf.util.LocalizedText`,
+        	   :class:`~pyuaf.util.QualifiedName`
+        	 - a :class:`~pyuaf.util.GenericStructureValue` instance
+        	 - a ``list`` of :class:`~pyuaf.util.GenericStructureValue` instances. 
+        	   (Or a :class:`~pyuaf.util.GenericStructureVector`, this is similar to a list.)
+        	   In other words, an array of structures.
+        	 - a :class:`~pyuaf.util.GenericUnionValue` instance
+        	 - a ``list`` of :class:`~pyuaf.util.GenericUnionValue` instances. 
+        	   (Or a :class:`~pyuaf.util.GenericUnionVector`, this is similar to a list.)
+        	   In other words, an array of unions.
+            
+        .. automethod:: pyuaf.util.GenericStructureValue.value
+        
+           Get the value of the specified field, in case the specified field represents a built-in
+           OPC UA value. In other words, in case the  :meth:`~pyuaf.util.GenericStructureValue.valueType` 
+           method returns the ``int`` :attr:`pyuaf.util.structurefielddatatypes.Variant`.
+           
+           The field can be specified via the only argument: either:
+        	
+        	 - the number of the field (an ``int``)
+        	 - or the name of the field (a ``str``).
+            
+           This method will return a tuple of (value, statuscode).
+           
+             - the value can be a primitive such as :class:`~pyuaf.util.primitives.UInt32`, 
+    	       :class:`~pyuaf.util.primitives.Double`, :class:`~pyuaf.util.primitives.String`,
+               or typical built-in OPC UA types such as :class:`~pyuaf.util.DateTime`, 
+               :class:`~pyuaf.util.LocalizedText`, :class:`~pyuaf.util.QualifiedName`, ...
+             - the statuscode is an ``int``, as defined by :mod:`pyuaf.util.opcuastatuscodes`. 
+               It will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Good` if the field corresponds
+               indeed to one of the values mentioned above. If the value is something else (e.g. a structure), 
+               then the statuscode will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument`.
+               If the field is empty, you can expect a :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadNoData`.
+               You can easily print the name of the status code by creating a :class:`~pyuaf.util.SdkStatus` 
+               (with the OPC UA status code as the argument for the constructor). 
+           
+            
+        .. automethod:: pyuaf.util.GenericStructureValue.genericStructure
+        
+           Get the structure value of the specified field, in case the specified field represents a structure.
+           In other words, in case the :meth:`~pyuaf.util.GenericStructureValue.valueType` 
+           method returns the ``int`` :attr:`pyuaf.util.structurefielddatatypes.GenericStructure`.
+           
+           The field can be specified via the only argument: either:
+        	
+        	 - the number of the field (an ``int``)
+        	 - or the name of the field (a ``str``).
+            
+           This method will return a tuple of (structureValue, statuscode).
+           
+             - the structureValue is an instance of :class:`~pyuaf.util.GenericStructureValue`.
+             - the statuscode is an ``int``, as defined by :mod:`pyuaf.util.opcuastatuscodes`. 
+               It will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Good` if the field corresponds
+               indeed to a structure. If the value is something else (e.g. a Double), 
+               then the statuscode will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument`.
+               If the field is empty, you can expect a :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadNoData`.
+               You can easily print the name of the status code by creating a :class:`~pyuaf.util.SdkStatus` 
+               (with the OPC UA status code as the argument for the constructor). 
+           
+           
+            
+        .. automethod:: pyuaf.util.GenericStructureValue.genericStructureArray
+        
+           Get the structure value of the specified field, in case the specified field represents an 
+           array of structures.
+           In other words, in case the :meth:`~pyuaf.util.GenericStructureValue.valueType` 
+           method returns the ``int`` :attr:`pyuaf.util.structurefielddatatypes.GenericStructureArray`.
+           
+           The field can be specified via the only argument: either:
+        	
+        	 - the number of the field (an ``int``)
+        	 - or the name of the field (a ``str``).
+            
+           This method will return a tuple of (structureValueArray, statuscode).
+           
+             - the structureValue is a Python ``list`` of :class:`~pyuaf.util.GenericStructureValue` instances.
+             - the statuscode is an ``int``, as defined by :mod:`pyuaf.util.opcuastatuscodes`. 
+               It will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Good` if the field corresponds
+               indeed to an array of structures. If the value is something else (e.g. a Double), 
+               then the statuscode will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument`.
+               If the field is empty, you can expect a :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadNoData`.
+               You can easily print the name of the status code by creating a :class:`~pyuaf.util.SdkStatus` 
+               (with the OPC UA status code as the argument for the constructor). 
+           
+            
+        .. automethod:: pyuaf.util.GenericStructureValue.genericUnion
+        
+           Get the union value of the specified field, in case the specified field represents a union.
+           In other words, in case the :meth:`~pyuaf.util.GenericStructureValue.valueType` 
+           method returns the ``int`` :attr:`pyuaf.util.structurefielddatatypes.GenericUnion`.
+           
+           The field can be specified via the only argument: either:
+        	
+        	 - the number of the field (an ``int``)
+        	 - or the name of the field (a ``str``).
+            
+           This method will return a tuple of (unionValue, statuscode).
+           
+             - the unionValue is an instance of :class:`~pyuaf.util.GenericUnionValue`.
+             - the statuscode is an ``int``, as defined by :mod:`pyuaf.util.opcuastatuscodes`. 
+               It will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Good` if the field corresponds
+               indeed to a union. If the value is something else (e.g. a Double), 
+               then the statuscode will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument`.
+               If the field is empty, you can expect a :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadNoData`.
+               You can easily print the name of the status code by creating a :class:`~pyuaf.util.SdkStatus` 
+               (with the OPC UA status code as the argument for the constructor). 
+           
+           
+        .. automethod:: pyuaf.util.GenericStructureValue.genericUnionArray
+        
+           Get the structure value of the specified field, in case the specified field represents an 
+           array of unions.
+           In other words, in case the :meth:`~pyuaf.util.GenericStructureValue.valueType` 
+           method returns the ``int`` :attr:`pyuaf.util.structurefielddatatypes.GenericUnionArray`.
+           
+           The field can be specified via the only argument: either:
+        	
+        	 - the number of the field (an ``int``)
+        	 - or the name of the field (a ``str``).
+            
+           This method will return a tuple of (unionValueArray, statuscode).
+           
+             - the unionValue is a Python ``list`` of :class:`~pyuaf.util.GenericUnionValue` instances.
+             - the statuscode is an ``int``, as defined by :mod:`pyuaf.util.opcuastatuscodes`. 
+               It will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Good` if the field corresponds
+               indeed to an array of unions. If the value is something else (e.g. a Double), 
+               then the statuscode will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument`.
+               If the field is empty, you can expect a :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadNoData`.
+               You can easily print the name of the status code by creating a :class:`~pyuaf.util.SdkStatus` 
+               (with the OPC UA status code as the argument for the constructor). 
+            
+           
+        .. automethod:: pyuaf.util.GenericStructureValue.definition
+        
+           Get the definition of the structure.
+           
+           :return: The definition of the structure.
+           :rtype: :class:`~pyuaf.util.StructureDefinition`
+           
+           
+        .. automethod:: pyuaf.util.GenericStructureValue.setDefinition
+        
+           Set the definition of the structure.
+           
+           :param definition: New definition.
+           :type definition: :class:`~pyuaf.util.StructureDefinition`
+           
+           
+        .. automethod:: pyuaf.util.GenericStructureValue.isFieldSet
+        
+           Check if the field is set or not.
+           
+           The field can be specified via the only argument: either:
+        	
+        	 - the number of the field (an ``int``)
+        	 - or the name of the field (a ``str``).
+            
+           :return: True if the field is set, False if not.
+           :rtype: ``bool``
+           
+           
+        .. automethod:: pyuaf.util.GenericStructureValue.unsetField
+        
+           Unset a field.
+           
+           The field can be specified via the only argument: either:
+        	
+        	 - the number of the field (an ``int``)
+        	 - or the name of the field (a ``str``).
+            
+           :return: The status: Good if the field could be unset, Bad otherwise.
+                    The :attr:`~pyuaf.util.SdkStatus.statusCode` of the :class:`~pyuaf.util.SdkStatus`
+                    will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument` if the specified
+                    field could not be found. 
+           :rtype: :class:`~pyuaf.util.SdkStatus`
+           
+           
+        .. automethod:: pyuaf.util.GenericStructureValue.valueType
+        
+           Get the datatype (built-in type, structure, structure array, union, ...) of a field.
+           
+           The field can be specified via the index argument.
+           
+           :param index: Index of the field.
+           :type index: ``int``
+           
+           This method will return a tuple of (type, statuscode).
+           
+             - the type is a Python ``int``, as defined by :mod:`pyuaf.util.structurefielddatatypes`.
+             - the statuscode is an ``int``, as defined by :mod:`pyuaf.util.opcuastatuscodes`. 
+               It will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument` if the index
+               is out of range, or :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Good` otherwise.
+            
+        .. automethod:: pyuaf.util.GenericStructureValue.toExtensionObject
+        
+           Convert the structure into an :class:`~pyuaf.util.ExtensionObject`.
+           
+           This ExtensionObject can be written back to the server, e.g. after some fields have been changed.
+           
+           :param extensionObject: The ExtensionObject to update.
+           :type extensionObject: :class:`~pyuaf.util.ExtensionObject`
+           :param encoding: Optional argument: the encoding for the ExtensionObject. If not specified, then the 
+                            default value :attr:`~pyuaf.util.GenericStructureValue.Encoding_Binary` will be used. 
+           :type encoding: ``int``
+           
+            
+            
+        .. automethod:: pyuaf.util.GenericStructureValue.__str__
+            
+            Get a string representation.
+
+
+
+*class* GenericStructureVector
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.GenericStructureVector
+
+    A GenericStructureVector is an array that holds elements of type 
+    :class:`~pyuaf.util.GenericStructureValue`. 
+    It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+    as a ``list`` of :class:`~pyuaf.util.GenericStructureVector`.
+
+    Usage example:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> from pyuaf.util import GenericStructureVector, GenericStructureValue
+        
+        >>> # construct a GenericStructureVector without elements:
+        >>> vec = GenericStructureVector()
+        
+        >>> noOfElements = len(vec) # will be 0
+        
+        >>> vec.append(GenericStructureValue())
+        
+        >>> noOfElements = len(vec) # will be 1
+        
+        >>> definition = vec[0].definition()
+        
+        >>> vec.resize(2)
+        >>> noOfElements = len(vec) # will be 2
+        
+        >>> # you may construct a GenericStructureVector from a regular Python list:
+        >>> someOtherVec = GenericStructureVector( [ GenericStructureValue(), GenericStructureValue() ] )
+
+
+    
+*class* GenericUnionValue
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.GenericUnionValue
+
+    A GenericUnionValue instance holds a union of fields. The fields may represent
+    values (Double, LocalizedText, ...) or GenericStructureValue instances or other GenericUnionValue instances or
+    arrays of GenericUnionValue or ...
+    
+    .. seealso:: Check out example :ref:`read-and-write-structures` for more information.
+
+    * Class attributes:
+
+        * Possible Encoding types:
+
+            .. autoattribute:: pyuaf.util.GenericUnionValue.Encoding_Binary
+    
+                An ``int`` identifying the type of Encoding: in this case Binary!
+
+            .. autoattribute:: pyuaf.util.GenericUnionValue.Encoding_Xml
+    
+                An ``int`` identifying the type of Encoding: in this case XML!
+    
+    
+    * Methods:
+
+        .. automethod:: pyuaf.util.GenericUnionValue.__init__
+            
+            Construct a new GenericUnionValue in one of the following ways:
+            
+            .. doctest::
+            
+                >>> import pyuaf
+                >>> from pyuaf.util import GenericUnionValue, ExtensionObject, StructureDefinition
+                >>> union1 = GenericUnionValue()
+                >>> union2 = GenericUnionValue(ExtensionObject(), StructureDefinition())
+        
+        .. automethod:: pyuaf.util.GenericUnionValue.clear
+            
+            Clear the union.
+        
+        .. automethod:: pyuaf.util.GenericUnionValue.setGenericUnion
+            
+            Fill the generic union value.
+            
+            Either you can provide a ByteString, Encoding and StructureDefinition as arguments:
+            
+             - :class:`~pyuaf.util.primitives.ByteString` data
+             - ``int`` representing the encoding, such as :attr:`~pyuaf.util.GenericUnionValue.Encoding_Binary`
+             - :class:`~pyuaf.util.StructureDefinition` structureDefinition
+            
+            Or you can provide an ExtensionObject and a StructureDefinition:
+            
+             - :class:`~pyuaf.util.ExtensionObject` extensionObject
+             - :class:`~pyuaf.util.StructureDefinition` structureDefinition
+        
+        .. automethod:: pyuaf.util.GenericUnionValue.setValue
+        
+        	Change the value of a field.
+        	
+        	This method has two arguments.
+        	
+        	The first argument identifies the field. It can either be:
+        	
+        	 - the number of the field (an ``int``)
+        	 - or the name of the field (a ``str``).
+        	 
+        	The second argument sets the new value. It can either be:
+        	 
+        	 - a value such as :class:`~pyuaf.util.primitives.UInt32`, 
+        	   :class:`~pyuaf.util.primitives.Double`, :class:`~pyuaf.util.primitives.String`,
+        	   :class:`~pyuaf.util.DateTime`, :class:`~pyuaf.util.LocalizedText`,
+        	   :class:`~pyuaf.util.QualifiedName`
+        	 - a :class:`~pyuaf.util.GenericStructureValue` instance
+        	 - a ``list`` of :class:`~pyuaf.util.GenericStructureValue` instances. 
+        	   (Or a :class:`~pyuaf.util.GenericStructureVector`, this is similar to a list.)
+        	   In other words, an array of structures.
+        	 - a :class:`~pyuaf.util.GenericUnionValue` instance
+        	 - a ``list`` of :class:`~pyuaf.util.GenericUnionValue` instances. 
+        	   (Or a :class:`~pyuaf.util.GenericUnionVector`, this is similar to a list.)
+        	   In other words, an array of unions.
+            
+        .. automethod:: pyuaf.util.GenericUnionValue.value
+        
+           Get the value of the active field, in case this field represents a built-in
+           OPC UA value. 
+            
+           This method will return a tuple of (value, statuscode).
+           
+             - the value can be a primitive such as :class:`~pyuaf.util.primitives.UInt32`, 
+    	       :class:`~pyuaf.util.primitives.Double`, :class:`~pyuaf.util.primitives.String`,
+               or typical built-in OPC UA types such as :class:`~pyuaf.util.DateTime`, 
+               :class:`~pyuaf.util.LocalizedText`, :class:`~pyuaf.util.QualifiedName`, ...
+             - the statuscode is an ``int``, as defined by :mod:`pyuaf.util.opcuastatuscodes`. 
+               It will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Good` if the field corresponds
+               indeed to one of the values mentioned above. If the value is something else (e.g. a structure), 
+               then the statuscode will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument`.
+               If the field is empty, you can expect a :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadNoData`.
+               You can easily print the name of the status code by creating a :class:`~pyuaf.util.SdkStatus` 
+               (with the OPC UA status code as the argument for the constructor). 
+           
+            
+        .. automethod:: pyuaf.util.GenericUnionValue.genericStructure
+        
+           Get the structure value of the active field, in case this field represents a structure.
+            
+           This method will return a tuple of (structureValue, statuscode).
+           
+             - the structureValue is an instance of :class:`~pyuaf.util.GenericUnionValue`.
+             - the statuscode is an ``int``, as defined by :mod:`pyuaf.util.opcuastatuscodes`. 
+               It will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Good` if the field corresponds
+               indeed to a structure. If the value is something else (e.g. a Double), 
+               then the statuscode will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument`.
+               If the field is empty, you can expect a :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadNoData`.
+               You can easily print the name of the status code by creating a :class:`~pyuaf.util.SdkStatus` 
+               (with the OPC UA status code as the argument for the constructor). 
+           
+           
+        .. automethod:: pyuaf.util.GenericUnionValue.genericStructureArray
+        
+           Get the structure value of the active field, in case this field represents an 
+           array of structures.
+            
+           This method will return a tuple of (structureValueArray, statuscode).
+           
+             - the structureValue is a Python ``list`` of :class:`~pyuaf.util.GenericUnionValue` instances.
+             - the statuscode is an ``int``, as defined by :mod:`pyuaf.util.opcuastatuscodes`. 
+               It will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Good` if the field corresponds
+               indeed to an array of structures. If the value is something else (e.g. a Double), 
+               then the statuscode will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument`.
+               If the field is empty, you can expect a :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadNoData`.
+               You can easily print the name of the status code by creating a :class:`~pyuaf.util.SdkStatus` 
+               (with the OPC UA status code as the argument for the constructor). 
+           
+            
+        .. automethod:: pyuaf.util.GenericUnionValue.genericUnion
+        
+           Get the union value of the active field, in case this field represents a union.
+            
+           This method will return a tuple of (unionValue, statuscode).
+           
+             - the unionValue is an instance of :class:`~pyuaf.util.GenericUnionValue`.
+             - the statuscode is an ``int``, as defined by :mod:`pyuaf.util.opcuastatuscodes`. 
+               It will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Good` if the field corresponds
+               indeed to a union. If the value is something else (e.g. a Double), 
+               then the statuscode will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument`.
+               If the field is empty, you can expect a :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadNoData`.
+               You can easily print the name of the status code by creating a :class:`~pyuaf.util.SdkStatus` 
+               (with the OPC UA status code as the argument for the constructor). 
+           
+           
+        .. automethod:: pyuaf.util.GenericUnionValue.genericUnionArray
+        
+           Get the structure value of the active field, in case this field represents an 
+           array of unions.
+            
+           This method will return a tuple of (unionValueArray, statuscode).
+           
+             - the unionValue is a Python ``list`` of :class:`~pyuaf.util.GenericUnionValue` instances.
+             - the statuscode is an ``int``, as defined by :mod:`pyuaf.util.opcuastatuscodes`. 
+               It will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Good` if the field corresponds
+               indeed to an array of unions. If the value is something else (e.g. a Double), 
+               then the statuscode will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument`.
+               If the field is empty, you can expect a :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadNoData`.
+               You can easily print the name of the status code by creating a :class:`~pyuaf.util.SdkStatus` 
+               (with the OPC UA status code as the argument for the constructor). 
+            
+           
+        .. automethod:: pyuaf.util.GenericUnionValue.definition
+        
+           Get the definition of the structure.
+           
+           :return: The definition of the structure.
+           :rtype: :class:`~pyuaf.util.StructureDefinition`
+           
+           
+        .. automethod:: pyuaf.util.GenericUnionValue.switchValue
+        
+           Get the number of the active field (the switch field).
+           
+           :return: Switch field number.
+           :rtype: ``int``
+           
+           
+        .. automethod:: pyuaf.util.GenericUnionValue.field
+        
+           Get currently used field.
+           
+           :return: The currently used field.
+           :rtype: :class:`~pyuaf.util.StructureField`
+           
+           
+        .. automethod:: pyuaf.util.GenericUnionValue.toExtensionObject
+        
+           Convert the structure into an :class:`~pyuaf.util.ExtensionObject`.
+           
+           This ExtensionObject can be written back to the server, e.g. after the field has been changed.
+           
+           :param extensionObject: The ExtensionObject to update.
+           :type extensionObject: :class:`~pyuaf.util.ExtensionObject`
+           :param encoding: Optional argument: the encoding for the ExtensionObject. If not specified, then the 
+                            default value :attr:`~pyuaf.util.GenericUnionValue.Encoding_Binary` will be used. 
+           :type encoding: ``int``
+           
+            
+            
+        .. automethod:: pyuaf.util.GenericUnionValue.__str__
+            
+            Get a string representation.
+
+
+
+*class* GenericUnionVector
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.GenericUnionVector
+
+    A GenericUnionVector is an array that holds elements of type 
+    :class:`~pyuaf.util.GenericUnionValue`. 
+    It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+    as a ``list`` of :class:`~pyuaf.util.GenericUnionVector`.
+
+    Usage example:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> from pyuaf.util import GenericUnionVector, GenericUnionValue
+        
+        >>> # construct a GenericUnionVector without elements:
+        >>> vec = GenericUnionVector()
+        
+        >>> noOfElements = len(vec) # will be 0
+        
+        >>> vec.append(GenericUnionValue())
+        
+        >>> noOfElements = len(vec) # will be 1
+        
+        >>> definition = vec[0].definition()
+        
+        >>> vec.resize(2)
+        >>> noOfElements = len(vec) # will be 2
+        
+        >>> # you may construct a GenericUnionVector from a regular Python list:
+        >>> someOtherVec = GenericUnionVector( [ GenericUnionValue(), GenericUnionValue() ] )
+
     
 
 *class* Guid
@@ -3117,6 +3689,344 @@
     Usage example:
     
     .. literalinclude:: /../../../examples/pyuaf/util/how_to_use_a_stringvector.py
+
+
+
+    
+*class* StructureDefinition
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.StructureDefinition
+
+    A StructureDefinition instance defines the fields of structures and unions.
+    
+    .. seealso:: Check out example :ref:`read-and-write-structures` for more information.
+
+    * Methods:
+
+        .. automethod:: pyuaf.util.StructureDefinition.__init__
+            
+            Construct a new StructureDefinition in one of the following ways:
+            
+        .. automethod:: pyuaf.util.StructureDefinition.isNull
+            
+            ``True`` if the definition is NULL, ``False`` if not.
+            
+        .. automethod:: pyuaf.util.StructureDefinition.clear
+            
+            Clear the definition.
+        
+        .. automethod:: pyuaf.util.StructureDefinition.setDataTypeId
+            
+            Set the datatype id.
+            
+            :param dataTypeId: The datatype id.
+            :type dataTypeId: :class:`~pyuaf.util.NodeId`
+        
+        .. automethod:: pyuaf.util.StructureDefinition.dataTypeId
+            
+            Get the datatype id.
+            
+            :return: The datatype id.
+            :rtype:  :class:`~pyuaf.util.NodeId`
+        
+        .. automethod:: pyuaf.util.StructureDefinition.setName
+        
+        	Change the name of the structure.
+            
+            :param name: The new name of the structure.
+            :type name: ``str``
+        
+        .. automethod:: pyuaf.util.StructureDefinition.name
+            
+            Get the name of the structure
+            
+            :return: The name of the structure definition
+            :rtype:  ``str``
+        	
+        .. automethod:: pyuaf.util.StructureDefinition.setDocumentation
+        
+        	Change the documentation of the structure.
+            
+            :param documentation: The new documentation of the structure.
+            :type documentation: :class:`~pyuaf.util.LocalizedText`
+        
+        .. automethod:: pyuaf.util.StructureDefinition.documentation
+            
+            Get the name of the documentation
+            
+            :return: The documentation of the structure definition
+            :rtype:  :class:`~pyuaf.util.LocalizedText`
+        
+        .. automethod:: pyuaf.util.StructureDefinition.setNamespace
+        
+        	Change the namespace of the structure.
+            
+            :param namespace: The new namespace of the structure.
+            :type namespace: ``str``
+        
+        .. automethod:: pyuaf.util.StructureDefinition.getNamespace
+            
+            Get the namespace of the structure
+            
+            :return: The namespace of the structure definition
+            :rtype:  ``str``
+        
+        .. automethod:: pyuaf.util.StructureDefinition.setBaseType
+        
+        	Change the base type of the definition.
+            
+            :param baseType: The base type.
+            :type baseType: :class:`~pyuaf.util.StructureDefinition`
+        
+        .. automethod:: pyuaf.util.StructureDefinition.baseTypeId
+            
+            Get the base type of the structure
+            
+            :return: The namespace of the structure definition
+            :rtype:  :class:`~pyuaf.util.NodeId`
+        
+        .. automethod:: pyuaf.util.StructureDefinition.createSubtype
+            
+            Create and return a subtype. 
+            
+            :return: A subtype of the structure definition.
+            :rtype:  :class:`~pyuaf.util.StructureDefinition`
+        
+        .. automethod:: pyuaf.util.StructureDefinition.childrenCount
+            
+            Get the number of children. 
+            
+            :return: The number of children of the definition.
+            :rtype:  ``int``
+        
+        .. automethod:: pyuaf.util.StructureDefinition.child
+            
+            Get the specified child.
+            
+            :param i: The index of the child.
+            :type i: ``int``
+            :return: The field.
+            :rtype:  :class:`~pyuaf.util.StructureField`
+        
+        .. automethod:: pyuaf.util.StructureDefinition.addChild
+            
+            Add the given child.
+            
+            :param newChild: The new child.
+            :type newChild: :class:`~pyuaf.util.StructureField`
+        
+        .. automethod:: pyuaf.util.StructureDefinition.remove
+            
+            Remove the field with the given name.
+            
+            :param i: The name of the field.
+            :type i: ``str``
+        
+        .. automethod:: pyuaf.util.StructureDefinition.isUnion
+            
+            Does the definition represent a Union?
+            
+            :return: True if it's a union.
+            :rtype:  ``bool``
+        
+        .. automethod:: pyuaf.util.StructureDefinition.setBinaryEncodingId
+            
+            Set the binary encoding ID.
+            
+            :param nodeId: The encoding NodeId.
+            :type nodeId: :class:`~pyuaf.util.NodeId`
+        
+        .. automethod:: pyuaf.util.StructureDefinition.binaryEncodingId
+            
+            Get the binary encoding ID.
+            
+            :return: The encoding NodeId.
+            :rtype: :class:`~pyuaf.util.NodeId`
+        
+        .. automethod:: pyuaf.util.StructureDefinition.setXmlEncodingId
+            
+            Set the XML encoding ID.
+            
+            :param nodeId: The encoding NodeId.
+            :type nodeId: :class:`~pyuaf.util.NodeId`
+        
+        .. automethod:: pyuaf.util.StructureDefinition.xmlEncodingId
+            
+            Get the XML encoding ID.
+            
+            :return: The encoding NodeId.
+            :rtype: :class:`~pyuaf.util.NodeId`
+        	
+        .. automethod:: pyuaf.util.StructureDefinition.__str__
+            
+            Get a string representation.
+
+
+
+
+*class* StructureField
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.StructureField
+
+    A StructureField holds a field of a StructureDefinition (it wraps the SDK UaStructureField
+    quite literally). 
+    
+    .. seealso:: Check out example :ref:`read-and-write-structures` for more information.
+
+    * Class attributes:
+
+        * Possible Encoding types:
+
+            .. autoattribute:: pyuaf.util.StructureField.ArrayType_Scalar
+    
+                An ``int`` identifying whether the field is a scalar or an array: in this case a scalar!
+
+            .. autoattribute:: pyuaf.util.StructureField.ArrayType_Array
+    
+                An ``int`` identifying whether the field is a scalar or an array: in this case an array!
+    
+    
+    * Methods:
+
+        .. automethod:: pyuaf.util.StructureField.__init__
+            
+            Construct a new StructureField.
+            
+        .. automethod:: pyuaf.util.StructureField.isNull
+            
+            Is the name of the field empty?
+            
+            :return: True if the name is empty.
+            :rtype: ``bool``
+            
+        .. automethod:: pyuaf.util.StructureField.name
+            
+            Get the name of the field.
+            
+            :return: The name of the field.
+            :rtype: ``str``
+        
+           
+        .. automethod:: pyuaf.util.StructureField.setName
+        
+           Set the name of the field.
+           
+           :param name: New name.
+           :type name: ``str``
+            
+        .. automethod:: pyuaf.util.StructureField.documentation
+            
+            Get the documentation of the field.
+            
+            :return: The documentation of the field.
+            :rtype: :class:`~pyuaf.util.LocalizedText`
+           
+        .. automethod:: pyuaf.util.StructureField.setDocumentation
+        
+           Set the documentation of the field.
+           
+           :param name: New documentation.
+           :type name: :class:`~pyuaf.util.LocalizedText`
+           
+        .. automethod:: pyuaf.util.StructureField.setDataTypeId
+        
+           Set the datatype id of the field.
+           
+           :param name: New datatype id.
+           :type name: :class:`~pyuaf.util.NodeId`
+            
+        .. automethod:: pyuaf.util.StructureField.typeId
+            
+            Get the datatype id of the field.
+            
+            :return: The documentation of the field.
+            :rtype: :class:`~pyuaf.util.NodeId`
+           
+           
+        .. automethod:: pyuaf.util.StructureField.valueType
+        
+           Get the built-in OPC UA type of the field. 
+            
+           :return: An ``int`` defined in :mod:`pyuaf.util.opcuatypes`
+           :rtype: ``int``
+           
+        .. automethod:: pyuaf.util.StructureField.setValueType
+        
+           Set the built-in OPC UA type of the field. 
+            
+           :param valueType: An ``int`` defined in :mod:`pyuaf.util.opcuatypes`
+           :type valueType: ``int``
+           
+           
+        .. automethod:: pyuaf.util.StructureField.arrayType
+        
+           Get the array type of the field. 
+            
+           :return: Either :attr:`~pyuaf.util.StructureField.ArrayType_Scalar` or :attr:`~pyuaf.util.StructureField.ArrayType_Array`
+           :rtype: ``int``
+           
+        .. automethod:: pyuaf.util.StructureField.setArrayType
+        
+           Set the array type of the field. 
+            
+           :param arrayType: Either :attr:`~pyuaf.util.StructureField.ArrayType_Scalar` or :attr:`~pyuaf.util.StructureField.ArrayType_Array`
+           :type arrayType: ``int``
+           
+           
+        .. automethod:: pyuaf.util.GenericStructureValue.unsetField
+        
+           Unset a field.
+           
+           The field can be specified via the only argument: either:
+        	
+        	 - the number of the field (an ``int``)
+        	 - or the name of the field (a ``str``).
+            
+           :return: The status: Good if the field could be unset, Bad otherwise.
+                    The :attr:`~pyuaf.util.SdkStatus.statusCode` of the :class:`~pyuaf.util.SdkStatus`
+                    will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument` if the specified
+                    field could not be found. 
+           :rtype: :class:`~pyuaf.util.SdkStatus`
+           
+           
+        .. automethod:: pyuaf.util.GenericStructureValue.valueType
+        
+           Get the datatype (built-in type, structure, structure array, union, ...) of a field.
+           
+           The field can be specified via the index argument.
+           
+           :param index: Index of the field.
+           :type index: ``int``
+           
+           This method will return a tuple of (type, statuscode).
+           
+             - the type is a Python ``int``, as defined by :mod:`pyuaf.util.structurefielddatatypes`.
+             - the statuscode is an ``int``, as defined by :mod:`pyuaf.util.opcuastatuscodes`. 
+               It will be :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument` if the index
+               is out of range, or :attr:`~pyuaf.util.opcuastatuscodes.OpcUa_Good` otherwise.
+            
+        .. automethod:: pyuaf.util.GenericStructureValue.toExtensionObject
+        
+           Convert the structure into an :class:`~pyuaf.util.ExtensionObject`.
+           
+           This ExtensionObject can be written back to the server, e.g. after some fields have been changed.
+           
+           :param extensionObject: The ExtensionObject to update.
+           :type extensionObject: :class:`~pyuaf.util.ExtensionObject`
+           :param encoding: Optional argument: the encoding for the ExtensionObject. If not specified, then the 
+                            default value :attr:`~pyuaf.util.GenericStructureValue.Encoding_Binary` will be used. 
+           :type encoding: ``int``
+           
+            
+            
+        .. automethod:: pyuaf.util.GenericStructureValue.__str__
+            
+            Get a string representation.
+
 
 
 

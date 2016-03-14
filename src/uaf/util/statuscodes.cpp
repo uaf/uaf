@@ -148,6 +148,7 @@ namespace uaf
                 UAF_STATUSCODES_TOSTRING(CouldNotCreateIssuersRevocationListLocationError)
                 UAF_STATUSCODES_TOSTRING(CouldNotCreateClientPrivateKeyLocationError)
                 UAF_STATUSCODES_TOSTRING(CouldNotCreateClientCertificateLocationError)
+                UAF_STATUSCODES_TOSTRING(DefinitionNotFoundError)
                 // status codes kept for backwards compatibility:
                 UAF_STATUSCODES_TOSTRING(DataFormatError)
                 UAF_STATUSCODES_TOSTRING(DataSizeError)

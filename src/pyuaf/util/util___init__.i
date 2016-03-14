@@ -62,6 +62,8 @@
 #include "uaf/util/sdkstatus.h"
 #include "uaf/util/structurefield.h"
 #include "uaf/util/structuredefinition.h"
+#include "uaf/util/genericstructurevalue.h"
+#include "uaf/util/genericunionvalue.h"
 %}
 
 
@@ -112,6 +114,7 @@
 %import "pyuaf/util/util_nodeclasses.i" 
 %import "pyuaf/util/util_timestampstoreturn.i" 
 %import "pyuaf/util/util_serverstates.i" 
+%import "pyuaf/util/util_structurefielddatatypes.i" 
 
 
 // before including any classes in a generic way, specify the "special treatments" of certain classes:
@@ -222,3 +225,6 @@ class VectorIterator(object):
 
 // now include the classes that make use of the Variant typemap
 UAF_WRAP_CLASS("uaf/util/datavalue.h"              , uaf , DataValue               , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, DataValueVector)
+UAF_WRAP_CLASS("uaf/util/genericstructurevalue.h"  , uaf , GenericStructureValue   , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, GenericStructureVector)
+UAF_WRAP_CLASS("uaf/util/genericunionvalue.h"  	   , uaf , GenericUnionValue   	   , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, GenericUnionVector)
+

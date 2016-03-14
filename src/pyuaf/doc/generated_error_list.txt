@@ -220,6 +220,8 @@
 
 .. autoclass:: pyuaf.util.errors.DataSourceError
 
+.. autoclass:: pyuaf.util.errors.DefinitionNotFoundError
+
 .. autoclass:: pyuaf.util.errors.DeleteSubscriptionError
 
 - attributes:

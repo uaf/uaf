@@ -60,8 +60,8 @@ namespace uaf
           statusCode(uaStatusCode.statusCode())
         {}
 
-        /** Construct a status based on a OpcUa_StatusCode integer. */
-        SdkStatus(OpcUa_StatusCode uaStatusCode)
+        /** Construct a status based on a uint32_t integer. */
+        SdkStatus(uint32_t uaStatusCode)
         : message(UaStatusCode(uaStatusCode).toString().toUtf8()),
           statusCode(uaStatusCode)
         {}

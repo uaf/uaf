@@ -184,6 +184,7 @@ namespace uaf
         UAF_STATUS_CONSTRUCTOR(CreateSubscriptionError)
         UAF_STATUS_CONSTRUCTOR(DeleteSubscriptionError)
         UAF_STATUS_CONSTRUCTOR(SetMonitoringModeInvocationError)
+        UAF_STATUS_CONSTRUCTOR(DefinitionNotFoundError)
 
         // configuration errors
         UAF_STATUS_CONSTRUCTOR(ConfigurationError)

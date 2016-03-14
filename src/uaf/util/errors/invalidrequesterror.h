@@ -191,6 +191,7 @@ namespace uaf
 
 
 
+
     class UAF_EXPORT UnknownClientHandleError : public uaf::InvalidRequestError
     {
     public:
@@ -224,6 +225,14 @@ namespace uaf
         uaf::ClientConnectionId unknownClientConnectionId;
     };
 
+
+    class UAF_EXPORT DefinitionNotFoundError : public uaf::InvalidRequestError
+    {
+    public:
+    	DefinitionNotFoundError()
+        : uaf::InvalidRequestError("No valid definition was found")
+        {}
+    };
 }
 
 

@@ -61,6 +61,7 @@
 %import(module="pyuaf.util.nodeclasses")        "pyuaf/util/util_nodeclasses.i"
 %import(module="pyuaf.util.timestampstoreturn") "pyuaf/util/util_timestampstoreturn.i"
 %import(module="pyuaf.util.serverstates")       "pyuaf/util/util_serverstates.i"
+%import(module="pyuaf.util.structurefielddatatypes") "pyuaf/util/util_structurefielddatatypes.i"
 %import(module="pyuaf.util.constants")          "pyuaf/util/util_constants.i"
 %import(module="pyuaf.util")                    "uaf/util/stringifiable.h"
 %import(module="pyuaf.util")                    "uaf/util/browsepath.h"

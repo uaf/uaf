@@ -69,7 +69,7 @@ namespace uaf
 
         ss << indent << " - data";
         ss << fillToPos(ss, colon);
-        ss << ": " << data.toString() << "\n";
+        ss << ": " << data.toString(indent + "   ", colon) << "\n";
 
         ss << indent << " - sourceTimestamp";
         ss << fillToPos(ss, colon);
