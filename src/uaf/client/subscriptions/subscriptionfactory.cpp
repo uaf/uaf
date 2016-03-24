@@ -134,7 +134,7 @@ namespace uaf
 
         if (acquisitionStatus.isGood())
         {
-            ret = subscription->deleteSubscription();
+            ret = subscription->deleteSubscription(true); // the unsubscribing is planned, so we can remove the persistent request
             releaseSubscription(subscription);
         }
         else
