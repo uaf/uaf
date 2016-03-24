@@ -104,9 +104,11 @@ namespace uaf
         /**
          * Delete the subscription between client and server.
          *
+         * @param deleteRequest  True to delete the persistent request that
+         *                       created the subscription.
          * @return  Good if the subscription was deleted.
          */
-        uaf::Status deleteSubscription();
+        uaf::Status deleteSubscription(bool deletePersistentRequest = false);
 
 
         /**
