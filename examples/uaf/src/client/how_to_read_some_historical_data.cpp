@@ -73,8 +73,10 @@ int main(int argc, char* argv[])
 
     status = myClient.read(initialReadAddresses,    // the node addresses
                            attributeids::Value,     // read the Value attribute of the node
-                           ReadConfig(),            // default service config
-                           SessionConfig(),         // default session config
+                           constants::CLIENTHANDLE_NOT_ASSIGNED, // don't specify an existing session, but let the UAF create new sessions (and assign handles to them) or re-use existing ones
+                           NULL,                    // default service settings
+                           NULL,                    // default translation settings (for Address resolution)
+                           NULL,                    // default session settings
                            initialReadResult);      // the ReadResult
 
     if (initialReadResult.overallStatus.isNotGood())
@@ -98,8 +100,10 @@ int main(int argc, char* argv[])
         status = myClient.call( demoAddress,              // the context (i.e. in context.method())
                                 startSimulationAddress,   // the method itself
                                 vector<Variant>(),        // the input arguments
-                                MethodCallConfig(),       // default service config
-                                SessionConfig(),          // default session config
+                                constants::CLIENTHANDLE_NOT_ASSIGNED, // don't specify an existing session, but let the UAF create new sessions (and assign handles to them) or re-use existing ones
+                                NULL,                    // default service settings
+                                NULL,                    // default translation settings (for Address resolution)
+                                NULL,                    // default session settings
                                 result);                  // the MethodCallResult
 
         if (result.overallStatus.isNotGood())
@@ -118,8 +122,10 @@ int main(int argc, char* argv[])
         status = myClient.call( historyAddress,           // the context (i.e. in context.method())
                                 startLoggingAddress,      // the method itself
                                 vector<Variant>(),        // the input arguments
-                                MethodCallConfig(),       // default service config
-                                SessionConfig(),          // default session config
+                                constants::CLIENTHANDLE_NOT_ASSIGNED, // don't specify an existing session, but let the UAF create new sessions (and assign handles to them) or re-use existing ones
+                                NULL,                    // default service settings
+                                NULL,                    // default translation settings (for Address resolution)
+                                NULL,                    // default session settings
                                 result);                  // the MethodCallResult
 
         if (result.overallStatus.isNotGood())
@@ -157,8 +163,10 @@ int main(int argc, char* argv[])
                                      100,                            // numValuesPerNode
                                      10,                             // maxAutoReadMore
                                      vector<ByteString>(),           // continuationPoints
-                                     HistoryReadRawModifiedConfig(), // serviceConfig
-                                     SessionConfig(),                // sessionConfig
+                                     constants::CLIENTHANDLE_NOT_ASSIGNED, // don't specify an existing session, but let the UAF create new sessions (and assign handles to them) or re-use existing ones
+                                     NULL,                           // default service settings
+                                     NULL,                           // default translation settings (for Address resolution)
+                                     NULL,                           // default session settings
                                      result);                        // result
 
     // print the result:
@@ -234,8 +242,10 @@ int main(int argc, char* argv[])
                                           100,                            // numValuesPerNode
                                           10,                             // maxAutoReadMore
                                           vector<ByteString>(),           // continuationPoints
-                                          HistoryReadRawModifiedConfig(), // serviceConfig
-                                          SessionConfig(),                // sessionConfig
+                                          constants::CLIENTHANDLE_NOT_ASSIGNED, // don't specify an existing session, but let the UAF create new sessions (and assign handles to them) or re-use existing ones
+                                          NULL,                           // default service settings
+                                          NULL,                           // default translation settings (for Address resolution)
+                                          NULL,                           // default session settings
                                           result);                        // result
 
     // print the result:
@@ -258,8 +268,10 @@ int main(int argc, char* argv[])
                                      3,                              // numValuesPerNode
                                      0,                              // maxAutoReadMore
                                      vector<ByteString>(),           // continuationPoints
-                                     HistoryReadRawModifiedConfig(), // serviceConfig
-                                     SessionConfig(),                // sessionConfig
+                                     constants::CLIENTHANDLE_NOT_ASSIGNED, // don't specify an existing session, but let the UAF create new sessions (and assign handles to them) or re-use existing ones
+                                     NULL,                           // default service settings
+                                     NULL,                           // default translation settings (for Address resolution)
+                                     NULL,                           // default session settings
                                      result);                        // result
 
     // append all DataValues to the following vector:
@@ -281,8 +293,10 @@ int main(int argc, char* argv[])
                                          3,                              // numValuesPerNode
                                          0,                              // maxAutoReadMore
                                          continuationPoints,             // continuationPoints
-                                         HistoryReadRawModifiedConfig(), // serviceConfig
-                                         SessionConfig(),                // sessionConfig
+                                         constants::CLIENTHANDLE_NOT_ASSIGNED, // don't specify an existing session, but let the UAF create new sessions (and assign handles to them) or re-use existing ones
+                                         NULL,                           // default service settings
+                                         NULL,                           // default translation settings (for Address resolution)
+                                         NULL,                           // default session settings
                                          result);                        // result
 
 
@@ -312,13 +326,13 @@ int main(int argc, char* argv[])
     request.targets[0].address = doubleAddress;
 
     // configure the request:
-    request.serviceConfig.serviceSettings.startTime                = startTime;
-    request.serviceConfig.serviceSettings.endTime                  = endTime;
-    request.serviceConfig.serviceSettings.callTimeoutSec           = 2.0;       // optional of course
-    request.serviceConfig.serviceSettings.numValuesPerNode         = 100;
-    request.serviceConfig.serviceSettings.maxAutoReadMore          = 10;
-    request.serviceConfig.serviceSettings.isReadModified           = false;     // we want raw historical data
-    request.sessionConfig.defaultSessionSettings.sessionTimeoutSec = 600.0;     // optional of course
+    request.serviceSettings.startTime                = startTime;
+    request.serviceSettings.endTime                  = endTime;
+    request.serviceSettings.callTimeoutSec           = 2.0;         // optional of course
+    request.serviceSettings.numValuesPerNode         = 100;
+    request.serviceSettings.maxAutoReadMore          = 10;
+    request.serviceSettings.isReadModified           = false;       // we want raw historical data
+    request.sessionSettings.sessionTimeoutSec = 600.0;              // optional of course
 
     // process the request
     status = myClient.processRequest(request, result);

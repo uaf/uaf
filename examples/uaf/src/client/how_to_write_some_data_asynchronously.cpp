@@ -63,15 +63,14 @@ int main(int argc, char* argv[])
     // create the client
     MyClient myClient(settings);
 
-    // OPTIONAL: You could also provide a WriteConfig to configure a call timeout
-    WriteConfig serviceConfig;
-    serviceConfig.serviceSettings.callTimeoutSec = 0.5;
+    // OPTIONAL: You could also provide a WriteSettings instance to configure a call timeout
+    WriteSettings serviceSettings;
+    serviceSettings.callTimeoutSec = 0.5;
 
-    // OPTIONAL: And you could also provide a SessionConfig to configure the sessions
+    // OPTIONAL: And you could also provide a SessionSettings instance to configure the sessions
     //           (e.g. set the timeout to 600.0 seconds)
-    //           For more info about SessionConfigs, see the sessionconfig example
-    SessionConfig sessionConfig;
-    sessionConfig.defaultSessionSettings.sessionTimeoutSec = 600.0;
+    SessionSettings sessionSettings;
+    sessionSettings.sessionTimeoutSec = 600.0;
 
     // now read the node attributes
     vector<Address> addresses;
@@ -80,19 +79,6 @@ int main(int argc, char* argv[])
     addresses.push_back(someStringNode);
     addresses.push_back(someLocalizedTextNode);
     addresses.push_back(someSByteArrayNode);
-
-    UaWriteValues writeValues;
-    writeValues.create(1);
-
-    UaNodeId nodeId("Demo.Scalar.Static.UInt32", 2);
-    UaVariant variant;
-    variant.setUInt32(3);
-
-    nodeId.copyTo(&writeValues[0].NodeId);
-    variant.copyTo(&writeValues[0].Value.Value);
-    writeValues[0].AttributeId = OpcUa_Attributes_Value;
-
-
 
     vector<Variant> data(5);
     data[0].setDouble(3.14);
@@ -107,7 +93,15 @@ int main(int argc, char* argv[])
     data[4].setSByteArray(sbyteArray);
 
     AsyncWriteResult result;
-    Status status = myClient.beginWrite(addresses, data, attributeids::Value, serviceConfig, sessionConfig, result);
+    Status status = myClient.beginWrite(
+            addresses,
+            data,
+            attributeids::Value,
+            constants::CLIENTHANDLE_NOT_ASSIGNED,   // don't specify an existing session, but let the UAF create new sessions (and assign handles to them) or re-use existing ones
+            &serviceSettings,
+            NULL,                                   // default settings for the Translate service
+            &sessionSettings,
+            result);
 
     // wait for the async result
     DateTime::msleep(1000);

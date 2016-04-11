@@ -54,15 +54,16 @@ int main(int argc, char* argv[])
     cout << "First option: use the convenience function \"browse()\"\n";
     cout << "====================================================\n";
 
-    // OPTIONAL: You could also provide a BrowseConfig to configure a call timeout
-    BrowseConfig serviceConfig;
-    serviceConfig.serviceSettings.callTimeoutSec = 0.5;
+    // OPTIONAL: You could provide a custom BrowseSettings instance to configure a call timeout
+    // (to use the default browse settings, simply provide a NULL pointer in the myClient.browse() call)
+    BrowseSettings serviceSettings;
+    serviceSettings.callTimeoutSec = 0.5;
 
-    // OPTIONAL: And you could also provide a SessionConfig to configure the sessions
+    // OPTIONAL: And you could also provide a sessionConfig to configure the sessions
     //           (e.g. set the timeout to 600.0 seconds)
-    //           For more info about SessionConfigs, see the sessionconfig example
-    SessionConfig sessionConfig;
-    sessionConfig.defaultSessionSettings.sessionTimeoutSec = 600.0;
+    // (to use the default session settings, simply provide a NULL pointer in the myClient.browse() call)
+    SessionSettings sessionSettings;
+    sessionSettings.sessionTimeoutSec = 600.0;
 
     // now browse the root node
     // (notice that there is also an argument called 'maxAutoBrowseNext', which we put at a high
@@ -72,7 +73,13 @@ int main(int argc, char* argv[])
     addresses.push_back(rootNode);
 
     BrowseResult firstLevelBrowseResult;
-    Status status = myClient.browse(addresses, 100, serviceConfig, sessionConfig, firstLevelBrowseResult);
+    Status status = myClient.browse(addresses,
+                                    100,               // maximum 100 automatic BrowseNext calls
+                                    constants::CLIENTHANDLE_NOT_ASSIGNED,  // let the UAF assign a cient handle
+                                    &serviceSettings,  // NULL for default BrowseSettings
+                                    NULL,              // default TranslateBrowsePathsToNodeIdsSettings for address resolution
+                                    &sessionSettings,  // NULL for default session settings,
+                                    firstLevelBrowseResult);
 
     // print the result
     cout << "\n";
@@ -99,7 +106,13 @@ int main(int argc, char* argv[])
         newNodesToBeBrowsed.push_back( Address(firstLevelBrowseResult.targets[0].references[i].nodeId) );
 
     BrowseResult secondLevelBrowseResult;
-    status = myClient.browse(newNodesToBeBrowsed, 100, serviceConfig, sessionConfig, secondLevelBrowseResult);
+    status = myClient.browse(newNodesToBeBrowsed,
+                             100,
+                             constants::CLIENTHANDLE_NOT_ASSIGNED,
+                             &serviceSettings,
+                             NULL,
+                             &sessionSettings,
+                             secondLevelBrowseResult);
 
     // print the result
     cout << "\n";
@@ -121,11 +134,11 @@ int main(int argc, char* argv[])
 
     // OPTIONAL: let's also specify a small call timeout, since the UaDemoServer is running
     //           on the local machine anyway
-    firstLevelBrowseRequest.serviceConfig.serviceSettings.callTimeoutSec = 2.0;
+    firstLevelBrowseRequest.serviceSettings.callTimeoutSec = 2.0;
 
     // OPTIONAL: and finally let's also specify that sessions should have a timeout of 600 seconds
     //           For more info about SessionConfigs, see the sessionconfig example
-    firstLevelBrowseRequest.sessionConfig.defaultSessionSettings.sessionTimeoutSec = 600.0;
+    firstLevelBrowseRequest.sessionSettings.sessionTimeoutSec = 600.0;
 
     // process the request
     status = myClient.processRequest(firstLevelBrowseRequest, firstLevelBrowseResult);

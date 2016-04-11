@@ -108,17 +108,16 @@ int main(int argc, char* argv[])
     cout << "First option: use the convenience function \"read()\"\n";
     cout << "===================================================\n";
 
-    // OPTIONAL: You could also provide a ReadConfig to configure a call timeout,
+    // OPTIONAL: You could also provide a ReadSettings instance to configure a call timeout,
     //           or maximum age of the values, or ...
-    ReadConfig serviceConfig;
-    serviceConfig.serviceSettings.callTimeoutSec = 0.5;
-    serviceConfig.serviceSettings.maxAgeSec = 1.0;
+    ReadSettings serviceSettings;
+    serviceSettings.callTimeoutSec = 0.5;
+    serviceSettings.maxAgeSec = 1.0;
 
-    // OPTIONAL: And you could also provide a SessionConfig to configure the sessions
+    // OPTIONAL: And you could also provide a SessionSettings instance to configure the sessions
     //           (e.g. set the timeout to 600.0 seconds)
-    //           For more info about SessionConfigs, see the sessionconfig example
-    SessionConfig sessionConfig;
-    sessionConfig.defaultSessionSettings.sessionTimeoutSec = 600.0;
+    SessionSettings sessionSettings;
+    sessionSettings.sessionTimeoutSec = 600.0;
 
     // now read the node attributes
     vector<Address> addresses;
@@ -129,7 +128,14 @@ int main(int argc, char* argv[])
     addresses.push_back(someSByteArrayNode);
 
     ReadResult readResult;
-    Status status = myClient.read(addresses, attributeids::Value, serviceConfig, sessionConfig, readResult);
+    Status status = myClient.read(
+            addresses,
+            attributeids::Value,
+            constants::CLIENTHANDLE_NOT_ASSIGNED, // don't specify an existing session, but let the UAF create new sessions (and assign handles to them) or re-use existing ones
+            NULL,                                      // default settings for the Read service
+            NULL,                                      // default settings for the Translate service
+            NULL,                                      // default session settings
+            readResult);
 
     // print the result using the function we defined before
     if (status.isGood())
@@ -158,12 +164,12 @@ int main(int argc, char* argv[])
 
     // OPTIONAL: let's also specify a small call timeout, since the UaDemoServer is running
     //           on the local machine anyway
-    readRequest.serviceConfig.serviceSettings.callTimeoutSec = 0.5;
+    readRequest.serviceSettings.callTimeoutSec = 0.5;
     // OPTIONAL: let's also specify that the values cannot be older than 1 second
-    readRequest.serviceConfig.serviceSettings.maxAgeSec = 1.0;
+    readRequest.serviceSettings.maxAgeSec = 1.0;
     // OPTIONAL: and finally let's also specify that sessions should have a timeout of 600 seconds
     //           For more info about SessionConfigs, see the sessionconfig_example
-    readRequest.sessionConfig.defaultSessionSettings.sessionTimeoutSec = 600.0;
+    readRequest.sessionSettings.sessionTimeoutSec = 600.0;
 
     // process the request
     status = myClient.processRequest(readRequest, readResult);
