@@ -846,6 +846,16 @@ namespace uaf
         uaf::Status manuallyDisconnect(uaf::ClientConnectionId clientConnectionId);
 
 
+        /**
+         * Disconnect all sessions.
+         *
+         * To stress that normally the UAF takes care of session connection and disconnection,
+         * this method has a "manually" prefix. Normally it should not be used explicitely,
+         * as all sessions will be disconnected automatically when the client is deleted.
+         */
+        void manuallyDisconnectAllSessions();
+
+
         ///@} //////////////////////////////////////////////////////////////////////////////////////
         /**
          *  @name SessionInformation

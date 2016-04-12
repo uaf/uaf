@@ -73,6 +73,7 @@
 // add some import stuff to the __init__.py file that will be produced
 %pythoncode %{
 import threading
+import time
 %}
 
 
