@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util &mdash; PyUAF 2.0.3 documentation</title>
+    <title>pyuaf.util &mdash; PyUAF 2.1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.3',
+        VERSION:     '2.1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.0.3 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.1.1 documentation" href="index.html" />
     <link rel="next" title="pyuaf.util.attributeids" href="api_pyuaf_util_attributeids.html" />
     <link rel="prev" title="pyuaf.client.subscriptionstates" href="api_pyuaf_client_subscriptionstates.html" /> 
   </head>
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -1608,6 +1608,749 @@ the wire.</p>
 </div></blockquote>
 </li>
 </ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-genericstructurevalue">
+<h2><em>class</em> GenericStructureValue<a class="headerlink" href="#class-genericstructurevalue" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.GenericStructureValue">
+<em class="property">class </em><code class="descclassname">pyuaf.util.</code><code class="descname">GenericStructureValue</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>A GenericStructureValue instance holds a structure of fields. The fields may represent
+values (Double, LocalizedText, ...) or other GenericStructureValue instances or
+arrays of GenericStructureValue.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">Check out example <a class="reference internal" href="client_examples.html#read-and-write-structures"><span class="std std-ref">How to read and write structures?</span></a> for more information.</p>
+</div>
+<ul>
+<li><p class="first">Class attributes:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Possible Encoding types:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.GenericStructureValue.Encoding_Binary">
+<code class="descname">Encoding_Binary</code><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.util.GenericStructureValue.Encoding_Binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <code class="docutils literal"><span class="pre">int</span></code> identifying the type of Encoding: in this case Binary!</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.GenericStructureValue.Encoding_Xml">
+<code class="descname">Encoding_Xml</code><em class="property"> = 2</em><a class="headerlink" href="#pyuaf.util.GenericStructureValue.Encoding_Xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <code class="docutils literal"><span class="pre">int</span></code> identifying the type of Encoding: in this case XML!</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.GenericStructureValue.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new GenericStructureValue in one of the following ways:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">GenericStructureValue</span><span class="p">,</span> <span class="n">ExtensionObject</span><span class="p">,</span> <span class="n">StructureDefinition</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">struct1</span> <span class="o">=</span> <span class="n">GenericStructureValue</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">struct2</span> <span class="o">=</span> <span class="n">GenericStructureValue</span><span class="p">(</span><span class="n">ExtensionObject</span><span class="p">(),</span> <span class="n">StructureDefinition</span><span class="p">())</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericStructureValue.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the structure.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericStructureValue.setGenericValue">
+<code class="descname">setGenericValue</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue.setGenericValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill the generic structure value.</p>
+<p>Either you can provide a ByteString, Encoding and StructureDefinition as arguments:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.ByteString" title="pyuaf.util.primitives.ByteString"><code class="xref py py-class docutils literal"><span class="pre">ByteString</span></code></a> data</li>
+<li><code class="docutils literal"><span class="pre">int</span></code> representing the encoding, such as <a class="reference internal" href="#pyuaf.util.GenericStructureValue.Encoding_Binary" title="pyuaf.util.GenericStructureValue.Encoding_Binary"><code class="xref py py-attr docutils literal"><span class="pre">Encoding_Binary</span></code></a></li>
+<li><a class="reference internal" href="#pyuaf.util.StructureDefinition" title="pyuaf.util.StructureDefinition"><code class="xref py py-class docutils literal"><span class="pre">StructureDefinition</span></code></a> structureDefinition</li>
+</ul>
+</div></blockquote>
+<p>Or you can provide an ExtensionObject and a StructureDefinition:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#pyuaf.util.ExtensionObject" title="pyuaf.util.ExtensionObject"><code class="xref py py-class docutils literal"><span class="pre">ExtensionObject</span></code></a> extensionObject</li>
+<li><a class="reference internal" href="#pyuaf.util.StructureDefinition" title="pyuaf.util.StructureDefinition"><code class="xref py py-class docutils literal"><span class="pre">StructureDefinition</span></code></a> structureDefinition</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericStructureValue.setField">
+<code class="descname">setField</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue.setField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the value of a field.</p>
+<p>This method has two arguments.</p>
+<p>The first argument identifies the field. It can either be:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the number of the field (an <code class="docutils literal"><span class="pre">int</span></code>)</li>
+<li>or the name of the field (a <code class="docutils literal"><span class="pre">str</span></code>).</li>
+</ul>
+</div></blockquote>
+<p>The second argument sets the new value. It can either be:</p>
+<blockquote>
+<div><ul class="simple">
+<li>a value such as <a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.UInt32" title="pyuaf.util.primitives.UInt32"><code class="xref py py-class docutils literal"><span class="pre">UInt32</span></code></a>,
+<a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.Double" title="pyuaf.util.primitives.Double"><code class="xref py py-class docutils literal"><span class="pre">Double</span></code></a>, <a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.String" title="pyuaf.util.primitives.String"><code class="xref py py-class docutils literal"><span class="pre">String</span></code></a>,
+<a class="reference internal" href="#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><code class="xref py py-class docutils literal"><span class="pre">DateTime</span></code></a>, <a class="reference internal" href="#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><code class="xref py py-class docutils literal"><span class="pre">LocalizedText</span></code></a>,
+<a class="reference internal" href="#pyuaf.util.QualifiedName" title="pyuaf.util.QualifiedName"><code class="xref py py-class docutils literal"><span class="pre">QualifiedName</span></code></a></li>
+<li>a <a class="reference internal" href="#pyuaf.util.GenericStructureValue" title="pyuaf.util.GenericStructureValue"><code class="xref py py-class docutils literal"><span class="pre">GenericStructureValue</span></code></a> instance</li>
+<li>a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.util.GenericStructureValue" title="pyuaf.util.GenericStructureValue"><code class="xref py py-class docutils literal"><span class="pre">GenericStructureValue</span></code></a> instances.
+(Or a <a class="reference internal" href="#pyuaf.util.GenericStructureVector" title="pyuaf.util.GenericStructureVector"><code class="xref py py-class docutils literal"><span class="pre">GenericStructureVector</span></code></a>, this is similar to a list.)
+In other words, an array of structures.</li>
+<li>a <a class="reference internal" href="#pyuaf.util.GenericUnionValue" title="pyuaf.util.GenericUnionValue"><code class="xref py py-class docutils literal"><span class="pre">GenericUnionValue</span></code></a> instance</li>
+<li>a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.util.GenericUnionValue" title="pyuaf.util.GenericUnionValue"><code class="xref py py-class docutils literal"><span class="pre">GenericUnionValue</span></code></a> instances.
+(Or a <a class="reference internal" href="#pyuaf.util.GenericUnionVector" title="pyuaf.util.GenericUnionVector"><code class="xref py py-class docutils literal"><span class="pre">GenericUnionVector</span></code></a>, this is similar to a list.)
+In other words, an array of unions.</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericStructureValue.value">
+<code class="descname">value</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value of the specified field, in case the specified field represents a built-in
+OPC UA value. In other words, in case the  <a class="reference internal" href="#pyuaf.util.GenericStructureValue.valueType" title="pyuaf.util.GenericStructureValue.valueType"><code class="xref py py-meth docutils literal"><span class="pre">valueType()</span></code></a>
+method returns the <code class="docutils literal"><span class="pre">int</span></code> <a class="reference internal" href="api_pyuaf_util_structurefielddatatypes.html#pyuaf.util.structurefielddatatypes.Variant" title="pyuaf.util.structurefielddatatypes.Variant"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.structurefielddatatypes.Variant</span></code></a>.</p>
+<p>The field can be specified via the only argument: either:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the number of the field (an <code class="docutils literal"><span class="pre">int</span></code>)</li>
+<li>or the name of the field (a <code class="docutils literal"><span class="pre">str</span></code>).</li>
+</ul>
+</div></blockquote>
+<p>This method will return a tuple of (value, statuscode).</p>
+<blockquote>
+<div><ul class="simple">
+<li>the value can be a primitive such as <a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.UInt32" title="pyuaf.util.primitives.UInt32"><code class="xref py py-class docutils literal"><span class="pre">UInt32</span></code></a>,
+<a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.Double" title="pyuaf.util.primitives.Double"><code class="xref py py-class docutils literal"><span class="pre">Double</span></code></a>, <a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.String" title="pyuaf.util.primitives.String"><code class="xref py py-class docutils literal"><span class="pre">String</span></code></a>,
+or typical built-in OPC UA types such as <a class="reference internal" href="#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><code class="xref py py-class docutils literal"><span class="pre">DateTime</span></code></a>,
+<a class="reference internal" href="#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><code class="xref py py-class docutils literal"><span class="pre">LocalizedText</span></code></a>, <a class="reference internal" href="#pyuaf.util.QualifiedName" title="pyuaf.util.QualifiedName"><code class="xref py py-class docutils literal"><span class="pre">QualifiedName</span></code></a>, ...</li>
+<li>the statuscode is an <code class="docutils literal"><span class="pre">int</span></code>, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></code></a>.
+It will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Good" title="pyuaf.util.opcuastatuscodes.OpcUa_Good"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_Good</span></code></a> if the field corresponds
+indeed to one of the values mentioned above. If the value is something else (e.g. a structure),
+then the statuscode will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument" title="pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadInvalidArgument</span></code></a>.
+If the field is empty, you can expect a <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadNoData" title="pyuaf.util.opcuastatuscodes.OpcUa_BadNoData"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadNoData</span></code></a>.
+You can easily print the name of the status code by creating a <a class="reference internal" href="#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a>
+(with the OPC UA status code as the argument for the constructor).</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericStructureValue.genericStructure">
+<code class="descname">genericStructure</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue.genericStructure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the structure value of the specified field, in case the specified field represents a structure.
+In other words, in case the <a class="reference internal" href="#pyuaf.util.GenericStructureValue.valueType" title="pyuaf.util.GenericStructureValue.valueType"><code class="xref py py-meth docutils literal"><span class="pre">valueType()</span></code></a>
+method returns the <code class="docutils literal"><span class="pre">int</span></code> <a class="reference internal" href="api_pyuaf_util_structurefielddatatypes.html#pyuaf.util.structurefielddatatypes.GenericStructure" title="pyuaf.util.structurefielddatatypes.GenericStructure"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.structurefielddatatypes.GenericStructure</span></code></a>.</p>
+<p>The field can be specified via the only argument: either:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the number of the field (an <code class="docutils literal"><span class="pre">int</span></code>)</li>
+<li>or the name of the field (a <code class="docutils literal"><span class="pre">str</span></code>).</li>
+</ul>
+</div></blockquote>
+<p>This method will return a tuple of (structureValue, statuscode).</p>
+<blockquote>
+<div><ul class="simple">
+<li>the structureValue is an instance of <a class="reference internal" href="#pyuaf.util.GenericStructureValue" title="pyuaf.util.GenericStructureValue"><code class="xref py py-class docutils literal"><span class="pre">GenericStructureValue</span></code></a>.</li>
+<li>the statuscode is an <code class="docutils literal"><span class="pre">int</span></code>, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></code></a>.
+It will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Good" title="pyuaf.util.opcuastatuscodes.OpcUa_Good"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_Good</span></code></a> if the field corresponds
+indeed to a structure. If the value is something else (e.g. a Double),
+then the statuscode will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument" title="pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadInvalidArgument</span></code></a>.
+If the field is empty, you can expect a <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadNoData" title="pyuaf.util.opcuastatuscodes.OpcUa_BadNoData"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadNoData</span></code></a>.
+You can easily print the name of the status code by creating a <a class="reference internal" href="#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a>
+(with the OPC UA status code as the argument for the constructor).</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericStructureValue.genericStructureArray">
+<code class="descname">genericStructureArray</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue.genericStructureArray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the structure value of the specified field, in case the specified field represents an
+array of structures.
+In other words, in case the <a class="reference internal" href="#pyuaf.util.GenericStructureValue.valueType" title="pyuaf.util.GenericStructureValue.valueType"><code class="xref py py-meth docutils literal"><span class="pre">valueType()</span></code></a>
+method returns the <code class="docutils literal"><span class="pre">int</span></code> <a class="reference internal" href="api_pyuaf_util_structurefielddatatypes.html#pyuaf.util.structurefielddatatypes.GenericStructureArray" title="pyuaf.util.structurefielddatatypes.GenericStructureArray"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.structurefielddatatypes.GenericStructureArray</span></code></a>.</p>
+<p>The field can be specified via the only argument: either:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the number of the field (an <code class="docutils literal"><span class="pre">int</span></code>)</li>
+<li>or the name of the field (a <code class="docutils literal"><span class="pre">str</span></code>).</li>
+</ul>
+</div></blockquote>
+<p>This method will return a tuple of (structureValueArray, statuscode).</p>
+<blockquote>
+<div><ul class="simple">
+<li>the structureValue is a Python <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.util.GenericStructureValue" title="pyuaf.util.GenericStructureValue"><code class="xref py py-class docutils literal"><span class="pre">GenericStructureValue</span></code></a> instances.</li>
+<li>the statuscode is an <code class="docutils literal"><span class="pre">int</span></code>, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></code></a>.
+It will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Good" title="pyuaf.util.opcuastatuscodes.OpcUa_Good"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_Good</span></code></a> if the field corresponds
+indeed to an array of structures. If the value is something else (e.g. a Double),
+then the statuscode will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument" title="pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadInvalidArgument</span></code></a>.
+If the field is empty, you can expect a <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadNoData" title="pyuaf.util.opcuastatuscodes.OpcUa_BadNoData"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadNoData</span></code></a>.
+You can easily print the name of the status code by creating a <a class="reference internal" href="#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a>
+(with the OPC UA status code as the argument for the constructor).</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericStructureValue.genericUnion">
+<code class="descname">genericUnion</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue.genericUnion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the union value of the specified field, in case the specified field represents a union.
+In other words, in case the <a class="reference internal" href="#pyuaf.util.GenericStructureValue.valueType" title="pyuaf.util.GenericStructureValue.valueType"><code class="xref py py-meth docutils literal"><span class="pre">valueType()</span></code></a>
+method returns the <code class="docutils literal"><span class="pre">int</span></code> <a class="reference internal" href="api_pyuaf_util_structurefielddatatypes.html#pyuaf.util.structurefielddatatypes.GenericUnion" title="pyuaf.util.structurefielddatatypes.GenericUnion"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.structurefielddatatypes.GenericUnion</span></code></a>.</p>
+<p>The field can be specified via the only argument: either:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the number of the field (an <code class="docutils literal"><span class="pre">int</span></code>)</li>
+<li>or the name of the field (a <code class="docutils literal"><span class="pre">str</span></code>).</li>
+</ul>
+</div></blockquote>
+<p>This method will return a tuple of (unionValue, statuscode).</p>
+<blockquote>
+<div><ul class="simple">
+<li>the unionValue is an instance of <a class="reference internal" href="#pyuaf.util.GenericUnionValue" title="pyuaf.util.GenericUnionValue"><code class="xref py py-class docutils literal"><span class="pre">GenericUnionValue</span></code></a>.</li>
+<li>the statuscode is an <code class="docutils literal"><span class="pre">int</span></code>, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></code></a>.
+It will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Good" title="pyuaf.util.opcuastatuscodes.OpcUa_Good"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_Good</span></code></a> if the field corresponds
+indeed to a union. If the value is something else (e.g. a Double),
+then the statuscode will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument" title="pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadInvalidArgument</span></code></a>.
+If the field is empty, you can expect a <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadNoData" title="pyuaf.util.opcuastatuscodes.OpcUa_BadNoData"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadNoData</span></code></a>.
+You can easily print the name of the status code by creating a <a class="reference internal" href="#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a>
+(with the OPC UA status code as the argument for the constructor).</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericStructureValue.genericUnionArray">
+<code class="descname">genericUnionArray</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue.genericUnionArray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the structure value of the specified field, in case the specified field represents an
+array of unions.
+In other words, in case the <a class="reference internal" href="#pyuaf.util.GenericStructureValue.valueType" title="pyuaf.util.GenericStructureValue.valueType"><code class="xref py py-meth docutils literal"><span class="pre">valueType()</span></code></a>
+method returns the <code class="docutils literal"><span class="pre">int</span></code> <a class="reference internal" href="api_pyuaf_util_structurefielddatatypes.html#pyuaf.util.structurefielddatatypes.GenericUnionArray" title="pyuaf.util.structurefielddatatypes.GenericUnionArray"><code class="xref py py-attr docutils literal"><span class="pre">pyuaf.util.structurefielddatatypes.GenericUnionArray</span></code></a>.</p>
+<p>The field can be specified via the only argument: either:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the number of the field (an <code class="docutils literal"><span class="pre">int</span></code>)</li>
+<li>or the name of the field (a <code class="docutils literal"><span class="pre">str</span></code>).</li>
+</ul>
+</div></blockquote>
+<p>This method will return a tuple of (unionValueArray, statuscode).</p>
+<blockquote>
+<div><ul class="simple">
+<li>the unionValue is a Python <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.util.GenericUnionValue" title="pyuaf.util.GenericUnionValue"><code class="xref py py-class docutils literal"><span class="pre">GenericUnionValue</span></code></a> instances.</li>
+<li>the statuscode is an <code class="docutils literal"><span class="pre">int</span></code>, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></code></a>.
+It will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Good" title="pyuaf.util.opcuastatuscodes.OpcUa_Good"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_Good</span></code></a> if the field corresponds
+indeed to an array of unions. If the value is something else (e.g. a Double),
+then the statuscode will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument" title="pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadInvalidArgument</span></code></a>.
+If the field is empty, you can expect a <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadNoData" title="pyuaf.util.opcuastatuscodes.OpcUa_BadNoData"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadNoData</span></code></a>.
+You can easily print the name of the status code by creating a <a class="reference internal" href="#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a>
+(with the OPC UA status code as the argument for the constructor).</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericStructureValue.definition">
+<code class="descname">definition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue.definition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the definition of the structure.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The definition of the structure.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.StructureDefinition" title="pyuaf.util.StructureDefinition"><code class="xref py py-class docutils literal"><span class="pre">StructureDefinition</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericStructureValue.setDefinition">
+<code class="descname">setDefinition</code><span class="sig-paren">(</span><em>definition</em>, <em>createDefaultValues=False</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue.setDefinition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the definition of the structure.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>definition</strong> (<a class="reference internal" href="#pyuaf.util.StructureDefinition" title="pyuaf.util.StructureDefinition"><code class="xref py py-class docutils literal"><span class="pre">StructureDefinition</span></code></a>) &#8211; New definition.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericStructureValue.isFieldSet">
+<code class="descname">isFieldSet</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue.isFieldSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the field is set or not.</p>
+<p>The field can be specified via the only argument: either:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the number of the field (an <code class="docutils literal"><span class="pre">int</span></code>)</li>
+<li>or the name of the field (a <code class="docutils literal"><span class="pre">str</span></code>).</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the field is set, False if not.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">bool</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericStructureValue.unsetField">
+<code class="descname">unsetField</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue.unsetField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unset a field.</p>
+<p>The field can be specified via the only argument: either:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the number of the field (an <code class="docutils literal"><span class="pre">int</span></code>)</li>
+<li>or the name of the field (a <code class="docutils literal"><span class="pre">str</span></code>).</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The status: Good if the field could be unset, Bad otherwise.
+The <a class="reference internal" href="#pyuaf.util.SdkStatus.statusCode" title="pyuaf.util.SdkStatus.statusCode"><code class="xref py py-attr docutils literal"><span class="pre">statusCode</span></code></a> of the <a class="reference internal" href="#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a>
+will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument" title="pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadInvalidArgument</span></code></a> if the specified
+field could not be found.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericStructureValue.valueType">
+<code class="descname">valueType</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue.valueType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the datatype (built-in type, structure, structure array, union, ...) of a field.</p>
+<p>The field can be specified via the index argument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<code class="docutils literal"><span class="pre">int</span></code>) &#8211; Index of the field.</td>
+</tr>
+</tbody>
+</table>
+<p>This method will return a tuple of (type, statuscode).</p>
+<blockquote>
+<div><ul class="simple">
+<li>the type is a Python <code class="docutils literal"><span class="pre">int</span></code>, as defined by <a class="reference internal" href="api_pyuaf_util_structurefielddatatypes.html#module-pyuaf.util.structurefielddatatypes" title="pyuaf.util.structurefielddatatypes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.structurefielddatatypes</span></code></a>.</li>
+<li>the statuscode is an <code class="docutils literal"><span class="pre">int</span></code>, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></code></a>.
+It will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument" title="pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadInvalidArgument</span></code></a> if the index
+is out of range, or <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Good" title="pyuaf.util.opcuastatuscodes.OpcUa_Good"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_Good</span></code></a> otherwise.</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericStructureValue.toExtensionObject">
+<code class="descname">toExtensionObject</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue.toExtensionObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the structure into an <a class="reference internal" href="#pyuaf.util.ExtensionObject" title="pyuaf.util.ExtensionObject"><code class="xref py py-class docutils literal"><span class="pre">ExtensionObject</span></code></a>.</p>
+<p>This ExtensionObject can be written back to the server, e.g. after some fields have been changed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>extensionObject</strong> (<a class="reference internal" href="#pyuaf.util.ExtensionObject" title="pyuaf.util.ExtensionObject"><code class="xref py py-class docutils literal"><span class="pre">ExtensionObject</span></code></a>) &#8211; The ExtensionObject to update.</li>
+<li><strong>encoding</strong> (<code class="docutils literal"><span class="pre">int</span></code>) &#8211; Optional argument: the encoding for the ExtensionObject. If not specified, then the
+default value <a class="reference internal" href="#pyuaf.util.GenericStructureValue.Encoding_Binary" title="pyuaf.util.GenericStructureValue.Encoding_Binary"><code class="xref py py-attr docutils literal"><span class="pre">Encoding_Binary</span></code></a> will be used.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericStructureValue.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureValue.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-genericstructurevector">
+<h2><em>class</em> GenericStructureVector<a class="headerlink" href="#class-genericstructurevector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.GenericStructureVector">
+<em class="property">class </em><code class="descclassname">pyuaf.util.</code><code class="descname">GenericStructureVector</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericStructureVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A GenericStructureVector is an array that holds elements of type
+<a class="reference internal" href="#pyuaf.util.GenericStructureValue" title="pyuaf.util.GenericStructureValue"><code class="xref py py-class docutils literal"><span class="pre">GenericStructureValue</span></code></a>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.util.GenericStructureVector" title="pyuaf.util.GenericStructureVector"><code class="xref py py-class docutils literal"><span class="pre">GenericStructureVector</span></code></a>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">GenericStructureVector</span><span class="p">,</span> <span class="n">GenericStructureValue</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a GenericStructureVector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">GenericStructureVector</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">GenericStructureValue</span><span class="p">())</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">definition</span> <span class="o">=</span> <span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">definition</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 2</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a GenericStructureVector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">someOtherVec</span> <span class="o">=</span> <span class="n">GenericStructureVector</span><span class="p">(</span> <span class="p">[</span> <span class="n">GenericStructureValue</span><span class="p">(),</span> <span class="n">GenericStructureValue</span><span class="p">()</span> <span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="class-genericunionvalue">
+<h2><em>class</em> GenericUnionValue<a class="headerlink" href="#class-genericunionvalue" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.GenericUnionValue">
+<em class="property">class </em><code class="descclassname">pyuaf.util.</code><code class="descname">GenericUnionValue</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericUnionValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>A GenericUnionValue instance holds a union of fields. The fields may represent
+values (Double, LocalizedText, ...) or GenericStructureValue instances or other GenericUnionValue instances or
+arrays of GenericUnionValue or ...</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">Check out example <a class="reference internal" href="client_examples.html#read-and-write-structures"><span class="std std-ref">How to read and write structures?</span></a> for more information.</p>
+</div>
+<ul>
+<li><p class="first">Class attributes:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Possible Encoding types:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.GenericUnionValue.Encoding_Binary">
+<code class="descname">Encoding_Binary</code><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.util.GenericUnionValue.Encoding_Binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <code class="docutils literal"><span class="pre">int</span></code> identifying the type of Encoding: in this case Binary!</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.GenericUnionValue.Encoding_Xml">
+<code class="descname">Encoding_Xml</code><em class="property"> = 2</em><a class="headerlink" href="#pyuaf.util.GenericUnionValue.Encoding_Xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <code class="docutils literal"><span class="pre">int</span></code> identifying the type of Encoding: in this case XML!</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.GenericUnionValue.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericUnionValue.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new GenericUnionValue in one of the following ways:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">GenericUnionValue</span><span class="p">,</span> <span class="n">ExtensionObject</span><span class="p">,</span> <span class="n">StructureDefinition</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">union1</span> <span class="o">=</span> <span class="n">GenericUnionValue</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">union2</span> <span class="o">=</span> <span class="n">GenericUnionValue</span><span class="p">(</span><span class="n">ExtensionObject</span><span class="p">(),</span> <span class="n">StructureDefinition</span><span class="p">())</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericUnionValue.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericUnionValue.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the union.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericUnionValue.setGenericUnion">
+<code class="descname">setGenericUnion</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericUnionValue.setGenericUnion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill the generic union value.</p>
+<p>Either you can provide a ByteString, Encoding and StructureDefinition as arguments:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.ByteString" title="pyuaf.util.primitives.ByteString"><code class="xref py py-class docutils literal"><span class="pre">ByteString</span></code></a> data</li>
+<li><code class="docutils literal"><span class="pre">int</span></code> representing the encoding, such as <a class="reference internal" href="#pyuaf.util.GenericUnionValue.Encoding_Binary" title="pyuaf.util.GenericUnionValue.Encoding_Binary"><code class="xref py py-attr docutils literal"><span class="pre">Encoding_Binary</span></code></a></li>
+<li><a class="reference internal" href="#pyuaf.util.StructureDefinition" title="pyuaf.util.StructureDefinition"><code class="xref py py-class docutils literal"><span class="pre">StructureDefinition</span></code></a> structureDefinition</li>
+</ul>
+</div></blockquote>
+<p>Or you can provide an ExtensionObject and a StructureDefinition:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#pyuaf.util.ExtensionObject" title="pyuaf.util.ExtensionObject"><code class="xref py py-class docutils literal"><span class="pre">ExtensionObject</span></code></a> extensionObject</li>
+<li><a class="reference internal" href="#pyuaf.util.StructureDefinition" title="pyuaf.util.StructureDefinition"><code class="xref py py-class docutils literal"><span class="pre">StructureDefinition</span></code></a> structureDefinition</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericUnionValue.setValue">
+<code class="descname">setValue</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericUnionValue.setValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the value of a field.</p>
+<p>This method has two arguments.</p>
+<p>The first argument identifies the field. It can either be:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the number of the field (an <code class="docutils literal"><span class="pre">int</span></code>)</li>
+<li>or the name of the field (a <code class="docutils literal"><span class="pre">str</span></code>).</li>
+</ul>
+</div></blockquote>
+<p>The second argument sets the new value. It can either be:</p>
+<blockquote>
+<div><ul class="simple">
+<li>a value such as <a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.UInt32" title="pyuaf.util.primitives.UInt32"><code class="xref py py-class docutils literal"><span class="pre">UInt32</span></code></a>,
+<a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.Double" title="pyuaf.util.primitives.Double"><code class="xref py py-class docutils literal"><span class="pre">Double</span></code></a>, <a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.String" title="pyuaf.util.primitives.String"><code class="xref py py-class docutils literal"><span class="pre">String</span></code></a>,
+<a class="reference internal" href="#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><code class="xref py py-class docutils literal"><span class="pre">DateTime</span></code></a>, <a class="reference internal" href="#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><code class="xref py py-class docutils literal"><span class="pre">LocalizedText</span></code></a>,
+<a class="reference internal" href="#pyuaf.util.QualifiedName" title="pyuaf.util.QualifiedName"><code class="xref py py-class docutils literal"><span class="pre">QualifiedName</span></code></a></li>
+<li>a <a class="reference internal" href="#pyuaf.util.GenericStructureValue" title="pyuaf.util.GenericStructureValue"><code class="xref py py-class docutils literal"><span class="pre">GenericStructureValue</span></code></a> instance</li>
+<li>a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.util.GenericStructureValue" title="pyuaf.util.GenericStructureValue"><code class="xref py py-class docutils literal"><span class="pre">GenericStructureValue</span></code></a> instances.
+(Or a <a class="reference internal" href="#pyuaf.util.GenericStructureVector" title="pyuaf.util.GenericStructureVector"><code class="xref py py-class docutils literal"><span class="pre">GenericStructureVector</span></code></a>, this is similar to a list.)
+In other words, an array of structures.</li>
+<li>a <a class="reference internal" href="#pyuaf.util.GenericUnionValue" title="pyuaf.util.GenericUnionValue"><code class="xref py py-class docutils literal"><span class="pre">GenericUnionValue</span></code></a> instance</li>
+<li>a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.util.GenericUnionValue" title="pyuaf.util.GenericUnionValue"><code class="xref py py-class docutils literal"><span class="pre">GenericUnionValue</span></code></a> instances.
+(Or a <a class="reference internal" href="#pyuaf.util.GenericUnionVector" title="pyuaf.util.GenericUnionVector"><code class="xref py py-class docutils literal"><span class="pre">GenericUnionVector</span></code></a>, this is similar to a list.)
+In other words, an array of unions.</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericUnionValue.value">
+<code class="descname">value</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericUnionValue.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the value of the active field, in case this field represents a built-in
+OPC UA value.</p>
+<p>This method will return a tuple of (value, statuscode).</p>
+<blockquote>
+<div><ul class="simple">
+<li>the value can be a primitive such as <a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.UInt32" title="pyuaf.util.primitives.UInt32"><code class="xref py py-class docutils literal"><span class="pre">UInt32</span></code></a>,
+<a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.Double" title="pyuaf.util.primitives.Double"><code class="xref py py-class docutils literal"><span class="pre">Double</span></code></a>, <a class="reference internal" href="api_pyuaf_util_primitives.html#pyuaf.util.primitives.String" title="pyuaf.util.primitives.String"><code class="xref py py-class docutils literal"><span class="pre">String</span></code></a>,
+or typical built-in OPC UA types such as <a class="reference internal" href="#pyuaf.util.DateTime" title="pyuaf.util.DateTime"><code class="xref py py-class docutils literal"><span class="pre">DateTime</span></code></a>,
+<a class="reference internal" href="#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><code class="xref py py-class docutils literal"><span class="pre">LocalizedText</span></code></a>, <a class="reference internal" href="#pyuaf.util.QualifiedName" title="pyuaf.util.QualifiedName"><code class="xref py py-class docutils literal"><span class="pre">QualifiedName</span></code></a>, ...</li>
+<li>the statuscode is an <code class="docutils literal"><span class="pre">int</span></code>, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></code></a>.
+It will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Good" title="pyuaf.util.opcuastatuscodes.OpcUa_Good"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_Good</span></code></a> if the field corresponds
+indeed to one of the values mentioned above. If the value is something else (e.g. a structure),
+then the statuscode will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument" title="pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadInvalidArgument</span></code></a>.
+If the field is empty, you can expect a <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadNoData" title="pyuaf.util.opcuastatuscodes.OpcUa_BadNoData"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadNoData</span></code></a>.
+You can easily print the name of the status code by creating a <a class="reference internal" href="#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a>
+(with the OPC UA status code as the argument for the constructor).</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericUnionValue.genericStructure">
+<code class="descname">genericStructure</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericUnionValue.genericStructure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the structure value of the active field, in case this field represents a structure.</p>
+<p>This method will return a tuple of (structureValue, statuscode).</p>
+<blockquote>
+<div><ul class="simple">
+<li>the structureValue is an instance of <a class="reference internal" href="#pyuaf.util.GenericUnionValue" title="pyuaf.util.GenericUnionValue"><code class="xref py py-class docutils literal"><span class="pre">GenericUnionValue</span></code></a>.</li>
+<li>the statuscode is an <code class="docutils literal"><span class="pre">int</span></code>, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></code></a>.
+It will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Good" title="pyuaf.util.opcuastatuscodes.OpcUa_Good"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_Good</span></code></a> if the field corresponds
+indeed to a structure. If the value is something else (e.g. a Double),
+then the statuscode will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument" title="pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadInvalidArgument</span></code></a>.
+If the field is empty, you can expect a <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadNoData" title="pyuaf.util.opcuastatuscodes.OpcUa_BadNoData"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadNoData</span></code></a>.
+You can easily print the name of the status code by creating a <a class="reference internal" href="#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a>
+(with the OPC UA status code as the argument for the constructor).</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericUnionValue.genericStructureArray">
+<code class="descname">genericStructureArray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericUnionValue.genericStructureArray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the structure value of the active field, in case this field represents an
+array of structures.</p>
+<p>This method will return a tuple of (structureValueArray, statuscode).</p>
+<blockquote>
+<div><ul class="simple">
+<li>the structureValue is a Python <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.util.GenericUnionValue" title="pyuaf.util.GenericUnionValue"><code class="xref py py-class docutils literal"><span class="pre">GenericUnionValue</span></code></a> instances.</li>
+<li>the statuscode is an <code class="docutils literal"><span class="pre">int</span></code>, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></code></a>.
+It will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Good" title="pyuaf.util.opcuastatuscodes.OpcUa_Good"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_Good</span></code></a> if the field corresponds
+indeed to an array of structures. If the value is something else (e.g. a Double),
+then the statuscode will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument" title="pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadInvalidArgument</span></code></a>.
+If the field is empty, you can expect a <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadNoData" title="pyuaf.util.opcuastatuscodes.OpcUa_BadNoData"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadNoData</span></code></a>.
+You can easily print the name of the status code by creating a <a class="reference internal" href="#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a>
+(with the OPC UA status code as the argument for the constructor).</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericUnionValue.genericUnion">
+<code class="descname">genericUnion</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericUnionValue.genericUnion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the union value of the active field, in case this field represents a union.</p>
+<p>This method will return a tuple of (unionValue, statuscode).</p>
+<blockquote>
+<div><ul class="simple">
+<li>the unionValue is an instance of <a class="reference internal" href="#pyuaf.util.GenericUnionValue" title="pyuaf.util.GenericUnionValue"><code class="xref py py-class docutils literal"><span class="pre">GenericUnionValue</span></code></a>.</li>
+<li>the statuscode is an <code class="docutils literal"><span class="pre">int</span></code>, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></code></a>.
+It will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Good" title="pyuaf.util.opcuastatuscodes.OpcUa_Good"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_Good</span></code></a> if the field corresponds
+indeed to a union. If the value is something else (e.g. a Double),
+then the statuscode will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument" title="pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadInvalidArgument</span></code></a>.
+If the field is empty, you can expect a <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadNoData" title="pyuaf.util.opcuastatuscodes.OpcUa_BadNoData"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadNoData</span></code></a>.
+You can easily print the name of the status code by creating a <a class="reference internal" href="#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a>
+(with the OPC UA status code as the argument for the constructor).</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericUnionValue.genericUnionArray">
+<code class="descname">genericUnionArray</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericUnionValue.genericUnionArray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the structure value of the active field, in case this field represents an
+array of unions.</p>
+<p>This method will return a tuple of (unionValueArray, statuscode).</p>
+<blockquote>
+<div><ul class="simple">
+<li>the unionValue is a Python <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.util.GenericUnionValue" title="pyuaf.util.GenericUnionValue"><code class="xref py py-class docutils literal"><span class="pre">GenericUnionValue</span></code></a> instances.</li>
+<li>the statuscode is an <code class="docutils literal"><span class="pre">int</span></code>, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></code></a>.
+It will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Good" title="pyuaf.util.opcuastatuscodes.OpcUa_Good"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_Good</span></code></a> if the field corresponds
+indeed to an array of unions. If the value is something else (e.g. a Double),
+then the statuscode will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument" title="pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadInvalidArgument</span></code></a>.
+If the field is empty, you can expect a <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadNoData" title="pyuaf.util.opcuastatuscodes.OpcUa_BadNoData"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadNoData</span></code></a>.
+You can easily print the name of the status code by creating a <a class="reference internal" href="#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a>
+(with the OPC UA status code as the argument for the constructor).</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericUnionValue.definition">
+<code class="descname">definition</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericUnionValue.definition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the definition of the structure.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The definition of the structure.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.StructureDefinition" title="pyuaf.util.StructureDefinition"><code class="xref py py-class docutils literal"><span class="pre">StructureDefinition</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericUnionValue.switchValue">
+<code class="descname">switchValue</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericUnionValue.switchValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of the active field (the switch field).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Switch field number.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">int</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericUnionValue.field">
+<code class="descname">field</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericUnionValue.field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get currently used field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The currently used field.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.StructureField" title="pyuaf.util.StructureField"><code class="xref py py-class docutils literal"><span class="pre">StructureField</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericUnionValue.toExtensionObject">
+<code class="descname">toExtensionObject</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericUnionValue.toExtensionObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the structure into an <a class="reference internal" href="#pyuaf.util.ExtensionObject" title="pyuaf.util.ExtensionObject"><code class="xref py py-class docutils literal"><span class="pre">ExtensionObject</span></code></a>.</p>
+<p>This ExtensionObject can be written back to the server, e.g. after the field has been changed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>extensionObject</strong> (<a class="reference internal" href="#pyuaf.util.ExtensionObject" title="pyuaf.util.ExtensionObject"><code class="xref py py-class docutils literal"><span class="pre">ExtensionObject</span></code></a>) &#8211; The ExtensionObject to update.</li>
+<li><strong>encoding</strong> (<code class="docutils literal"><span class="pre">int</span></code>) &#8211; Optional argument: the encoding for the ExtensionObject. If not specified, then the
+default value <a class="reference internal" href="#pyuaf.util.GenericUnionValue.Encoding_Binary" title="pyuaf.util.GenericUnionValue.Encoding_Binary"><code class="xref py py-attr docutils literal"><span class="pre">Encoding_Binary</span></code></a> will be used.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.GenericUnionValue.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericUnionValue.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-genericunionvector">
+<h2><em>class</em> GenericUnionVector<a class="headerlink" href="#class-genericunionvector" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.GenericUnionVector">
+<em class="property">class </em><code class="descclassname">pyuaf.util.</code><code class="descname">GenericUnionVector</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.GenericUnionVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A GenericUnionVector is an array that holds elements of type
+<a class="reference internal" href="#pyuaf.util.GenericUnionValue" title="pyuaf.util.GenericUnionValue"><code class="xref py py-class docutils literal"><span class="pre">GenericUnionValue</span></code></a>.
+It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.util.GenericUnionVector" title="pyuaf.util.GenericUnionVector"><code class="xref py py-class docutils literal"><span class="pre">GenericUnionVector</span></code></a>.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">GenericUnionVector</span><span class="p">,</span> <span class="n">GenericUnionValue</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a GenericUnionVector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">GenericUnionVector</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">GenericUnionValue</span><span class="p">())</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">definition</span> <span class="o">=</span> <span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">definition</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 2</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a GenericUnionVector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">someOtherVec</span> <span class="o">=</span> <span class="n">GenericUnionVector</span><span class="p">(</span> <span class="p">[</span> <span class="n">GenericUnionValue</span><span class="p">(),</span> <span class="n">GenericUnionValue</span><span class="p">()</span> <span class="p">]</span> <span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -4564,6 +5307,651 @@ as a <code class="docutils literal"><span class="pre">list</span></code> of stri
 </dd></dl>
 
 </div>
+<div class="section" id="class-structuredefinition">
+<h2><em>class</em> StructureDefinition<a class="headerlink" href="#class-structuredefinition" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.StructureDefinition">
+<em class="property">class </em><code class="descclassname">pyuaf.util.</code><code class="descname">StructureDefinition</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition" title="Permalink to this definition">¶</a></dt>
+<dd><p>A StructureDefinition instance defines the fields of structures and unions.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">Check out example <a class="reference internal" href="client_examples.html#read-and-write-structures"><span class="std std-ref">How to read and write structures?</span></a> for more information.</p>
+</div>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.StructureDefinition.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new StructureDefinition in one of the following ways:</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.isNull">
+<code class="descname">isNull</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.isNull" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal"><span class="pre">True</span></code> if the definition is NULL, <code class="docutils literal"><span class="pre">False</span></code> if not.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the definition.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.setDataTypeId">
+<code class="descname">setDataTypeId</code><span class="sig-paren">(</span><em>dataTypeId</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.setDataTypeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the datatype id.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dataTypeId</strong> (<a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><code class="xref py py-class docutils literal"><span class="pre">NodeId</span></code></a>) &#8211; The datatype id.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.dataTypeId">
+<code class="descname">dataTypeId</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.dataTypeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the datatype id.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The datatype id.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><code class="xref py py-class docutils literal"><span class="pre">NodeId</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.setName">
+<code class="descname">setName</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.setName" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Change the name of the structure.</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<code class="docutils literal"><span class="pre">str</span></code>) &#8211; The new name of the structure.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.name">
+<code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the structure</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The name of the structure definition</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">str</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.setDocumentation">
+<code class="descname">setDocumentation</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.setDocumentation" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Change the documentation of the structure.</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>documentation</strong> (<a class="reference internal" href="#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><code class="xref py py-class docutils literal"><span class="pre">LocalizedText</span></code></a>) &#8211; The new documentation of the structure.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.documentation">
+<code class="descname">documentation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.documentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the documentation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The documentation of the structure definition</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><code class="xref py py-class docutils literal"><span class="pre">LocalizedText</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.setNamespace">
+<code class="descname">setNamespace</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.setNamespace" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Change the namespace of the structure.</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>namespace</strong> (<code class="docutils literal"><span class="pre">str</span></code>) &#8211; The new namespace of the structure.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.getNamespace">
+<code class="descname">getNamespace</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.getNamespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the namespace of the structure</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The namespace of the structure definition</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">str</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.setBaseType">
+<code class="descname">setBaseType</code><span class="sig-paren">(</span><em>baseType</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.setBaseType" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Change the base type of the definition.</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>baseType</strong> (<a class="reference internal" href="#pyuaf.util.StructureDefinition" title="pyuaf.util.StructureDefinition"><code class="xref py py-class docutils literal"><span class="pre">StructureDefinition</span></code></a>) &#8211; The base type.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.baseTypeId">
+<code class="descname">baseTypeId</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.baseTypeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the base type of the structure</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The namespace of the structure definition</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><code class="xref py py-class docutils literal"><span class="pre">NodeId</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.createSubtype">
+<code class="descname">createSubtype</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.createSubtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create and return a subtype.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A subtype of the structure definition.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.StructureDefinition" title="pyuaf.util.StructureDefinition"><code class="xref py py-class docutils literal"><span class="pre">StructureDefinition</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.childrenCount">
+<code class="descname">childrenCount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.childrenCount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of children.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The number of children of the definition.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">int</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.child">
+<code class="descname">child</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the specified child.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>i</strong> (<code class="docutils literal"><span class="pre">int</span></code>) &#8211; The index of the child.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The field.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.StructureField" title="pyuaf.util.StructureField"><code class="xref py py-class docutils literal"><span class="pre">StructureField</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.addChild">
+<code class="descname">addChild</code><span class="sig-paren">(</span><em>newChild</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.addChild" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the given child.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>newChild</strong> (<a class="reference internal" href="#pyuaf.util.StructureField" title="pyuaf.util.StructureField"><code class="xref py py-class docutils literal"><span class="pre">StructureField</span></code></a>) &#8211; The new child.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.remove">
+<code class="descname">remove</code><span class="sig-paren">(</span><em>fieldName</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the field with the given name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>i</strong> (<code class="docutils literal"><span class="pre">str</span></code>) &#8211; The name of the field.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.isUnion">
+<code class="descname">isUnion</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.isUnion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the definition represent a Union?</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if it&#8217;s a union.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">bool</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.setBinaryEncodingId">
+<code class="descname">setBinaryEncodingId</code><span class="sig-paren">(</span><em>nodeId</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.setBinaryEncodingId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the binary encoding ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nodeId</strong> (<a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><code class="xref py py-class docutils literal"><span class="pre">NodeId</span></code></a>) &#8211; The encoding NodeId.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.binaryEncodingId">
+<code class="descname">binaryEncodingId</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.binaryEncodingId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the binary encoding ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The encoding NodeId.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><code class="xref py py-class docutils literal"><span class="pre">NodeId</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.setXmlEncodingId">
+<code class="descname">setXmlEncodingId</code><span class="sig-paren">(</span><em>nodeId</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.setXmlEncodingId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the XML encoding ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>nodeId</strong> (<a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><code class="xref py py-class docutils literal"><span class="pre">NodeId</span></code></a>) &#8211; The encoding NodeId.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.xmlEncodingId">
+<code class="descname">xmlEncodingId</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.xmlEncodingId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the XML encoding ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The encoding NodeId.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><code class="xref py py-class docutils literal"><span class="pre">NodeId</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureDefinition.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureDefinition.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-structurefield">
+<h2><em>class</em> StructureField<a class="headerlink" href="#class-structurefield" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.StructureField">
+<em class="property">class </em><code class="descclassname">pyuaf.util.</code><code class="descname">StructureField</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField" title="Permalink to this definition">¶</a></dt>
+<dd><p>A StructureField holds a field of a StructureDefinition (it wraps the SDK UaStructureField
+quite literally).</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">Check out example <a class="reference internal" href="client_examples.html#read-and-write-structures"><span class="std std-ref">How to read and write structures?</span></a> for more information.</p>
+</div>
+<ul>
+<li><p class="first">Class attributes:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Possible Encoding types:</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.util.StructureField.ArrayType_Scalar">
+<code class="descname">ArrayType_Scalar</code><em class="property"> = 0</em><a class="headerlink" href="#pyuaf.util.StructureField.ArrayType_Scalar" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <code class="docutils literal"><span class="pre">int</span></code> identifying whether the field is a scalar or an array: in this case a scalar!</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.util.StructureField.ArrayType_Array">
+<code class="descname">ArrayType_Array</code><em class="property"> = 1</em><a class="headerlink" href="#pyuaf.util.StructureField.ArrayType_Array" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <code class="docutils literal"><span class="pre">int</span></code> identifying whether the field is a scalar or an array: in this case an array!</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.StructureField.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new StructureField.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureField.isNull">
+<code class="descname">isNull</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField.isNull" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the name of the field empty?</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the name is empty.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">bool</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureField.name">
+<code class="descname">name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the name of the field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The name of the field.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">str</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureField.setName">
+<code class="descname">setName</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField.setName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of the field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<code class="docutils literal"><span class="pre">str</span></code>) &#8211; New name.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureField.documentation">
+<code class="descname">documentation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField.documentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the documentation of the field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The documentation of the field.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><code class="xref py py-class docutils literal"><span class="pre">LocalizedText</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureField.setDocumentation">
+<code class="descname">setDocumentation</code><span class="sig-paren">(</span><em>doc</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField.setDocumentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the documentation of the field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference internal" href="#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><code class="xref py py-class docutils literal"><span class="pre">LocalizedText</span></code></a>) &#8211; New documentation.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureField.setDataTypeId">
+<code class="descname">setDataTypeId</code><span class="sig-paren">(</span><em>dataTypeId</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField.setDataTypeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the datatype id of the field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><code class="xref py py-class docutils literal"><span class="pre">NodeId</span></code></a>) &#8211; New datatype id.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureField.typeId">
+<code class="descname">typeId</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField.typeId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the datatype id of the field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The documentation of the field.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><code class="xref py py-class docutils literal"><span class="pre">NodeId</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureField.valueType">
+<code class="descname">valueType</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField.valueType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the built-in OPC UA type of the field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An <code class="docutils literal"><span class="pre">int</span></code> defined in <a class="reference internal" href="api_pyuaf_util_opcuatypes.html#module-pyuaf.util.opcuatypes" title="pyuaf.util.opcuatypes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuatypes</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">int</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureField.setValueType">
+<code class="descname">setValueType</code><span class="sig-paren">(</span><em>valueType</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField.setValueType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the built-in OPC UA type of the field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>valueType</strong> (<code class="docutils literal"><span class="pre">int</span></code>) &#8211; An <code class="docutils literal"><span class="pre">int</span></code> defined in <a class="reference internal" href="api_pyuaf_util_opcuatypes.html#module-pyuaf.util.opcuatypes" title="pyuaf.util.opcuatypes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuatypes</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureField.arrayType">
+<code class="descname">arrayType</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField.arrayType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the array type of the field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Either <a class="reference internal" href="#pyuaf.util.StructureField.ArrayType_Scalar" title="pyuaf.util.StructureField.ArrayType_Scalar"><code class="xref py py-attr docutils literal"><span class="pre">ArrayType_Scalar</span></code></a> or <a class="reference internal" href="#pyuaf.util.StructureField.ArrayType_Array" title="pyuaf.util.StructureField.ArrayType_Array"><code class="xref py py-attr docutils literal"><span class="pre">ArrayType_Array</span></code></a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">int</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureField.setArrayType">
+<code class="descname">setArrayType</code><span class="sig-paren">(</span><em>arrayType</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField.setArrayType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the array type of the field.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>arrayType</strong> (<code class="docutils literal"><span class="pre">int</span></code>) &#8211; Either <a class="reference internal" href="#pyuaf.util.StructureField.ArrayType_Scalar" title="pyuaf.util.StructureField.ArrayType_Scalar"><code class="xref py py-attr docutils literal"><span class="pre">ArrayType_Scalar</span></code></a> or <a class="reference internal" href="#pyuaf.util.StructureField.ArrayType_Array" title="pyuaf.util.StructureField.ArrayType_Array"><code class="xref py py-attr docutils literal"><span class="pre">ArrayType_Array</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureField.GenericStructureValue.unsetField">
+<code class="descclassname">GenericStructureValue.</code><code class="descname">unsetField</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField.GenericStructureValue.unsetField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unset a field.</p>
+<p>The field can be specified via the only argument: either:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the number of the field (an <code class="docutils literal"><span class="pre">int</span></code>)</li>
+<li>or the name of the field (a <code class="docutils literal"><span class="pre">str</span></code>).</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The status: Good if the field could be unset, Bad otherwise.
+The <a class="reference internal" href="#pyuaf.util.SdkStatus.statusCode" title="pyuaf.util.SdkStatus.statusCode"><code class="xref py py-attr docutils literal"><span class="pre">statusCode</span></code></a> of the <a class="reference internal" href="#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a>
+will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument" title="pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadInvalidArgument</span></code></a> if the specified
+field could not be found.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">SdkStatus</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureField.GenericStructureValue.valueType">
+<code class="descclassname">GenericStructureValue.</code><code class="descname">valueType</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField.GenericStructureValue.valueType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the datatype (built-in type, structure, structure array, union, ...) of a field.</p>
+<p>The field can be specified via the index argument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<code class="docutils literal"><span class="pre">int</span></code>) &#8211; Index of the field.</td>
+</tr>
+</tbody>
+</table>
+<p>This method will return a tuple of (type, statuscode).</p>
+<blockquote>
+<div><ul class="simple">
+<li>the type is a Python <code class="docutils literal"><span class="pre">int</span></code>, as defined by <a class="reference internal" href="api_pyuaf_util_structurefielddatatypes.html#module-pyuaf.util.structurefielddatatypes" title="pyuaf.util.structurefielddatatypes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.structurefielddatatypes</span></code></a>.</li>
+<li>the statuscode is an <code class="docutils literal"><span class="pre">int</span></code>, as defined by <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></code></a>.
+It will be <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument" title="pyuaf.util.opcuastatuscodes.OpcUa_BadInvalidArgument"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_BadInvalidArgument</span></code></a> if the index
+is out of range, or <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#pyuaf.util.opcuastatuscodes.OpcUa_Good" title="pyuaf.util.opcuastatuscodes.OpcUa_Good"><code class="xref py py-attr docutils literal"><span class="pre">OpcUa_Good</span></code></a> otherwise.</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureField.GenericStructureValue.toExtensionObject">
+<code class="descclassname">GenericStructureValue.</code><code class="descname">toExtensionObject</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField.GenericStructureValue.toExtensionObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the structure into an <a class="reference internal" href="#pyuaf.util.ExtensionObject" title="pyuaf.util.ExtensionObject"><code class="xref py py-class docutils literal"><span class="pre">ExtensionObject</span></code></a>.</p>
+<p>This ExtensionObject can be written back to the server, e.g. after some fields have been changed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>extensionObject</strong> (<a class="reference internal" href="#pyuaf.util.ExtensionObject" title="pyuaf.util.ExtensionObject"><code class="xref py py-class docutils literal"><span class="pre">ExtensionObject</span></code></a>) &#8211; The ExtensionObject to update.</li>
+<li><strong>encoding</strong> (<code class="docutils literal"><span class="pre">int</span></code>) &#8211; Optional argument: the encoding for the ExtensionObject. If not specified, then the
+default value <a class="reference internal" href="#pyuaf.util.GenericStructureValue.Encoding_Binary" title="pyuaf.util.GenericStructureValue.Encoding_Binary"><code class="xref py py-attr docutils literal"><span class="pre">Encoding_Binary</span></code></a> will be used.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.StructureField.GenericStructureValue.__str__">
+<code class="descclassname">GenericStructureValue.</code><code class="descname">__str__</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.StructureField.GenericStructureValue.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string representation.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
 <div class="section" id="class-uint32vector">
 <h2><em>class</em> UInt32Vector<a class="headerlink" href="#class-uint32vector" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -4863,6 +6251,10 @@ will return True) if you want to specify the whole address space.</p>
 <li><a class="reference internal" href="#class-expandednodeid"><em>class</em> ExpandedNodeId</a></li>
 <li><a class="reference internal" href="#class-expandednodeidvector"><em>class</em> ExpandedNodeIdVector</a></li>
 <li><a class="reference internal" href="#class-extensionobject"><em>class</em> ExtensionObject</a></li>
+<li><a class="reference internal" href="#class-genericstructurevalue"><em>class</em> GenericStructureValue</a></li>
+<li><a class="reference internal" href="#class-genericstructurevector"><em>class</em> GenericStructureVector</a></li>
+<li><a class="reference internal" href="#class-genericunionvalue"><em>class</em> GenericUnionValue</a></li>
+<li><a class="reference internal" href="#class-genericunionvector"><em>class</em> GenericUnionVector</a></li>
 <li><a class="reference internal" href="#class-guid"><em>class</em> Guid</a></li>
 <li><a class="reference internal" href="#class-localizedtext"><em>class</em> LocalizedText</a></li>
 <li><a class="reference internal" href="#class-logginginterface"><em>class</em> LoggingInterface</a></li>
@@ -4891,6 +6283,8 @@ will return True) if you want to specify the whole address space.</p>
 <li><a class="reference internal" href="#class-status"><em>class</em> Status</a></li>
 <li><a class="reference internal" href="#class-statusvector"><em>class</em> StatusVector</a></li>
 <li><a class="reference internal" href="#class-stringvector"><em>class</em> StringVector</a></li>
+<li><a class="reference internal" href="#class-structuredefinition"><em>class</em> StructureDefinition</a></li>
+<li><a class="reference internal" href="#class-structurefield"><em>class</em> StructureField</a></li>
 <li><a class="reference internal" href="#class-uint32vector"><em>class</em> UInt32Vector</a></li>
 <li><a class="reference internal" href="#class-usertokenpolicy"><em>class</em> UserTokenPolicy</a></li>
 <li><a class="reference internal" href="#class-usertokenpolicyvector"><em>class</em> UserTokenPolicyVector</a></li>
@@ -4945,7 +6339,7 @@ will return True) if you want to specify the whole address space.</p>
         <li class="right" >
           <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

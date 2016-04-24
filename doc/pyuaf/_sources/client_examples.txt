@@ -37,6 +37,19 @@ How to read some historical data?
 .. literalinclude:: ../../../examples/pyuaf/client/how_to_read_some_historical_data.py
 
 
+How to read some data?
+====================================================================================================
+
+.. literalinclude:: ../../../examples/pyuaf/client/how_to_read_some_data.py
+
+
+.. _read-and-write-structures: 
+
+How to read and write structures?
+====================================================================================================
+
+.. literalinclude:: ../../../examples/pyuaf/client/how_to_read_and_write_structures.py
+
 
 .. _configure-settings-example: 
 

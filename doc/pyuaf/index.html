@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>PyUAF - Python bindings for the UAF (Unified Architecture Framework) &mdash; PyUAF 2.0.3 documentation</title>
+    <title>PyUAF - Python bindings for the UAF (Unified Architecture Framework) &mdash; PyUAF 2.1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.3',
+        VERSION:     '2.1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.0.3 documentation" href="#" />
+    <link rel="top" title="PyUAF 2.1.1 documentation" href="#" />
     <link rel="next" title="Client examples" href="client_examples.html" /> 
   </head>
   <body role="document">
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="client_examples.html" title="Client examples"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">PyUAF 2.0.3 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="#">PyUAF 2.1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -102,6 +102,8 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
 <li class="toctree-l2"><a class="reference internal" href="client_examples.html#how-to-read-some-data">How to read some data?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="client_examples.html#how-to-browse-some-nodes">How to browse some nodes?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="client_examples.html#how-to-read-some-historical-data">How to read some historical data?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="client_examples.html#id1">How to read some data?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="client_examples.html#how-to-read-and-write-structures">How to read and write structures?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="client_examples.html#how-to-configure-all-settings">How to configure all settings?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="client_examples.html#how-to-manually-connect-to-an-endpoint-without-discovery">How to manually connect to an endpoint without discovery?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="client_examples.html#how-to-connect-to-a-secured-endpoint">How to connect to a secured endpoint?</a></li>
@@ -238,6 +240,10 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-expandednodeid"><em>class</em> ExpandedNodeId</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-expandednodeidvector"><em>class</em> ExpandedNodeIdVector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-extensionobject"><em>class</em> ExtensionObject</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-genericstructurevalue"><em>class</em> GenericStructureValue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-genericstructurevector"><em>class</em> GenericStructureVector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-genericunionvalue"><em>class</em> GenericUnionValue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-genericunionvector"><em>class</em> GenericUnionVector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-guid"><em>class</em> Guid</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-localizedtext"><em>class</em> LocalizedText</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-logginginterface"><em>class</em> LoggingInterface</a></li>
@@ -266,6 +272,8 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-status"><em>class</em> Status</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-statusvector"><em>class</em> StatusVector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-stringvector"><em>class</em> StringVector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-structuredefinition"><em>class</em> StructureDefinition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-structurefield"><em>class</em> StructureField</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-uint32vector"><em>class</em> UInt32Vector</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-usertokenpolicy"><em>class</em> UserTokenPolicy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-usertokenpolicyvector"><em>class</em> UserTokenPolicyVector</a></li>
@@ -322,6 +330,7 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_serverstates.html"><code class="docutils literal"><span class="pre">pyuaf.util.serverstates</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_securitypolicies.html"><code class="docutils literal"><span class="pre">pyuaf.util.securitypolicies</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_structurefielddatatypes.html"><code class="docutils literal"><span class="pre">pyuaf.util.structurefielddatatypes</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_statuscodes.html"><code class="docutils literal"><span class="pre">pyuaf.util.statuscodes</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_timestampstoreturn.html"><code class="docutils literal"><span class="pre">pyuaf.util.timestampstoreturn</span></code></a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_pyuaf_util_usertokentypes.html"><code class="docutils literal"><span class="pre">pyuaf.util.usertokentypes</span></code></a></li>
@@ -401,7 +410,7 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
         <li class="right" >
           <a href="client_examples.html" title="Client examples"
              >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">PyUAF 2.0.3 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="#">PyUAF 2.1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

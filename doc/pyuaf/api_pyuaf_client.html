@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client &mdash; PyUAF 2.0.3 documentation</title>
+    <title>pyuaf.client &mdash; PyUAF 2.1.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.0.3',
+        VERSION:     '2.1.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.0.3 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.1.1 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.connectionsteps" href="api_pyuaf_client_connectionsteps.html" />
     <link rel="prev" title="pyuaf" href="api_pyuaf.html" /> 
   </head>
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -1557,6 +1557,15 @@ the <a class="reference internal" href="#pyuaf.client.Client.manuallyConnect" ti
 </dd></dl>
 
 <dl class="method">
+<dt id="pyuaf.client.Client.manuallyDisconnectAllSessions">
+<code class="descname">manuallyDisconnectAllSessions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.Client.manuallyDisconnectAllSessions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect all sessions.</p>
+<p>To stress that normally the UAF takes care of session connection and disconnection,
+this method has a &#8220;manually&#8221; prefix. Normally it should not be used explicitely,
+as all sessions will be disconnected automatically when the client is deleted.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyuaf.client.Client.manuallySubscribe">
 <code class="descname">manuallySubscribe</code><span class="sig-paren">(</span><em>clientConnectionId</em>, <em>subscriptionSettings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.Client.manuallySubscribe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a subscription manually.</p>
@@ -2197,6 +2206,33 @@ default settings).</li>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
 <li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UnknownClientHandleError" title="pyuaf.util.errors.UnknownClientHandleError"><strong>pyuaf.util.errors.UnknownClientHandleError</strong></a> &#8211; The clientSubscriptionHandle is unknown!</li>
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any UAF errors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.structureDefinition">
+<code class="descname">structureDefinition</code><span class="sig-paren">(</span><em>dataTypeId</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.Client.structureDefinition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a structure definition for the given datatype NodeId.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>dataTypeId</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><code class="xref py py-class docutils literal"><span class="pre">NodeId</span></code></a>.) &#8211; NodeId of the datatype.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The definition of this datatype.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.StructureDefinition" title="pyuaf.util.StructureDefinition"><code class="xref py py-class docutils literal"><span class="pre">StructureDefinition</span></code></a>.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.DefinitionNotFoundError" title="pyuaf.util.errors.DefinitionNotFoundError"><strong>pyuaf.util.errors.DefinitionNotFoundError</strong></a> &#8211; Will be raised if no definition could be found.</li>
 <li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any UAF errors.</li>
 </ul>
 </td>
@@ -2918,7 +2954,7 @@ state of the subscription, the handle, etc.</p>
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.0.3 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
