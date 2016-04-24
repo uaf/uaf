@@ -3,6 +3,28 @@ UAF changelog
 ====================================================================================================
 
 
+Version 2.1.1 @ 2016/04/24
+----------------------------------------------------------------------------------------------------
+
+- bugfix (https://github.com/uaf/uaf/issues/106):
+  Deleting a python client with monitored items sometimes lead to crashes, when the client was 
+  destructed. 
+   
+- C++ examples now updated to UAF v2 (https://github.com/uaf/uaf/issues/107)
+
+- bugfix (https://github.com/uaf/uaf/issues/105):
+  Manually removed subscriptions were restored automatically by the UAF, while they should have
+  been removed permanently. They are now removed permanently.
+  
+- new feature (https://github.com/uaf/uaf/issues/104):
+  On MS Windows, multi-core compiling is now possible on via a CMake flag 
+  (BUILD_WITH_MULTIPLE_PROCESSES). By default, this flag is OFF, so there is no change in behavior.
+  By adding -DBUILD_WITH_MULTIPLE_PROCESSES=ON to the command line, the build process will
+  be faster if a multi-core CPU is available.
+  On Linux, multi-core compilation is not specified with the cmake command, but with the make 
+  command ("make -j"), so the BUILD_WITH_MULTIPLE_PROCESSES flag is not allowed for this platform.
+   
+
 Version 2.1.0 @ 2016/03/14
 ----------------------------------------------------------------------------------------------------
 

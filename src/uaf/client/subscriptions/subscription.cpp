@@ -124,7 +124,7 @@ namespace uaf
     }
 
 
-    Status Subscription::deleteSubscription()
+    Status Subscription::deleteSubscription(bool deletePersistentRequest)
     {
         Status ret;
 
@@ -162,17 +162,25 @@ namespace uaf
             // remove the notification buffer according to the kind
             if (it->second.settings.kind() == MonitoredItemSettings::Data)
             {
-                database_->createMonitoredDataRequestStore.updateTargetStatus(
-                        it->second.requestHandle,
-                        it->second.targetRank,
-                        SubscriptionHasBeenDeletedError());
+                if (deletePersistentRequest)
+                    database_->createMonitoredDataRequestStore.remove(
+                            it->second.requestHandle);
+                else
+                    database_->createMonitoredDataRequestStore.updateTargetStatus(
+                            it->second.requestHandle,
+                            it->second.targetRank,
+                            SubscriptionHasBeenDeletedError());
             }
             else
             {
-                database_->createMonitoredEventsRequestStore.updateTargetStatus(
-                        it->second.requestHandle,
-                        it->second.targetRank,
-                        SubscriptionHasBeenDeletedError());
+                if (deletePersistentRequest)
+                    database_->createMonitoredEventsRequestStore.remove(
+                            it->second.requestHandle);
+                else
+                    database_->createMonitoredEventsRequestStore.updateTargetStatus(
+                            it->second.requestHandle,
+                            it->second.targetRank,
+                            SubscriptionHasBeenDeletedError());
             }
 
             // remove the monitoredItemsMap_ entry

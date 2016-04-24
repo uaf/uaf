@@ -645,6 +645,14 @@ namespace uaf
     }
 
 
+    // Manual disconnection of all sessions
+    //==============================================================================================
+    void Client::manuallyDisconnectAllSessions()
+    {
+        return sessionFactory_->deleteAllSessions();
+    }
+
+
     // Manual subscription
     //==============================================================================================
     Status Client::manuallySubscribe(

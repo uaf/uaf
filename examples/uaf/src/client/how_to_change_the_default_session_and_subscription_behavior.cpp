@@ -32,32 +32,31 @@ int main(int argc, char* argv[])
 
     printf("This example will fail when executed, since it tries to connect to non-existing servers\n");
 
-    // create a single SessionConfig object that we will use for all our service calls
-    SessionConfig sessionCfg;
+    // Create a client settings object, to change the default behaviour of the client
+    ClientSettings clientSettings;
 
     // configure the default settings for the sessions that will be created
-    sessionCfg.defaultSessionSettings.sessionTimeoutSec = 100.0;
-    sessionCfg.defaultSessionSettings.connectTimeoutSec = 2.0;
+    clientSettings.defaultSessionSettings.sessionTimeoutSec = 100.0;
+    clientSettings.defaultSessionSettings.connectTimeoutSec = 2.0;
 
     // for a particular server (an embedded device) we expect an unreliable connection,
     // so we specify some settings that are more suitable for this particular server
-    sessionCfg.specificSessionSettings["My/Unreliable/Device/Server"].sessionTimeoutSec = 200.0;
-    sessionCfg.specificSessionSettings["My/Unreliable/Device/Server"].connectTimeoutSec = 5.0;
+    clientSettings.specificSessionSettings["My/Unreliable/Device/Server"].sessionTimeoutSec = 200.0;
+    clientSettings.specificSessionSettings["My/Unreliable/Device/Server"].connectTimeoutSec = 5.0;
 
     // we also have a particular very reliable and fast server (some PLC), for which we want to
     // specify other settings:
-    sessionCfg.specificSessionSettings["My/Reliable/PLC/Server"].connectTimeoutSec = 0.5;
+    clientSettings.specificSessionSettings["My/Reliable/PLC/Server"].connectTimeoutSec = 0.5;
 
-    // Now we can use the same config for many different service calls.
+    // Now we can use these settings for many different service calls.
     // Sessions will be created silently in the background by the UAF, based on the
-    // settings we provided via the 'sessionCfg' object.
+    // settings we provided via the 'clientSettings' object.
     // If sessions need to be created to the "My/Unreliable/Device/Uri" or "My/Reliable/PLC/Uri"
     // servers, they will be created according to the specified settings.
     // If sessions need to be created to other servers, they will be created according to the
     // defaultSessionSettings settings.
 
-    // configure a client ...
-    ClientSettings clientSettings;
+    // now configure the client settings further...
     clientSettings.applicationName = "MyClient";
     clientSettings.discoveryUrls.push_back("opc.tcp://10.133.78.42");
     clientSettings.discoveryUrls.push_back("opc.tcp://10.133.78.81");
@@ -83,8 +82,10 @@ int main(int argc, char* argv[])
     ReadResult myReadResult;
     Status readStatus  = myClient.read(myReadNodes,
                                        uaf::attributeids::Value, // read the Value attribute
-                                       uaf::ReadConfig(),        // default settings for the Read service
-                                       sessionCfg,
+                                       constants::CLIENTHANDLE_NOT_ASSIGNED, // don't specify an existing session, but let the UAF create new sessions (and assign handles to them) or re-use existing ones
+                                       NULL,                                      // default settings for the Read service
+                                       NULL,                                      // default settings for the Translate service
+                                       NULL,                                      // default session settings
                                        myReadResult);
 
     std::cout << "Read status: " << readStatus.toString() << "\n";
@@ -98,8 +99,10 @@ int main(int argc, char* argv[])
     Status writeStatus = myClient.write(myWriteNodes,
                                         myData,
                                         uaf::attributeids::Value, // write the Value attribute
-                                        uaf::WriteConfig(),       // default settings for the Write service
-                                        sessionCfg,
+                                        constants::CLIENTHANDLE_NOT_ASSIGNED, // don't specify an existing session, but let the UAF create new sessions (and assign handles to them) or re-use existing ones
+                                        NULL,                                      // default settings for the Write service
+                                        NULL,                                      // default settings for the Translate service
+                                        NULL,                                      // default session settings
                                         myWriteResult);
 
     std::cout << "Write status: " << writeStatus.toString() << "\n";

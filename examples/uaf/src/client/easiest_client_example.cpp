@@ -35,9 +35,11 @@ int main(int argc, char* argv[])
     // read the Value attribute of the node that we just addressed:
     ReadResult result;
     Status status = myClient.read(nodesToBeRead,
-                                  attributeids::Value, // read the Value attribute
-                                  ReadConfig(),        // default settings for the Read service
-                                  SessionConfig(),     // default settings for the sessions to be created
+                                  attributeids::Value,                       // read the Value attribute
+                                  uaf::constants::CLIENTHANDLE_NOT_ASSIGNED, // let the UAF pick a suitable Session
+                                  NULL,                                      // default settings for the Read service
+                                  NULL,                                      // default settings for the Translate service
+                                  NULL,                                      // default session settings
                                   result);
 
     if (status.isGood())

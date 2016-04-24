@@ -34,20 +34,12 @@ int main(int argc, char* argv[])
 
     printf("This example will fail when executed, since it tries to connect to non-existing servers\n");
 
-    // create a single SubscriptionConfig object that we will use for all our service calls
-    SubscriptionConfig subscriptionCfg;
+    // Create a client settings object, to change the default behaviour of the client
+    ClientSettings clientSettings;
 
     // configure the default settings for the sessions that will be created
-    subscriptionCfg.defaultSubscriptionSettings.publishingIntervalSec = 1.0;
-    subscriptionCfg.defaultSubscriptionSettings.priority = 50;
-
-    // for a particular server (a small embedded device) we want to create a subscription with a
-    // slow publishing interval, so that we don't require too much resources from the device:
-    subscriptionCfg.specificSubscriptionSettings["My/Slow/Device/Server"].publishingIntervalSec = 2.0;
-
-    // we also have a very fast server (some high-end PLC), from which we want to receive updates
-    // much faster (4 times per second!):
-    subscriptionCfg.specificSubscriptionSettings["My/Fast/PLC/Server"].publishingIntervalSec = 0.25;
+    clientSettings.defaultSubscriptionSettings.publishingIntervalSec = 1.0;
+    clientSettings.defaultSubscriptionSettings.priority = 50;
 
     // Now we can use the same config for many different service calls.
     // Subscriptions will be created silently in the background by the UAF, based on the

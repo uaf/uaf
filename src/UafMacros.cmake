@@ -29,6 +29,8 @@ MACRO(handleOptions)
     OPTION( NO_THIRD_PARTY_MSINTTYPES "Set to ON if you want to avoid msinttypes to be included for certain compilers" OFF)
     
     OPTION( COPY_SDK_LIBS  "Set to OFF if you don't want the SDK libraries to be copied to the UAF/lib folder" ON )
+    
+    OPTION( BUILD_WITH_MULTIPLE_PROCESSES   "Set to ON if you want to build the UAF with multiple processes" OFF )
 
 ENDMACRO(handleOptions)
 
@@ -77,6 +79,9 @@ MACRO(setUafCompilerFlags)
 
     if (WIN32)
         set(CMAKE_CXX_FLAGS "/EHsc")
+        if (BUILD_WITH_MULTIPLE_PROCESSES)
+            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+        endif (BUILD_WITH_MULTIPLE_PROCESSES)
         add_definitions(-D_CRT_SECURE_NO_DEPRECATE -D_CRT_SECURE_NO_WARNINGS -DUNICODE -D_UNICODE -D_UA_STACK_USE_DLL)  
     else (WIN32)
         if (FORCE32)
@@ -84,7 +89,11 @@ MACRO(setUafCompilerFlags)
         else (FORCE32)
             set(CMAKE_CXX_FLAGS "-Wall -Wno-unused-function -Wno-comment -Wno-maybe-uninitialized")
         endif (FORCE32)
+        if (BUILD_WITH_MULTIPLE_PROCESSES)
+            message(FATAL_ERROR "BUILD_WITH_MULTIPLE_PROCESSES is not allowed on this platform. Try 'make -j' instead, when compiling.")
+        endif (BUILD_WITH_MULTIPLE_PROCESSES)
     endif (WIN32)
+    message(STATUS "CMAKE_CXX_FLAGS: ${CMAKE_CXX_FLAGS}")
     
 ENDMACRO(setUafCompilerFlags)
 
