@@ -17,7 +17,7 @@ set(  CMAKE_SWIG_OUTDIR     ${LIB_PYUAF_CLIENT_DIR} )
 
 # declare the targets
 set(  PYUAF_CLIENT_TARGETS
-      __init__
+      client
       sessionstates
       connectionsteps
       subscriptionstates
@@ -31,3 +31,9 @@ set(  PYUAF_CLIENT_TARGETS
 foreach(PYUAF_CLIENT_TARGET ${PYUAF_CLIENT_TARGETS})
     setPyUafTargetProperties( client   ${PYUAF_CLIENT_TARGET}  ${LIB_PYUAF_CLIENT_DIR}  uafclient )
 endforeach(PYUAF_CLIENT_TARGET)
+
+
+
+add_custom_command(TARGET _client_client POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy ${LIB_PYUAF_DIR}/client/client.py ${LIB_PYUAF_DIR}/client/__init__.py
+                   COMMENT "Copying ${LIB_PYUAF_DIR}/client/util.py to ${LIB_PYUAF_DIR}/client/__init__.py" )

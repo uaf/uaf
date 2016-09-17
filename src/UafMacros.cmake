@@ -54,7 +54,7 @@ MACRO(setUnifiedAutomationSdkCompilerDir _NEW_VAR)
         ELSEIF (MSVC10)
             SET (${_NEW_VAR} vs2010sp1)
         ELSEIF (MSVC11)
-            SET (${_NEW_VAR} vs2012 )
+            SET (${_NEW_VAR} vs2012sp4 )
         ELSEIF (MINGW)
             SET (${_NEW_VAR} mingw)
         ELSE ()
@@ -352,6 +352,8 @@ MACRO(handleSwig)
     	find_package(SWIG)
     
     endif(WIN32)
+    
+    
 
 ENDMACRO(handleSwig)
 
@@ -430,6 +432,9 @@ MACRO(setPyUafTargetProperties  _PREFIX _NAME _OUTDIR _UAFLINKLIB)
 
     # link the libraries to the Python libraries and UAF libraries
     swig_link_libraries(  ${_TARGET}  ${PYTHON_LIBRARIES}  ${_UAFLINKLIB}  )
+    
+    # NOT USED set_source_files_properties( ${_TARGET} PROPERTIES COMPILE_FLAGS "-relativeimport")
+    
     
     if (WIN32)
         set_target_properties(  _${_TARGET}   PROPERTIES   LIBRARY_OUTPUT_DIRECTORY_DEBUG           "${_OUTDIR}"  )
