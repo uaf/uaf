@@ -154,7 +154,7 @@ namespace uaf
         if (ret.size() > 0)
         {
             // transform to lower case
-            transform(ret.begin(), ret.end(), ret.begin(), std::ptr_fun<int, int>(tolower));
+            transform(ret.begin(), ret.end(), ret.begin(), toLower );
             // remove a trailing '/' character
             if (ret.substr(ret.length()-1, 1) == string("/"))
             {
