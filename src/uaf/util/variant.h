@@ -111,6 +111,14 @@ namespace uaf
 
 
         /**
+         * Is the variant a matrix?
+         *
+         * @return True if the variant is a matrix.
+         */
+        bool isMatrix() const;
+
+
+        /**
          * Get the array size if isArray() == true.
          *
          * @return The size of the array.

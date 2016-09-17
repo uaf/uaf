@@ -763,6 +763,15 @@ namespace uaf
             return (bool)(uaVariant_.isArray());
     }
 
+    // Does the variant represent a matrix?
+    // =============================================================================================
+    bool Variant::isMatrix() const
+    {
+        if (isNativeUaf_)
+            return arrayTypeIfNativeUaf_ == OpcUa_VariantArrayType_Matrix;
+        else
+            return (bool)(uaVariant_.isMatrix());
+    }
 
     // Size of the array in case isArra() is True
     // =============================================================================================
