@@ -126,6 +126,17 @@
     OBJECT.set##TYPE(*uafObject);
 
 
+#define PYUAF_CONVERT_MATRIX(IN, OBJECT)              \
+    uaf::Matrix* uafObject;                                 \
+    SWIG_ConvertPtr(IN,                                     \
+                    (void **) &uafObject,                   \
+                    $descriptor(uaf::Matrix *),             \
+                    SWIG_POINTER_EXCEPTION);                \
+    UaVariant v;                                            \
+    uafObject->toSdk(v);                                    \
+    OBJECT.fromSdk(v);
+
+
 
 #define CONVERT_PRIMITIVE_ARRAY(IN, TYPE, CTYPE, LENGTH, OBJECT)                            \
     std::vector<CTYPE> array;                                                               \
@@ -277,6 +288,7 @@
     else if (UAFTYPE_CONDITION(PYOBJECT, QualifiedName))  { PYUAF_CONVERT_UAFTYPE(PYOBJECT, QualifiedName,    VARIANT) } \
     else if (UAFTYPE_CONDITION(PYOBJECT, DateTime))       { PYUAF_CONVERT_UAFTYPE(PYOBJECT, DateTime,         VARIANT) } \
     else if (UAFTYPE_CONDITION(PYOBJECT, ExtensionObject)){ PYUAF_CONVERT_UAFTYPE(PYOBJECT, ExtensionObject,  VARIANT) } \
+    else if (UAFTYPE_CONDITION(PYOBJECT, Matrix))         { PYUAF_CONVERT_MATRIX(PYOBJECT, VARIANT) } \
     else \
     { \
         PyErr_SetString(PyExc_TypeError, "Unsupported type!"); \
@@ -427,6 +439,16 @@
 
 
 
+#define CREATE_MATRIXOBJECT(VARIANT, PYOBJECT) \
+    uaf::Matrix* matrix = new uaf::Matrix;                                                         \
+    UaVariant uaVariant;                                                                           \
+    VARIANT.toSdk(uaVariant);                                                                      \
+    matrix->fromSdk(uaVariant);                                                                    \
+    PYOBJECT = SWIG_NewPointerObj(matrix, $descriptor(uaf::Matrix *) , SWIG_POINTER_OWN);
+
+
+
+
 #define CREATE_OBJECT(VARIANT, PYOBJECT)  \
     if (VARIANT.type() == uaf::opcuatypes::Boolean)              { CREATE_PRIMITIVE(Boolean, VARIANT, PYOBJECT)      }  \
     else if (VARIANT.type() == uaf::opcuatypes::SByte)           { CREATE_PRIMITIVE(SByte, VARIANT, PYOBJECT)        }  \
@@ -464,6 +486,10 @@
     else if (VARIANT.isArray())                                                                    \
     {                                                                                              \
         CREATE_ARRAYOBJECT(VARIANT, PYOBJECT)                                                      \
+    }                                                                                              \
+    else if (VARIANT.isMatrix())                                                                   \
+    {                                                                                              \
+        CREATE_MATRIXOBJECT(VARIANT, PYOBJECT)                                                     \
     }                                                                                              \
     else                                                                                           \
     {                                                                                              \
