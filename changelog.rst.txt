@@ -2,6 +2,27 @@
 UAF changelog                     
 ====================================================================================================
 
+Version 2.2.1 @ 2016/09/18
+----------------------------------------------------------------------------------------------------
+
+- bugfix (https://github.com/uaf/uaf/issues/115):
+  Compilation error of namespacearray.cpp with newest version of Visual Studio (2012sp4).
+  Now fixed by using different (non obsolete) code.
+
+- bugfix (https://github.com/uaf/uaf/issues/114):
+  Latest version of SWIG (3.0.10) replaced the way how libraries are imported, causing
+  'import pyuaf' to fail. 
+  Now fixed by appending the directories of the pyuaf/util/ and pyuaf/client dirs to the sys.path,
+  and by creating util/util.py and client/client.py files which are renamed by the building
+  process to util/__init__.py and client/__init__.py as before.  
+
+- bugfix (https://github.com/uaf/uaf/issues/112)
+  Build process now supports vs2012sp4.
+  
+- new feature (https://github.com/uaf/uaf/issues/113)
+  Matrices are now supported via a convenience class (pyuaf.util.Matrix).
+  See examples/pyuaf/client/how_to_read_and_write_some_matrices.py.
+
 
 Version 2.1.1 @ 2016/04/24
 ----------------------------------------------------------------------------------------------------
