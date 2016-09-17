@@ -22,6 +22,7 @@
 %{
 #define SWIG_FILE_WITH_INIT
 #include "uaf/util/variant.h"
+#include "uaf/util/matrix.h"
 #include "uaf/util/primitives.h"
 #include "uaf/util/nodeid.h"
 #include "uaf/util/guid.h"
@@ -45,11 +46,11 @@
     PYOBJECT_TO_UAF_VARIANT($input, $1)
 }
 
+
 %typemap(typecheck, precedence=3001) const uaf::Variant&
 {
     VARIANT_CHECK($input, $1)
 }
-
 
 
 %typemap(in) const uaf::Variant& (uaf::Variant temp) 
