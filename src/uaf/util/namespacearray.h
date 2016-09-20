@@ -275,6 +275,9 @@ namespace uaf
          * @return      A simplified "plain" string.
          */
         static std::string getSimplifiedUri(const std::string& uri);
+
+        // wrap the overloaded islower, to avoid 'invalid overload' problems
+        static int toLower( int ch ) { return tolower(ch); }
     };
 }
 

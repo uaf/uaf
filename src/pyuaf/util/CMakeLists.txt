@@ -20,7 +20,7 @@ configure_file(  "unittesting.py"  "${LIB_PYUAF_UTIL_DIR}"   )
 
 # declare the targets
 set(  PYUAF_UTIL_TARGETS
-      __init__
+      util
       applicationtypes
       attributeids
       bytestring_python
@@ -52,6 +52,12 @@ set(  PYUAF_UTIL_TARGETS
 foreach(PYUAF_UTIL_TARGET ${PYUAF_UTIL_TARGETS})
     setPyUafTargetProperties(    util    ${PYUAF_UTIL_TARGET}   ${LIB_PYUAF_UTIL_DIR}  uafutil)
 endforeach(PYUAF_UTIL_TARGET)
+
+
+
+add_custom_command(TARGET _util_util POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy ${LIB_PYUAF_DIR}/util/util.py ${LIB_PYUAF_DIR}/util/__init__.py
+                   COMMENT "Copying ${LIB_PYUAF_DIR}/util/util.py to ${LIB_PYUAF_DIR}/util/__init__.py" )
 
 
  

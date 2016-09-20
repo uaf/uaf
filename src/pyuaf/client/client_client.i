@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-%module (directors="1", "threads"=1) __init__
+%module (directors="1", "threads"=1) client
 // Directors are enabled to implement the callbacks for the 
 // asynchronous communication.
 // Threads must also be enabled, because the overridden callbacks 
@@ -114,7 +114,7 @@ import time
 %import(module="pyuaf.util.timestampstoreturn")      "pyuaf/util/util_timestampstoreturn.i"
 %import(module="pyuaf.util.structurefielddatatypes") "pyuaf/util/util_structurefielddatatypes.i"
 %import(module="pyuaf.util.__unittesthelper__")      "pyuaf/util/util___unittesthelper__.i"
-%import(module="pyuaf.util")                         "pyuaf/util/util___init__.i"
+%import(module="pyuaf.util")                         "pyuaf/util/util_util.i"
 
  
 // import the EXPORT macro and some numeric types

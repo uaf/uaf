@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-%module __init__
+%module util
 %{
 #define SWIG_FILE_WITH_INIT
 #include "uaf/util/util.h"
@@ -49,6 +49,7 @@
 #include "uaf/util/browsepath.h"
 #include "uaf/util/address.h"
 #include "uaf/util/variant.h"
+#include "uaf/util/matrix.h"
 #include "uaf/util/viewdescription.h"
 #include "uaf/util/referencedescription.h"
 #include "uaf/util/enumvalue.h"
@@ -79,6 +80,7 @@
 // add some built-in type vectors to the pyuaf.util module
 %template(StringVector) std::vector<std::string>;
 %template(UInt32Vector) std::vector<uint32_t>;
+%template(Int32Vector) std::vector<int32_t>;
 
 
 // include the initializeUaf() function
@@ -208,9 +210,9 @@ class VectorIterator(object):
         return VectorIterator(self)
     def insert(self, i, x):
         if isinstance(i, int): # "insert" is used as if the vector is a Python list
-            ___init__.VariantVector___cpp_insert(self, self.begin() + i, x)
+            _util.VariantVector___cpp_insert(self, self.begin() + i, x)
         else: # "insert" is used as if the vector is a native C++ container
-            return ___init__.VariantVector___cpp_insert(self, i, x)
+            return _util.VariantVector___cpp_insert(self, i, x)
    }
 }
 
@@ -227,4 +229,5 @@ class VectorIterator(object):
 UAF_WRAP_CLASS("uaf/util/datavalue.h"              , uaf , DataValue               , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, DataValueVector)
 UAF_WRAP_CLASS("uaf/util/genericstructurevalue.h"  , uaf , GenericStructureValue   , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, GenericStructureVector)
 UAF_WRAP_CLASS("uaf/util/genericunionvalue.h"  	   , uaf , GenericUnionValue   	   , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, GenericUnionVector)
+UAF_WRAP_CLASS("uaf/util/matrix.h"                 , uaf , Matrix                  , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 

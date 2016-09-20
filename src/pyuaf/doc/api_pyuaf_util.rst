@@ -2019,6 +2019,74 @@
             :rtype:  :class:`pyuaf.util.Mask`
 
 
+*class* Matrix
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.Matrix
+
+    Matrix holds an n-dimensional matrix.
+
+
+    * Methods:
+
+        .. automethod:: pyuaf.util.Matrix.__init__
+    
+            Construct an empty matrix.
+    
+        .. automethod:: pyuaf.util.Matrix.clear
+    
+            Clear the matrix.
+    
+        .. automethod:: pyuaf.util.Matrix.status
+    
+            :return: Good if the matrix is valid, bad if not.
+            :rtype:  :class:`pyuaf.util.Status`
+    
+        .. automethod:: pyuaf.util.Matrix.getElement
+    
+            Get the element at certain dimension numbers.
+            
+            For example, getElement([1,3,2]) to get matrix[1][3][2]
+            
+            :param dimensionNumbers: a list of ``int``, e.g. [1,2,3].
+            :return: The element corresponding to the dimensionNumbers
+    
+        .. automethod:: pyuaf.util.Matrix.setElement
+    
+            Change the element at certain dimension numbers.
+            
+            For example, setElement([1,3,2], UInt32(3)) to set matrix[1][3][2].
+            
+            :param dimensionNumbers: a list of ``int``, e.g. [1,2,3].
+            :param value: The element corresponding to the dimensionNumbers, which 
+                          could be of several types: see :ref:`note-variants`.
+    
+        .. automethod:: pyuaf.util.Matrix.getElementNumber
+    
+            Get the element number for given dimension numbers.
+            
+            For example, getElementNumber([0,0,0]) returns 0, getElementNumber([0,0,1]) returns 1, and so on.
+            
+            :param dimensionNumbers: a list of ``int``, e.g. [1,2,3].
+            :return: The element number corresponding to the dimensionNumbers, as an ``int``.
+
+
+    * Attributes:
+  
+        .. autoattribute:: pyuaf.util.Matrix.type
+  
+           The built-in OPC UA type of the matrix (an ``int`` defined in :mod:`pyuaf.util.opcuatypes`).
+           
+        .. autoattribute:: pyuaf.util.Matrix.elements
+        
+            A list of elements, which could be of several types: see :ref:`note-variants`.
+           
+        .. autoattribute:: pyuaf.util.Matrix.dimensions
+        
+            The dimensions of the matrix, as a list of ``int``.
+            
+    
 
 
 *class* ModelChangeStructureDataType
