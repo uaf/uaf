@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>A note on dynamic data types &mdash; PyUAF 2.1.1 documentation</title>
+    <title>A note on dynamic data types &mdash; PyUAF 2.2.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,16 +14,17 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.1.1',
+        VERSION:     '2.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.1.1 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.2.1 documentation" href="index.html" />
     <link rel="next" title="A note on **kwargs for Client services" href="api_client_kwargs.html" />
     <link rel="prev" title="pyuaf.util.usertokentypes" href="api_pyuaf_util_usertokentypes.html" /> 
   </head>
@@ -43,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_util_usertokentypes.html" title="pyuaf.util.usertokentypes"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -105,24 +106,24 @@ of this list should have the same type!!!</p>
 </dl>
 <p>So suppose <cite>x</cite> is the instance, and we expect it to be a NULL value, or an unsigned 32-bit number,
 or an array of unsigned 32-bit numbers. Then we can process the instance like this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;NULL value!&quot;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NULL value!&quot;</span><span class="p">)</span>
 <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">primitives</span><span class="o">.</span><span class="n">UInt32</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;The value is </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">x</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The value is </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span><span class="n">x</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-    <span class="c"># In an OPC UA array, all elements have the same type.</span>
-    <span class="c"># So if we check the type of the first item, we don&#39;t have to check the type of the subsequent items.</span>
+    <span class="c1"># In an OPC UA array, all elements have the same type.</span>
+    <span class="c1"># So if we check the type of the first item, we don&#39;t have to check the type of the subsequent items.</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The value is an empty array!&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The value is an empty array!&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">primitives</span><span class="o">.</span><span class="n">UInt32</span><span class="p">):</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&quot;The value is an array of the following UInt32 items:&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The value is an array of the following UInt32 items:&quot;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">x</span><span class="p">:</span>
-                <span class="k">print</span><span class="p">(</span><span class="s">&quot; - element value: </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">item</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; - element value: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span><span class="n">item</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&quot;The value is an array of the wrong type (</span><span class="si">%s</span><span class="s">)!&quot;</span> <span class="o">%</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The value is an array of the wrong type (</span><span class="si">%s</span><span class="s2">)!&quot;</span> <span class="o">%</span><span class="nb">type</span><span class="p">(</span><span class="n">item</span><span class="p">))</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;The value is of the wrong type (</span><span class="si">%s</span><span class="s">)!&quot;</span> <span class="o">%</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The value is of the wrong type (</span><span class="si">%s</span><span class="s2">)!&quot;</span> <span class="o">%</span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Multiple values of a dynamic data type may be contained in a native Python container, but sometimes they
@@ -147,21 +148,18 @@ may be presented to you as a <a class="reference internal" href="api_pyuaf_util.
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/api_variants.txt"
+      <li><a href="_sources/api_variants.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -183,7 +181,7 @@ may be presented to you as a <a class="reference internal" href="api_pyuaf_util.
         <li class="right" >
           <a href="api_pyuaf_util_usertokentypes.html" title="pyuaf.util.usertokentypes"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

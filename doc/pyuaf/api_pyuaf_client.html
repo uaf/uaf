@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client &mdash; PyUAF 2.1.1 documentation</title>
+    <title>pyuaf.client &mdash; PyUAF 2.2.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,16 +14,17 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.1.1',
+        VERSION:     '2.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.1.1 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.2.1 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.connectionsteps" href="api_pyuaf_client_connectionsteps.html" />
     <link rel="prev" title="pyuaf" href="api_pyuaf.html" /> 
   </head>
@@ -43,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -377,7 +378,7 @@
 <em class="property">class </em><code class="descclassname">pyuaf.client.</code><code class="descname">Client</code><span class="sig-paren">(</span><em>settings=None</em>, <em>loggingCallback=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.Client" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct a UAF client.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># examples/pyuaf/client/how_to_create_a_client.py</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># examples/pyuaf/client/how_to_create_a_client.py</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">EXAMPLE: how to create a client</span>
 <span class="sd">====================================================================================================</span>
@@ -399,58 +400,58 @@
 <span class="kn">import</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">os</span>
 
 <span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="kn">from</span> <span class="nn">pyuaf.client</span>          <span class="kn">import</span> <span class="n">Client</span>
-<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span> <span class="kn">import</span> <span class="n">ClientSettings</span>
-<span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="kn">import</span> <span class="n">loglevels</span><span class="p">,</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client</span>          <span class="k">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span> <span class="k">import</span> <span class="n">ClientSettings</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="k">import</span> <span class="n">loglevels</span><span class="p">,</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
 
-<span class="c"># we can create some ClientSettings:</span>
+<span class="c1"># we can create some ClientSettings:</span>
 <span class="n">settings</span> <span class="o">=</span> <span class="n">ClientSettings</span><span class="p">()</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">applicationName</span> <span class="o">=</span> <span class="s">&quot;MyClient&quot;</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">)</span>
-<span class="n">settings</span><span class="o">.</span><span class="n">logToStdOutLevel</span>   <span class="o">=</span> <span class="n">loglevels</span><span class="o">.</span><span class="n">Info</span>   <span class="c"># print Info, Warning and Error logging to the console </span>
-<span class="n">settings</span><span class="o">.</span><span class="n">logToCallbackLevel</span> <span class="o">=</span> <span class="n">loglevels</span><span class="o">.</span><span class="n">Debug</span>  <span class="c"># send Debug, Info, Warning and Error logging to the callback</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">applicationName</span> <span class="o">=</span> <span class="s2">&quot;MyClient&quot;</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">discoveryUrls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">)</span>
+<span class="n">settings</span><span class="o">.</span><span class="n">logToStdOutLevel</span>   <span class="o">=</span> <span class="n">loglevels</span><span class="o">.</span><span class="n">Info</span>   <span class="c1"># print Info, Warning and Error logging to the console </span>
+<span class="n">settings</span><span class="o">.</span><span class="n">logToCallbackLevel</span> <span class="o">=</span> <span class="n">loglevels</span><span class="o">.</span><span class="n">Debug</span>  <span class="c1"># send Debug, Info, Warning and Error logging to the callback</span>
 
-<span class="c"># And if you want to catch the logging output, you may also define a callback.</span>
-<span class="c"># In this case we define a callback to write the logging output to a file in the user&#39;s home directory.</span>
-<span class="c"># (but this callback is optional of course, only define one if you want to do something more with the</span>
-<span class="c">#  logging output than simply printing it to the console (i.e. sending it to the stdout))</span>
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&quot;~/my_logging_output.txt&quot;</span><span class="p">),</span> <span class="s">&quot;w&quot;</span><span class="p">)</span>
+<span class="c1"># And if you want to catch the logging output, you may also define a callback.</span>
+<span class="c1"># In this case we define a callback to write the logging output to a file in the user&#39;s home directory.</span>
+<span class="c1"># (but this callback is optional of course, only define one if you want to do something more with the</span>
+<span class="c1">#  logging output than simply printing it to the console (i.e. sending it to the stdout))</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/my_logging_output.txt&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
-    <span class="n">logDetailsString</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
-    <span class="n">logDetailsString</span> <span class="o">+=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&quot;%a, </span><span class="si">%d</span><span class="s"> %b %Y %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">ctime</span><span class="p">))</span>
-    <span class="n">logDetailsString</span> <span class="o">+=</span> <span class="s">&quot;.</span><span class="si">%.3d</span><span class="s"> &quot;</span> <span class="o">%</span><span class="n">msg</span><span class="o">.</span><span class="n">msec</span>
-    <span class="n">logDetailsString</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="si">%-10s</span><span class="s"> &quot;</span> <span class="o">%</span><span class="n">msg</span><span class="o">.</span><span class="n">applicationName</span>
-    <span class="n">logDetailsString</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="si">%-20s</span><span class="s"> &quot;</span> <span class="o">%</span><span class="n">msg</span><span class="o">.</span><span class="n">loggerName</span>
-    <span class="n">logDetailsString</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="si">%-8s</span><span class="s"> &quot;</span>  <span class="o">%</span><span class="n">loglevels</span><span class="o">.</span><span class="n">toString</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">level</span><span class="p">)</span>
-    <span class="c"># msg.message may contain multiple lines, so we prepend the other logging details in</span>
-    <span class="c"># front of each line:</span>
+    <span class="n">logDetailsString</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">logDetailsString</span> <span class="o">+=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%a, </span><span class="si">%d</span><span class="s2"> %b %Y %H:%M:%S&quot;</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">localtime</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">ctime</span><span class="p">))</span>
+    <span class="n">logDetailsString</span> <span class="o">+=</span> <span class="s2">&quot;.</span><span class="si">%.3d</span><span class="s2"> &quot;</span> <span class="o">%</span><span class="n">msg</span><span class="o">.</span><span class="n">msec</span>
+    <span class="n">logDetailsString</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">%-10s</span><span class="s2"> &quot;</span> <span class="o">%</span><span class="n">msg</span><span class="o">.</span><span class="n">applicationName</span>
+    <span class="n">logDetailsString</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">%-20s</span><span class="s2"> &quot;</span> <span class="o">%</span><span class="n">msg</span><span class="o">.</span><span class="n">loggerName</span>
+    <span class="n">logDetailsString</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">%-8s</span><span class="s2"> &quot;</span>  <span class="o">%</span><span class="n">loglevels</span><span class="o">.</span><span class="n">toString</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">level</span><span class="p">)</span>
+    <span class="c1"># msg.message may contain multiple lines, so we prepend the other logging details in</span>
+    <span class="c1"># front of each line:</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">logDetailsString</span><span class="p">,</span> <span class="n">line</span><span class="p">))</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">logDetailsString</span><span class="p">,</span> <span class="n">line</span><span class="p">))</span>
 
 
-<span class="c"># Example 0: create a client with the default settings and no logging callback</span>
-<span class="c"># --------------------------------------------------------------------------------------------------</span>
+<span class="c1"># Example 0: create a client with the default settings and no logging callback</span>
+<span class="c1"># --------------------------------------------------------------------------------------------------</span>
 <span class="n">client0</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
 
-<span class="c"># Example 1: create a client by specifying the settings</span>
-<span class="c"># --------------------------------------------------------------------------------------------------</span>
+<span class="c1"># Example 1: create a client by specifying the settings</span>
+<span class="c1"># --------------------------------------------------------------------------------------------------</span>
 <span class="n">client1</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">settings</span><span class="p">)</span>
 
-<span class="c"># Example 2: create a client by specifying the settings</span>
-<span class="c"># --------------------------------------------------------------------------------------------------</span>
+<span class="c1"># Example 2: create a client by specifying the settings</span>
+<span class="c1"># --------------------------------------------------------------------------------------------------</span>
 <span class="n">client2</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>
 
-<span class="c"># Example 3: create a client by specifying only the logging callback</span>
-<span class="c"># --------------------------------------------------------------------------------------------------</span>
+<span class="c1"># Example 3: create a client by specifying only the logging callback</span>
+<span class="c1"># --------------------------------------------------------------------------------------------------</span>
 <span class="n">client3</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">loggingCallback</span><span class="o">=</span><span class="n">callback</span><span class="p">)</span>
 
-<span class="c"># you can still provide settings and register a logging callback afterwards, but you&#39;ll need to use:</span>
-<span class="c">#  client0.setClientSettings(settings)</span>
-<span class="c">#  client0.registerLoggingCallback(callback)</span>
+<span class="c1"># you can still provide settings and register a logging callback afterwards, but you&#39;ll need to use:</span>
+<span class="c1">#  client0.setClientSettings(settings)</span>
+<span class="c1">#  client0.registerLoggingCallback(callback)</span>
 
 
-<span class="c"># read the Value attribute of some non-existing node in order to have some Error output sent to the callback:</span>
-<span class="n">client2</span><span class="o">.</span><span class="n">read</span><span class="p">([</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;InvalidIdentifier&quot;</span><span class="p">,</span><span class="s">&quot;InvalidNamespace&quot;</span><span class="p">),</span><span class="s">&quot;InvalidServerURI&quot;</span><span class="p">)])</span>
+<span class="c1"># read the Value attribute of some non-existing node in order to have some Error output sent to the callback:</span>
+<span class="n">client2</span><span class="o">.</span><span class="n">read</span><span class="p">([</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s2">&quot;InvalidIdentifier&quot;</span><span class="p">,</span><span class="s2">&quot;InvalidNamespace&quot;</span><span class="p">),</span><span class="s2">&quot;InvalidServerURI&quot;</span><span class="p">)])</span>
 
 <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
@@ -1417,13 +1418,13 @@ the security settings were incorrect), this methd will <em>not</em> raise an Exc
 It will simply return the ClientConnectionId assigned to the internal Session object, 
 which the UAF will try to reconnect in the background! So if you want to make sure
 this method call resulted in a connected session, you should do something like this:</p>
-<div class="last highlight-python"><div class="highlight"><pre><span class="n">clientConnectionId</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">manuallyConnect</span><span class="p">(</span><span class="n">SERVER_URI</span><span class="p">)</span>
+<div class="last highlight-default"><div class="highlight"><pre><span></span><span class="n">clientConnectionId</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">manuallyConnect</span><span class="p">(</span><span class="n">SERVER_URI</span><span class="p">)</span>
 <span class="n">sessionInformation</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">sessionInformation</span><span class="p">(</span><span class="n">clientConnectionId</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">sessionInformation</span><span class="o">.</span><span class="n">sessionState</span> <span class="o">==</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">sessionstates</span><span class="o">.</span><span class="n">Disconnected</span><span class="p">:</span>
-    <span class="k">pass</span> <span class="c"># OK, we can proceed</span>
+    <span class="k">pass</span> <span class="c1"># OK, we can proceed</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Oops, something went wrong:&quot;</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">sessionInformation</span><span class="o">.</span><span class="n">lastConnectionAttemptStatus</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Oops, something went wrong:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">sessionInformation</span><span class="o">.</span><span class="n">lastConnectionAttemptStatus</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2070,38 +2071,38 @@ both. This means that your monitored items are always identified in the same way
 clientHandles), no matter what happens on the server-side. The UAF takes care of the 
 conversion automatically, so you don&#8217;t have to worry about it.</p>
 <p>Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.errors</span> <span class="kn">import</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">CreateMonitoredItemsError</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client</span> <span class="kn">import</span> <span class="n">Client</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">monitoringmodes</span> 
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.errors</span> <span class="k">import</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">CreateMonitoredItemsError</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client</span> <span class="k">import</span> <span class="n">Client</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="k">import</span> <span class="n">monitoringmodes</span> 
 <span class="gp">&gt;&gt;&gt; </span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">myClient</span>     <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;myClient&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">myClient</span>     <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;myClient&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">])</span>
 <span class="go">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nameSpaceUri</span> <span class="o">=</span> <span class="s">&quot;http://mycompany.com/mymachine&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">serverUri</span>    <span class="o">=</span> <span class="s">&quot;http://mycompany.com/servers/plc1&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">temperature</span>  <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myMachine.temperature&quot;</span><span class="p">,</span> <span class="n">nameSpaceUri</span><span class="p">),</span> <span class="n">serverUri</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">pressure</span>     <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myMachine.pressure&quot;</span><span class="p">,</span> <span class="n">nameSpaceUri</span><span class="p">),</span> <span class="n">serverUri</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nameSpaceUri</span> <span class="o">=</span> <span class="s2">&quot;http://mycompany.com/mymachine&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">serverUri</span>    <span class="o">=</span> <span class="s2">&quot;http://mycompany.com/servers/plc1&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">temperature</span>  <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s2">&quot;myMachine.temperature&quot;</span><span class="p">,</span> <span class="n">nameSpaceUri</span><span class="p">),</span> <span class="n">serverUri</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pressure</span>     <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s2">&quot;myMachine.pressure&quot;</span><span class="p">,</span> <span class="n">nameSpaceUri</span><span class="p">),</span> <span class="n">serverUri</span><span class="p">)</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">updateTemperatureWidget</span><span class="p">(</span><span class="n">notification</span><span class="p">):</span>
-<span class="gp">... </span>     <span class="n">temperatureIndicator</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%.1f</span><span class="s"> K&quot;</span> <span class="o">%</span><span class="n">notification</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="gp">... </span>     <span class="n">temperatureIndicator</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.1f</span><span class="s2"> K&quot;</span> <span class="o">%</span><span class="n">notification</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">updatePressureWidget</span><span class="p">(</span><span class="n">notification</span><span class="p">):</span>
-<span class="gp">... </span>     <span class="n">pressureIndicator</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%.1f</span><span class="s"> Bar&quot;</span> <span class="o">%</span><span class="n">notification</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="gp">... </span>     <span class="n">pressureIndicator</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.1f</span><span class="s2"> Bar&quot;</span> <span class="o">%</span><span class="n">notification</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">createMonitoredData</span><span class="p">(</span>
 <span class="gp">... </span>                <span class="n">addresses</span> <span class="o">=</span> <span class="p">[</span><span class="n">temperature</span><span class="p">,</span> <span class="n">pressure</span><span class="p">],</span> 
 <span class="gp">... </span>                <span class="n">notificationCallbacks</span> <span class="o">=</span> <span class="p">[</span><span class="n">updateTemperatureWidget</span><span class="p">,</span> <span class="n">updatePressureWidget</span><span class="p">])</span>
-<span class="gp">... </span>    <span class="c"># store the clientHandles:</span>
+<span class="gp">... </span>    <span class="c1"># store the clientHandles:</span>
 <span class="gp">... </span>    <span class="n">clientHandles</span> <span class="o">=</span> <span class="p">[</span> <span class="n">target</span><span class="o">.</span><span class="n">clientHandle</span> <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span> <span class="p">]</span>
 <span class="gp">... </span><span class="k">except</span> <span class="n">CreateMonitoredItemsError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="c"># The monitored items could not be created, because there was some failure</span>
-<span class="gp">... </span>    <span class="c">#  (maybe the server is off-line?).</span>
-<span class="gp">... </span>    <span class="c"># Nevertheless, the client handles were already assigned, and we can get them like this: </span>
+<span class="gp">... </span>    <span class="c1"># The monitored items could not be created, because there was some failure</span>
+<span class="gp">... </span>    <span class="c1">#  (maybe the server is off-line?).</span>
+<span class="gp">... </span>    <span class="c1"># Nevertheless, the client handles were already assigned, and we can get them like this: </span>
 <span class="gp">... </span>    <span class="n">clientHandle</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">assignedClientHandles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gp">... </span><span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Oops, an unexpected error!&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Oops, an unexpected error!&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">uiTabChangedState</span><span class="p">(</span><span class="n">visible</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">if</span> <span class="n">visible</span><span class="p">:</span>
@@ -2110,11 +2111,11 @@ conversion automatically, so you don&#8217;t have to worry about it.</p>
 <span class="gp">... </span>         <span class="n">monitoringMode</span> <span class="o">=</span> <span class="n">monitoringmodes</span><span class="o">.</span><span class="n">Reporting</span>
 <span class="gp">... </span>    <span class="k">try</span><span class="p">:</span>
 <span class="gp">... </span>        <span class="n">statuses</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">setMonitoringMode</span><span class="p">(</span><span class="n">clientHandles</span><span class="p">,</span> <span class="n">monitoringMode</span><span class="p">)</span>
-<span class="gp">... </span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">statuses</span><span class="p">)):</span>
+<span class="gp">... </span>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">statuses</span><span class="p">)):</span>
 <span class="gp">... </span>            <span class="k">if</span> <span class="ow">not</span> <span class="n">statuses</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isGood</span><span class="p">():</span>
-<span class="gp">... </span>                <span class="k">print</span><span class="p">(</span><span class="s">&quot;Could not set monitoring mode of widget </span><span class="si">%d</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">statuses</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> 
+<span class="gp">... </span>                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Could not set monitoring mode of widget </span><span class="si">%d</span><span class="s2">: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">statuses</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span> 
 <span class="gp">... </span>    <span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Couldn&#39;t set the new monitoring mode: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t set the new monitoring mode: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="n">e</span><span class="p">)</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2153,43 +2154,43 @@ is <em>not</em> assigned yet, but ClientHandles <em>are</em> assigned yet. There
 first call <a class="reference internal" href="#pyuaf.client.Client.monitoredItemInformation" title="pyuaf.client.Client.monitoredItemInformation"><code class="xref py py-meth docutils literal"><span class="pre">monitoredItemInformation()</span></code></a> of your monitored item, 
 and get the subscription handle from there.</p>
 <p>E.g. like this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.errors</span> <span class="kn">import</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">CreateMonitoredItemsError</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client</span> <span class="kn">import</span> <span class="n">Client</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.errors</span> <span class="k">import</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">CreateMonitoredItemsError</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client</span> <span class="k">import</span> <span class="n">Client</span>
 <span class="gp">&gt;&gt;&gt; </span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">myClient</span>     <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;myClient&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">myClient</span>     <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;myClient&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">])</span>
 <span class="go">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nameSpaceUri</span> <span class="o">=</span> <span class="s">&quot;http://mycompany.com/mymachine&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">serverUri</span>    <span class="o">=</span> <span class="s">&quot;http://mycompany.com/servers/plc1&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myMachine.myVariable&quot;</span><span class="p">,</span> <span class="n">nameSpaceUri</span><span class="p">),</span> <span class="n">serverUri</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nameSpaceUri</span> <span class="o">=</span> <span class="s2">&quot;http://mycompany.com/mymachine&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">serverUri</span>    <span class="o">=</span> <span class="s2">&quot;http://mycompany.com/servers/plc1&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s2">&quot;myMachine.myVariable&quot;</span><span class="p">,</span> <span class="n">nameSpaceUri</span><span class="p">),</span> <span class="n">serverUri</span><span class="p">)</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">myCallback</span><span class="p">(</span><span class="n">notification</span><span class="p">):</span>
-<span class="gp">... </span>     <span class="k">print</span><span class="p">(</span><span class="s">&quot;A data change was received: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">notification</span><span class="p">)</span>
+<span class="gp">... </span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A data change was received: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="n">notification</span><span class="p">)</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">createMonitoredData</span><span class="p">([</span><span class="n">address</span><span class="p">],</span> 
 <span class="gp">... </span>                                          <span class="n">notificationCallbacks</span> <span class="o">=</span> <span class="p">[</span><span class="n">myCallback</span><span class="p">])</span>
 <span class="gp">... </span>    <span class="n">clientHandle</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">clientHandle</span>
 <span class="gp">... </span><span class="k">except</span> <span class="n">CreateMonitoredItemsError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="c"># The monitored items could not be created, because there was some failure</span>
-<span class="gp">... </span>    <span class="c">#  (maybe the server is off-line?).</span>
-<span class="gp">... </span>    <span class="c"># Nevertheless, the client handles were already assigned, and we can get them like this: </span>
+<span class="gp">... </span>    <span class="c1"># The monitored items could not be created, because there was some failure</span>
+<span class="gp">... </span>    <span class="c1">#  (maybe the server is off-line?).</span>
+<span class="gp">... </span>    <span class="c1"># Nevertheless, the client handles were already assigned, and we can get them like this: </span>
 <span class="gp">... </span>    <span class="n">clientHandle</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">assignedClientHandles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gp">... </span><span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Oops, an unexpected error!&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Oops, an unexpected error!&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span>
 <span class="gp">&gt;&gt;&gt; </span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">info</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">monitoredItemInformation</span><span class="p">(</span><span class="n">clientHandle</span><span class="p">)</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">info</span><span class="o">.</span><span class="n">monitoredItemState</span> <span class="o">==</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">monitoreditemstates</span><span class="o">.</span><span class="n">Created</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="c"># enable the subscription that hosts the monitored item:</span>
-<span class="gp">... </span>    <span class="n">myClient</span><span class="o">.</span><span class="n">setPublishingMode</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">clientSubscriptionHandle</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="c1"># enable the subscription that hosts the monitored item:</span>
+<span class="gp">... </span>    <span class="n">myClient</span><span class="o">.</span><span class="n">setPublishingMode</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">clientSubscriptionHandle</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 <span class="gp">... </span>        
-<span class="gp">... </span>    <span class="c"># ... do some stuff ...</span>
+<span class="gp">... </span>    <span class="c1"># ... do some stuff ...</span>
 <span class="gp">... </span>        
-<span class="gp">... </span>    <span class="c"># disable the subscription that hosts the monitored item:</span>
-<span class="gp">... </span>    <span class="n">myClient</span><span class="o">.</span><span class="n">setPublishingMode</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">clientSubscriptionHandle</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="c1"># disable the subscription that hosts the monitored item:</span>
+<span class="gp">... </span>    <span class="n">myClient</span><span class="o">.</span><span class="n">setPublishingMode</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">clientSubscriptionHandle</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -2918,21 +2919,18 @@ state of the subscription, the handle, etc.</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/api_pyuaf_client.txt"
+      <li><a href="_sources/api_pyuaf_client.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -2954,7 +2952,7 @@ state of the subscription, the handle, etc.</p>
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

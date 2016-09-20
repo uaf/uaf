@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util.statuscodes &mdash; PyUAF 2.1.1 documentation</title>
+    <title>pyuaf.util.statuscodes &mdash; PyUAF 2.2.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,16 +14,17 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.1.1',
+        VERSION:     '2.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.1.1 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.2.1 documentation" href="index.html" />
     <link rel="next" title="pyuaf.util.timestampstoreturn" href="api_pyuaf_util_timestampstoreturn.html" />
     <link rel="prev" title="pyuaf.util.structurefielddatatypes" href="api_pyuaf_util_structurefielddatatypes.html" /> 
   </head>
@@ -43,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_util_structurefielddatatypes.html" title="pyuaf.util.structurefielddatatypes"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -76,19 +77,19 @@ For instance, if the <a class="reference internal" href="api_pyuaf_util.html#pyu
 then the Status object in fact holds a <a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.InvalidServerUriError" title="pyuaf.util.errors.InvalidServerUriError"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.util.errors.InvalidServerUriError</span></code></a> instance.
 See the example below:</p>
 <blockquote>
-<div><div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">Status</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">errors</span><span class="p">,</span> <span class="n">statuscodes</span>
+<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="k">import</span> <span class="n">Status</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="k">import</span> <span class="n">errors</span><span class="p">,</span> <span class="n">statuscodes</span>
 <span class="go">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">sts</span> <span class="o">=</span> <span class="n">Status</span><span class="p">(</span> <span class="n">errors</span><span class="o">.</span><span class="n">InvalidServerUriError</span><span class="p">(</span><span class="s">&quot;my/invalid/server/uri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sts</span> <span class="o">=</span> <span class="n">Status</span><span class="p">(</span> <span class="n">errors</span><span class="o">.</span><span class="n">InvalidServerUriError</span><span class="p">(</span><span class="s2">&quot;my/invalid/server/uri&quot;</span><span class="p">))</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">sts</span><span class="o">.</span><span class="n">statusCode</span> <span class="o">==</span> <span class="n">statuscodes</span><span class="o">.</span><span class="n">InvalidServerUriError</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
 <span class="gp">... </span>   <span class="n">sts</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
-<span class="gp">... </span>   <span class="n">raised</span> <span class="o">=</span> <span class="bp">False</span><span class="p">;</span>
+<span class="gp">... </span>   <span class="n">raised</span> <span class="o">=</span> <span class="kc">False</span><span class="p">;</span>
 <span class="gp">... </span><span class="k">except</span> <span class="n">errors</span><span class="o">.</span><span class="n">InvalidServerUriError</span><span class="p">:</span>
-<span class="gp">... </span>   <span class="n">raised</span> <span class="o">=</span> <span class="bp">True</span><span class="p">;</span>
+<span class="gp">... </span>   <span class="n">raised</span> <span class="o">=</span> <span class="kc">True</span><span class="p">;</span>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">raised</span>
 </pre></div>
@@ -759,21 +760,18 @@ See the example below:</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/api_pyuaf_util_statuscodes.txt"
+      <li><a href="_sources/api_pyuaf_util_statuscodes.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -795,7 +793,7 @@ See the example below:</p>
         <li class="right" >
           <a href="api_pyuaf_util_structurefielddatatypes.html" title="pyuaf.util.structurefielddatatypes"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

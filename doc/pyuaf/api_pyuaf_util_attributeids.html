@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util.attributeids &mdash; PyUAF 2.1.1 documentation</title>
+    <title>pyuaf.util.attributeids &mdash; PyUAF 2.2.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,16 +14,17 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.1.1',
+        VERSION:     '2.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.1.1 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.2.1 documentation" href="index.html" />
     <link rel="next" title="pyuaf.util.applicationtypes" href="api_pyuaf_util_applicationtypes.html" />
     <link rel="prev" title="pyuaf.util" href="api_pyuaf_util.html" /> 
   </head>
@@ -43,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_util.html" title="pyuaf.util"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -60,16 +61,16 @@ Name, a Browse Name, ... ) and some additional attributes depending on the class
 (e.g. the Value attribute if the node is of class Variable). The AttributeId specifies which
 attribute we&#8217;re talking about.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="kn">from</span> <span class="nn">pyuaf.client</span> <span class="kn">import</span> <span class="n">Client</span>
-<span class="kn">from</span> <span class="nn">pyuaf.util</span>   <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">attributeids</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client</span> <span class="k">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>   <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">attributeids</span>
 
 <span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">()</span>
 
-<span class="c"># define the address of the node of which we want to read the DisplayName and Value:</span>
-<span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;myNode&quot;</span><span class="p">,</span> <span class="s">&quot;myNameSpaceUri&quot;</span><span class="p">,</span> <span class="s">&quot;myServerUri&quot;</span><span class="p">))</span>
+<span class="c1"># define the address of the node of which we want to read the DisplayName and Value:</span>
+<span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;myNode&quot;</span><span class="p">,</span> <span class="s2">&quot;myNameSpaceUri&quot;</span><span class="p">,</span> <span class="s2">&quot;myServerUri&quot;</span><span class="p">))</span>
 
-<span class="c"># create a read request with two targets:</span>
+<span class="c1"># create a read request with two targets:</span>
 <span class="n">request</span> <span class="o">=</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">requests</span><span class="o">.</span><span class="n">ReadRequest</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">request</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span>     <span class="o">=</span> <span class="n">address</span>
 <span class="n">request</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">attributeId</span> <span class="o">=</span> <span class="n">attributeids</span><span class="o">.</span><span class="n">DisplayName</span>
@@ -260,21 +261,18 @@ array.</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/api_pyuaf_util_attributeids.txt"
+      <li><a href="_sources/api_pyuaf_util_attributeids.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -296,7 +294,7 @@ array.</p>
         <li class="right" >
           <a href="api_pyuaf_util.html" title="pyuaf.util"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

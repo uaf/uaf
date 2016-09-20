@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client.requests &mdash; PyUAF 2.1.1 documentation</title>
+    <title>pyuaf.client.requests &mdash; PyUAF 2.2.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,16 +14,17 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.1.1',
+        VERSION:     '2.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.1.1 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.2.1 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.results" href="api_pyuaf_client_results.html" />
     <link rel="prev" title="pyuaf.client.monitoreditemstates" href="api_pyuaf_client_monitoreditemstates.html" /> 
   </head>
@@ -43,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_monitoreditemstates.html" title="pyuaf.client.monitoreditemstates"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -300,39 +301,39 @@ This attribute is of the Python built-in type <code class="docutils literal"><sp
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.requests.BrowseNextRequestTarget" title="pyuaf.client.requests.BrowseNextRequestTarget"><code class="xref py py-class docutils literal"><span class="pre">BrowseNextRequestTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="kn">import</span> <span class="n">BrowseRequest</span><span class="p">,</span> <span class="n">BrowseNextRequestTarget</span><span class="p">,</span> <span class="n">BrowseNextRequestTargetVector</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span>  <span class="kn">import</span> <span class="n">BrowseResult</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">NodeId</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="k">import</span> <span class="n">BrowseRequest</span><span class="p">,</span> <span class="n">BrowseNextRequestTarget</span><span class="p">,</span> <span class="n">BrowseNextRequestTargetVector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span>  <span class="k">import</span> <span class="n">BrowseResult</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">NodeId</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># we simulate the request and result of a previous Browse call with two targets</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># (i.e. two nodes that were being browsed simultaneously)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># we simulate the request and result of a previous Browse call with two targets</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># (i.e. two nodes that were being browsed simultaneously)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">originalRequest</span> <span class="o">=</span> <span class="n">BrowseRequest</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">originalResult</span> <span class="o">=</span> <span class="n">BrowseResult</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">originalResult</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a vector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a vector without elements:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">BrowseNextRequestTargetVector</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 0</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BrowseNextRequestTarget</span><span class="p">())</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">originalRequest</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">continuationPoint</span> <span class="o">=</span> <span class="n">originalResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">continuationPoint</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 4</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a vector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># you may construct a vector from a regular Python list:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">otherVec</span> <span class="o">=</span> <span class="n">BrowseNextRequestTargetVector</span><span class="p">(</span>
-<span class="gp">... </span>            <span class="p">[</span> <span class="n">BrowseNextRequestTarget</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myId0&quot;</span><span class="p">,</span> <span class="s">&quot;myNs&quot;</span><span class="p">),</span> <span class="s">&quot;myServerUri&quot;</span><span class="p">),</span> <span class="nb">bytearray</span><span class="p">(</span><span class="s">&quot;abcd&quot;</span><span class="p">)),</span>
-<span class="gp">... </span>              <span class="n">BrowseNextRequestTarget</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myId1&quot;</span><span class="p">,</span> <span class="s">&quot;myNs&quot;</span><span class="p">),</span> <span class="s">&quot;myServerUri&quot;</span><span class="p">),</span> <span class="nb">bytearray</span><span class="p">())</span> <span class="p">]</span> <span class="p">)</span>
+<span class="gp">... </span>            <span class="p">[</span> <span class="n">BrowseNextRequestTarget</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s2">&quot;myId0&quot;</span><span class="p">,</span> <span class="s2">&quot;myNs&quot;</span><span class="p">),</span> <span class="s2">&quot;myServerUri&quot;</span><span class="p">),</span> <span class="nb">bytearray</span><span class="p">(</span><span class="s2">&quot;abcd&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>              <span class="n">BrowseNextRequestTarget</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s2">&quot;myId1&quot;</span><span class="p">,</span> <span class="s2">&quot;myNs&quot;</span><span class="p">),</span> <span class="s2">&quot;myServerUri&quot;</span><span class="p">),</span> <span class="nb">bytearray</span><span class="p">())</span> <span class="p">]</span> <span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># or you may specify a number of targets directly</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># or you may specify a number of targets directly</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span> <span class="o">=</span> <span class="n">BrowseNextRequestTargetVector</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId0&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId1&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId2&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId0&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId1&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId2&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -464,17 +465,17 @@ a <a class="reference internal" href="#pyuaf.client.requests.BrowseRequest" titl
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>args*</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.requests.BrowseRequestTarget.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new BrowseRequestTarget object.</p>
 <p>You can specify a BrowseRequestTarget in two ways:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>                 <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>      <span class="kn">import</span> <span class="n">BrowseRequestTarget</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>                 <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>      <span class="k">import</span> <span class="n">BrowseRequestTarget</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">addressOfNodeToBeBrowsed</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;someId&quot;</span><span class="p">,</span> <span class="s">&quot;someNs&quot;</span><span class="p">,</span> <span class="s">&quot;someServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">addressOfNodeToBeBrowsed</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;someId&quot;</span><span class="p">,</span> <span class="s2">&quot;someNs&quot;</span><span class="p">,</span> <span class="s2">&quot;someServerUri&quot;</span><span class="p">))</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># there are 2 ways to define a target:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># there are 2 ways to define a target:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span> <span class="o">=</span> <span class="n">BrowseRequestTarget</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target1</span> <span class="o">=</span> <span class="n">BrowseRequestTarget</span><span class="p">(</span><span class="n">addressOfNodeToBeBrowsed</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># in case of the first target, you still need to specify an Address:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># in case of the first target, you still need to specify an Address:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">addressOfNodeToBeBrowsed</span>
 </pre></div>
 </div>
@@ -578,31 +579,31 @@ description to be returned. The mask has the following bits assigned:</p>
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.requests.BrowseRequestTarget" title="pyuaf.client.requests.BrowseRequestTarget"><code class="xref py py-class docutils literal"><span class="pre">BrowseRequestTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="kn">import</span> <span class="n">BrowseRequestTarget</span><span class="p">,</span> <span class="n">BrowseRequestTargetVector</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">NodeId</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="k">import</span> <span class="n">BrowseRequestTarget</span><span class="p">,</span> <span class="n">BrowseRequestTargetVector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">NodeId</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a vector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a vector without elements:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">BrowseRequestTargetVector</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 0</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BrowseRequestTarget</span><span class="p">())</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;SomeId&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">),</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s2">&quot;SomeId&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">),</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">)</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 4</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a vector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># you may construct a vector from a regular Python list:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">otherVec</span> <span class="o">=</span> <span class="n">BrowseRequestTargetVector</span><span class="p">(</span>
-<span class="gp">... </span>            <span class="p">[</span> <span class="n">BrowseRequestTarget</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myId0&quot;</span><span class="p">,</span> <span class="s">&quot;myNs&quot;</span><span class="p">),</span> <span class="s">&quot;myServerUri&quot;</span><span class="p">)),</span>
-<span class="gp">... </span>              <span class="n">BrowseRequestTarget</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myId1&quot;</span><span class="p">,</span> <span class="s">&quot;myNs&quot;</span><span class="p">),</span> <span class="s">&quot;myServerUri&quot;</span><span class="p">))</span> <span class="p">]</span> <span class="p">)</span>
+<span class="gp">... </span>            <span class="p">[</span> <span class="n">BrowseRequestTarget</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s2">&quot;myId0&quot;</span><span class="p">,</span> <span class="s2">&quot;myNs&quot;</span><span class="p">),</span> <span class="s2">&quot;myServerUri&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>              <span class="n">BrowseRequestTarget</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s2">&quot;myId1&quot;</span><span class="p">,</span> <span class="s2">&quot;myNs&quot;</span><span class="p">),</span> <span class="s2">&quot;myServerUri&quot;</span><span class="p">))</span> <span class="p">]</span> <span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># or you may specify a number of targets directly</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># or you may specify a number of targets directly</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span> <span class="o">=</span> <span class="n">BrowseRequestTargetVector</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId0&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId1&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId2&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId0&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId1&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId2&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -853,26 +854,26 @@ by the server. 0.0 means as fast as possible.</p>
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.requests.CreateMonitoredDataRequestTarget" title="pyuaf.client.requests.CreateMonitoredDataRequestTarget"><code class="xref py py-class docutils literal"><span class="pre">CreateMonitoredDataRequestTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="kn">import</span> <span class="n">CreateMonitoredDataRequestTarget</span><span class="p">,</span> <span class="n">CreateMonitoredDataRequestTargetVector</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="k">import</span> <span class="n">CreateMonitoredDataRequestTarget</span><span class="p">,</span> <span class="n">CreateMonitoredDataRequestTargetVector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a vector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a vector without elements:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">CreateMonitoredDataRequestTargetVector</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 0</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CreateMonitoredDataRequestTarget</span><span class="p">())</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span>   <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span>   <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">queueSize</span> <span class="o">=</span> <span class="mi">5</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 4</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a vector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># you may construct a vector from a regular Python list:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">otherVec</span> <span class="o">=</span> <span class="n">CreateMonitoredDataRequestTargetVector</span><span class="p">(</span> <span class="p">[</span><span class="n">CreateMonitoredDataRequestTarget</span><span class="p">(),</span> <span class="n">CreateMonitoredDataRequestTarget</span><span class="p">()]</span> <span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># or you may specify a number of targets directly</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># or you may specify a number of targets directly</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span> <span class="o">=</span> <span class="n">CreateMonitoredDataRequestTargetVector</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">queueSize</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">queueSize</span> <span class="o">=</span> <span class="mi">10</span>
@@ -1113,26 +1114,26 @@ by the server. 0.0 means as fast as possible.</p>
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.requests.CreateMonitoredEventsRequestTarget" title="pyuaf.client.requests.CreateMonitoredEventsRequestTarget"><code class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsRequestTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="kn">import</span> <span class="n">CreateMonitoredEventsRequestTarget</span><span class="p">,</span> <span class="n">CreateMonitoredEventsRequestTargetVector</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="k">import</span> <span class="n">CreateMonitoredEventsRequestTarget</span><span class="p">,</span> <span class="n">CreateMonitoredEventsRequestTargetVector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a vector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a vector without elements:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">CreateMonitoredEventsRequestTargetVector</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 0</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CreateMonitoredEventsRequestTarget</span><span class="p">())</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span>   <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span>   <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">queueSize</span> <span class="o">=</span> <span class="mi">5</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 4</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a vector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># you may construct a vector from a regular Python list:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">otherVec</span> <span class="o">=</span> <span class="n">CreateMonitoredEventsRequestTargetVector</span><span class="p">(</span> <span class="p">[</span><span class="n">CreateMonitoredEventsRequestTarget</span><span class="p">(),</span> <span class="n">CreateMonitoredEventsRequestTarget</span><span class="p">()]</span> <span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># or you may specify a number of targets directly</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># or you may specify a number of targets directly</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span> <span class="o">=</span> <span class="n">CreateMonitoredEventsRequestTargetVector</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">queueSize</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">queueSize</span> <span class="o">=</span> <span class="mi">10</span>
@@ -1270,20 +1271,20 @@ manually continue a history reading, etc.</p>
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>args*</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.requests.HistoryReadRawModifiedRequestTarget.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new HistoryReadRawModifiedRequestTarget object.</p>
 <p>You can specify a HistoryReadRawModifiedRequestTarget in three ways:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>                 <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>      <span class="kn">import</span> <span class="n">HistoryReadRawModifiedRequestTarget</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>                 <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>      <span class="k">import</span> <span class="n">HistoryReadRawModifiedRequestTarget</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">addressOfNodeToBeRead</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;someId&quot;</span><span class="p">,</span> <span class="s">&quot;someNs&quot;</span><span class="p">,</span> <span class="s">&quot;someServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">somePreviousContinuationPoint</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span> <span class="c"># normally you would copy the bytearray</span>
-<span class="gp">&gt;&gt;&gt; </span>                                            <span class="c"># from a previous HistoryReadRawModifiedResult</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">addressOfNodeToBeRead</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;someId&quot;</span><span class="p">,</span> <span class="s2">&quot;someNs&quot;</span><span class="p">,</span> <span class="s2">&quot;someServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">somePreviousContinuationPoint</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">()</span> <span class="c1"># normally you would copy the bytearray</span>
+<span class="gp">&gt;&gt;&gt; </span>                                            <span class="c1"># from a previous HistoryReadRawModifiedResult</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># there are 3 ways to define a target:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># there are 3 ways to define a target:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span> <span class="o">=</span> <span class="n">HistoryReadRawModifiedRequestTarget</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target1</span> <span class="o">=</span> <span class="n">HistoryReadRawModifiedRequestTarget</span><span class="p">(</span><span class="n">addressOfNodeToBeRead</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target2</span> <span class="o">=</span> <span class="n">HistoryReadRawModifiedRequestTarget</span><span class="p">(</span><span class="n">addressOfNodeToBeRead</span><span class="p">,</span> <span class="n">somePreviousContinuationPoint</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># in case of the first target, you still need to specify an Address:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># in case of the first target, you still need to specify an Address:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">addressOfNodeToBeBrowsed</span>
 </pre></div>
 </div>
@@ -1346,31 +1347,31 @@ Leave NULL (i.e. don&#8217;t touch) if you want to use the default encoding.</p>
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.requests.HistoryReadRawModifiedRequestTarget" title="pyuaf.client.requests.HistoryReadRawModifiedRequestTarget"><code class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedRequestTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="kn">import</span> <span class="n">HistoryReadRawModifiedRequestTarget</span><span class="p">,</span> <span class="n">HistoryReadRawModifiedRequestTargetVector</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">NodeId</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="k">import</span> <span class="n">HistoryReadRawModifiedRequestTarget</span><span class="p">,</span> <span class="n">HistoryReadRawModifiedRequestTargetVector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">NodeId</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a vector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a vector without elements:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">HistoryReadRawModifiedRequestTargetVector</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 0</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">HistoryReadRawModifiedRequestTarget</span><span class="p">())</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;SomeId&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">),</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s2">&quot;SomeId&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">),</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">)</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 4</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a vector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># you may construct a vector from a regular Python list:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">otherVec</span> <span class="o">=</span> <span class="n">HistoryReadRawModifiedRequestTargetVector</span><span class="p">(</span>
-<span class="gp">... </span>            <span class="p">[</span> <span class="n">HistoryReadRawModifiedRequestTarget</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myId0&quot;</span><span class="p">,</span> <span class="s">&quot;myNs&quot;</span><span class="p">),</span> <span class="s">&quot;myServerUri&quot;</span><span class="p">)),</span>
-<span class="gp">... </span>              <span class="n">HistoryReadRawModifiedRequestTarget</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myId1&quot;</span><span class="p">,</span> <span class="s">&quot;myNs&quot;</span><span class="p">),</span> <span class="s">&quot;myServerUri&quot;</span><span class="p">))</span> <span class="p">]</span> <span class="p">)</span>
+<span class="gp">... </span>            <span class="p">[</span> <span class="n">HistoryReadRawModifiedRequestTarget</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s2">&quot;myId0&quot;</span><span class="p">,</span> <span class="s2">&quot;myNs&quot;</span><span class="p">),</span> <span class="s2">&quot;myServerUri&quot;</span><span class="p">)),</span>
+<span class="gp">... </span>              <span class="n">HistoryReadRawModifiedRequestTarget</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s2">&quot;myId1&quot;</span><span class="p">,</span> <span class="s2">&quot;myNs&quot;</span><span class="p">),</span> <span class="s2">&quot;myServerUri&quot;</span><span class="p">))</span> <span class="p">]</span> <span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># or you may specify a number of targets directly</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># or you may specify a number of targets directly</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span> <span class="o">=</span> <span class="n">HistoryReadRawModifiedRequestTargetVector</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId0&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId1&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId2&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId0&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId1&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId2&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1502,23 +1503,23 @@ a <a class="reference internal" href="#pyuaf.client.requests.MethodCallRequest" 
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>args*</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.requests.MethodCallRequestTarget.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new MethodCallRequestTarget object.</p>
 <p>You can specify a MethodCallRequestTarget in two ways:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">VariantVector</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.primitives</span>  <span class="kn">import</span> <span class="n">UInt32</span><span class="p">,</span> <span class="n">Double</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>  <span class="kn">import</span> <span class="n">MethodCallRequestTarget</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">VariantVector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.primitives</span>  <span class="k">import</span> <span class="n">UInt32</span><span class="p">,</span> <span class="n">Double</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>  <span class="k">import</span> <span class="n">MethodCallRequestTarget</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">objectAddress</span>  <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;someId&quot;</span><span class="p">,</span> <span class="s">&quot;someNs&quot;</span><span class="p">,</span> <span class="s">&quot;someServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">methodAddress</span>  <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;someOtherId&quot;</span><span class="p">,</span> <span class="s">&quot;someNs&quot;</span><span class="p">,</span> <span class="s">&quot;someServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">objectAddress</span>  <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;someId&quot;</span><span class="p">,</span> <span class="s2">&quot;someNs&quot;</span><span class="p">,</span> <span class="s2">&quot;someServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">methodAddress</span>  <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;someOtherId&quot;</span><span class="p">,</span> <span class="s2">&quot;someNs&quot;</span><span class="p">,</span> <span class="s2">&quot;someServerUri&quot;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">inputArguments</span> <span class="o">=</span> <span class="n">VariantVector</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">inputArguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">UInt32</span><span class="p">(</span><span class="mi">123</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">inputArguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;some string&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">inputArguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;some string&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">inputArguments</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Double</span><span class="p">(</span><span class="o">-</span><span class="mf">3.14</span><span class="p">))</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># there are 2 ways to define a target:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># there are 2 ways to define a target:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span> <span class="o">=</span> <span class="n">MethodCallRequestTarget</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target1</span> <span class="o">=</span> <span class="n">MethodCallRequestTarget</span><span class="p">(</span><span class="n">objectAddress</span><span class="p">,</span> <span class="n">methodAddress</span><span class="p">,</span> <span class="n">inputArguments</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># in case of the first target, you still need to specify the addresses and arguments:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># in case of the first target, you still need to specify the addresses and arguments:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span><span class="o">.</span><span class="n">objectAddress</span>  <span class="o">=</span> <span class="n">objectAddress</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span><span class="o">.</span><span class="n">methodAddress</span>  <span class="o">=</span> <span class="n">methodAddress</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span><span class="o">.</span><span class="n">inputArguments</span> <span class="o">=</span> <span class="n">inputArguments</span>
@@ -1570,33 +1571,33 @@ a <a class="reference internal" href="#pyuaf.client.requests.MethodCallRequest" 
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.requests.MethodCallRequestTarget" title="pyuaf.client.requests.MethodCallRequestTarget"><code class="xref py py-class docutils literal"><span class="pre">MethodCallRequestTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="kn">import</span> <span class="n">MethodCallRequestTarget</span><span class="p">,</span> <span class="n">MethodCallRequestTargetVector</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="k">import</span> <span class="n">MethodCallRequestTarget</span><span class="p">,</span> <span class="n">MethodCallRequestTargetVector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a vector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a vector without elements:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">MethodCallRequestTargetVector</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 0</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MethodCallRequestTarget</span><span class="p">())</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">objectAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId&quot;</span>     <span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">methodAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeOtherId&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">objectAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId&quot;</span>     <span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">methodAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeOtherId&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 4</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a vector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># you may construct a vector from a regular Python list:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">otherVec</span> <span class="o">=</span> <span class="n">MethodCallRequestTargetVector</span><span class="p">(</span> <span class="p">[</span><span class="n">MethodCallRequestTarget</span><span class="p">(),</span> <span class="n">MethodCallRequestTarget</span><span class="p">()]</span> <span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># or you may specify a number of targets directly</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># or you may specify a number of targets directly</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span> <span class="o">=</span> <span class="n">MethodCallRequestTargetVector</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">objectAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId&quot;</span>     <span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">methodAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeOtherId&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">objectAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId&quot;</span>     <span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">methodAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeOtherId&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">objectAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId&quot;</span>     <span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">methodAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeOtherId&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">objectAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId&quot;</span>     <span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">methodAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeOtherId&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">objectAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId&quot;</span>     <span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">methodAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeOtherId&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">objectAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId&quot;</span>     <span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">methodAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeOtherId&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1729,19 +1730,19 @@ a <a class="reference internal" href="#pyuaf.client.requests.ReadRequest" title=
 <dd><p>Create a new ReadRequestTarget object.</p>
 <p>The default attributeId is <a class="reference internal" href="api_pyuaf_util_attributeids.html#pyuaf.util.attributeids.Value" title="pyuaf.util.attributeids.Value"><code class="xref py py-attr docutils literal"><span class="pre">Value</span></code></a>.</p>
 <p>You can specify a ReadRequestTarget in three ways:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>                 <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.attributeids</span>    <span class="kn">import</span> <span class="n">DisplayName</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>      <span class="kn">import</span> <span class="n">ReadRequestTarget</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>                 <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.attributeids</span>    <span class="k">import</span> <span class="n">DisplayName</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>      <span class="k">import</span> <span class="n">ReadRequestTarget</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">addressOfNodeToBeRead</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;someId&quot;</span><span class="p">,</span> <span class="s">&quot;someNs&quot;</span><span class="p">,</span> <span class="s">&quot;someServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">addressOfNodeToBeRead</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;someId&quot;</span><span class="p">,</span> <span class="s2">&quot;someNs&quot;</span><span class="p">,</span> <span class="s2">&quot;someServerUri&quot;</span><span class="p">))</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># there are 3 ways to define a target:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># there are 3 ways to define a target:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span> <span class="o">=</span> <span class="n">ReadRequestTarget</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">target1</span> <span class="o">=</span> <span class="n">ReadRequestTarget</span><span class="p">(</span><span class="n">addressOfNodeToBeRead</span><span class="p">)</span>              <span class="c"># attribute id = Value</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">target2</span> <span class="o">=</span> <span class="n">ReadRequestTarget</span><span class="p">(</span><span class="n">addressOfNodeToBeRead</span><span class="p">,</span> <span class="n">DisplayName</span><span class="p">)</span> <span class="c"># attribute id = DisplayName</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target1</span> <span class="o">=</span> <span class="n">ReadRequestTarget</span><span class="p">(</span><span class="n">addressOfNodeToBeRead</span><span class="p">)</span>              <span class="c1"># attribute id = Value</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target2</span> <span class="o">=</span> <span class="n">ReadRequestTarget</span><span class="p">(</span><span class="n">addressOfNodeToBeRead</span><span class="p">,</span> <span class="n">DisplayName</span><span class="p">)</span> <span class="c1"># attribute id = DisplayName</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># in case of the first target, you still need to specify an Address:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># in case of the first target, you still need to specify an Address:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">addressOfNodeToBeRead</span>
 </pre></div>
 </div>
@@ -1793,29 +1794,29 @@ in <a class="reference internal" href="api_pyuaf_util_attributeids.html#module-p
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.requests.ReadRequestTarget" title="pyuaf.client.requests.ReadRequestTarget"><code class="xref py py-class docutils literal"><span class="pre">ReadRequestTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="kn">import</span> <span class="n">ReadRequestTarget</span><span class="p">,</span> <span class="n">ReadRequestTargetVector</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="k">import</span> <span class="n">ReadRequestTarget</span><span class="p">,</span> <span class="n">ReadRequestTargetVector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a vector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a vector without elements:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">ReadRequestTargetVector</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 0</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReadRequestTarget</span><span class="p">())</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 4</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a vector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># you may construct a vector from a regular Python list:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">otherVec</span> <span class="o">=</span> <span class="n">ReadRequestTargetVector</span><span class="p">(</span> <span class="p">[</span><span class="n">ReadRequestTarget</span><span class="p">(),</span> <span class="n">ReadRequestTarget</span><span class="p">()]</span> <span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># or you may specify a number of targets directly</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># or you may specify a number of targets directly</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span> <span class="o">=</span> <span class="n">ReadRequestTargetVector</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId0&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId1&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId2&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId0&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId1&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId2&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1948,17 +1949,17 @@ to be translated.</p>
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>args*</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequestTarget.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a new TranslateBrowsePathsToNodeIdsRequestTarget object.</p>
 <p>You can specify a TranslateBrowsePathsToNodeIdsRequestTarget in two ways:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">BrowsePath</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>  <span class="kn">import</span> <span class="n">TranslateBrowsePathsToNodeIdsRequestTarget</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="k">import</span> <span class="n">BrowsePath</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>  <span class="k">import</span> <span class="n">TranslateBrowsePathsToNodeIdsRequestTarget</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">browsePathToBeTranslated</span> <span class="o">=</span> <span class="n">BrowsePath</span><span class="p">()</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># there are 2 ways to define a target:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># there are 2 ways to define a target:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span> <span class="o">=</span> <span class="n">TranslateBrowsePathsToNodeIdsRequestTarget</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target1</span> <span class="o">=</span> <span class="n">TranslateBrowsePathsToNodeIdsRequestTarget</span><span class="p">(</span><span class="n">browsePathToBeTranslated</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># in case of the first target, you still need to specify a node and some data:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># in case of the first target, you still need to specify a node and some data:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span><span class="o">.</span><span class="n">browsePath</span> <span class="o">=</span> <span class="n">browsePathToBeTranslated</span>
 </pre></div>
 </div>
@@ -1996,35 +1997,35 @@ to be translated.</p>
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequestTarget" title="pyuaf.client.requests.TranslateBrowsePathsToNodeIdsRequestTarget"><code class="xref py py-class docutils literal"><span class="pre">TranslateBrowsePathsToNodeIdsRequestTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="kn">import</span> <span class="n">TranslateBrowsePathsToNodeIdsRequestTarget</span><span class="p">,</span> \
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="k">import</span> <span class="n">TranslateBrowsePathsToNodeIdsRequestTarget</span><span class="p">,</span> \
 <span class="gp">... </span>                                  <span class="n">TranslateBrowsePathsToNodeIdsRequestTargetVector</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="kn">import</span> <span class="n">BrowsePath</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">RelativePathElement</span><span class="p">,</span> <span class="n">QualifiedName</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="k">import</span> <span class="n">BrowsePath</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">RelativePathElement</span><span class="p">,</span> <span class="n">QualifiedName</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a vector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a vector without elements:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">TranslateBrowsePathsToNodeIdsRequestTargetVector</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 0</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># define a starting ExpandedNodeId for the browse path</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">startOfBrowsePath</span> <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># define a starting ExpandedNodeId for the browse path</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">startOfBrowsePath</span> <span class="o">=</span> <span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">)</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TranslateBrowsePathsToNodeIdsRequestTarget</span><span class="p">())</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">browsePath</span> <span class="o">=</span> <span class="n">BrowsePath</span><span class="p">(</span><span class="n">startOfBrowsePath</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;SomeName&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">))]</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">browsePath</span> <span class="o">=</span> <span class="n">BrowsePath</span><span class="p">(</span><span class="n">startOfBrowsePath</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s2">&quot;SomeName&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">))]</span> <span class="p">)</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 4</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a vector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># you may construct a vector from a regular Python list:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">otherVec</span> <span class="o">=</span> <span class="n">TranslateBrowsePathsToNodeIdsRequestTargetVector</span><span class="p">(</span>
 <span class="gp">... </span>              <span class="p">[</span><span class="n">TranslateBrowsePathsToNodeIdsRequestTarget</span><span class="p">(),</span>
 <span class="gp">... </span>               <span class="n">TranslateBrowsePathsToNodeIdsRequestTarget</span><span class="p">()]</span> <span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># or you may specify a number of targets directly</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># or you may specify a number of targets directly</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span> <span class="o">=</span> <span class="n">TranslateBrowsePathsToNodeIdsRequestTargetVector</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">browsePath</span> <span class="o">=</span> <span class="n">BrowsePath</span><span class="p">(</span><span class="n">startOfBrowsePath</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;SomeName0&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">))]</span> <span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">browsePath</span> <span class="o">=</span> <span class="n">BrowsePath</span><span class="p">(</span><span class="n">startOfBrowsePath</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;SomeName1&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">))]</span> <span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">browsePath</span> <span class="o">=</span> <span class="n">BrowsePath</span><span class="p">(</span><span class="n">startOfBrowsePath</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s">&quot;SomeName2&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">))]</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">browsePath</span> <span class="o">=</span> <span class="n">BrowsePath</span><span class="p">(</span><span class="n">startOfBrowsePath</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s2">&quot;SomeName0&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">))]</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">browsePath</span> <span class="o">=</span> <span class="n">BrowsePath</span><span class="p">(</span><span class="n">startOfBrowsePath</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s2">&quot;SomeName1&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">))]</span> <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">browsePath</span> <span class="o">=</span> <span class="n">BrowsePath</span><span class="p">(</span><span class="n">startOfBrowsePath</span><span class="p">,</span> <span class="p">[</span><span class="n">RelativePathElement</span><span class="p">(</span><span class="n">QualifiedName</span><span class="p">(</span><span class="s2">&quot;SomeName2&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">))]</span> <span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2157,20 +2158,20 @@ a <a class="reference internal" href="#pyuaf.client.requests.WriteRequest" title
 <dd><p>Create a new WriteRequestTarget object.</p>
 <p>The default attributeId is <a class="reference internal" href="api_pyuaf_util_attributeids.html#pyuaf.util.attributeids.Value" title="pyuaf.util.attributeids.Value"><code class="xref py py-attr docutils literal"><span class="pre">Value</span></code></a>.</p>
 <p>You can specify a WriteRequestTarget in three ways:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>                 <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">LocalizedText</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.attributeids</span>    <span class="kn">import</span> <span class="n">DisplayName</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.primitives</span>      <span class="kn">import</span> <span class="n">UInt32</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>      <span class="kn">import</span> <span class="n">WriteRequestTarget</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>                 <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span><span class="p">,</span> <span class="n">LocalizedText</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.attributeids</span>    <span class="k">import</span> <span class="n">DisplayName</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.primitives</span>      <span class="k">import</span> <span class="n">UInt32</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span>      <span class="k">import</span> <span class="n">WriteRequestTarget</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">addressOfNodeToBeWritten</span>  <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;someId&quot;</span><span class="p">,</span> <span class="s">&quot;someNs&quot;</span><span class="p">,</span> <span class="s">&quot;someServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">addressOfNodeToBeWritten</span>  <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;someId&quot;</span><span class="p">,</span> <span class="s2">&quot;someNs&quot;</span><span class="p">,</span> <span class="s2">&quot;someServerUri&quot;</span><span class="p">))</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># there are 3 ways to define a target:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># there are 3 ways to define a target:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span> <span class="o">=</span> <span class="n">WriteRequestTarget</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">target1</span> <span class="o">=</span> <span class="n">WriteRequestTarget</span><span class="p">(</span><span class="n">addressOfNodeToBeWritten</span><span class="p">,</span> <span class="n">UInt32</span><span class="p">(</span><span class="mi">332</span><span class="p">))</span>                                     <span class="c"># attribute id = Value</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">target2</span> <span class="o">=</span> <span class="n">WriteRequestTarget</span><span class="p">(</span><span class="n">addressOfNodeToBeWritten</span><span class="p">,</span> <span class="n">LocalizedText</span><span class="p">(</span><span class="s">&quot;en&quot;</span><span class="p">,</span> <span class="s">&quot;Some name&quot;</span><span class="p">),</span> <span class="n">DisplayName</span><span class="p">)</span>   <span class="c"># attribute id = DisplayName</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target1</span> <span class="o">=</span> <span class="n">WriteRequestTarget</span><span class="p">(</span><span class="n">addressOfNodeToBeWritten</span><span class="p">,</span> <span class="n">UInt32</span><span class="p">(</span><span class="mi">332</span><span class="p">))</span>                                     <span class="c1"># attribute id = Value</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target2</span> <span class="o">=</span> <span class="n">WriteRequestTarget</span><span class="p">(</span><span class="n">addressOfNodeToBeWritten</span><span class="p">,</span> <span class="n">LocalizedText</span><span class="p">(</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="s2">&quot;Some name&quot;</span><span class="p">),</span> <span class="n">DisplayName</span><span class="p">)</span>   <span class="c1"># attribute id = DisplayName</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># in case of the first target, you still need to specify an address and some data:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># in case of the first target, you still need to specify an address and some data:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">addressOfNodeToBeWritten</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0</span><span class="o">.</span><span class="n">data</span>    <span class="o">=</span> <span class="n">UInt32</span><span class="p">(</span><span class="mi">332</span><span class="p">)</span>
 </pre></div>
@@ -2266,34 +2267,34 @@ in <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#modu
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.requests.WriteRequestTarget" title="pyuaf.client.requests.WriteRequestTarget"><code class="xref py py-class docutils literal"><span class="pre">WriteRequestTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="kn">import</span> <span class="n">WriteRequestTarget</span><span class="p">,</span> <span class="n">WriteRequestTargetVector</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.primitives</span> <span class="kn">import</span> <span class="n">UInt32</span><span class="p">,</span> <span class="n">Float</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.requests</span> <span class="k">import</span> <span class="n">WriteRequestTarget</span><span class="p">,</span> <span class="n">WriteRequestTargetVector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span>            <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">ExpandedNodeId</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.primitives</span> <span class="k">import</span> <span class="n">UInt32</span><span class="p">,</span> <span class="n">Float</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a vector without elements:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a vector without elements:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span> <span class="o">=</span> <span class="n">WriteRequestTargetVector</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 0</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">WriteRequestTarget</span><span class="p">())</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>    <span class="o">=</span> <span class="n">UInt32</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">vec</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c"># will be 4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="c1"># will be 4</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># you may construct a vector from a regular Python list:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># you may construct a vector from a regular Python list:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">otherVec</span> <span class="o">=</span> <span class="n">WriteRequestTargetVector</span><span class="p">(</span> <span class="p">[</span><span class="n">WriteRequestTarget</span><span class="p">(),</span> <span class="n">WriteRequestTarget</span><span class="p">()]</span> <span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># or you may specify a number of targets directly</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># or you may specify a number of targets directly</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span> <span class="o">=</span> <span class="n">WriteRequestTargetVector</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId0&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId0&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>    <span class="o">=</span> <span class="n">UInt32</span><span class="p">(</span><span class="mi">1234</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId1&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId1&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>    <span class="o">=</span> <span class="n">Float</span><span class="p">(</span><span class="mf">0.1234</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s">&quot;SomeId2&quot;</span><span class="p">,</span> <span class="s">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s">&quot;SomeServerUri&quot;</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>    <span class="o">=</span> <span class="s">&quot;test&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">ExpandedNodeId</span><span class="p">(</span><span class="s2">&quot;SomeId2&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeNs&quot;</span><span class="p">,</span> <span class="s2">&quot;SomeServerUri&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">yetAnotherVec</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>    <span class="o">=</span> <span class="s2">&quot;test&quot;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -2358,21 +2359,18 @@ as a <code class="docutils literal"><span class="pre">list</span></code> of <a c
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/api_pyuaf_client_requests.txt"
+      <li><a href="_sources/api_pyuaf_client_requests.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -2394,7 +2392,7 @@ as a <code class="docutils literal"><span class="pre">list</span></code> of <a c
         <li class="right" >
           <a href="api_pyuaf_client_monitoreditemstates.html" title="pyuaf.client.monitoreditemstates"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

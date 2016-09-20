@@ -85,10 +85,6 @@ div.sphinxsidebar #searchbox input[type="text"] {
     width: 170px;
 }
 
-div.sphinxsidebar #searchbox input[type="submit"] {
-    width: 30px;
-}
-
 img {
     border: 0;
     max-width: 100%;
@@ -188,6 +184,13 @@ div.genindex-jumpbox {
 }
 
 /* -- general body styles --------------------------------------------------- */
+
+div.body p, div.body dd, div.body li, div.body blockquote {
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
 
 a.headerlink {
     visibility: hidden;
@@ -580,6 +583,16 @@ div.body div.math p {
 
 span.eqno {
     float: right;
+}
+
+span.eqno a.headerlink {
+    position: relative;
+    left: 0px;
+    z-index: 1;
+}
+
+div.math:hover a.headerlink {
+    visibility: visible;
 }
 
 /* -- printout stylesheet --------------------------------------------------- */

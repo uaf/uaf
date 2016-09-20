@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util.opcuaidentifiers &mdash; PyUAF 2.1.1 documentation</title>
+    <title>pyuaf.util.opcuaidentifiers &mdash; PyUAF 2.2.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,16 +14,17 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.1.1',
+        VERSION:     '2.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.1.1 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.2.1 documentation" href="index.html" />
     <link rel="next" title="pyuaf.util.opcuastatuscodes" href="api_pyuaf_util_opcuastatuscodes.html" />
     <link rel="prev" title="pyuaf.util.nodeididentifiertypes" href="api_pyuaf_util_nodeididentifiertypes.html" /> 
   </head>
@@ -43,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_util_nodeididentifiertypes.html" title="pyuaf.util.nodeididentifiertypes"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -141,7 +142,7 @@ documents.</p>
 <p>And here&#8217;s a little script you can use to print all identifiers to the standard out (&#8220;stdout&#8221;,
 e.g. the Windows DOS Prompt or the Linux shell) or write them to a file:</p>
 <blockquote>
-<div><div class="highlight-python"><div class="highlight"><pre><span class="c"># examples/pyuaf/util/how_to_print_all_opcua_identifiers.py</span>
+<div><div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># examples/pyuaf/util/how_to_print_all_opcua_identifiers.py</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Example: how to print all OPC UA identifiers</span>
 <span class="sd">====================================================================================================</span>
@@ -149,33 +150,33 @@ e.g. the Windows DOS Prompt or the Linux shell) or write them to a file:</p>
 
 <span class="kn">import</span> <span class="nn">pyuaf</span>
 
-<span class="c"># create a list that will contain tuples of (&lt;identifierName&gt;, &lt;numericIdentifier&gt;)</span>
-<span class="c"># such as (&#39;OpcUaId_ObjectsFolder&#39;, 85)</span>
+<span class="c1"># create a list that will contain tuples of (&lt;identifierName&gt;, &lt;numericIdentifier&gt;)</span>
+<span class="c1"># such as (&#39;OpcUaId_ObjectsFolder&#39;, 85)</span>
 <span class="n">identifierItems</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="c"># add all identifier items from the module to the list</span>
+<span class="c1"># add all identifier items from the module to the list</span>
 <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">pyuaf</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">opcuaidentifiers</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s">&#39;_&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;_&#39;</span><span class="p">:</span>
         <span class="n">identifierItems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
-<span class="c"># sort the list</span>
+<span class="c1"># sort the list</span>
 <span class="n">identifierItems</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">identifierItems</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-<span class="c"># modify these flags to instruct the script to print the items to</span>
-<span class="c"># the screen and/or to write them to a file:</span>
-<span class="n">printToScreen</span> <span class="o">=</span> <span class="bp">True</span>
-<span class="n">writeToFile</span>   <span class="o">=</span> <span class="bp">False</span>
+<span class="c1"># modify these flags to instruct the script to print the items to</span>
+<span class="c1"># the screen and/or to write them to a file:</span>
+<span class="n">printToScreen</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">writeToFile</span>   <span class="o">=</span> <span class="kc">False</span>
 
-<span class="c"># print the items to the screen if necessary</span>
+<span class="c1"># print the items to the screen if necessary</span>
 <span class="k">if</span> <span class="n">printToScreen</span><span class="p">:</span>
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">identifierItems</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">item</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span><span class="n">item</span><span class="p">)</span>
 
-<span class="c"># write the items to a file if necessary</span>
+<span class="c1"># write the items to a file if necessary</span>
 <span class="k">if</span> <span class="n">writeToFile</span><span class="p">:</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;opcuaidentifiers.txt&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;opcuaidentifiers.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">identifierItems</span><span class="p">:</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="si">%s</span><span class="s"> </span><span class="si">%d</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> </span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span><span class="n">item</span><span class="p">)</span>
     <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -200,21 +201,18 @@ e.g. the Windows DOS Prompt or the Linux shell) or write them to a file:</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/api_pyuaf_util_opcuaidentifiers.txt"
+      <li><a href="_sources/api_pyuaf_util_opcuaidentifiers.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -236,7 +234,7 @@ e.g. the Windows DOS Prompt or the Linux shell) or write them to a file:</p>
         <li class="right" >
           <a href="api_pyuaf_util_nodeididentifiertypes.html" title="pyuaf.util.nodeididentifiertypes"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

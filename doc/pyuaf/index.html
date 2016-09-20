@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>PyUAF - Python bindings for the UAF (Unified Architecture Framework) &mdash; PyUAF 2.1.1 documentation</title>
+    <title>PyUAF - Python bindings for the UAF (Unified Architecture Framework) &mdash; PyUAF 2.2.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,16 +14,17 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.1.1',
+        VERSION:     '2.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.1.1 documentation" href="#" />
+    <link rel="top" title="PyUAF 2.2.1 documentation" href="#" />
     <link rel="next" title="Client examples" href="client_examples.html" /> 
   </head>
   <body role="document">
@@ -39,7 +40,7 @@
         <li class="right" >
           <a href="client_examples.html" title="Client examples"
              accesskey="N">next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">PyUAF 2.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="#">PyUAF 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,27 +58,27 @@ is hosted at <a class="reference external" href="http://github.com/uaf">http://g
 <p>It documents the Python bindings for the UAF, which is supported on both Linux and Microsoft Windows.</p>
 <p>The PyUAF bindings provide a very convenient interface to create OPC UA applications. For instance,
 an OPC UA variable can be read by a UAF client with just a few lines of Python code:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># examples/pyuaf/client/easiest_client_example.py</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># examples/pyuaf/client/easiest_client_example.py</span>
 
-<span class="c"># Start the demo server ($SDK/bin/uaservercpp) of Unified Automation before running this script!</span>
+<span class="c1"># Start the demo server ($SDK/bin/uaservercpp) of Unified Automation before running this script!</span>
 
 <span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
-<span class="kn">from</span> <span class="nn">pyuaf.client</span>           <span class="kn">import</span> <span class="n">Client</span>
-<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="kn">import</span> <span class="n">ClientSettings</span>
+<span class="kn">from</span> <span class="nn">pyuaf.util</span>             <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client</span>           <span class="k">import</span> <span class="n">Client</span>
+<span class="kn">from</span> <span class="nn">pyuaf.client.settings</span>  <span class="k">import</span> <span class="n">ClientSettings</span>
 
-<span class="c"># create a client named &quot;myClient&quot;, and provide the discovery URL of the server (uaservercpp):</span>
-<span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">ClientSettings</span><span class="p">(</span><span class="s">&quot;myClient&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;opc.tcp://localhost:48010&quot;</span><span class="p">]))</span>
+<span class="c1"># create a client named &quot;myClient&quot;, and provide the discovery URL of the server (uaservercpp):</span>
+<span class="n">myClient</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">ClientSettings</span><span class="p">(</span><span class="s2">&quot;myClient&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;opc.tcp://localhost:48010&quot;</span><span class="p">]))</span>
 
-<span class="c"># specify the address of the node of which we would like to read its Value attribute:</span>
-<span class="c"># (here we&#39;re using an absolute address, i.e. a NodeId(&lt;identifier&gt;, &lt;namespace URI&gt;) and a &lt;server URI&gt;)</span>
-<span class="n">someAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;Demo.SimulationSpeed&quot;</span><span class="p">,</span>                         <span class="c"># NodeId identifier</span>
-                             <span class="s">&quot;http://www.unifiedautomation.com/DemoServer&quot;</span><span class="p">),</span> <span class="c"># NodeId namespace URI</span>
-                      <span class="s">&quot;urn:UnifiedAutomation:UaServerCpp&quot;</span><span class="p">)</span>                   <span class="c"># server URI</span>
+<span class="c1"># specify the address of the node of which we would like to read its Value attribute:</span>
+<span class="c1"># (here we&#39;re using an absolute address, i.e. a NodeId(&lt;identifier&gt;, &lt;namespace URI&gt;) and a &lt;server URI&gt;)</span>
+<span class="n">someAddress</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">NodeId</span><span class="p">(</span><span class="s2">&quot;Demo.SimulationSpeed&quot;</span><span class="p">,</span>                         <span class="c1"># NodeId identifier</span>
+                             <span class="s2">&quot;http://www.unifiedautomation.com/DemoServer&quot;</span><span class="p">),</span> <span class="c1"># NodeId namespace URI</span>
+                      <span class="s2">&quot;urn:UnifiedAutomation:UaServerCpp&quot;</span><span class="p">)</span>                   <span class="c1"># server URI</span>
 
-<span class="c"># read the Value attribute of the node that we just addressed:</span>
+<span class="c1"># read the Value attribute of the node that we just addressed:</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">read</span><span class="p">(</span> <span class="p">[</span><span class="n">someAddress</span><span class="p">]</span> <span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">&quot;The value is </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The value is </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span><span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>As you can see, all session management is done automatically for you!</p>
@@ -249,6 +250,7 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-logginginterface"><em>class</em> LoggingInterface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-logmessage"><em>class</em> LogMessage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-mask"><em>class</em> Mask</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-matrix"><em>class</em> Matrix</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-modelchangestructuredatatype"><em>class</em> ModelChangeStructureDataType</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-modificationinfo"><em>class</em> ModificationInfo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_pyuaf_util.html#class-modificationinfovector"><em>class</em> ModificationInfoVector</a></li>
@@ -377,21 +379,18 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/index.txt"
+      <li><a href="_sources/index.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -410,7 +409,7 @@ so that you can concentrate on the &#8220;functional&#8221; aspects of your soft
         <li class="right" >
           <a href="client_examples.html" title="Client examples"
              >next</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">PyUAF 2.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="#">PyUAF 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

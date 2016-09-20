@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client.results &mdash; PyUAF 2.1.1 documentation</title>
+    <title>pyuaf.client.results &mdash; PyUAF 2.2.1 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,16 +14,17 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.1.1',
+        VERSION:     '2.2.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.1.1 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.2.1 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.settings" href="api_pyuaf_client_settings.html" />
     <link rel="prev" title="pyuaf.client.requests" href="api_pyuaf_client_requests.html" /> 
   </head>
@@ -43,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_requests.html" title="pyuaf.client.requests"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -378,22 +379,22 @@ server.</p>
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.results.AsyncResultTarget" title="pyuaf.client.results.AsyncResultTarget"><code class="xref py py-class docutils literal"><span class="pre">AsyncResultTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="kn">import</span> <span class="n">AsyncResultTarget</span><span class="p">,</span> <span class="n">AsyncResultTargetVector</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="k">import</span> <span class="n">AsyncResultTarget</span><span class="p">,</span> <span class="n">AsyncResultTargetVector</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a realistic result, for instance one with 5 targets:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a realistic result, for instance one with 5 targets:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span> <span class="o">=</span> <span class="n">AsyncResultTargetVector</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c"># will be 5  (alternative: targets.size())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c1"># will be 5  (alternative: targets.size())</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0_isGood</span>  <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># other methods of the vector:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># other methods of the vector:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">AsyncResultTarget</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">someTarget</span> <span class="o">=</span> <span class="n">targets</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ...</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -628,26 +629,26 @@ as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Referenc
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.results.BrowseResultTarget" title="pyuaf.client.results.BrowseResultTarget"><code class="xref py py-class docutils literal"><span class="pre">BrowseResultTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="kn">import</span> <span class="n">BrowseResultTarget</span><span class="p">,</span> <span class="n">BrowseResultTargetVector</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="k">import</span> <span class="n">BrowseResultTarget</span><span class="p">,</span> <span class="n">BrowseResultTargetVector</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a realistic result, for instance one with 5 targets:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a realistic result, for instance one with 5 targets:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span> <span class="o">=</span> <span class="n">BrowseResultTargetVector</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c"># will be 5  (alternative: targets.size())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c1"># will be 5  (alternative: targets.size())</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)):</span>
 <span class="gp">... </span>    <span class="k">if</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()):</span>
-<span class="gp">... </span>        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">references</span><span class="p">)):</span>
-<span class="gp">... </span>            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Target </span><span class="si">%d</span><span class="s"> Reference </span><span class="si">%d</span><span class="s"> --&gt; Display name = </span><span class="si">%s</span><span class="s">&quot;</span>
+<span class="gp">... </span>        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">references</span><span class="p">)):</span>
+<span class="gp">... </span>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Target </span><span class="si">%d</span><span class="s2"> Reference </span><span class="si">%d</span><span class="s2"> --&gt; Display name = </span><span class="si">%s</span><span class="s2">&quot;</span>
 <span class="gp">... </span>                  <span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">references</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">displayName</span><span class="p">))</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># other methods of the vector:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># other methods of the vector:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BrowseResultTarget</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">someTarget</span> <span class="o">=</span> <span class="n">targets</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ...</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -775,23 +776,23 @@ as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" 
 <dd><p>The client handle that was assigned to the monitored item by the UAF, at the time when
 the monitored item was requested.
 E.g. you can get client handles like this:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.errors</span> <span class="kn">import</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">CreateMonitoredItemsError</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="kn">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client</span> <span class="kn">import</span> <span class="n">Client</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.errors</span> <span class="k">import</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">CreateMonitoredItemsError</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="k">import</span> <span class="n">Address</span><span class="p">,</span> <span class="n">NodeId</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client</span> <span class="k">import</span> <span class="n">Client</span>
 <span class="go">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">myClient</span>     <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s">&quot;myClient&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">myClient</span>     <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="s2">&quot;myClient&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;opc.tcp://localhost:4841&quot;</span><span class="p">])</span>
 <span class="go">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">nameSpaceUri</span> <span class="o">=</span> <span class="s">&quot;http://mycompany.com/mymachine&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">serverUri</span>    <span class="o">=</span> <span class="s">&quot;http://mycompany.com/servers/plc1&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">address0</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myMachine.myVariable0&quot;</span><span class="p">,</span> <span class="n">nameSpaceUri</span><span class="p">),</span> <span class="n">serverUri</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">address1</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s">&quot;myMachine.myVariable1&quot;</span><span class="p">,</span> <span class="n">nameSpaceUri</span><span class="p">),</span> <span class="n">serverUri</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nameSpaceUri</span> <span class="o">=</span> <span class="s2">&quot;http://mycompany.com/mymachine&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">serverUri</span>    <span class="o">=</span> <span class="s2">&quot;http://mycompany.com/servers/plc1&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address0</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s2">&quot;myMachine.myVariable0&quot;</span><span class="p">,</span> <span class="n">nameSpaceUri</span><span class="p">),</span> <span class="n">serverUri</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address1</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span> <span class="n">NodeId</span><span class="p">(</span><span class="s2">&quot;myMachine.myVariable1&quot;</span><span class="p">,</span> <span class="n">nameSpaceUri</span><span class="p">),</span> <span class="n">serverUri</span><span class="p">)</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">myCallback0</span><span class="p">(</span><span class="n">notification</span><span class="p">):</span>
-<span class="gp">... </span>     <span class="k">print</span><span class="p">(</span><span class="s">&quot;Variable 0 was received: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">notification</span><span class="p">)</span>
+<span class="gp">... </span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variable 0 was received: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="n">notification</span><span class="p">)</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">myCallback1</span><span class="p">(</span><span class="n">notification</span><span class="p">):</span>
-<span class="gp">... </span>     <span class="k">print</span><span class="p">(</span><span class="s">&quot;Variable 1 was received: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span><span class="n">notification</span><span class="p">)</span>
+<span class="gp">... </span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variable 1 was received: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="n">notification</span><span class="p">)</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">myClient</span><span class="o">.</span><span class="n">createMonitoredData</span><span class="p">([</span><span class="n">address0</span><span class="p">,</span> <span class="n">address1</span><span class="p">],</span>
@@ -799,12 +800,12 @@ E.g. you can get client handles like this:</p>
 <span class="gp">... </span>    <span class="n">clientHandle0</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">clientHandle</span>
 <span class="gp">... </span>    <span class="n">clientHandle1</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">clientHandle</span>
 <span class="gp">... </span><span class="k">except</span> <span class="n">CreateMonitoredItemsError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="c"># The monitored items could not be created, because there was some failure</span>
-<span class="gp">... </span>    <span class="c">#  (maybe the server is off-line?).</span>
-<span class="gp">... </span>    <span class="c"># Nevertheless, the client handles were already assigned, and we can get them like this:</span>
+<span class="gp">... </span>    <span class="c1"># The monitored items could not be created, because there was some failure</span>
+<span class="gp">... </span>    <span class="c1">#  (maybe the server is off-line?).</span>
+<span class="gp">... </span>    <span class="c1"># Nevertheless, the client handles were already assigned, and we can get them like this:</span>
 <span class="gp">... </span>    <span class="n">clientHandles</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">assignedClientHandles</span>
 <span class="gp">... </span><span class="k">except</span> <span class="n">UafError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Oops, an unexpected error!&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Oops, an unexpected error!&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -844,23 +845,23 @@ in reality by the server.</p>
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.results.CreateMonitoredDataResultTarget" title="pyuaf.client.results.CreateMonitoredDataResultTarget"><code class="xref py py-class docutils literal"><span class="pre">CreateMonitoredDataResultTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="kn">import</span> <span class="n">CreateMonitoredDataResultTarget</span><span class="p">,</span> <span class="n">CreateMonitoredDataResultTargetVector</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="k">import</span> <span class="n">CreateMonitoredDataResultTarget</span><span class="p">,</span> <span class="n">CreateMonitoredDataResultTargetVector</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a realistic result, for instance one with 5 targets:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a realistic result, for instance one with 5 targets:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span> <span class="o">=</span> <span class="n">CreateMonitoredDataResultTargetVector</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c"># will be 5  (alternative: targets.size())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c1"># will be 5  (alternative: targets.size())</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0_isGood</span>       <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0_clientHandle</span> <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">clientHandle</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># other methods of the vector:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># other methods of the vector:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CreateMonitoredDataResultTarget</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">someTarget</span> <span class="o">=</span> <span class="n">targets</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ...</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1025,23 +1026,23 @@ in reality by the server.</p>
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.results.CreateMonitoredEventsResultTarget" title="pyuaf.client.results.CreateMonitoredEventsResultTarget"><code class="xref py py-class docutils literal"><span class="pre">CreateMonitoredEventsResultTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="kn">import</span> <span class="n">CreateMonitoredEventsResultTarget</span><span class="p">,</span> <span class="n">CreateMonitoredEventsResultTargetVector</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="k">import</span> <span class="n">CreateMonitoredEventsResultTarget</span><span class="p">,</span> <span class="n">CreateMonitoredEventsResultTargetVector</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a realistic result, for instance one with 5 targets:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a realistic result, for instance one with 5 targets:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span> <span class="o">=</span> <span class="n">CreateMonitoredEventsResultTargetVector</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c"># will be 5  (alternative: targets.size())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c1"># will be 5  (alternative: targets.size())</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0_isGood</span>       <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0_clientHandle</span> <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">clientHandle</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># other methods of the vector:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># other methods of the vector:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">CreateMonitoredEventsResultTarget</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">someTarget</span> <span class="o">=</span> <span class="n">targets</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ...</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1153,16 +1154,16 @@ Apart from the UAF status code (which are defined in the
 <a class="reference internal" href="api_pyuaf_util_statuscodes.html#module-pyuaf.util.statuscodes" title="pyuaf.util.statuscodes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.statuscodes</span></code></a> module), you may also check the OPC UA statuscode
 (which are defined in the <a class="reference internal" href="api_pyuaf_util_opcuastatuscodes.html#module-pyuaf.util.opcuastatuscodes" title="pyuaf.util.opcuastatuscodes"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.util.opcuastatuscodes</span></code></a> module) since
 this provides more information (e.g. OpcUa_GoodNoData and OpcUa_GoodMoreData).</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span>        <span class="kn">import</span> <span class="n">HistoryReadRawModifiedResult</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.opcuastatuscodes</span> <span class="kn">import</span> <span class="n">OpcUa_GoodNoData</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span>        <span class="k">import</span> <span class="n">HistoryReadRawModifiedResult</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util.opcuastatuscodes</span> <span class="k">import</span> <span class="n">OpcUa_GoodNoData</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># create some simulated result, that we may have received from the client:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># create some simulated result, that we may have received from the client:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">someReceivedResult</span> <span class="o">=</span> <span class="n">HistoryReadRawModifiedResult</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">someReceivedResult</span><span class="o">.</span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># if the result didn&#39;t return any data values, you may want to check if there is</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># simply no historical data that matches your request:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># if the result didn&#39;t return any data values, you may want to check if there is</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># simply no historical data that matches your request:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">someReceivedResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dataValues</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 <span class="gp">... </span>   <span class="n">noDataFound</span> <span class="o">=</span> <span class="n">someReceivedResult</span><span class="o">.</span><span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">opcUaStatusCode</span> <span class="o">==</span> <span class="n">OpcUa_GoodNoData</span>
 </pre></div>
@@ -1224,23 +1225,23 @@ was set in the settings of the original request.</p>
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.results.HistoryReadRawModifiedResultTarget" title="pyuaf.client.results.HistoryReadRawModifiedResultTarget"><code class="xref py py-class docutils literal"><span class="pre">HistoryReadRawModifiedResultTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="kn">import</span> <span class="n">HistoryReadRawModifiedResultTarget</span><span class="p">,</span> <span class="n">HistoryReadRawModifiedResultTargetVector</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="k">import</span> <span class="n">HistoryReadRawModifiedResultTarget</span><span class="p">,</span> <span class="n">HistoryReadRawModifiedResultTargetVector</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a realistic result, for instance one with 5 targets:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a realistic result, for instance one with 5 targets:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span> <span class="o">=</span> <span class="n">HistoryReadRawModifiedResultTargetVector</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c"># will be 5  (alternative: targets.size())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c1"># will be 5  (alternative: targets.size())</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0_isGood</span>        <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0_retrievedData</span> <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dataValues</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># other methods of the vector:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># other methods of the vector:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">HistoryReadRawModifiedResultTarget</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">someTarget</span> <span class="o">=</span> <span class="n">targets</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ...</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1398,23 +1399,23 @@ You can compare these values to the OPC UA statuscodes defined in <a class="refe
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.results.MethodCallResultTarget" title="pyuaf.client.results.MethodCallResultTarget"><code class="xref py py-class docutils literal"><span class="pre">MethodCallResultTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="kn">import</span> <span class="n">MethodCallResultTarget</span><span class="p">,</span> <span class="n">MethodCallResultTargetVector</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="k">import</span> <span class="n">MethodCallResultTarget</span><span class="p">,</span> <span class="n">MethodCallResultTargetVector</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a realistic result, for instance one with 5 targets:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a realistic result, for instance one with 5 targets:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span> <span class="o">=</span> <span class="n">MethodCallResultTargetVector</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c"># will be 5  (alternative: targets.size())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c1"># will be 5  (alternative: targets.size())</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0_isGood</span>     <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0_outputArgs</span> <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">outputArguments</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># other methods of the vector:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># other methods of the vector:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">MethodCallResultTarget</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">someTarget</span> <span class="o">=</span> <span class="n">targets</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ...</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1582,23 +1583,23 @@ The status contains the OPC UA status code of the data.</p>
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.results.ReadResultTarget" title="pyuaf.client.results.ReadResultTarget"><code class="xref py py-class docutils literal"><span class="pre">ReadResultTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="kn">import</span> <span class="n">ReadResultTarget</span><span class="p">,</span> <span class="n">ReadResultTargetVector</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="k">import</span> <span class="n">ReadResultTarget</span><span class="p">,</span> <span class="n">ReadResultTargetVector</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a realistic result, for instance one with 5 targets:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a realistic result, for instance one with 5 targets:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span> <span class="o">=</span> <span class="n">ReadResultTargetVector</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c"># will be 5  (alternative: targets.size())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c1"># will be 5  (alternative: targets.size())</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0_isGood</span>  <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0_data</span>    <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># other methods of the vector:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># other methods of the vector:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ReadResultTarget</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">someTarget</span> <span class="o">=</span> <span class="n">targets</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ...</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1743,23 +1744,23 @@ as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" 
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.results.TranslateBrowsePathsToNodeIdsResultTarget" title="pyuaf.client.results.TranslateBrowsePathsToNodeIdsResultTarget"><code class="xref py py-class docutils literal"><span class="pre">TranslateBrowsePathsToNodeIdsResultTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="kn">import</span> <span class="n">TranslateBrowsePathsToNodeIdsResultTarget</span><span class="p">,</span> <span class="n">TranslateBrowsePathsToNodeIdsResultTargetVector</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="k">import</span> <span class="n">TranslateBrowsePathsToNodeIdsResultTarget</span><span class="p">,</span> <span class="n">TranslateBrowsePathsToNodeIdsResultTargetVector</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a realistic result, for instance one with 5 targets:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a realistic result, for instance one with 5 targets:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span> <span class="o">=</span> <span class="n">TranslateBrowsePathsToNodeIdsResultTargetVector</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c"># will be 5  (alternative: targets.size())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c1"># will be 5  (alternative: targets.size())</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0_isGood</span>          <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0_expandedNodeIds</span> <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">expandedNodeIds</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># other methods of the vector:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># other methods of the vector:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TranslateBrowsePathsToNodeIdsResultTarget</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">someTarget</span> <span class="o">=</span> <span class="n">targets</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ...</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1890,22 +1891,22 @@ as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.Status" 
 It is an artifact automatically generated from the C++ UAF code, and has the same functionality
 as a <code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="#pyuaf.client.results.WriteResultTarget" title="pyuaf.client.results.WriteResultTarget"><code class="xref py py-class docutils literal"><span class="pre">WriteResultTarget</span></code></a>.</p>
 <p>Usage example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="kn">import</span> <span class="n">WriteResultTarget</span><span class="p">,</span> <span class="n">WriteResultTargetVector</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.client.results</span> <span class="k">import</span> <span class="n">WriteResultTarget</span><span class="p">,</span> <span class="n">WriteResultTargetVector</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># construct a realistic result, for instance one with 5 targets:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># construct a realistic result, for instance one with 5 targets:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span> <span class="o">=</span> <span class="n">WriteResultTargetVector</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c"># will be 5  (alternative: targets.size())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">noOfElements</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="c1"># will be 5  (alternative: targets.size())</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">target0_isGood</span>  <span class="o">=</span> <span class="n">targets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">status</span><span class="o">.</span><span class="n">isGood</span><span class="p">()</span>
 
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># other methods of the vector:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># other methods of the vector:</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">WriteResultTarget</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">someTarget</span> <span class="o">=</span> <span class="n">targets</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c"># ...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ...</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1970,21 +1971,18 @@ as a <code class="docutils literal"><span class="pre">list</span></code> of <a c
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/api_pyuaf_client_results.txt"
+      <li><a href="_sources/api_pyuaf_client_results.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
     </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
@@ -2006,7 +2004,7 @@ as a <code class="docutils literal"><span class="pre">list</span></code> of <a c
         <li class="right" >
           <a href="api_pyuaf_client_requests.html" title="pyuaf.client.requests"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.1.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
