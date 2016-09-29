@@ -135,6 +135,32 @@ namespace uaf
 
 
         /**
+         * Override this method to handle connect errors by the SDK.
+         *
+         * By default, this method returns false, which means that client errors by the SDK
+         * will cause a failure of the connection.
+         * Return True if the client SDK error should be ignored.
+         * If the error was not a client-side SDK error (meaning: if clientSideError is False)
+         * then the return value will be ignored.
+         *
+         * @param clientConnectionId The ID of the session that raised the connectError.
+         * @param connectionStep     The failing connection step.
+         * @param sdkStatus          The error by the SDK.
+         * @param clientSideError    True if the error was created inside the SDK.
+         * @return                   True to override the error a client SDK error, False by default.
+         */
+        virtual bool connectErrorReceived(
+            uaf::ClientConnectionId                 clientConnectionId,
+            uaf::connectionsteps::ConnectionStep    connectionStep,
+            const uaf::SdkStatus&                   sdkStatus,
+            bool                                    clientSideError)
+        {
+            return false;
+        }
+
+
+
+        /**
          * Override this method to trust or reject or the server certificate during connection.
          *
          * By default, uaf::PkiCertificate::Action_Reject will be returned. It means that all

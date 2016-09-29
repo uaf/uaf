@@ -45,9 +45,10 @@ class Client(ClientBase):
                          input argument, which you should call "msg" or so,
                          because this argument is of type :class:`pyuaf.util.LogMessage`.
         """
-        # define the logging and untrustedCertificate callbacks
+        # define the logging, untrustedCertificate and connectError callbacks
         self.__loggingCallback__ = loggingCallback
         self.__untrustedCertificateCallback__ = None
+        self.__connectErrorCallback__ = None
         
         # define some more callbacks to receive status changes
         self.__connectionCallbacks__ = []
@@ -323,45 +324,6 @@ class Client(ClientBase):
         """
         pass
     
-    def __dispatch_logMessageReceived__(self, message):
-        try:
-            if self.__loggingCallback__ is None:
-                self.logMessageReceived(message)
-            else:
-                self.__loggingCallback__(message)
-        except:
-            pass # nothing we can do at this point!
-    
-    
-    def logMessageReceived(self, message):
-        """
-        Override this method if you want to process logging output from the UAF. 
-        
-        This method is called by the UAF if:
-          - :attr:`pyuaf.client.settings.ClientSettings.logToCallbackLevel` is not set to :attr:`pyuaf.util.loglevels.Disabled`
-          - no external logging callback function is registered 
-            (via :meth:`~pyuaf.client.Client` or via :meth:`~pyuaf.client.Client.registerLoggingCallback`).
-        
-        :param message: The received LogMessage.
-        :type  message: :class:`pyuaf.util.LogMessage`
-        """
-        pass
-        
-    
-    def registerLoggingCallback(self, callback):
-        """
-        Register a callback function to receive all log messages.
-        
-        If you register a callback function, this callback function will be called instead of 
-        the :meth:`~pyuaf.client.Client.logMessageReceived` function (so the latter function will 
-        NOT be called anymore!).
-        
-        :param callback: A callback function for the logging. This function should have one 
-                         input argument, which you should call "msg" or so,
-                         because this argument is of type :class:`pyuaf.util.LogMessage`.
-        """
-        self.__loggingCallback__ = callback
-    
     
     def __dispatch_logMessageReceived__(self, message):
         try:
@@ -435,37 +397,6 @@ class Client(ClientBase):
         # also call the Client.connectionStatusChanged method, which may be overridden by the user:
         try:
             self.connectionStatusChanged(info)
-        except:
-            pass # exception raised by the user, nothing we can do!
-    
-    
-    def __dispatch_subscriptionStatusChanged__(self, info):
-        """
-        Hidden method to dispatch the changed subscription status information to the correct 
-        callback method.
-        """
-        # create a copy using the C++ copy constructor, 
-        # so that the instance may be stored on the python level:
-        info = pyuaf.client.SubscriptionInformation(info)
-        
-        for dic in self.__subscriptionCallbacks__:
-            
-            callback                     = dic["callback"]
-            onlyClientSubscriptionHandle = dic["onlyClientSubscriptionHandle"]
-            
-            doCall = True
-            
-            if onlyClientSubscriptionHandle is not None:
-                if onlyClientSubscriptionHandle != info.clientConnectionId:
-                    doCall = False
-            
-            if doCall:
-                t = threading.Thread(target=callback, args=[info])
-                t.start()
-        
-        # also call the Client.subscriptionStatusChanged method, which may be overridden by the user:
-        try:
-            self.subscriptionStatusChanged(info)
         except:
             pass # exception raised by the user, nothing we can do!
     
@@ -860,7 +791,71 @@ class Client(ClientBase):
         """
         self.__untrustedCertificateCallback__ = None
     
+
     
+    def __dispatch_connectErrorReceived__(self, clientConnectionId, connectionStep, sdkStatus, clientSideError):
+        try:
+            if self.__connectErrorCallback__ is None:
+                return self.connectErrorReceived(clientConnectionId, connectionStep, sdkStatus, clientSideError)
+            else:
+                return self.__connectErrorCallback__(clientConnectionId, connectionStep, sdkStatus, clientSideError)
+        except:
+            pass # nothing we can do at this point!
+    
+    
+    def connectErrorReceived(self, clientConnectionId, connectionStep, sdkStatus, clientSideError):
+        """
+        Override this method to handle connect errors by the SDK.
+        
+        By default, this method returns False, which means that client errors by the SDK
+        will cause a failure of the connection.
+        Return True if the client SDK error should be ignored.
+        If the error was not a client-side SDK error (meaning: if clientSideError is False)
+        then the return value will be ignored.
+        
+        :param clientConnectionId: The ID of the session that raised the connectError.
+        :type  clientConnectionId: ``int``
+        :param connectionStep: The failing connection step, as an ``int`` defined by :mod:`pyuaf.client.connectionsteps`
+        :type  connectionStep: ``int``
+        :param sdkStatus: The error by the SDK.
+        :type  sdkStatus: :class:`pyuaf.util.SdkStatus`
+        :param clientSideError: True if the error was created inside the SDK.
+        :type  clientSideError: ``bool``
+        :return: True to override the error a client SDK error, False by default.
+        :rtype: ``bool``
+        """
+        return False
+    
+    
+    def registerConnectErrorCallback(self, callback):
+        """
+        Register a callback function to handle connect errors.
+        
+        If you register a callback function, this callback function will be called instead of 
+        the :meth:`~pyuaf.client.Client.connectErrorReceived` function 
+        (so the latter function will NOT be called anymore!).
+        
+        The callback function should have:
+        
+        - 4 input arguments: clientConnectionId, connectionStep, sdkStatus, clientSideError
+        - 1 returned value: a bool
+        
+        The signature of this method (and the meaning of these input arguments and returned value)
+        is exactly the same as :meth:`~pyuaf.client.Client.connectErrorReceived`.
+        
+        :param callback: A callback function for handling connectErrors.
+        """
+        self.__connectErrorCallback__ = callback
+    
+    
+    def unregisterConnectErrorCallback(self):
+        """
+        Unregister a callback function to stop handling connect errors.
+        
+        If you unregister a callback function, the connect error will be send to 
+        :meth:`~pyuaf.client.Client.connectErrorReceived` instead.
+        """
+        self.__connectErrorCallback__ = None
     
     
     def clientSettings(self):

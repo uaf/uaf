@@ -2,6 +2,15 @@
 UAF changelog                     
 ====================================================================================================
 
+Version 2.3.0 @ 2016/09/29
+----------------------------------------------------------------------------------------------------
+
+- new feature (https://github.com/uaf/uaf/issues/115):
+  A ConnectError can now be handled by a callback function.  
+
+- bugfix:
+  Removed duplicate definitions for several pyuaf.client.Client methods. 
+
 Version 2.2.1 @ 2016/09/18
 ----------------------------------------------------------------------------------------------------
 
