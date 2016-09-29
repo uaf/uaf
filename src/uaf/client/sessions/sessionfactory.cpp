@@ -788,6 +788,7 @@ namespace uaf
 
         // convert the SDK value to a corresponding UAF value
         connectionsteps::ConnectionStep step = connectionsteps::fromSdk(serviceType);
+        SdkStatus sdkStatus(uaStatus);
 
         logger_->debug("Received a connectError event:");
         logger_->debug(" - clientConnectionId : %d", clientConnectionId);
@@ -799,9 +800,9 @@ namespace uaf
         Session* session = 0;
         Status acquireStatus = acquireExistingSession(clientConnectionId, session);
 
+
         if (acquireStatus.isGood())
         {
-            SdkStatus sdkStatus(uaStatus);
             Status status = AsyncConnectionFailedError(session->serverUri(), sdkStatus);
 
             // update the session state
@@ -814,8 +815,7 @@ namespace uaf
             releaseSession(session, false);
         }
 
-        // always return false, because the client side error doesn't need to be overridden
-        return false;
+        return clientInterface_->connectError(clientConnectionId, step, sdkStatus, clientSideError);
     }
 
     // implemented from the callback interface

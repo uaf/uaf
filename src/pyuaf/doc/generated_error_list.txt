@@ -254,7 +254,7 @@
 
    .. autoattribute:: pyuaf.util.errors.EmptyServerUriAndUnknownNamespaceIndexError.unknownNamespaceIndex
 
-    - type: ``long``
+    - type: ``int``
 
 .. autoclass:: pyuaf.util.errors.EmptyServerUriError
 
@@ -362,7 +362,7 @@
 
    .. autoattribute:: pyuaf.util.errors.NoItemFoundForTheGivenRequestHandleError.requestHandle
 
-    - type: ``long``
+    - type: ``int``
 
 .. autoclass:: pyuaf.util.errors.NoNamespaceIndexOrUriGivenError
 
@@ -598,7 +598,7 @@
 
    .. autoattribute:: pyuaf.util.errors.UnknownNamespaceIndexAndServerIndexError.unknownNamespaceIndex
 
-    - type: ``long``
+    - type: ``int``
 
    .. autoattribute:: pyuaf.util.errors.UnknownNamespaceIndexAndServerIndexError.unknownServerIndex
 
@@ -610,7 +610,7 @@
 
    .. autoattribute:: pyuaf.util.errors.UnknownNamespaceIndexError.unknownNamespaceIndex
 
-    - type: ``long``
+    - type: ``int``
 
 .. autoclass:: pyuaf.util.errors.UnknownNamespaceUriError
 
