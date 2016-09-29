@@ -114,6 +114,12 @@
         .. autosummary:: 
                 Client.serversFound
                 Client.findServersNow
+    
+    *Override connect errors:*
+        .. autosummary:: 
+                Client.connectErrorReceived
+                Client.registerConnectErrorCallback
+                Client.unregisterConnectErrorCallback
 
 
 **DETAILED DESCRIPTION:**:
