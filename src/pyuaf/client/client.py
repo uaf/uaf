@@ -324,45 +324,6 @@ class Client(ClientBase):
         """
         pass
     
-    def __dispatch_logMessageReceived__(self, message):
-        try:
-            if self.__loggingCallback__ is None:
-                self.logMessageReceived(message)
-            else:
-                self.__loggingCallback__(message)
-        except:
-            pass # nothing we can do at this point!
-    
-    
-    def logMessageReceived(self, message):
-        """
-        Override this method if you want to process logging output from the UAF. 
-        
-        This method is called by the UAF if:
-          - :attr:`pyuaf.client.settings.ClientSettings.logToCallbackLevel` is not set to :attr:`pyuaf.util.loglevels.Disabled`
-          - no external logging callback function is registered 
-            (via :meth:`~pyuaf.client.Client` or via :meth:`~pyuaf.client.Client.registerLoggingCallback`).
-        
-        :param message: The received LogMessage.
-        :type  message: :class:`pyuaf.util.LogMessage`
-        """
-        pass
-        
-    
-    def registerLoggingCallback(self, callback):
-        """
-        Register a callback function to receive all log messages.
-        
-        If you register a callback function, this callback function will be called instead of 
-        the :meth:`~pyuaf.client.Client.logMessageReceived` function (so the latter function will 
-        NOT be called anymore!).
-        
-        :param callback: A callback function for the logging. This function should have one 
-                         input argument, which you should call "msg" or so,
-                         because this argument is of type :class:`pyuaf.util.LogMessage`.
-        """
-        self.__loggingCallback__ = callback
-    
     
     def __dispatch_logMessageReceived__(self, message):
         try:
@@ -436,37 +397,6 @@ class Client(ClientBase):
         # also call the Client.connectionStatusChanged method, which may be overridden by the user:
         try:
             self.connectionStatusChanged(info)
-        except:
-            pass # exception raised by the user, nothing we can do!
-    
-    
-    def __dispatch_subscriptionStatusChanged__(self, info):
-        """
-        Hidden method to dispatch the changed subscription status information to the correct 
-        callback method.
-        """
-        # create a copy using the C++ copy constructor, 
-        # so that the instance may be stored on the python level:
-        info = pyuaf.client.SubscriptionInformation(info)
-        
-        for dic in self.__subscriptionCallbacks__:
-            
-            callback                     = dic["callback"]
-            onlyClientSubscriptionHandle = dic["onlyClientSubscriptionHandle"]
-            
-            doCall = True
-            
-            if onlyClientSubscriptionHandle is not None:
-                if onlyClientSubscriptionHandle != info.clientConnectionId:
-                    doCall = False
-            
-            if doCall:
-                t = threading.Thread(target=callback, args=[info])
-                t.start()
-        
-        # also call the Client.subscriptionStatusChanged method, which may be overridden by the user:
-        try:
-            self.subscriptionStatusChanged(info)
         except:
             pass # exception raised by the user, nothing we can do!
     
