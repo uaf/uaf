@@ -149,7 +149,7 @@ namespace uaf
          * @param clientSideError    True if the error was created inside the SDK.
          * @return                   True to override the error a client SDK error, False by default.
          */
-        virtual bool connectError(
+        virtual bool connectErrorReceived(
             uaf::ClientConnectionId                 clientConnectionId,
             uaf::connectionsteps::ConnectionStep    connectionStep,
             const uaf::SdkStatus&                   sdkStatus,

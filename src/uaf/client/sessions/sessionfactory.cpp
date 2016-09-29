@@ -815,7 +815,7 @@ namespace uaf
             releaseSession(session, false);
         }
 
-        return clientInterface_->connectError(clientConnectionId, step, sdkStatus, clientSideError);
+        return clientInterface_->connectErrorReceived(clientConnectionId, step, sdkStatus, clientSideError);
     }
 
     // implemented from the callback interface

@@ -143,6 +143,7 @@ import time
 %rename(__dispatch_subscriptionStatusChanged__)             uaf::ClientInterface::subscriptionStatusChanged;
 %rename(__dispatch_notificationsMissing__)                  uaf::ClientInterface::notificationsMissing;
 %rename(__dispatch_untrustedServerCertificateReceived__)    uaf::ClientInterface::untrustedServerCertificateReceived;
+%rename(__dispatch_connectErrorReceived__)    				uaf::ClientInterface::connectErrorReceived;
 
 
 // now include all classes in a generic way
