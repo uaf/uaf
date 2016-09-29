@@ -15,7 +15,7 @@ UafError..............................................................
           +noOfTargets                                                Attribute of type: int
           +targetRank                                                 Attribute of type: int
       NoItemFoundForTheGivenRequestHandleError........................No item was found for the given request handle
-          +requestHandle                                              Attribute of type: int
+          +requestHandle                                              Attribute of type: long
       EmptyAddressError...............................................The address is empty (no valid NodeId or BrowsePath)
       UnknownClientSubscriptionHandleError............................Unknown client subscription handle
           +unknownClientSubscriptionHandle                            Attribute of type: int
@@ -97,14 +97,14 @@ UafError..............................................................
       EmptyServerUriError.............................................The server uri is empty
       ExpandedNodeIdAddressExpectedError..............................The given address should contain an ExpandedNodeId
       EmptyServerUriAndUnknownNamespaceIndexError.....................The server uri is empty and namespace index is unknown
-          +unknownNamespaceIndex                                      Attribute of type: int
+          +unknownNamespaceIndex                                      Attribute of type: long
       NoNamespaceIndexOrUriGivenError.................................No namespace index or URI were given
       UnknownServerIndexError.........................................The server index is not known
           +unknownServerIndex                                         Attribute of type: int
       UnknownNamespaceIndexError......................................The namespace index is not known
-          +unknownNamespaceIndex                                      Attribute of type: int
+          +unknownNamespaceIndex                                      Attribute of type: long
       UnknownNamespaceIndexAndServerIndexError........................The namespace index is not known
-          +unknownNamespaceIndex                                      Attribute of type: int
+          +unknownNamespaceIndex                                      Attribute of type: long
           +unknownServerIndex                                         Attribute of type: int
       InvalidAddressError.............................................Invalid address
       MultipleTranslationResultsError.................................Multiple nodes were found when translating the given browsepath
