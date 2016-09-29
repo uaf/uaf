@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util.errors &mdash; PyUAF 2.2.1 documentation</title>
+    <title>pyuaf.util.errors &mdash; PyUAF 2.3.0 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.2.1',
+        VERSION:     '2.3.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.2.1 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.3.0 documentation" href="index.html" />
     <link rel="next" title="pyuaf.util.loglevels" href="api_pyuaf_util_loglevels.html" />
     <link rel="prev" title="pyuaf.util.constants" href="api_pyuaf_util_constants.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_util_constants.html" title="pyuaf.util.constants"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.3.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -113,7 +113,7 @@ When an error has attributes, these attributes (name and type) are displayed too
           <span class="o">+</span><span class="n">noOfTargets</span>                                                <span class="n">Attribute</span> <span class="n">of</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">int</span>
           <span class="o">+</span><span class="n">targetRank</span>                                                 <span class="n">Attribute</span> <span class="n">of</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">int</span>
       <span class="n">NoItemFoundForTheGivenRequestHandleError</span><span class="o">........................</span><span class="n">No</span> <span class="n">item</span> <span class="n">was</span> <span class="n">found</span> <span class="k">for</span> <span class="n">the</span> <span class="n">given</span> <span class="n">request</span> <span class="n">handle</span>
-          <span class="o">+</span><span class="n">requestHandle</span>                                              <span class="n">Attribute</span> <span class="n">of</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">int</span>
+          <span class="o">+</span><span class="n">requestHandle</span>                                              <span class="n">Attribute</span> <span class="n">of</span> <span class="nb">type</span><span class="p">:</span> <span class="n">long</span>
       <span class="n">EmptyAddressError</span><span class="o">...............................................</span><span class="n">The</span> <span class="n">address</span> <span class="ow">is</span> <span class="n">empty</span> <span class="p">(</span><span class="n">no</span> <span class="n">valid</span> <span class="n">NodeId</span> <span class="ow">or</span> <span class="n">BrowsePath</span><span class="p">)</span>
       <span class="n">UnknownClientSubscriptionHandleError</span><span class="o">............................</span><span class="n">Unknown</span> <span class="n">client</span> <span class="n">subscription</span> <span class="n">handle</span>
           <span class="o">+</span><span class="n">unknownClientSubscriptionHandle</span>                            <span class="n">Attribute</span> <span class="n">of</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">int</span>
@@ -195,14 +195,14 @@ When an error has attributes, these attributes (name and type) are displayed too
       <span class="n">EmptyServerUriError</span><span class="o">.............................................</span><span class="n">The</span> <span class="n">server</span> <span class="n">uri</span> <span class="ow">is</span> <span class="n">empty</span>
       <span class="n">ExpandedNodeIdAddressExpectedError</span><span class="o">..............................</span><span class="n">The</span> <span class="n">given</span> <span class="n">address</span> <span class="n">should</span> <span class="n">contain</span> <span class="n">an</span> <span class="n">ExpandedNodeId</span>
       <span class="n">EmptyServerUriAndUnknownNamespaceIndexError</span><span class="o">.....................</span><span class="n">The</span> <span class="n">server</span> <span class="n">uri</span> <span class="ow">is</span> <span class="n">empty</span> <span class="ow">and</span> <span class="n">namespace</span> <span class="n">index</span> <span class="ow">is</span> <span class="n">unknown</span>
-          <span class="o">+</span><span class="n">unknownNamespaceIndex</span>                                      <span class="n">Attribute</span> <span class="n">of</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">int</span>
+          <span class="o">+</span><span class="n">unknownNamespaceIndex</span>                                      <span class="n">Attribute</span> <span class="n">of</span> <span class="nb">type</span><span class="p">:</span> <span class="n">long</span>
       <span class="n">NoNamespaceIndexOrUriGivenError</span><span class="o">.................................</span><span class="n">No</span> <span class="n">namespace</span> <span class="n">index</span> <span class="ow">or</span> <span class="n">URI</span> <span class="n">were</span> <span class="n">given</span>
       <span class="n">UnknownServerIndexError</span><span class="o">.........................................</span><span class="n">The</span> <span class="n">server</span> <span class="n">index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">known</span>
           <span class="o">+</span><span class="n">unknownServerIndex</span>                                         <span class="n">Attribute</span> <span class="n">of</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">int</span>
       <span class="n">UnknownNamespaceIndexError</span><span class="o">......................................</span><span class="n">The</span> <span class="n">namespace</span> <span class="n">index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">known</span>
-          <span class="o">+</span><span class="n">unknownNamespaceIndex</span>                                      <span class="n">Attribute</span> <span class="n">of</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">int</span>
+          <span class="o">+</span><span class="n">unknownNamespaceIndex</span>                                      <span class="n">Attribute</span> <span class="n">of</span> <span class="nb">type</span><span class="p">:</span> <span class="n">long</span>
       <span class="n">UnknownNamespaceIndexAndServerIndexError</span><span class="o">........................</span><span class="n">The</span> <span class="n">namespace</span> <span class="n">index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">known</span>
-          <span class="o">+</span><span class="n">unknownNamespaceIndex</span>                                      <span class="n">Attribute</span> <span class="n">of</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">int</span>
+          <span class="o">+</span><span class="n">unknownNamespaceIndex</span>                                      <span class="n">Attribute</span> <span class="n">of</span> <span class="nb">type</span><span class="p">:</span> <span class="n">long</span>
           <span class="o">+</span><span class="n">unknownServerIndex</span>                                         <span class="n">Attribute</span> <span class="n">of</span> <span class="nb">type</span><span class="p">:</span> <span class="nb">int</span>
       <span class="n">InvalidAddressError</span><span class="o">.............................................</span><span class="n">Invalid</span> <span class="n">address</span>
       <span class="n">MultipleTranslationResultsError</span><span class="o">.................................</span><span class="n">Multiple</span> <span class="n">nodes</span> <span class="n">were</span> <span class="n">found</span> <span class="n">when</span> <span class="n">translating</span> <span class="n">the</span> <span class="n">given</span> <span class="n">browsepath</span>
@@ -925,7 +925,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 <dt id="pyuaf.util.errors.EmptyServerUriAndUnknownNamespaceIndexError.unknownNamespaceIndex">
 <code class="descclassname">EmptyServerUriAndUnknownNamespaceIndexError.</code><code class="descname">unknownNamespaceIndex</code><a class="headerlink" href="#pyuaf.util.errors.EmptyServerUriAndUnknownNamespaceIndexError.unknownNamespaceIndex" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <code class="docutils literal"><span class="pre">int</span></code></li>
+<li>type: <code class="docutils literal"><span class="pre">long</span></code></li>
 </ul>
 </dd></dl>
 
@@ -1185,7 +1185,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 <dt id="pyuaf.util.errors.NoItemFoundForTheGivenRequestHandleError.requestHandle">
 <code class="descclassname">NoItemFoundForTheGivenRequestHandleError.</code><code class="descname">requestHandle</code><a class="headerlink" href="#pyuaf.util.errors.NoItemFoundForTheGivenRequestHandleError.requestHandle" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <code class="docutils literal"><span class="pre">int</span></code></li>
+<li>type: <code class="docutils literal"><span class="pre">long</span></code></li>
 </ul>
 </dd></dl>
 
@@ -1749,7 +1749,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 <dt id="pyuaf.util.errors.UnknownNamespaceIndexAndServerIndexError.unknownNamespaceIndex">
 <code class="descclassname">UnknownNamespaceIndexAndServerIndexError.</code><code class="descname">unknownNamespaceIndex</code><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceIndexAndServerIndexError.unknownNamespaceIndex" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <code class="docutils literal"><span class="pre">int</span></code></li>
+<li>type: <code class="docutils literal"><span class="pre">long</span></code></li>
 </ul>
 </dd></dl>
 
@@ -1776,7 +1776,7 @@ When an error has attributes, these attributes (name and type) are displayed too
 <dt id="pyuaf.util.errors.UnknownNamespaceIndexError.unknownNamespaceIndex">
 <code class="descclassname">UnknownNamespaceIndexError.</code><code class="descname">unknownNamespaceIndex</code><a class="headerlink" href="#pyuaf.util.errors.UnknownNamespaceIndexError.unknownNamespaceIndex" title="Permalink to this definition">¶</a></dt>
 <dd><ul class="simple">
-<li>type: <code class="docutils literal"><span class="pre">int</span></code></li>
+<li>type: <code class="docutils literal"><span class="pre">long</span></code></li>
 </ul>
 </dd></dl>
 
@@ -1981,7 +1981,7 @@ When an error has attributes, these attributes (name and type) are displayed too
         <li class="right" >
           <a href="api_pyuaf_util_constants.html" title="pyuaf.util.constants"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.3.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

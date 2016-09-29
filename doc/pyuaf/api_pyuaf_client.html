@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client &mdash; PyUAF 2.2.1 documentation</title>
+    <title>pyuaf.client &mdash; PyUAF 2.3.0 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.2.1',
+        VERSION:     '2.3.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.2.1 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.3.0 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.connectionsteps" href="api_pyuaf_client_connectionsteps.html" />
     <link rel="prev" title="pyuaf" href="api_pyuaf.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.3.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -894,6 +894,37 @@ via the &#8216;resultCallback&#8217; argument &#8211;&gt; then only the external
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The currently active settings.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings" title="pyuaf.client.settings.ClientSettings"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.client.settings.ClientSettings</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.connectErrorReceived">
+<code class="descname">connectErrorReceived</code><span class="sig-paren">(</span><em>clientConnectionId</em>, <em>connectionStep</em>, <em>sdkStatus</em>, <em>clientSideError</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.Client.connectErrorReceived" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override this method to handle connect errors by the SDK.</p>
+<p>By default, this method returns False, which means that client errors by the SDK
+will cause a failure of the connection.
+Return True if the client SDK error should be ignored.
+If the error was not a client-side SDK error (meaning: if clientSideError is False)
+then the return value will be ignored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>clientConnectionId</strong> (<code class="docutils literal"><span class="pre">int</span></code>) &#8211; The ID of the session that raised the connectError.</li>
+<li><strong>connectionStep</strong> (<code class="docutils literal"><span class="pre">int</span></code>) &#8211; The failing connection step, as an <code class="docutils literal"><span class="pre">int</span></code> defined by <a class="reference internal" href="api_pyuaf_client_connectionsteps.html#module-pyuaf.client.connectionsteps" title="pyuaf.client.connectionsteps"><code class="xref py py-mod docutils literal"><span class="pre">pyuaf.client.connectionsteps</span></code></a></li>
+<li><strong>sdkStatus</strong> (<a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.SdkStatus" title="pyuaf.util.SdkStatus"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.util.SdkStatus</span></code></a>) &#8211; The error by the SDK.</li>
+<li><strong>clientSideError</strong> (<code class="docutils literal"><span class="pre">bool</span></code>) &#8211; True if the error was created inside the SDK.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True to override the error a client SDK error, False by default.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="docutils literal"><span class="pre">bool</span></code></p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -1825,6 +1856,30 @@ callback function &#8211;&gt; then only the external callback function will be c
 </dd></dl>
 
 <dl class="method">
+<dt id="pyuaf.client.Client.registerConnectErrorCallback">
+<code class="descname">registerConnectErrorCallback</code><span class="sig-paren">(</span><em>callback</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.Client.registerConnectErrorCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register a callback function to handle connect errors.</p>
+<p>If you register a callback function, this callback function will be called instead of 
+the <a class="reference internal" href="#pyuaf.client.Client.connectErrorReceived" title="pyuaf.client.Client.connectErrorReceived"><code class="xref py py-meth docutils literal"><span class="pre">connectErrorReceived()</span></code></a> function 
+(so the latter function will NOT be called anymore!).</p>
+<p>The callback function should have:</p>
+<ul class="simple">
+<li>4 input arguments: clientConnectionId, connectionStep, sdkStatus, clientSideError</li>
+<li>1 returned value: a bool</li>
+</ul>
+<p>The signature of this method (and the meaning of these input arguments and returned value)
+is exactly the same as <a class="reference internal" href="#pyuaf.client.Client.connectErrorReceived" title="pyuaf.client.Client.connectErrorReceived"><code class="xref py py-meth docutils literal"><span class="pre">connectErrorReceived()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>callback</strong> &#8211; A callback function for handling connectErrors.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="pyuaf.client.Client.registerConnectionStatusCallback">
 <code class="descname">registerConnectionStatusCallback</code><span class="sig-paren">(</span><em>callback</em>, <em>onlyServerUri=None</em>, <em>onlyClientConnectionId=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.Client.registerConnectionStatusCallback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a callback to receive connection status changes.</p>
@@ -2284,6 +2339,14 @@ registering them using <a class="reference internal" href="#pyuaf.client.Client.
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.unregisterConnectErrorCallback">
+<code class="descname">unregisterConnectErrorCallback</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.Client.unregisterConnectErrorCallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unregister a callback function to stop handling connect errors.</p>
+<p>If you unregister a callback function, the connect error will be send to 
+<a class="reference internal" href="#pyuaf.client.Client.connectErrorReceived" title="pyuaf.client.Client.connectErrorReceived"><code class="xref py py-meth docutils literal"><span class="pre">connectErrorReceived()</span></code></a> instead.</p>
 </dd></dl>
 
 <dl class="method">
@@ -2952,7 +3015,7 @@ state of the subscription, the handle, etc.</p>
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.2.1 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.3.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
