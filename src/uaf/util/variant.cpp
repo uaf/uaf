@@ -61,6 +61,21 @@ namespace uaf
         return ret;
     }
 
+    // Convert the variant to a VariantArray
+    // =============================================================================================
+    Status Variant::toVariantArray(std::vector<uaf::Variant>& vec) const
+    {
+        UaVariantArray arr;
+        uaf::Status ret = evaluate(
+                uaVariant_.toVariantArray(arr),
+                uaVariant_.type(),
+                OpcUaType_Variant);
+        vec.resize(arr.length());
+        for (uint32_t i = 0; i < arr.length(); i++)
+            vec[i] = arr[i];
+        return ret;
+    }
+
 #define IMPLEMENT_VARIANT_TOXXX_METHOD(XXX, CPPTYPE)                                               \
     /** Convert the variant to a native C++ type.                                                  \
     =========================================================================================== */ \
@@ -221,6 +236,21 @@ namespace uaf
         arr.resize(vec.size());
         for (std::size_t i = 0; i < vec.size(); i++) { arr[int(i)] = vec[i]; }
         uaVariant_.setByteArray(arr);
+    }
+
+    // Set the variant to a variant array.
+    // ===========================================================================================
+    void Variant::setVariantArray(const std::vector<uaf::Variant>& vec)
+    {
+        clear();
+        UaVariantArray arr;
+        arr.resize(vec.size());
+        for (std::size_t i = 0; i < vec.size(); i++) {
+            UaVariant v;
+            vec[i].toSdk(v);
+            v.copyTo(&arr[int(i)]);
+        }
+        uaVariant_.setVariantArray(arr);
     }
 
 

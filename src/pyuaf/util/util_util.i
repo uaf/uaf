@@ -60,6 +60,7 @@
 #include "uaf/util/pkiprivatekey.h"
 #include "uaf/util/pkirsakeypair.h"
 #include "uaf/util/pkicertificate.h"
+#include "uaf/util/primitives.h"
 #include "uaf/util/sdkstatus.h"
 #include "uaf/util/structurefield.h"
 #include "uaf/util/structuredefinition.h"
@@ -67,6 +68,7 @@
 #include "uaf/util/genericunionvalue.h"
 %}
 
+//#define SWIG_NO_EXPORT_ITERATOR_METHODS 1
 
 // include common definitions
 %include "../pyuaf.i"
@@ -231,3 +233,4 @@ UAF_WRAP_CLASS("uaf/util/genericstructurevalue.h"  , uaf , GenericStructureValue
 UAF_WRAP_CLASS("uaf/util/genericunionvalue.h"  	   , uaf , GenericUnionValue   	   , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, GenericUnionVector)
 UAF_WRAP_CLASS("uaf/util/matrix.h"                 , uaf , Matrix                  , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 
+//UAF_WRAP_CLASS("uaf/util/variant.h"                 , uaf , Variant                  , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)

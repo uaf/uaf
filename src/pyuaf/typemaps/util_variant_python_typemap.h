@@ -23,7 +23,6 @@
 
 
 
-
 #define UAFTYPE_CONDITION(IN, TYPE)   SWIG_ConvertPtr(IN, (void **) &ptr, SWIGTYPE_p_uaf__##TYPE,             SWIG_POINTER_EXCEPTION) == 0
 #define PRIMITIVE_CONDITION(IN, TYPE) SWIG_ConvertPtr(IN, (void **) &ptr, SWIGTYPE_p_uaf__primitives__##TYPE, SWIG_POINTER_EXCEPTION) == 0
 
@@ -51,42 +50,52 @@
 
 
 
-#define VARIANT_CHECK(INPUT, RESULT)                                                               \
-        if (PyBool_Check(INPUT))                                                                   \
-            RESULT = 1;                                                                            \
-        else if (PyString_Check(INPUT))                                                            \
-            RESULT = 1;                                                                            \
-        else if (PyUnicode_Check(INPUT))                                                           \
-            RESULT = 1;                                                                            \
-        else if (PyByteArray_Check(INPUT))                                                         \
-            RESULT = 1;                                                                            \
-        else if (PySequence_Check(INPUT))                                                          \
-        {                                                                                          \
-            bool allGood = true;                                                                   \
-            Py_ssize_t length = PySequence_Size(INPUT);                                            \
-            for (Py_ssize_t i = 0; i < length && allGood; i++)                                     \
-            {                                                                                      \
-                void *ptr;                                                                         \
-                PyObject* currentObject = PySequence_GetItem(INPUT, i);                            \
-                if (!(CONVERTIBLE_CONDITION(currentObject)))                                       \
-                 {                                                                                 \
-                    allGood = false;                                                               \
-                    break;                                                                         \
-                 }                                                                                 \
-            }                                                                                      \
-            if (allGood)                                                                           \
-                RESULT = 1;                                                                        \
-            else                                                                                   \
-                RESULT = 0;                                                                        \
-        }                                                                                          \
-        else                                                                                       \
-        {                                                                                          \
-            void *ptr;                                                                             \
-            if (CONVERTIBLE_CONDITION(INPUT))                                                      \
-                RESULT = 1;                                                                        \
-            else                                                                                   \
-                RESULT = 0;                                                                        \
+void checkPyObject(PyObject*& pyObject, int& RESULT)
+{
+        if (PyBool_Check(pyObject))
+            RESULT = 1;
+        else if (PyString_Check(pyObject))
+            RESULT = 1;
+        else if (PyUnicode_Check(pyObject))
+            RESULT = 1;
+        else if (PyByteArray_Check(pyObject))
+            RESULT = 1;
+        else if (PySequence_Check(pyObject))
+        {
+            bool allGood = true;
+            Py_ssize_t length = PySequence_Size(pyObject);
+            for (Py_ssize_t i = 0; i < length && allGood; i++)
+            {
+                void *ptr;
+                PyObject* currentObject = PySequence_GetItem(pyObject, i);
+                if (!(CONVERTIBLE_CONDITION(currentObject)))
+                 {
+                    allGood = false;
+                    break;
+                 }
+            }
+            if (allGood)
+                RESULT = 1;
+            else
+                RESULT = 0;
         }
+        else {
+            void *ptr;
+            if (SWIG_ConvertPtr(pyObject, (void **) &ptr,
+                SWIGTYPE_p_std__vectorT_uaf__Variant_std__allocatorT_uaf__Variant_t_t,
+                SWIG_POINTER_EXCEPTION) == 0)
+                {
+                    RESULT = 1;
+                }
+            else
+            {
+                if (CONVERTIBLE_CONDITION(pyObject))
+                    RESULT = 1;
+                else
+                    RESULT = 0;
+            }
+        }
+}
 
 
 
@@ -94,7 +103,7 @@
     uaf::primitives::TYPE* primitive;                       \
     SWIG_ConvertPtr(IN,                                     \
                     (void **) &primitive,                   \
-                    $descriptor(uaf::primitives::TYPE *),   \
+                    SWIGTYPE_p_uaf__primitives__##TYPE,   \
                     SWIG_POINTER_EXCEPTION);                \
     OBJECT.set##TYPE(primitive->value);
 
@@ -112,7 +121,7 @@
     uaf::primitives::UAFTYPE##Array* vec;                       \
     SWIG_ConvertPtr(IN,                                     \
                     (void **) &vec,                   \
-                    $descriptor(uaf::primitives::UAFTYPE##Array *),   \
+                    SWIGTYPE_p_uaf__primitives__##UAFTYPE##Array,   \
                     SWIG_POINTER_EXCEPTION);                \
     OBJECT.set##UAFTYPE##Array(*vec);
 
@@ -121,7 +130,7 @@
     uaf::TYPE* uafObject;                                   \
     SWIG_ConvertPtr(IN,                                     \
                     (void **) &uafObject,                   \
-                    $descriptor(uaf::TYPE *),               \
+                    SWIGTYPE_p_uaf__##TYPE,               \
                     SWIG_POINTER_EXCEPTION);                \
     OBJECT.set##TYPE(*uafObject);
 
@@ -130,7 +139,7 @@
     uaf::Matrix* uafObject;                                 \
     SWIG_ConvertPtr(IN,                                     \
                     (void **) &uafObject,                   \
-                    $descriptor(uaf::Matrix *),             \
+                    SWIGTYPE_p_uaf__Matrix,               \
                     SWIG_POINTER_EXCEPTION);                \
     UaVariant v;                                            \
     uafObject->toSdk(v);                                    \
@@ -154,13 +163,13 @@
             uaf::primitives::TYPE* primitive;                                               \
             SWIG_ConvertPtr(currentPyObject,                                                \
                             (void **) &primitive,                                           \
-                            $descriptor(uaf::primitives::TYPE *),                           \
+                            SWIGTYPE_p_uaf__primitives__##TYPE,                           \
                             SWIG_POINTER_EXCEPTION);                                        \
             array[i] = primitive->value;                                                    \
         }                                                                                   \
         else                                                                                \
         {                                                                                   \
-            PyErr_SetString(PyExc_TypeError, "Sequence contains inconsistent types!");      \
+            PyErr_SetString(PyExc_TypeError, "Sequence contains inconsistent types!   0");      \
             return NULL;                                                                    \
         }                                                                                   \
     }                                                                                       \
@@ -186,13 +195,13 @@
             uaf::TYPE* uafObject;                                                           \
             SWIG_ConvertPtr(currentPyObject,                                                \
                             (void **) &uafObject,                                           \
-                            $descriptor(uaf::TYPE *),                                       \
+                            SWIGTYPE_p_uaf__##TYPE,                                       \
                             SWIG_POINTER_EXCEPTION);                                        \
             array[i] = *uafObject;                                                          \
         }                                                                                   \
         else                                                                                \
         {                                                                                   \
-            PyErr_SetString(PyExc_TypeError, "Sequence contains inconsistent types!");      \
+            PyErr_SetString(PyExc_TypeError, "Sequence contains inconsistent types!    1");      \
             return NULL;                                                                    \
         }                                                                                   \
     }                                                                                       \
@@ -229,7 +238,7 @@
         }                                                                                          \
         else                                                                                       \
         {                                                                                          \
-            PyErr_SetString(PyExc_TypeError, "Sequence contains inconsistent types!");             \
+            PyErr_SetString(PyExc_TypeError, "Sequence contains inconsistent types!    2");             \
             return NULL;                                                                           \
         }                                                                                          \
     }                                                                                              \
@@ -296,68 +305,86 @@
     }
 
 
-#define PYOBJECT_TO_UAF_VARIANT(PYOBJECT, VARIANT)                                                 \
-            void *ptr;                                                                             \
-    if (PYOBJECT == Py_None)                                                                       \
-    {    VARIANT.clear();    }                                                                     \
-    else if (PyBool_Check(PYOBJECT))                                                               \
-    {   VARIANT.setBoolean(PyInt_AsLong(PYOBJECT));    }                                           \
-    else if (PyString_Check(PYOBJECT))                                                             \
-    {                                                                                              \
-        VARIANT.setString(PyString_AsString(PYOBJECT));                                            \
-    }                                                                                              \
-    else if (PyUnicode_Check(PYOBJECT))                                                            \
-    {                                                                                              \
-        PyObject* pyString = PyUnicode_AsUTF8String(PYOBJECT);                                     \
-        if (pyString == 0) {                                                                       \
-            PyErr_SetString(PyExc_TypeError, "Could not encode the given unicode string as UTF-8");\
-            return NULL; }                                                                         \
-        VARIANT.setString(PyString_AsString(pyString));                                            \
-    }                                                                                              \
-    else if (PyByteArray_Check(PYOBJECT))                                                          \
-    {                                                                                              \
-        char* data = PyByteArray_AsString(PYOBJECT);                                               \
-        Py_ssize_t length = PyByteArray_Size(PYOBJECT);                                            \
-        VARIANT.setByteString((uint8_t*)data, length);                                             \
-    }                                                                                              \
-    else if (PySequence_Check(PYOBJECT))                                                           \
-    {                                                                                              \
-        Py_ssize_t length = PySequence_Size(PYOBJECT);                                             \
-        if (length > 0)                                                                            \
-        {                                                                                          \
-            PyObject* firstPyObject = PySequence_GetItem(PYOBJECT, 0);                             \
-            PYUAF_CONVERT_ARRAYOBJECT(firstPyObject, PYOBJECT, length, VARIANT)                    \
-        }                                                                                          \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "BooleanArray") == 0) { VARIANT.setBooleanArray(std::vector<bool>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "SByteArray") == 0) { VARIANT.setSByteArray(std::vector<int8_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "UInt16Array") == 0) { VARIANT.setUInt16Array(std::vector<uint16_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "Int16Array") == 0) { VARIANT.setInt16Array(std::vector<int16_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "UInt32Array") == 0) { VARIANT.setUInt32Array(std::vector<uint32_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "Int32Array") == 0) { VARIANT.setInt32Array(std::vector<int32_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "UInt64Array") == 0) { VARIANT.setUInt64Array(std::vector<uint64_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "Int64Array") == 0) { VARIANT.setInt64Array(std::vector<int64_t>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "FloatArray") == 0) { VARIANT.setFloatArray(std::vector<float>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "DoubleArray") == 0) { VARIANT.setDoubleArray(std::vector<double>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "StringArray") == 0) { VARIANT.setStringArray(std::vector<std::string>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "ByteStringArray") == 0) { VARIANT.setByteStringArray(std::vector<uaf::ByteString>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "DateTimeVector") == 0) { VARIANT.setDateTimeArray(std::vector<uaf::DateTime>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "LocalizedTextVector") == 0) { VARIANT.setLocalizedTextArray(std::vector<uaf::LocalizedText>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "NodeIdVector") == 0) { VARIANT.setNodeIdArray(std::vector<uaf::NodeId>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "GuidVector") == 0) { VARIANT.setGuidArray(std::vector<uaf::Guid>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "ExpandedNodeIdVector") == 0) { VARIANT.setExpandedNodeIdArray(std::vector<uaf::ExpandedNodeId>()); } \
-        else if (strcmp(PYOBJECT->ob_type->tp_name, "QualifiedNameVector") == 0) { VARIANT.setQualifiedNameArray(std::vector<uaf::QualifiedName>()); } \
-        else                                                                                       \
-        {  \
-            PyErr_SetString(PyExc_TypeError, "Could not determine the array type, empty array! $type $*ltype $ltype");  \
-            return NULL;                                                                            \
-        }                                                                                          \
-    }                                                                                              \
-    else                                                                                           \
-    {                                                                                              \
-        void *ptr;                                                                                 \
-        CONVERT_OBJECT(PYOBJECT, VARIANT)                                                          \
+bool pyObjectToUafVariant(PyObject*& pyObject, uaf::Variant& variant)
+{
+    void *ptr;
+    if (pyObject == Py_None)
+    {
+        variant.clear();
     }
-
+    else if (PyBool_Check(pyObject))
+    {
+        variant.setBoolean(PyInt_AsLong(pyObject));
+    }
+    else if (PyString_Check(pyObject))
+    {
+        variant.setString(PyString_AsString(pyObject));
+    }
+    else if (PyUnicode_Check(pyObject))
+    {
+        PyObject* pyString = PyUnicode_AsUTF8String(pyObject);
+        if (pyString == 0)
+        {
+            PyErr_SetString(PyExc_TypeError, "Could not encode the given unicode string as UTF-8");
+            return false;
+        }
+        variant.setString(PyString_AsString(pyString));
+    }
+    else if (PyByteArray_Check(pyObject))
+    {
+        char* data = PyByteArray_AsString(pyObject);
+        Py_ssize_t length = PyByteArray_Size(pyObject);
+        variant.setByteString((uint8_t*)data, length);
+    }
+    else if (PySequence_Check(pyObject))
+    {
+        Py_ssize_t length = PySequence_Size(pyObject);
+        if (strcmp(pyObject->ob_type->tp_name, "VariantVector") == 0)
+        {                            \
+                std::vector<uaf::Variant>* vec;
+                SWIG_ConvertPtr(
+                        pyObject,
+                        (void **) &vec,
+                        SWIGTYPE_p_std__vectorT_uaf__Variant_std__allocatorT_uaf__Variant_t_t,
+                        SWIG_POINTER_EXCEPTION);
+                variant.setVariantArray(*vec);
+        }
+        else if (length > 0)
+        {
+            PyObject* firstPyObject = PySequence_GetItem(pyObject, 0);
+            PYUAF_CONVERT_ARRAYOBJECT(firstPyObject, pyObject, length, variant);
+        }
+        else if (strcmp(pyObject->ob_type->tp_name, "BooleanArray") == 0) { variant.setBooleanArray(std::vector<bool>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "SByteArray") == 0) { variant.setSByteArray(std::vector<int8_t>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "UInt16Array") == 0) { variant.setUInt16Array(std::vector<uint16_t>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "Int16Array") == 0) { variant.setInt16Array(std::vector<int16_t>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "UInt32Array") == 0) { variant.setUInt32Array(std::vector<uint32_t>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "Int32Array") == 0) { variant.setInt32Array(std::vector<int32_t>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "UInt64Array") == 0) { variant.setUInt64Array(std::vector<uint64_t>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "Int64Array") == 0) { variant.setInt64Array(std::vector<int64_t>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "FloatArray") == 0) { variant.setFloatArray(std::vector<float>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "DoubleArray") == 0) { variant.setDoubleArray(std::vector<double>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "StringArray") == 0) { variant.setStringArray(std::vector<std::string>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "ByteStringArray") == 0) { variant.setByteStringArray(std::vector<uaf::ByteString>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "DateTimeVector") == 0) { variant.setDateTimeArray(std::vector<uaf::DateTime>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "LocalizedTextVector") == 0) { variant.setLocalizedTextArray(std::vector<uaf::LocalizedText>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "NodeIdVector") == 0) { variant.setNodeIdArray(std::vector<uaf::NodeId>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "GuidVector") == 0) { variant.setGuidArray(std::vector<uaf::Guid>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "ExpandedNodeIdVector") == 0) { variant.setExpandedNodeIdArray(std::vector<uaf::ExpandedNodeId>()); }
+        else if (strcmp(pyObject->ob_type->tp_name, "QualifiedNameVector") == 0) { variant.setQualifiedNameArray(std::vector<uaf::QualifiedName>()); }
+        else
+        {
+            PyErr_SetString(PyExc_TypeError, "Could not determine the array type, empty array! $type $*ltype $ltype");
+            return false;
+        }
+    }
+    else
+    {
+        void *ptr;
+        CONVERT_OBJECT(pyObject, variant)
+    }
+    return true;
+}
 
 
 
@@ -365,13 +392,13 @@
 #define CREATE_PRIMITIVE(TYPE, VARIANT, PYRESULT)                                                  \
     uaf::primitives::TYPE* primitive = new uaf::primitives::TYPE;                                  \
     VARIANT.to##TYPE(primitive->value);                                                            \
-    PYRESULT = SWIG_NewPointerObj(primitive, $descriptor(uaf::primitives::TYPE *), SWIG_POINTER_OWN);
+    PYRESULT = SWIG_NewPointerObj(primitive, SWIGTYPE_p_uaf__primitives__##TYPE, SWIG_POINTER_OWN);
 
 
 #define CREATE_UAFTYPE(TYPE, VARIANT, PYRESULT)                                                    \
     uaf::TYPE* uafObject = new uaf::TYPE;                                                          \
     VARIANT.to##TYPE(*uafObject);                                                                  \
-    PYRESULT = SWIG_NewPointerObj(uafObject, $descriptor(uaf::TYPE *) , SWIG_POINTER_OWN);
+    PYRESULT = SWIG_NewPointerObj(uafObject, SWIGTYPE_p_uaf__##TYPE , SWIG_POINTER_OWN);
 
 
 
@@ -385,7 +412,7 @@
         uaf::primitives::TYPE* primitive = new uaf::primitives::TYPE;                           \
         primitive->value = vec[i];                                                              \
         PyObject* newItem = SWIG_NewPointerObj(primitive,                                       \
-                                               $descriptor(uaf::primitives::TYPE *),            \
+                                               SWIGTYPE_p_uaf__primitives__##TYPE,            \
                                                SWIG_POINTER_OWN);                               \
         PyList_SetItem(PYRESULT, i, newItem);                                                   \
     }
@@ -397,54 +424,24 @@
     if (conversionStatus.isNotGood())                                                           \
     {                                                                                           \
         PyErr_SetString(PyExc_TypeError, conversionStatus.toString().c_str());                  \
-        return NULL;                                                                            \
+        return false;                                                                            \
     }                                                                                           \
     PYRESULT = PyList_New(VARIANT.arraySize());                                                 \
     for (Py_ssize_t i = 0; i < VARIANT.arraySize(); i++)                                        \
     {                                                                                           \
         uaf::TYPE* newObject = new uaf::TYPE(vec[i]);                                           \
         PyObject* newItem = SWIG_NewPointerObj(newObject,                                       \
-                                               $descriptor(uaf::TYPE *),                        \
+                                               SWIGTYPE_p_uaf__##TYPE,                        \
                                                SWIG_POINTER_OWN);                               \
         PyList_SetItem(PYRESULT, i, newItem);                                                   \
     }
-
-
-#define CREATE_ARRAYOBJECT(VARIANT, PYOBJECT)  \
-    if (VARIANT.type() == uaf::opcuatypes::Boolean)              { CREATE_PRIMITIVE_ARRAY(Boolean,    bool, VARIANT, PYOBJECT)     } \
-    else if (VARIANT.type() == uaf::opcuatypes::SByte)           { CREATE_PRIMITIVE_ARRAY(SByte,      int8_t, VARIANT, PYOBJECT)   } \
-    else if (VARIANT.type() == uaf::opcuatypes::Byte)            { CREATE_PRIMITIVE_ARRAY(Byte,       uint8_t, VARIANT, PYOBJECT)  } \
-    else if (VARIANT.type() == uaf::opcuatypes::Int16)           { CREATE_PRIMITIVE_ARRAY(Int16,      int16_t, VARIANT, PYOBJECT)  } \
-    else if (VARIANT.type() == uaf::opcuatypes::UInt16)          { CREATE_PRIMITIVE_ARRAY(UInt16,     uint16_t, VARIANT, PYOBJECT) } \
-    else if (VARIANT.type() == uaf::opcuatypes::Int32)           { CREATE_PRIMITIVE_ARRAY(Int32,      int32_t, VARIANT, PYOBJECT)  } \
-    else if (VARIANT.type() == uaf::opcuatypes::UInt32)          { CREATE_PRIMITIVE_ARRAY(UInt32,     uint32_t, VARIANT, PYOBJECT) } \
-    else if (VARIANT.type() == uaf::opcuatypes::Int64)           { CREATE_PRIMITIVE_ARRAY(Int64,      int64_t, VARIANT, PYOBJECT)  } \
-    else if (VARIANT.type() == uaf::opcuatypes::UInt64)          { CREATE_PRIMITIVE_ARRAY(UInt64,     uint64_t, VARIANT, PYOBJECT) } \
-    else if (VARIANT.type() == uaf::opcuatypes::Float)           { CREATE_PRIMITIVE_ARRAY(Float,      float, VARIANT, PYOBJECT)    } \
-    else if (VARIANT.type() == uaf::opcuatypes::Double)          { CREATE_PRIMITIVE_ARRAY(Double,     double, VARIANT, PYOBJECT)   } \
-    else if (VARIANT.type() == uaf::opcuatypes::String)          { CREATE_PRIMITIVE_ARRAY(String,     std::string, VARIANT, PYOBJECT)   } \
-    else if (VARIANT.type() == uaf::opcuatypes::ByteString)      { CREATE_PRIMITIVE_ARRAY(ByteString, uaf::ByteString, VARIANT, PYOBJECT)   } \
-    else if (VARIANT.type() == uaf::opcuatypes::NodeId)          { CREATE_UAFTYPE_ARRAY(NodeId, VARIANT, PYOBJECT)         } \
-    else if (VARIANT.type() == uaf::opcuatypes::Guid)            { CREATE_UAFTYPE_ARRAY(Guid, VARIANT, PYOBJECT)         } \
-    else if (VARIANT.type() == uaf::opcuatypes::ExpandedNodeId)  { CREATE_UAFTYPE_ARRAY(ExpandedNodeId, VARIANT, PYOBJECT) } \
-    else if (VARIANT.type() == uaf::opcuatypes::LocalizedText)   { CREATE_UAFTYPE_ARRAY(LocalizedText, VARIANT, PYOBJECT)  } \
-    else if (VARIANT.type() == uaf::opcuatypes::QualifiedName)   { CREATE_UAFTYPE_ARRAY(QualifiedName, VARIANT, PYOBJECT)  } \
-    else if (VARIANT.type() == uaf::opcuatypes::DateTime)        { CREATE_UAFTYPE_ARRAY(DateTime, VARIANT, PYOBJECT)       } \
-    else if (VARIANT.type() == uaf::opcuatypes::ExtensionObject) { CREATE_UAFTYPE_ARRAY(ExtensionObject, VARIANT, PYOBJECT)} \
-    else                                                                                           \
-    {                                                                                              \
-        PyErr_SetString(PyExc_TypeError, "Unsupported type!");                                     \
-        return NULL;                                                                               \
-    }
-
-
 
 #define CREATE_MATRIXOBJECT(VARIANT, PYOBJECT) \
     uaf::Matrix* matrix = new uaf::Matrix;                                                         \
     UaVariant uaVariant;                                                                           \
     VARIANT.toSdk(uaVariant);                                                                      \
     matrix->fromSdk(uaVariant);                                                                    \
-    PYOBJECT = SWIG_NewPointerObj(matrix, $descriptor(uaf::Matrix *) , SWIG_POINTER_OWN);
+    PYOBJECT = SWIG_NewPointerObj(matrix, SWIGTYPE_p_uaf__Matrix , SWIG_POINTER_OWN);
 
 
 
@@ -473,28 +470,84 @@
     else                                                                                           \
     {                                                                                              \
         PyErr_SetString(PyExc_TypeError, "Unsupported type!");                                     \
-        return NULL;                                                                               \
+        return false;                                                                               \
     }
 
 
-#define UAF_VARIANT_TO_PYOBJECT(VARIANT, PYOBJECT)                                                 \
-    if (VARIANT.isNull())                                                                          \
-    {                                                                                              \
-        Py_INCREF(Py_None);                                                                        \
-        PYOBJECT = Py_None;                                                                        \
-    }                                                                                              \
-    else if (VARIANT.isArray())                                                                    \
-    {                                                                                              \
-        CREATE_ARRAYOBJECT(VARIANT, PYOBJECT)                                                      \
-    }                                                                                              \
-    else if (VARIANT.isMatrix())                                                                   \
-    {                                                                                              \
-        CREATE_MATRIXOBJECT(VARIANT, PYOBJECT)                                                     \
-    }                                                                                              \
+#define CREATE_ARRAYOBJECT(VARIANT, PYOBJECT)  \
+    if (VARIANT.type() == uaf::opcuatypes::Boolean)              { CREATE_PRIMITIVE_ARRAY(Boolean,    bool, VARIANT, PYOBJECT)     } \
+    else if (VARIANT.type() == uaf::opcuatypes::SByte)           { CREATE_PRIMITIVE_ARRAY(SByte,      int8_t, VARIANT, PYOBJECT)   } \
+    else if (VARIANT.type() == uaf::opcuatypes::Byte)            { CREATE_PRIMITIVE_ARRAY(Byte,       uint8_t, VARIANT, PYOBJECT)  } \
+    else if (VARIANT.type() == uaf::opcuatypes::Int16)           { CREATE_PRIMITIVE_ARRAY(Int16,      int16_t, VARIANT, PYOBJECT)  } \
+    else if (VARIANT.type() == uaf::opcuatypes::UInt16)          { CREATE_PRIMITIVE_ARRAY(UInt16,     uint16_t, VARIANT, PYOBJECT) } \
+    else if (VARIANT.type() == uaf::opcuatypes::Int32)           { CREATE_PRIMITIVE_ARRAY(Int32,      int32_t, VARIANT, PYOBJECT)  } \
+    else if (VARIANT.type() == uaf::opcuatypes::UInt32)          { CREATE_PRIMITIVE_ARRAY(UInt32,     uint32_t, VARIANT, PYOBJECT) } \
+    else if (VARIANT.type() == uaf::opcuatypes::Int64)           { CREATE_PRIMITIVE_ARRAY(Int64,      int64_t, VARIANT, PYOBJECT)  } \
+    else if (VARIANT.type() == uaf::opcuatypes::UInt64)          { CREATE_PRIMITIVE_ARRAY(UInt64,     uint64_t, VARIANT, PYOBJECT) } \
+    else if (VARIANT.type() == uaf::opcuatypes::Float)           { CREATE_PRIMITIVE_ARRAY(Float,      float, VARIANT, PYOBJECT)    } \
+    else if (VARIANT.type() == uaf::opcuatypes::Double)          { CREATE_PRIMITIVE_ARRAY(Double,     double, VARIANT, PYOBJECT)   } \
+    else if (VARIANT.type() == uaf::opcuatypes::String)          { CREATE_PRIMITIVE_ARRAY(String,     std::string, VARIANT, PYOBJECT)   } \
+    else if (VARIANT.type() == uaf::opcuatypes::ByteString)      { CREATE_PRIMITIVE_ARRAY(ByteString, uaf::ByteString, VARIANT, PYOBJECT)   } \
+    else if (VARIANT.type() == uaf::opcuatypes::NodeId)          { CREATE_UAFTYPE_ARRAY(NodeId, VARIANT, PYOBJECT)         } \
+    else if (VARIANT.type() == uaf::opcuatypes::Guid)            { CREATE_UAFTYPE_ARRAY(Guid, VARIANT, PYOBJECT)         } \
+    else if (VARIANT.type() == uaf::opcuatypes::ExpandedNodeId)  { CREATE_UAFTYPE_ARRAY(ExpandedNodeId, VARIANT, PYOBJECT) } \
+    else if (VARIANT.type() == uaf::opcuatypes::LocalizedText)   { CREATE_UAFTYPE_ARRAY(LocalizedText, VARIANT, PYOBJECT)  } \
+    else if (VARIANT.type() == uaf::opcuatypes::QualifiedName)   { CREATE_UAFTYPE_ARRAY(QualifiedName, VARIANT, PYOBJECT)  } \
+    else if (VARIANT.type() == uaf::opcuatypes::DateTime)        { CREATE_UAFTYPE_ARRAY(DateTime, VARIANT, PYOBJECT)       } \
+    else if (VARIANT.type() == uaf::opcuatypes::ExtensionObject) { CREATE_UAFTYPE_ARRAY(ExtensionObject, VARIANT, PYOBJECT)} \
+    else if (VARIANT.type() == uaf::opcuatypes::Variant)         { \
+        std::vector<uaf::Variant> vec;                                                                 \
+        uaf::Status conversionStatus = VARIANT.toVariantArray(vec);                                \
+        if (conversionStatus.isNotGood())                                                           \
+        {                                                                                           \
+            PyErr_SetString(PyExc_TypeError, conversionStatus.toString().c_str());                  \
+            return false;                                                                            \
+        }                                                                                           \
+        PYOBJECT = PyList_New(VARIANT.arraySize());                                                 \
+        for (Py_ssize_t i = 0; i < VARIANT.arraySize(); i++)                                        \
+        {                                                                                           \
+            PyObject* newPyObject = NULL;                                                               \
+            bool ok = uafVariantToPyObject(vec[i], newPyObject);                                    \
+            if (!ok) { return false; }                                                              \
+            PyList_SetItem(PYOBJECT, i, newPyObject);                                                   \
+        } \
+    } \
     else                                                                                           \
     {                                                                                              \
-        CREATE_OBJECT(VARIANT, PYOBJECT)                                                           \
+        PyErr_SetString(PyExc_TypeError, "Unsupported type!");                                     \
+        return false;                                                                               \
     }
+
+
+    /*else if (VARIANT.type() == uaf::opcuatypes::Variant) \
+    {                                                                                              \
+        CREATE_UAFTYPE_ARRAY(Variant, VARIANT, PYOBJECT)   \
+    }*/\
+
+
+bool uafVariantToPyObject(uaf::Variant& variant, PyObject*& pyObject)
+{
+    if (variant.isNull())
+    {
+        Py_INCREF(Py_None);
+        pyObject = Py_None;
+    }
+    else if (variant.isArray())
+    {
+        CREATE_ARRAYOBJECT(variant, pyObject)
+    }
+    else if (variant.isMatrix())
+    {
+        CREATE_MATRIXOBJECT(variant, pyObject)
+    }
+    else
+    {
+        CREATE_OBJECT(variant, pyObject)
+    }
+
+    return true;
+}
+    
 
 
 #endif /* UTIL_VARIANT_PYTHON_TYPEMAP_H_ */
