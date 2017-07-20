@@ -45,7 +45,6 @@
 #include "uaf/util/qualifiedname.h"
 #include "uaf/util/extensionobject.h"
 
-#include "uaf/util/primitives.h"
 
 
 
@@ -177,6 +176,8 @@ namespace uaf
         DECLARE_VARIANT_METHODS(String          , std::string         , const std::string&)
         DECLARE_VARIANT_METHODS(ExtensionObject , uaf::ExtensionObject, const uaf::ExtensionObject&)
 
+        void setVariantArray(const std::vector<uaf::Variant>& vec);
+        Status toVariantArray(std::vector<uaf::Variant>& vec) const;
 
         /**
          * Set the variant to a bytestring.

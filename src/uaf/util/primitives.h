@@ -31,6 +31,7 @@
 #include "uaf/util/util.h"
 #include "uaf/util/bytestring.h"
 #include "uaf/util/opcuatypes.h"
+#include "uaf/util/variant.h"
 
 
 /** @file */
@@ -59,6 +60,8 @@ namespace uaf
             NAME() : value(DEFAULT) {}                                                      \
             /** Create a primitive with given value. */                                     \
             NAME(CTYPE value) : value(value) {}                                             \
+            /** Create a primitive based on a variant. */                                   \
+            void fromVariant(const uaf::Variant& v) { v.to##NAME(value); }                                    \
             /** The value. */                                                               \
             CTYPE value;                                                                    \
             /** The type of the primitive. */                                               \

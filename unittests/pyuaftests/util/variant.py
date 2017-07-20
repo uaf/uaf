@@ -518,6 +518,28 @@ class VariantTest(unittest.TestCase):
                                                      pyuaf.util.QualifiedName("name", "uri", 34),
                                                      pyuaf.util.LocalizedText("en", "text") ])
 
+    def test_util_VariantVector_recursive(self):
+        def isEqual(a, b):
+            """Compare 2 floats."""
+            return abs(a - b) < 0.00001
+        
+        vec1 = pyuaf.util.VariantVector()
+        vec1.append(pyuaf.util.primitives.Float(2.3))
+        vec1.append(pyuaf.util.primitives.UInt32(33))
+        
+        vec2 = pyuaf.util.VariantVector()
+        vec2.append(vec1)
+        vec2.append(pyuaf.util.primitives.UInt32(44))
+        
+        vec3 = pyuaf.util.VariantVector()
+        vec3.append(vec2)
+        vec3.append(pyuaf.util.primitives.UInt32(55))
+        
+        assert isEqual(vec3[0][0][0].value, 2.3)
+        assert isEqual(vec3[0][0][1].value, 33)
+        assert isEqual(vec3[0][1].value, 44)
+        assert isEqual(vec3[1].value, 55)
+
 
 if __name__ == '__main__':
     unittest.TextTestRunner(verbosity = ARGS.verbosity).run(suite())
