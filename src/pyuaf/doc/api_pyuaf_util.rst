@@ -3453,6 +3453,84 @@
 
 
 
+*class* ServerOnNetwork
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.ServerOnNetwork
+
+    A ServerOnNetwork instance describes a Server found on the network using the
+    FindServersOnNetwork service.
+
+
+    * Methods:
+
+        .. automethod:: pyuaf.util.ServerOnNetwork.__init__
+    
+            Construct a new ApplicationDescription.
+    
+
+    * Attributes:
+  
+  
+        .. autoattribute:: pyuaf.util.ServerOnNetwork.recordId
+        
+            The record id (type ``int``).
+    
+        .. autoattribute:: pyuaf.util.ServerOnNetwork.serverName
+        
+            The server name (type ``str``).
+    
+        .. autoattribute:: pyuaf.util.ServerOnNetwork.discoveryUrl
+        
+            The discovery server URL (type ``str``).
+    
+        .. autoattribute:: pyuaf.util.ServerOnNetwork.serverCapabilities
+        
+            The server capabilities (a :class:`~pyuaf.util.StringVector`).
+    
+
+
+*class* ServerOnNetworkVector
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.ServerOnNetworkVector
+
+    A ServerOnNetworkVector is a container that holds elements of type 
+    :class:`pyuaf.util.ServerOnNetwork`. 
+    It is an artifact automatically generated from the C++ UAF code, and has the same functionality
+    as a ``list`` of :class:`pyuaf.util.ServerOnNetwork`.
+
+    Usage example:
+    
+    .. doctest::
+    
+        >>> import pyuaf
+        >>> from pyuaf.util import ServerOnNetworkVector, \
+        ...                        ServerOnNetwork
+        
+        >>> # construct a ServerOnNetworkVector without elements:
+        >>> vec = ServerOnNetworkVector()
+        
+        >>> noOfElements = len(vec) # will be 0
+        
+        >>> vec.append(ServerOnNetwork())
+        
+        >>> vec[0].discoveryUrl = "opc.tcp://192.168.100.102"
+        >>> noOfElements = len(vec) # will be 1
+        
+        >>> vec.resize(4)
+        
+        >>> noOfElements = len(vec) # will be 4
+        
+        >>> # you may construct a ServerOnNetworkVector from a regular Python list:
+        >>> someOtherVec = ServerOnNetworkVector( [ ServerOnNetwork(), 
+        ...                                         ServerOnNetwork() ] )
+
+
+
+
 *class* SimpleAttributeOperand
 ----------------------------------------------------------------------------------------------------
 

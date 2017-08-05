@@ -114,6 +114,8 @@
         .. autosummary:: 
                 Client.serversFound
                 Client.findServersNow
+                Client.serversOnNetworkFound
+                Client.findServersOnNetworkNow
     
     *Override connect errors:*
         .. autosummary:: 
