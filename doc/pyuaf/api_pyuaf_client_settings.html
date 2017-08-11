@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client.settings &mdash; PyUAF 2.3.0 documentation</title>
+    <title>pyuaf.client.settings &mdash; PyUAF 2.4.0 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.3.0',
+        VERSION:     '2.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.3.0 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.4.0 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.sessionstates" href="api_pyuaf_client_sessionstates.html" />
     <link rel="prev" title="pyuaf.client.results" href="api_pyuaf_client_results.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_results.html" title="pyuaf.client.results"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.3.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.4.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -361,6 +361,50 @@ as a <code class="docutils literal"><span class="pre">list</span></code> of <cod
 <code class="descname">discoveryIntervalSec</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.discoveryIntervalSec" title="Permalink to this definition">¶</a></dt>
 <dd><p>The interval between discovery attempts which are continuously running in the
 background, in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+<li><p class="first">Attributes related to the network-wide discovery process (FindServersOnNetwork)</p>
+<blockquote>
+<div><dl class="attribute">
+<dt id="pyuaf.client.settings.ClientSettings.discoveryOnNetworkEnable">
+<code class="descname">discoveryOnNetworkEnable</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.discoveryOnNetworkEnable" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, the FindServersOnNetwork service will be called automatically, on every
+discovery cycle. Default: False, type: <code class="docutils literal"><span class="pre">bool</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">discoveryFindServersTimeoutSec</code></dt>
+<dd><p>The timeout value for the FindServersOnNetwork discovery service, in seconds, as a <code class="docutils literal"><span class="pre">float</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.settings.ClientSettings.discoveryOnNetworkDiscoveryServer">
+<code class="descname">discoveryOnNetworkDiscoveryServer</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.discoveryOnNetworkDiscoveryServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>The discovery server (as a <code class="docutils literal"><span class="pre">str</span></code>) to invoke the FindServersOnNetwork on.
+Default: &#8220;opc.tcp://localhost&#8221;.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.settings.ClientSettings.discoveryOnNetworkStartingRecordId">
+<code class="descname">discoveryOnNetworkStartingRecordId</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.discoveryOnNetworkStartingRecordId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Only find servers with record id greater than this number. Default: 0, type: <code class="docutils literal"><span class="pre">int</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyuaf.client.settings.ClientSettings.discoveryOnNetworkServerCapabilities">
+<code class="descname">discoveryOnNetworkServerCapabilities</code><a class="headerlink" href="#pyuaf.client.settings.ClientSettings.discoveryOnNetworkServerCapabilities" title="Permalink to this definition">¶</a></dt>
+<dd><p>Only find servers with all of the given capabilities
+(as a <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.StringVector" title="pyuaf.util.StringVector"><code class="xref py py-class docutils literal"><span class="pre">StringVector</span></code></a>, which can be treated more or less
+as a <code class="docutils literal"><span class="pre">list</span></code> of <code class="docutils literal"><span class="pre">str</span></code>). Default: empty vector, which means: no filter, find all.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">discoveryOnNetworkStartingRecordId</code></dt>
+<dd><p>Only find the given amount of servers on the network. Default: 0 (no limit), type: <code class="docutils literal"><span class="pre">int</span></code>.</p>
 </dd></dl>
 
 </div></blockquote>
@@ -1492,7 +1536,7 @@ in seconds, as a <code class="docutils literal"><span class="pre">float</span></
         <li class="right" >
           <a href="api_pyuaf_client_results.html" title="pyuaf.client.results"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.3.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.4.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.client &mdash; PyUAF 2.3.0 documentation</title>
+    <title>pyuaf.client &mdash; PyUAF 2.4.0 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.3.0',
+        VERSION:     '2.4.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.3.0 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.4.0 documentation" href="index.html" />
     <link rel="next" title="pyuaf.client.connectionsteps" href="api_pyuaf_client_connectionsteps.html" />
     <link rel="prev" title="pyuaf" href="api_pyuaf.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.3.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.4.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -366,6 +366,12 @@
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.findServersNow" title="pyuaf.client.Client.findServersNow"><code class="xref py py-obj docutils literal"><span class="pre">Client.findServersNow</span></code></a>()</td>
 <td>Discover the servers immediately (instead of waiting for the background thread) by  using the OPC UA FindServers service.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#pyuaf.client.Client.serversOnNetworkFound" title="pyuaf.client.Client.serversOnNetworkFound"><code class="xref py py-obj docutils literal"><span class="pre">Client.serversOnNetworkFound</span></code></a>()</td>
+<td>Get a list of the server descriptions of the servers found by querying the LDS.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#pyuaf.client.Client.findServersOnNetworkNow" title="pyuaf.client.Client.findServersOnNetworkNow"><code class="xref py py-obj docutils literal"><span class="pre">Client.findServersOnNetworkNow</span></code></a>()</td>
+<td>Discover the servers on the network immediately (instead of waiting for the background  thread) by using the OPC UA FindServersOnNetwork service.</td>
 </tr>
 </tbody>
 </table>
@@ -1198,6 +1204,36 @@ by the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.
 <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings" title="pyuaf.client.settings.ClientSettings"><code class="xref py py-class docutils literal"><span class="pre">ClientSettings</span></code></a>.
 Since discovery is also handled silently (and periodically) in the background, 
 you normally don&#8217;t have to call <a class="reference internal" href="#pyuaf.client.Client.findServersNow" title="pyuaf.client.Client.findServersNow"><code class="xref py py-meth docutils literal"><span class="pre">findServersNow()</span></code></a> manually.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.DiscoveryError" title="pyuaf.util.errors.DiscoveryError"><strong>pyuaf.util.errors.DiscoveryError</strong></a> &#8211; Raised in case the FindServers service failed for one or more URLs.</li>
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.InvalidRequestError" title="pyuaf.util.errors.InvalidRequestError"><strong>pyuaf.util.errors.InvalidRequestError</strong></a> &#8211; Raised in case the FindServers service is already being invoked by the client (because
+no parallel FindServers invocations are allowed!). This can happen for instance when
+multiple threads (created by the user, or running in the background of the Client
+instance) try to use the FindServers service at the same time.</li>
+<li><a class="reference internal" href="api_pyuaf_util_errors.html#pyuaf.util.errors.UafError" title="pyuaf.util.errors.UafError"><strong>pyuaf.util.errors.UafError</strong></a> &#8211; Base exception, catch this to handle any other errors.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.findServersOnNetworkNow">
+<code class="descname">findServersOnNetworkNow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.Client.findServersOnNetworkNow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discover the servers on the network immediately (instead of waiting for the background 
+thread) by using the OPC UA FindServersOnNetwork service.</p>
+<p>The URL of the discovery server is specified 
+by the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings.discoveryOnNetworkDiscoveryServer" title="pyuaf.client.settings.ClientSettings.discoveryOnNetworkDiscoveryServer"><code class="xref py py-attr docutils literal"><span class="pre">discoveryOnNetworkDiscoveryServer</span></code></a> 
+attribute of the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings" title="pyuaf.client.settings.ClientSettings"><code class="xref py py-class docutils literal"><span class="pre">ClientSettings</span></code></a>.
+Since discovery is also handled silently (and periodically) in the background <em>if</em> 
+<a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings.discoveryOnNetworkEnable" title="pyuaf.client.settings.ClientSettings.discoveryOnNetworkEnable"><code class="xref py py-attr docutils literal"><span class="pre">discoveryOnNetworkEnable</span></code></a> is True,
+you normally don&#8217;t have to call <a class="reference internal" href="#pyuaf.client.Client.findServersOnNetworkNow" title="pyuaf.client.Client.findServersOnNetworkNow"><code class="xref py py-meth docutils literal"><span class="pre">findServersOnNetworkNow()</span></code></a> 
+manually.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -2084,6 +2120,25 @@ via the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of the application descriptions that were found.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.ApplicationDescription" title="pyuaf.util.ApplicationDescription"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.util.ApplicationDescription</span></code></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.client.Client.serversOnNetworkFound">
+<code class="descname">serversOnNetworkFound</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.client.Client.serversOnNetworkFound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of the server descriptions of the servers found by querying the LDS.</p>
+<p>The discovery is periodically being run in the background, so the returned list may 
+change. The cycle time is of the discovery is configurable
+via the <a class="reference internal" href="api_pyuaf_client_settings.html#pyuaf.client.settings.ClientSettings" title="pyuaf.client.settings.ClientSettings"><code class="xref py py-class docutils literal"><span class="pre">ClientSettings</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of the servers that were found.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><code class="docutils literal"><span class="pre">list</span></code> of <a class="reference internal" href="api_pyuaf_util.html#pyuaf.util.ServerOnNetwork" title="pyuaf.util.ServerOnNetwork"><code class="xref py py-class docutils literal"><span class="pre">pyuaf.util.ServerOnNetwork</span></code></a></td>
 </tr>
 </tbody>
 </table>
@@ -3034,7 +3089,7 @@ state of the subscription, the handle, etc.</p>
         <li class="right" >
           <a href="api_pyuaf.html" title="pyuaf"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.3.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.4.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
