@@ -49,6 +49,11 @@ namespace uaf
       discoveryFindServersTimeoutSec(2.0),
       discoveryGetEndpointsTimeoutSec(1.0),
       discoveryIntervalSec(30.0),
+      discoveryOnNetworkEnable(false),
+      discoveryOnNetworkTimeoutSec(30.0),
+      discoveryOnNetworkDiscoveryServer("opc.tcp://localhost"),
+      discoveryOnNetworkStartingRecordId(0),
+      discoveryOnNetworkMaxRecordsToReturn(0),
       certificateTrustListLocation("PKI/trusted/certs/"),
       certificateRevocationListLocation("PKI/trusted/crl/"),
       issuersCertificatesLocation("PKI/issuers/certs/"),
@@ -56,7 +61,6 @@ namespace uaf
       createSecurityLocationsIfNeeded(true),
       clientPrivateKey("PKI/client/private/client.pem"),
       clientCertificate("PKI/client/certs/client.der")
-
     {}
 
     // Constructor
@@ -68,6 +72,11 @@ namespace uaf
       discoveryFindServersTimeoutSec(2.0),
       discoveryGetEndpointsTimeoutSec(1.0),
       discoveryIntervalSec(30.0),
+      discoveryOnNetworkEnable(false),
+      discoveryOnNetworkTimeoutSec(30.0),
+      discoveryOnNetworkDiscoveryServer("opc.tcp://localhost"),
+      discoveryOnNetworkStartingRecordId(0),
+      discoveryOnNetworkMaxRecordsToReturn(0),
       certificateTrustListLocation("PKI/trusted/certs/"),
       certificateRevocationListLocation("PKI/trusted/crl/"),
       issuersCertificatesLocation("PKI/issuers/certs/"),
@@ -89,6 +98,11 @@ namespace uaf
       discoveryFindServersTimeoutSec(2.0),
       discoveryGetEndpointsTimeoutSec(1.0),
       discoveryIntervalSec(30.0),
+      discoveryOnNetworkEnable(false),
+      discoveryOnNetworkTimeoutSec(30.0),
+      discoveryOnNetworkDiscoveryServer("opc.tcp://localhost"),
+      discoveryOnNetworkStartingRecordId(0),
+      discoveryOnNetworkMaxRecordsToReturn(0),
       certificateTrustListLocation("PKI/trusted/certs/"),
       certificateRevocationListLocation("PKI/trusted/crl/"),
       issuersCertificatesLocation("PKI/issuers/certs/"),
@@ -251,6 +265,45 @@ namespace uaf
         ss << fillToPos(ss, colon);
         ss << ": " << discoveryGetEndpointsTimeoutSec << "\n";
 
+        ss << indent << " - discoveryOnNetworkEnable";
+        ss << fillToPos(ss, colon);
+        ss << ": " << (discoveryOnNetworkEnable ? "true" : "false") << "\n";
+
+        ss << indent << " - discoveryOnNetworkTimeoutSec";
+        ss << fillToPos(ss, colon);
+        ss << ": " << discoveryOnNetworkTimeoutSec << "\n";
+
+        ss << indent << " - discoveryOnNetworkDiscoveryServer";
+        ss << fillToPos(ss, colon);
+        ss << ": " << discoveryOnNetworkDiscoveryServer << "\n";
+
+        ss << indent << " - discoveryOnNetworkStartingRecordId";
+        ss << fillToPos(ss, colon);
+        ss << ": " << discoveryOnNetworkStartingRecordId << "\n";
+
+        ss << indent << " - discoveryOnNetworkServerCapabilities[]";
+
+        if (discoveryOnNetworkServerCapabilities.size() == 0)
+        {
+            ss << fillToPos(ss, colon);
+            ss << ": []\n";
+        }
+        else
+        {
+            ss << "\n";
+
+            for (size_t i = 0; i<discoveryOnNetworkServerCapabilities.size(); i++)
+            {
+                ss << indent << "    - " << "discoveryOnNetworkServerCapabilities[" << i << "]";
+                fillToPos(ss, colon);
+                ss << ": " << discoveryOnNetworkServerCapabilities[i] << "\n";
+            }
+        }
+
+        ss << indent << " - discoveryOnNetworkMaxRecordsToReturn";
+        ss << fillToPos(ss, colon);
+        ss << ": " << discoveryOnNetworkMaxRecordsToReturn << "\n";
+
         ss << indent << " - certificateTrustListLocation";
         ss << fillToPos(ss, colon);
         ss << ": " << certificateTrustListLocation << "\n";
@@ -351,6 +404,12 @@ namespace uaf
                && object1.logToCallbackLevel == object2.logToCallbackLevel
                && object1.discoveryFindServersTimeoutSec == object2.discoveryFindServersTimeoutSec
                && object1.discoveryGetEndpointsTimeoutSec == object2.discoveryGetEndpointsTimeoutSec
+               && object1.discoveryOnNetworkEnable == object2.discoveryOnNetworkEnable
+               && object1.discoveryOnNetworkTimeoutSec == object2.discoveryOnNetworkTimeoutSec
+               && object1.discoveryOnNetworkDiscoveryServer == object2.discoveryOnNetworkDiscoveryServer
+               && object1.discoveryOnNetworkStartingRecordId == object2.discoveryOnNetworkStartingRecordId
+               && object1.discoveryOnNetworkServerCapabilities == object2.discoveryOnNetworkServerCapabilities
+               && object1.discoveryOnNetworkMaxRecordsToReturn == object2.discoveryOnNetworkMaxRecordsToReturn
                && object1.certificateTrustListLocation == object2.certificateTrustListLocation
                && object1.certificateRevocationListLocation == object2.certificateRevocationListLocation
                && object1.issuersCertificatesLocation == object2.issuersCertificatesLocation
@@ -391,6 +450,16 @@ namespace uaf
             return object1.discoveryFindServersTimeoutSec < object2.discoveryFindServersTimeoutSec;
         else if (object1.discoveryGetEndpointsTimeoutSec != object2.discoveryGetEndpointsTimeoutSec)
             return object1.discoveryGetEndpointsTimeoutSec < object2.discoveryGetEndpointsTimeoutSec;
+        else if (object1.discoveryOnNetworkEnable != object2.discoveryOnNetworkEnable)
+            return object1.discoveryOnNetworkEnable < object2.discoveryOnNetworkEnable;
+        else if (object1.discoveryOnNetworkTimeoutSec != object2.discoveryOnNetworkTimeoutSec)
+            return object1.discoveryOnNetworkTimeoutSec < object2.discoveryOnNetworkTimeoutSec;
+        else if (object1.discoveryOnNetworkDiscoveryServer != object2.discoveryOnNetworkDiscoveryServer)
+            return object1.discoveryOnNetworkDiscoveryServer < object2.discoveryOnNetworkDiscoveryServer;
+        else if (object1.discoveryOnNetworkStartingRecordId != object2.discoveryOnNetworkStartingRecordId)
+            return object1.discoveryOnNetworkStartingRecordId < object2.discoveryOnNetworkStartingRecordId;
+        else if (object1.discoveryOnNetworkMaxRecordsToReturn != object2.discoveryOnNetworkMaxRecordsToReturn)
+            return object1.discoveryOnNetworkMaxRecordsToReturn < object2.discoveryOnNetworkMaxRecordsToReturn;
         else if (object1.certificateTrustListLocation != object2.certificateTrustListLocation)
             return object1.certificateTrustListLocation < object2.certificateTrustListLocation;
         else if (object1.certificateRevocationListLocation != object2.certificateRevocationListLocation)

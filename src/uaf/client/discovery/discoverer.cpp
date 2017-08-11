@@ -34,7 +34,7 @@ namespace uaf
     // =============================================================================================
     Discoverer::Discoverer(LoggerFactory* loggerFactory, Database* database)
     : database_(database),
-      findServersBusy_(false)
+      findServersBusy_(false), findServersOnNetworkBusy_(false)
     {
         logger_ = new Logger(loggerFactory, "Discoverer");
         logger_->info("The discoverer has been constructed");
@@ -82,6 +82,12 @@ namespace uaf
         }
         else
         {
+
+            if (database_->clientSettings.discoveryOnNetworkEnable)
+            {
+                findServersOnNetwork();
+            }
+
             if (database_->clientSettings.discoveryUrls.size() > 0)
             {
                 // store the results in a temporary variable, and copy this temporary variable to the
@@ -121,10 +127,10 @@ namespace uaf
                             clientSecurityInfo, // ToDo replace
                             desc);
 
-                    // store the status
+					// store the status
                     sdkStatuses.push_back(discoveryStatus);
 
-                    // if the service call went OK, process the result
+					// if the service call went OK, process the result
                     if (discoveryStatus.isGood())
                     {
                         // loop through the results
@@ -143,22 +149,13 @@ namespace uaf
                         noOfErrors++;
                         logger_->error(discoveryStatus.toString());
                     }
-                }
 
-                if (noOfErrors > 0)
-                {
-                    ret = FindServersError(sdkStatuses, noOfErrors, discoveryUrls.size());
-                    logger_->error(ret.toString());
-                }
-                else
-                {
-                    ret = statuscodes::Good;
-                    logger_->debug("The FindServers service was successfully invoked on all URLs");
-                }
+				}
 
                 // copy the temporary application descriptions to the class member
                 serverDescriptions_ = serverDescriptions;
-            }
+
+			}
             else
             {
                 logger_->warning("Nothing to do: no discoveryUrls specified in the ClientConfig");
@@ -177,6 +174,135 @@ namespace uaf
         }
 
         return ret;
+    }
+
+
+	// Get the discovery URL from the LDS-ME
+    // =============================================================================================
+	Status Discoverer::findServersOnNetwork()
+    {
+        Status ret;
+
+        logger_->debug("Finding all configured servers on the network");
+
+        // check if findServersOnNetwork() is already busy
+        bool alreadyBusy;
+
+        findServersOnNetworkBusyMutex_.lock();
+        if (findServersOnNetworkBusy_)
+        {
+            alreadyBusy = true;
+        }
+        else
+        {
+            findServersOnNetworkBusy_ = true;
+            alreadyBusy = false;
+        }
+        findServersOnNetworkBusyMutex_.unlock();
+
+        if (alreadyBusy)
+        {
+            ret = NoParallelFindServersAllowedError();
+            logger_->error(ret.toString());
+        }
+        else
+        {
+			// store the results in a temporary variable, and copy this temporary variable to the
+			// serverDescriptions_ member when finished
+            vector<ServerOnNetwork> serversOnNetwork;
+			std::string serverUri = database_->clientSettings.discoveryOnNetworkDiscoveryServer;
+
+			// set the call timeout
+			UaClientSdk::ServiceSettings serviceSettings;
+			serviceSettings.callTimeout = int32_t(
+				database_->clientSettings.discoveryOnNetworkTimeoutSec * 1000);
+
+			UaClientSdk::ClientSecurityInfo clientSecurityInfo;
+
+			logger_->debug("Finding the servers on network for URL '%s' (timeout %dms)",
+				serverUri.c_str(),
+				serviceSettings.callTimeout);
+
+			// invoke the FindServersOnNetworks service for the current URL
+			UaDateTime lastCounterResetTime;
+			UaStringArray serverCapabilities;
+            serverCapabilities.resize(database_->clientSettings.discoveryOnNetworkServerCapabilities.size());
+			for (std::size_t i = 0;
+			        i < database_->clientSettings.discoveryOnNetworkServerCapabilities.size();
+			        i++)
+			{
+			    UaString(database_->clientSettings.discoveryOnNetworkServerCapabilities[i].c_str()).copyTo(
+			            &serverCapabilities[i]);
+			}
+
+			UaServerOnNetworks servers;
+			SdkStatus discoveryStatus = uaDiscovery_.findServersOnNetwork(
+				serviceSettings,
+				UaString(serverUri.c_str()),
+				clientSecurityInfo,
+				database_->clientSettings.discoveryOnNetworkStartingRecordId,
+				serverCapabilities,
+                database_->clientSettings.discoveryOnNetworkMaxRecordsToReturn,
+				lastCounterResetTime,
+				servers);
+
+
+			// if the service call went OK, process the result
+			if (discoveryStatus.isGood())
+			{
+				// create a copy of the URLs
+                vector<string> discoveryUrls = database_->clientSettings.discoveryUrls;
+
+                    // loop through the results
+                    for (uint32_t i=0; i<servers.length(); i++)
+                    {
+						bool isInside = false;
+
+						// loop through the given discovery urls
+						for (vector<string>::const_iterator iter = discoveryUrls.begin();
+							iter != discoveryUrls.end(); iter++)
+						{
+							string url(*iter);
+
+							if(url == UaString(servers[i].DiscoveryUrl).toUtf8())
+								isInside = true;
+						}
+
+						// update discoveryurls only, when it was not in the database
+						if(!isInside)
+						{
+							database_->clientSettings.discoveryUrls.push_back(UaString(servers[i].DiscoveryUrl).toUtf8());
+							logger_->debug("Found server on network by localhost at URL '%s'.", serverUri.c_str());
+							logger_->debug("So update the discoveryUrls with '%s'.",UaString(&servers[i].DiscoveryUrl).toUtf8());
+						}
+					}
+
+					ret = statuscodes::Good;
+
+				// copy the temporary application descriptions to the class member
+                vector<ServerOnNetwork> serverOnNetworkDescriptions;
+				for(uint32_t i = 0; i < servers.length(); i++)
+				{
+				    serverOnNetworkDescriptions.push_back(ServerOnNetwork(servers[i]));
+				}
+                serverOnNetworkDescriptions_ = serverOnNetworkDescriptions;
+
+			}
+			else
+			{
+				logger_->error(discoveryStatus.toString());
+				ret = statuscodes::FindServersError;
+			}
+
+			// reset the findServersBusy_ flag
+            findServersOnNetworkBusyMutex_.lock();
+            findServersOnNetworkBusy_ = false;
+            findServersOnNetworkBusyMutex_.unlock();
+
+		}
+
+        return ret;
+
     }
 
 
@@ -217,6 +343,13 @@ namespace uaf
     const vector<ApplicationDescription>& Discoverer::serversFound() const
     {
         return serverDescriptions_;
+    }
+
+    // Get all servers found on the network
+    // =============================================================================================
+    const vector<ServerOnNetwork>& Discoverer::serversOnNetworkFound() const
+    {
+        return serverOnNetworkDescriptions_;
     }
 
 
@@ -298,7 +431,6 @@ namespace uaf
 
 
 }
-
 
 
 

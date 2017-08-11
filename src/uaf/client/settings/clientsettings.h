@@ -70,6 +70,12 @@ namespace uaf
          *  - discoveryFindServersTimeoutSec : 2.0
          *  - discoveryGetEndpointsTimeoutSec : 1.0
          *  - discoveryIntervalSec : 30.0
+         *  - discoveryOnNetworkEnable: false,
+         *  - discoveryOnNetworkTimeoutSec: 30.0
+         *  - discoveryOnNetworkDiscoveryServer: "opc.tcp://localhost"
+         *  - discoveryOnNetworkStartingRecordId: 0
+         *  - discoveryOnNetworkServerCapabilities: []
+         *  - discoveryOnNetworkMaxRecordsToReturn: 0
          *  - logToStdOutLevel : uaf::loglevels::Disabled
          *  - logToCallbackLevel : uaf::loglevels::Disabled
          *  - certificateTrustListLocation : "PKI/trusted/certs/"
@@ -137,6 +143,29 @@ namespace uaf
         /** The interval between discovery attempts which are continuously running in the
          *  background, in seconds. */
         float discoveryIntervalSec;
+
+        /** If true, the FindServersOnNetwork service will be called automatically, on every
+         * discovery cycle. Default: false. */
+        bool discoveryOnNetworkEnable;
+
+        /** The timeout value for the FindServersOnNetwork discovery service, in seconds. */
+        float discoveryOnNetworkTimeoutSec;
+
+        /** The discovery server to invoke the FindServersOnNetwork on.
+         * Default: opc.tcp://localhost */
+        std::string discoveryOnNetworkDiscoveryServer;
+
+        /** Only find servers with record id greater than this number.
+         * Default: 0 */
+        uint32_t discoveryOnNetworkStartingRecordId;
+
+        /** Only find servers with all of the given capabilities.
+         * Default: empty vector = find all. */
+        std::vector<std::string> discoveryOnNetworkServerCapabilities;
+
+        /** Only find the given amount of servers on the network.
+         * Default: 0 = no limit. */
+        uint32_t discoveryOnNetworkMaxRecordsToReturn;
 
 
         /////// Security ///////

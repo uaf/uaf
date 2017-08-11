@@ -921,6 +921,51 @@ class Client(ClientBase):
         return l
     
     
+    def findServersOnNetworkNow(self):
+       """ 
+       Discover the servers on the network immediately (instead of waiting for the background 
+       thread) by using the OPC UA FindServersOnNetwork service.
+           
+       The URL of the discovery server is specified 
+       by the :attr:`~pyuaf.client.settings.ClientSettings.discoveryOnNetworkDiscoveryServer` 
+       attribute of the :class:`~pyuaf.client.settings.ClientSettings`.
+       Since discovery is also handled silently (and periodically) in the background *if* 
+       :attr:`~pyuaf.client.settings.ClientSettings.discoveryOnNetworkEnable` is True,
+       you normally don't have to call :meth:`~pyuaf.client.Client.findServersOnNetworkNow` 
+       manually.
+       
+       :raise pyuaf.util.errors.DiscoveryError:
+            Raised in case the FindServers service failed for one or more URLs.
+       :raise pyuaf.util.errors.InvalidRequestError:
+            Raised in case the FindServers service is already being invoked by the client (because
+            no parallel FindServers invocations are allowed!). This can happen for instance when
+            multiple threads (created by the user, or running in the background of the Client
+            instance) try to use the FindServers service at the same time.
+       :raise pyuaf.util.errors.UafError:
+            Base exception, catch this to handle any other errors.
+       """
+       ClientBase.findServersOnNetworkNow(self).test()
+    
+    
+    def serversOnNetworkFound(self):
+        """
+        Get a list of the server descriptions of the servers found by querying the LDS.
+        
+        The discovery is periodically being run in the background, so the returned list may 
+        change. The cycle time is of the discovery is configurable
+        via the :class:`~pyuaf.client.settings.ClientSettings`.
+        
+        :return: A list of the servers that were found.
+        :rtype: ``list`` of :class:`pyuaf.util.ServerOnNetwork`
+        """
+        descriptionVector = ClientBase.serversOnNetworkFound(self)
+        # put the elements in a normal python list
+        l = []
+        for desc in descriptionVector:
+            l.append(desc)
+        return l
+    
+    
     def getEndpoints(self, discoveryUrl):
         """
         Get a list of endpoint descriptions supported by the server.

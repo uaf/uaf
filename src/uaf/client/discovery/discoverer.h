@@ -34,6 +34,7 @@
 #include "uaf/util/status.h"
 #include "uaf/util/sdkstatus.h"
 #include "uaf/util/applicationdescription.h"
+#include "uaf/util/serveronnetwork.h"
 #include "uaf/util/endpointdescription.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/database/database.h"
@@ -74,6 +75,13 @@ namespace uaf
 
 
         /**
+         * Update the discoveryUrls by calling the OPC UA FindServersOnNetwork service
+         * on the configured discovery server in ClientSettings.
+         */
+        uaf::Status findServersOnNetwork();
+
+
+        /**
          * Get the discovery URLs for the given server URI.
          *
          * @param serverUri     The URI of the server of which you would like to get the
@@ -108,6 +116,14 @@ namespace uaf
         const std::vector<uaf::ApplicationDescription>& serversFound() const;
 
 
+        /**
+         * Get a const reference to the servers that were found on the network.
+         *
+         * @return  A vector of the server descriptions that were found on the network.
+         */
+        const std::vector<uaf::ServerOnNetwork>& serversOnNetworkFound() const;
+
+
     private:
 
         // no copying or assigning allowed
@@ -120,10 +136,14 @@ namespace uaf
         uaf::Database* database_;
         // are we busy with findServers()?
         bool findServersBusy_;
-        // mutex to change the internal state
+        bool findServersOnNetworkBusy_;
+        // mutexes to change the internal state
         UaMutex findServersBusyMutex_;
+        UaMutex findServersOnNetworkBusyMutex_;
         // the latest application descriptions
         std::vector<uaf::ApplicationDescription> serverDescriptions_;
+        // the latest server-on-network descriptions
+        std::vector<uaf::ServerOnNetwork> serverOnNetworkDescriptions_;
         // UaDiscovery instance
         UaClientSdk::UaDiscovery uaDiscovery_;
     };

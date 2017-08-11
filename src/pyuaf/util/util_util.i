@@ -66,6 +66,7 @@
 #include "uaf/util/structuredefinition.h"
 #include "uaf/util/genericstructurevalue.h"
 #include "uaf/util/genericunionvalue.h"
+#include "uaf/util/serveronnetwork.h"
 %}
 
 //#define SWIG_NO_EXPORT_ITERATOR_METHODS 1
@@ -178,6 +179,7 @@ UAF_WRAP_CLASS("uaf/util/pkicertificate.h"         , uaf , PkiCertificate       
 UAF_WRAP_CLASS("uaf/util/sdkstatus.h"              , uaf , SdkStatus               , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/structurefield.h"         , uaf , StructureField          , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/structuredefinition.h"    , uaf , StructureDefinition     , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/serveronnetwork.h"        , uaf , ServerOnNetwork         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ServerOnNetworkVector)
 
 
 // also include the Variant typemap(s)
