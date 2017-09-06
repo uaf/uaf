@@ -767,6 +767,114 @@ namespace uaf
     }
 
 
+    // Register a callback for a monitored data item
+    // =============================================================================================
+    void Client::registerDataChangeCallback(
+           uaf::ClientHandle                       clientHandle,
+           uaf::Callback<uaf::DataChangeNotification> callback)
+    {
+        dataCallbackRegistry_.RegisterCallback(clientHandle, callback);
+    }
+
+
+    // Register a callback for a monitored event item
+    // =============================================================================================
+    void Client::registerEventCallback(
+           uaf::ClientHandle                       clientHandle,
+           uaf::Callback<uaf::EventNotification> callback)
+    {
+        eventCallbackRegistry_.RegisterCallback(clientHandle, callback);
+    }
+
+
+    // Register a callback for all monitored data items
+    // =============================================================================================
+    void Client::registerDataChangeCallback(
+           uaf::Callback<uaf::DataChangeNotification> callback)
+    {
+        dataCallbackRegistry_.RegisterCallback(callback);
+    }
+
+
+    // Register a callback for all monitored event items
+    // =============================================================================================
+    void Client::registerEventCallback(
+           uaf::Callback<uaf::EventNotification> callback)
+    {
+        eventCallbackRegistry_.RegisterCallback(callback);
+    }
+
+
+    // Unregister callbacks for a monitored data item
+    // =============================================================================================
+    void Client::unregisterDataChangeCallbacks(
+           uaf::ClientHandle                       clientHandle)
+    {
+        dataCallbackRegistry_.UnregisterCallbacks(clientHandle);
+    }
+
+
+    // Unregister callbacks for a monitored event item
+    // =============================================================================================
+    void Client::unregisterEventCallbacks(
+           uaf::ClientHandle                       clientHandle)
+    {
+        eventCallbackRegistry_.UnregisterCallbacks(clientHandle);
+    }
+
+
+    // Unregister callbacks for all monitored data items
+    // =============================================================================================
+    void Client::unregisterDataChangeCallbacks()
+    {
+        dataCallbackRegistry_.UnregisterCallbacks();
+    }
+
+
+    // Unregister callbacks for all monitored event items
+    // =============================================================================================
+    void Client::unregisterEventCallbacks()
+    {
+        eventCallbackRegistry_.UnregisterCallbacks();
+    }
+
+
+    // Unregister all callbacks for monitored data items
+    // =============================================================================================
+    void Client::unregisterAllDataChangeCallbacks()
+    {
+        dataCallbackRegistry_.UnregisterAllCallbacks();
+    }
+
+
+    // Unregister all callbacks for monitored event items
+    // =============================================================================================
+    void Client::unregisterAllEventCallbacks()
+    {
+        eventCallbackRegistry_.UnregisterAllCallbacks();
+    }
+
+    // Handle data change notifications
+    // =============================================================================================
+    void Client::dataChangesReceived(std::vector<uaf::DataChangeNotification> notifications)
+    {
+        for (auto i = notifications.begin(); i != notifications.end(); ++i)
+        {
+            dataCallbackRegistry_.CallCallback(*i);
+        }
+    }
+
+    // Handle events
+    // =============================================================================================
+    void Client::eventsReceived(std::vector<uaf::EventNotification> notifications)
+    {
+        for (auto i = notifications.begin(); i != notifications.end(); ++i)
+        {
+            eventCallbackRegistry_.CallCallback(*i);
+        }
+    }
+
+
     // Run the thread
     // =============================================================================================
     void Client::run()
@@ -1087,4 +1195,3 @@ namespace uaf
 
 
 }
-
