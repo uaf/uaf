@@ -12,17 +12,17 @@ namespace uaf
 
     // Register a catchall Callback
     // =============================================================================================
-    template<class NotificationType> void CallbackRegistry<NotificationType>::RegisterCallback(uaf::Callback<NotificationType> callback)
+    template<class NotificationType> void CallbackRegistry<NotificationType>::RegisterCallback(uaf::Callback<NotificationType>* pCallback)
     {
-        RegisterCallback(uaf::constants::CLIENTHANDLE_NOT_ASSIGNED, callback);
+        RegisterCallback(uaf::constants::CLIENTHANDLE_NOT_ASSIGNED, pCallback);
     }
 
     // Register an associated Callback
     // =============================================================================================
-    template<class NotificationType> void CallbackRegistry<NotificationType>::RegisterCallback(uaf::ClientHandle clientHandle, uaf::Callback<NotificationType> callback)
+    template<class NotificationType> void CallbackRegistry<NotificationType>::RegisterCallback(uaf::ClientHandle clientHandle, uaf::Callback<NotificationType>* pCallback)
     {
         UaMutexLocker locker(&mapMutex_);
-        callbackMap_.emplace(clientHandle, callback);
+        callbackMap_[clientHandle] = pCallback;
     }
 
     // Unregister all Callbacks
@@ -51,21 +51,18 @@ namespace uaf
     // Call all Callbacks associated with the clientHandle of notification or
     // with no association.
     // =============================================================================================
-    template<class NotificationType> void CallbackRegistry<NotificationType>::CallCallback(NotificationType notification)
+    template<class NotificationType> void CallbackRegistry<NotificationType>::CallCallback(const NotificationType& notification)
     {
         UaMutexLocker locker(&mapMutex_);
-        // Calling catchall callbacks
-        auto range = callbackMap_.equal_range(uaf::constants::CLIENTHANDLE_NOT_ASSIGNED);
-        for (auto i = range.first; i != range.second; ++i)
-        {
-            i->second(notification);
-        }
 
-        // Calling callbacks associated to the clientHandle
-        range = callbackMap_.equal_range(notification.clientHandle);
-        for (auto i = range.first; i != range.second; ++i)
+        typename std::map<uaf::ClientHandle, uaf::Callback<NotificationType>* >::const_iterator iter;
+
+        for (iter = callbackMap_.begin(); iter != callbackMap_.end(); ++iter)
         {
-            i->second(notification);
+            if (iter->first == uaf::constants::CLIENTHANDLE_NOT_ASSIGNED || iter->first == notification.clientHandle)
+            {
+                iter->second->operator()(notification);
+            }
         }
     }
 

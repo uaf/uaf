@@ -39,12 +39,12 @@ namespace uaf
         /**
          * Register a callback for all notifications.
          */
-        void RegisterCallback(uaf::Callback<NotificationType> callback);
+        void RegisterCallback(uaf::Callback<NotificationType>* pCallback);
 
         /**
          * Register a callback for a notification identified by clientHandle.
          */
-        void RegisterCallback(uaf::ClientHandle clientHandle, uaf::Callback<NotificationType> callback);
+        void RegisterCallback(uaf::ClientHandle clientHandle, uaf::Callback<NotificationType>* pCallback);
 
         /**
          * Unregister all callbacks.
@@ -64,10 +64,10 @@ namespace uaf
         /**
          * Emit a notification to registered callbacks.
          */
-        void CallCallback(NotificationType notification);
+        void CallCallback(const NotificationType& notification);
 
     private:
-        std::multimap<uaf::ClientHandle, uaf::Callback<NotificationType>> callbackMap_;
+        std::map<uaf::ClientHandle, uaf::Callback<NotificationType>* > callbackMap_;
 
         UaMutex mapMutex_;
     };

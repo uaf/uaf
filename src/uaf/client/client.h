@@ -1053,8 +1053,8 @@ namespace uaf
         * @param callback          A callback function.
         */
         void registerDataChangeCallback(
-               uaf::ClientHandle                       clientHandle,
-               uaf::Callback<uaf::DataChangeNotification> callback);
+               uaf::ClientHandle        clientHandle,
+               uaf::DataChangeCallback* pCallback);
 
 
         /**
@@ -1063,8 +1063,7 @@ namespace uaf
         * @param callback          A callback function.
         */
         void registerDataChangeCallback(
-               uaf::Callback<uaf::DataChangeNotification> callback);
-
+                uaf::DataChangeCallback* pCallback);
 
         /**
         * Register a callback for a monitored event.
@@ -1073,8 +1072,8 @@ namespace uaf
         * @param callback          A callback function.
         */
         void registerEventCallback(
-               uaf::ClientHandle                       clientHandle,
-               uaf::Callback<uaf::EventNotification> callback);
+                uaf::ClientHandle   clientHandle,
+                uaf::EventCallback* pCallback);
 
 
         /**
@@ -1082,8 +1081,7 @@ namespace uaf
         *
         * @param callback          A callback function.
         */
-        void registerEventCallback(
-               uaf::Callback<uaf::EventNotification> callback);
+        void registerEventCallback(uaf::EventCallback* pCallback);
 
 
         /**

@@ -13,37 +13,54 @@
  */
 
 #include "uaf/client/client.h"
+#include "uaf/util/callbacks.h"
 #include <iostream>
 
-void DataChanged(uaf::DataChangeNotification notification) {
-    uaf::Status status = notification.status;
-    uaf::Variant data  = notification.data;
-    double value0;
-    if (status.isGood() && data.toDouble(value0).isGood())
-        std::cout << "A double changed to: " << value0 << "\n";
-    else
-        std::cout << "No good double: " << status.toString() << "\n";
-}
 
-void StaticDataChanged(uaf::DataChangeNotification notification) {
-    uaf::Status status = notification.status;
-    uaf::Variant data  = notification.data;
-    double value0;
-    if (status.isGood() && data.toDouble(value0).isGood())
-        std::cout << "The static double changed to: " << value0 << "\n";
-    else
-        std::cout << "The static double turned bad: " << status.toString() << "\n";
-}
+class DataChanged : public uaf::DataChangeCallback
+{
+    void operator() (const uaf::DataChangeNotification& notification)
+    {
+        uaf::Status status = notification.status;
+        uaf::Variant data  = notification.data;
+        double value0;
+        if (status.isGood() && data.toDouble(value0).isGood())
+            std::cout << "A double changed to: " << value0 << "\n";
+        else
+            std::cout << "No good double: " << status.toString() << "\n";
+    }
+};
 
-void DynamicDataChanged(uaf::DataChangeNotification notification) {
-    uaf::Status status = notification.status;
-    uaf::Variant data  = notification.data;
-    double value0;
-    if (status.isGood() && data.toDouble(value0).isGood())
-        std::cout << "The dynamic double changed to: " << value0 << "\n";
-    else
-        std::cout << "The dynamic double turned bad: " << status.toString() << "\n";
-}
+
+class StaticDataChanged : public uaf::DataChangeCallback
+{
+    void operator() (const uaf::DataChangeNotification& notification)
+    {
+        uaf::Status status = notification.status;
+        uaf::Variant data  = notification.data;
+        double value0;
+        if (status.isGood() && data.toDouble(value0).isGood())
+            std::cout << "The static double changed to: " << value0 << "\n";
+        else
+            std::cout << "The static double turned bad: " << status.toString() << "\n";
+    }
+};
+
+
+class DynamicDataChanged : public uaf::DataChangeCallback
+{
+    void operator() (const uaf::DataChangeNotification& notification)
+    {
+        uaf::Status status = notification.status;
+        uaf::Variant data  = notification.data;
+        double value0;
+        if (status.isGood() && data.toDouble(value0).isGood())
+            std::cout << "The dynamic double changed to: " << value0 << "\n";
+        else
+            std::cout << "The dynamic double turned bad: " << status.toString() << "\n";
+    }
+};
+
 
 int main(int argc, char* argv[])
 {
@@ -62,6 +79,7 @@ int main(int argc, char* argv[])
     uaf::ClientSettings settings;
     settings.applicationName = "MyClient";
     settings.discoveryUrls.push_back("opc.tcp://localhost:48010");
+    // settings.logToStdOutLevel = uaf::loglevels::Debug; // uncomment for enabling logging
 
     // create the client
     uaf::Client myClient(settings);
@@ -85,15 +103,18 @@ int main(int argc, char* argv[])
     std::cout << "CreateMonitoredData Status: " << status.toString() << "\n";
 
     // register our callbacks
-    myClient.registerDataChangeCallback(myCreateMonitoredDataResult.targets[0].clientHandle, StaticDataChanged);
-    myClient.registerDataChangeCallback(myCreateMonitoredDataResult.targets[1].clientHandle, DynamicDataChanged);
-    myClient.registerDataChangeCallback(&DataChanged);
-    // To use a class instance method, register like this:
-    //myClient.registerDataChangeCallback(myCreateMonitoredDataResult.targets[0].clientHandle, std::bind(&MyClass::StaticDataChanged, myInstance, std::placeholders::_1));
+    StaticDataChanged staticDataChanged;
+    DynamicDataChanged dynamicDataChanged;
+    DataChanged dataChanged;
+
+    myClient.registerDataChangeCallback(myCreateMonitoredDataResult.targets[0].clientHandle, &staticDataChanged);
+    myClient.registerDataChangeCallback(myCreateMonitoredDataResult.targets[1].clientHandle, &dynamicDataChanged);
+    myClient.registerDataChangeCallback(&dataChanged);
 
     // wait for some data
     std::cout << "Waiting for notifications. Press Enter to exit.\n";
     std::cin.get();
+
     // don't worry about disconnecting sessions etc., these things will be done automatically
     // when the client is destroyed.
 
