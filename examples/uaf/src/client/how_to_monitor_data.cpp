@@ -15,19 +15,15 @@
 #include "uaf/client/client.h"
 #include "uaf/util/callbacks.h"
 #include <iostream>
+#include <functional>
+
 
 
 class DataChanged : public uaf::DataChangeCallback
 {
     void operator() (const uaf::DataChangeNotification& notification)
     {
-        uaf::Status status = notification.status;
-        uaf::Variant data  = notification.data;
-        double value0;
-        if (status.isGood() && data.toDouble(value0).isGood())
-            std::cout << "A double changed to: " << value0 << "\n";
-        else
-            std::cout << "No good double: " << status.toString() << "\n";
+        std::cout << "New notification received: " << notification.toString() << "\n";
     }
 };
 
@@ -62,6 +58,37 @@ class DynamicDataChanged : public uaf::DataChangeCallback
 };
 
 
+class MyClass
+{
+public:
+    static void f1(MyClass* m, const uaf::DataChangeNotification& notification)
+    {
+        float value0;
+        notification.data.toFloat(value0);
+        std::cout << "f1: float changed to: " << value0 << "\n";
+    }
+    static void f2(MyClass* m, const uaf::DataChangeNotification& notification)
+    {
+        uint32_t value0;
+        notification.data.toUInt32(value0);
+        std::cout << "f2: uint32 changed to: " << value0 << "\n";
+    }
+private:
+    std::string _name;
+};
+
+
+template <void (*T)(MyClass*, const uaf::DataChangeNotification&)>
+class Binding : public uaf::DataChangeCallback
+{
+public:
+    MyClass* _instance;
+    Binding(MyClass* instance) : _instance(instance) {}
+    void operator() (const uaf::DataChangeNotification& notification) { T(_instance, notification); }
+};
+
+
+
 int main(int argc, char* argv[])
 {
     // always initialize the framework first!
@@ -74,6 +101,8 @@ int main(int argc, char* argv[])
     // define addresses of nodes we want to monitor
     uaf::Address staticDoubleNode(uaf::NodeId("Demo.Static.Scalar.Double" , demoNsUri), demoServerUri);
     uaf::Address dynamicDoubleNode(uaf::NodeId("Demo.Dynamic.Scalar.Double", demoNsUri), demoServerUri);
+    uaf::Address dynamicFloatNode(uaf::NodeId("Demo.Dynamic.Scalar.Float", demoNsUri), demoServerUri);
+    uaf::Address dynamicUInt32Node(uaf::NodeId("Demo.Dynamic.Scalar.UInt32", demoNsUri), demoServerUri);
 
     // define the ClientSettings:
     uaf::ClientSettings settings;
@@ -88,6 +117,8 @@ int main(int argc, char* argv[])
     std::vector<uaf::Address> myMonitoredData;
     myMonitoredData.push_back(staticDoubleNode);
     myMonitoredData.push_back(dynamicDoubleNode);
+    myMonitoredData.push_back(dynamicFloatNode);
+    myMonitoredData.push_back(dynamicUInt32Node);
 
     // create the monitoring
     uaf::CreateMonitoredDataResult myCreateMonitoredDataResult;
@@ -111,6 +142,14 @@ int main(int argc, char* argv[])
     myClient.registerDataChangeCallback(myCreateMonitoredDataResult.targets[1].clientHandle, &dynamicDataChanged);
     myClient.registerDataChangeCallback(&dataChanged);
 
+    MyClass myInstance;
+
+    Binding<MyClass::f1> f1(&myInstance);
+    Binding<MyClass::f2> f2(&myInstance);
+
+    myClient.registerDataChangeCallback(myCreateMonitoredDataResult.targets[2].clientHandle, &f1);
+    myClient.registerDataChangeCallback(myCreateMonitoredDataResult.targets[3].clientHandle, &f2);
+
     // wait for some data
     std::cout << "Waiting for notifications. Press Enter to exit.\n";
     std::cin.get();
@@ -120,3 +159,4 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+
