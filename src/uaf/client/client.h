@@ -131,11 +131,27 @@ namespace uaf
 
 
         /**
+         * Find the servers on the network now (i.e. irrespective of the thread running in the
+         * background, which is also periodically trying to find the servers in the system
+         * if enabled by the clientsettings).
+         */
+        uaf::Status findServersOnNetworkNow();
+
+
+        /**
          * Get a const reference to the servers that were found.
          *
          * @return  A vector of the application descriptions that were discovered.
          */
         const std::vector<uaf::ApplicationDescription>& serversFound() const;
+
+
+        /**
+         * Get a const reference to the servers that were found on the network.
+         *
+         * @return  A vector of the server descriptions that were found on the network.
+         */
+        const std::vector<uaf::ServerOnNetwork>& serversOnNetworkFound() const;
 
 
         /**

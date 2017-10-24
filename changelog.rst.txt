@@ -2,7 +2,8 @@
 UAF changelog                     
 ====================================================================================================
 
-Version 2.4.0 @ 2017/10/24
+
+Version 2.5.0 @ 2017/10/24
 ----------------------------------------------------------------------------------------------------
 
 - new feature (https://github.com/uaf/uaf/issues/127):
@@ -10,6 +11,32 @@ Version 2.4.0 @ 2017/10/24
   See src/uaf/util/callbacks.h and uaf/util/callbackregistry.h for new source code.
   See examples/uaf/src/client/how_to_monitor_data.cpp for an example.
 
+Version 2.4.0 @ 2017/08/11
+----------------------------------------------------------------------------------------------------
+
+- new feature (https://github.com/uaf/uaf/issues/123):
+  Now supporting FindServersOnNetwork (LDS-ME). 
+  
+- The following classes were added:
+
+  - uaf::ServerOnNetwork                  (pyuaf.util.ServerOnNetwork)
+  - pyuaf.util.ServerOnNetworkVector
+ 
+- The following methods were added:
+ 
+  - uaf::Client::findServersOnNetworkNow  (pyuaf.Client.findServersOnNetworkNow)
+  - uaf::Client::serversOnNetworkFound    (pyuaf.Client.serversOnNetworkFound)
+ 
+- The following attributes were added to uaf::ClientSettings 
+  (pyuaf.client.settings.ClientSettings):
+
+  - discoveryOnNetworkEnable              (default: false)
+  - discoveryOnNetworkTimeoutSec          (default: 30.0)
+  - discoveryOnNetworkDiscoveryServer     (default: opc.tcp://localhost
+  - discoveryOnNetworkStartingRecordId    (default: 0)
+  - discoveryOnNetworkServerCapabilities  (default: [])
+  - discoveryOnNetworkMaxRecordsToReturn  (default: 0)
+ 
 Version 2.3.1 @ 2017/07/20
 ----------------------------------------------------------------------------------------------------
 

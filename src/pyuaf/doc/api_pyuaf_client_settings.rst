@@ -254,6 +254,38 @@
                background, in seconds, as a ``float``.
            
            
+       * Attributes related to the network-wide discovery process (FindServersOnNetwork)
+       
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.discoveryOnNetworkEnable
+       
+       		  If True, the FindServersOnNetwork service will be called automatically, on every
+         	  discovery cycle. Default: False, type: ``bool``.
+       
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.discoveryFindServersTimeoutSec
+           
+               The timeout value for the FindServersOnNetwork discovery service, in seconds, as a ``float``.
+       
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.discoveryOnNetworkDiscoveryServer
+           
+               The discovery server (as a ``str``) to invoke the FindServersOnNetwork on. 
+               Default: "opc.tcp://localhost".
+       
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.discoveryOnNetworkStartingRecordId
+           
+               Only find servers with record id greater than this number. Default: 0, type: ``int``.
+               
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.discoveryOnNetworkServerCapabilities
+       
+               Only find servers with all of the given capabilities
+               (as a :class:`~pyuaf.util.StringVector`, which can be treated more or less 
+               as a ``list`` of ``str``). Default: empty vector, which means: no filter, find all.
+       
+           .. autoattribute:: pyuaf.client.settings.ClientSettings.discoveryOnNetworkStartingRecordId
+           
+               Only find the given amount of servers on the network. Default: 0 (no limit), type: ``int``.
+             
+       
+           
        * Attributes related to security
            
            

@@ -165,12 +165,27 @@ namespace uaf
         return discoverer_->findServers();
     }
 
+    // Find the servers on the network now
+    // =============================================================================================
+    Status Client::findServersOnNetworkNow()
+    {
+        return discoverer_->findServersOnNetwork();
+    }
+
 
     // Get the servers that were found
     // =============================================================================================
     const vector<ApplicationDescription>& Client::serversFound() const
     {
         return discoverer_->serversFound();
+    }
+
+
+    // Get the servers that were found on then network
+    // =============================================================================================
+    const vector<ServerOnNetwork>& Client::serversOnNetworkFound() const
+    {
+        return discoverer_->serversOnNetworkFound();
     }
 
 
