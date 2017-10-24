@@ -10,6 +10,7 @@ set(  UAF_CLIENT_EXAMPLES
       how_to_read_some_historical_data
       how_to_write_some_data_asynchronously
       how_to_change_the_default_session_and_subscription_behavior
+      how_to_monitor_data
    )
 
 

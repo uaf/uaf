@@ -34,6 +34,8 @@
 #include "uaf/util/logger.h"
 #include "uaf/util/mask.h"
 #include "uaf/util/logginginterface.h"
+#include "uaf/util/callbackregistry.h"
+#include "uaf/util/callbacks.h"
 #include "uaf/client/clientexport.h"
 #include "uaf/client/settings/clientsettings.h"
 #include "uaf/client/database/database.h"
@@ -1052,6 +1054,101 @@ namespace uaf
                 std::vector<uaf::Status>&               results);
 
 
+        ///@} //////////////////////////////////////////////////////////////////////////////////////
+        /**
+         *  @name Callbacks
+         *  Manage callbacks for monitored items.
+         */
+        ///@{
+
+
+        /**
+        * Register a callback for a monitored data item.
+        *
+        * @param clientHandle      The ClientHandle of the monitored item.
+        * @param callback          A callback function.
+        */
+        void registerDataChangeCallback(
+               uaf::ClientHandle        clientHandle,
+               uaf::DataChangeCallback* pCallback);
+
+
+        /**
+        * Register a callback for all monitored data items.
+        *
+        * @param callback          A callback function.
+        */
+        void registerDataChangeCallback(
+                uaf::DataChangeCallback* pCallback);
+
+        /**
+        * Register a callback for a monitored event.
+        *
+        * @param clientHandle      The ClientHandle of the monitored item.
+        * @param callback          A callback function.
+        */
+        void registerEventCallback(
+                uaf::ClientHandle   clientHandle,
+                uaf::EventCallback* pCallback);
+
+
+        /**
+        * Register a callback for all monitored events.
+        *
+        * @param callback          A callback function.
+        */
+        void registerEventCallback(uaf::EventCallback* pCallback);
+
+
+        /**
+        * Unregister all callbacks for a monitored data item.
+        *
+        * @param clientHandle      The ClientHandle of the monitored item.
+        */
+        void unregisterDataChangeCallbacks(
+               uaf::ClientHandle                       clientHandle);
+
+
+        /**
+        * Unregister all callbacks that are registered for all monitored data items.
+        *
+        */
+        void unregisterDataChangeCallbacks();
+
+
+        /**
+        * Unregister all callbacks for monitored data items.
+        *
+        */
+        void unregisterAllDataChangeCallbacks();
+
+
+        /**
+        * Unregister a callback for a monitored event.
+        *
+        * @param clientHandle      The ClientHandle of the monitored item.
+        * @param callback          A callback function.
+        */
+        void unregisterEventCallbacks(
+               uaf::ClientHandle                       clientHandle);
+
+
+        /**
+        * Unregister all callbacks that are registered for all events.
+        *
+        */
+        void unregisterEventCallbacks();
+
+
+        /**
+        * Unregister all callbacks for events.
+        *
+        */
+        void unregisterAllEventCallbacks();
+
+        ///@} //////////////////////////////////////////////////////////////////////////////////////
+        ///@{
+
     private:
 
         DISALLOW_COPY_AND_ASSIGN(Client);
@@ -1080,6 +1177,12 @@ namespace uaf
         /** The mutex to lock when the currentRequestHandle_ is read or manipulated. */
         UaMutex requestHandleMutex_;
 
+        /** The callback registry for events. */
+        uaf::CallbackRegistry<EventNotification> eventCallbackRegistry_;
+
+        /** The callback registry for monitored data. */
+        uaf::CallbackRegistry<DataChangeNotification> dataCallbackRegistry_;
+
         /**
          * Run method of the thread.
          */
@@ -1090,6 +1193,21 @@ namespace uaf
          * Common code of the constructors.
          */
         void construct();
+
+
+        /**
+         * Handle data changes.
+         *
+         * @param notifications Received data change notifications.
+         */
+        virtual void dataChangesReceived(std::vector<uaf::DataChangeNotification> notifications);
+
+        /**
+         * Handle events.
+         *
+         * @param notifications Received event notifications.
+         */
+        virtual void eventsReceived(std::vector<uaf::EventNotification> notifications);
 
 
 
