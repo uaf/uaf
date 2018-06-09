@@ -1141,6 +1141,79 @@
         .. autoattribute:: pyuaf.util.ExtensionObject.dataTypeId
         
             The NodeId that describes the datatype (type :class:`~pyuaf.util.NodeId`).
+
+
+
+*class* EUInformation
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.EUInformation
+
+    A EUInformation conveys information about the engineering unit of a variable.
+    
+    * Methods:
+
+        .. automethod:: pyuaf.util.EUInformation.__init__
+            
+            Construct a new EUInformation in one of the following ways:
+            
+            .. doctest::
+            
+                >>> import pyuaf
+                >>> from pyuaf.util import EUInformation, ExtensionObject, LocalizedText
+                >>> info1 = EUInformation()
+                >>> info2 = EUInformation(ExtensionObject())
+                >>> info3 = EUInformation("nsUri", 23, LocalizedText("en", "display name"), LocalizedText("en", "description"))
+        
+        .. automethod:: pyuaf.util.EUInformation.clear
+            
+            Clear the object.
+        
+        .. automethod:: pyuaf.util.EUInformation.getNamespaceUri
+            
+            Get the namespace uri as a ```str```.
+        
+        .. automethod:: pyuaf.util.EUInformation.getUnitId
+            
+            Get the unit id as an ```int```.
+        
+        .. automethod:: pyuaf.util.EUInformation.getDisplayName
+            
+            Get the display name as a :class:`~pyuaf.util.LocalizedText`.
+        
+        .. automethod:: pyuaf.util.EUInformation.getDescription
+            
+            Get the description as a :class:`~pyuaf.util.LocalizedText`.
+        
+        .. automethod:: pyuaf.util.EUInformation.setNamespaceUri
+            
+            Set the namespace uri.
+            
+            :param namespaceUri: The namespace URI.
+            :type namespaceUri: ```str```.
+        
+        .. automethod:: pyuaf.util.EUInformation.setUnitId
+            
+            Set the unit id.
+            
+            :param unitId: The unit ID.
+            :type unitId: ```int```.
+        
+        .. automethod:: pyuaf.util.EUInformation.setDisplayName
+            
+            Set the display name.
+            
+            :param displayName: The display name.
+            :type displayName: :class:`~pyuaf.util.LocalizedText`.
+        
+        .. automethod:: pyuaf.util.EUInformation.getDescription
+            
+            Set the description.
+            
+            :param description: The description.
+            :type description: :class:`~pyuaf.util.LocalizedText`.
+    
     
 
 *class* GenericStructureValue
@@ -3173,6 +3246,56 @@
         >>> # you may construct a QualifiedNameVector from a regular Python list:
         >>> someOtherVec = QualifiedNameVector( [ QualifiedName("a", "uriA"), 
         ...                                       QualifiedName("b", "uriB") ] )
+
+
+
+*class* Range
+----------------------------------------------------------------------------------------------------
+
+
+.. autoclass:: pyuaf.util.Range
+
+    A Range conveys information about the highest and lowest value of a variable.
+    
+    * Methods:
+
+        .. automethod:: pyuaf.util.Range.__init__
+            
+            Construct a new Range in one of the following ways:
+            
+            .. doctest::
+            
+                >>> import pyuaf
+                >>> from pyuaf.util import Range, ExtensionObject
+                >>> range1 = Range()
+                >>> range2 = Range(ExtensionObject())
+                >>> range3 = Range(0.0, 100.0)
+        
+        .. automethod:: pyuaf.util.Range.clear
+            
+            Clear the object.
+        
+        .. automethod:: pyuaf.util.Range.getLow
+            
+            Get the low value as a ```float```.
+        
+        .. automethod:: pyuaf.util.Range.getHigh
+            
+            Get the high value as a ```float```.
+        
+        .. automethod:: pyuaf.util.Range.setLow
+            
+            Set the low value.
+            
+            :param low: The low value.
+            :type low: ```float```.
+        
+        .. automethod:: pyuaf.util.Range.setHigh
+            
+            Set the high value.
+            
+            :param high: The high value.
+            :type high: ```float```.
 
 
 

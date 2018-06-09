@@ -32,6 +32,7 @@
 #include "uaf/util/datavalue.h"
 #include "uaf/util/endpointdescription.h"
 #include "uaf/util/eventfilter.h"
+#include "uaf/util/euinformation.h"
 #include "uaf/util/logmessage.h"
 #include "uaf/util/logginginterface.h"
 #include "uaf/util/usertokenpolicy.h"
@@ -61,6 +62,7 @@
 #include "uaf/util/pkirsakeypair.h"
 #include "uaf/util/pkicertificate.h"
 #include "uaf/util/primitives.h"
+#include "uaf/util/range.h"
 #include "uaf/util/sdkstatus.h"
 #include "uaf/util/structurefield.h"
 #include "uaf/util/structuredefinition.h"
@@ -180,6 +182,8 @@ UAF_WRAP_CLASS("uaf/util/sdkstatus.h"              , uaf , SdkStatus            
 UAF_WRAP_CLASS("uaf/util/structurefield.h"         , uaf , StructureField          , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/structuredefinition.h"    , uaf , StructureDefinition     , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 UAF_WRAP_CLASS("uaf/util/serveronnetwork.h"        , uaf , ServerOnNetwork         , COPY_YES, TOSTRING_YES, COMP_YES, pyuaf.util, ServerOnNetworkVector)
+UAF_WRAP_CLASS("uaf/util/range.h"                  , uaf , Range                   , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
+UAF_WRAP_CLASS("uaf/util/euinformation.h"          , uaf , EUInformation           , COPY_YES, TOSTRING_YES, COMP_NO,  pyuaf.util, VECTOR_NO)
 
 
 // also include the Variant typemap(s)
