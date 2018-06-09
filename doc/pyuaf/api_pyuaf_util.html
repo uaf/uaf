@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyuaf.util &mdash; PyUAF 2.4.0 documentation</title>
+    <title>pyuaf.util &mdash; PyUAF 2.6.0 documentation</title>
     
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2.4.0',
+        VERSION:     '2.6.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="PyUAF 2.4.0 documentation" href="index.html" />
+    <link rel="top" title="PyUAF 2.6.0 documentation" href="index.html" />
     <link rel="next" title="pyuaf.util.attributeids" href="api_pyuaf_util_attributeids.html" />
     <link rel="prev" title="pyuaf.client.subscriptionstates" href="api_pyuaf_client_subscriptionstates.html" /> 
   </head>
@@ -44,7 +44,7 @@
         <li class="right" >
           <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.4.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.6.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -1604,6 +1604,120 @@ the wire.</p>
 <dt id="pyuaf.util.ExtensionObject.dataTypeId">
 <code class="descname">dataTypeId</code><a class="headerlink" href="#pyuaf.util.ExtensionObject.dataTypeId" title="Permalink to this definition">¶</a></dt>
 <dd><p>The NodeId that describes the datatype (type <a class="reference internal" href="#pyuaf.util.NodeId" title="pyuaf.util.NodeId"><code class="xref py py-class docutils literal"><span class="pre">NodeId</span></code></a>).</p>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="class-euinformation">
+<h2><em>class</em> EUInformation<a class="headerlink" href="#class-euinformation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.EUInformation">
+<em class="property">class </em><code class="descclassname">pyuaf.util.</code><code class="descname">EUInformation</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.EUInformation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A EUInformation conveys information about the engineering unit of a variable.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.EUInformation.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.EUInformation.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new EUInformation in one of the following ways:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="k">import</span> <span class="n">EUInformation</span><span class="p">,</span> <span class="n">ExtensionObject</span><span class="p">,</span> <span class="n">LocalizedText</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">info1</span> <span class="o">=</span> <span class="n">EUInformation</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">info2</span> <span class="o">=</span> <span class="n">EUInformation</span><span class="p">(</span><span class="n">ExtensionObject</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">info3</span> <span class="o">=</span> <span class="n">EUInformation</span><span class="p">(</span><span class="s2">&quot;nsUri&quot;</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="n">LocalizedText</span><span class="p">(</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="s2">&quot;display name&quot;</span><span class="p">),</span> <span class="n">LocalizedText</span><span class="p">(</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="s2">&quot;description&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.EUInformation.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.EUInformation.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.EUInformation.getNamespaceUri">
+<code class="descname">getNamespaceUri</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.EUInformation.getNamespaceUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the namespace uri as a <code class="docutils literal"><span class="pre">`str`</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.EUInformation.getUnitId">
+<code class="descname">getUnitId</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.EUInformation.getUnitId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the unit id as an <code class="docutils literal"><span class="pre">`int`</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.EUInformation.getDisplayName">
+<code class="descname">getDisplayName</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.EUInformation.getDisplayName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the display name as a <a class="reference internal" href="#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><code class="xref py py-class docutils literal"><span class="pre">LocalizedText</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.EUInformation.getDescription">
+<code class="descname">getDescription</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.EUInformation.getDescription" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the description as a <a class="reference internal" href="#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><code class="xref py py-class docutils literal"><span class="pre">LocalizedText</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.EUInformation.setNamespaceUri">
+<code class="descname">setNamespaceUri</code><span class="sig-paren">(</span><em>nsUri</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.EUInformation.setNamespaceUri" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the namespace uri.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>namespaceUri</strong> (<code class="docutils literal"><span class="pre">`str`</span></code>.) &#8211; The namespace URI.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.EUInformation.setUnitId">
+<code class="descname">setUnitId</code><span class="sig-paren">(</span><em>unitId</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.EUInformation.setUnitId" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the unit id.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>unitId</strong> (<code class="docutils literal"><span class="pre">`int`</span></code>.) &#8211; The unit ID.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.EUInformation.setDisplayName">
+<code class="descname">setDisplayName</code><span class="sig-paren">(</span><em>displayName</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.EUInformation.setDisplayName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the display name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>displayName</strong> (<a class="reference internal" href="#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><code class="xref py py-class docutils literal"><span class="pre">LocalizedText</span></code></a>.) &#8211; The display name.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">getDescription</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Set the description.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>description</strong> (<a class="reference internal" href="#pyuaf.util.LocalizedText" title="pyuaf.util.LocalizedText"><code class="xref py py-class docutils literal"><span class="pre">LocalizedText</span></code></a>.) &#8211; The description.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div></blockquote>
@@ -4612,6 +4726,80 @@ as a <code class="docutils literal"><span class="pre">list</span></code> of <a c
 </dd></dl>
 
 </div>
+<div class="section" id="class-range">
+<h2><em>class</em> Range<a class="headerlink" href="#class-range" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pyuaf.util.Range">
+<em class="property">class </em><code class="descclassname">pyuaf.util.</code><code class="descname">Range</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.Range" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Range conveys information about the highest and lowest value of a variable.</p>
+<ul>
+<li><p class="first">Methods:</p>
+<blockquote>
+<div><dl class="method">
+<dt id="pyuaf.util.Range.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.Range.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new Range in one of the following ways:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyuaf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyuaf.util</span> <span class="k">import</span> <span class="n">Range</span><span class="p">,</span> <span class="n">ExtensionObject</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">range1</span> <span class="o">=</span> <span class="n">Range</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">range2</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="n">ExtensionObject</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">range3</span> <span class="o">=</span> <span class="n">Range</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">100.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Range.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.Range.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear the object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Range.getLow">
+<code class="descname">getLow</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.Range.getLow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the low value as a <code class="docutils literal"><span class="pre">`float`</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Range.getHigh">
+<code class="descname">getHigh</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.Range.getHigh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the high value as a <code class="docutils literal"><span class="pre">`float`</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Range.setLow">
+<code class="descname">setLow</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.Range.setLow" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the low value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>low</strong> (<code class="docutils literal"><span class="pre">`float`</span></code>.) &#8211; The low value.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyuaf.util.Range.setHigh">
+<code class="descname">setHigh</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyuaf.util.Range.setHigh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the high value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>high</strong> (<code class="docutils literal"><span class="pre">`float`</span></code>.) &#8211; The high value.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div></blockquote>
+</li>
+</ul>
+</dd></dl>
+
+</div>
 <div class="section" id="class-referencedescription">
 <h2><em>class</em> ReferenceDescription<a class="headerlink" href="#class-referencedescription" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -6456,6 +6644,7 @@ will return True) if you want to specify the whole address space.</p>
 <li><a class="reference internal" href="#class-expandednodeid"><em>class</em> ExpandedNodeId</a></li>
 <li><a class="reference internal" href="#class-expandednodeidvector"><em>class</em> ExpandedNodeIdVector</a></li>
 <li><a class="reference internal" href="#class-extensionobject"><em>class</em> ExtensionObject</a></li>
+<li><a class="reference internal" href="#class-euinformation"><em>class</em> EUInformation</a></li>
 <li><a class="reference internal" href="#class-genericstructurevalue"><em>class</em> GenericStructureValue</a></li>
 <li><a class="reference internal" href="#class-genericstructurevector"><em>class</em> GenericStructureVector</a></li>
 <li><a class="reference internal" href="#class-genericunionvalue"><em>class</em> GenericUnionValue</a></li>
@@ -6479,6 +6668,7 @@ will return True) if you want to specify the whole address space.</p>
 <li><a class="reference internal" href="#class-pkiidentity"><em>class</em> PkiIdentity</a></li>
 <li><a class="reference internal" href="#class-qualifiedname"><em>class</em> QualifiedName</a></li>
 <li><a class="reference internal" href="#class-qualifiednamevector"><em>class</em> QualifiedNameVector</a></li>
+<li><a class="reference internal" href="#class-range"><em>class</em> Range</a></li>
 <li><a class="reference internal" href="#class-referencedescription"><em>class</em> ReferenceDescription</a></li>
 <li><a class="reference internal" href="#class-referencedescriptionvector"><em>class</em> ReferenceDescriptionVector</a></li>
 <li><a class="reference internal" href="#class-relativepath"><em>class</em> RelativePath</a></li>
@@ -6544,7 +6734,7 @@ will return True) if you want to specify the whole address space.</p>
         <li class="right" >
           <a href="api_pyuaf_client_subscriptionstates.html" title="pyuaf.client.subscriptionstates"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.4.0 documentation</a> &raquo;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">PyUAF 2.6.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
