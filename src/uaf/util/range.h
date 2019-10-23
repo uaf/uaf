@@ -28,7 +28,7 @@
 #include <stdint.h>
 
 // SDK
-#include "uabase/uarange.h"
+#include "uabasecpp/uarange.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/extensionobject.h"

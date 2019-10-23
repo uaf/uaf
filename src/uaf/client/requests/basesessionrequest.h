@@ -26,7 +26,7 @@
 #include <vector>
 #include <string>
 // SDK
-#include "uaclient/uaclientsdk.h"
+#include "uaclientcpp/uaclientsdk.h"
 // UAF
 #include "uaf/util/logger.h"
 #include "uaf/util/status.h"

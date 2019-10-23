@@ -28,7 +28,7 @@
 #include <vector>
 #include <stdint.h>
 // SDK
-#include "uapki/uapkicertificate.h"
+#include "uapkicpp/uapkicertificate.h"
 // UAF
 #include "uaf/util/pkipublickey.h"
 #include "uaf/util/pkiprivatekey.h"
@@ -77,11 +77,21 @@ namespace uaf
          * Create a certificate.
          */
         PkiCertificate(
-                const uaf::PkiCertificateInfo& info,
-                const uaf::PkiIdentity& subject,
-                const uaf::PkiPublicKey& subjectPublicKey,
-                const uaf::PkiIdentity& issuer,
-                const uaf::PkiPrivateKey& issuerPrivateKey);
+            const uaf::PkiCertificateInfo& info,
+            const uaf::PkiIdentity& subject,
+            const uaf::PkiRsaKeyPair& subjectKeyPair,
+            bool bCACert = false);
+
+        /**
+         * Create a certificate.
+         */
+        PkiCertificate(
+            const uaf::PkiCertificateInfo& info,
+            const uaf::PkiIdentity& subject,
+            const uaf::PkiPublicKey& subjectPublicKey,
+            const uaf::PkiCertificate& issuerCert,
+            const uaf::PkiPrivateKey& issuerPrivateKey,
+            bool bCACert = false);
 
         /**
          * Create a certificate based on an SDK instance.

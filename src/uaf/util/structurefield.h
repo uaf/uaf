@@ -28,7 +28,7 @@
 #include <stdint.h>
 
 // SDK
-#include "uabase/uastructurefield.h"
+#include "uabasecpp/uastructurefield.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/localizedtext.h"

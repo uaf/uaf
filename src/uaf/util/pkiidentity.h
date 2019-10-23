@@ -28,7 +28,7 @@
 #include <vector>
 #include <stdint.h>
 // SDK
-#include "uapki/uapkiidentity.h"
+#include "uapkicpp/uapkiidentity.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/stringifiable.h"

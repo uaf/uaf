@@ -28,8 +28,8 @@
 #include <sstream>
 #include <stdint.h>
 // SDK
-#include "uabase/uabytestring.h"
-#include "uabase/uabytearray.h"
+#include "uabasecpp/uabytestring.h"
+#include "uabasecpp/uabytearray.h"
 // UAF
 #include "uaf/util/util.h"
 

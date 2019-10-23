@@ -27,7 +27,7 @@
 #include <sstream>
 #include <vector>
 // SDK
-#include "uapki/uapkirsakeypair.h"
+#include "uapkicpp/uapkirsakeypair.h"
 // UAF
 #include "uaf/util/pkiprivatekey.h"
 #include "uaf/util/pkipublickey.h"
@@ -142,6 +142,8 @@ namespace uaf
         friend bool UAF_EXPORT operator==(const PkiRsaKeyPair& object1, const PkiRsaKeyPair& object2);
         friend bool UAF_EXPORT operator!=(const PkiRsaKeyPair& object1, const PkiRsaKeyPair& object2);
         friend bool UAF_EXPORT operator<(const PkiRsaKeyPair& object1, const PkiRsaKeyPair& object2);
+
+        friend class PkiCertificate;
 
     private:
         UaPkiRsaKeyPair uaPair_;

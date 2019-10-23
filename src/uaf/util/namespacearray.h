@@ -29,9 +29,9 @@
 #include <algorithm>
 #include <stdint.h>
 // SDK
-#include "uabase/uaarraytemplates.h"
-#include "uabase/uastring.h"
-#include "uabase/uavariant.h"
+#include "uabasecpp/uaarraytemplates.h"
+#include "uabasecpp/uastring.h"
+#include "uabasecpp/uavariant.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/status.h"

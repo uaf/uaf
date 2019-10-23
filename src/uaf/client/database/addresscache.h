@@ -27,7 +27,7 @@
 #include <vector>
 #include <map>
 // SDK
-#include "uabase/uamutex.h"
+#include "uabasecpp/uamutex.h"
 // UAF
 #include "uaf/util/expandednodeid.h"
 #include "uaf/util/status.h"

@@ -29,8 +29,8 @@
 #include <stdint.h>
 #include <iostream>
 // SDK
-#include "uapki/uapkipublickey.h"
-#include "uapki/uapkirsakeypair.h"
+#include "uapkicpp/uapkipublickey.h"
+#include "uapkicpp/uapkirsakeypair.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/bytestring.h"

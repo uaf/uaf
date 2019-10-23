@@ -28,7 +28,7 @@
 #include <vector>
 #include <stdint.h>
 // SDK
-#include "uapki/uapkiprivatekey.h"
+#include "uapkicpp/uapkiprivatekey.h"
 // UAF
 #include "uaf/util/util.h"
 

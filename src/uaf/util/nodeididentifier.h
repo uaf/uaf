@@ -27,8 +27,8 @@
 #include <sstream>
 #include <stdint.h>
 // SDK
-#include "uabase/uaexpandednodeid.h"
-#include "uabase/uanodeid.h"
+#include "uabasecpp/uaexpandednodeid.h"
+#include "uabasecpp/uanodeid.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/nodeididentifiertypes.h"

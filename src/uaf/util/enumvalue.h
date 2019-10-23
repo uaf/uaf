@@ -28,7 +28,7 @@
 #include <sstream>
 #include <stdint.h>
 // SDK
-#include "uabase/uaenumvalue.h"
+#include "uabasecpp/uaenumvalue.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/localizedtext.h"

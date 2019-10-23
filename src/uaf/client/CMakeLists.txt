@@ -14,7 +14,7 @@ aux_source_directory(./settings             SOURCES_UAF_CLIENT_SETTINGS)
 aux_source_directory(./subscriptions        SOURCES_UAF_CLIENT_SUBSCRIPTIONS)
 
 # Include the client headers from the SDK
-include_directories("${UASDK}/include/uaclient")
+include_directories(${UASDK_INCLUDE_DIRS})
 
 # Create a shared library consisting of the previously added source files.
 add_library(uafclient SHARED ${SOURCES_UAF_CLIENT}
@@ -30,5 +30,11 @@ add_library(uafclient SHARED ${SOURCES_UAF_CLIENT}
                              ${SOURCES_UAF_CLIENT_SETTINGS}
                              ${SOURCES_UAF_CLIENT_SUBSCRIPTIONS})
 
+link_directories(
+    ${UASDK_LIBRARIES_DIRS}
+)
+
 # Link the libraries.
-target_link_libraries( uafclient uaclient uafutil )
+target_link_libraries(uafclient
+    ${UASDK_LIBRARIES}
+)

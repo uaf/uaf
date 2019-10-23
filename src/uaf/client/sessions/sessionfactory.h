@@ -26,8 +26,8 @@
 #include <string>
 #include <sstream>
 // SDK
-#include "uabase/uasemaphore.h"
-#include "uaclient/uaclientsdk.h"
+#include "uabasecpp/uasemaphore.h"
+#include "uaclientcpp/uaclientsdk.h"
 // UAF
 #include "uaf/util/logger.h"
 #include "uaf/client/clientexport.h"

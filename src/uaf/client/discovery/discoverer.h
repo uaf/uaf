@@ -27,8 +27,8 @@
 #include <string>
 #include <ctime>
 // SDK
-#include "uaclient/uaclientsdk.h"
-#include "uaclient/uadiscovery.h"
+#include "uaclientcpp/uaclientsdk.h"
+#include "uaclientcpp/uadiscovery.h"
 // UAF
 #include "uaf/util/logger.h"
 #include "uaf/util/status.h"

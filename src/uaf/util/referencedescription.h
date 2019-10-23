@@ -28,7 +28,7 @@
 #include <vector>
 #include <stdint.h>
 // SDK
-#include "uaclient/uadiscovery.h"
+#include "uaclientcpp/uadiscovery.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/localizedtext.h"

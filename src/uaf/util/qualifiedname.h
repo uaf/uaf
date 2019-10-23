@@ -27,7 +27,7 @@
 #include <sstream>
 #include <stdint.h>
 // SDK
-#include "uabase/uaqualifiedname.h"
+#include "uabasecpp/uaqualifiedname.h"
 // UAF
 #include "uaf/util/util.h"
 

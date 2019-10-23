@@ -3,6 +3,17 @@ UAF changelog
 ====================================================================================================
 
 
+Version 2.7.0 @ 2019/10/24
+----------------------------------------------------------------------------------------------------
+
+- Update to UASDK 1.7.1:
+  - Relevant UASDK v1.7.1 changes:
+    - Some folders and libraries were renamed (using suffix "cpp").
+    - A deprecated ctor for UaPkiCertificate was removed.
+    - UaStructureFieldDataType was renamed to UaStructureFieldDataEnum.
+  - CMakeLists.txt changes to be compatible with the renamed folders and libraries.
+
+Note: Did not test on Windows.
 Version 2.6.0 @ 2018/06/09
 ----------------------------------------------------------------------------------------------------
 

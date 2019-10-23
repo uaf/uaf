@@ -38,10 +38,7 @@ handlePythonLibs()
 includeThirdPartyCodeIfNeeded()
 
 # Include the common SDK headers
-include_directories("${UASDK_INCLUDE_DIR}")
-include_directories("${UASDK_INCLUDE_DIR}/uabase")
-include_directories("${UASDK_INCLUDE_DIR}/uapki")
-include_directories("${UASDK_INCLUDE_DIR}/uastack")
+include_directories(${UASDK_INCLUDE_DIRS})
 
 # Include the OpenSSL headers
 include_directories("${OPENSSL_INCLUDE_DIR}")
