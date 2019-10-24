@@ -27,8 +27,8 @@
 #include <stdint.h>
 #include <sstream>
 // SDK
-#include "uabase/uaplatformlayer.h"
-#include "uabase/uastring.h"
+#include "uabasecpp/uaplatformlayer.h"
+#include "uabasecpp/uastring.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/stringifiable.h"

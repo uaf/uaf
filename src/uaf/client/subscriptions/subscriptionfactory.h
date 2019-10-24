@@ -27,9 +27,9 @@
 #include <sstream>
 #include <map>
 // SDK
-#include "uaclient/uaclientsdk.h"
-#include "uaclient/uasession.h"
-#include "uabase/uastring.h"
+#include "uaclientcpp/uaclientsdk.h"
+#include "uaclientcpp/uasession.h"
+#include "uabasecpp/uastring.h"
 // UAF
 #include "uaf/util/status.h"
 #include "uaf/util/logger.h"

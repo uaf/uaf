@@ -145,17 +145,16 @@ ENDMACRO(includeThirdPartyCodeIfNeeded)
 # ----------------------------------------------------------------------------
 # handleUnifiedAutomationSdk()
 #    This macro will set the necessary UnifiedAutomation SDK variables 
-#    (UASDK_FOUND, UASDK_RI, UASDK_LIBRARIES_DIR, UASDK_INCLUDE_DIR).
+#    (UASDK_FOUND, UASDK_RI, UASDK_LIBRARIES_DIRS, UASDK_INCLUDE_DIRS).
 # ----------------------------------------------------------------------------
 MACRO(handleUnifiedAutomationSdk)
 
     if (UASDK)
     
         if (EXISTS "${UASDK}/include")
-            message(STATUS "The specified Unified Automation SDK directory was found" )
+            message(STATUS "The specified Unified Automation SDK directory was found (${UASDK})" )
             set(UASDK_FOUND TRUE)
             set(UASDK_DIR "${UASDK}")
-            set(UASDK_LIBRARIES_DIR "${UASDK}/lib")
             set(UASDK_INCLUDE_DIR "${UASDK}/include")
         else (EXISTS "${UASDK}/include")
             set(UASDK_FOUND FALSE)
@@ -183,11 +182,11 @@ MACRO(handleUnifiedAutomationSdk)
     endif (EXISTS "${UASDK_DIR}/src")
     
     # figure out if the SDK version is at least 1.4 by checking if include/uabase/uafile.h exists
-    if (EXISTS "${UASDK_INCLUDE_DIR}/uabase/uafile.h")
+    if (EXISTS "${UASDK_INCLUDE_DIR}/uabasecpp/uafile.h")
         message(STATUS "OK, the SDK has version 1.4 or higher")
-    else (EXISTS "${UASDK_INCLUDE_DIR}/uabase/uafile.h")
+    else (EXISTS "${UASDK_INCLUDE_DIR}/uabasecpp/uafile.h")
         message(FATAL_ERROR "The Unified Automation SDK must be at least version 1.4.0")
-    endif (EXISTS "${UASDK_INCLUDE_DIR}/uabase/uafile.h")
+    endif (EXISTS "${UASDK_INCLUDE_DIR}/uabasecpp/uafile.h")
     
     # figure out if the SDK version is 1.5 or 1.4 by checking if include/uastack/opcua_p_config.h exists
     if (EXISTS "${UASDK_INCLUDE_DIR}/uastack/opcua_p_config.h")
@@ -203,9 +202,9 @@ MACRO(handleUnifiedAutomationSdk)
     
     # store the path to the UaServerCPP executable, since it is required for the unit tests
     if (WIN32)
-        set(DEMOSERVER_COMMAND "${UASDK_DIR}/bin/uaservercpp.exe")
+        set(DEMOSERVER_COMMAND "${UASDK_DIR}/bin/uaservercppd.exe")
     else (WIN32)
-        set(DEMOSERVER_COMMAND "${UASDK_DIR}/bin/uaservercpp")
+        set(DEMOSERVER_COMMAND "${UASDK_DIR}/bin/uaservercppd")
     endif (WIN32)
     
     # display a warning if the UaServerCPP demoserver cannot be found
@@ -214,6 +213,26 @@ MACRO(handleUnifiedAutomationSdk)
     else (EXISTS ${DEMOSERVER_COMMAND})
         message(WARNING "The demo server (UaServerCPP) cannot be found: ${DEMOSERVER_COMMAND} does not exist! This demo server is only needed to run the client unit tests, so you can safely ignore this warning if you do not intend to run unit tests.\n")
     endif (EXISTS ${DEMOSERVER_COMMAND})
+
+    set(UASDK_LIBRARIES_DIRS
+        "${UASDK}/lib"
+        "${UASDK}/lib64")
+    set(UASDK_INCLUDE_DIRS
+        SYSTEM "${UASDK_INCLUDE_DIR}"
+        SYSTEM "${UASDK_INCLUDE_DIR}/uabasecpp"
+        SYSTEM "${UASDK_INCLUDE_DIR}/uaclientcpp"
+        SYSTEM "${UASDK_INCLUDE_DIR}/uamodels"
+        SYSTEM "${UASDK_INCLUDE_DIR}/uapkicpp"
+        SYSTEM "${UASDK_INCLUDE_DIR}/uaservercpp"
+        SYSTEM "${UASDK_INCLUDE_DIR}/uastack"
+        SYSTEM "${UASDK_INCLUDE_DIR}/xmlparsercpp")
+    set(UASDK_LIBRARIES
+        debug uabasecppd optimized uabasecpp
+        debug uaclientcppd optimized uaclientcpp
+        debug uamodelsd optimized uamodels
+        debug uapkicppd optimized uapkicpp
+        debug uastackd optimized uastack
+        debug xmlparsercppd optimized xmlparsercpp)
 
 ENDMACRO(handleUnifiedAutomationSdk)
 

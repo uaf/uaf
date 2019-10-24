@@ -28,8 +28,8 @@
 #include <string>
 #include <map>
 // SDK
-#include "uabase/uaeventfilter.h"
-#include "uaclient/uaclientsdk.h"
+#include "uabasecpp/uaeventfilter.h"
+#include "uaclientcpp/uaclientsdk.h"
 // UAF
 #include "uaf/client/clientexport.h"
 #include "uaf/client/requests/requests.h"

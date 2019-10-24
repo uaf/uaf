@@ -34,8 +34,8 @@
 #endif /* _MSC_VER */
 
 // SDK
-#include "uabase/uadatetime.h"
-#include "uabase/uathread.h"
+#include "uabasecpp/uadatetime.h"
+#include "uabasecpp/uathread.h"
 // UAF
 #include "uaf/util/util.h"
 

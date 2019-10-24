@@ -48,15 +48,15 @@ namespace uaf
 
         // UAF to SDK type
         // =========================================================================================
-        UaStructureFieldDataType fromUafToSdk(StructureFieldDataType type)
+        UaStructureFieldDataEnum fromUafToSdk(StructureFieldDataType type)
         {
-            return static_cast<UaStructureFieldDataType>(type);
+            return static_cast<UaStructureFieldDataEnum>(type);
         }
 
 
         // SDK to UAF type
         // =========================================================================================
-        StructureFieldDataType fromSdkToUaf(UaStructureFieldDataType type)
+        StructureFieldDataType fromSdkToUaf(UaStructureFieldDataEnum type)
         {
             return static_cast<StructureFieldDataType>(type);
         }

@@ -27,7 +27,7 @@
 #include <string>
 #include <stdint.h>
 // SDK
-#include "uabase/uaguid.h"
+#include "uabasecpp/uaguid.h"
 // UAF
 #include "uaf/util/util.h"
 

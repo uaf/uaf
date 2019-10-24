@@ -382,7 +382,7 @@ namespace uaf
 	uaf::structurefielddatatypes::StructureFieldDataType GenericStructureValue::valueType(int index, uint32_t* opcUaStatusCode) const
 	{
         OpcUa_StatusCode uaCode;
-		UaStructureFieldDataType uaDataType = uaGenericStructureValue_.valueType(index, &uaCode);
+		UaStructureFieldDataEnum uaDataType = uaGenericStructureValue_.valueType(index, &uaCode);
         *opcUaStatusCode = static_cast<uint32_t>(uaCode);
 		return uaf::structurefielddatatypes::fromSdkToUaf(uaDataType);
 	}

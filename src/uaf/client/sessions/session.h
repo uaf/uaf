@@ -26,11 +26,11 @@
 #include <string>
 #include <sstream>
 // SDK
-#include "uaclient/uaclientsdk.h"
-#include "uaclient/uasession.h"
-#include "uabase/uastring.h"
-#include "uabase/uadir.h"
-#include "uapki/uapkicertificate.h"
+#include "uaclientcpp/uaclientsdk.h"
+#include "uaclientcpp/uasession.h"
+#include "uabasecpp/uastring.h"
+#include "uabasecpp/uadir.h"
+#include "uapkicpp/uapkicertificate.h"
 // UAF
 #include "uaf/util/status.h"
 #include "uaf/util/logger.h"

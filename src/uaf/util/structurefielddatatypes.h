@@ -24,8 +24,8 @@
 // STD
 #include <string>
 // SDK
-#include "uabase/uaplatformlayer.h"
-#include "uabase/uastructurefielddata.h"
+#include "uabasecpp/uaplatformlayer.h"
+#include "uabasecpp/uastructurefielddata.h"
 // UAF
 #include "uaf/util/util.h"
 
@@ -77,7 +77,7 @@ namespace uaf
          * @ingroup Util
          */
         uaf::structurefielddatatypes::StructureFieldDataType UAF_EXPORT fromSdkToUaf(
-        		UaStructureFieldDataType uaType);
+        		UaStructureFieldDataEnum uaType);
 
 
         /**
@@ -85,7 +85,7 @@ namespace uaf
          *
          * @ingroup Util
          */
-        UaStructureFieldDataType UAF_EXPORT fromUafToSdk(
+        UaStructureFieldDataEnum UAF_EXPORT fromUafToSdk(
         		uaf::structurefielddatatypes::StructureFieldDataType type);
 
     }

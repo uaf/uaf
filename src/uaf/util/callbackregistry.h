@@ -7,7 +7,7 @@
 #include <string>
 #include <sstream>
 // SDK
-#include "uabase/uamutex.h"
+#include "uabasecpp/uamutex.h"
 // UAF
 #include "uaf/util/logger.h"
 #include "uaf/util/stringifiable.h"

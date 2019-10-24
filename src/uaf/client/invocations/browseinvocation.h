@@ -28,7 +28,7 @@
 #include <string>
 #include <map>
 // SDK
-#include "uaclient/uaclientsdk.h"
+#include "uaclientcpp/uaclientsdk.h"
 // UAF
 #include "uaf/client/clientexport.h"
 #include "uaf/client/requests/requests.h"

@@ -27,9 +27,9 @@
 #include <vector>
 #include <map>
 // SDK
-#include "uabase/uathread.h"
-#include "uabase/uamutex.h"
-#include "uabase/uadatetime.h"
+#include "uabasecpp/uathread.h"
+#include "uabasecpp/uamutex.h"
+#include "uabasecpp/uadatetime.h"
 // UAF
 #include "uaf/util/logger.h"
 #include "uaf/util/mask.h"

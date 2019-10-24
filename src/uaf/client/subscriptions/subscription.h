@@ -26,10 +26,10 @@
 #include <sstream>
 #include <vector>
 // SDK
-#include "uaclient/uaclientsdk.h"
-#include "uaclient/uasession.h"
-#include "uaclient/uasubscription.h"
-#include "uabase/uastring.h"
+#include "uaclientcpp/uaclientsdk.h"
+#include "uaclientcpp/uasession.h"
+#include "uaclientcpp/uasubscription.h"
+#include "uabasecpp/uastring.h"
 // UAF
 #include "uaf/util/status.h"
 #include "uaf/util/logger.h"

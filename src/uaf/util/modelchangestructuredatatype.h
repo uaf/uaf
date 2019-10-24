@@ -26,7 +26,7 @@
 #include <string>
 #include <sstream>
 // SDK
-#include "uabase/uamodelchangestructuredatatype.h"
+#include "uabasecpp/uamodelchangestructuredatatype.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/stringifiable.h"

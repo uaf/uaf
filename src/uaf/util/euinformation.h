@@ -28,7 +28,7 @@
 #include <stdint.h>
 
 // SDK
-#include "uabase/uaeuinformation.h"
+#include "uabasecpp/uaeuinformation.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/extensionobject.h"

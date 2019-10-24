@@ -38,16 +38,34 @@ namespace uaf
     // Constructor
     // =============================================================================================
     PkiCertificate::PkiCertificate(
-            const PkiCertificateInfo&   info,
-            const PkiIdentity&          subject,
-            const PkiPublicKey&         subjectPublicKey,
-            const PkiIdentity&          issuer,
-            const PkiPrivateKey&        issuerPrivateKey)
+        const PkiCertificateInfo& info,
+        const PkiIdentity& subject,
+        const PkiRsaKeyPair& subjectKeyPair,
+        bool bCACert)
+    : uaCert_(info.toSdk(),
+              subject.toSdk(),
+              subjectKeyPair.uaPair_,
+              bCACert,
+              UaPkiCertificate::SignatureAlgorithm_Sha256)
+    {}
+
+
+    // Constructor
+    // =============================================================================================
+    PkiCertificate::PkiCertificate(
+        const uaf::PkiCertificateInfo& info,
+        const uaf::PkiIdentity& subject,
+        const uaf::PkiPublicKey& subjectPublicKey,
+        const uaf::PkiCertificate& issuerCert,
+        const uaf::PkiPrivateKey& issuerPrivateKey,
+        bool bCACert)
     : uaCert_(info.toSdk(),
               subject.toSdk(),
               subjectPublicKey.uaPkiPublicKey_,
-              issuer.toSdk(),
-              issuerPrivateKey.uaPkiPrivateKey_)
+              issuerCert.uaCert_,
+              issuerPrivateKey.uaPkiPrivateKey_,
+              bCACert,
+              UaPkiCertificate::SignatureAlgorithm_Sha256)
     {}
 
 

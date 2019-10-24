@@ -28,8 +28,8 @@
 #include <stdint.h>
 
 // SDK
-#include "uabase/uagenericstructurevalue.h"
-#include "uabase/uastructurefielddata.h"
+#include "uabasecpp/uagenericstructurevalue.h"
+#include "uabasecpp/uastructurefielddatatype.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/localizedtext.h"

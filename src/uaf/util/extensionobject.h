@@ -26,7 +26,7 @@
 #include <string>
 #include <sstream>
 // SDK
-#include "uabase/uaextensionobject.h"
+#include "uabasecpp/uaextensionobject.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/stringifiable.h"

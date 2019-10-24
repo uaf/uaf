@@ -25,7 +25,7 @@
 // STD
 #include <string>
 // SDK
-#include "uabase/ualocalizedtext.h"
+#include "uabasecpp/ualocalizedtext.h"
 // UAF
 #include "uaf/util/util.h"
 

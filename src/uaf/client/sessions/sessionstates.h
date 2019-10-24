@@ -25,8 +25,8 @@
 #include <string>
 #include <stdint.h>
 // SDK
-#include "uaclient/uaclientsdk.h"
-#include "uaclient/uasession.h"
+#include "uaclientcpp/uaclientsdk.h"
+#include "uaclientcpp/uasession.h"
 // UAF
 #include "uaf/util/util.h"
 

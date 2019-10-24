@@ -28,8 +28,8 @@
 #include <map>
 #include <stdint.h>
 // SDK
-#include "uabase/uaarraytemplates.h"
-#include "uabase/uastring.h"
+#include "uabasecpp/uaarraytemplates.h"
+#include "uabasecpp/uastring.h"
 // UAF
 #include "uaf/util/util.h"
 #include "uaf/util/status.h"
