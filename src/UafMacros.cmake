@@ -388,7 +388,7 @@ MACRO(handlePythonLibs)
     
     # the provided find_package script seems to do a decent job in finding
     # the python installation, also on Windows...
-    find_package(PythonLibs)
+    find_package(PythonLibs ${PYUAF_PYTHONLIBS_VERSION} ${PYUAF_PYTHONLIBS_REQUIRED})
 
 ENDMACRO(handlePythonLibs)
 

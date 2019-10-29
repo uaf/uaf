@@ -105,8 +105,6 @@ namespace uaf
             ClientConnectionId clientConnectionId,
             bool retryInitialConnect)
     {
-        Status ret;
-
         // update the session specific settings
         info.clientConnectionId   = clientConnectionId;
         info.nSessionTimeout      = uint32_t(sessionSettings_.sessionTimeoutSec * 1000);
@@ -566,8 +564,7 @@ namespace uaf
         // ============
 
         // initialize the PKI store so that we can verify the server certificate
-        if (ret.isGood())
-            ret = initializePkiStore(uaSecurity);
+        ret = initializePkiStore(uaSecurity);
 
         // load the server certificate
         if (ret.isGood())
