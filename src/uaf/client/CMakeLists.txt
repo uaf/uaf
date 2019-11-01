@@ -36,5 +36,6 @@ link_directories(
 
 # Link the libraries.
 target_link_libraries(uafclient
+    uafutil
     ${UASDK_LIBRARIES}
 )
