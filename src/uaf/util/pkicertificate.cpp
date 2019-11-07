@@ -32,6 +32,7 @@ namespace uaf
     // Constructor
     // =============================================================================================
     PkiCertificate::PkiCertificate()
+    : uaCert_()
     {}
 
 

@@ -23,14 +23,16 @@ foreach(UAF_CLIENT_EXAMPLE ${UAF_CLIENT_EXAMPLES})
     if(WIN32)
         target_link_libraries(${UAF_CLIENT_EXAMPLE} 
                               uafclient uafutil 
-                              uaclient ${OPENSSL_LIBRARIES}
-                              uabase uapki uastack oleaut32 ole32 
+                              ${UASDK_LIBRARIES}
+                              ${OPENSSL_LIBRARIES}
+                              oleaut32 ole32 
                               Version ws2_32 rpcrt4 crypt32)
     else(WIN32)
         target_link_libraries(${UAF_CLIENT_EXAMPLE} 
                               uafclient uafutil
-                              ${LIBXML2_LIBRARIES} ssl crypto dl rt pthread 
-                              uafutil uabase uapki uastack )
+                              ${LIBXML2_LIBRARIES}
+                              ${UASDK_LIBRARIES}
+                              ssl crypto dl rt pthread)
     endif(WIN32)
     
     
