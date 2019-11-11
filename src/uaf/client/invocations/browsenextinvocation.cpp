@@ -108,8 +108,8 @@ namespace uaf
     // Fill the UAF members
     // =============================================================================================
     Status BrowseNextInvocation::fromSyncSdkToUaf(
-            const NamespaceArray&           nameSpaceArray,
-            const ServerArray&              serverArray,
+            const NamespaceArray&       nameSpaceArray,
+            const ServerArray&          serverArray,
             vector<BrowseNextResultTarget>& targets)
     {
         // declare the return Status
@@ -125,83 +125,101 @@ namespace uaf
 
             for (uint32_t i=0; i<noOfTargets ; i++)
             {
-                // update the status
-                if (OpcUa_IsGood(uaBrowseResults_[i].StatusCode))
-                    targets[i].status = statuscodes::Good;
-                else
-                    targets[i].status = ServerCouldNotBrowseNextError(
-                            SdkStatus(uaBrowseResults_[i].StatusCode));
+                auto& target = targets[i];
+                const auto& uaBrowseResult = uaBrowseResults_[i];
 
                 // update the status code
-                targets[i].opcUaStatusCode = uaBrowseResults_[i].StatusCode;
+                target.opcUaStatusCode = uaBrowseResult.StatusCode;
+
+                // update the status
+                if (OpcUa_IsGood(uaBrowseResult.StatusCode))
+                {
+                    target.status = statuscodes::Good;
+                }
+                else
+                {
+                    target.status = ServerCouldNotBrowseError(
+                            SdkStatus(uaBrowseResult.StatusCode));
+                    continue;
+                }
 
                 // update the continuation point
-                targets[i].continuationPoint = ByteString(
-                        uaBrowseResults_[i].ContinuationPoint.Length,
-                        uaBrowseResults_[i].ContinuationPoint.Data);
+                target.continuationPoint = ByteString(
+                        uaBrowseResult.ContinuationPoint.Length,
+                        uaBrowseResult.ContinuationPoint.Data);
+
+                if ((uaBrowseResult.NoOfReferences < 0) ||
+                    (nullptr == uaBrowseResult.References))
+                {
+                    continue;
+                }
 
                 // update the references
-                targets[i].references.resize(uaBrowseResults_[i].NoOfReferences);
+                target.references.resize(
+                        static_cast<std::size_t>(uaBrowseResult.NoOfReferences));
 
-                for (int32_t j = 0; j < uaBrowseResults_[i].NoOfReferences; j++)
+                for (int32_t j = 0; j < uaBrowseResult.NoOfReferences; j++)
                 {
-                    if (uaBrowseResults_[i].References[j].IsForward)
-                        targets[i].references[j].isForward = true;
+                    auto& targetReference = target.references[j];
+                    const auto& reference = uaBrowseResult.References[j];
+
+                    if (reference.IsForward)
+                        targetReference.isForward = true;
                     else
-                        targets[i].references[j].isForward = false;
+                        targetReference.isForward = false;
 
-                    targets[i].references[j].nodeClass = nodeclasses::fromSdkToUaf(
-                            uaBrowseResults_[i].References[j].NodeClass);
+                    targetReference.nodeClass = nodeclasses::fromSdkToUaf(
+                            reference.NodeClass);
 
-                    targets[i].references[j].browseName.fromSdk(
-                            UaQualifiedName(uaBrowseResults_[i].References[j].BrowseName));
+                    targetReference.browseName.fromSdk(
+                            UaQualifiedName(reference.BrowseName));
 
-                    targets[i].references[j].displayName.fromSdk(
-                            UaLocalizedText(uaBrowseResults_[i].References[j].DisplayName));
+                    targetReference.displayName.fromSdk(
+                            UaLocalizedText(reference.DisplayName));
 
                     Status resolutionStatus;
 
                     resolutionStatus = nameSpaceArray.fillQualifiedName(
-                            uaBrowseResults_[i].References[j].BrowseName,
-                            targets[i].references[j].browseName);
+                            reference.BrowseName,
+                            targetReference.browseName);
 
-                    if (targets[i].status.isGood() && resolutionStatus.isNotGood())
-                        targets[i].status = resolutionStatus;
+                    if (target.status.isGood() && resolutionStatus.isNotGood())
+                        target.status = resolutionStatus;
 
                     resolutionStatus = nameSpaceArray.fillNodeId(
-                            uaBrowseResults_[i].References[j].ReferenceTypeId,
-                            targets[i].references[j].referenceTypeId);
+                            reference.ReferenceTypeId,
+                            targetReference.referenceTypeId);
 
-                    if (targets[i].status.isGood() && resolutionStatus.isNotGood())
-                        targets[i].status = resolutionStatus;
-
-                    resolutionStatus = nameSpaceArray.fillExpandedNodeId(
-                            uaBrowseResults_[i].References[j].NodeId,
-                            targets[i].references[j].nodeId);
-
-                    if (targets[i].status.isGood() && resolutionStatus.isNotGood())
-                        targets[i].status = resolutionStatus;
-
-                    resolutionStatus = serverArray.fillExpandedNodeId(
-                            uaBrowseResults_[i].References[j].NodeId,
-                            targets[i].references[j].nodeId);
-
-                    if (targets[i].status.isGood() && resolutionStatus.isNotGood())
-                        targets[i].status = resolutionStatus;
+                    if (target.status.isGood() && resolutionStatus.isNotGood())
+                        target.status = resolutionStatus;
 
                     resolutionStatus = nameSpaceArray.fillExpandedNodeId(
-                            uaBrowseResults_[i].References[j].TypeDefinition,
-                            targets[i].references[j].typeDefinition);
+                            reference.NodeId,
+                            targetReference.nodeId);
 
-                    if (targets[i].status.isGood() && resolutionStatus.isNotGood())
-                        targets[i].status = resolutionStatus;
+                    if (target.status.isGood() && resolutionStatus.isNotGood())
+                        target.status = resolutionStatus;
 
                     resolutionStatus = serverArray.fillExpandedNodeId(
-                            uaBrowseResults_[i].References[j].TypeDefinition,
-                            targets[i].references[j].typeDefinition);
+                            reference.NodeId,
+                            targetReference.nodeId);
 
-                    if (targets[i].status.isGood() && resolutionStatus.isNotGood())
-                        targets[i].status = resolutionStatus;
+                    if (target.status.isGood() && resolutionStatus.isNotGood())
+                        target.status = resolutionStatus;
+
+                    resolutionStatus = nameSpaceArray.fillExpandedNodeId(
+                            reference.TypeDefinition,
+                            targetReference.typeDefinition);
+
+                    if (target.status.isGood() && resolutionStatus.isNotGood())
+                        target.status = resolutionStatus;
+
+                    resolutionStatus = serverArray.fillExpandedNodeId(
+                            reference.TypeDefinition,
+                            targetReference.typeDefinition);
+
+                    if (target.status.isGood() && resolutionStatus.isNotGood())
+                        target.status = resolutionStatus;
                 }
             }
 
@@ -210,14 +228,12 @@ namespace uaf
         else
         {
             ret = UnexpectedError(
-                          "Number of result targets does not match number of request targets,"
-                          "or number of automatic BrowseNext counters");
+                    "Number of result targets does not match number of request targets,"
+                    "or number of automatic BrowseNext counters");
         }
 
         return ret;
     }
-
-
 
 
 }
