@@ -9,9 +9,6 @@ MACRO(setBuildTypeToRelease)
     
 ENDMACRO(setBuildTypeToRelease)
 
-
-
-
 # ----------------------------------------------------------------------------
 # handleOptions()
 #    This macro handles some command line options.
@@ -33,9 +30,6 @@ MACRO(handleOptions)
     OPTION( BUILD_WITH_MULTIPLE_PROCESSES   "Set to ON if you want to build the UAF with multiple processes" OFF )
 
 ENDMACRO(handleOptions)
-
-
-
 
 # ----------------------------------------------------------------------------
 # setUnifiedAutomationSdkCompilerDir(NEW_VAR)
@@ -67,10 +61,6 @@ MACRO(setUnifiedAutomationSdkCompilerDir _NEW_VAR)
     
 ENDMACRO(setUnifiedAutomationSdkCompilerDir)
 
-
-
-
-
 # ----------------------------------------------------------------------------
 # setUafCompilerFlags()
 #    This macro will set the correct compiler flags for the UAF.
@@ -98,11 +88,6 @@ MACRO(setUafCompilerFlags)
     
 ENDMACRO(setUafCompilerFlags)
 
-
-
-
-
-
 # ----------------------------------------------------------------------------
 # setUafLinkerRestrictions()
 #    This macro will set the correct linker restrictions.
@@ -116,10 +101,6 @@ MACRO(setUafLinkerRestrictions)
     endif (FORCE32)
 
 ENDMACRO(setUafLinkerRestrictions)
-
-
-
-
 
 # ----------------------------------------------------------------------------
 # includeThirdPartyCodeIfNeeded()
@@ -139,9 +120,6 @@ MACRO(includeThirdPartyCodeIfNeeded)
     endif (MSVC90)
 
 ENDMACRO(includeThirdPartyCodeIfNeeded)
-
-
-
 
 # ----------------------------------------------------------------------------
 # handleUnifiedAutomationSdk()
@@ -237,10 +215,6 @@ MACRO(handleUnifiedAutomationSdk)
 
 ENDMACRO(handleUnifiedAutomationSdk)
 
-
-
-
-
 # ----------------------------------------------------------------------------
 # handleLibXml2()
 #    This macro will set the necessary LibXml2 variables 
@@ -257,7 +231,7 @@ MACRO(handleLibXml2)
                 optimized ${UASDK_DIR}/third-party/win32/${COMPILER_DIR}/libxml2/out32dll/libxml2.lib
                 debug ${UASDK_DIR}/third-party/win32/${COMPILER_DIR}/libxml2/out32dll.dbg/libxml2d.lib)
             INSTALL(FILES ${UASDK_DIR}/third-party/win32/${COMPILER_DIR}/libxml2/out32dll/libxml2.dll
-                    DESTINATION "${PROJECT_SOURCE_DIR}/../lib")
+                    DESTINATION "${PROJECT_OUTPUT_DIR}")
             MESSAGE(STATUS "found libxml2: " ${LIBXML2_LIBRARIES})
         else()
             message(FATAL_ERROR "\n"
@@ -268,10 +242,6 @@ MACRO(handleLibXml2)
     endif (WIN32)
     
 ENDMACRO(handleLibXml2)
-
-
-
-
 
 # ----------------------------------------------------------------------------
 # handleOpenSsl()
@@ -289,7 +259,7 @@ MACRO(handleOpenSsl)
                 optimized ${UASDK_DIR}/third-party/win32/${COMPILER_DIR}/openssl/out32dll/libeay32.lib
                 debug ${UASDK_DIR}/third-party/win32/${COMPILER_DIR}/openssl/out32dll.dbg/libeay32d.lib)
             INSTALL(FILES ${UASDK_DIR}/third-party/win32/${COMPILER_DIR}/openssl/out32dll/libeay32.dll
-                    DESTINATION "${PROJECT_SOURCE_DIR}/../lib")
+                    DESTINATION "${PROJECT_OUTPUT_DIR}")
             MESSAGE(STATUS "found openssl: " ${OPENSSL_LIBRARIES})
         else ()
             message(FATAL_ERROR "\n"
@@ -300,10 +270,6 @@ MACRO(handleOpenSsl)
     endif (WIN32)
 
 ENDMACRO(handleOpenSsl)
-
-
-
-
 
 # ----------------------------------------------------------------------------
 # handleSwig()
@@ -377,10 +343,6 @@ MACRO(handleSwig)
 
 ENDMACRO(handleSwig)
 
-
-
-
-
 # ----------------------------------------------------------------------------
 # handlePythonLibs()
 #    This macro will set the necessary PythonLibs variables.
@@ -393,19 +355,11 @@ MACRO(handlePythonLibs)
 
 ENDMACRO(handlePythonLibs)
 
-
-
-
-
-
-
 # ----------------------------------------------------------------------------
 # setUafOutputDirectories()
 #    This macro will set the correct output directories for the UAF.
 # ----------------------------------------------------------------------------
 MACRO(setUafOutputDirectories)
-
-    get_filename_component(PROJECT_OUTPUT_DIR "${PROJECT_SOURCE_DIR}/../lib" ABSOLUTE)
 
     if (WIN32)
         set_target_properties(uafutil    PROPERTIES LIBRARY_OUTPUT_DIRECTORY_DEBUG          "${PROJECT_OUTPUT_DIR}")
@@ -435,7 +389,6 @@ MACRO(setUafOutputDirectories)
     
 ENDMACRO(setUafOutputDirectories)
 
-
 # ----------------------------------------------------------------------------
 # setPyUafTargetProperties()
 #    This macro will set the correct target properties for PyUAF
@@ -448,13 +401,12 @@ MACRO(setPyUafTargetProperties  _PREFIX _NAME _OUTDIR _UAFLINKLIB)
     set_source_files_properties(  ${_TARGET}.i  PROPERTIES  CPLUSPLUS ON  )
 
     # Add the SWIG interface module
-    swig_add_module(  ${_TARGET}  python  ${_TARGET}.i  )
+    swig_add_library(  ${_TARGET}  TYPE SHARED  LANGUAGE python  SOURCES ${_TARGET}.i  )
 
     # link the libraries to the Python libraries and UAF libraries
     swig_link_libraries(  ${_TARGET}  ${PYTHON_LIBRARIES}  ${_UAFLINKLIB}  )
     
     # NOT USED set_source_files_properties( ${_TARGET} PROPERTIES COMPILE_FLAGS "-relativeimport")
-    
     
     if (WIN32)
         set_target_properties(  _${_TARGET}   PROPERTIES   LIBRARY_OUTPUT_DIRECTORY_DEBUG           "${_OUTDIR}"  )
@@ -474,7 +426,6 @@ MACRO(setPyUafTargetProperties  _PREFIX _NAME _OUTDIR _UAFLINKLIB)
     set_target_properties(  _${_TARGET} PROPERTIES OUTPUT_NAME _${_NAME})
 
 ENDMACRO(setPyUafTargetProperties)
-
 
 # ----------------------------------------------------------------------------
 # copyFile(file, to)
@@ -521,5 +472,4 @@ MACRO(copySdkLibraries)
     endif(COPY_SDK_LIBS)
 
 ENDMACRO(copySdkLibraries)
-
 

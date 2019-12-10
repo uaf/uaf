@@ -9,6 +9,9 @@ cmake_minimum_required(VERSION 2.8)
 # Provide the path which contains CMake modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}")
 
+# Set general output folder
+get_filename_component(PROJECT_OUTPUT_DIR "${PROJECT_SOURCE_DIR}/../lib/pyuaf" ABSOLUTE)
+
 # Load the macros defined by the UAF
 include(UafMacros)
 
