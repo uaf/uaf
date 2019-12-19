@@ -395,7 +395,7 @@ namespace uaf
             NodeId nodeId = expandedNodeId.nodeId();
             nodeId.setNameSpaceUri(string(UaString(&opcUaExpandedNodeId.NamespaceUri).toUtf8()));
             expandedNodeId.setNodeId(nodeId);
-            ret.isGood();
+            ret.setGood();
         }
         else if (findNamespaceUri(opcUaExpandedNodeId.NodeId.NamespaceIndex, namespaceUri))
         {
