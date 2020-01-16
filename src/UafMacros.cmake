@@ -400,8 +400,13 @@ MACRO(setPyUafTargetProperties  _PREFIX _NAME _OUTDIR _UAFLINKLIB)
     # Set the source file properties to C++
     set_source_files_properties(  ${_TARGET}.i  PROPERTIES  CPLUSPLUS ON  )
 
-    # Add the SWIG interface module
-    swig_add_library(  ${_TARGET}  TYPE SHARED  LANGUAGE python  SOURCES ${_TARGET}.i  )
+    if (${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} VERSION_GREATER 3.11)
+        # Add the SWIG interface module
+        swig_add_library(  ${_TARGET}  TYPE SHARED  LANGUAGE python  SOURCES ${_TARGET}.i  )
+    else()
+        # Add the SWIG interface module
+         swig_add_module(  ${_TARGET}  python  ${_TARGET}.i  )
+    endif()
 
     # link the libraries to the Python libraries and UAF libraries
     swig_link_libraries(  ${_TARGET}  ${PYTHON_LIBRARIES}  ${_UAFLINKLIB}  )
