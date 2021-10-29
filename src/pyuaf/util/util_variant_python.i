@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 %module variant_python
 %{
 #define SWIG_FILE_WITH_INIT
@@ -37,15 +37,15 @@
 %include "../pyuaf.i"
 
 
-%types(uaf::primitives::Boolean *, 
+%types(uaf::primitives::Boolean *,
        uaf::primitives::SByte *,
-       uaf::primitives::Byte *, 
+       uaf::primitives::Byte *,
        uaf::primitives::UInt16 *,
        uaf::primitives::Int16 *,
        uaf::primitives::UInt32 *,
        uaf::primitives::Int32 *,
        uaf::primitives::UInt64 *,
-       uaf::primitives::Int64 *, 
+       uaf::primitives::Int64 *,
        uaf::primitives::Float *,
        uaf::primitives::Double *,
        uaf::primitives::String *,
@@ -65,7 +65,7 @@
 %import "../typemaps/util_variant_python_typemap.h"
 
 
-%typemap(in, precedence=3000) uaf::Variant 
+%typemap(in, precedence=3000) uaf::Variant
 {
 	bool typemapOK = pyObjectToUafVariant($input, $1);
     if (!typemapOK)
@@ -77,9 +77,9 @@
     checkPyObject($input, $1);
 }
 
-%typemap(in) const uaf::Variant& (uaf::Variant temp) 
+%typemap(in) const uaf::Variant& (uaf::Variant temp)
 {
-    
+
 	bool typemapOK = pyObjectToUafVariant($input, temp);
     $1 = &temp;
     if (!typemapOK)
@@ -94,13 +94,13 @@
 }
 
 %typemap(out) uaf::Variant *
-{ 
+{
 	bool typemapOK = uafVariantToPyObject($1, $result);
     if (!typemapOK)
     	return NULL;
 }
 
-%typemap(out) const uaf::Variant& 
+%typemap(out) const uaf::Variant&
 {
 	bool typemapOK;
     typemapOK = uafVariantToPyObject((*$1), $result);

@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 %module primitives
 %{
 #define SWIG_FILE_WITH_INIT
@@ -44,10 +44,13 @@
 // =================================================================================================
 // SETUP_PRIMITIVE(TYPE, PYTHONTYPE)
 // =================================================================================================
-// 
+//
 // Set-up a string primitive type from uaf::primitives.
 //
 //   - argument TYPE : the type of the class, e.g. String
+//
+// Note: in case of a ValueError, which occurs if args[0] contains a string, representing a float,
+//  such as "123.0", we catch the ValueError, and try to cast to float first before casting to int.
 //
 %define SETUP_PRIMITIVE(TYPE, PYTHONTYPE)
     %feature("pythonprepend") uaf::primitives::TYPE::TYPE %{
@@ -57,6 +60,11 @@
         if len(args) == 1:
             try:
                 args = (PYTHONTYPE(args[0]),)
+            except ValueError as e:
+                try:
+                    args = (PYTHONTYPE(float(args[0])),)
+                except:
+                    raise e
             except:
                 raise TypeError("'PYTHONTYPE' expected instead of %s instance" %type(args[0]))
         elif len(args) > 0:
@@ -64,7 +72,7 @@
     %}
     HANDLE_COMPARISON_OPERATORS(uaf::primitives, TYPE)
     HANDLE_TOSTRING(uaf::primitives, TYPE, pyuaf.util.primitives)
-    
+
     %template(TYPE##Array) std::vector<uaf::primitives::TYPE>;
 %enddef
 
@@ -77,8 +85,9 @@ SETUP_PRIMITIVE(Int16      , int)
 SETUP_PRIMITIVE(UInt16     , int)
 SETUP_PRIMITIVE(Int32      , int)
 SETUP_PRIMITIVE(UInt32     , int)
-SETUP_PRIMITIVE(Int64      , long)
-SETUP_PRIMITIVE(UInt64     , long)
+// The long builtin type has been deprecated in Python3
+SETUP_PRIMITIVE(Int64      , int)
+SETUP_PRIMITIVE(UInt64     , int)
 SETUP_PRIMITIVE(Float      , float)
 SETUP_PRIMITIVE(Double     , float)
 SETUP_PRIMITIVE(String     , str)
