@@ -103,25 +103,25 @@
 %template(ByteStringVector) std::vector<uaf::ByteString>;
 
 // import the submodules
-%import "pyuaf/util/util_loglevels.i" 
-%import "pyuaf/util/util_applicationtypes.i" 
-%import "pyuaf/util/util_attributeids.i" 
-%import "pyuaf/util/util_constants.i" 
-%import "pyuaf/util/util_usertokentypes.i" 
-%import "pyuaf/util/util_nodeididentifiertypes.i" 
-%import "pyuaf/util/util_statuscodes.i" 
+%import "pyuaf/util/util_loglevels.i"
+%import "pyuaf/util/util_applicationtypes.i"
+%import "pyuaf/util/util_attributeids.i"
+%import "pyuaf/util/util_constants.i"
+%import "pyuaf/util/util_usertokentypes.i"
+%import "pyuaf/util/util_nodeididentifiertypes.i"
+%import "pyuaf/util/util_statuscodes.i"
 %import "pyuaf/util/util_opcuatypes.i"
 %import "pyuaf/util/util_opcuaidentifiers.i"
 %import "pyuaf/util/util_opcuastatuscodes.i"
-%import "pyuaf/util/util_primitives.i" 
-%import "pyuaf/util/util_securitypolicies.i" 
-%import "pyuaf/util/util_messagesecuritymodes.i" 
-%import "pyuaf/util/util_monitoringmodes.i" 
-%import "pyuaf/util/util_browsedirections.i" 
-%import "pyuaf/util/util_nodeclasses.i" 
-%import "pyuaf/util/util_timestampstoreturn.i" 
-%import "pyuaf/util/util_serverstates.i" 
-%import "pyuaf/util/util_structurefielddatatypes.i" 
+%import "pyuaf/util/util_primitives.i"
+%import "pyuaf/util/util_securitypolicies.i"
+%import "pyuaf/util/util_messagesecuritymodes.i"
+%import "pyuaf/util/util_monitoringmodes.i"
+%import "pyuaf/util/util_browsedirections.i"
+%import "pyuaf/util/util_nodeclasses.i"
+%import "pyuaf/util/util_timestampstoreturn.i"
+%import "pyuaf/util/util_serverstates.i"
+%import "pyuaf/util/util_structurefielddatatypes.i"
 
 
 // before including any classes in a generic way, specify the "special treatments" of certain classes:
@@ -194,19 +194,22 @@ UAF_WRAP_CLASS("uaf/util/euinformation.h"          , uaf , EUInformation        
 
 // SWIG iterators don't work well for our vectors (probably SWIG bug),
 // so therefore we create our own iterators:
+// The method next is maintained for python2 compatibility.
 %pythoncode %{
 class VectorIterator(object):
-   
+
     def __init__(self, pointerToVector):
         self.pointerToVector = pointerToVector
         self.index = -1
-    
-    def next(self):
+
+    def __next__(self):
         self.index += 1
         if self.index < len(self.pointerToVector):
             return self.pointerToVector[self.index]
         else:
             raise StopIteration
+
+    next = __next__
 %}
 
 %rename(__cpp_iterator) std::vector<uaf::Variant>::iterator;

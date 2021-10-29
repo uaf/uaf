@@ -685,7 +685,7 @@ namespace uaf
                 const uaf::TranslateBrowsePathsToNodeIdsRequest&  request,
                 uaf::TranslateBrowsePathsToNodeIdsResult&         result);
 
-        
+
         /**
          * Process a synchronous "create monitored data" request.
          *

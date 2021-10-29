@@ -54,9 +54,8 @@
 
 // include the errors
 // wrap the UafError and make sure it inherits from Exception
-%pythoncode %{ _object = Exception %}
+%exceptionclass UafError;
 UAF_WRAP_CLASS("uaf/util/errors/uaferror.h", uaf , UafError, COPY_YES, TOSTRING_YES, COMP_NO, pyuaf.util, VECTOR_NO)
-%pythoncode %{ _object = object %}
 
 %include "uaf/util/errors/invalidrequesterror.h"
 %include "uaf/util/errors/connectionerrors.h"

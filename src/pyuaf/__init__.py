@@ -1,7 +1,7 @@
 __all__ = ["util", "client"]
 
 # the code below is needed from SWIG 3.0.10 onwards
-# because this swig uses importlib, and importlib needs 
+# because this swig uses importlib, and importlib needs
 # the right path to resolve the ___init__.so files
 import os,sys
 THIS_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -17,4 +17,4 @@ initialized = util.initializeUaf()
 if not initialized:
     raise RuntimeError("WARNING: the UAF could not be initialized!")
 
-__version__ = "2.7.0"
+__version__ = "2.7.2"

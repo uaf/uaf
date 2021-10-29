@@ -19,10 +19,10 @@
  */
 
 %module (directors="1", "threads"=1) client
-// Directors are enabled to implement the callbacks for the 
+// Directors are enabled to implement the callbacks for the
 // asynchronous communication.
-// Threads must also be enabled, because the overridden callbacks 
-// are called from multiple C++ threads 
+// Threads must also be enabled, because the overridden callbacks
+// are called from multiple C++ threads
 
 %{
 #define SWIG_FILE_WITH_INIT
@@ -78,7 +78,7 @@ import time
 
 
 // enable directors for the Client
-%feature("director") uaf::Client;  
+%feature("director") uaf::Client;
 
 
 // include common definitions
@@ -97,8 +97,8 @@ import time
 %import(module="pyuaf.util.applicationtypes")        "pyuaf/util/util_applicationtypes.i"
 %import(module="pyuaf.util.attributeids")            "pyuaf/util/util_attributeids.i"
 %import(module="pyuaf.util.constants")               "pyuaf/util/util_constants.i"
-%import(module="pyuaf.util.errors")                  "pyuaf/util/util_errors.i" 
-%import(module="pyuaf.util.usertokentypes")          "pyuaf/util/util_usertokentypes.i" 
+%import(module="pyuaf.util.errors")                  "pyuaf/util/util_errors.i"
+%import(module="pyuaf.util.usertokentypes")          "pyuaf/util/util_usertokentypes.i"
 %import(module="pyuaf.util.nodeididentifiertypes")   "pyuaf/util/util_nodeididentifiertypes.i"
 %import(module="pyuaf.util.statuscodes")             "pyuaf/util/util_statuscodes.i"
 %import(module="pyuaf.util.opcuatypes")              "pyuaf/util/util_opcuatypes.i"
@@ -116,7 +116,7 @@ import time
 %import(module="pyuaf.util.__unittesthelper__")      "pyuaf/util/util___unittesthelper__.i"
 %import(module="pyuaf.util")                         "pyuaf/util/util_util.i"
 
- 
+
 // import the EXPORT macro and some numeric types
 %include "uaf/client/clientexport.h"
 %import "uaf/util/handles.h"
@@ -125,7 +125,7 @@ import time
 // now import the submodules of pyuaf.client
 %import "pyuaf/client/client_sessionstates.i"
 %import "pyuaf/client/client_connectionsteps.i"
-%import "pyuaf/client/client_subscriptionstates.i" 
+%import "pyuaf/client/client_subscriptionstates.i"
 %import "pyuaf/client/client_monitoreditemstates.i"
 %import "pyuaf/client/client_settings.i"
 %import "pyuaf/client/client_requests.i"
@@ -143,7 +143,7 @@ import time
 %rename(__dispatch_subscriptionStatusChanged__)             uaf::ClientInterface::subscriptionStatusChanged;
 %rename(__dispatch_notificationsMissing__)                  uaf::ClientInterface::notificationsMissing;
 %rename(__dispatch_untrustedServerCertificateReceived__)    uaf::ClientInterface::untrustedServerCertificateReceived;
-%rename(__dispatch_connectErrorReceived__)    				uaf::ClientInterface::connectErrorReceived;
+%rename(__dispatch_connectErrorReceived__)                              uaf::ClientInterface::connectErrorReceived;
 
 
 // now include all classes in a generic way
@@ -169,3 +169,4 @@ UAF_WRAP_CLASS("uaf/client/clientinterface.h"                         , uaf , Cl
 %clear uaf::ClientConnectionId & clientSubscriptionHandle;
 // finally, include the client code:
 %include "pyuaf/client/client.py"
+
