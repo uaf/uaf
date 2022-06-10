@@ -143,7 +143,7 @@ namespace uaf
     {
         UaString uaFieldName(fieldName.c_str());
         int index;
-        bool found;
+        bool found = false;
         for(index=0; index<uaGenericUnionValue_.definition().childrenCount() && !found; index++)
         {
             if (uaGenericUnionValue_.definition().child(index).name() == uaFieldName)
@@ -209,7 +209,7 @@ namespace uaf
 	{
 		UaString uaFieldName(fieldName.c_str());
 		int index;
-		bool found;
+		bool found = false;
 		for(index=0; index<uaGenericUnionValue_.definition().childrenCount() && !found; index++)
 		{
 			if (uaGenericUnionValue_.definition().child(index).name() == uaFieldName)
