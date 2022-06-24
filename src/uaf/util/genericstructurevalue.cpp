@@ -144,7 +144,7 @@ namespace uaf
 	{
 		UaString uaFieldName(fieldName.c_str());
 		int index;
-		bool found;
+		bool found = false;
 		for(index=0; index<uaGenericStructureValue_.definition().childrenCount() && !found; index++)
 		{
 			if (uaGenericStructureValue_.definition().child(index).name() == uaFieldName)
