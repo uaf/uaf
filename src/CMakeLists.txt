@@ -18,8 +18,8 @@ include(UafMacros)
 # Handle some command line options (default values are the same as for the SDK!)
 handleOptions()
 
-# Set the build type to release
-setBuildTypeToRelease()
+# Set the default build type to release
+setDefaultBuildTypeToRelease()
 
 # Set the UAF compiler flags
 setUafCompilerFlags()
