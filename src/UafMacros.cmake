@@ -1,4 +1,18 @@
 # ----------------------------------------------------------------------------
+# setDefaultBuildTypeToRelease()
+#    This macro sets the build type to Release, if no
+#    build type has been set yet.
+# ----------------------------------------------------------------------------
+MACRO(setDefaultBuildTypeToRelease)
+
+    IF(NOT DEFINED CMAKE_BUILD_TYPE AND NOT DEFINED CMAKE_CONFIGURATION_TYPES)
+        set (CMAKE_BUILD_TYPE Release)
+        set (CMAKE_CONFIGURATION_TYPES "Release")
+    ENDIF()
+
+ENDMACRO(setDefaultBuildTypeToRelease)
+
+# ----------------------------------------------------------------------------
 # handleOptions()
 #    This macro handles some command line options.
 # ----------------------------------------------------------------------------
