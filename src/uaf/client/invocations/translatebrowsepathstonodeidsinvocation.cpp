@@ -177,6 +177,10 @@ namespace uaf
                 // update the status code
                 targets[i].opcUaStatusCode = uaBrowsePathResults_[i].StatusCode;
 
+                // Make sure we don't try to process an empty or null array of target results.
+                if(uaBrowsePathResults_[i].NoOfTargets <= 0)
+                    continue;
+
                 // declare the number of "targets of the current ResultTarget"
                 uint32_t noOfResultTargetTargets = uaBrowsePathResults_[i].NoOfTargets;
 
