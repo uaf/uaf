@@ -10,8 +10,6 @@ file(MAKE_DIRECTORY ${LIB_PYUAF_DIR})
 configure_file(  "__init__.py"   "${LIB_PYUAF_DIR}"  )
 
 
-
-       
 # add the subdirectories
 add_subdirectory(${PROJECT_SOURCE_DIR}/pyuaf/util)
 add_subdirectory(${PROJECT_SOURCE_DIR}/pyuaf/client)

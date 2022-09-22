@@ -1,7 +1,27 @@
 
-UAF changelog                     
+UAF changelog
 ====================================================================================================
 
+
+Version 2.7.2 @ 2021/10/29
+----------------------------------------------------------------------------------------------------
+
+- Update to UASDK 1.7.2
+- Made compatible with python3:
+  - not completely backwards compatible with python 2.7 due to:
+    - long removed and replaced with int in python3
+    - unicode type removed in python3
+    - module thread renamed to _thread and deprecated in python3 (_thread is still used in this commit, though, but needs to be refactored later)
+  - range() instead of xrange()
+  - key in dict instead of dict.has_key()
+  - removed call to ClientBase.__del__(self), as it is undefined
+  - "except PyUafError as e:" instead of "except PyUafError, e:"
+  - using module _thread (deprecated) instead of thread
+  - Adjusted unit testing code:
+    - Added VectorIterator.__next__()
+    - using binary decode()
+- Changed certain return values in exception cases
+- Whitespace formatting
 
 Version 2.7.0 @ 2019/10/24
 ----------------------------------------------------------------------------------------------------
@@ -32,19 +52,19 @@ Version 2.4.0 @ 2017/08/11
 ----------------------------------------------------------------------------------------------------
 
 - new feature (https://github.com/uaf/uaf/issues/123):
-  Now supporting FindServersOnNetwork (LDS-ME). 
-  
+  Now supporting FindServersOnNetwork (LDS-ME).
+
 - The following classes were added:
 
   - uaf::ServerOnNetwork                  (pyuaf.util.ServerOnNetwork)
   - pyuaf.util.ServerOnNetworkVector
- 
+
 - The following methods were added:
- 
+
   - uaf::Client::findServersOnNetworkNow  (pyuaf.Client.findServersOnNetworkNow)
   - uaf::Client::serversOnNetworkFound    (pyuaf.Client.serversOnNetworkFound)
- 
-- The following attributes were added to uaf::ClientSettings 
+
+- The following attributes were added to uaf::ClientSettings
   (pyuaf.client.settings.ClientSettings):
 
   - discoveryOnNetworkEnable              (default: false)
@@ -53,21 +73,21 @@ Version 2.4.0 @ 2017/08/11
   - discoveryOnNetworkStartingRecordId    (default: 0)
   - discoveryOnNetworkServerCapabilities  (default: [])
   - discoveryOnNetworkMaxRecordsToReturn  (default: 0)
- 
+
 Version 2.3.1 @ 2017/07/20
 ----------------------------------------------------------------------------------------------------
 
 - bugfix (https://github.com/uaf/uaf/issues/122):
-  VariantVectors can now be nested. 
+  VariantVectors can now be nested.
 
 Version 2.3.0 @ 2016/09/29
 ----------------------------------------------------------------------------------------------------
 
 - new feature (https://github.com/uaf/uaf/issues/115):
-  A ConnectError can now be handled by a callback function.  
+  A ConnectError can now be handled by a callback function.
 
 - bugfix:
-  Removed duplicate definitions for several pyuaf.client.Client methods. 
+  Removed duplicate definitions for several pyuaf.client.Client methods.
 
 Version 2.2.1 @ 2016/09/18
 ----------------------------------------------------------------------------------------------------
@@ -78,14 +98,14 @@ Version 2.2.1 @ 2016/09/18
 
 - bugfix (https://github.com/uaf/uaf/issues/114):
   Latest version of SWIG (3.0.10) replaced the way how libraries are imported, causing
-  'import pyuaf' to fail. 
+  'import pyuaf' to fail.
   Now fixed by appending the directories of the pyuaf/util/ and pyuaf/client dirs to the sys.path,
   and by creating util/util.py and client/client.py files which are renamed by the building
-  process to util/__init__.py and client/__init__.py as before.  
+  process to util/__init__.py and client/__init__.py as before.
 
 - bugfix (https://github.com/uaf/uaf/issues/112)
   Build process now supports vs2012sp4.
-  
+
 - new feature (https://github.com/uaf/uaf/issues/113)
   Matrices are now supported via a convenience class (pyuaf.util.Matrix).
   See examples/pyuaf/client/how_to_read_and_write_some_matrices.py.
@@ -95,23 +115,23 @@ Version 2.1.1 @ 2016/04/24
 ----------------------------------------------------------------------------------------------------
 
 - bugfix (https://github.com/uaf/uaf/issues/106):
-  Deleting a python client with monitored items sometimes lead to crashes, when the client was 
-  destructed. 
-   
+  Deleting a python client with monitored items sometimes lead to crashes, when the client was
+  destructed.
+
 - C++ examples now updated to UAF v2 (https://github.com/uaf/uaf/issues/107)
 
 - bugfix (https://github.com/uaf/uaf/issues/105):
   Manually removed subscriptions were restored automatically by the UAF, while they should have
   been removed permanently. They are now removed permanently.
-  
+
 - new feature (https://github.com/uaf/uaf/issues/104):
-  On MS Windows, multi-core compiling is now possible on via a CMake flag 
+  On MS Windows, multi-core compiling is now possible on via a CMake flag
   (BUILD_WITH_MULTIPLE_PROCESSES). By default, this flag is OFF, so there is no change in behavior.
   By adding -DBUILD_WITH_MULTIPLE_PROCESSES=ON to the command line, the build process will
   be faster if a multi-core CPU is available.
-  On Linux, multi-core compilation is not specified with the cmake command, but with the make 
+  On Linux, multi-core compilation is not specified with the cmake command, but with the make
   command ("make -j"), so the BUILD_WITH_MULTIPLE_PROCESSES flag is not allowed for this platform.
-   
+
 
 Version 2.1.0 @ 2016/03/14
 ----------------------------------------------------------------------------------------------------
@@ -120,7 +140,7 @@ Version 2.1.0 @ 2016/03/14
   Added support for Structures, Unions, and arrays of Structures and Unions.
   See examples/pyuaf/client/how_to_read_and_write_structures.py
 
-- bugfix in the CMake file of examples/uaf/src/client/CMakeLists.txt, which prevented the C++ 
+- bugfix in the CMake file of examples/uaf/src/client/CMakeLists.txt, which prevented the C++
   examples from building correctly. (Reported and fixed by Hoang N.)
 
 
@@ -133,7 +153,7 @@ Version 2.0.3 @ 2016/01/29
 
 - bugfix (https://github.com/uaf/uaf/issues/96):
   The status codes of uaf::Client::setMonitoringMode were not updated correctly.
-  
+
 - bugfix (https://github.com/uaf/uaf/issues/97):
   uaf::Client::setMonitoringMode of monitored items on multiple subscriptions only succeeded
   for the first subscription, not for subsequent subscriptions.
@@ -154,15 +174,15 @@ Version 2.0.2 @ 2015/11/18
 Version 2.0.1 @ 2015/08/21
 ----------------------------------------------------------------------------------------------------
 
-- bugfix (https://github.com/uaf/uaf/issues/85): 
+- bugfix (https://github.com/uaf/uaf/issues/85):
   Relative addresses are now fully stored in memory (instead of using pointers to refer to the
   'startingAddress' of a relative address). This consumes a bit more memory, but it avoids segfaults
   when the Python garbage collector deletes a 'startingAddress' which is still in use by another
   relative address.
-  
+
 - bugfix (https://github.com/uaf/uaf/issues/86):
   Fixed a severe memory leak in the C++ SessionFactory class (credits to jorrita @ GitHub).
-  
+
 
 
 Version 2.0.0 @ 2015/07/17
@@ -174,9 +194,9 @@ Informally:
   Basically, all Config classes (like SessionConfig, SubscriptionConfig, ReadConfig, ...)
   have disappeared. This means that the config arguments (e.g. read(..., sessionConfig=None, ...))
   have disappeared as well! Instead of using configs, you can now:
-   
+
   - easily configure default SessionSettings, SubscriptionSettings, ReadSettings, etc.:
-     
+
     >>> clientSettings = ClientSettings()
     >>> clientSettings.defaultSessionSettings.sessionTimeoutSec = 100.0
     >>> clientSettings.defaultReadSettings.callTimeoutSec = 2.0
@@ -184,22 +204,22 @@ Informally:
     >>> myClient.read(addresses) # this will use the above defaults
 
   - easily configure SessionSettings, SubscriptionSettings, ReadSettings, etc. per service call:
-   
-    >>> myClient.read(addresses       = myAddresses, 
+
+    >>> myClient.read(addresses       = myAddresses,
     ...               serviceSettings = myReadSettings,    # optional **kwarg
     ...               sessionSettings = mySessionSettings) # optional **kwarg
-    >>> myClient.createMonitoredData(addresses            = myAddresses, 
+    >>> myClient.createMonitoredData(addresses            = myAddresses,
     ...                              serviceSettings      = myCreateMonitoredDataSettings, # optional **kwarg
     ...                              sessionSettings      = mySessionSettings,             # optional **kwarg
     ...                              subscriptionSettings = mySubscriptionSettings)        # optional **kwarg
 
   - easily keep full control over sessions, subscriptions and services (only if you know
     what you're doing):
-   
+
     >>> myClient.read(addresses, clientConnectionId = 3)
     >>> myClient.createMonitoredData(addresses, clientConnectionId = 3, clientSubscriptionHandle = 1)
 
-  Check the examples/pyuaf/client/how_to_configure_all_settings.py example or the API docs for 
+  Check the examples/pyuaf/client/how_to_configure_all_settings.py example or the API docs for
   more detailed information!
 
   This is a breaking change that may affect existing code!!!
@@ -211,40 +231,40 @@ Informally:
 - Everything related to status/error handling has changed significantly:
 
   - Many more error types are now defined, so errors can now be handled much more "fine grained".
-    For instance, in addition to the old "SecurityError", you can now also catch a 
-    "OpenSSLStoreInitializationError". The former is a superclass of the latter, so if you're 
+    For instance, in addition to the old "SecurityError", you can now also catch a
+    "OpenSSLStoreInitializationError". The former is a superclass of the latter, so if you're
     handling SecurityErrors, you'll also handling all "fine grained" security related errors.
-    To maintain backwards compatibility, no errors have been removed from the framework. If an 
-    error has become obsolete, it is now a subclass of the "BackwardsCompatibilityError", and it 
+    To maintain backwards compatibility, no errors have been removed from the framework. If an
+    error has become obsolete, it is now a subclass of the "BackwardsCompatibilityError", and it
     will never be raised.
-    For PyUAF, see the documentation on pyuaf.util.errors to get an overview of all errors. 
+    For PyUAF, see the documentation on pyuaf.util.errors to get an overview of all errors.
     For the C++ UAF, see the errors in the headers of src/uaf/errors/*.h.
 
-  - The newly defined errors often have diagnostic attributes. For instance, the 
-    "ConnectionFailedError" has an "endpointUrl" string attribute, so you'll know for which 
-    endpoint the connection failed. It also has a "sdkStatus" attribute of the new type SdkStatus. 
-    SdkStatus instances hold the low-level statuscode and status description from the Unified 
+  - The newly defined errors often have diagnostic attributes. For instance, the
+    "ConnectionFailedError" has an "endpointUrl" string attribute, so you'll know for which
+    endpoint the connection failed. It also has a "sdkStatus" attribute of the new type SdkStatus.
+    SdkStatus instances hold the low-level statuscode and status description from the Unified
     Automation SDK. In other words, you can use the sdkStatus attribute to know what caused the
     ConnectionFailedError at the SDK level.
     Again, see the documentation of pyuaf.util.errors (or the C++ error headers) to know which
-    attributes are defined for each error.  
+    attributes are defined for each error.
 
-  - Since individual error classes now have diagnostic attributes, the StatusDiagnostics class 
-    (which previously held all diagnostic info) has been removed from the framework. Consequently, 
-    the "statusDiagnostics()" method of the Status class has been removed. Search through your 
+  - Since individual error classes now have diagnostic attributes, the StatusDiagnostics class
+    (which previously held all diagnostic info) has been removed from the framework. Consequently,
+    the "statusDiagnostics()" method of the Status class has been removed. Search through your
     existing code for "statusdiagnostics" (case insensitive) to detect problems due to backwards
-    incompatibility. Especially watch out when creating monitored items: diagnostics are often 
+    incompatibility. Especially watch out when creating monitored items: diagnostics are often
     used there to store clientHandles even if the monitored items could not be created. Check out
-    the documentation on the "createMonitoredData()" or "createMonitoredEvents()" methods of the 
-    pyuaf.client.Client class to see how to adapt your code. 
+    the documentation on the "createMonitoredData()" or "createMonitoredEvents()" methods of the
+    pyuaf.client.Client class to see how to adapt your code.
 
 - Relevant for the C++ side only: the uafc:: namespace has been removed and all code is now part of
-  the uaf:: namespace. We did this because SWIG apparently has problems with namespaces in certain 
+  the uaf:: namespace. We did this because SWIG apparently has problems with namespaces in certain
   cases (e.g. subclasses of an abstract class of another namespace may give problems when used in
   wrapped vectors).
 
-- ExtensionObjects are now supported, and so are model change events. 
-  See example how_to_monitor_model_changes.py. 
+- ExtensionObjects are now supported, and so are model change events.
+  See example how_to_monitor_model_changes.py.
 
 - The endpoint descriptions of the discovered servers can now be accessed via Client::getEndpoints().
 
@@ -291,20 +311,20 @@ Formally:
     (pyuaf.client.Client.SessionInformation.subscriptionSettings)
   - uaf::Client::SessionInformation::lastConnectionAttemptStatus
     (pyuaf.client.Client.SessionInformation.lastConnectionAttemptStatus)
-  - uaf::ReadResultTarget::opcUaStatusCode 
+  - uaf::ReadResultTarget::opcUaStatusCode
     (pyuaf.client.results.ReadResultTarget.opcUaStatusCode)
-  - uaf::HistoryReadRawModifiedResultTarget::opcUaStatusCode 
+  - uaf::HistoryReadRawModifiedResultTarget::opcUaStatusCode
     (pyuaf.client.results.HistoryReadRawModifiedResultTarget.opcUaStatusCode)
-  - uaf::MethodCallResultTarget::inputArgumentsOpcUaStatusCodes 
+  - uaf::MethodCallResultTarget::inputArgumentsOpcUaStatusCodes
     (pyuaf.client.results.MethodCallResultTarget.inputArgumentsOpcUaStatusCodes)
 
 - The following attributes of existing classes have been replaced:
 
-  - uaf::WriteRequestTarget::status --> opcUaStatusCode 
+  - uaf::WriteRequestTarget::status --> opcUaStatusCode
     (pyuaf.client.requests.WriteRequestTarget::status --> opcUaStatusCode
-  - uaf::DataValue::status --> opcUaStatusCode 
+  - uaf::DataValue::status --> opcUaStatusCode
     (pyuaf.util.DataValue::status --> opcUaStatusCode
-  - uaf::DataValue::status --> opcUaStatusCode 
+  - uaf::DataValue::status --> opcUaStatusCode
     (pyuaf.util.DataValue::status --> opcUaStatusCode
 
 - The following classes have been removed:
@@ -324,10 +344,10 @@ different branch from version 2.0.0, which will receive an updated API and new f
 
 So there will be two main branches:
 
-- long-term: 
+- long-term:
 
   - based on version 1.10 (this one)
-  - tested and production-ready at any time 
+  - tested and production-ready at any time
   - API and feature set are frozen, but bugfixes are applied.
 
 - master:
@@ -339,35 +359,35 @@ So there will be two main branches:
 
 Plans for version 2.0.0:
 
-- simplify the API related to session/subscription management. Get rid of concepts like 
-  "SessionConfig", "SubscriptionConfig", "manuallyConnect", ... and simply provide functions 
-  like "createSession", "createSubscription", etc. 
+- simplify the API related to session/subscription management. Get rid of concepts like
+  "SessionConfig", "SubscriptionConfig", "manuallyConnect", ... and simply provide functions
+  like "createSession", "createSubscription", etc.
   Session and subscription management remains optional for the user (as it's easier to let the
-  UAF handle that), but those users that want to keep full control over their sessions and 
+  UAF handle that), but those users that want to keep full control over their sessions and
   subscriptions will have a much easier API to work with.
 - support security
-- fix some small API inconsistencies so that the remaining missing OPC UA services 
+- fix some small API inconsistencies so that the remaining missing OPC UA services
   (such as ModifyMonitoredItems) can be implemented easily, and so that the API can remain
-  more stable while the first attempts to implement the server-side are carried out... 
- 
+  more stable while the first attempts to implement the server-side are carried out...
+
 
 New in this version:
 
 Informally:
 
-- Updated the README.md to explain the intent and the added value of (Py)UAF a bit better 
+- Updated the README.md to explain the intent and the added value of (Py)UAF a bit better
   (section "Why?").
 
-- The monitoring mode (Disabled/Sampling/Reported) can now be set for monitored items via 
+- The monitoring mode (Disabled/Sampling/Reported) can now be set for monitored items via
   the SetMonitoringMode service. This is the preferred way to temporarily disable monitored items
   from being reported, e.g. when the tab of a graphical user interface is not visible.
   The newly added method "setMonitoringMode" will find out to which sessions and subscriptions
-  your specified monitored items belong to: you only have to provide their client handles. 
+  your specified monitored items belong to: you only have to provide their client handles.
   This means that you can code your application against the specification of some nodes,
-  without worrying about questions like "which node is currently hosted by which server?" or 
-  "which monitored item currently belongs to which subscription?". 
+  without worrying about questions like "which node is currently hosted by which server?" or
+  "which monitored item currently belongs to which subscription?".
 
-- Connections and subscriptions can now be monitored much better because the following events 
+- Connections and subscriptions can now be monitored much better because the following events
   are now exposed to the user (via callback functions):
 
   - ConnectionStatusChanged
@@ -376,37 +396,37 @@ Informally:
 
 - !!! breaking change !!!
 
-  By default, when you create monitored items, the queue size is now 1 and the discard policy 
-  is set to "discard oldest". The default queue size used to be 0, which meant that servers 
-  always had to revise this number and correct it to 1. The default discard policy used to be 
-  "discard newest", which meant that the most recent data got lost in case a variable changed 
-  too rapidly. With the new defaults, clients are now always notified of the most recent data 
+  By default, when you create monitored items, the queue size is now 1 and the discard policy
+  is set to "discard oldest". The default queue size used to be 0, which meant that servers
+  always had to revise this number and correct it to 1. The default discard policy used to be
+  "discard newest", which meant that the most recent data got lost in case a variable changed
+  too rapidly. With the new defaults, clients are now always notified of the most recent data
   changes and events. For most applications, this makes a lot more sense.
 
-- Bugfix: the value returned by pyuaf.util.Status.opcUaStatusCode() was sometimes wrong: SWIG 
+- Bugfix: the value returned by pyuaf.util.Status.opcUaStatusCode() was sometimes wrong: SWIG
   converted the value into a signed 'long' which numerically (but not always bitwise!) corresponds
-  to the 32-bit code defined by the OPC UA standard. Since pyuaf.util.opcuastatuscodes contains 
-  'int's that correspond bitwise (but not always numerically!) to the status codes defined by the 
-  OPC UA standard, there was a mismatch between the output of pyuaf.util.Status.opcUaStatusCode() 
-  and the contents of pyuaf.util.opcuastatuscodes. This is now fixed: both correspond now 
+  to the 32-bit code defined by the OPC UA standard. Since pyuaf.util.opcuastatuscodes contains
+  'int's that correspond bitwise (but not always numerically!) to the status codes defined by the
+  OPC UA standard, there was a mismatch between the output of pyuaf.util.Status.opcUaStatusCode()
+  and the contents of pyuaf.util.opcuastatuscodes. This is now fixed: both correspond now
   bitwise to the OPC UA status codes, so they can be compared with each other.
-   
-- Fixed a bug that caused the UAF to crash when providing Namespace URIs and Server URIs that 
-  contain percentage (%) signs. The bug occurred when trying to connect to the 
+
+- Fixed a bug that caused the UAF to crash when providing Namespace URIs and Server URIs that
+  contain percentage (%) signs. The bug occurred when trying to connect to the
   Ignition OPC UA server by Inductive Automation.
   See http://github.com/uaf/uaf/issues/30
-   
+
 - Microsoft VS2008 is now supported (credits to robi-wan @ GitHub).
-  The VS2008 compiler requires the third-party "msinttypes" C++ headers, which are shipped with 
+  The VS2008 compiler requires the third-party "msinttypes" C++ headers, which are shipped with
   the UAF. If you don't want these headers to be included automatically by the CMake build script,
   set the NO_THIRD_PARTY_MSINTTYPES option to ON (see install_windows.rst.txt).
   See http://github.com/uaf/uaf/issues/29
-   
+
 - Python primitives such as pyuaf.util.primitives.Bool, UInt32 etc. now also accept strings, which
-  they automatically cast to the correct datatype. 
-  For example, besides IUnt64(42) you can now also write UInt64("42"). 
+  they automatically cast to the correct datatype.
+  For example, besides IUnt64(42) you can now also write UInt64("42").
   See http://github.com/uaf/uaf/issues/27
-   
+
 Formally:
 
 - The following methods were added:
@@ -416,7 +436,7 @@ Formally:
    - connectionStatusChanged
    - subscriptionStatusChanged
    - notificationsMissing
-    
+
 - On the Python side, the following methods were added to pyuaf.client.Client:
    - connectionStatusChanged() and registerConnectionStatusCallback()
    - subscriptionStatusChanged() and registerSubscriptionStatusCallback()
@@ -426,15 +446,15 @@ Formally:
 - The following method may produce a different output in some cases (Python only):
    - pyuaf.util.Status.opcUaStatusCode()
      (the output now always corresponds to the numbers defined in pyuaf.util.opcuastatuscodes)
-     
+
 - The following attributes have different default value:
-   - uafc::CreateMonitoredDataRequest::queueSize 
+   - uafc::CreateMonitoredDataRequest::queueSize
      (pyuaf.client.requests.CreateMonitoredDataRequest.queueSize)
      --> now 1 instead of 0
    - uafc::CreateMonitoredDataRequest::discardOldest
      (pyuaf.client.requests.CreateMonitoredDataRequest.discardOldest)
      --> now true instead of false
-   - uafc::CreateMonitoredEventsRequest::queueSize 
+   - uafc::CreateMonitoredEventsRequest::queueSize
      (pyuaf.client.requests.CreateMonitoredEventsRequest.queueSize)
      --> now 1 instead of 0
    - uafc::CreateMonitoredEventsRequest::discardOldest
@@ -452,47 +472,47 @@ Formally:
 
 Informally:
 
-- This version doesn't really add more features to the UAF. It mostly fixes some not-so-critical 
+- This version doesn't really add more features to the UAF. It mostly fixes some not-so-critical
   problems that have been known for a long while, but were cumbersome to solve.
 
-- Bugfix: iterators of vectors are now properly wrapped. So you can do "for item in vec: ..." 
+- Bugfix: iterators of vectors are now properly wrapped. So you can do "for item in vec: ..."
   for all vectors. This functionality is now also tested by the unittests.
-  
-- Improved the reading/writing/historical reading/... of NodeIds, ExpandedNodeIds and 
-  QualifiedNames. Whenever you are reading/writing/... these particular datatypes, they will 
-  automatically be resolved by the UAF. For instance: when you read a QualifiedName, only the 
-  namespace index of the QualifiedName will be sent over the wire. As of now, the UAF will 
-  automatically insert the correct namespace URI into the result (according to the NamespaceArray 
+
+- Improved the reading/writing/historical reading/... of NodeIds, ExpandedNodeIds and
+  QualifiedNames. Whenever you are reading/writing/... these particular datatypes, they will
+  automatically be resolved by the UAF. For instance: when you read a QualifiedName, only the
+  namespace index of the QualifiedName will be sent over the wire. As of now, the UAF will
+  automatically insert the correct namespace URI into the result (according to the NamespaceArray
   of the server), so that the result is fully resolved. Another example: you can now simply do::
-  
+
     currentOrderAddress = Address(NodeId("currentOrder", "my_company_namespace_uri"), "my_server_uri")
     myClient.write(addresses = [ currentOrderAddress ]
                    data      = [ NodeId("orders.order5", "my_company_namespace_uri") ])
-  
+
   In the above example, the UAF will automatically resolve the 'data' argument (meaning: it will
   find out the namespace index of "my_company_namespace_uri" and insert it into the data argument,
   before sending the request to the server).
-  
+
 - Completely removed the abstract class uaf::Stringifiable (pyuaf.util.Stringifiable).
-  This most likely won't affect your code (do a search for "Stringifiable" if in doubt: 
+  This most likely won't affect your code (do a search for "Stringifiable" if in doubt:
   if you don't find any occurrence, then you're safe).
 
   - Rationale:
-    The reason for removing it is that SWIG had difficulties with vectors of classes that derive 
-    from uaf::Stringifiable. More specifically: SWIG didn't wrap the iterators correctly of 
-    std::vectors of classes in the uafc:: namespace that implement uaf::Stringifiable.  
+    The reason for removing it is that SWIG had difficulties with vectors of classes that derive
+    from uaf::Stringifiable. More specifically: SWIG didn't wrap the iterators correctly of
+    std::vectors of classes in the uafc:: namespace that implement uaf::Stringifiable.
     For example, you couldn't do::
-  
+
       vec = pyuaf.client.settings.SessionSecuritySettingsVector()
       vec.resize(2)
       for item in vec:
           print(item)
-    
+
     Instead, you could only do "for i in xrange(len(vec)): ...". The problem was that the iterator
-    ('item' in the code above) didn't point to a properly wrapped SessionSecuritySettings instance. 
+    ('item' in the code above) didn't point to a properly wrapped SessionSecuritySettings instance.
     Instead, 'item' was an opaque SWIG value, i.e. a SWIG artifact that you couldn't use directly.
     Now that SessionSecuritySettings doesn't implement Stringifiable anymore, this bug is avoided.
-    Of course it comes at the cost of losing uaf::Stringifiable, but this class wasn't very useful 
+    Of course it comes at the cost of losing uaf::Stringifiable, but this class wasn't very useful
     so the advantage of fixing the bug was considered more important.
 
 - Added comparison operators for several classes.
@@ -506,7 +526,7 @@ Formally:
 
 - Comparison operators (==, != and < in C++; __eq__, __ne__, __lt__, __gt__, __ge__ and __le__ in
   Python) have been added to the following existing classes:
-  
+
   - uaf::ApplicationDescription                     (pyuaf.util.ApplicationDescription)
   - uaf::UserTokenPolicy                            (pyuaf.util.UserTokenPolicy)
   - uaf::EndpointDescription                        (pyuaf.util.EndpointDescription)
@@ -535,14 +555,14 @@ Informally:
   A UAF client normally uses the discovery process to identify a server and connect to it.
   The user therefore doesn't have to worry about connecting, disconnecting, session management, etc.
   However, in certain cases you may want to connect manually to a specific endpoint, without using
-  the discovery process (i.e. without relying on the discovery endpoint of the server). 
-  In these cases, you can now use Client::manuallyConnectToEndpoint(). 
+  the discovery process (i.e. without relying on the discovery endpoint of the server).
+  In these cases, you can now use Client::manuallyConnectToEndpoint().
 
 Formally:
 
 - The following methods were added to existing classes:
 
-  - uafc::Client::manuallyConnectToEndpoint() 
+  - uafc::Client::manuallyConnectToEndpoint()
     (pyuaf.client.Client.manuallyConnectToEndpoint())
 
 
@@ -558,78 +578,78 @@ Informally:
   a particular widget of your User Interface is active. In this case, you can group the monitored
   items of that widget in a single subscription (could be a "unique" subscription, by setting the
   "unique" flag of the SubscriptionSettings), and then subsequently:
-  
+
   - enable the subscription, whenever the widget becomes active
   - disable the subscription, whenever the widget becomes inactive.
 
-- A method 'monitoredItemInformation(<ClientHandle>)' has been added to the Client class. 
+- A method 'monitoredItemInformation(<ClientHandle>)' has been added to the Client class.
   The result of this method is a 'MonitoredItemInformation' instance, which provides you information
-  about the monitored item that you specified using the client handle. Among other things, it 
+  about the monitored item that you specified using the client handle. Among other things, it
   will tell you the handle of the subscription that owns the monitored item.
 
 - !!!Breaking change!!!
 
-  The concept of 'notification handles' was redundant with the concept of 'client handles' of 
+  The concept of 'notification handles' was redundant with the concept of 'client handles' of
   monitored items. It has therefore been *removed* from the UAF. To make sure your code remains
-  compatible, do a (case insensitive) search-all for 'notificationHandle', and replace all 
-  occurrences with 'clientHandle'. Note that the term 'notificationhandle' may occur both in 
+  compatible, do a (case insensitive) search-all for 'notificationHandle', and replace all
+  occurrences with 'clientHandle'. Note that the term 'notificationhandle' may occur both in
   attribute names and in method names.
 
 - !!!Breaking change!!!
 
-  BaseServiceSettings has been renamed to ServiceSettings. This -most likely- won't affect your 
+  BaseServiceSettings has been renamed to ServiceSettings. This -most likely- won't affect your
   existing code. To be sure: do a search-all for 'BaseServiceSettings' and replace all occurrences
   with 'ServiceSettings'.
 
 - !!!Breaking change!!!
 
-  The 'exclusive' flag of subscription settings has been renamed to a more appropriate 'unique' 
-  flag (to force the UAF to create a new subscription instead of reusing an existing one). 
-  This -most likely- won't affect your existing code. To be sure: do a search-all for 
+  The 'exclusive' flag of subscription settings has been renamed to a more appropriate 'unique'
+  flag (to force the UAF to create a new subscription instead of reusing an existing one).
+  This -most likely- won't affect your existing code. To be sure: do a search-all for
   'exclusive' and replace all occurrences with 'unique'.
 
 Formally:
 
 - The following methods were added to existing classes:
-  
-  - uafc::Client::setPublishingMode() 
+
+  - uafc::Client::setPublishingMode()
     (pyuaf.client.Client.setPublishingMode())
-  - uafc::Client::monitoredItemInformation() 
+  - uafc::Client::monitoredItemInformation()
     (pyuaf.client.Client.monitoredItemInformation())
 
 - The following classes were added:
-  
+
   - uafc::MonitoredItemInformation (pyuaf.client.Client.MonitoredItemInformation)
 
 - The following namespaces (modules) were added:
-  
+
   - uafc::monitoreditemstates (pyuaf.client.monitoreditemstates)
 
-- The following attributes have been renamed or removed due to the removal of the redundant 
+- The following attributes have been renamed or removed due to the removal of the redundant
   'notification handle' concept in favor of the 'client handle' concept:
-  
+
   - uafc::StatusDiagnostics (pyuaf.util.StatusDiagnostics):
-  
+
     - hasNotificationHandles() -> renamed to hasClientHandles()
     - getNotificationHandles() -> renamed to getClientHandles()
     - setNotificationHandles() -> renamed to setClientHandles()
-    
+
   - | uafc::MonitoredItemNotification (pyuaf.client.subscriptions.MonitoredItemNotification),
     | uafc::DataChangeNotification (pyuaf.client.subscriptions.DataChangeNotification),
     | uafc::CreateMonitoredEventsResultTarget (pyuaf.client.results.CreateMonitoredEventsResultTarget),
     | uafc::CreateMonitoredDataResultTarget (pyuaf.client.results.CreateMonitoredDataResultTarget)
-  
+
     - notificationHandle -> removed (use clientHandle instead)
-   
+
 - The following classes have been renamed:
 
-  - uafc::BaseServiceSettings (pyuaf.client.settings.BaseServiceSettings) 
-    has been renamed to uafc::ServiceSettings (pyuaf.client.settings.ServiceSettings) 
-   
+  - uafc::BaseServiceSettings (pyuaf.client.settings.BaseServiceSettings)
+    has been renamed to uafc::ServiceSettings (pyuaf.client.settings.ServiceSettings)
+
 - The following attributes have been renamed:
 
-  - uafc::SubscriptionSettings::exclusive (pyuaf.client.settings.SubscriptionSettings.exclusive) 
-    has been renamed to uafc::ServiceSettings::unique (pyuaf.client.settings.ServiceSettings.unique) 
+  - uafc::SubscriptionSettings::exclusive (pyuaf.client.settings.SubscriptionSettings.exclusive)
+    has been renamed to uafc::ServiceSettings::unique (pyuaf.client.settings.ServiceSettings.unique)
 
 
 1.6 @ 2014/01/07
@@ -638,19 +658,19 @@ Formally:
 Informally:
 
 - The UAF / PyUAF now require the Unified Automation SDK version 1.4.0 or higher!
-  
-- The unit tests and examples now require UaServerCPP (that comes with SDK v1.4) to be run 
+
+- The unit tests and examples now require UaServerCPP (that comes with SDK v1.4) to be run
   instead of UaDemoServer (that comes with SDK v1.3 or lower).
-  
+
 - The unit tests are now based on Python's 'unittest' builtin module.
 
-- By default, the UAF is now compiled *with* HTTPS support. However, if your Stack and SDK were 
+- By default, the UAF is now compiled *with* HTTPS support. However, if your Stack and SDK were
   built *without* HTTPS support, you must (!!!) also compile the UAF *without* HTTPS support.
   See the install_linux.rst.txt and install_windows.rst.txt files for more info.
 
 - Address now also has a constructor to create an address based on a single RelativePathElement.
   This allows you to define relative addresses in one line, also in C++::
-  
+
     Address myMachine            ( NodeId("Demo", nsUri), serverUri );
     Address myMachineTemperature ( &myMachine, RelativePathElement(QualifiedName("Temperature" , nsUri)) );
     Address myMachinePressure    ( &myMachine, RelativePathElement(QualifiedName("Pressure"    , nsUri)) );
@@ -658,7 +678,7 @@ Informally:
 Formally:
 
 - The following classes got an additional constructor:
- 
+
   - uafc::Address
     (pyuaf.util.Address)
 
@@ -668,11 +688,11 @@ Formally:
 
 Informally:
 
-- KeepAlive notifications are now supported. KeepAlive notifications make sure that the client 
+- KeepAlive notifications are now supported. KeepAlive notifications make sure that the client
   is aware that a subscription (and its monitored items) is still alive even though no notifications
   were send lately (since no data had changed or no events were sent).
 
-- BaseNotification is now known as MonitoredItemNotification, to clarify that it is only a 
+- BaseNotification is now known as MonitoredItemNotification, to clarify that it is only a
   superclass of DataChangeNotification and EventNotification, and not of other notifications such as
   the new KeepAliveNotification.
 
@@ -680,19 +700,19 @@ Formally:
 
 - !!!Breaking change!!!
 
-  uafc::BaseNotification (pyuaf.client.BaseNotification) is now known as 
+  uafc::BaseNotification (pyuaf.client.BaseNotification) is now known as
   uafc::MonitoredItemNotification (pyuaf.client.MonitoredItemNotification). Only the name has
   changed (because it's more correct, see above), nothing else.
 
 - The following classes have been added:
- 
-  - uafc::KeepAliveNotification 
+
+  - uafc::KeepAliveNotification
     (pyuaf.client.KeepAliveNotification)
 
 
 - The following methods were added to existing classes
- 
-  - uafc::ClientInterface::keepAliveReceived() 
+
+  - uafc::ClientInterface::keepAliveReceived()
     (pyuaf.client.Client.keepAliveReceived())
 
 
@@ -703,32 +723,32 @@ Formally:
 Informally:
 
 - When createMonitoredData() or createMonitoredEvents() fail, you can now access the handles that
-  were assigned to the monitored items 
+  were assigned to the monitored items
   in Python (<the raised exception>.status.additionalDiagnostics().getNotificationHandles())
   and C++ (<the returned Status>.additionalDiagnostics().getNotificationHandles()). This is useful
-  because when createMonitoredData() or createMonitoredEvents() fail (e.g. because the server is 
-  not online yet), the UAF will still try to create the monitored items automatically in the 
-  background. So as soon as the UAF succeeds in creating the monitored items, you will need the 
+  because when createMonitoredData() or createMonitoredEvents() fail (e.g. because the server is
+  not online yet), the UAF will still try to create the monitored items automatically in the
+  background. So as soon as the UAF succeeds in creating the monitored items, you will need the
   handles to identify the notifications that you start to receive.
 
 Formally:
-      
+
 - !!!Breaking change (only for the C++ API)!!!
- 
-  The handles from "uaf/client/clienthandles.h" (that were part of the uafc namespace) are now 
+
+  The handles from "uaf/client/clienthandles.h" (that were part of the uafc namespace) are now
   part of the "uaf/util/handles.h" file (so they are not part of the uaf namespace).
   Also uaf::NotificationHandle (formerly uafc::NotificationHandle) is now a 32-bit unsigned int
   instead of 64-bit unsigned int.
   All this has no consequences for the Python API.
 
 - The following classes have been added:
- 
-  - uaf::StatusDiagnostics 
+
+  - uaf::StatusDiagnostics
     (pyuaf.util.StatusDiagnostics)
-      
+
 - The following methods were added to existing classes
- 
-  - uaf::Status::additionalDiagnostics() 
+
+  - uaf::Status::additionalDiagnostics()
     (pyuaf.util.Status.additionalDiagnostics())
 
 
@@ -758,58 +778,58 @@ Informally:
 
 - DataValues are now better supported. A DataValue class (with a status, a value, timestamps, ...)
   has been added, and ReadResultTarget and WriteRequestTarget inherit now from this class.
-   
-- The "timestampstoreturn" namespace / Python module has been added to allow the user to specify 
-  which timestamps should be returned by the server. 
-   
-- The "opcuastatuscodes" Python module has been added to allow Python users to access all 
+
+- The "timestampstoreturn" namespace / Python module has been added to allow the user to specify
+  which timestamps should be returned by the server.
+
+- The "opcuastatuscodes" Python module has been added to allow Python users to access all
   OPC UA status codes symbolically.
-   
-- A new service has been added: it's now possible to read raw historical data, and the 
+
+- A new service has been added: it's now possible to read raw historical data, and the
   modifications of this historical data. As with the Browse service implementation, the
   UAF can deal with continuation points automatically.
-   
+
 Formally:
 
 - !!!Breaking change!!!
-    
-  An uafc::WriteRequestTarget / pyuaf.client.requests.WriteRequestTarget now has 
-  a 'status' attribute (of type uaf::Status / pyuaf.util.Status) 
+
+  An uafc::WriteRequestTarget / pyuaf.client.requests.WriteRequestTarget now has
+  a 'status' attribute (of type uaf::Status / pyuaf.util.Status)
   instead of a 'opcUaStatusCode' attribute (of type uint32_t / int).
-   
+
 - The following namespaces (modules) have been added:
- 
+
   - uaf::timestampstoreturn
     (pyuaf.util.timestampstoreturn)
-   
+
 - The following classes have been added:
- 
-  - uaf::DataValue 
+
+  - uaf::DataValue
     (pyuaf.util.DataValue)
   - uafc::HistoryReadRawModifiedRequest
     (pyuaf.client.requests.HistoryReadRawModifiedRequest)
-  - uafc::HistoryReadRawModifiedRequestTarget 
-    (pyuaf.client.requests.HistoryReadRawModifiedRequestTarget 
+  - uafc::HistoryReadRawModifiedRequestTarget
+    (pyuaf.client.requests.HistoryReadRawModifiedRequestTarget
     and pyuaf.client.requests.HistoryReadRawModifiedRequestTargetVector)
-  - uafc::HistoryReadRawModifiedConfig 
+  - uafc::HistoryReadRawModifiedConfig
     (pyuaf.client.configs.HistoryReadRawModifiedConfig)
-  - uafc::HistoryReadRawModifiedSettings 
+  - uafc::HistoryReadRawModifiedSettings
     (pyuaf.client.configs.HistoryReadRawModifiedSettings)
-  - uafc::HistoryReadRawModifiedResult 
+  - uafc::HistoryReadRawModifiedResult
     (pyuaf.client.requests.HistoryReadRawModifiedResult)
-  - uafc::HistoryReadRawModifiedResultTarget 
-    (pyuaf.client.requests.HistoryReadRawModifiedResultTarget 
+  - uafc::HistoryReadRawModifiedResultTarget
+    (pyuaf.client.requests.HistoryReadRawModifiedResultTarget
     and pyuaf.client.requests.HistoryReadRawModifiedResultTargetVector)
-      
+
 - The following class inheritances have been modified:
- 
+
   - uafc::ReadResultTarget: inherits now from uaf::DataValue
     (pyuaf.client.results.ReadResultTarget: inherits now from pyuaf.util.DataValue)
   - uafc::WriteRequestTarget: inherits now from uaf::DataValue
     (pyuaf.client.requests.WriteRequestTarget: inherits now from pyuaf.util.DataValue)
 
 - The following methods have been added to existing classes:
- 
+
   - uafc::Client.historyReadRaw() and historyReadModified()
     (pyuaf.client.Client.historyReadRaw() and historyReadModified())
   - uaf::Status::hasSpecificOpcUaStatusCode(): replaces hasOpcUaStatusCode()
@@ -818,24 +838,24 @@ Formally:
     (pyuaf.util.Status.setOpcUaStatusCode())
   - uaf::DateTime::sleep() and msleep()
     (pyuaf.util.DateTime.sleep() and msleep())
- 
- 
+
+
 
 1.1 @ 2013/05/22
 ----------------------------------------------------------------------------------------------------
 
 Informally:
 
-- The Browse service is now supported (including the functionality to let the UAF invoke 
+- The Browse service is now supported (including the functionality to let the UAF invoke
   BrowseNext automatically).
-   
-- Strings and ByteStrings that are part of OPC UA requests and results have become 
-  "primitive" values in Python (i.e. they are encapsulated in Python by 
+
+- Strings and ByteStrings that are part of OPC UA requests and results have become
+  "primitive" values in Python (i.e. they are encapsulated in Python by
   pyuaf.util.primitives.String and pyuaf.util.primitives.ByteString classes).
-   
-- Bytestrings are now better supported in Python: a typemap has been added that maps a 
+
+- Bytestrings are now better supported in Python: a typemap has been added that maps a
   uaf::ByteString to a built-in Python bytearray and the other way around.
-   
+
 - Timestamps are now supported via the DateTime class.
 
 - NodeId identifiers can now also be GUIDs (Globally Unique Identifiers) and bytestrings.
@@ -845,60 +865,60 @@ Informally:
 Formally:
 
 - The following namespaces (modules) have been added:
- 
-  - uaf::nodeclasses 
+
+  - uaf::nodeclasses
     (pyuaf.util.nodeclasses)
-  - uaf::browsedirections 
+  - uaf::browsedirections
     (pyuaf.util.browsedirections)
-   
+
 - The following classes have been added:
- 
-  - uaf::ViewDescription 
+
+  - uaf::ViewDescription
     (pyuaf.util.ViewDescription)
-  - uaf::Guid 
+  - uaf::Guid
     (pyuaf.util.Guid)
-  - uaf::ReferenceDescription 
+  - uaf::ReferenceDescription
     (pyuaf.util.ReferenceDescription and pyuaf.util.ReferenceDescriptionVector)
-  - uaf::DateTime 
+  - uaf::DateTime
     (pyuaf.util.DateTime)
   - uafc::BrowseRequest
     (pyuaf.client.requests.BrowseRequest)
-  - uafc::BrowseRequestTarget 
+  - uafc::BrowseRequestTarget
     (pyuaf.client.requests.BrowseRequestTarget and pyuaf.client.requests.BrowseRequestTargetVector)
-  - uafc::BrowseConfig 
+  - uafc::BrowseConfig
     (pyuaf.client.configs.BrowseConfig)
-  - uafc::BrowseSettings 
+  - uafc::BrowseSettings
     (pyuaf.client.configs.BrowseSettings)
-  - uafc::BrowseResult 
+  - uafc::BrowseResult
     (pyuaf.client.requests.BrowseResult)
-  - uafc::BrowseResultTarget 
+  - uafc::BrowseResultTarget
     (pyuaf.client.requests.BrowseResultTarget and pyuaf.client.requests.BrowseResultTargetVector)
   - uafc::BrowseNextRequest
     (pyuaf.client.requests.BrowseNextRequest)
-  - uafc::BrowseNextRequestTarget 
+  - uafc::BrowseNextRequestTarget
     (pyuaf.client.requests.BrowseNextRequestTarget and pyuaf.client.requests.BrowseNextRequestTargetVector)
-  - uafc::BrowseNextConfig 
+  - uafc::BrowseNextConfig
     (pyuaf.client.configs.BrowseNextConfig)
-  - uafc::BrowseNextSettings 
+  - uafc::BrowseNextSettings
     (pyuaf.client.configs.BrowseNextSettings)
-  - uafc::BrowseNextResult 
+  - uafc::BrowseNextResult
     (pyuaf.client.requests.BrowseNextResult)
-  - uafc::BrowseNextResultTarget 
+  - uafc::BrowseNextResultTarget
     (same as pyuaf.client.requests.BrowseResultTarget and pyuaf.client.requests.BrowseResultTargetVector)
 
 - The following methods and attributes have been added to existing classes:
 
-  - uafc::Client::browse() 
-    (pyuaf.util.Client.browse()) 
-  - uaf::NodeId::isNull() 
-    (pyuaf.util.NodeId.isNull()) 
-  - uaf::NodeIdIdentifier::isNull(), idGuid, idOpaque 
+  - uafc::Client::browse()
+    (pyuaf.util.Client.browse())
+  - uaf::NodeId::isNull()
+    (pyuaf.util.NodeId.isNull())
+  - uaf::NodeIdIdentifier::isNull(), idGuid, idOpaque
     (pyuaf.util.NodeIdIdentifier.isNull(), idGuid, idOpaque)
-  - uaf::Variant::toDateTime(), toDateTimeArray(), fromDateTime(), fromDateTimeArray() 
-    (DateTime Variants are converted automatically into DateTime instances in Python) 
+  - uaf::Variant::toDateTime(), toDateTimeArray(), fromDateTime(), fromDateTimeArray()
+    (DateTime Variants are converted automatically into DateTime instances in Python)
   - uaf::Variant::toByteString(), fromByteString(), toByteStringArray(), fromByteStringArray()
-    (ByteString Variants are converted automatically into bytearray instances in Python) 
- 
+    (ByteString Variants are converted automatically into bytearray instances in Python)
+
 
 
 1.0 @ 2013/05/14

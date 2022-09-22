@@ -1,5 +1,3 @@
-
-
 %pythoncode %{
 ################################ BEGINNING OF INCLUDED PYTHON FILE #################################
 
