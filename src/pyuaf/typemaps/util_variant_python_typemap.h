@@ -547,7 +547,7 @@ bool uafVariantToPyObject(uaf::Variant& variant, PyObject*& pyObject)
 
     return true;
 }
-    
+
 
 
 #endif /* UTIL_VARIANT_PYTHON_TYPEMAP_H_ */

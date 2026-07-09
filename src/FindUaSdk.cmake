@@ -66,15 +66,15 @@ endforeach(POTENTIAL_SDK_FOLDER)
 foreach(POTENTIAL_SDK_FOLDER ${POTENTIAL_SDK_FOLDERS})
 
     message(STATUS "Now searching recursively for ${SDK_SEARCH_LIB} in ${POTENTIAL_SDK_FOLDER}")
-    
+
     file(GLOB_RECURSE LIBRESULTS "${POTENTIAL_SDK_FOLDER}/${SDK_SEARCH_LIB}")
 
     if(LIBRESULTS)
-        
+
         list(GET LIBRESULTS 0 FIRST_LIBRESULT)
-    
+
         message(STATUS "The ${SDK_SEARCH_LIB} library was found!")
-    
+
         # get the path of the /lib directory:
         get_filename_component(UASDK_LIBRARIES_DIR "${FIRST_LIBRESULT}" PATH)
 
@@ -88,11 +88,11 @@ foreach(POTENTIAL_SDK_FOLDER ${POTENTIAL_SDK_FOLDERS})
 
         # break out of the foreach loop
         break()
-    
+
     else(LIBRESULTS)
-    
+
         message(STATUS "The ${SDK_SEARCH_LIB} library was not found recursively  this directory")
-    
+
     endif(LIBRESULTS)
 
 endforeach(POTENTIAL_SDK_FOLDER)

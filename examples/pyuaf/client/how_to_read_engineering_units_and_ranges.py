@@ -3,7 +3,7 @@
 EXAMPLE: how to read engineering units and ranges
 ====================================================================================================
 
-To run the example, start the UaServerCPP of UnifiedAutomation first on the same machine. 
+To run the example, start the UaServerCPP of UnifiedAutomation first on the same machine.
 ($SDK/bin/uaservercpp, this executable is part of the SDK).
 """
 
@@ -41,7 +41,7 @@ result = myClient.read( [units_address, range_address] )
 
 # we're expecting ExtensionObjects. Let's check this:
 
-for i in xrange(2):
+for i in range(2):
     if isinstance(result.targets[i].data, ExtensionObject):
         print("We received an ExtensionObject")
     else:

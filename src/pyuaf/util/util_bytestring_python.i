@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 %module bytestring_python
 %{
 #define SWIG_FILE_WITH_INIT
@@ -47,26 +47,26 @@
 
 
 
-%typemap(in) uaf::ByteString 
+%typemap(in) uaf::ByteString
 {
     PYOBJECT_TO_UAF_BYTESTRING($input, $1)
 }
 
 
 
-%typemap(in) const uaf::ByteString& (uaf::ByteString temp) 
+%typemap(in) const uaf::ByteString& (uaf::ByteString temp)
 {
     PYOBJECT_TO_UAF_BYTESTRING($input, temp)
     $1 = &temp;
 }
 
 %typemap(out) uaf::ByteString
-{ 
-    UAF_BYTESTRING_TO_PYOBJECT($1, $result); 
+{
+    UAF_BYTESTRING_TO_PYOBJECT($1, $result);
 }
 
 
-%typemap(out) const uaf::ByteString& 
+%typemap(out) const uaf::ByteString&
 {
     UAF_BYTESTRING_TO_PYOBJECT((*$1), $result);
 }

@@ -3,7 +3,7 @@
 EXAMPLE: how to read and write structures
 ====================================================================================================
 
-To run the example, start the UaServerCPP of UnifiedAutomation first on the same machine. 
+To run the example, start the UaServerCPP of UnifiedAutomation first on the same machine.
 ($SDK/bin/uaservercpp, this executable is part of the SDK).
 """
 
@@ -42,7 +42,7 @@ print("#************************************************************************
 def printStructure(structure, indentation=""):
     """
     Print a structure.
-    
+
     Parameters:
       structure:   a pyuaf.util.GenericStructureValue instance. May represent a structure
                    or union or optionset.
@@ -51,27 +51,27 @@ def printStructure(structure, indentation=""):
     """
     # get the definition of the structure:
     definition = structure.definition()
-    
+
     # we'll print the contents of the structure
     print(indentation + "Structure contents:")
-    
+
     # loop through the fields of the structure, by looking at the definition:
-    for i in xrange(definition.childrenCount()):
-        
+    for i in range(definition.childrenCount()):
+
         # retrieve information both from the definition and from the structure itself:
         child = definition.child(i)
         childName  = child.name()           # a string
         childType  = child.valueType()      # datatype, e.g. Double
         fieldType, opcUaStatusCode  = structure.valueType(i) # e.g. Variant, GenericStructure, GenericStructureArray...
-        
+
         if not SdkStatus(opcUaStatusCode).isGood():
             raise Exception("Oops, we could not get the valueType due to: %s" %SdkStatus(opcUaStatusCode))
-        
+
         print(indentation + "  * child number %d:"         %i)
         print(indentation + "     - child name = %s"       %childName)
         print(indentation + "     - child type = %d (%s)"  %(childType, opcuatypes.toString(childType)))
         print(indentation + "     - field type = %s (%s)"  %(fieldType, structurefielddatatypes.toString(fieldType)))
-        
+
         if fieldType == structurefielddatatypes.Variant:
             value, opcUaStatusCode = structure.value(i)
             print(indentation + "     - value      = %s" %value)
@@ -81,16 +81,16 @@ def printStructure(structure, indentation=""):
             printStructure(structureValue.genericStructureValue(i), indentation + "   ")
         elif fieldType == structurefielddatatypes.GenericStructureArray:
             array, opcUaStatusCode = structureValue.genericStructureArray(i)
-            
+
             if not SdkStatus(opcUaStatusCode).isGood():
                 raise Exception("Oops, we could not get the structure due to: %s" %SdkStatus(opcUaStatusCode))
-            
+
             print(indentation + "     - value:")
             # recursive calls to all array items:
-            for j in xrange(len(array)):
+            for j in range(len(array)):
                 print(indentation + "        array[%d]:" %j)
                 printStructure(array[j], indentation + "          ")
-        
+
     print("") # empty line
 
 
@@ -156,7 +156,7 @@ try:
         print("OK, the new structure value has been written successfully")
     else:
         print("Oops, some OPC UA problem occurred. Here's the result:\n%s" %result)
-except UafError, e:
+except UafError as e:
     print("Oops, some error occurred on the client side. Here's the error message: %s" %e)
 
 print("")
@@ -207,17 +207,17 @@ print("")
 
 print("Now let's loop through the list:")
 
-for i in xrange(len(extensionObjectList)):
-    
+for i in range(len(extensionObjectList)):
+
     extensionObject = extensionObjectList[i]
-    
+
     # using the original ExtensionObject the StructureDefinition, we can now create the GenericStructureValue:
     structureValue = GenericStructureValue(extensionObject, definition)
-    
+
     # print the structure in one line:
     print("item[%d]: " %i)
     printStructure(structureValue)
-    
+
 print("")
 
 # now change the values of the first child of the first array item:
@@ -227,7 +227,7 @@ firstItem.setField("Y", primitives.Double(0.2))
 
 # write back the structure
 firstItem.toExtensionObject(extensionObjectList[0])
- 
+
 print("Now writing the modified structure array")
 print("")
 try:
@@ -237,7 +237,7 @@ try:
         print("")
     else:
         print("Oops, some OPC UA problem occurred. Here's the result:\n%s" %result)
-except UafError, e:
+except UafError as e:
     print("Oops, some error occurred on the client side. Here's the error message: %s" %e)
 
 
@@ -248,7 +248,7 @@ print("# 4) How to read and write a structure which contains an array of structu
 print("#                                                                                                 #")
 print("#*************************************************************************************************#")
 
-# define the address of the Structure which has an array of structure as one of its fields 
+# define the address of the Structure which has an array of structure as one of its fields
 address = Address( NodeId("Demo.Static.Scalar.WorkOrder", demoNamespaceUri), demoServerUri )
 
 # read the structure
@@ -296,7 +296,7 @@ try:
         print("")
     else:
         print("Oops, some OPC UA problem occurred. Here's the result:\n%s" %result)
-except UafError, e:
+except UafError as e:
     print("Oops, some error occurred on the client side. Here's the error message: %s" %e)
 
 
@@ -310,37 +310,37 @@ print("#************************************************************************
 def printUnion(union, indentation=""):
     """
     Print a structure.
-    
+
     Parameters:
-      union:       a pyuaf.util.GenericUnionValue instance. 
+      union:       a pyuaf.util.GenericUnionValue instance.
       indentation: a string to print at the beginning of each line (to add indentation when
                    this function is called recursively).
     """
     # get the definition of the structure:
     definition = union.definition()
-    
+
     # we'll print the contents of the structure
     print(indentation + "Union contents:")
-    
+
     if not definition.isUnion():
         raise Exception("The given union is no union!")
-    
+
     # let's show the possible values by looking at the definition:
-    for i in xrange(definition.childrenCount()):
-        
+    for i in range(definition.childrenCount()):
+
         # retrieve information both from the definition and from the structure itself:
         child = definition.child(i)
         childName   = child.name()           # a string
         childType   = child.valueType()      # datatype, e.g. Double
-        
+
         print(indentation + "  * child number %d:"         %i)
         print(indentation + "     - child name = %s"       %childName)
         print(indentation + "     - child type = %d (%s)"  %(childType, opcuatypes.toString(childType)))
-        
-    # show the active value (the "switchValue")    
+
+    # show the active value (the "switchValue")
     switchValue = union.switchValue()
     field       = union.field()
-    
+
     print(indentation + "Switch value: %d" %switchValue)
     print(indentation + "Field name: %s" %union.field().name())
     print(indentation + "Value: %s" %union.value())
@@ -389,7 +389,7 @@ try:
         print("OK, the new structure value has been written successfully")
     else:
         print("Oops, some OPC UA problem occurred. Here's the result:\n%s" %result)
-except UafError, e:
+except UafError as e:
     print("Oops, some error occurred on the client side. Here's the error message: %s" %e)
 
 print("")

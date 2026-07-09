@@ -3,7 +3,7 @@
 EXAMPLE: how to monitor model changes
 ====================================================================================================
 
-To run the example, start the UaDemoServer of UnifiedAutomation first on the same machine. 
+To run the example, start the UaDemoServer of UnifiedAutomation first on the same machine.
 """
 
 import time, os
@@ -49,7 +49,7 @@ def myCallback(notification):
     print("Notification received!")
     changes = notification.fields[0]
     print("Changes:")
-    for i in xrange(len(changes)):
+    for i in range(len(changes)):
         change = changes[i]
         print("- change %d:" %i)
         print(change)
@@ -60,15 +60,15 @@ def myCallback(notification):
         print("The same object, converted to a ModelChangeStructureDataType:")
         modelChange = ModelChangeStructureDataType(change)
         print modelChange
-        
-    
+
+
 
 
 print("STEP 1: start monitoring the Server node for events")
 print("===================================================")
 print("")
-result = myClient.createMonitoredEvents( addresses             = [address_Server], 
-                                         eventFilter           = eventFilter, 
+result = myClient.createMonitoredEvents( addresses             = [address_Server],
+                                         eventFilter           = eventFilter,
                                          notificationCallbacks = [myCallback] )
 print("Result:")
 print(result)

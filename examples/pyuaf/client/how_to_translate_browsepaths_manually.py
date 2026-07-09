@@ -58,14 +58,14 @@ try:
         print("The browse path was translated into the following ExpandedNodeIds:")
         for expandedNodeId in result.targets[0].expandedNodeIds:
             print(" - %s" %expandedNodeId)
-        
+
         print("")
         print("Full translation result:")
         print(result)
     else:
         print("Problem when translating the target: %s" %result.targets[0].status)
 
-except UafError, e:
+except UafError as e:
     print("Some error occurred!")
     raise
 
@@ -77,13 +77,13 @@ try:
     print("")
     print("Full read result:")
     print(readResult)
-except UafError, e:
+except UafError as e:
     print("Some error occurred!")
     raise
 
-# Note: in fact, during the above myClient.read() call, no translation request is being sent 
-# to the server, because the UAF had already internally cached the translation results during 
-# the myClient.processRequest() invocation. 
+# Note: in fact, during the above myClient.read() call, no translation request is being sent
+# to the server, because the UAF had already internally cached the translation results during
+# the myClient.processRequest() invocation.
 # Of course, if the browsepath wouldn't have been cached, the UAF *would* have automatically
 # sent a translation request to the server prior to reading the data. So the UAF takes care
 # of translating browsepaths in the most efficient way, all done automatically for you!

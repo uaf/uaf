@@ -32,7 +32,7 @@
 // =================================================================================================
 // MAKE_NON_DYNAMIC(NS, TYPE)
 // =================================================================================================
-// 
+//
 // Make a class non-dynamic (so that you cannot add attributes in certain languages).
 //
 //   - argument CLASS : the fully qualified class name, e.g. uaf::LocalizedText
@@ -48,7 +48,7 @@
 // =================================================================================================
 // HANDLE_COMPARISON_OPERATORS(NS, TYPE)
 // =================================================================================================
-// 
+//
 // Handle the comparison operators ==, != and <.
 //
 //   - argument NS   : the namespace of the class, e.g. uaf
@@ -72,7 +72,7 @@
     %ignore operator< (const NS::TYPE&, const NS::TYPE&);
 
     #if defined(SWIGPYTHON)
-    
+
         %extend NS::TYPE {
             bool __eq__(const TYPE& other) const { return (*$self == other);                      }
             bool __ne__(const TYPE& other) const { return (*$self != other);                      }
@@ -81,7 +81,7 @@
             bool __ge__(const TYPE& other) const { return (*$self == other) || !(*$self < other); }
             bool __le__(const TYPE& other) const { return (*$self == other) ||  (*$self < other); }
         }
-        
+
     #endif
 
 %enddef
@@ -91,7 +91,7 @@
 // =================================================================================================
 // HANDLE_TOSTRING(NS, TYPE, PYTHON_NS)
 // =================================================================================================
-// 
+//
 // Handle the toString() method.
 //
 //   - argument NS        : the namespace of the class, e.g. uaf
@@ -105,27 +105,27 @@
 %define HANDLE_TOSTRING(NS, TYPE, PYTHON_NS)
 
     #if defined(SWIGPYTHON)
-    
+
         // rename toString() to __str__()
         %rename(__str__) NS::TYPE::toString const;
-        
-        // add a __repr__() method based on the toString() output 
+
+        // add a __repr__() method based on the toString() output
         %extend NS::TYPE {
             std::string __repr__() const
-            {  
+            {
                 std::string s("<");
                 s += #PYTHON_NS;
                 s += ".";
                 s += #TYPE;
                 s += "(";
-                
+
                 std::size_t indent = s.length();
-                
+
                 std::stringstream ss($self->toString());
                 std::string line;
-                
+
                 uint16_t noOfLines = 0;
-        
+
                 while ( std::getline(ss, line, '\n') )
                 {
                     if (noOfLines > 0)
@@ -141,7 +141,7 @@
                 return s;
             }
         }
-        
+
     #endif
 
 %enddef
@@ -151,7 +151,7 @@
 // =================================================================================================
 // ADD_COPY_CONSTRUCTOR()
 // =================================================================================================
-// 
+//
 // Add a copy constructor to a wrapped class.
 //
 %define ADD_COPY_CONSTRUCTOR()
@@ -166,7 +166,7 @@
 // =================================================================================================
 // UAF_WRAP_CLASS(HEADERTOINCLUDE, NS, TYPE, DO_COPY, DO_TOSTRING, DO_COMPARISON, PYTHON_NS, VECTORNAME)
 // =================================================================================================
-// 
+//
 // Wrap a class in a convenient way.
 //
 //   - argument HEADERTOINCLUDE : the header that contains the class, e.g. "uaf/util/localizedtext.h"
@@ -179,7 +179,7 @@
 //   - argument VECTORNAME      : VECTOR_NO to not create a vector for the class, or the name of the vector to create the vector
 //
 %define UAF_WRAP_CLASS(HEADERTOINCLUDE, NS, TYPE, DO_COPY, DO_TOSTRING, DO_COMPARISON, PYTHON_NS, VECTORNAME)
-   
+
     #if DO_COPY == COPY_YES
         %copyctor TYPE;
     #elif DO_COPY == COPY_NO
@@ -187,7 +187,7 @@
     #else
         #error Only "COPY_YES" or "COPY_NO" are allowed: see line __LINE__!
     #endif
-   
+
     #if DO_TOSTRING == TOSTRING_YES
         HANDLE_TOSTRING(NS, TYPE, PYTHON_NS)
     #elif DO_TOSTRING == TOSTRING_NO
@@ -205,12 +205,12 @@
     #endif
 
     %include HEADERTOINCLUDE
-   
+
     #if VECTORNAME == VECTOR_NO
         // do nothing
     #else
         %template(VECTORNAME) std::vector<NS::TYPE>;
     #endif
-   
+
 %enddef
 

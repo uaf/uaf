@@ -5,11 +5,11 @@ EXAMPLE: how to read some data
 
 A UAF Client can read data in two ways:
   - either using the "convenience" method: read()
-  - or using the "generic" method: processRequest() 
+  - or using the "generic" method: processRequest()
 
-The "convenience" methods (such as read(), beginRead(), write(), ...) are conveniently to use 
- (since they accept the most frequently used parameters directly), 
-but they are less powerful than the "generic" processRequest() method 
+The "convenience" methods (such as read(), beginRead(), write(), ...) are conveniently to use
+ (since they accept the most frequently used parameters directly),
+but they are less powerful than the "generic" processRequest() method
  (since this method accepts ReadRequests, AsyncReadRequests, etc. that can be fully configured).
 
 In this example, we will use several ways to read data:
@@ -20,7 +20,7 @@ In this example, we will use several ways to read data:
  - fifth option  : "convenience" asynchronous function beginRead()       , with overridden callback
  - sixth option  : "generic"     asynchronous function processRequest()  , with overridden callback
 
-To run the example, start the UaDemoServer of UnifiedAutomation first on the same machine. 
+To run the example, start the UaDemoServer of UnifiedAutomation first on the same machine.
 """
 
 import time, os
@@ -28,7 +28,7 @@ import time, os
 import pyuaf
 from pyuaf.client           import Client
 from pyuaf.client.settings  import ClientSettings, ReadSettings, SessionSettings
-from pyuaf.client.requests  import ReadRequest, AsyncReadRequest, ReadRequestTarget 
+from pyuaf.client.requests  import ReadRequest, AsyncReadRequest, ReadRequestTarget
 from pyuaf.util             import Address, NodeId, RelativePathElement, QualifiedName, LocalizedText
 from pyuaf.util             import primitives
 from pyuaf.util.errors      import UafError
@@ -39,7 +39,7 @@ demoNsUri     = "http://www.unifiedautomation.com/DemoServer"
 demoServerUri = "urn:UnifiedAutomation:UaServerCpp"
 
 # define some addresses of nodes of which we will read the Value attribute
-# (you could also define addresses as Relative Paths to other addresses, 
+# (you could also define addresses as Relative Paths to other addresses,
 #  see the example that shows you how to define addresses)
 someDoubleNode        = Address( NodeId("Demo.Static.Scalar.Double"              , demoNsUri), demoServerUri )
 someUInt32Node        = Address( NodeId("Demo.Static.Scalar.UInt32"              , demoNsUri), demoServerUri )
@@ -51,37 +51,37 @@ someSByteArrayNode    = Address( NodeId("Demo.Static.Arrays.SByte"              
 def printResult(readResult):
     # overall result
     print("The overall status is: %s" %str(readResult.overallStatus))
-    
+
     # target 0:
     status = readResult.targets[0].status                         # 'status' has type pyuaf.util.Status
     data   = readResult.targets[0].data                           # 'data' has type pyuaf.util.primitives.Double
     if status.isGood() and isinstance(data, primitives.Double):
         print("The double is: %.3f" %data.value)
-    
+
     # target 1:
     status = readResult.targets[1].status                         # 'status' has type pyuaf.util.Status
     data   = readResult.targets[1].data                           # 'data' has type pyuaf.util.primitives.UInt32
     if status.isGood() and isinstance(data, primitives.UInt32):
         print("The uint32 is: %d" %data.value)
-    
+
     # target 2:
     status = readResult.targets[2].status                         # 'status' has type pyuaf.util.Status
     data   = readResult.targets[2].data                           # 'data' has type pyuaf.util.primitives.String
     if status.isGood() and isinstance(data, primitives.String):
         print("The string is: '%s'" %data.value)
-    
+
     # target 3:
     status = readResult.targets[3].status                         # 'status' has type pyuaf.util.Status
     data   = readResult.targets[3].data                           # 'data' has type pyuaf.util.LocalizedText
     if status.isGood() and isinstance(data, LocalizedText):
         print("The locale is: '%s', the text is: '%s'" %(data.locale(), data.text()))
-    
+
     # target 4:
     status = readResult.targets[4].status                         # 'status' has type pyuaf.util.Status
     data   = readResult.targets[4].data                           # 'data' is a list of pyuaf.util.primitives.SByte
     if status.isGood() and isinstance(data, list):
         print("The array is:")
-        for i in xrange(len(data)):
+        for i in range(len(data)):
             print(" - array[%d] = %d" %(i, data[i].value))
 
 
@@ -99,14 +99,14 @@ myClient = Client(settings)
 print("")
 print("First option: use the convenience function read() to read data synchronously")
 print("============================================================================")
-    
-# OPTIONAL: You could also provide a ReadSettings to configure a call timeout, 
-#           or maximum age of the values, or ... 
+
+# OPTIONAL: You could also provide a ReadSettings to configure a call timeout,
+#           or maximum age of the values, or ...
 serviceSettings = ReadSettings()
 serviceSettings.callTimeoutSec = 0.5
 serviceSettings.maxAgeSec = 1.0
 
-# OPTIONAL: And you could also provide a SessionConfig to configure the sessions 
+# OPTIONAL: And you could also provide a SessionConfig to configure the sessions
 #           (e.g. set the timeout to 600.0 seconds)
 #           For more info about SessionConfigs, see the sessionconfig_example
 sessionSettings = SessionSettings()
@@ -114,14 +114,14 @@ sessionSettings.sessionTimeoutSec = 600.0
 
 try:
     # now read the node attributes
-    readResult = myClient.read( addresses     = [someDoubleNode, someUInt32Node, someStringNode, 
+    readResult = myClient.read( addresses     = [someDoubleNode, someUInt32Node, someStringNode,
                                                  someLocalizedTextNode, someSByteArrayNode],
                                 serviceSettings = serviceSettings, # optional argument
                                 sessionSettings = sessionSettings) # optional argument
-    
+
     # print the result using the function we defined before
     printResult(readResult)
-except UafError, e:
+except UafError as e:
     print("Some error occurred: %s" %e)
 
 
@@ -145,49 +145,49 @@ readRequest.targets[5].attributeId = pyuaf.util.attributeids.DisplayName
 readRequest.serviceSettings        = serviceSettings # optional
 readRequest.sessionSettings        = sessionSettings # optional
 
-try:    
+try:
     # process the request
     readResult = myClient.processRequest(readRequest)
-    
+
     # print the result
     printResult(readResult)
-    
+
     # also print the display name of the 6th node:
     status = readResult.targets[5].status
     data   = readResult.targets[5].data
     if status.isGood() and isinstance(data, LocalizedText):
         print("The DisplayName-locale is: '%s', the DisplayName-text is: '%s'" %(data.locale(), data.text()))
-except UafError, e:
+except UafError as e:
     print("Some error occurred: %s" %e)
-    
-    
+
+
 
 print("")
 print("Third option: use the convenience function beginRead() to read data asynchronously")
 print("==================================================================================")
 
-# notice we enable asynchronous communication now by providing the printResult() method as 
+# notice we enable asynchronous communication now by providing the printResult() method as
 # a callback function!
 
 try:
-    asyncReadResult = myClient.beginRead(addresses       = [someDoubleNode, someUInt32Node, 
-                                                            someStringNode, someLocalizedTextNode, 
+    asyncReadResult = myClient.beginRead(addresses       = [someDoubleNode, someUInt32Node,
+                                                            someStringNode, someLocalizedTextNode,
                                                             someSByteArrayNode],
                                          serviceSettings = serviceSettings, # optional argument
                                          sessionSettings = sessionSettings, # optional argument
                                          callback        = printResult)     # callback function!
-    
-    # check if there was an "immediate" error on the client side when executing the asynchronous 
+
+    # check if there was an "immediate" error on the client side when executing the asynchronous
     # service call:
     if asyncReadResult.overallStatus.isGood():
         print("OK, the client could invoke the asynchronous request without problems.")
         print("Let's wait a second for the result ...")
-        
+
         time.sleep(1)
-        
+
         print("The read result should have been received by now!")
 
-except UafError, e:
+except UafError as e:
     print("Some error occurred: %s" %e)
 
 
@@ -195,16 +195,16 @@ print("")
 print("Fourth option: use the generic function processRequest() to read data asynchronously")
 print("====================================================================================")
 
-# notice we enable asynchronous communication now by providing the printResult() method as 
+# notice we enable asynchronous communication now by providing the printResult() method as
 # a callback function!
 
 # create an asynchronous (!) request with 5 targets
 asyncReadRequest = AsyncReadRequest(5)
 
 # we can simply copy the targets of the synchronous request to the asynchronous request:
-for i in xrange(5):
+for i in range(5):
     asyncReadRequest.targets[i] = readRequest.targets[i]
-    
+
 # OPTIONAL: also copy the service config and session config:
 asyncReadRequest.serviceSettings = serviceSettings
 asyncReadRequest.sessionSettings = sessionSettings
@@ -212,19 +212,19 @@ asyncReadRequest.sessionSettings = sessionSettings
 try:
     # process the request
     asyncReadResult = myClient.processRequest(asyncReadRequest, resultCallback=printResult)
-    
-    # check if there was an "immediate" error on the client side when executing the asynchronous 
+
+    # check if there was an "immediate" error on the client side when executing the asynchronous
     # service call:
     if asyncReadResult.overallStatus.isGood():
         print("OK, the client could invoke the asynchronous request without problems.")
         print("Let's wait a second for the result ...")
-        
+
         time.sleep(1)
-        
+
         print("The read result should have been received by now!")
 
-    
-except UafError, e:
+
+except UafError as e:
     print("Some error occurred: %s" %e)
 
 
@@ -234,14 +234,14 @@ print("Fifth option: read data asynchronously using beginRead() without specifyi
 print("==============================================================================================")
 
 # instead of using "external" callback functions (such as printResult() above), we can also use
-# the "internal" callback function of the Client class. If the argument 'callback' of beginRead() is 
+# the "internal" callback function of the Client class. If the argument 'callback' of beginRead() is
 # not used (or 'resultCallback' is not used in case of processRequest()), the asynchronous result
-# will be dispatched to the readComplete() method of the Client class. 
+# will be dispatched to the readComplete() method of the Client class.
 # In other words, when you subclass Client, you can simply override the readComplete() method
 # to receive the asynchronous read results.
 
 class MySubClasssedClient(Client):
-    
+
     def __init__(self, settings):
         Client.__init__(self, settings)
 
@@ -251,29 +251,29 @@ class MySubClasssedClient(Client):
 
 # create the client
 mySubClassedClient = MySubClasssedClient(settings)
-    
+
 try:
     asyncReadResult = mySubClassedClient.beginRead(
-                                         addresses       = [someDoubleNode, someUInt32Node, 
-                                                            someStringNode, someLocalizedTextNode, 
+                                         addresses       = [someDoubleNode, someUInt32Node,
+                                                            someStringNode, someLocalizedTextNode,
                                                             someSByteArrayNode],
                                          serviceSettings = serviceSettings, # optional argument
                                          sessionSettings = sessionSettings) # optional argument!
     # note: the 'callback' argument is not used in the above call!
-    
-    # check if there was an "immediate" error on the client side when executing the asynchronous 
+
+    # check if there was an "immediate" error on the client side when executing the asynchronous
     # service call:
     if asyncReadResult.overallStatus.isGood():
         print("OK, the client could invoke the asynchronous request without problems.")
         print("Let's wait a second for the result ...")
-        
+
         time.sleep(1)
-        
+
         print("The read result should have been received by now!")
-    
-except UafError, e:
+
+except UafError as e:
     print("Some error occurred: %s" %e)
-    
+
 
 
 print("")
@@ -282,20 +282,20 @@ print("=========================================================================
 
 try:
     # process the request
-    asyncReadResult = mySubClassedClient.processRequest(asyncReadRequest) 
+    asyncReadResult = mySubClassedClient.processRequest(asyncReadRequest)
     # note: the 'resultCallback' argument is not used in the above call!
-    
-    # check if there was an "immediate" error on the client side when executing the asynchronous 
+
+    # check if there was an "immediate" error on the client side when executing the asynchronous
     # service call:
     if asyncReadResult.overallStatus.isGood():
         print("OK, the client could invoke the asynchronous request without problems.")
         print("Let's wait a second for the result ...")
-        
+
         time.sleep(1)
-        
+
         print("The read result should have been received by now!")
 
-except UafError, e:
+except UafError as e:
     print("Some error occurred: %s" %e)
-    
+
 

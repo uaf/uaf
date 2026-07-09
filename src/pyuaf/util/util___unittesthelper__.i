@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 %module __unittesthelper__
 %{
 #define SWIG_FILE_WITH_INIT
@@ -51,9 +51,9 @@
     class UnitTestHelper
     {
     public:
-        
+
         uint8_t* someBytes;
-        
+
         uaf::NodeId someNodeId0;
         uaf::NodeId someNodeId1;
         uaf::NodeId someNodeId2;
@@ -68,16 +68,16 @@
         uaf::ExtensionObject someExtensionObject;
         uaf::Guid someGuid1;
         uaf::Guid someGuid2;
-        
-        UnitTestHelper() 
+
+        UnitTestHelper()
         {
             someBytes = new uint8_t[3];
             someBytes[0] = 1;
             someBytes[1] = 2;
             someBytes[2] = 3;
-            
+
             // create a NodeId but don't include a NameSpaceURI because the OPC UA NodeId type
-            // only contains a NameSpaceIndex (in contrast to the UAF NodeId, which can contain 
+            // only contains a NameSpaceIndex (in contrast to the UAF NodeId, which can contain
             // both)
             someNodeId0 = uaf::NodeId("SomeIdentifier", 42);
             someNodeId1 = uaf::NodeId("SomeIdentifier", "nsUri");
@@ -98,20 +98,20 @@
         {
             delete[] someBytes;
         }
-        
-        
+
+
         uaf::Variant testVariantTypemap_out(uaf::opcuatypes::OpcUaType type, bool array=false)
         {
             // declare the variant to return
             uaf::Variant v;
-    
+
             // for each type, create an example variant
             if (array)
             {
                 switch (type)
                 {
                     case uaf::opcuatypes::Boolean:
-                    { 
+                    {
                         std::vector<bool> array;
                         array.push_back(true);
                         array.push_back(false);
@@ -120,31 +120,31 @@
                         break;
                     }
                     case uaf::opcuatypes::Byte:
-                    { 
+                    {
                         std::vector<uint8_t> array;
                         array.push_back(1);
                         array.push_back(2);
                         array.push_back(3);
                         v.setByteArray(array);
-                        break; 
+                        break;
                     }
                     case uaf::opcuatypes::SByte:
-                    { 
+                    {
                         std::vector<int8_t> array;
                         array.push_back(-1);
                         array.push_back(2);
                         array.push_back(-3);
                         v.setSByteArray(array);
-                        break; 
+                        break;
                     }
                     case uaf::opcuatypes::UInt16:
-                    { 
+                    {
                         std::vector<uint16_t> array;
                         array.push_back(1);
                         array.push_back(2);
                         array.push_back(3);
                         v.setUInt16Array(array);
-                        break; 
+                        break;
                     }
                     case uaf::opcuatypes::Int16:
                     {
@@ -153,7 +153,7 @@
                         array.push_back(2);
                         array.push_back(-3);
                         v.setInt16Array(array);
-                        break; 
+                        break;
                     }
                     case uaf::opcuatypes::UInt32:
                     {
@@ -302,7 +302,8 @@
                     case uaf::opcuatypes::Int64:           { v.setInt64(-3);                            break; }
                     case uaf::opcuatypes::Float:           { v.setFloat(3.14);                          break; }
                     case uaf::opcuatypes::Double:          { v.setDouble(3.14);                         break; }
-                    case uaf::opcuatypes::String:          { v.setString("test \xc2\xb0");              break; } // \u00B0 only works for GCC
+                    // https://www.fileformat.info/info/unicode/char/b0/index.htm
+                    case uaf::opcuatypes::String:          { v.setString("test \u00B0");                break; }
                     case uaf::opcuatypes::ByteString:      { v.setByteString(someBytes, 3);             break; }
                     case uaf::opcuatypes::NodeId:          { v.setNodeId(someNodeId2);                  break; }
                     case uaf::opcuatypes::ExpandedNodeId:  { v.setExpandedNodeId(someExpandedNodeId2);  break; }
@@ -314,10 +315,10 @@
                     default:                               { v.clear();                                 break; }
                 }
             }
-    
+
             return v;
         }
-        
+
         uaf::Variant testVariantTypemap_in(const uaf::Variant& v)
         {
             return uaf::Variant(v);
