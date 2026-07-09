@@ -56,8 +56,8 @@ namespace uaf
 
         ConnectionFailedError(const std::string& endpointUrl, const uaf::SdkStatus& sdkStatus)
         : uaf::ConnectionError(uaf::format("Connection to endpoint '%s' failed: %s",
-                                           sdkStatus.toString().c_str(),
-                                           endpointUrl.c_str())),
+                                           endpointUrl.c_str(),
+                                           sdkStatus.toString().c_str()),
           sdkStatus(sdkStatus),
           endpointUrl(endpointUrl)
         {}
@@ -75,8 +75,8 @@ namespace uaf
 
         AsyncConnectionFailedError(const std::string& serverUri, const uaf::SdkStatus& sdkStatus)
         : uaf::ConnectionError(uaf::format("Connection to server URI '%s' failed: %s",
-                                           sdkStatus.toString().c_str(),
-                                           serverUri.c_str())),
+                                           serverUri.c_str(),
+                                           sdkStatus.toString().c_str())),
           sdkStatus(sdkStatus),
           serverUri(serverUri)
         {}
