@@ -57,7 +57,7 @@ namespace uaf
         ConnectionFailedError(const std::string& endpointUrl, const uaf::SdkStatus& sdkStatus)
         : uaf::ConnectionError(uaf::format("Connection to endpoint '%s' failed: %s",
                                            endpointUrl.c_str(),
-                                           sdkStatus.toString().c_str()),
+                                           sdkStatus.toString().c_str())),
           sdkStatus(sdkStatus),
           endpointUrl(endpointUrl)
         {}
