@@ -25,6 +25,25 @@ class PkiCertificateTest(unittest.TestCase):
         self.issuerPrivateKey = keyPair.privateKey()
         self.subjectPublicKey = keyPair.publicKey()
 
+        self.issuerInfo = pyuaf.util.PkiCertificateInfo()
+        self.issuerInfo.uri        = "issuerUri"
+        self.issuerInfo.dns        = "issuerDns"
+        self.issuerInfo.eMail      = "issuerEMail"
+        self.issuerInfo.validTime  = 60*60*24*365*5
+        self.issuerInfo.ipAddresses.append("192.168.178.12")
+        self.issuerInfo.dnsNames.append("issuerdns")
+
+        self.issuerIdentity = pyuaf.util.PkiIdentity()
+        self.issuerIdentity.commonName         = "issuerCommonName"
+        self.issuerIdentity.organization       = "issuerOrganization"
+        self.issuerIdentity.organizationUnit   = "issuerOrganizationUnit"
+        self.issuerIdentity.locality           = "issuerLocality"
+        self.issuerIdentity.state              = "issuerState"
+        self.issuerIdentity.country            = "NL"
+        self.issuerIdentity.domainComponent    = "issuerDomainComponent"
+
+        self.issuerCert = pyuaf.util.PkiCertificate(self.issuerInfo, self.issuerIdentity, keyPair, True)
+
         self.identity = pyuaf.util.PkiIdentity()
         self.identity.commonName         = "commonName"
         self.identity.organization       = "organization"
@@ -42,7 +61,7 @@ class PkiCertificateTest(unittest.TestCase):
         self.info.ipAddresses.append("192.168.0.94")
         self.info.dnsNames.append("dns")
 
-        self.cert1 = pyuaf.util.PkiCertificate(self.info, self.identity, keyPair)
+        self.cert1 = pyuaf.util.PkiCertificate(self.info, self.identity, self.subjectPublicKey,  self.issuerCert, self.issuerPrivateKey)
 
 
     def test_util_PkiCertificate_publicKey(self):
@@ -55,7 +74,7 @@ class PkiCertificateTest(unittest.TestCase):
         self.assertEqual( self.cert1.subject(), self.identity )
 
     def test_util_PkiCertificate_issuer(self):
-        self.assertEqual( self.cert1.issuer(), self.identity )
+        self.assertEqual( self.cert1.issuer(), self.issuerIdentity )
 
     def test_util_PkiCertificate_subjectNameHash(self):
         self.assertTrue( self.cert1.subjectNameHash() > 0 )
@@ -81,6 +100,8 @@ class PkiCertificateTest(unittest.TestCase):
         self.assertTrue( len(self.cert1.serialNumber()) > 0 )
 
     def test_util_PkiCertificate_signatureTypeNID(self):
+        # sha1WithRSAEncryption  : 65
+        # sha256WitRSAEncryption : 668
         self.assertEqual( self.cert1.signatureTypeNID() , 668 )
 
     def test_util_PkiCertificate_signatureTypeString(self):
@@ -88,6 +109,7 @@ class PkiCertificateTest(unittest.TestCase):
 
     def test_util_PkiCertificate_isNull(self):
         self.assertTrue( self.cert0.isNull() )
+        self.assertFalse( self.issuerCert.isNull() )
         self.assertFalse( self.cert1.isNull() )
 
     def test_util_PkiCertificate_isValid(self):
@@ -96,7 +118,8 @@ class PkiCertificateTest(unittest.TestCase):
 
     def test_util_PkiCertificate_isSelfSigned(self):
         self.assertFalse( self.cert0.isSelfSigned() )
-        self.assertTrue( self.cert1.isSelfSigned() )
+        self.assertTrue( self.issuerCert.isSelfSigned() )
+        self.assertFalse( self.cert1.isSelfSigned() )
 
     def test_util_PkiCertificate_hasExtension(self):
         self.assertTrue( self.cert1.hasExtension(pyuaf.util.PkiCertificate.Extension_SubjectKeyIdentifier))
