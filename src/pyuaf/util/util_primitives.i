@@ -45,14 +45,15 @@
 // SETUP_PRIMITIVE(TYPE, PYTHONTYPE)
 // =================================================================================================
 // 
-// Set-up a string primitive type from uaf::primitives.
+// Set-up a primitive type from uaf::primitives.
 //
 //   - argument TYPE : the type of the class, e.g. String
 //
-%define SETUP_PRIMITIVE(TYPE, PYTHONTYPE)
+%define SETUP_PRIMITIVE(TYPE, PYTHONTYPE, DOCSTR)
     %feature("pythonprepend") uaf::primitives::TYPE::TYPE %{
         """
         Construct a primitive.
+        DOCSTR
         """
         if len(args) == 1:
             try:
@@ -70,19 +71,19 @@
 
 
 // setup the primitives
-SETUP_PRIMITIVE(Boolean    , bool)
-SETUP_PRIMITIVE(SByte      , int)
-SETUP_PRIMITIVE(Byte       , int)
-SETUP_PRIMITIVE(Int16      , int)
-SETUP_PRIMITIVE(UInt16     , int)
-SETUP_PRIMITIVE(Int32      , int)
-SETUP_PRIMITIVE(UInt32     , int)
-SETUP_PRIMITIVE(Int64      , long)
-SETUP_PRIMITIVE(UInt64     , long)
-SETUP_PRIMITIVE(Float      , float)
-SETUP_PRIMITIVE(Double     , float)
-SETUP_PRIMITIVE(String     , str)
-SETUP_PRIMITIVE(ByteString , bytearray)
+SETUP_PRIMITIVE(Boolean    , bool       , A str is also accepted. Only an empty string leads to bool value False.)
+SETUP_PRIMITIVE(SByte      , int        , A str that can be converted to int is also accepted.)
+SETUP_PRIMITIVE(Byte       , int        , A str that can be converted to int is also accepted.)
+SETUP_PRIMITIVE(Int16      , int        , A str that can be converted to int is also accepted.)
+SETUP_PRIMITIVE(UInt16     , int        , A str that can be converted to int is also accepted.)
+SETUP_PRIMITIVE(Int32      , int        , A str that can be converted to int is also accepted.)
+SETUP_PRIMITIVE(UInt32     , int        , A str that can be converted to int is also accepted.)
+SETUP_PRIMITIVE(Int64      , long       , A str that can be converted to long is also accepted.)
+SETUP_PRIMITIVE(UInt64     , long       , A str that can be converted to long is also accepted.)
+SETUP_PRIMITIVE(Float      , float      , A str that can be converted to float is also accepted.)
+SETUP_PRIMITIVE(Double     , float      , A str that can be converted to float is also accepted.)
+SETUP_PRIMITIVE(String     , str        , )
+SETUP_PRIMITIVE(ByteString , bytearray  , A str is also accepted.)
 
 
 %include "uaf/util/primitives.h"
