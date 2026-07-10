@@ -21,11 +21,11 @@ def testNumber(testcase, primitive, signed, length):
     if signed:
         minValue = -(2** (length-1))
         maxValue = 2**(length-1) - 1
-        randomGoodValue = -(2**(length/2))
+        randomGoodValue = -(2**(length//2))
     else:
         minValue = 0
         maxValue = 2**length - 1
-        randomGoodValue = 2**(length/2)
+        randomGoodValue = 2**(length//2)
     testcase.assertEqual( primitive.__call__(minValue).value , minValue )
     testcase.assertEqual( primitive.__call__(str(minValue)).value , minValue )
     testcase.assertEqual( primitive.__call__(maxValue).value , maxValue )

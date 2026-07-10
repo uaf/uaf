@@ -45,28 +45,21 @@
 // SETUP_PRIMITIVE(TYPE, PYTHONTYPE)
 // =================================================================================================
 //
-// Set-up a string primitive type from uaf::primitives.
+// Set-up a primitive type from uaf::primitives.
 //
 //   - argument TYPE : the type of the class, e.g. String
 //
-// Note: in case of a ValueError, which occurs if args[0] contains a string, representing a float,
-//  such as "123.0", we catch the ValueError, and try to cast to float first before casting to int.
-//
-%define SETUP_PRIMITIVE(TYPE, PYTHONTYPE)
+%define SETUP_PRIMITIVE(TYPE, PYTHONTYPE, DOCSTR)
     %feature("pythonprepend") uaf::primitives::TYPE::TYPE %{
         """
         Construct a primitive.
+        DOCSTR
         """
         if len(args) == 1:
             try:
                 args = (PYTHONTYPE(args[0]),)
-            except ValueError as e:
-                try:
-                    args = (PYTHONTYPE(float(args[0])),)
-                except:
-                    raise e
-            except:
-                raise TypeError("'PYTHONTYPE' expected instead of %s instance" %type(args[0]))
+            except Exception as e:
+                raise TypeError("'PYTHONTYPE' expected instead of %s instance: %s" % (type(args[0]), e))
         elif len(args) > 0:
             raise TypeError("Only one value can be provided")
     %}
@@ -78,20 +71,20 @@
 
 
 // setup the primitives
-SETUP_PRIMITIVE(Boolean    , bool)
-SETUP_PRIMITIVE(SByte      , int)
-SETUP_PRIMITIVE(Byte       , int)
-SETUP_PRIMITIVE(Int16      , int)
-SETUP_PRIMITIVE(UInt16     , int)
-SETUP_PRIMITIVE(Int32      , int)
-SETUP_PRIMITIVE(UInt32     , int)
+SETUP_PRIMITIVE(Boolean    , bool       , A str is also accepted. Only an empty string leads to bool value False.)
+SETUP_PRIMITIVE(SByte      , int        , A str that can be converted to int is also accepted.)
+SETUP_PRIMITIVE(Byte       , int        , A str that can be converted to int is also accepted.)
+SETUP_PRIMITIVE(Int16      , int        , A str that can be converted to int is also accepted.)
+SETUP_PRIMITIVE(UInt16     , int        , A str that can be converted to int is also accepted.)
+SETUP_PRIMITIVE(Int32      , int        , A str that can be converted to int is also accepted.)
+SETUP_PRIMITIVE(UInt32     , int        , A str that can be converted to int is also accepted.)
 // The long builtin type has been deprecated in Python3
-SETUP_PRIMITIVE(Int64      , int)
-SETUP_PRIMITIVE(UInt64     , int)
-SETUP_PRIMITIVE(Float      , float)
-SETUP_PRIMITIVE(Double     , float)
-SETUP_PRIMITIVE(String     , str)
-SETUP_PRIMITIVE(ByteString , bytearray)
+SETUP_PRIMITIVE(Int64      , int        , A str that can be converted to int is also accepted.)
+SETUP_PRIMITIVE(UInt64     , int        , A str that can be converted to int is also accepted.)
+SETUP_PRIMITIVE(Float      , float      , A str that can be converted to float is also accepted.)
+SETUP_PRIMITIVE(Double     , float      , A str that can be converted to float is also accepted.)
+SETUP_PRIMITIVE(String     , str        , )
+SETUP_PRIMITIVE(ByteString , bytearray  , A str is not accepted. A class bytes is accepted.)
 
 
 %include "uaf/util/primitives.h"

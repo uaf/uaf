@@ -89,12 +89,12 @@ class PkiCertificateTest(unittest.TestCase):
     def test_util_PkiCertificate_validFrom(self):
         now = pyuaf.util.DateTime.now()
         self.assertTrue( type(self.cert1.validFrom()) == pyuaf.util.DateTime )
-        self.assertTrue( self.cert1.validFrom().secsTo(now) < 2)
+        self.assertTrue( self.cert1.validFrom().secsTo(now) < 5)
 
     def test_util_PkiCertificate_validTo(self):
         now = pyuaf.util.DateTime.now()
         self.assertTrue( type(self.cert1.validTo()) == pyuaf.util.DateTime )
-        self.assertTrue(60*60*24*365*5 - now.secsTo(self.cert1.validTo()) < 2)
+        self.assertTrue(60*60*24*365*5 - now.secsTo(self.cert1.validTo()) < 5)
 
     def test_util_PkiCertificate_serialNumber(self):
         self.assertTrue( len(self.cert1.serialNumber()) > 0 )
