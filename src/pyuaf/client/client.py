@@ -1154,6 +1154,11 @@ class Client(ClientBase):
        this method has a "manually" prefix. Normally it should not be used explicitely,
        as all sessions will be disconnected automatically when the client is deleted.
        """
+       for subscription in self.allSubscriptionInformations():
+          try:
+             self.manuallyUnsubscribe(subscription.clientConnectionId, subscription.clientSubscriptionHandle)
+          except:
+             pass
        ClientBase.manuallyDisconnectAllSessions(self)
 
 
